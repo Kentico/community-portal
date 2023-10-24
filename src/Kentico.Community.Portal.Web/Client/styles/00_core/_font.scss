@@ -1,0 +1,34 @@
+$font-path: "/fonts"; // This is the runtime path - see vite.config.js
+
+@font-face {
+  font-family: "GT Walsheim Pro";
+  src:
+    local("GT Walsheim Pro Regular"),
+    local("GTWalsheimPro-Regular"),
+    url("#{$font-path}/GTWalsheimPro-Regular.woff2") format("woff2"),
+    url("#{$font-path}/GTWalsheimPro-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GT Walsheim Pro";
+  src:
+    local("GT Walsheim Pro Bold"),
+    local("GTWalsheimPro-Bold"),
+    url("#{$font-path}/GTWalsheimPro-Bold.woff2") format("woff2"),
+    url("#{$font-path}/GTWalsheimPro-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GT Walsheim Pro";
+  src:
+    local("GT Walsheim Pro Medium"),
+    local("GTWalsheimPro-Medium"),
+    url("#{$font-path}/GTWalsheimPro-Medium.woff2") format("woff2"),
+    url("#{$font-path}/GTWalsheimPro-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}

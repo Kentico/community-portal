@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>OM.TrackedWebsite</CodeName>
+    <GUID>ffb2e77a-0462-48c5-9e16-564b119be413</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="TrackedWebsiteID" guid="1c75d7f1-e902-4181-827d-1a60372a315d" />
+      <field column="TrackedWebsiteGUID" guid="3032fa33-8400-490d-9e6f-0d44e4f5cd33" />
+      <field column="TrackedWebsiteDisplayName" columnprecision="0" enabled="true" guid="ce7edbe9-57c8-42f5-932d-b5255edb8fcf" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalmarketing.trackedwebsite.edit.displayname$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="TrackedWebsiteName" columnprecision="0" enabled="true" guid="f5a73cf0-0dc1-4230-bffe-5f0e55a611b3" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.trackedwebsite.edit.name$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="TrackedWebsiteURL" columnprecision="0" enabled="true" guid="43382d3f-9bb7-484d-8da4-0015c083d668" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.trackedwebsite.edit.url$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="TrackedWebsiteDescription" columnprecision="0" enabled="true" guid="d4806096-b148-4ad7-8232-cc47ac56f36e" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalmarketing.trackedwebsite.edit.description$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="TrackedWebsiteChannelID" enabled="true" guid="1987fc7f-c745-407c-9017-57d401083a4e" visible="true" order="6">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>cms.channel</ObjectType>
+        </settings>
+        <properties>
+          <defaultvalue>0</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalmarketing.trackedwebsite.edit.websitechannel$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="TrackedWebsiteEnabled" enabled="true" guid="44254a4a-f7da-45c8-a452-e6691dc0fa0b" visible="true" order="7">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <defaultvalue>True</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.trackedwebsite.edit.enabled$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="TrackedWebsiteLastModified" guid="04236e90-2b2e-430d-b73e-ca53866a957c" order="8" />
+    </form>
+  </FormDefinition>
+  <FormDisplayName>create</FormDisplayName>
+  <FormGUID>045e40c1-da32-4181-b729-bcfad700a120</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>Create</FormName>
+</cms.alternativeform>

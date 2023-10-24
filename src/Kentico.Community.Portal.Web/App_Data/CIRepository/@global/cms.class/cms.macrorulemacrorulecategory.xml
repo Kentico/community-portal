@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassDisplayName>MacroRuleMacroRuleCategory</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="MacroRuleMacroRuleCategoryID" columntype="integer" guid="ea4447db-ae81-41f0-b8de-345ccd49a2ea" isPK="true" system="true" />
+      <field column="MacroRuleID" columntype="integer" guid="7fe094b4-9f17-46c8-89ea-4f94b9e311a6" refobjtype="cms.macrorule" reftype="Required" system="true" />
+      <field column="MacroRuleCategoryID" columntype="integer" guid="f63547b7-1d65-4e0d-b0db-29ad552222d8" refobjtype="cms.macrorulecategory" reftype="Required" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>87a9ad39-b36e-4eaf-b4a9-c3b86adbae05</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.MacroRuleMacroRuleCategory</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS</CodeName>
+    <GUID>ce1a65a0-80dc-4c53-b0e7-bdecf0aa8c02</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_MacroRuleMacroRuleCategory</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

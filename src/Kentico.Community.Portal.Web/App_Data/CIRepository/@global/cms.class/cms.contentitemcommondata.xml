@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Content item common data</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemCommonDataID" columntype="integer" enabled="true" guid="dcc7d6bf-4c35-4414-9ed7-76f89bf9960d" isPK="true" system="true" />
+      <field column="ContentItemCommonDataGUID" columnprecision="0" columntype="guid" enabled="true" guid="8faf5ded-4735-4a11-a8ba-da6e5cfe71b5" system="true" />
+      <field column="ContentItemCommonDataContentItemID" columnprecision="0" columntype="integer" enabled="true" guid="91fc5540-0504-4301-a196-d9cc050499f6" refobjtype="cms.contentitem" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="ContentItemCommonDataContentLanguageID" columnprecision="0" columntype="integer" enabled="true" guid="66a47fdf-75d6-4bd6-b99d-f37a816b8676" refobjtype="cms.contentlanguage" reftype="Required" system="true" />
+      <field column="ContentItemCommonDataVersionStatus" columnprecision="0" columntype="integer" enabled="true" guid="a26f89d5-5e71-4e55-97e9-0f121c2ec231" system="true" />
+      <field column="ContentItemCommonDataIsLatest" columnprecision="0" columntype="boolean" enabled="true" guid="8fda7834-4aeb-4f2d-9ba9-cb3861e56b62" system="true" />
+      <field allowempty="true" column="ContentItemCommonDataPageBuilderWidgets" columnprecision="0" columntype="longtext" enabled="true" guid="b67cbb13-d340-42bf-bb5b-e479bf31f509" system="true" />
+      <field allowempty="true" column="ContentItemCommonDataPageTemplateConfiguration" columnprecision="0" columntype="longtext" enabled="true" guid="0d5a573b-759a-4dd7-a86b-be2ef2f5bac4" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>a6581fb3-892a-45b4-981a-012ce4b50b43</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ContentItemCommonData</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentEngine</CodeName>
+    <GUID>eb76ebd1-752f-4969-a5b6-1fb984cae224</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ContentItemCommonData</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

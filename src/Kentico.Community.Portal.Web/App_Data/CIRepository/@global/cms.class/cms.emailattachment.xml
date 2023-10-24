@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Email attachment</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="AttachmentID" columntype="integer" guid="ebf34bd7-e1d2-4488-85a3-9e3127f6a69b" isPK="true" system="true" />
+      <field column="AttachmentName" columnsize="255" columntype="text" guid="5340fb1e-0d50-4f87-aa6a-8029f188e64b" system="true" />
+      <field column="AttachmentExtension" columnsize="50" columntype="text" guid="4511305d-5456-4bbc-b99c-7eba264d379c" system="true" />
+      <field column="AttachmentSize" columntype="integer" guid="3a4cffe6-51a8-41d6-946c-b35ee0846c9a" system="true" />
+      <field column="AttachmentMimeType" columnsize="100" columntype="text" guid="8c49f5fb-e8a0-4c7e-bcde-447e370cbb7f" system="true" />
+      <field column="AttachmentBinary" columntype="text" guid="43c6ec9d-8c01-4b7c-9178-1cea0d2fda61" system="true" />
+      <field column="AttachmentGUID" columntype="guid" guid="096f5598-6e57-446f-918d-168beb17e67c" system="true" />
+      <field column="AttachmentLastModified" columntype="datetime" guid="9a39bd85-4847-41ee-a7e1-3fb867eb5964" system="true" />
+      <field allowempty="true" column="AttachmentContentID" columnsize="255" columntype="text" guid="0a09be9c-cc0c-4342-9549-af1dec53a02d" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>3a6a10ed-8426-4240-9f0f-ae054f612c61</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>cms.EmailAttachment</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.EmailEngine</CodeName>
+    <GUID>7675c4a8-a792-4d4c-b83e-38ed24b64eab</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_EmailAttachment</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

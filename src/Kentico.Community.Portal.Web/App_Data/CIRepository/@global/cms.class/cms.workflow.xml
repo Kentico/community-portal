@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Workflow</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="WorkflowID" columntype="integer" guid="bf3f5149-ebe0-4c41-8cde-79a0e63bdb66" isPK="true" system="true" />
+      <field column="WorkflowDisplayName" columnsize="450" columntype="text" guid="1493eba2-b913-4a2f-af71-9df4ebcb6f51" system="true" />
+      <field column="WorkflowName" columnsize="450" columntype="text" guid="c0821ace-fa5b-4e08-b9eb-32783abd66c9" system="true" />
+      <field column="WorkflowGUID" columntype="guid" guid="a7be7df7-232f-4cf4-8446-09df882727bc" system="true" />
+      <field column="WorkflowLastModified" columntype="datetime" guid="83b95ad1-000c-4e16-9177-71b438a75d3c" system="true" />
+      <field allowempty="true" column="WorkflowAutoPublishChanges" columntype="boolean" guid="947759f0-e4ee-4286-8ed3-4a33506ee50e" system="true">
+        <properties>
+          <defaultvalue>false</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="WorkflowUseCheckinCheckout" columntype="boolean" guid="64518cad-820b-425a-9553-3a11fe06a609" system="true">
+        <properties>
+          <defaultvalue>false</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="WorkflowType" columntype="integer" guid="23dba236-db4e-4549-8dd9-bb15ae665296" system="true" />
+      <field allowempty="true" column="WorkflowSendEmails" columntype="boolean" guid="772b67c7-150b-48a0-856e-22ca96d9f747" system="true">
+        <properties>
+          <defaultvalue>false</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="WorkflowSendApproveEmails" columntype="boolean" guid="b1241a2a-d1b7-4fee-a4cf-9a851a768887" system="true">
+        <properties>
+          <defaultvalue>true</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="WorkflowApprovedTemplateName" columnsize="200" columntype="text" guid="b12d21d4-a5b9-407d-815f-a7340247efeb" system="true" />
+      <field allowempty="true" column="WorkflowSendRejectEmails" columntype="boolean" guid="0d4d8bad-2cdd-4fbb-a128-4cc3f77b9b1f" system="true">
+        <properties>
+          <defaultvalue>true</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="WorkflowRejectedTemplateName" columnsize="200" columntype="text" guid="0dd2bd6e-2f9e-49dc-9d00-1d7aed9062b5" system="true" />
+      <field allowempty="true" column="WorkflowSendPublishEmails" columntype="boolean" guid="73960e86-97a9-4e64-8cbe-f678f72e2698" system="true">
+        <properties>
+          <defaultvalue>true</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="WorkflowPublishedTemplateName" columnsize="200" columntype="text" guid="c93eb40e-cdbb-4b73-9564-59a8923f80ec" system="true" />
+      <field allowempty="true" column="WorkflowSendArchiveEmails" columntype="boolean" guid="8b05ab93-3365-4a76-beb8-d02d126e681b" system="true">
+        <properties>
+          <defaultvalue>true</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="WorkflowArchivedTemplateName" columnsize="200" columntype="text" guid="5cadd028-def3-4a36-97e8-53075839241c" system="true" />
+      <field allowempty="true" column="WorkflowSendReadyForApprovalEmails" columntype="boolean" guid="a3f5583f-eaed-4189-9f26-ebd08b763cb8" system="true">
+        <properties>
+          <defaultvalue>true</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="WorkflowReadyForApprovalTemplateName" columnsize="200" columntype="text" guid="e1fcdf91-da81-40c3-85f1-222ac1580baf" system="true" />
+      <field allowempty="true" column="WorkflowNotificationTemplateName" columnsize="200" columntype="text" guid="2633af02-6838-4651-872f-ca07c95c3ec1" system="true" />
+      <field allowempty="true" column="WorkflowAllowedObjects" columntype="longtext" guid="e4a38770-488d-4b0f-8367-1b0fb3aaa18d" system="true" />
+      <field allowempty="true" column="WorkflowRecurrenceType" columntype="integer" guid="c4da319f-62aa-46d7-8132-ba1ea48d1253" system="true" />
+      <field column="WorkflowEnabled" columntype="boolean" guid="d8267b62-623a-4397-8041-0ab5a13cf0c1" system="true">
+        <properties>
+          <defaultvalue>True</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>a80047fb-e386-48ea-b433-bcdd92d131e4</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>cms.workflow</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.WorkflowEngine</CodeName>
+    <GUID>2b67f370-3df4-4a4d-8734-1974639c5b69</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_Workflow</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

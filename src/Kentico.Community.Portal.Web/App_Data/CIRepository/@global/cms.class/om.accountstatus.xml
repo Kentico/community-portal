@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSOMConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Contact management - Account status</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="AccountStatusID" columntype="integer" guid="0611d4f5-56b4-48d7-9308-5f5c913b0cb5" isPK="true" system="true" />
+      <field column="AccountStatusDisplayName" columnsize="200" columntype="text" guid="cde400d2-cbef-4ec3-af8c-19d10a28d559" system="true" />
+      <field column="AccountStatusName" columnsize="200" columntype="text" guid="4b284edd-af5c-4706-b798-99a946dc4f25" system="true" />
+      <field allowempty="true" column="AccountStatusDescription" columntype="longtext" guid="0102efd5-de2a-4d3d-80e7-445c35c4fcc5" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>39c48783-a43a-4ac4-b68d-3097fa876843</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.AccountStatus</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContactManagement</CodeName>
+    <GUID>0e4beef1-989c-4687-80ca-ae21fec09734</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>OM_AccountStatus</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

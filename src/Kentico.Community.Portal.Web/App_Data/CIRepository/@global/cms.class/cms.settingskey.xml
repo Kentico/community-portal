@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Settings key</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="KeyID" columntype="integer" guid="ac7779ce-7c76-40ad-9c17-b489b895b4a9" isPK="true" isunique="true" system="true" />
+      <field column="KeyDisplayName" columnsize="200" columntype="text" guid="93a202e2-0a05-4cbc-bb24-4bb746e0161e" system="true" />
+      <field column="KeyName" columnsize="100" columntype="text" guid="efbde045-fadd-4730-8fa6-162653f115ae" system="true" />
+      <field allowempty="true" column="KeyDescription" columntype="longtext" guid="831a5e01-d23e-497f-a3b4-abb2716d084f" system="true" />
+      <field allowempty="true" column="KeyExplanationText" columntype="longtext" guid="b78b7da8-3ac8-4ada-a075-abe4ea859c43" system="true" />
+      <field column="KeyType" columnsize="50" columntype="text" guid="e32d876e-e786-482c-b263-d2a7dcd4215d" system="true" />
+      <field allowempty="true" column="KeyValidation" columnsize="255" columntype="text" guid="8e89cb6f-c568-4622-9d7b-2fd551d121d7" system="true" />
+      <field allowempty="true" column="KeyEditingControlPath" columnsize="200" columntype="text" guid="9c614167-3952-467a-b054-4d97e13a6a21" system="true" />
+      <field allowempty="true" column="KeyFormControlSettings" columntype="longtext" guid="7ac2e6cc-5e5e-482c-bfd3-1761fa9bbb17" system="true" />
+      <field allowempty="true" column="KeyIsHidden" columntype="boolean" guid="0a45ca6a-d72e-4f9d-bc12-35cd935049d3" system="true">
+        <properties>
+          <defaultvalue>false</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="KeyCategoryID" columntype="integer" guid="5bf162ea-b507-4da2-b6a3-bb47f825c2a5" system="true" />
+      <field allowempty="true" column="KeyIsCustom" columntype="boolean" guid="3332844e-553a-411f-9840-36533960080e" system="true">
+        <properties>
+          <defaultvalue>false</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="KeyValue" columntype="longtext" guid="cd572f36-fab6-4ad3-8877-a34305ab3048" system="true" />
+      <field column="KeyGUID" columntype="guid" guid="6a1e6aa0-7b6a-4c8e-9292-22d58c69f9c1" system="true" />
+      <field column="KeyLastModified" columntype="datetime" guid="713fe666-07c5-446b-b544-48a8205d8b31" system="true" />
+      <field allowempty="true" column="KeyOrder" columntype="integer" guid="85d56e5e-9514-448c-8a52-618368567044" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>ec796166-5adf-43fa-9508-c9791db1b6dd</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.SettingsKey</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS</CodeName>
+    <GUID>ce1a65a0-80dc-4c53-b0e7-bdecf0aa8c02</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_SettingsKey</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

@@ -1,0 +1,124 @@
+@using Kentico.Community.Portal.Web.Features.Blog.Components
+
+@model BlogPostDetailViewModel
+
+@{
+    ClientAssets.RequirePrism();
+}
+
+<div class="t-article">
+    <div class="content-wrapper">
+        <section class="c-section hero-article">
+            <section class="template-banner blog greyscale">
+                <div class="template-banner__bg">
+                    <img class="t-article_hero-picture img-fluid" src="@Model.Teaser.URLData.RelativePath"
+                        alt="@Model.Teaser.AltText" title="Model.Teaser.Title" width="@Model.Teaser.Dimensions.Width"
+                        height="@Model.Teaser.Dimensions.Height" />
+                </div>
+                <div class="site-wide grid-container grid-container--full">
+                    <div class="grid-column">
+                        <div class="template-banner__content-wrapper">
+                            <h1 class="template-banner__title h3-styling">@Model.Title</h1>
+                            <div class="template-banner__meta">
+                                @Model.Date.ToString("MMM d, yyyy")
+                            </div>
+                            <div class="template-banner__content blog__content">
+                                <div class="template-banner__author">
+                                    <div class="template-banner__author-name">
+                                        <div class="template-banner__author-image">
+                                            @if (Model.Author.Avatar is ImageAssetViewModel avatar)
+                                            {
+                                                <img src="@avatar.URLData.RelativePath" alt="@Model.Author.Name"
+                                                    class="c-tag_icon" />
+                                            }
+                                        </div>
+                                        @if (Model.Author.LinkProfilePath is string path)
+                                        {
+                                            <a href="@Model.Author.LinkProfilePath">@Model.Author.Name</a>
+                                        }
+                                        else
+                                        {
+                                            @Model.Author.Name
+                                        }
+                                    </div>
+                                    @if (Model.Author.Title is string title)
+                                    {
+                                        <div class="template-banner__author-role">
+                                            @title
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <section class="c-section default">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-9 col-xl-8">
+
+                        <div role="main" class="t-article_body">
+                            <div>
+                                @Model.HTMLSanitizedContentHTML
+                            </div>
+                        </div>
+
+                        <div class="t-article_footer mt-6">
+                            <div class="t-article_footer_share">
+                                <h5 class="h6">Share on:</h5>
+                                <div class="text-center mt-3 mt-sm-0">
+                                    <a href="https://twitter.com/intent/tweet?url=@Model.AbsoluteURL" target="_blank"
+                                        rel="noopener noreferrer" title="Twitter" class="btn btn-social bg-twitter">
+                                        <svg class="c-icon ">
+                                            <use xlink:href="/img/icons.svg#brand-twitter"></use>
+                                        </svg>
+                                    </a>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=@Model.AbsoluteURL"
+                                        target="_blank" rel="noopener noreferrer" title="Facebook"
+                                        class="btn btn-social bg-facebook">
+                                        <svg class="c-icon ">
+                                            <use xlink:href="/img/icons.svg#brand-facebook"></use>
+                                        </svg>
+                                    </a>
+                                    <a href="https://www.linkedin.com/shareArticle?url=@Model.AbsoluteURL"
+                                        target="_blank" rel="noopener noreferrer" title="LinkedIn"
+                                        class="btn btn-social bg-linkedin">
+                                        <svg class="c-icon ">
+                                            <use xlink:href="/img/icons.svg#brand-linkedin"></use>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="c-card default-border author mt-5">
+                            <div class="c-card_inner grid">
+                                <div class="c-card_icon">
+                                    @if (Model.Author.Avatar is ImageAssetViewModel avt)
+                                    {
+                                        <img src="@avt.URLData.RelativePath" alt="@Model.Author.Name" />
+                                    }
+                                    else
+                                    {
+                                        <img src="/img/avatars/john-doe.png" alt="" />
+                                    }
+                                </div>
+                                <div class="c-card_content">
+                                    <h4 class="h4 mb-0 mt-1">@Model.Author.Name</h4>
+                                    <div class="my-0">@Model.Author.BiographyHTML</div>
+                                </div>
+                                <div class="c-card_footer">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Automation template</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="TemplateID" columntype="integer" guid="ec2ed19d-8dd2-46dd-b02d-4eded67c3284" isPK="true" system="true" />
+      <field column="TemplateDisplayName" columnsize="250" columntype="text" guid="9bf0a856-8fce-4fd7-a3af-b154f398183a" system="true" />
+      <field allowempty="true" column="TemplateDescription" columntype="longtext" guid="086856b7-8b0a-4207-adf6-fec6c48b6eb9" system="true" />
+      <field allowempty="true" column="TemplateIconClass" columnsize="200" columntype="text" guid="8c23ad83-0f8e-4cd8-a364-5191073afb16" system="true" />
+      <field allowempty="true" column="TemplateConfiguration" columntype="longtext" guid="7ff4799e-3218-4c71-b18b-fe17a53906bd" system="true" />
+      <field column="TemplateGuid" columntype="guid" guid="2cee8dbb-5969-49b1-a605-196c824110bf" system="true" />
+      <field column="TemplateLastModified" columnprecision="7" columntype="datetime" guid="f1a289b2-c24a-4653-a0d8-1f99d1dc7317" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>28286976-1784-42f4-b2e0-877d9288f7e8</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.AutomationTemplate</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.WorkflowEngine</CodeName>
+    <GUID>2b67f370-3df4-4a4d-8734-1974639c5b69</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_AutomationTemplate</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

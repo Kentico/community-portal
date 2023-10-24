@@ -1,0 +1,34 @@
+﻿{
+  "profiles": {
+    "Portal.Web": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "applicationUrl": "https://localhost:45039;http://localhost:45038",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DOTNET_WATCH_RESTART_ON_RUDE_EDIT": "true"
+      }
+    },
+    "Portal.Web watch": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "workingDirectory": "$(ProjectDir)",
+      "commandLineArgs": "watch",
+      "applicationUrl": "https://localhost:45039;http://localhost:45038",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DOTNET_WATCH_RESTART_ON_RUDE_EDIT": "true"
+      }
+    },
+    "Portal.WebCI": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "applicationUrl": "https://localhost:45039",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "CI"
+      }
+    }
+  }
+}

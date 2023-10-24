@@ -1,0 +1,26 @@
+{
+  "name": "kentico-community-portal",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "bundle-stats": "npx vite-bundle-visualizer"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "5.0.0",
+    "postcss": "8.4.31",
+    "postcss-load-config": "4.0.1",
+    "postcss-preset-env": "9.2.0",
+    "prettier": "3.0.3",
+    "sass": "1.69.4",
+    "vite": "4.5.0"
+  },
+  "dependencies": {
+    "@popperjs/core": "2.11.8",
+    "bootstrap": "5.3.2",
+    "bootstrap-icons": "1.11.1"
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead"
+}

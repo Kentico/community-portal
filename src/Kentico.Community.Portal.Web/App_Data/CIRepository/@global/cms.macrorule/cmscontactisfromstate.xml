@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[{_is}Contact.IsFromState("{states}")]]>
+  </MacroRuleCondition>
+  <MacroRuleDescription>{$macrorule.cmscontactisfromstate.description$}</MacroRuleDescription>
+  <MacroRuleDisplayName>Contact is from state</MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>da07fa9d-2ffd-4253-836e-6ffce3270041</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactIsFromState</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="states" columnprecision="0" columntype="objectcodenames" guid="ffe93888-2772-4343-9ada-ac9649628ffc" visible="true">
+        <properties>
+          <fieldcaption>states</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectCodeNameSelector</controlname>
+          <MaximumItems>0</MaximumItems>
+          <ObjectType>cms.state</ObjectType>
+          <Placeholder>select states</Placeholder>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field column="_is" columnsize="100" columntype="text" guid="c04b73aa-8687-44b2-ad2b-a9e555ef50b9" visible="true">
+        <properties>
+          <defaultvalue>__is</defaultvalue>
+          <fieldcaption>select operation</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <IsPerfectum>True</IsPerfectum>
+          <Options>
+<![CDATA[
+__is;is
+__isnot;is not
+]]>
+          </Options>
+          <RepeatDirection>horizontal</RepeatDirection>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>
+    <![CDATA[Contact {_is} from any of the following states: {states}]]>
+  </MacroRuleText>
+</cms.macrorule>

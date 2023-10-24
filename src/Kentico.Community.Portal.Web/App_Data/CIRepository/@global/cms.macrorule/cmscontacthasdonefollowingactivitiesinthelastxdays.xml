@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[{_perfectum}Contact.DidActivities("{activities}", ToInt({days}), {_any})]]>
+  </MacroRuleCondition>
+  <MacroRuleDescription>
+    <![CDATA[{$macrorule.cmscontacthasdonefollowingactivitiesinthelastxdays.description$}]]>
+  </MacroRuleDescription>
+  <MacroRuleDisplayName>
+    <![CDATA[Contact has performed specific activities in the last X days]]>
+  </MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>bf285ca9-ba59-4085-b6ef-f97e69e335ac</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactHasDoneFollowingActivitiesInTheLastXDays</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field allowempty="true" column="days" columntype="integer" guid="76d0c396-505e-46be-8226-63c410ec5991" visible="true">
+        <properties>
+          <fieldcaption>enter days</fieldcaption>
+        </properties>
+        <settings>
+          <AutoCompleteEnableCaching>False</AutoCompleteEnableCaching>
+          <AutoCompleteFirstRowSelected>False</AutoCompleteFirstRowSelected>
+          <AutoCompleteShowOnlyCurrentWordInCompletionListItem>False</AutoCompleteShowOnlyCurrentWordInCompletionListItem>
+          <controlname>Kentico.Administration.NumberInput</controlname>
+          <FilterMode>False</FilterMode>
+          <Trim>False</Trim>
+          <WatermarkText>enter number</WatermarkText>
+        </settings>
+      </field>
+      <field column="activities" columnprecision="0" columntype="objectcodenames" guid="b9434960-7e90-4db8-868c-691daba74942" visible="true">
+        <properties>
+          <fieldcaption>activities</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectCodeNameSelector</controlname>
+          <MaximumItems>0</MaximumItems>
+          <ObjectType>om.activitytype</ObjectType>
+          <Placeholder>select activities</Placeholder>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field column="_perfectum" columnsize="100" columntype="text" guid="2d58f59e-e3c2-4509-a4b0-569705be4f3f" visible="true">
+        <properties>
+          <defaultvalue>__is</defaultvalue>
+          <fieldcaption>select operation</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <IsPerfectum>True</IsPerfectum>
+          <Options>
+<![CDATA[
+__is;has
+__isnot;has not
+]]>
+          </Options>
+          <RepeatDirection>horizontal</RepeatDirection>
+        </settings>
+      </field>
+      <field column="_any" columnsize="100" columntype="text" guid="32b71352-fe8f-4de8-b43e-2f1db33a5ba9" visible="true">
+        <properties>
+          <defaultvalue>false;any</defaultvalue>
+          <fieldcaption>select operation</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+false;any
+true;all
+]]>
+          </Options>
+          <RepeatDirection>horizontal</RepeatDirection>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>
+    <![CDATA[Contact {_perfectum} performed {_any} of the following activities in the last {days} days: {activities}]]>
+  </MacroRuleText>
+</cms.macrorule>

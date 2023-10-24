@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.formfeaturedfield>
+  <FormFeaturedFieldDescription>Featured last name</FormFeaturedFieldDescription>
+  <FormFeaturedFieldDisplayName>Last name</FormFeaturedFieldDisplayName>
+  <FormFeaturedFieldEnabled>True</FormFeaturedFieldEnabled>
+  <FormFeaturedFieldFormDefinition>
+    <form version="2">
+      <field allowempty="true" column="LastName" columnsize="500" columntype="text" visible="true">
+        <properties>
+          <fieldcaption>Last name</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.TextInput</componentidentifier>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <Identifier>Kentico.MaximumLength</Identifier>
+            <ValidationRule>
+              <InstanceIdentifier>a004a57d-a084-445e-bea6-f589aaea1548</InstanceIdentifier>
+              <ErrorMessage>Maximum allowed length of the input text is 100.</ErrorMessage>
+              <MaximumLength>100</MaximumLength>
+            </ValidationRule>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+    </form>
+  </FormFeaturedFieldFormDefinition>
+  <FormFeaturedFieldGuid>85c7c430-43ee-43cd-9f7d-e04333166dc4</FormFeaturedFieldGuid>
+  <FormFeaturedFieldIconClass>icon-paragraph-short</FormFeaturedFieldIconClass>
+  <FormFeaturedFieldMapping>ContactLastName</FormFeaturedFieldMapping>
+  <FormFeaturedFieldName>Kentico.Featured.LastName</FormFeaturedFieldName>
+  <FormFeaturedFieldOrder>3</FormFeaturedFieldOrder>
+</cms.formfeaturedfield>

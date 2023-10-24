@@ -1,0 +1,45 @@
+@model Kentico.Community.Portal.Web.Features.Accounts.MyAccountViewModel
+
+<vc:page-heading page="Model" />
+
+<main>
+    <div class="c-section default">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 p-4">
+                    <div class="c-card article nopic mt-3">
+                        <div class="c-card_inner grid">
+                            <div class="c-card_title">
+                                <h4>
+                                    Profile Information
+                                </h4>
+                            </div>
+
+                            <div class="c-card_content">
+                                <p>
+                                    Username: @Model.Username
+                                </p>
+                                <p>
+                                    Email: @Model.Email
+                                </p>
+                                <p>
+                                    Joined: @Model.DateCreated.ToShortDateString()
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-6 p-4">
+                    <partial name="~/Features/Accounts/_ProfileForm.cshtml" model="Model.Profile" />
+                </div>
+
+                <div class="col-md-6 p-4">
+                    <partial name="~/Features/Accounts/_PasswordForm.cshtml" model="Model.PasswordInfo" />
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

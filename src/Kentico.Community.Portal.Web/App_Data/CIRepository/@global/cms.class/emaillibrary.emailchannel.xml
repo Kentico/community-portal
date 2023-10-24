@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Email channel</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="EmailChannelID" columntype="integer" enabled="true" guid="1809a092-4da8-4fe3-9fd5-dd209e9665fb" isPK="true" system="true" />
+      <field column="EmailChannelGUID" columnprecision="0" columntype="guid" enabled="true" guid="41765ada-9150-41ea-97d3-26b3efb86d18" system="true" />
+      <field column="EmailChannelChannelID" columnprecision="0" columntype="integer" enabled="true" guid="953aec8a-5ef7-49a9-9966-d405fcb63058" refobjtype="cms.channel" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="EmailChannelSendingDomain" columnprecision="0" columnsize="252" columntype="text" enabled="true" guid="25ff309e-6c66-4bf1-b2d6-e7741257718c" system="true" />
+      <field column="EmailChannelServiceDomain" columnprecision="0" columnsize="400" columntype="text" enabled="true" guid="f19a1f1b-6966-4447-b61b-b5c35e1b717c" system="true" />
+      <field column="EmailChannelPrimaryContentLanguageID" columnprecision="0" columntype="integer" enabled="true" guid="59266eec-7d15-4300-8c50-8aaebdb36671" refobjtype="cms.contentlanguage" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>c5a7e4ad-8ea5-46b7-b577-6e070a797b0f</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>EmailLibrary.EmailChannel</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.EmailLibrary</CodeName>
+    <GUID>028f4adc-346c-434a-8992-408c8b45a986</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>EmailLibrary_EmailChannel</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

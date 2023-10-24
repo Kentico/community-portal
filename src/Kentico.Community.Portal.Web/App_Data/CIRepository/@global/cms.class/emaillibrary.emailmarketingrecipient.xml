@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Email marketing recipient</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="EmailMarketingRecipientID" columntype="integer" enabled="true" guid="82372e7b-82bb-4caa-9930-740fbf50109d" isPK="true" system="true" />
+      <field column="EmailMarketingRecipientEmailConfigurationID" columnprecision="0" columntype="integer" enabled="true" guid="aea492fa-d4c0-461c-a468-8fe65062a3ac" refobjtype="emaillibrary.emailconfiguration" reftype="Required" system="true" />
+      <field column="EmailMarketingRecipientContactID" columnprecision="0" columntype="integer" enabled="true" guid="a668fc5d-4dd7-40e5-86c5-6ef2e49ef35e" refobjtype="om.contact" reftype="Required" system="true" />
+      <field column="EmailMarketingRecipientContactEmail" columnprecision="0" columnsize="254" columntype="text" enabled="true" guid="26973597-ad7b-42a4-a94e-41b287efe173" system="true" />
+      <field column="EmailMarketingRecipientStatus" columnprecision="0" columntype="integer" enabled="true" guid="d5fd82a6-6155-4819-b998-1857883d1de7" system="true" />
+      <field allowempty="true" column="EmailMarketingRecipientErrorMessage" columnprecision="0" columnsize="500" columntype="text" enabled="true" guid="aa89b271-a938-40b8-9d12-36e91332e087" system="true" />
+      <field column="EmailMarketingRecipientLastModified" columnprecision="7" columntype="datetime" enabled="true" guid="8585dc2d-1c5e-4143-9b91-f46234fe6e82" system="true" />
+      <field column="EmailMarketingRecipientRetryAttempt" columnprecision="0" columntype="integer" enabled="true" guid="52be5ae1-95fc-4766-99f1-d04ef6319a8c" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>5471847a-2d53-4e2c-8490-b7502078d382</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>EmailLibrary.EmailMarketingRecipient</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.EmailLibrary</CodeName>
+    <GUID>028f4adc-346c-434a-8992-408c8b45a986</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>EmailLibrary_EmailMarketingRecipient</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

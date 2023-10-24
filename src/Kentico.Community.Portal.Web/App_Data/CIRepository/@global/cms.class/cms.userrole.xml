@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>User role</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="UserRoleID" columntype="integer" guid="a6ca4467-2aca-4cdb-b8e6-218521075d5a" isPK="true" system="true" />
+      <field column="UserID" columntype="integer" guid="fade36d8-d004-4e7e-a354-614332e49bc9" refobjtype="cms.user" reftype="Binding" system="true" />
+      <field column="RoleID" columntype="integer" guid="61c16b7f-a96a-454e-aa67-9159e1e1d2d2" refobjtype="cms.role" reftype="Binding" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>7664a5c5-128c-4546-a7f9-c6d3e694c28a</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>cms.UserRole</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Membership</CodeName>
+    <GUID>d4b7561a-f188-420c-8f68-63b5c573b2bf</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_UserRole</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

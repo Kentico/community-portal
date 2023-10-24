@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>media.file</CodeName>
+    <GUID>d511179e-7fd5-42ee-8b51-048f58e45f6f</GUID>
+    <ObjectType>cms.systemtable</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="FileID" guid="be274203-89f9-46c6-8430-686c3f4ed2ee" />
+      <field column="FileMimeType" guid="75fbd642-1882-4463-b813-00feddb929b7" order="1" />
+      <field column="FilePath" guid="6d1230c9-478c-4b29-b2e1-d055d0173bc7" order="2" />
+      <field column="FileSize" guid="e230f41a-6ff1-4975-af9e-546c35cf50a2" order="3" />
+      <field column="FileImageWidth" guid="e106b686-4bcc-467c-8c9e-08554ed47551" order="4" />
+      <field column="FileImageHeight" guid="ddc0242f-cd85-42e1-aaf9-baa98c0fcba2" order="5" />
+      <field column="FileGUID" guid="e146f69c-1f65-433c-a091-616d9ac28aa7" order="6" />
+      <field column="FileLibraryID" guid="5b7f4a0a-386a-4575-beea-126f94381abb" order="7" />
+      <field column="FileCreatedByUserID" guid="2c37082f-cc5f-4ef1-b272-d28166037df1" order="8" />
+      <field column="FileCreatedWhen" guid="f4c0a650-7f2d-43d3-b56a-a5ae117c1f01" order="9" />
+      <field column="FileModifiedByUserID" guid="8a3a9510-9f16-4760-937e-ff733dfe39ed" order="10" />
+      <field column="FileModifiedWhen" guid="63d7a235-fae6-4383-b251-7269b71f648d" order="11" />
+      <field column="FileCustomData" guid="ea859358-cb3e-4fd6-a16c-bfca37c7484c" order="12" />
+      <field column="FileExtension" guid="2fa8bf43-d045-4ad6-805d-22adcd05cddf" order="13" />
+      <field column="FileName" columnprecision="0" enabled="true" guid="e5922646-9755-419f-b97c-4da13c11e537" visible="true" order="14">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.medialibraries.file.detail.name$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="FileTitle" columnprecision="0" enabled="true" guid="69be119f-9a88-4ee5-8d15-7f3fca93abc1" visible="true" order="15">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.medialibraries.file.detail.title$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="FileDescription" columnprecision="0" enabled="true" guid="61714ed7-0b1a-40ee-9dcf-a03c3ecff77e" visible="true" order="16">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.medialibraries.file.detail.description$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field allowempty="true" column="MediaFileURL" columnprecision="0" columntype="longtext" dummy="altform" guid="c5cd0df2-77b6-4eef-a2e2-6e35d4550f0d" system="true" visible="true" order="17">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.medialibraries.file.detail.url$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.Link</controlname>
+          <OpenInNewTab>True</OpenInNewTab>
+        </settings>
+      </field>
+      <field allowempty="true" column="MediaFileGUID" columnprecision="0" columnsize="40" columntype="text" dummy="altform" guid="8bfadcb7-290d-4844-a967-03b591b6b0a5" system="true" visible="true" order="18">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.medialibraries.file.detail.guid$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="MediaFileResolution" columnprecision="0" columnsize="200" columntype="text" dummy="altform" guid="587d3f52-36ba-47ac-aaed-acb26ccc0440" system="true" visible="true" order="19">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.medialibraries.file.detail.resolution$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="MediaFileSize" columnprecision="0" columnsize="200" columntype="text" dummy="altform" guid="076d11e6-3820-4044-8854-67c7c5cc47f2" system="true" visible="true" order="20">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.medialibraries.file.detail.size$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>mediafileinfo</FormDisplayName>
+  <FormGUID>88ca43a8-1fee-404e-a253-1d0619927880</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>mediafileinfo</FormName>
+</cms.alternativeform>

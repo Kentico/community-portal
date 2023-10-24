@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Settings category</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="CategoryID" columntype="integer" guid="c91d8df8-c913-4a06-9605-900d9d1e6ddf" isPK="true" isunique="true" system="true" />
+      <field column="CategoryDisplayName" columnsize="200" columntype="text" guid="eec20439-a956-4bbd-8f57-68550f811e89" system="true" />
+      <field allowempty="true" column="CategoryName" columnsize="100" columntype="text" guid="41261c56-9595-47e8-b89a-0a28de33f38b" system="true" />
+      <field allowempty="true" column="CategoryIconPath" columnsize="200" columntype="text" guid="2af723e2-e890-49a5-8f88-2c53e6cec49c" system="true" />
+      <field allowempty="true" column="CategoryParentID" columntype="integer" guid="7b67a457-09bf-4075-a07f-d9f6cd52e16f" system="true" />
+      <field allowempty="true" column="CategoryIsCustom" columntype="boolean" guid="0825124a-b2cb-44d2-bcb8-1ed956c537f4" system="true">
+        <properties>
+          <defaultvalue>false</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="CategoryResourceID" columntype="integer" guid="f1f1f495-bd5e-48a5-9c2b-60dab90ba70f" system="true" />
+      <field allowempty="true" column="CategoryIDPath" columnsize="450" columntype="text" guid="53774e18-81e8-4e01-8e14-5fccccbe747b" system="true" />
+      <field allowempty="true" column="CategoryLevel" columntype="integer" guid="a2978ca3-c075-47fd-b482-de8eec4c8321" system="true" />
+      <field allowempty="true" column="CategoryChildCount" columntype="integer" guid="5af06ddd-f3a6-47c1-ac42-551daaf4535d" system="true" />
+      <field allowempty="true" column="CategoryIsGroup" columntype="boolean" guid="42f525f5-1eac-4e92-aa73-16ea2419c863" system="true">
+        <properties>
+          <defaultvalue>false</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="CategoryOrder" columntype="integer" guid="ea9b2037-0238-4303-80ed-181bb044f859" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>e85e89d4-b387-48bc-b414-63ebbd2f6b40</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>cms.settingscategory</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS</CodeName>
+    <GUID>ce1a65a0-80dc-4c53-b0e7-bdecf0aa8c02</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_SettingsCategory</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

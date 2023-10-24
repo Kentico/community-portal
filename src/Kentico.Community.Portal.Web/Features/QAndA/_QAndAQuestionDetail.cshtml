@@ -1,0 +1,54 @@
+@model Kentico.Community.Portal.Web.Features.QAndA.QAndAPostQuestionViewModel
+
+@{
+    string wrapperElId = $"questionDetail_{Model.ID:N}";
+}
+
+<div id="@wrapperElId">
+    <div>
+        <h1 class="text-left k-dot h3">@Model.Title</h1>
+
+        <div class="c-card default-border mt-3 question mb-3">
+            <div class="c-card_inner">
+                <div class="c-card_content">
+                    <p class="mb-3 small">
+                        <span class="text-secondary fw-bold">@Model.Author.Name</span> asked
+                        on @Model.DateCreated.ToString("MMMM d, yyyy")
+                        @Model.DateCreated.ToString("t")
+                    </p>
+
+                    <div class="fr-view mb-3 member-generated-content">@Model.HTMLSanitizedContentHTML</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex gap-1">
+        @if (Model.Permissions.CanEdit)
+        {
+            <button type="button" class="btn btn-sm btn-outline-secondary" hx-get hx-controller="QAndAQuestion"
+                hx-action="DisplayEditQuestionForm" hx-route-questionID="@Model.ID" hx-swap="outerHTML"
+                hx-target="#@wrapperElId">
+                Edit Question
+            </button>
+        }
+        @if (Model.Permissions.CanDelete)
+        {
+            <form hx-delete hx-controller="QAndAQuestion" hx-action="DeleteQuestion" hx-route-questionID="@Model.ID">
+                <button type="submit" class="btn btn-sm btn-outline-danger">
+                    Delete
+                </button>
+            </form>
+        }
+    </div>
+</div>
+
+@{
+    if (Context.Request.IsHtmx())
+    {
+        <script type="module">
+            const el = document.querySelector('#@wrapperElId');
+            window.Prism.highlightAllUnder(el);
+        </script>
+    }
+}

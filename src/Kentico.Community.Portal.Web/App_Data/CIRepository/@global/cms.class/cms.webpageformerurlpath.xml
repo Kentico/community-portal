@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Web page former url path</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="WebPageFormerUrlPathID" columntype="integer" enabled="true" guid="30caa1c4-ded0-434b-86c7-c74e254a3ba4" isPK="true" system="true" />
+      <field column="WebPageFormerUrlPath" columnprecision="0" columnsize="2000" columntype="text" enabled="true" guid="ece9439b-9780-4e00-9b3d-aa03b7027cb6" system="true" />
+      <field column="WebPageFormerUrlPathHash" columnprecision="0" columnsize="64" columntype="text" enabled="true" guid="baae69fb-4526-4629-a813-a45c51abe070" system="true" />
+      <field column="WebPageFormerUrlPathContentLanguageID" columnprecision="0" columntype="integer" enabled="true" guid="e993e41a-273b-48b1-b561-9db382a230fc" refobjtype="cms.contentlanguage" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="WebPageFormerUrlPathWebPageItemID" columnprecision="0" columntype="integer" enabled="true" guid="fed52aef-c15f-4602-9449-5533923bb132" refobjtype="cms.webpageitem" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="WebPageFormerUrlPathWebsiteChannelID" columnprecision="0" columntype="integer" enabled="true" guid="ad748bd2-1917-4a2c-8800-e00fe7e722ce" refobjtype="cms.websitechannel" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="WebPageFormerUrlPathLastModified" columnprecision="7" columntype="datetime" enabled="true" guid="56a5dcc9-6cb7-4ac8-b7c5-0c9b23d7a5ef" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>27b484b0-dbce-4598-bb51-a578246996c0</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.WebPageFormerUrlPath</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Websites</CodeName>
+    <GUID>87975c89-f788-4e6c-a91f-08f38097cc32</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_WebPageFormerUrlPath</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

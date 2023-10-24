@@ -1,0 +1,38 @@
+﻿@model Kentico.Community.Portal.Web.Features.Authentication.LoginViewModel
+
+<section class="c-section default">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-xxl-9">
+                <div class="main">
+                    <h1 class="text-center k-dot">@HtmlLocalizer["Sign in"]</h1>
+                </div>
+                <div class="signin-register">
+                    <div class="row">
+                        <div class="col-md-6 p-6">
+                            <h2>@HtmlLocalizer["Sign in"]</h2>
+                            <div class="form-group-input">
+                                <div class="logon-page-background">
+                                    <div class="logon-panel">
+                                        <partial name="~/Features/Authentication/_LoginForm.cshtml" model="Model" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 zone-light p-6">
+                            <h2>@HtmlLocalizer["New to the Kentico Community?"]</h2>
+                            <p>@HtmlLocalizer["It only takes a moment to get started."]</p>
+                            <a id="register" asp-controller="Registration" asp-action="Register"
+                                class="btn btn-secondary btn-default mt-3"
+                                test-id="register">@HtmlLocalizer["Register"]</a>
+                        </div>
+                        <div class="col-md-6 zone-light p-6">
+                            <a id="forgotPassword" asp-controller="PasswordRecovery" asp-action="RequestRecoveryEmail"
+                                class="mt-3" test-id="forgotPassword">@HtmlLocalizer["Forgotten your password?"]</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

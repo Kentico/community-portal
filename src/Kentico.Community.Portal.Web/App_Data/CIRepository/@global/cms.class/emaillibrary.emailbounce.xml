@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Email bounce</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="EmailBounceID" columntype="integer" enabled="true" guid="e705a22a-0706-4759-a386-2aa06d940961" isPK="true" system="true">
+        <properties>
+          <fieldcaption>EmailBounceID</fieldcaption>
+        </properties>
+      </field>
+      <field column="EmailBounceEmailAddress" columnprecision="0" columnsize="256" columntype="text" enabled="true" guid="328d935f-188e-4543-ad5d-201f1e144214" system="true" />
+      <field column="EmailBounceIsHardBounce" columnprecision="0" columntype="boolean" enabled="true" guid="cfadd124-3bde-4b6c-bc05-2041a85b59bf" system="true" />
+      <field column="EmailBounceSoftBounceCount" columnprecision="0" columntype="integer" enabled="true" guid="41f64dc8-f8b2-4958-9eed-3acb12fd53e4" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>2e9a20d6-0432-4c51-9048-07961a05a604</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>EmailLibrary.EmailBounce</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.EmailLibrary</CodeName>
+    <GUID>028f4adc-346c-434a-8992-408c8b45a986</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>EmailLibrary_EmailBounce</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

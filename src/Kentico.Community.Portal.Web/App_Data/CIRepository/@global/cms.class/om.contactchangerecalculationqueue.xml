@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSOMConnectionString</ClassConnectionString>
+  <ClassDisplayName>
+    <![CDATA[Contact management - Contact change recalculation queue]]>
+  </ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContactChangeRecalculationQueueID" columnprecision="0" columntype="integer" guid="f52613e4-f8a2-4be2-b58b-adee4140f708" isPK="true" system="true" />
+      <field column="ContactChangeRecalculationQueueContactID" columntype="integer" guid="86184af4-3308-4841-b2b4-d62241a09b05" system="true" />
+      <field allowempty="true" column="ContactChangeRecalculationQueueChangedColumns" columntype="longtext" guid="b15e9c71-2633-43e0-b5af-31eb53f45001" system="true" />
+      <field column="ContactChangeRecalculationQueueContactIsNew" columntype="boolean" guid="1d731c71-45bd-4503-a9a7-98d17f27725d" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+      <field column="ContactChangeRecalculationQueueContactWasMerged" columntype="boolean" guid="bb07bcef-1a97-422d-b4ce-e676cb61cec9" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>f1c75287-3b7e-4a98-885d-67e90b85fa78</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.ContactChangeRecalculationQueue</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContactManagement</CodeName>
+    <GUID>0e4beef1-989c-4687-80ca-ae21fec09734</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>OM_ContactChangeRecalculationQueue</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

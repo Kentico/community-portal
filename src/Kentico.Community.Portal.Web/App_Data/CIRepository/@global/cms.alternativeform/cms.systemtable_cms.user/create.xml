@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>cms.user</CodeName>
+    <GUID>2e02c378-0f3d-45de-9b2d-b8cf2bd87b55</GUID>
+    <ObjectType>cms.systemtable</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="UserID" guid="153b1cec-1580-43ae-adf8-ca0e4879d168" />
+      <field column="UserName" guid="aa4122b7-db14-48a5-885e-07a242f84702" />
+      <field column="FirstName" guid="60af25ea-ad95-49ba-a446-2ea754cd10be" />
+      <field column="LastName" guid="67305fcf-928a-45ea-8e29-735f17da0972" />
+      <field column="Email" columnprecision="0" enabled="true" guid="fcef0fb3-6145-48ed-8f41-e28b71a665a8" visible="true" allowempty="">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.Email</ValidationRuleIdentifier>
+            <RuleValues>
+              <AllowMultipleAddresses>false</AllowMultipleAddresses>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.users.email.create$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="UserRole" columnprecision="0" columntype="objectids" dummy="altform" enabled="true" guid="c7fe1389-5fee-492c-a10d-1cbde795fa57" system="true" visible="true" order="5">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.users.role$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectIdSelector</controlname>
+          <MaximumItems>0</MaximumItems>
+          <ObjectType>cms.role</ObjectType>
+        </settings>
+      </field>
+      <field column="UserPassword" guid="adaad374-af5a-4e1b-afc7-72b4fb798d19" order="6" />
+      <field column="UserEnabled" guid="d5d58e7d-6b71-4a51-9226-d7ce166e8580" order="7" />
+      <field column="UserCreated" guid="d75ebe3e-3d7d-44ab-af34-0ee947c3a3eb" order="8" />
+      <field column="LastLogon" guid="8bb80186-0c9b-45cb-91d1-cbec14b8fdc7" order="9" />
+      <field column="UserGUID" guid="89fae932-ca98-420b-92a0-0fc146856ce3" order="10" />
+      <field column="UserLastModified" guid="e1f9c8fd-8c5d-415c-ad0e-935034d751de" order="11" />
+      <field column="UserSecurityStamp" guid="52911de8-d111-4afd-8567-cd0150927a95" />
+      <field column="UserIsPendingRegistration" guid="4ffddbf8-cde2-42ce-a65e-b3f42c2914ee" />
+      <field column="UserRegistrationLinkExpiration" guid="c6aa3f2a-3f5f-4559-9c9a-32dc88734368" />
+      <field column="UserAdministrationAccess" guid="8e548958-20ef-4c6a-9545-6bf439f0d0d8" />
+      <field column="UserPasswordLastChanged" guid="48ea571d-9507-49c9-82f5-2b58f3601e26" order="16" />
+      <field column="UserIsExternal" guid="21bda78d-41a1-4aa9-a10e-1337a98b1ce7" enabled="" order="17" />
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Create</FormDisplayName>
+  <FormGUID>32970f88-4604-4780-993a-d797c9e553f9</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>Create</FormName>
+</cms.alternativeform>

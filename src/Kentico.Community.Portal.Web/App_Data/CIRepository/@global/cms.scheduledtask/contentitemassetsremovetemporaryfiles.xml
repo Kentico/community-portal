@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.scheduledtask>
+  <TaskAssemblyName>CMS.ContentEngine</TaskAssemblyName>
+  <TaskClass>
+    <![CDATA[CMS.ContentEngine.Internal.ContentItemFilesRemoveTemporaryTask]]>
+  </TaskClass>
+  <TaskData>
+    <![CDATA[<data></data>]]>
+  </TaskData>
+  <TaskDisplayName>Remove temporary asset files</TaskDisplayName>
+  <TaskEnabled>True</TaskEnabled>
+  <TaskGUID>c2221537-adc3-47ec-93d1-25cd1ccdba00</TaskGUID>
+  <TaskInterval>
+    <![CDATA[hour;05/29/2023 12:00:00 AM;1;00:00:00;23:59:00;Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday]]>
+  </TaskInterval>
+  <TaskName>ContentItemAssetsRemoveTemporaryFiles</TaskName>
+  <TaskRunInSeparateThread>True</TaskRunInSeparateThread>
+</cms.scheduledtask>

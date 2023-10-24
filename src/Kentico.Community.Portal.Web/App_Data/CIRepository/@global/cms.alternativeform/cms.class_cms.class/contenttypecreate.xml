@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>cms.class</CodeName>
+    <GUID>d7e91104-201b-4b11-9550-e93ad9a4d81f</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="ClassID" guid="15a00747-3ff0-470a-ae7a-cc99c8a8259f" />
+      <field column="ClassDisplayName" columnprecision="0" enabled="true" guid="b622e4bc-00e4-4ddd-bc24-952579b9812a" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$general.displayname$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ClassName" columnprecision="0" enabled="true" guid="11b3b0bd-6161-4ea6-b714-2249e4710ff3" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.NamespaceCodeName</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$general.codename$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ClassXmlSchema" guid="fa1ff4fd-b445-494b-9b34-538b978011c7" />
+      <field column="ClassFormDefinition" guid="0e36af3b-04b5-477b-86d9-e4fedbb6acfd" />
+      <field column="ClassTableName" guid="b211147b-2e77-4f0d-9546-e18990108532" />
+      <field column="ClassShowTemplateSelection" guid="9d6a6d71-0f1a-49f3-810c-40b830a5cba9" />
+      <field column="ClassLastModified" guid="b0efc357-062e-4db3-a772-4761673faa81" />
+      <field column="ClassGUID" guid="155ef725-c6a5-434f-90e6-f9a91f70d6cb" />
+      <field column="ClassConnectionString" guid="81f850e0-0dbd-4298-aebf-3a73bdc3b8e4" />
+      <field column="ClassContactMapping" guid="fa0aa943-e3ef-42a0-ade2-179a27fc184b" />
+      <field column="ClassContactOverwriteEnabled" guid="04b3aee9-b470-45b2-9c5e-90932d09cc19" />
+      <field column="ClassDefaultObjectType" guid="87954ccc-9d86-4dcc-8e05-90dc7bbdfeb6" />
+      <field column="ClassResourceID" guid="e8581cf4-a56e-4daf-9dd4-ee3f0d8a15b2" />
+      <field column="ClassCodeGenerationSettings" guid="5a8428f9-3212-4ad6-be4e-7fd96928f699" />
+      <field column="ClassFormLayout" guid="32425d42-712b-48ad-92f2-ca7be3493456" order="15" />
+      <field column="ClassFormLayoutType" guid="1197ae53-0087-4e94-9b62-b8d4f3c46919" order="16" />
+      <field column="ClassVersionGUID" guid="f27eb613-419e-48d4-9046-6828e5d8caab" order="17" />
+      <field column="ClassHasUnmanagedDbSchema" guid="cfeb12da-2006-4f45-aa24-919142788451" order="18" />
+      <field column="ClassIconClass" columnprecision="0" enabled="true" guid="6db7bd4c-3a91-4f98-8540-a82a070677ff" visible="true" order="19">
+        <settings>
+          <controlname>Kentico.Administration.IconSelector</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$contentengine.contenttypes.edit.icon$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ClassContentTypeType" enabled="true" guid="032be9ff-9648-4289-a55f-eba73d6ddce3" visible="true" allowempty="" order="20">
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+Reusable;{$contentengine.contenttypes.typedropdown.options.reusable$}
+Website;{$contentengine.contenttypes.typedropdown.options.website$}
+Email;{$contentengine.contenttypes.typedropdown.options.email$}
+]]>
+          </Options>
+          <Placeholder>{$base.forms.dropdown.placeholder$}</Placeholder>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$contentengine.contenttypes.typedropdown$}</fieldcaption>
+          <fielddescription>
+            <![CDATA[{$contentengine.contenttypes.typedropdown.tooltip$}<ul><li>{$contentengine.contenttypes.typedropdown.tooltip.reusable$}</li><li>{$contentengine.contenttypes.typedropdown.tooltip.pages$}</li><li>{$contentengine.contenttypes.typedropdown.tooltip.emails$}</li></ul>]]>
+          </fielddescription>
+          <fielddescriptionashtml>True</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ClassType" guid="e6e0f7a9-f910-4ba2-8520-e6ca86a1f88b" enabled="" order="21" />
+      <field column="ClassWebPageHasUrl" enabled="true" guid="f76db854-f389-421b-9c92-13bd12978c0c" visible="true" order="22">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <defaultvalue>True</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$contentengine.contenttypes.webpagehasurl$}</fieldcaption>
+          <fielddescription>
+            <![CDATA[{$contentengine.contenttypes.webpagehasurl.tooltip$}]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Create content type</FormDisplayName>
+  <FormGUID>f79bf62e-b1e3-4d81-9ceb-8cef3345bd53</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>ContentTypeCreate</FormName>
+</cms.alternativeform>

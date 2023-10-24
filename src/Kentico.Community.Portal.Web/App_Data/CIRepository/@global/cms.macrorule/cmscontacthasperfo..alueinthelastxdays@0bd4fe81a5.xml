@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[{_perfectum}Contact.DidActivityWithValue("{_activity}", "{_op}", "{_value}", ToInt({days}))]]>
+  </MacroRuleCondition>
+  <MacroRuleDescription>
+    <![CDATA[{$macrorule.cmscontacthasperformedactivitywithvalueinthelastxdays.description$}]]>
+  </MacroRuleDescription>
+  <MacroRuleDisplayName>
+    <![CDATA[Contact has performed activity with value in the last X days]]>
+  </MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>5ce28857-add7-422d-b2c6-1569a021d9d0</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>
+    <![CDATA[CMSContactHasPerformedActivityWithValueInTheLastXDays]]>
+  </MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field allowempty="true" column="days" columntype="integer" guid="a3ca5b41-0f17-461f-abcb-045b3825f88d" visible="true">
+        <properties>
+          <fieldcaption>enter days</fieldcaption>
+        </properties>
+        <settings>
+          <AutoCompleteEnableCaching>False</AutoCompleteEnableCaching>
+          <AutoCompleteFirstRowSelected>False</AutoCompleteFirstRowSelected>
+          <AutoCompleteShowOnlyCurrentWordInCompletionListItem>False</AutoCompleteShowOnlyCurrentWordInCompletionListItem>
+          <controlname>Kentico.Administration.NumberInput</controlname>
+          <FilterMode>False</FilterMode>
+          <Trim>False</Trim>
+          <WatermarkText>enter number</WatermarkText>
+        </settings>
+      </field>
+      <field column="_activity" columnprecision="0" columntype="objectcodenames" guid="a5b9ea11-0a66-475a-97b8-381559da87b7" visible="true">
+        <properties>
+          <fieldcaption>activity</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectCodeNameSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <ObjectType>om.activitytype</ObjectType>
+          <Placeholder>select activity</Placeholder>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field column="_perfectum" columnsize="100" columntype="text" guid="ede9ed9b-f90a-4d62-9ff0-0a5cfcdd781d" visible="true">
+        <properties>
+          <defaultvalue>__is</defaultvalue>
+          <fieldcaption>select operation</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <IsPerfectum>True</IsPerfectum>
+          <Options>
+<![CDATA[
+__is;has
+__isnot;has not
+]]>
+          </Options>
+          <RepeatDirection>horizontal</RepeatDirection>
+        </settings>
+      </field>
+      <field column="_op" columnsize="100" columntype="text" guid="1648d5c4-e794-4ee2-9eae-dc02b2ed455f" visible="true">
+        <properties>
+          <defaultvalue>Contains;contains</defaultvalue>
+          <fieldcaption>select operator</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <EditText>False</EditText>
+          <Options>
+<![CDATA[
+Contains;contains
+NotContains;does not contain
+StartsWith;starts with
+EndsWith;ends with
+Equals;is equal to
+NotEquals;is not equal to
+]]>
+          </Options>
+        </settings>
+      </field>
+      <field column="_value" columnsize="200" columntype="text" guid="fe24cfa1-6879-4175-8de5-53c008e8e3c6" visible="true">
+        <properties>
+          <fieldcaption>enter value</fieldcaption>
+        </properties>
+        <settings>
+          <AutoCompleteEnableCaching>False</AutoCompleteEnableCaching>
+          <AutoCompleteFirstRowSelected>False</AutoCompleteFirstRowSelected>
+          <AutoCompleteShowOnlyCurrentWordInCompletionListItem>False</AutoCompleteShowOnlyCurrentWordInCompletionListItem>
+          <controlname>Kentico.Administration.TextInput</controlname>
+          <FilterMode>False</FilterMode>
+          <Trim>False</Trim>
+          <WatermarkText>enter value</WatermarkText>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>
+    <![CDATA[Contact {_perfectum} performed activity {_activity} with value that {_op} {_value} in the last {days} days.]]>
+  </MacroRuleText>
+</cms.macrorule>

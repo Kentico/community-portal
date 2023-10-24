@@ -1,0 +1,76 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model Kentico.Community.Portal.Web.Features.QAndA.QAndAAnswerViewModel
+
+@{
+    int id = Model.EditedObjectID ?? 0;
+    var formId = $"answerForm_{id}";
+    var rootElId = $"answerFormRoot_{id}";
+    var editormdId = $"editormd_{id}";
+    string action = Model.EditedObjectID is null ? "CreateAnswer" : "UpdateAnswer";
+}
+
+<div id="@rootElId">
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <form id="@formId" method="post" hx-post hx-controller="QAndAAnswer" hx-action="@action" hx-swap="outerHTML"
+            hx-target="#@rootElId">
+            <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
+
+            <div class="mt-6">
+                <p class="text mt-3"><span class="text-secondary fw-bold">@User.Identity.Name</span> would answer</p>
+            </div>
+
+            <div class="row mb-3">
+                @Model.FormHelpMessageHTML
+            </div>
+
+            <div id="editor_@editormdId" style="height:800px;">
+                <label for="@editormdId" class="form-label mt-3">Your answer</label>
+                <textarea class="form-control" style="display:none;" asp-for="@Model.Content" id="@editormdId"
+                    style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;" name="Content"
+                    placeholder="Your full question description goes here" value="@Model.Content"></textarea>
+            </div>
+
+            <div class="d-grid">
+                <input asp-for="EditedObjectID">
+                <input asp-for="ParentQuestionID">
+                <button type="submit" class="btn btn-primary btn-lighter px-5 mt-4">Submit your answer</button>
+
+                @if (Model.EditedObjectID is int answerID)
+                {
+                    <button hx-get hx-controller="QAndAQuestionPage" hx-action="DisplayAnswerDetail"
+                        hx-route-questionID="@Model.ParentQuestionID" hx-route-answerID="@answerID" hx-swap="outerHTML"
+                        hx-target="#@rootElId" class="btn btn-outline-warning px-5 mt-4">
+                        Cancel
+                    </button>
+                }
+            </div>
+        </form>
+
+        <vc:editor-md-assets />
+
+        <script type="module">
+            asyncReady(async () => {
+                const qanda = await import('@ClientAssets.ViteAssetPath("dist/js/q-and-a.js")');
+
+                qanda.initQAndA({
+                    formElemID: '@formId',
+                    editorElemID: '@editormdId',
+                    formType: 'Answer'
+                });
+            });
+        </script>
+    }
+    else
+    {
+        <div class="mt-6">
+            <h2 class="text-center k-dot">Need login</h2>
+            <p class="text-center mt-3">
+                To post new answer, you have to
+                <a asp-controller="Authentication" asp-action="Login" asp-route-returnUrl="@Context.Request.Path"
+                    class="c-link">login first</a>.
+            </p>
+        </div>
+    }
+</div>

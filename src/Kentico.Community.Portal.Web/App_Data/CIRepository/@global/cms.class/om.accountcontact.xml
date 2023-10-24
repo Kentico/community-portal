@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSOMConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Contact management - AccountContact</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="AccountContactID" columntype="integer" guid="f4b7d8c1-777b-410e-b1c2-6e6251449216" isPK="true" system="true" />
+      <field allowempty="true" column="ContactRoleID" columntype="integer" guid="bcfc3aba-b780-4350-b6a7-930d6d4ff8d8" system="true" />
+      <field column="AccountID" columntype="integer" guid="67ab562d-fa08-4bfd-930c-de1b9d916b6f" refobjtype="om.account" reftype="Binding" system="true" />
+      <field column="ContactID" columntype="integer" guid="96361cb2-9434-4b11-b430-b799dbce84ad" refobjtype="om.contact" reftype="Binding" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>6f8e05a4-3bc3-4d45-a4ea-905664c3a84e</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.AccountContact</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContactManagement</CodeName>
+    <GUID>0e4beef1-989c-4687-80ca-ae21fec09734</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>OM_AccountContact</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

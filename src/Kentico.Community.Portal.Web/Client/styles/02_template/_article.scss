@@ -1,0 +1,92 @@
+.t-article {
+  h1,
+  .h1 {
+    font-size: 1.25rem;
+    line-height: 1.625rem;
+  }
+  &_hero-header {
+    padding: 1rem 0 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .note {
+    background-color: var(--bg-purple-100);
+    padding: 0.25rem 1rem;
+  }
+  &_body {
+    h2,
+    .h2 {
+      margin: 2rem 0 1rem;
+    }
+    h3,
+    .h3 {
+      margin: 1.5rem 0 0.75rem;
+    }
+    p {
+      margin: 1rem 0;
+    }
+    img {
+      margin: 2rem 0;
+      display: block;
+    }
+    .c-code {
+      margin: 2rem 0;
+    }
+    .t-article_perex {
+      margin-top: 0;
+      opacity: 0.6;
+    }
+  }
+  &_footer {
+    &_btns {
+      text-align: center;
+      .btn {
+        margin-top: 0.5rem;
+        width: 100%;
+      }
+    }
+    &_share {
+      margin-top: 1.5rem;
+      h5,
+      .h5,
+      h6,
+      .h6 {
+        text-align: center;
+        font-weight: inherit;
+        margin-bottom: 0;
+      }
+      .btn {
+        margin: 0 0.375rem;
+      }
+    }
+    @include media-breakpoint-up(sm) {
+      &_btns {
+        .btn {
+          width: calc(50% - 1rem);
+          margin: 0 0.375rem;
+        }
+      }
+      &_share {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .btn {
+          margin: 0 0 0 1rem;
+        }
+      }
+    }
+    @include media-breakpoint-up(xl) {
+      display: flex;
+      align-items: stretch;
+      &_share {
+        margin: 0 0 0 auto;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &_hero-header {
+      padding: 9.25rem 4rem 0 1rem;
+    }
+  }
+}

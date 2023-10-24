@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassDisplayName>Email</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="EmailConfigurationID" columnprecision="0" columntype="integer" guid="19f1fe12-e72d-4990-8952-9aabb9fe39f6" isPK="true" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="EmailConfigurationName" columnsize="250" columntype="text" guid="b5b272b7-4fc3-4523-8692-5d90b93ac2dd" system="true" />
+      <field column="EmailConfigurationGUID" columnprecision="0" columntype="guid" guid="88516da6-3f5e-4f3e-8e02-9ddc4980ab86" system="true" />
+      <field column="EmailConfigurationLastModified" columnprecision="7" columntype="datetime" guid="59e39d5a-8d6c-406d-850e-401c78e17d05" system="true" />
+      <field column="EmailConfigurationPurpose" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="927917f2-f339-4f65-a978-665c4b0eb04e" system="true">
+        <properties>
+          <defaultvalue>Regular</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="EmailConfigurationEmailChannelID" columnprecision="0" columntype="integer" enabled="true" guid="51687442-8f6d-42cb-b4df-77410624881e" refobjtype="emaillibrary.emailchannel" reftype="NotRequired" system="true" />
+      <field allowempty="true" column="EmailConfigurationContentItemID" columnprecision="0" columntype="integer" enabled="true" guid="cd5bd368-f951-45e0-a5ce-0ee99588383b" refobjtype="cms.contentitem" reftype="NotRequired" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>5ff87120-370d-4251-9ba9-3fe9ff1d9926</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>EmailLibrary.EmailConfiguration</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.EmailLibrary</CodeName>
+    <GUID>028f4adc-346c-434a-8992-408c8b45a986</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>EmailLibrary_EmailConfiguration</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Email statistics</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="EmailStatisticsID" columntype="integer" enabled="true" guid="70410d2d-9509-41e3-9a54-a428cbcef363" isPK="true" system="true" />
+      <field column="EmailStatisticsEmailConfigurationID" columnprecision="0" columntype="integer" enabled="true" guid="49a053fd-cd64-4974-a780-5d32e26563c5" refobjtype="emaillibrary.emailconfiguration" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="EmailStatisticsEmailOpens" columnprecision="0" columntype="integer" enabled="true" guid="1b39c9d4-32bd-43ca-976f-c26f3d3a38e1" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="EmailStatisticsEmailUniqueOpens" columnprecision="0" columntype="integer" enabled="true" guid="b862372a-192f-45c8-ab8e-e8978e188c31" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="EmailStatisticsEmailClicks" columnprecision="0" columntype="integer" enabled="true" guid="b3466c92-d7a0-4bd6-be23-d1df23ae20be" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="EmailStatisticsEmailUniqueClicks" columnprecision="0" columntype="integer" enabled="true" guid="aa5d7a1e-9f0b-4da7-bb2c-bb2171e4c1de" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="EmailStatisticsTotalSent" columnprecision="0" columntype="integer" enabled="true" guid="e6c585ef-fa89-44db-99c4-ed20739ba448" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="EmailStatisticsEmailSoftBounces" columnprecision="0" columntype="integer" enabled="true" guid="5c011d71-830b-49ff-9da6-67c1ebf755a7" system="true" />
+      <field allowempty="true" column="EmailStatisticsEmailHardBounces" columnprecision="0" columntype="integer" enabled="true" guid="0b1296a1-e84b-4b65-89ba-a8b11048837f" system="true" />
+      <field column="EmailStatisticsEmailsDelivered" columnprecision="0" columntype="integer" enabled="true" guid="5d23d538-afd0-42d1-8923-70ee1be65601" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="EmailStatisticsUniqueUnsubscribes" columnprecision="0" columntype="integer" enabled="true" guid="4856c130-4857-49b3-b058-ac1b05b9de76" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="EmailStatisticsSpamReports" columnprecision="0" columntype="integer" enabled="true" guid="0dd13042-67db-4bff-8514-ce5d6bdcb873" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>3a8c14a7-4881-437e-b094-267b91c20bb8</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>EmailLibrary.EmailStatistics</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.EmailLibrary</CodeName>
+    <GUID>028f4adc-346c-434a-8992-408c8b45a986</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>EmailLibrary_EmailStatistics</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

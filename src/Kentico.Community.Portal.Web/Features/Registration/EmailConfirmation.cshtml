@@ -1,0 +1,41 @@
+﻿@using Kentico.Community.Portal.Web.Features.Registration
+
+@model EmailConfirmationViewModel
+
+@if (Model.State == EmailConfirmationState.Success_Confirmed || Model.State ==
+EmailConfirmationState.Success_AlreadyConfirmed)
+{
+    <section class="c-section default">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-10 col-xxl-9">
+                    <div class="main">
+                        @if (Model.State == EmailConfirmationState.Success_AlreadyConfirmed)
+                        {
+                            <h1 test-id="confirmationMessage" class="text-center k-dot">@HtmlLocalizer["Your email is already verified"]</h1>
+                        }
+                        else
+                        {
+                            <h1 test-id="confirmationMessage" class="text-center k-dot">@HtmlLocalizer["Email Confirmed"]</h1>
+                        }
+
+                        <p class="text-center fs-1">
+                            @HtmlLocalizer["You may now"]
+                            <a asp-controller="Authentication" asp-action="Login" test-id="confirmationSignIn">@HtmlLocalizer["sign in"]</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <form hx-post
+        hx-controller="Registration" hx-action="ResendVerificationEmail" hx-swap="outerHTML" hx-target=""
+        hx-route-username="@Model.Username" method="post">
+        <p>@Model.Message</p>
+
+        <button type="submit" class="btn btn-primary mt-3">@Model.SendButtonText</button>
+    </form>
+}

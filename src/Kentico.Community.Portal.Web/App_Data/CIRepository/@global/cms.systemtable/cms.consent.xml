@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassConnectionString>CMSOMConnectionString</ClassConnectionString>
+  <ClassDisplayName>Consent</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ConsentID" columntype="integer" guid="85f3f6fb-6cb8-4cd3-bd85-6f1803970a6c" isPK="true" system="true" />
+      <field column="ConsentDisplayName" columnsize="200" columntype="text" guid="678ba678-0658-47d4-a5b3-61684acf1398" system="true" />
+      <field column="ConsentName" columnsize="200" columntype="text" guid="e03d4f66-a288-4e2f-be3c-0ceed645441b" system="true" />
+      <field column="ConsentContent" columntype="longtext" guid="e4c8261f-1c95-4b63-9d71-33d853992475" system="true" />
+      <field column="ConsentGuid" columntype="guid" guid="ef9baeba-8aca-4407-97b2-0ccd273138e3" system="true" />
+      <field column="ConsentLastModified" columnprecision="7" columntype="datetime" guid="86874899-0c72-47e7-8f47-cf920e909951" system="true" />
+      <field column="ConsentHash" columnsize="100" columntype="text" guid="94daa148-b0f2-4a5d-8e0a-f2d7c06699e6" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>1de57768-d0cb-4e03-b3d9-7dd95c26c193</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.Consent</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.DataProtection</CodeName>
+    <GUID>8089f9a7-95d9-4e3c-b95a-91a49ccf10c4</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_Consent</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>

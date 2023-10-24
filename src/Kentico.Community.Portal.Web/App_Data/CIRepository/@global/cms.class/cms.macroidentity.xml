@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Macro identity</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="MacroIdentityID" columnprecision="0" columntype="integer" guid="58f4a454-f618-4bcf-afa4-980b9c5cc0bb" isPK="true" system="true" />
+      <field column="MacroIdentityName" columnprecision="0" columnsize="200" columntype="text" guid="2a5d530e-3416-42fa-b3eb-2f19becc675d" isunique="true" system="true" />
+      <field column="MacroIdentityGuid" columnprecision="0" columntype="guid" guid="722c73c4-5e62-4c80-9287-92b3dc008c0c" system="true" />
+      <field allowempty="true" column="MacroIdentityEffectiveUserID" columntype="integer" guid="29adec56-b936-4ebe-8ac2-4d8608ce547b" refobjtype="cms.user" reftype="NotRequired" system="true" />
+      <field column="MacroIdentityLastModified" columnprecision="7" columntype="datetime" guid="9673684f-794e-4b28-a02c-1c35342c8513" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>714ceadc-9a49-4934-8d3b-12cfaba9538f</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.MacroIdentity</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.MacroEngine</CodeName>
+    <GUID>313656bc-0d27-4911-80fb-00a69012ba46</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_MacroIdentity</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

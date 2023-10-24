@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>ExternalLogin</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ExternalLoginID" columnprecision="0" columntype="integer" guid="abfb0000-680e-4a12-b159-932d8ba1c864" isPK="true" system="true" />
+      <field column="UserID" columntype="integer" guid="e584fa69-4799-4436-9d06-63def92251dd" refobjtype="cms.user" reftype="Required" system="true" />
+      <field column="LoginProvider" columnprecision="0" columnsize="100" columntype="text" guid="bc9b380b-fe53-4dd0-9923-37e8c1d7709f" system="true" />
+      <field column="IdentityKey" columnprecision="0" columnsize="100" columntype="text" guid="457df517-1176-44a1-9ab0-7176acb2b398" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>fc44c5a6-4ac1-4935-a617-1c47d5ee896e</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ExternalLogin</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Membership</CodeName>
+    <GUID>d4b7561a-f188-420c-8f68-63b5c573b2bf</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_ExternalLogin</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

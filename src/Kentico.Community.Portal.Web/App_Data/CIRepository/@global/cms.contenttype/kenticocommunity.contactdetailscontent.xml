@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>Contact Details Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="df4170dd-24aa-403b-9f80-1b231e573fff" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="457c3cad-e21e-438b-852d-4591d77c69c2" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="dcfeef2b-0eaa-41c8-b06b-d17dd40f25e9" isunique="true" system="true" />
+      <field column="ContactDetailsContentTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="d9cf33f6-fc80-4a9d-aa07-cfd6c2429f9d" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Title</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="ContactDetailsContentPhoneNumber" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="501d3014-7876-47b6-a660-4be397831455" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Phone Number</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="ContactDetailsContentEmailAddress" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="6a69bae0-0ce3-42d2-a216-ada0287b8618" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Email Address</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>db487c87-f753-4721-a7e9-b7aff5600084</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-smartphone</ClassIconClass>
+  <ClassName>KenticoCommunity.ContactDetailsContent</ClassName>
+  <ClassTableName>KenticoCommunity_ContactDetailsContent</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>True</ClassWebPageHasUrl>
+</cms.contenttype>

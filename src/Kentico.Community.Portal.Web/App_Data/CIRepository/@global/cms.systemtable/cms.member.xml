@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassDisplayName>Member</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="MemberID" columntype="integer" enabled="true" guid="97a619c1-37d6-4490-8dee-6ac70551d421" isPK="true" system="true" />
+      <field allowempty="true" column="MemberEmail" columnprecision="0" columnsize="254" columntype="text" enabled="true" guid="3e50549b-a12d-4c19-8df7-380efa3a8d40" system="true" />
+      <field column="MemberEnabled" columnprecision="0" columntype="boolean" enabled="true" guid="1454d95c-81bb-4956-bda2-75edda984071" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+      <field column="MemberCreated" columnprecision="7" columntype="datetime" enabled="true" guid="c5075420-a7c7-4307-922d-82f711b8a689" system="true" />
+      <field column="MemberGuid" columnprecision="0" columntype="guid" enabled="true" guid="926897c7-71e2-47b3-b3b7-b456596e7da3" system="true" />
+      <field allowempty="true" column="MemberName" columnprecision="0" columnsize="254" columntype="text" enabled="true" guid="f8b13f5b-c254-4f3a-8b8c-df10f5619300" system="true" />
+      <field allowempty="true" column="MemberPassword" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="61911700-cd6c-4d73-943a-985a57342b4f" system="true" />
+      <field column="MemberIsExternal" columnprecision="0" columntype="boolean" enabled="true" guid="5cf88feb-d217-4a33-8039-63b46bf2c672" system="true" />
+      <field allowempty="true" column="MemberSecurityStamp" columnprecision="0" columnsize="72" columntype="text" enabled="true" guid="d127bfec-d965-4888-8836-0b22ef2e1010" system="true" />
+      <field allowempty="true" column="MemberFirstName" columnprecision="0" columnsize="25" columntype="text" enabled="true" guid="077b5d08-4a4c-4fc0-b665-ed82507046bd" />
+      <field allowempty="true" column="MemberLastName" columnprecision="0" columnsize="25" columntype="text" enabled="true" guid="22a169e9-34c1-4d93-a314-b55913e184e6" />
+      <field allowempty="true" column="MemberLinkedInIdentifier" columnprecision="0" columnsize="25" columntype="text" enabled="true" guid="440be370-f12c-47c0-9841-e30cb1d9d4ff" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>07c5d145-7cbc-4c75-9a96-6d4948bf6c73</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.Member</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Membership</CodeName>
+    <GUID>d4b7561a-f188-420c-8f68-63b5c573b2bf</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_Member</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>

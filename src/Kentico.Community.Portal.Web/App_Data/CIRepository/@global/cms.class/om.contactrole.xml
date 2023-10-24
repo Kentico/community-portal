@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSOMConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Contact management - Contact role</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContactRoleID" columntype="integer" guid="378c0bef-aa2e-4038-93fe-0d378a526b9e" isPK="true" system="true" />
+      <field column="ContactRoleDisplayName" columnsize="200" columntype="text" guid="4d9eacf2-3bb1-47b8-b32e-a34d55adb36f" system="true" />
+      <field column="ContactRoleName" columnsize="200" columntype="text" guid="2447dbcc-aa1f-4be9-a1b3-d35567bec9f0" system="true" />
+      <field allowempty="true" column="ContactRoleDescription" columntype="longtext" guid="86e4aa34-d34c-423f-9705-e9ddce795b54" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>6ef5e1b9-08d9-4dfa-a748-e483afe72621</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.ContactRole</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContactManagement</CodeName>
+    <GUID>0e4beef1-989c-4687-80ca-ae21fec09734</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>OM_ContactRole</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

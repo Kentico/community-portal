@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.formfeaturedfield>
+  <FormFeaturedFieldDescription>Featured company name</FormFeaturedFieldDescription>
+  <FormFeaturedFieldDisplayName>Company</FormFeaturedFieldDisplayName>
+  <FormFeaturedFieldEnabled>True</FormFeaturedFieldEnabled>
+  <FormFeaturedFieldFormDefinition>
+    <form version="2">
+      <field allowempty="true" column="Company" columnsize="500" columntype="text" visible="true">
+        <properties>
+          <fieldcaption>Company</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.TextInput</componentidentifier>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <Identifier>Kentico.MaximumLength</Identifier>
+            <ValidationRule>
+              <InstanceIdentifier>58cbdd7b-473c-4ec5-bfb9-887940217b34</InstanceIdentifier>
+              <ErrorMessage>Maximum allowed length of the input text is 100.</ErrorMessage>
+              <MaximumLength>100</MaximumLength>
+            </ValidationRule>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+    </form>
+  </FormFeaturedFieldFormDefinition>
+  <FormFeaturedFieldGuid>98b349e5-40e8-4b3b-a438-3b2327ca44c4</FormFeaturedFieldGuid>
+  <FormFeaturedFieldIconClass>icon-home</FormFeaturedFieldIconClass>
+  <FormFeaturedFieldMapping>ContactCompanyName</FormFeaturedFieldMapping>
+  <FormFeaturedFieldName>Kentico.Featured.CompanyName</FormFeaturedFieldName>
+  <FormFeaturedFieldOrder>7</FormFeaturedFieldOrder>
+</cms.formfeaturedfield>

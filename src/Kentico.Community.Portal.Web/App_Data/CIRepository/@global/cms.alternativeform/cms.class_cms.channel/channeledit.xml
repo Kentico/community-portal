@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>CMS.Channel</CodeName>
+    <GUID>4c9def5a-eaa9-4193-94e6-5fdcae2a4bd9</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="ChannelID" guid="33aa7dc4-e6c8-4453-a459-423f92b0e606" enabled="" />
+      <field column="ChannelDisplayName" enabled="true" guid="81347e19-7cd9-4aa3-9045-73c9b9478783" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.channels.channel.displayname$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ChannelName" enabled="true" guid="fc533407-2fa5-4530-a5e2-7f972e0db992" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.channels.channel.codename$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ChannelType" guid="d4aa1a02-2270-47f0-a44c-e84f8c011591" visible="true" enabled="">
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+Website;Website
+Email;Email
+]]>
+          </Options>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.channels.channel.type$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ChannelGUID" guid="1e802beb-f06d-4575-b5d0-f66c365fa1e1" enabled="" />
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit channel</FormDisplayName>
+  <FormGUID>955397a3-6ad5-4032-88da-23f4caf3fa6a</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>ChannelEdit</FormName>
+</cms.alternativeform>

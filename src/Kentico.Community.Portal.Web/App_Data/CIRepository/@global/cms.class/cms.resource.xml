@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Resource</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ResourceID" columntype="integer" guid="870bc6d4-f89a-4116-80b3-45a32604b394" isPK="true" system="true" />
+      <field column="ResourceDisplayName" columnsize="100" columntype="text" guid="e4714769-8c09-4488-82ee-69f0c7aeccac" system="true" />
+      <field column="ResourceName" columnsize="100" columntype="text" guid="69930d99-46c8-4be2-b19c-5a9edb05fb79" system="true" />
+      <field allowempty="true" column="ResourceDescription" columntype="longtext" guid="27828b12-d1fb-4cb1-866d-a15f683bb674" system="true" />
+      <field allowempty="true" column="ResourceIsInDevelopment" columntype="boolean" guid="787c2b57-e5e4-48c4-a865-321f8d90b4e9" system="true" />
+      <field column="ResourceGUID" columntype="guid" guid="2389fed5-9c07-45e7-88db-4e56ec0c2889" system="true" />
+      <field column="ResourceLastModified" columntype="datetime" guid="a43d2cef-9fdc-43a8-8cd8-37b161ef4582" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>93746c62-21e4-4fda-bcbd-61c5fcee9945</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>cms.resource</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS</CodeName>
+    <GUID>ce1a65a0-80dc-4c53-b0e7-bdecf0aa8c02</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_Resource</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

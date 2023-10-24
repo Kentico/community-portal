@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>EmailLibrary.EmailTemplate</CodeName>
+    <GUID>3872be3f-2a60-4e3f-839d-3a8b762238da</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="EmailTemplateDisplayName" enabled="true" guid="a19f6cfb-de18-4a94-9cb1-fc0a5b3f02ae" visible="true" order="0">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalmarketing.emailtemplate.edit.displayname$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="EmailTemplateName" enabled="true" guid="27f053c1-41bc-440c-8695-6c08eaa2a0c2" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.emailtemplate.edit.name$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="EmailTemplateDescription" enabled="true" guid="471c95a6-2650-447b-8570-53ebbe983ede" visible="true" order="2">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalmarketing.emailtemplate.edit.description$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="EmailTemplateID" guid="08d9a3b4-0c76-417a-bb90-9e57771868ba" order="3" />
+      <field column="EmailTemplateCode" guid="e4f71522-cdf4-45d5-a612-5a517e249c88" />
+      <field column="EmailTemplateGuid" guid="b5ab4211-d8ca-4a8d-879d-80127b76e284" />
+      <field column="EmailTemplateLastModified" guid="5f6a057c-7562-49ae-acd9-633f1522a645" />
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit</FormDisplayName>
+  <FormGUID>95ef1dfb-5bc0-46cb-b86c-660483ca681d</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>edit</FormName>
+</cms.alternativeform>

@@ -1,0 +1,14 @@
+@model Kentico.Community.Portal.Web.Features.DataCollection.CookiesInitViewModel
+
+<script type="module">
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+        'event': 'consent.default',
+        'consent': {
+            'functionality_storage': '@(Model.CookieConsentLevel >= 1 ? "granted" : "denied")',
+            'personalization_storage': '@(Model.CookieConsentLevel >= 2 ? "granted" : "denied")',
+            'analytics_storage': '@(Model.CookieConsentLevel >= 3 ? "granted" : "denied")',
+            'ad_storage': '@(Model.CookieConsentLevel == 4 ? "granted" : "denied")'
+        }
+    });
+</script>

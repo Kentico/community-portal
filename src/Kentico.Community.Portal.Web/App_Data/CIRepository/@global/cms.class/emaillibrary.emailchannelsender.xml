@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Email channel sender</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="EmailChannelSenderID" columntype="integer" enabled="true" guid="c9991d14-8f62-4bf5-9e79-0024d0c0e797" isPK="true" system="true" />
+      <field column="EmailChannelSenderEmailChannelID" columnprecision="0" columntype="integer" enabled="true" guid="4c594737-9ed9-4e6a-b675-1221e7d818eb" refobjtype="emaillibrary.emailchannel" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="EmailChannelSenderName" columnprecision="0" columnsize="250" columntype="text" enabled="true" guid="8b533a28-55a0-4c13-96f1-e86405a148c1" system="true" />
+      <field column="EmailChannelSenderDisplayName" columnprecision="0" columnsize="250" columntype="text" enabled="true" guid="5dcbd4f8-9a38-4b7e-b54d-179eed719232" system="true" />
+      <field column="EmailChannelSenderGUID" columnprecision="0" columntype="guid" enabled="true" guid="60094af8-c87e-420d-8eeb-987a107bdead" system="true" />
+      <field column="EmailChannelSenderCreated" columnprecision="7" columntype="datetime" enabled="true" guid="63913be2-2731-486d-a8b7-14eb5db79280" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>50f47357-c564-4644-a8a7-cba132a18506</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>EmailLibrary.EmailChannelSender</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.EmailLibrary</CodeName>
+    <GUID>028f4adc-346c-434a-8992-408c8b45a986</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>EmailLibrary_EmailChannelSender</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

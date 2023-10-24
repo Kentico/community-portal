@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSOMConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Contact management - Contact group</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContactGroupID" columntype="integer" guid="8254be8f-7554-4c85-8d8b-f16e0ec2bd5f" isPK="true" system="true" />
+      <field column="ContactGroupDisplayName" columnsize="200" columntype="text" guid="0b8230c0-06a2-4378-9435-8f475865687a" system="true" />
+      <field column="ContactGroupName" columnsize="200" columntype="text" guid="5c5692fb-85c4-409f-a6e6-6f6670a52f7d" isunique="true" system="true" />
+      <field allowempty="true" column="ContactGroupDescription" columntype="longtext" guid="99c12065-9aa0-4dce-835d-949a31f4162e" system="true" />
+      <field allowempty="true" column="ContactGroupEnabled" columntype="boolean" guid="b2572394-a920-4f7e-81a9-5cc435925099" system="true">
+        <properties>
+          <defaultvalue>true</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="ContactGroupLastModified" columntype="datetime" guid="b6dff322-4c32-46ec-a06b-2b096a148658" system="true" />
+      <field allowempty="true" column="ContactGroupGUID" columntype="guid" guid="affe9d0f-3c70-4a67-90f8-d61075eb1b55" system="true" />
+      <field allowempty="true" column="ContactGroupStatus" columntype="integer" guid="8c338293-e30c-4b0c-bae3-58eea2993f58" system="true" />
+      <field allowempty="true" column="ContactGroupDynamicCondition" columntype="longtext" guid="fd9391ed-bfab-4753-bc4d-a98e0457ce1a" system="true" />
+      <field allowempty="true" column="ContactGroupIsRecipientList" columnprecision="0" columntype="boolean" guid="ddca40fe-9ef4-4c98-9afc-fd00072b2db5" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>97f104ff-d87a-48b8-a5db-216786f9344e</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.ContactGroup</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContactManagement</CodeName>
+    <GUID>0e4beef1-989c-4687-80ca-ae21fec09734</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>OM_ContactGroup</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

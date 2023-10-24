@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>{condition}</MacroRuleCondition>
+  <MacroRuleDescription>
+    <![CDATA[{$macrorule.cmssatisfiesmacrocondition.description$}]]>
+  </MacroRuleDescription>
+  <MacroRuleDisplayName>Custom macro condition</MacroRuleDisplayName>
+  <MacroRuleEnabled>False</MacroRuleEnabled>
+  <MacroRuleGUID>33e07d27-6277-4470-8bff-1b07aafd1802</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSSatisfiesMacroCondition</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="condition" columntype="longtext" guid="add4ba80-d6c6-417e-ab8b-7597270f69ea" visible="true">
+        <properties>
+          <fieldcaption>enter condition</fieldcaption>
+          <fielddescription>K# macro condition</fielddescription>
+        </properties>
+        <settings>
+          <controlname>macrosyntaxhighlighter</controlname>
+          <ShowAutoCompletionAbove>False</ShowAutoCompletionAbove>
+          <ShowToolbar>False</ShowToolbar>
+          <SignMacro>False</SignMacro>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>
+    <![CDATA[The following macro condition is satisfied: {condition}]]>
+  </MacroRuleText>
+</cms.macrorule>

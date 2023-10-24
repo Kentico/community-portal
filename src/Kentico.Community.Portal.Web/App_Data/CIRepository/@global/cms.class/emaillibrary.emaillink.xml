@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Email link</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="EmailLinkID" columntype="integer" enabled="true" guid="cf58d89d-879f-46b2-abd7-6988adb6ae83" isPK="true" system="true" />
+      <field column="EmailLinkEmailConfigurationID" columnprecision="0" columntype="integer" enabled="true" guid="c8e66ff4-ba99-42dd-a90d-24c0b713279d" refobjtype="emaillibrary.emailconfiguration" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="EmailLinkTarget" columnprecision="0" columntype="longtext" enabled="true" guid="d4067ee1-17d7-4965-adbe-4efe206fcdeb" system="true" />
+      <field column="EmailLinkDescription" columnprecision="0" columnsize="450" columntype="text" enabled="true" guid="f6d76c5e-87c9-4437-96ac-4095c037f02c" system="true" />
+      <field column="EmailLinkGUID" columnprecision="0" columntype="guid" enabled="true" guid="a350b304-893e-406a-b551-d7089bd04b5b" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>a2c04308-1d67-43f5-943c-687722ca7f7c</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>EmailLibrary.EmailLink</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.EmailLibrary</CodeName>
+    <GUID>028f4adc-346c-434a-8992-408c8b45a986</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>EmailLibrary_EmailLink</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

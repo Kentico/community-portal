@@ -1,0 +1,51 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Debug and Hot Reload",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": ".NET: build (Solution)",
+      "program": "dotnet",
+      "args": ["watch", "--project", ".", "--verbose"],
+      "cwd": "${workspaceFolder}/src/Kentico.Community.Portal.Web",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DOTNET_WATCH_RESTART_ON_RUDE_EDIT": "true"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/src/Kentico.Community.Portal.Web/Views"
+      }
+    },
+    {
+      "name": ".NET Launch",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": ".NET: build (Solution)",
+      "program": "${workspaceFolder}/src/Kentico.Community.Portal.Web/bin/Debug/net6.0/Kentico.Community.Portal.Web.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/Kentico.Community.Portal.Web",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/src/Kentico.Community.Portal.Web/Views"
+      }
+    },
+    {
+      "name": ".NET Attach",
+      "type": "coreclr",
+      "request": "attach"
+    }
+  ]
+}

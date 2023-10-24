@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Website CAPTCHA settings</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="WebsiteCaptchaSettingsID" columntype="integer" enabled="true" guid="5d3b60e2-996c-4059-967e-ba29ffd94805" isPK="true" system="true" />
+      <field column="WebsiteCaptchaSettingsWebsiteChannelID" columnprecision="0" columntype="integer" enabled="true" guid="3d08514e-1287-4ec9-98f7-210ade5d55cb" refobjtype="cms.websitechannel" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="WebsiteCaptchaSettingsReCaptchaSiteKey" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="8449e950-1b80-4db0-9abd-7e9e8c252fe7" system="true" />
+      <field column="WebsiteCaptchaSettingsReCaptchaSecretKey" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="dc4dcd0c-fb7b-4bc7-affe-cfb5e5cfba35" system="true" />
+      <field allowempty="true" column="WebsiteCaptchaSettingsReCaptchaThreshold" columnprecision="0" columntype="double" enabled="true" guid="f231da1e-af78-422e-b254-7d5c069a241a" system="true" />
+      <field column="WebsiteCaptchaSettingsReCaptchaVersion" columnprecision="0" columntype="integer" enabled="true" guid="dca0fe66-29ff-4bd9-8f69-559948d6ce85" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="WebsiteCaptchaSettingsGUID" columnprecision="0" columntype="guid" enabled="true" guid="cd8998d5-592d-4ad9-9866-342da69e2b91" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>df2ea10b-3c1b-45eb-8082-44b28753f3bc</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.WebsiteCaptchaSettings</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Websites</CodeName>
+    <GUID>87975c89-f788-4e6c-a91f-08f38097cc32</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_WebsiteCaptchaSettings</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

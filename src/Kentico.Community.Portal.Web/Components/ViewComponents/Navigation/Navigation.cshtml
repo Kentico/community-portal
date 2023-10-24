@@ -1,0 +1,145 @@
+@using Kentico.Community.Portal.Web.Components.ViewComponents.Navigation
+
+@model HeaderViewModel
+
+@{
+    string GetCurrentClass(MenuItemViewModel item)
+    {
+        return item.IsActive ? "active" : null;
+    }
+
+    string GetAriaAttribute(MenuItemViewModel item)
+    {
+        return item.IsActive ? "aria-current=page" : null;
+    }
+}
+
+<header class="c-header sticky-top" data-ktc-search-exclude>
+    <vc:cookie-banner />
+
+    <nav class="navbar navbar-expand-md c-main-navbar">
+        <div id="navbar-container" class="container-xxl">
+            <a class="navbar-brand" href="/">
+                <img src="/img/logo.svg" alt="Kentico">
+            </a>
+            @if (User.Identity?.IsAuthenticated != true)
+            {
+                <a id="sign-in-tablet" class="btn btn-primary btn-lg text-uppercase" asp-controller="Authentication"
+                    asp-action="Login" test-id="signInMobile">Sign in</a>
+            }
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-bar"></span>
+                <span class="navbar-toggler-bar"></span>
+                <span class="navbar-toggler-bar"></span>
+            </button>
+            <div class="collapse navbar-collapse d-none d-md-block" id="navbarNavDropdown">
+                <ul class="c-main-nav navbar-nav ms-auto">
+                    <div class="c-navbar-dropdown-bg"></div>
+                    @foreach (var item in Model.FirstLevel)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @GetCurrentClass(item)" @GetAriaAttribute(item)
+                                href="@item.Url">@item.Caption</a>
+                        </li>
+                    }
+
+                    @if (User.Identity?.IsAuthenticated != true)
+                    {
+                        <li class="nav-item with-btn">
+                            <a class="btn btn-primary btn-lg text-uppercase" asp-controller="Authentication"
+                                asp-action="Login" asp-route-returnURL="@Context.Request.Path" test-id="signIn">Sign in</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item dropdown">
+                            <span class="nav-link active">
+                                <span test-id="username">@User.Identity.Name</span>
+                                <svg class="c-icon d-none d-md-block">
+                                    <use xlink:href="/img/icons.svg#chevron-down"></use>
+                                </svg>
+                            </span>
+
+                            <button type="button" class="btn dropdown-toggle d-md-none" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <svg class="c-icon ">
+                                    <use xlink:href="/img/icons.svg#chevron-down"></use>
+                                </svg>
+                            </button>
+                            <ul class="dropdown-menu gap-3 flex-row flex-md-column justify-content-around">
+                                <li class="nav-item">
+                                    <a asp-controller="Account" asp-action="MyAccount"
+                                        class="btn btn-primary text-uppercase">My
+                                        Account</a>
+                                </li>
+                                <li class="nav-item w-md-100">
+                                    <form asp-controller="Authentication" asp-action="Logout" method="post">
+                                        <button class="btn btn-outline-secondary text-uppercase w-100" type="submit"
+                                            test-id="logout">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="collapse navbar-collapse position-static d-md-none" id="navbarNavDropdown">
+        <ul class="c-main-nav navbar-nav ms-auto">
+            <div class="c-navbar-dropdown-bg"></div>
+            @foreach (var item in Model.FirstLevel)
+            {
+                <li class="nav-item">
+                    <a class="nav-link @GetCurrentClass(item)" @GetAriaAttribute(item) href="@item.Url">@item.Caption</a>
+                </li>
+            }
+
+            @if (User.Identity?.IsAuthenticated != true)
+            {
+                <li class="nav-item with-btn">
+                    <a class="btn btn-primary btn-lg text-uppercase" asp-controller="Authentication" asp-action="Login"
+                        asp-route-returnURL="@Context.Request.Path" test-id="signInMobile">Sign in</a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item dropdown">
+                    <span class="nav-link active">
+                        <span test-id="usernameMobile">@User.Identity.Name</span>
+                        <svg class="c-icon d-none d-md-block">
+                            <use xlink:href="/img/icons.svg#chevron-down"></use>
+                        </svg>
+                    </span>
+
+                    <button type="button" class="btn dropdown-toggle d-md-none" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <svg class="c-icon ">
+                            <use xlink:href="/img/icons.svg#chevron-down"></use>
+                        </svg>
+                    </button>
+                    <ul class="dropdown-menu gap-3 flex-row flex-md-column justify-content-around"
+                        style="transform: none; position: initial">
+                        <li class="nav-item">
+                            <a asp-controller="Account" asp-action="MyAccount" class="btn btn-primary text-uppercase">My
+                                Account</a>
+                        </li>
+                        <li class="nav-item w-md-100">
+                            <form asp-controller="Authentication" asp-action="Logout" method="post">
+                                <button class="btn btn-outline-secondary text-uppercase w-100" type="submit"
+                                    test-id="logoutMobile">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+    </div>
+
+    <vc:alert-box />
+
+</header>

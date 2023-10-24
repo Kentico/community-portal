@@ -1,0 +1,188 @@
+@model Kentico.Community.Portal.Web.Components.Widgets.FormSupport.FormSupportWidgetViewModel
+
+<script src="https://www.google.com/recaptcha/api.js?render=@Model.SiteKey" async defer></script>
+
+<div class="c-card large secondary">
+    <form id="supportForm" action="/api/forms" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-sm">
+                <label for="FirstName" class="form-label mt-3">First name (optional)</label>
+                <input asp-for="@Model.FirstName" type="text" class="form-control" id="FirstName" name="FirstName"
+                    placeholder="John" value="@Model.FirstName" />
+                <span asp-validation-for="@Model.FirstName" class="error"></span>
+            </div>
+            <div class="col-sm">
+                <label for="LastName" class="form-label mt-3">Last name (optional)</label>
+                <input asp-for="@Model.LastName" id="LastName" name="LastName" type="text" class="form-control"
+                    placeholder="Doe" value="@Model.LastName" />
+                <span asp-validation-for="@Model.LastName" class="error"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <label for="Company" class="form-label mt-3">Company</label>
+                <input type="text" class="form-control" asp-for="@Model.Company" id="Company" name="Company"
+                    placeholder="John Doe Co." value="@Model.Company" />
+                <span asp-validation-for="@Model.Company" class="error"></span>
+            </div>
+            <div class="col-sm">
+                <label for="Email" class="form-label mt-3">E-mail</label>
+                <input asp-for="@Model.Email" type="email" class="form-control" id="Email" name="Email"
+                    placeholder="johndoe@example.com" value="@Model.Email" />
+                <span asp-validation-for="@Model.Email" class="error"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="Issue" class="form-label mt-3">Issue</label>
+                <input type="text" class="form-control" asp-for="@Model.Issue" id="Issue" name="Issue"
+                    placeholder="I have a small issue..." value="@Model.Issue" />
+                <span asp-validation-for="@Model.Issue" class="error"></span>
+            </div>
+        </div>
+
+        <div>
+            <label for="Description" class="form-label mt-3">Description</label>
+            <textarea class="form-control" asp-for="@Model.Description" id="Description" name="Description"
+                placeholder="I have a small issue..." value="@Model.Description"></textarea>
+            <span asp-validation-for="@Model.Description" class="error"></span>
+        </div>
+        <div>
+            <label for="Cause" class="form-label mt-3">How did it happen? (optional)</label>
+            <textarea class="form-control" asp-for="@Model.Cause" id="Cause" name="Cause"
+                placeholder="Go ahead, tell us what happened in as much detail as possible."
+                value="@Model.Cause"></textarea>
+        </div>
+        <div>
+            <label for="Fix" class="form-label mt-3">Have you tried fixing it yourself? If you did, what steps did you
+                take? (optional)</label>
+            <textarea class="form-control" asp-for="@Model.Fix" id="Fix" name="Fix"
+                placeholder="Go ahead, tell us what happened in as much detail as possible."
+                value="@Model.Fix"></textarea>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                <label class="form-label mt-3">
+                    Version
+                    <span class="c-tooltip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right"
+                        title="Version of product you are having issues with (e.g. 23.0.3).">
+                        <svg class="c-icon ">
+                            <use xlink:href="/img/icons.svg#i-circle"></use>
+                        </svg>
+                    </span>
+                </label>
+                @* <input asp-for="@Model.Email" type="email" class="form-control" id="Email" name="Email"
+                placeholder="johndoe@example.com" value="@Model.Email" /> *@
+                <input type="text" class="form-control" asp-for="@Model.Version" id="Version" name="Version"
+                    placeholder="23.0.3" value="@Model.Version"
+                    pattern="(\d{1,2})|(\d{1,2}\.)|(\d{1,2}\.\d{1,2})|(\d{1,2}\.\d{1,2}\.)|(\d{1,2}\.\d{1,2}\.\d{1,2})" />
+                @* <select class="form-select c-select" aria-label="select version" asp-for="@Model.Version"
+                id="Version" name="Version" value="@Model.Version"> *@
+                @* <option selected value="">Choose a version</option> *@
+                @* <option value="Milestone 5">Milestone 5</option> *@
+                @* <option value="Milestone 6">Milestone 6</option> *@
+                @* <option value="Milestone 7">Milestone 7</option> *@
+                @* <option value="Milestone 8">Milestone 8</option> *@
+                @* <option value="Milestone 9">Milestone 9</option> *@
+                @* <option value="Milestone 10">Milestone 10</option> *@
+                @* </select> *@
+                <span asp-validation-for="@Model.Version" class="error"></span>
+            </div>
+            <div class="col-sm">
+                <label class="form-label mt-3">
+                    Deployment model (optional)
+                    @* <span class="c-tooltip" *@
+                    @* tabindex="0" *@
+                    @* data-bs-toggle="tooltip" *@
+                    @* data-bs-placement="right"> *@
+                    @* <svg class="c-icon "> *@
+                    @* <use xlink:href="/img/icons.svg#i-circle"></use> *@
+                    @* </svg> *@
+                    @* </span> *@
+                </label>
+                <select class="form-select c-select" aria-label="select deployment model"
+                    asp-for="@Model.DeploymentModel" id="DeploymentModel" name="DeploymentModel"
+                    value="@Model.DeploymentModel">
+                    <option selected value="">Choose a deployment model</option>
+                    <option value="Xperience Managed Cloud Service">Xperience Managed Cloud Service</option>
+                    <option value="Custom solution - on-premise">Custom solution - on-premise</option>
+                    <option value="PortalEngine">Custom solution - cloud</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="Website" class="form-label mt-3">Website URL</label>
+                <input type="text" class="form-control" asp-for="@Model.Website" id="Website" name="Website"
+                    placeholder="https://yoursite.co" value="@Model.Website" />
+                <span asp-validation-for="@Model.Website" class="error"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-7">
+                <label for="Attachment" class="form-label mt-3">Attachment (optional)</label>
+                <div class="d-flex">
+                    <label for="Attachment" class="btn btn-outline-secondary">ATTACH&nbsp;FILE</label>
+                    <input type="file" class="form-control" id="Attachment" name="Attachment" />
+                </div>
+            </div>
+            <div class="col-sm-5">
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button id="supportFormSubmit" type="submit" class="btn btn-primary btn-lighter px-5 mt-4">SUBMIT
+                FORM</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById('supportForm').addEventListener("submit", (evt) => {
+        evt.preventDefault();
+
+        let form = document.getElementById('supportForm');
+
+        if ($("#supportForm").valid()) {
+            let overlay = document.getElementById('overlay');
+
+            if (overlay) {
+                overlay.style.display = "block";
+            }
+            grecaptcha.ready(function () {
+                grecaptcha.execute('@Model.SiteKey', { action: 'submit' }).then(function (token) {
+                    if (token && token !== '') {
+                        let data = new FormData(form);
+                        data.append("CaptchaToken", token);
+                        fetch('/api/forms', {
+                            method: 'post',
+                            body: data
+                        })
+                            .then((response) => {
+                                if (response.ok) {
+                                    document.getElementById('supportForm').reset();
+                                    overlay.style.display = "none";
+                                }
+                            }).finally(() => {
+                                overlay.style.display = "none";
+                            });
+                    }
+                });
+            });
+
+        }
+    });
+
+    let prevVal = "";
+    document.getElementById('Version').addEventListener('input', function (e) {
+        if (this.checkValidity()) {
+            prevVal = this.value;
+        } else {
+            this.value = prevVal;
+        }
+    });
+</script>

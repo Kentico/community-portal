@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>Author Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="bc9ecc04-8829-49bb-82e4-fe3cf141f6aa" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="7a6da816-c141-4042-a03b-6c45b47498e5" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="9223df6c-70b9-4ae2-ba83-2c1a604b4b98" isunique="true" system="true" />
+      <field column="DocumentName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="1e0f27f5-f59a-4fa1-871f-5c2d946453ca" visible="true">
+        <properties>
+          <fieldcaption>Page name</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="AuthorContentPhotoMediaFileImage" columnprecision="0" columntype="assets" enabled="true" guid="b7c62736-e101-4410-8315-f203dacaafa4" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Photo</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedExtensions>jpg;jpeg;png;webp</AllowedExtensions>
+          <controlname>Kentico.Administration.AssetSelector</controlname>
+          <MaximumAssets>1</MaximumAssets>
+        </settings>
+      </field>
+      <field column="AuthorContentFirstName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="ff556cf5-53ad-459d-b73e-648e179d9494" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>First Name</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="AuthorContentSurname" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="3753e916-a6c5-4cd3-9507-e827bc52152d" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Surname</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field column="AuthorContentCodeName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="3bf0575b-e3ed-4567-a022-ab84f9b04cf0" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Code Name</fieldcaption>
+          <fielddescription>
+            <![CDATA[Used to refer to the author within the application code]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field column="AuthorContentMemberID" columnprecision="0" columntype="integer" enabled="true" guid="d28276ba-8f40-44e7-92c4-77f023ec6519" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Member</fieldcaption>
+          <fielddescription>
+            <![CDATA[The author's live site Member ID]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.NumberInput</controlname>
+        </settings>
+      </field>
+      <field column="AuthorContentBiographyHTML" columnprecision="0" columntype="longtext" enabled="true" guid="85729337-9483-4cbb-a7e8-024aaca18439" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Biography</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <ConfigurationName>Kentico.Administration.StructuredContent</ConfigurationName>
+          <controlname>Kentico.Administration.RichTextEditor</controlname>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>8033c6de-9e47-4618-ac1a-25fd361c6ac8</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-personalisation</ClassIconClass>
+  <ClassName>KenticoCommunity.AuthorContent</ClassName>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>KenticoCommunity_AuthorContent</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

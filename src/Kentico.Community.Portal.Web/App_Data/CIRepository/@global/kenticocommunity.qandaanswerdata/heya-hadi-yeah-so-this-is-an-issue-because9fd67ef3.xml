@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>05437535-1e80-48a5-a16c-24ef27632133</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Heya-Hadi-Yeah-so-this-is-an-issue-because9fd67ef3</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Heya Hadi,
+
+Yeah so this is an issue because when your API endpoint is called, kentico doesnt have the context of what page the user made the call from.
+
+You can do something similar to what the error mentions - adding this line
+```
+@Html.Kentico().PageData()
+```
+
+into your page - this will generate a <input type="hidden" name="__Kentico_DC_Page" value="..."/> which has an encrypted string representing the DocumentID - which kentico uses to resolve the current page.
+
+However since your making a call from JS rather than a form submission, you'll want to query the DOM for this input in JS and include it's name & vlaue in your AJAX request data.
+
+There's a limitation on this though: The __Kentico_DC_Page=<value> field needs to be sent in the AJAX request with Content-Type: application/x-www-form-urlencoded.
+
+Alternatively - you could do as you say and include the page id directly in a custom field in your AJAX request. As you mention IPageDataContextInitializer can be used to initialize the page with your custom field, which will then allow the IPageDataContextRetriever to work correctly as normal.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2023-10-21 02:20:38Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>0bdfc3d5-2bad-46b8-ae4c-a213d29062a6</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>IPageDataContextInitializer-on-WebAPI3f4fcfde-localtest</CodeName>
+    <GUID>63ccfc15-39f3-4af8-bc26-a1d6cbe9ac38</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+</kenticocommunity.qandaanswerdata>

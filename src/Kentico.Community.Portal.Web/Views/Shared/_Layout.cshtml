@@ -1,0 +1,90 @@
+﻿@using Kentico.Activities.Web.Mvc
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head id="head">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <meta name="view-transition" content="same-origin">
+
+    <link rel="preload" href='@ClientAssets.ViteAssetPath("dist/styles/style.scss")' as="style" />
+    <link rel="modulepreload" href='@ClientAssets.ViteAssetPath("dist/js/main.js")' as="script" />
+
+    <vc:page-custom-meta />
+
+    <link rel="stylesheet" href='@ClientAssets.ViteAssetPath("dist/styles/style.scss")' />
+
+    @if (ClientAssets.PrismRequired)
+    {
+        <link rel="stylesheet" href="/vendor/css/prism.min.css" asp-append-version="true">
+    }
+
+    @Html.Kentico().ActivityLoggingScript()
+
+    @if (Context.Kentico().PageBuilder().EditMode)
+    {
+        <page-builder-styles />
+    }
+
+    <vc:gtm is-head="true" />
+    <vc:cookies-init />
+    <script>
+        window.asyncReady = function (callback) {
+            document.readyState === "interactive" || document.readyState === "complete" ? callback() : document.addEventListener("DOMContentLoaded", callback);
+        };
+    </script>
+</head>
+
+<body>
+    <vc:gtm is-head="false" />
+
+    <vc:navigation />
+
+    <div id="overlay">
+        <div class="overlay__inner">
+            <div class="overlay__content"><span class="spinner"></span></div>
+        </div>
+    </div>
+
+    <div id="pageContent">
+        @RenderBody()
+    </div>
+
+    <vc:footer />
+
+    <div class="bottom-0 p-3 position-absolute end-0 toast-container">
+        <div class="toast bg-warning-subtle" role="alert" aria-live="assertive" aria-atomic="true" data-error-toast>
+            <div class="toast-header">
+                <strong class="me-auto">Error</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                There was a problem handling your request.
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src='@ClientAssets.ViteAssetPath("dist/js/main.js")'></script>
+
+    @if (!ClientAssets.EditormdRequired)
+    {
+        @* The Editormd assets View Component adds jquery automatically, so it isn't required to add it here *@
+        <script src="/vendor/js/jquery-3.5.1.min.js" asp-append-version="true"></script>
+    }
+
+    <script src="/vendor/js/jquery.validate.min.js" asp-append-version="true"></script>
+    <script src="/vendor/js/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+
+    <script src="/vendor/js/htmx.min.js" asp-append-version="true"></script>
+
+    @if (ClientAssets.PrismRequired)
+    {
+        <script src="/vendor/js/prism.min.js" asp-append-version="true"></script>
+    }
+
+    <page-builder-scripts />
+</body>
+
+</html>

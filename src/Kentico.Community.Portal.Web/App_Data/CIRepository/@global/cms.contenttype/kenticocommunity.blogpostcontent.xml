@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>Blog Post Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="0fe478b9-245e-45df-ac10-1ca97f319d18" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="9a4ee5c1-201f-4acc-9c3c-07a6d7c35696" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="88d462cd-3922-43c4-bc9b-bcccf6565f69" isunique="true" system="true" />
+      <field column="BlogPostContentTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="3d113f37-6c8f-45a2-b578-c68e63ad11ea" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Title</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="BlogPostContentAuthor" columnprecision="0" columntype="contentitemreference" enabled="true" guid="c8b8d314-3c85-4049-a090-10e7056b7903" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Author</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["8033c6de-9e47-4618-ac1a-25fd361c6ac8"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+        </settings>
+      </field>
+      <field column="BlogPostContentTeaserMediaFileImage" columnprecision="0" columntype="assets" enabled="true" guid="9c5b4e23-b208-488e-b009-03d70f48058e" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Teaser Image</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedExtensions>jpg;jpeg;png;webp;</AllowedExtensions>
+          <controlname>Kentico.Administration.AssetSelector</controlname>
+          <MaximumAssets>1</MaximumAssets>
+        </settings>
+      </field>
+      <field column="BlogPostContentShortDescription" columnprecision="0" columntype="longtext" enabled="true" guid="0e4f608e-b17f-4d9e-aabd-89a2cff246fb" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Short Description</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>True</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+      </field>
+      <field column="BlogPostContentTaxonomy" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="5a0acff4-c186-4520-884a-260233139c79" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Taxonomy</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+Community
+Guide
+Announcement
+Media
+Article
+]]>
+          </Options>
+          <Placeholder>Article</Placeholder>
+        </settings>
+      </field>
+      <field column="BlogPostContentPublishedDate" columnprecision="2" columntype="datetime" enabled="true" guid="d07d938a-8de9-4202-a823-ab2be9330aac" visible="true">
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY hh:mm AM/PM</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Published Date</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+      </field>
+      <field column="BlogPostPageContentSourceType" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="63d87e99-6afd-4ac3-b82f-8d1be785c80e" visible="true">
+        <properties>
+          <defaultvalue>markdown</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Content Source Type</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+markdown;Markdown
+richText;Rich Text
+]]>
+          </Options>
+          <Placeholder>markdown</Placeholder>
+        </settings>
+      </field>
+      <field column="BlogPostContentContentMarkdown" columnprecision="0" columntype="longtext" enabled="true" guid="90542128-fed3-4211-90f9-2afc6055f095" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Markdown Content</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>30</MaxRowsNumber>
+          <MinRowsNumber>5</MinRowsNumber>
+        </settings>
+      </field>
+      <field column="BlogPostContentContentHTML" columnprecision="0" columntype="longtext" enabled="true" guid="9dad16e1-55a9-48b0-9429-8a832406fc61" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Rich Text Content</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <ConfigurationName>Kentico.Community.Portal.RichText</ConfigurationName>
+          <controlname>Kentico.Administration.RichTextEditor</controlname>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>2e7c68a6-f9c7-450a-9acb-a71db270ff71</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-paragraph</ClassIconClass>
+  <ClassName>KenticoCommunity.BlogPostContent</ClassName>
+  <ClassTableName>KenticoCommunity_BlogPostContent</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

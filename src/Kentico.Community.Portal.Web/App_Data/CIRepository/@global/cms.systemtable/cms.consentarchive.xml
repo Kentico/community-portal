@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassConnectionString>CMSOMConnectionString</ClassConnectionString>
+  <ClassDisplayName>Consent archive</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ConsentArchiveID" columntype="integer" guid="37b531a6-2173-4757-b334-9e721e210e8a" isPK="true" system="true" />
+      <field column="ConsentArchiveGuid" columntype="guid" guid="507af185-d0b2-4094-bea5-547a1af2bdb3" system="true" />
+      <field column="ConsentArchiveLastModified" columnprecision="7" columntype="datetime" guid="09e68eac-a34b-4d71-88ee-80fad7ef2bf0" system="true" />
+      <field column="ConsentArchiveConsentID" columntype="integer" guid="d8ccdbeb-29b9-4a98-9625-0f18d33c222d" refobjtype="cms.consent" reftype="Required" system="true" />
+      <field column="ConsentArchiveHash" columnsize="100" columntype="text" guid="d372fb96-d2d8-4e70-9933-b06b5348187b" system="true" />
+      <field column="ConsentArchiveContent" columntype="longtext" guid="4e91e447-50c0-49fc-8f3f-8b03a7276da2" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>04fb1a53-1f25-42bb-9608-a4bb23ca657d</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ConsentArchive</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.DataProtection</CodeName>
+    <GUID>8089f9a7-95d9-4e3c-b95a-91a49ccf10c4</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_ConsentArchive</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>

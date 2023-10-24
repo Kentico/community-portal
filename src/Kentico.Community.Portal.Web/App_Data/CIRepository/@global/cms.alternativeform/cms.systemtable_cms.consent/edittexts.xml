@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>CMS.Consent</CodeName>
+    <GUID>1de57768-d0cb-4e03-b3d9-7dd95c26c193</GUID>
+    <ObjectType>cms.systemtable</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="ConsentID" guid="85f3f6fb-6cb8-4cd3-bd85-6f1803970a6c" />
+      <field column="ConsentDisplayName" guid="678ba678-0658-47d4-a5b3-61684acf1398" />
+      <field column="ConsentName" guid="e03d4f66-a288-4e2f-be3c-0ceed645441b" />
+      <field column="ConsentContent" guid="e4c8261f-1c95-4b63-9d71-33d853992475" />
+      <field column="ConsentGuid" guid="ef9baeba-8aca-4407-97b2-0ccd273138e3" />
+      <field column="ConsentLastModified" guid="86874899-0c72-47e7-8f47-cf920e909951" />
+      <field column="ConsentHash" guid="94daa148-b0f2-4a5d-8e0a-f2d7c06699e6" />
+      <field column="ShortText" columnprecision="0" columntype="longtext" dummy="altform" enabled="true" guid="2bb95a94-feb0-443e-b753-e3f8d5bb0f18" system="true" visible="true" order="7">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.consentedit.shorttext.caption$}</fieldcaption>
+          <fielddescription>
+            <![CDATA[{$digitalmarketing.consentedit.shorttext.description$}]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <ConfigurationName>Kentico.Administration.ConsentText</ConfigurationName>
+          <controlname>Kentico.Administration.RichTextEditor</controlname>
+        </settings>
+      </field>
+      <field column="FullText" columnprecision="0" columntype="longtext" dummy="altform" enabled="true" guid="70054528-d75f-4a17-adf9-65da61d61900" system="true" visible="true" order="8">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.consentedit.fulltext.caption$}</fieldcaption>
+          <fielddescription>
+            <![CDATA[{$digitalmarketing.consentedit.fulltext.description$}]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <ConfigurationName>Kentico.Administration.ConsentText</ConfigurationName>
+          <controlname>Kentico.Administration.RichTextEditor</controlname>
+        </settings>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit texts</FormDisplayName>
+  <FormGUID>d6c36501-4f28-49a4-bb69-8d035c78f8bf</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>edittexts</FormName>
+</cms.alternativeform>

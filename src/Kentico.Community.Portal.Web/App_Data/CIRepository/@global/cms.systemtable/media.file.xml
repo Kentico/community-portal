@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Media file</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="FileID" columntype="integer" guid="be274203-89f9-46c6-8430-686c3f4ed2ee" isPK="true" system="true" />
+      <field column="FileName" columnsize="250" columntype="text" guid="e5922646-9755-419f-b97c-4da13c11e537" system="true" />
+      <field column="FileTitle" columnsize="250" columntype="text" guid="69be119f-9a88-4ee5-8d15-7f3fca93abc1" system="true" />
+      <field column="FileDescription" columntype="longtext" guid="61714ed7-0b1a-40ee-9dcf-a03c3ecff77e" system="true" />
+      <field column="FileExtension" columnsize="50" columntype="text" guid="2fa8bf43-d045-4ad6-805d-22adcd05cddf" system="true" />
+      <field column="FileMimeType" columnsize="100" columntype="text" guid="75fbd642-1882-4463-b813-00feddb929b7" system="true" />
+      <field column="FilePath" columnsize="450" columntype="text" guid="6d1230c9-478c-4b29-b2e1-d055d0173bc7" system="true" />
+      <field column="FileSize" columntype="longinteger" guid="e230f41a-6ff1-4975-af9e-546c35cf50a2" system="true" />
+      <field allowempty="true" column="FileImageWidth" columntype="integer" guid="e106b686-4bcc-467c-8c9e-08554ed47551" system="true" />
+      <field allowempty="true" column="FileImageHeight" columntype="integer" guid="ddc0242f-cd85-42e1-aaf9-baa98c0fcba2" system="true" />
+      <field column="FileGUID" columntype="guid" guid="e146f69c-1f65-433c-a091-616d9ac28aa7" system="true" />
+      <field column="FileLibraryID" columntype="integer" guid="5b7f4a0a-386a-4575-beea-126f94381abb" system="true" />
+      <field allowempty="true" column="FileCreatedByUserID" columntype="integer" guid="2c37082f-cc5f-4ef1-b272-d28166037df1" system="true" />
+      <field column="FileCreatedWhen" columntype="datetime" guid="f4c0a650-7f2d-43d3-b56a-a5ae117c1f01" system="true" />
+      <field allowempty="true" column="FileModifiedByUserID" columntype="integer" guid="8a3a9510-9f16-4760-937e-ff733dfe39ed" system="true" />
+      <field column="FileModifiedWhen" columntype="datetime" guid="63d7a235-fae6-4383-b251-7269b71f648d" system="true" />
+      <field allowempty="true" column="FileCustomData" columntype="longtext" guid="ea859358-cb3e-4fd6-a16c-bfca37c7484c" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>d511179e-7fd5-42ee-8b51-048f58e45f6f</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>media.file</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.MediaLibrary</CodeName>
+    <GUID>f1ae7bb7-e5e2-4944-b0a6-c92be4f95982</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>Media_File</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>

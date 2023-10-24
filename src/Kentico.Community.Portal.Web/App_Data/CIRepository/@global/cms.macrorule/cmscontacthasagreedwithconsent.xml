@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[{_perfectum}Contact.AgreedWithConsent("{consent}")]]>
+  </MacroRuleCondition>
+  <MacroRuleDescription>
+    <![CDATA[{$macrorule.contacthasagreedwithconsent.description$}]]>
+  </MacroRuleDescription>
+  <MacroRuleDisplayName>Contact has agreed with consent</MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>f01d1fdc-954b-41f7-affb-073993039369</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactHasAgreedWithConsent</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="_perfectum" columnsize="100" columntype="text" guid="f7b64deb-dc54-4717-9884-89216af3c60f" visible="true">
+        <properties>
+          <defaultvalue>__is</defaultvalue>
+          <fieldcaption>select operation</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <EditText>False</EditText>
+          <IsPerfectum>True</IsPerfectum>
+          <Options>
+<![CDATA[
+__is;has
+__isnot;has not
+]]>
+          </Options>
+        </settings>
+      </field>
+      <field column="consent" columnprecision="0" columntype="objectcodenames" guid="eeee335f-421b-45ec-aad1-621948d1ab9d" visible="true">
+        <properties>
+          <fieldcaption>consent</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectCodeNameSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <ObjectType>cms.consent</ObjectType>
+          <Placeholder>select consent</Placeholder>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>Contact {_perfectum} agreed with consent {consent}</MacroRuleText>
+</cms.macrorule>

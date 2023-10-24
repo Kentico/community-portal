@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Application Permission</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ApplicationPermissionID" columntype="integer" enabled="true" guid="55b13357-0290-4aa9-8e72-dbb6b2010682" isPK="true" system="true" />
+      <field column="RoleID" columnprecision="0" columntype="integer" enabled="true" guid="0a570c52-1b01-4b10-aba6-25ba27503108" refobjtype="cms.role" reftype="Required" system="true" />
+      <field column="ApplicationName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="4fa21d1f-10d2-49c4-8dcb-ec3c5a6c90d2" system="true" />
+      <field column="PermissionName" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="1418b41d-de84-4c19-8bd7-db512ab28aef" system="true" />
+      <field column="ApplicationPermissionGuid" columnprecision="0" columntype="guid" enabled="true" guid="f29ef866-a51d-411e-b19b-48e842addec8" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>da4ce06f-8c1d-49ef-ad6c-c7e240c8f69c</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ApplicationPermission</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Membership</CodeName>
+    <GUID>d4b7561a-f188-420c-8f68-63b5c573b2bf</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ApplicationPermission</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

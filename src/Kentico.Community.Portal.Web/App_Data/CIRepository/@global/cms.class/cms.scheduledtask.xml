@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Scheduled task</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="TaskID" columntype="integer" guid="4419f729-75ac-4eb7-a4d4-bdcdb8d03884" isPK="true" system="true" />
+      <field column="TaskName" columnprecision="0" columnsize="200" columntype="text" guid="e9eabd43-9133-4cd9-8012-aefa513e87b2" system="true" />
+      <field column="TaskDisplayName" columnprecision="0" columnsize="200" columntype="text" guid="a3f95b42-bd02-4db6-b1aa-0d340952a27e" system="true" />
+      <field column="TaskAssemblyName" columnprecision="0" columnsize="200" columntype="text" guid="4c567e00-bf7a-42e8-878b-a5befde1faed" system="true" />
+      <field allowempty="true" column="TaskClass" columnprecision="0" columnsize="200" columntype="text" guid="c7a260a0-d909-4e9e-b1d3-bcbda7eb9076" system="true" />
+      <field column="TaskInterval" columnprecision="0" columnsize="1000" columntype="text" guid="02900d9c-c032-4081-9532-a48c339dbbce" system="true" />
+      <field column="TaskData" columntype="longtext" guid="a8fd0828-3456-483d-9845-f93c6d9fc9fd" system="true" />
+      <field allowempty="true" column="TaskLastRunTime" columntype="datetime" guid="c1c5fbe3-cf9b-4055-b663-18898c5cae18" system="true" />
+      <field allowempty="true" column="TaskNextRunTime" columntype="datetime" guid="72b48b10-53ca-4934-8be4-c3044af2be7d" system="true" />
+      <field column="TaskEnabled" columntype="boolean" guid="dbd5d77f-f7f4-4da4-87f8-9027cbcca5e1" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+      <field column="TaskIsRunning" columntype="boolean" guid="94914428-22b2-41c8-ae75-f42e57ca8e14" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="TaskLastResult" columntype="longtext" guid="feb262dd-3a25-4301-8b31-6d068f0a75a1" system="true" />
+      <field allowempty="true" column="TaskDeleteAfterLastRun" columntype="boolean" guid="564b2be3-fa3f-4517-8cf3-f36bff312e6b" system="true" />
+      <field allowempty="true" column="TaskServerName" columnprecision="0" columnsize="100" columntype="text" guid="a86cf79a-156b-4075-a378-58875eb715ef" system="true" />
+      <field column="TaskGUID" columntype="guid" guid="6db955f1-124a-4a2b-ad66-596dd53936ea" system="true" />
+      <field column="TaskLastModified" columntype="datetime" guid="5a02bac7-ee29-497a-a42d-22f1201e1b1c" system="true" />
+      <field allowempty="true" column="TaskExecutions" columntype="integer" guid="5f1cbc53-2a56-415b-b194-fdf91a48a8ad" system="true" />
+      <field allowempty="true" column="TaskResourceID" columntype="integer" guid="6f837b40-1492-4558-b16f-85622aa7d1ce" system="true" />
+      <field allowempty="true" column="TaskRunInSeparateThread" columntype="boolean" guid="56747e3e-3b17-459a-a828-353093ae98fb" system="true">
+        <properties>
+          <defaultvalue>false</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="TaskLastExecutionReset" columntype="datetime" guid="36a365cb-fd5a-40a7-84a3-3dc124f073da" system="true" />
+      <field allowempty="true" column="TaskCondition" columnsize="400" columntype="text" guid="191cdffc-6798-49c7-8b6b-50ce1932a042" system="true" />
+      <field allowempty="true" column="TaskUserID" columntype="integer" guid="c362f5fa-bc6d-47c9-b238-cf91083809b6" system="true" />
+      <field allowempty="true" column="TaskType" columntype="integer" guid="e714ac81-c2d4-4256-b11e-ab5bedad4f27" system="true" />
+      <field allowempty="true" column="TaskObjectType" columnsize="100" columntype="text" guid="c0144c6b-2105-4543-9e41-6f017fb58a69" system="true" />
+      <field allowempty="true" column="TaskObjectID" columntype="integer" guid="944b2dbf-fd97-41e3-8788-fc47d5158a30" system="true" />
+      <field allowempty="true" column="TaskExecutingServerName" columnsize="200" columntype="text" guid="21247dd8-8c7a-47c9-b925-fc9ba485f9ba" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>57b78754-4137-4220-b736-8c16cbbe6c87</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>cms.ScheduledTask</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ScheduledTasks</CodeName>
+    <GUID>1017a016-7671-4bca-a5b0-8ea84dae01fa</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_ScheduledTask</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

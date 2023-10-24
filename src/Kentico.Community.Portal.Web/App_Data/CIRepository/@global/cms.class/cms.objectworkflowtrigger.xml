@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Object workflow trigger</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="TriggerID" columntype="integer" guid="a92b1092-2df2-401a-8071-e11109a9edd0" isPK="true" isunique="true" system="true" />
+      <field column="TriggerGUID" columntype="guid" guid="2ae41c83-46ad-4b52-9d46-c7d292f45589" system="true" />
+      <field column="TriggerLastModified" columntype="datetime" guid="9591a19f-604f-49c0-9e54-91dd1d441330" system="true" />
+      <field column="TriggerDisplayName" columnsize="450" columntype="text" guid="c0987906-007f-4a8a-bc04-5b0d4c9b8148" system="true" />
+      <field column="TriggerType" columntype="integer" guid="bb361369-3be9-45a0-bcd5-a2c8d20d166b" system="true" />
+      <field allowempty="true" column="TriggerMacroCondition" columntype="longtext" guid="5dcbf6b3-7716-4f70-8089-e78dc5acf49e" system="true" />
+      <field column="TriggerObjectType" columnsize="100" columntype="text" guid="196371ef-8797-4529-8d93-9a9f45cd1733" system="true" />
+      <field allowempty="true" column="TriggerTargetObjectType" columnsize="100" columntype="text" guid="cdaf46cc-4182-48b1-a3dc-3402c8d4483b" system="true" />
+      <field allowempty="true" column="TriggerTargetObjectID" columntype="integer" guid="a86e6b3d-5038-4d58-a166-1aa045e6aea9" system="true" />
+      <field allowempty="true" column="TriggerParameters" columntype="longtext" guid="d5239d68-4497-41cf-9fc8-baa34e52a537" system="true" />
+      <field column="TriggerWorkflowID" columntype="integer" guid="9d3821ef-fb86-4e6b-b3e2-30a6889dfab8" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>6c8003f7-4bc2-429e-88af-65c2b69db47c</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ObjectWorkflowTrigger</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.WorkflowEngine</CodeName>
+    <GUID>2b67f370-3df4-4a4d-8734-1974639c5b69</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_ObjectWorkflowTrigger</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

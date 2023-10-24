@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassDisplayName>Macro rule category</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="MacroRuleCategoryID" columntype="integer" guid="d700fb14-26e1-4a26-87a3-fa69c4cd3f28" isPK="true" system="true" />
+      <field column="MacroRuleCategoryName" columnsize="200" columntype="text" guid="0fa511aa-2f9f-47ed-9780-efd2644f1042" system="true" />
+      <field column="MacroRuleCategoryDisplayName" columnsize="200" columntype="text" guid="c5a8bf03-ea16-4f15-974b-8766f95b3c36" system="true" />
+      <field allowempty="true" column="MacroRuleCategoryDescription" columnsize="450" columntype="text" guid="bee89211-92a0-4e54-aad1-e261822bb90f" system="true" />
+      <field column="MacroRuleCategoryEnabled" columntype="boolean" guid="25146bfa-836d-49ba-b5b6-25f3ac4a2f6f" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+      <field column="MacroRuleCategoryGuid" columntype="guid" guid="f6b9c32a-2235-4897-b630-bf2df7fc8db8" system="true" />
+      <field column="MacroRuleCategoryLastModified" columnprecision="7" columntype="datetime" guid="6ff988b7-64f5-4ef2-8a76-20436c8e98b0" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>9a2ba321-ed97-48b2-b5ee-82be433d9afa</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.MacroRuleCategory</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS</CodeName>
+    <GUID>ce1a65a0-80dc-4c53-b0e7-bdecf0aa8c02</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_MacroRuleCategory</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

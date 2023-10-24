@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>KenticoCommunity.QAndAAnswerData</CodeName>
+    <GUID>1f10f256-8926-4510-a733-3f5bfbeac7e3</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="QAndAAnswerDataID" guid="ea86edba-fc5b-4431-9b6b-c73470573acb" enabled="" />
+      <field column="QAndAAnswerDataGUID" guid="58b00abc-d366-497f-8ff7-1d3764c8e8b2" enabled="" />
+      <field column="QAndAAnswerDataAuthorMemberID" enabled="true" guid="c39aabde-d57c-44e8-82c6-b99d52199102" visible="true" refobjtype="" reftype="" order="2">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>CMS.Member</ObjectType>
+          <Placeholder>0</Placeholder>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Author (Member)</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="QAndAAnswerDataQuestionWebPageItemID" enabled="true" guid="10390b46-43c6-4416-a900-897e13069ab0" visible="true" refobjtype="" reftype="" order="3">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>CMS.WebPageItem</ObjectType>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Question (Content Item)</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="QAndAAnswerDataCodeName" enabled="true" guid="640c9431-27a5-4b7e-8aa7-35bf4bc8692c" visible="true" order="4">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Code Name</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="QAndAAnswerDataContent" enabled="true" guid="a946c5e1-9f53-494a-852d-57b8ae38c49d" visible="true" order="5">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>12</MaxRowsNumber>
+          <MinRowsNumber>5</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Content (Markdown)</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="QAndAAnswerDataDateCreated" enabled="true" guid="03c222e2-8960-424d-81ac-f127d0b590a1" visible="true" order="6">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY hh:mm AM/PM</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Created</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="QAndAAnswerDataDateModified" enabled="true" guid="a862e42b-83cc-48b7-a0d7-8d290925ec99" visible="true" order="7">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY hh:mm AM/PM</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Modified</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Create</FormDisplayName>
+  <FormGUID>e8a7ca60-7f4b-42aa-bde6-3bf2b64a7ef2</FormGUID>
+  <FormIsCustom>True</FormIsCustom>
+  <FormName>create</FormName>
+</cms.alternativeform>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.query>
+  <ClassID>
+    <CodeName>cms.EmailAttachment</CodeName>
+    <GUID>3a6a10ed-8426-4240-9f0f-ae054f612c61</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </ClassID>
+  <QueryConnectionString>CMSConnectionString</QueryConnectionString>
+  <QueryGUID>7aa953a6-95e3-44c6-b57f-82735ce322eb</QueryGUID>
+  <QueryIsCustom>False</QueryIsCustom>
+  <QueryIsLocked>False</QueryIsLocked>
+  <QueryName>deleteattachmentswithnobindings</QueryName>
+  <QueryRequiresTransaction>False</QueryRequiresTransaction>
+  <QueryText>
+    <![CDATA[DELETE FROM CMS_EmailAttachment WHERE AttachmentID NOT IN (SELECT DISTINCT AttachmentID FROM CMS_AttachmentForEmail)]]>
+  </QueryText>
+  <QueryTypeID>0</QueryTypeID>
+</cms.query>

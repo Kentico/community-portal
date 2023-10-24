@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.workflowtransition>
+  <Parent>
+    <CodeName>SendAutoresponderEmail</CodeName>
+    <GUID>1e3f3dea-3667-452c-9dfa-1c489efe5857</GUID>
+    <ObjectType>ma.automationstep</ObjectType>
+    <Parent>
+      <CodeName>Kentico.Devnet.SendAutoresponderEmail.NewsletterSignup</CodeName>
+      <GUID>31b9e041-b09c-4111-8c07-1ea10ea4637c</GUID>
+      <ObjectType>ma.automationprocess</ObjectType>
+    </Parent>
+  </Parent>
+  <Bindings>
+    <Binding id="ma.automationstep_Finished_ma.automationprocess_Kentico.Devnet.SendAutoresponderEmail.NewsletterSignup">
+      <TransitionEndStepID>
+        <CodeName>Finished</CodeName>
+        <GUID>30ac33e8-60b3-49aa-8adf-c9f5d5bf6355</GUID>
+        <ObjectType>ma.automationstep</ObjectType>
+        <Parent>
+          <CodeName>Kentico.Devnet.SendAutoresponderEmail.NewsletterSignup</CodeName>
+          <GUID>31b9e041-b09c-4111-8c07-1ea10ea4637c</GUID>
+          <ObjectType>ma.automationprocess</ObjectType>
+        </Parent>
+      </TransitionEndStepID>
+      <TransitionSourcePointGUID>989e86a7-2c11-4884-835a-6a784e4d1cca</TransitionSourcePointGUID>
+      <TransitionType>1</TransitionType>
+      <TransitionWorkflowID>
+        <CodeName>Kentico.Devnet.SendAutoresponderEmail.NewsletterSignup</CodeName>
+        <GUID>31b9e041-b09c-4111-8c07-1ea10ea4637c</GUID>
+        <ObjectType>ma.automationprocess</ObjectType>
+      </TransitionWorkflowID>
+    </Binding>
+  </Bindings>
+</cms.workflowtransition>

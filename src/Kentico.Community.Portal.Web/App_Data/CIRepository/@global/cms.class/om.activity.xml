@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSOMConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Activities - Activity</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ActivityID" columntype="integer" guid="5d3c983f-e8a6-4164-b18c-49834d046588" isPK="true" system="true" />
+      <field column="ActivityContactID" columntype="integer" guid="bfb83fb9-da4f-40bb-9923-c328e526664a" system="true" />
+      <field column="ActivityType" columnsize="250" columntype="text" guid="e90919e1-7a7d-4bf4-8178-592b0edda080" system="true" />
+      <field allowempty="true" column="ActivityItemID" columntype="integer" guid="1e18dc64-c5a3-4ae5-8c65-1fad3e2f6b22" system="true" />
+      <field allowempty="true" column="ActivityItemDetailID" columntype="integer" guid="6fb533b0-2036-49e2-9c36-e92bfb1e2205" system="true" />
+      <field allowempty="true" column="ActivityValue" columnsize="250" columntype="text" guid="7e1bf8d5-33bb-4e36-9727-bdb6a04fb7b0" system="true" />
+      <field allowempty="true" column="ActivityCreated" columntype="datetime" guid="db2eba1f-fec7-4019-b1c0-cfd4bfaf314f" system="true" />
+      <field allowempty="true" column="ActivityWebPageItemGUID" columnprecision="0" columntype="guid" enabled="true" guid="e0ef3d90-ec3d-4534-99ab-967116d241eb" system="true" />
+      <field allowempty="true" column="ActivityURL" columntype="longtext" guid="209bc147-d2a8-4dcd-aff9-e9c0de77c220" system="true" />
+      <field allowempty="true" column="ActivityTitle" columnsize="250" columntype="text" guid="72b362da-019d-4679-a29f-cfd87909d18b" system="true" />
+      <field allowempty="true" column="ActivityComment" columntype="longtext" guid="2d92df26-e285-494c-b07a-2564ab0c73c0" system="true" />
+      <field allowempty="true" column="ActivityUTMSource" columnsize="200" columntype="text" guid="10fcce88-c98b-43ad-8db4-645138f48f65" system="true" />
+      <field allowempty="true" column="ActivityUTMContent" columnsize="200" columntype="text" guid="33bb0223-3cb9-47a7-9a57-935377a2f6a4" system="true" />
+      <field allowempty="true" column="ActivityLanguageID" columnprecision="0" columntype="integer" enabled="true" guid="e1300a29-5626-4c97-b747-cd9c9e250951" refobjtype="cms.contentlanguage" reftype="Required" system="true" />
+      <field allowempty="true" column="ActivityURLReferrer" columntype="longtext" guid="cf247454-7ab5-4e3f-a239-7b0fa57d3884" system="true" />
+      <field allowempty="true" column="ActivityTrackedWebsiteID" columntype="integer" guid="ca41395a-3612-4b68-9ffd-a16c30b74c4a" system="true" />
+      <field allowempty="true" column="ActivityChannelID" columnprecision="0" columntype="integer" enabled="true" guid="1a81fbee-37de-4f6b-88fe-b4cca6dc9e70" refobjtype="cms.channel" reftype="Required" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>77fa65bf-2a57-42a1-a738-c29d6f0f444a</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.Activity</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Activities</CodeName>
+    <GUID>f26ac0e2-0658-4598-bae8-4cc628758550</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>OM_Activity</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

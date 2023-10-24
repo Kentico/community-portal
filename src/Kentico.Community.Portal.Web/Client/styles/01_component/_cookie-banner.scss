@@ -1,0 +1,107 @@
+$height: 260px;
+
+.xpcookiebanner {
+    width: 100%;
+    background-color: $white;
+    padding: 16px 0;
+    z-index: 110;
+    transform: translateY(100%);
+    min-height: $height;
+    color: #231f20;
+    border-bottom: 4px solid #f05a22;
+    display: none;
+
+    &.is-active {
+        display: flex;
+        transform: translateY(0%);
+    }
+
+    &__inner {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-direction: column;
+
+        @include media-breakpoint-up(md) {
+            flex-direction: row;
+            align-items: center;
+        }
+
+        p,
+        a {
+            color: $black;
+            margin: 0;
+            font-size: 12px;
+
+            @include media-breakpoint-up(sm) {
+                font-size: 14px;
+            }
+
+            @include media-breakpoint-up(md) {
+                font-size: 16px;
+            }
+        }
+    }
+
+    &__header {
+        width: 100%;
+        font-size: 18px;
+        font-weight: bold;
+        margin: 8px 16px 8px 0;
+
+        @include media-breakpoint-down(sm) {
+            margin: 16px 0 16px 0;
+        }
+
+        @include media-breakpoint-down(md) {
+            margin: 16px 32px 16px 0;
+            font-size: 30px;
+        }
+
+        &:after {
+            content: '';
+        }
+    }
+
+    &__ctas {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        white-space: nowrap;
+        margin-top: 16px;
+
+        @include media-breakpoint-up(sm) {
+            margin-top: 0;
+            margin-left: 32px;
+        }
+
+        .btn {
+            @include media-breakpoint-up(md) {
+                font-size: 14px;
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+        }
+    }
+
+    &__cta + .xpcookiebanner__cta {
+        margin-top: 0;
+        margin-left: 16px;
+    }
+
+    &__message {
+        font-size: 0;
+    }
+}
+
+.js-header--xpcookiebanner-is-active {
+    margin-top: $height;
+    top: $height;
+
+    @include media-breakpoint-down(md) {
+        .nav .nav__inner {
+            height: calc(100% - #{$height});
+            top: $height;
+        }
+    }
+}

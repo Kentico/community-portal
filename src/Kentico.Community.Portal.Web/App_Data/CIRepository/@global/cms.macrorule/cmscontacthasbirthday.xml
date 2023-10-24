@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+<![CDATA[
+selectedDay = DateTime.Now.AddDays(ToInt({days}));
+Contact.ContactBirthday != null && {_is}(Contact.ContactBirthday.Month == selectedDay.Month && Contact.ContactBirthday.Day == selectedDay.Day);
+]]>
+  </MacroRuleCondition>
+  <MacroRuleDescription>{$macrorule.contacthasbirthday.description$}</MacroRuleDescription>
+  <MacroRuleDisplayName>Contact birthday is</MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>6de0ab69-0512-40a7-9a52-d3a0d3cafe75</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactHasBirthday</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="days" columnsize="200" columntype="text" guid="c5407516-dead-4ae8-ade3-d7e414a6ea9d" visible="true">
+        <properties>
+          <fieldcaption>select day</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <DisplayActualValueAsItem>False</DisplayActualValueAsItem>
+          <EditText>False</EditText>
+          <Options>
+<![CDATA[
+-1;yesterday
+0;today
+1;tomorrow
+]]>
+          </Options>
+          <Placeholder>select day</Placeholder>
+          <SortItems>False</SortItems>
+        </settings>
+      </field>
+      <field column="_is" columnsize="100" columntype="text" guid="050a2dfc-5040-4064-8bf0-1e5b80c5b93e" visible="true">
+        <properties>
+          <defaultvalue>__is</defaultvalue>
+          <fieldcaption>select operation</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <EditText>False</EditText>
+          <IsPerfectum>True</IsPerfectum>
+          <Options>
+<![CDATA[
+__is;is
+__isnot;is not
+]]>
+          </Options>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>Contact birthday {_is} {days}</MacroRuleText>
+</cms.macrorule>

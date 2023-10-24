@@ -1,0 +1,58 @@
+@model Kentico.Community.Portal.Web.Components.ViewComponents.Pagination.IPagedViewModel
+
+<nav aria-label="pagination" class="mt-4">
+    <ul class="pagination justify-content-center">
+
+        @if (Model.Page > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" href='@Model.PageLinkPath(1, Context.Request)' aria-label="First">
+                    <svg class="c-icon  ">
+                        <use xlink:href="/img/icons.svg#pagination-left-end"></use>
+                    </svg>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href='@Model.PageLinkPath(Model.Page - 1, Context.Request)' aria-label="Previous">
+                    <svg class="c-icon  ">
+                        <use xlink:href="/img/icons.svg#pagination-left"></use>
+                    </svg>
+                </a>
+            </li>
+        }
+
+        @for (int pageNumber = 1; pageNumber <= Model.TotalPages; pageNumber++)
+        {
+            if (pageNumber == Model.Page)
+            {
+                <li class="page-item active">
+                    <a href="#" class="page-link">@pageNumber</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" href='@Model.PageLinkPath(pageNumber, Context.Request)'>@pageNumber</a>
+                </li>
+            }
+        }
+
+        @if (Model.Page < Model.TotalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" href='@Model.PageLinkPath(Model.Page + 1, Context.Request)' aria-label="Next">
+                    <svg class="c-icon  ">
+                        <use xlink:href="/img/icons.svg#pagination-right"></use>
+                    </svg>
+                </a>
+            </li>
+            <li class="page-item">
+                <a href='@Model.PageLinkPath(Model.TotalPages, Context.Request)' class="page-link" aria-label=" Last">
+                    <svg class="c-icon  ">
+                        <use xlink:href="/img/icons.svg#pagination-right-end"></use>
+                    </svg>
+                </a>
+            </li>
+        }
+    </ul>
+</nav>

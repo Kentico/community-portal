@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.scheduledtask>
+  <TaskAssemblyName>CMS.EmailMarketing</TaskAssemblyName>
+  <TaskClass>CMS.EmailLibrary.EmailStatisticsCalculatorTask</TaskClass>
+  <TaskData />
+  <TaskDeleteAfterLastRun>False</TaskDeleteAfterLastRun>
+  <TaskDisplayName>Recalculate email statistics</TaskDisplayName>
+  <TaskEnabled>True</TaskEnabled>
+  <TaskGUID>8703d71f-e6ef-4312-afca-5bb8da2dcfd5</TaskGUID>
+  <TaskInterval>
+    <![CDATA[minute;11/4/2022 1:00:00 PM;30;00:00:00;23:59:00;Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday]]>
+  </TaskInterval>
+  <TaskName>RecalculateEmailStatistics</TaskName>
+</cms.scheduledtask>

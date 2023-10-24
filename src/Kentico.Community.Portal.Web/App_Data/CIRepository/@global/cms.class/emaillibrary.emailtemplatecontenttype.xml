@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Allowed email template</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="EmailTemplateContentTypeID" columntype="integer" enabled="true" guid="d0500953-3793-4c02-846e-49f7ba6c72c9" isPK="true" system="true" />
+      <field column="EmailTemplateContentTypeContentTypeID" columnprecision="0" columntype="integer" enabled="true" guid="dddf9a91-618f-48c7-94f4-f1f1047a8ea4" refobjtype="cms.contenttype" reftype="Required" system="true" />
+      <field column="EmailTemplateContentTypeEmailTemplateID" columnprecision="0" columntype="integer" enabled="true" guid="55151be1-f329-4c38-bfba-fd6f2589dbe5" refobjtype="emaillibrary.emailtemplate" reftype="Required" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>306c5917-4204-4f7d-a6ee-3f611964a29b</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>EmailLibrary.EmailTemplateContentType</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.EmailLibrary</CodeName>
+    <GUID>028f4adc-346c-434a-8992-408c8b45a986</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>EmailLibrary_EmailTemplateContentType</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

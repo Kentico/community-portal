@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Website channel</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="WebsiteChannelID" columntype="integer" enabled="true" guid="95266598-75d9-497a-a9d9-dc6879a5e5fd" isPK="true" system="true" />
+      <field column="WebsiteChannelGUID" columnprecision="0" columntype="guid" enabled="true" guid="5ab5bc55-e4f3-48b4-a2e7-0cc51d251e53" system="true" />
+      <field column="WebsiteChannelDomain" columnprecision="0" columnsize="400" columntype="text" enabled="true" guid="d55c6ce8-2422-4df6-95bb-5963b35d9e31" system="true" />
+      <field column="WebsiteChannelChannelID" columnprecision="0" columntype="integer" enabled="true" guid="460a1531-dcb2-48a1-9784-2af43a4c2575" refobjtype="cms.channel" reftype="Required" system="true" />
+      <field allowempty="true" column="WebsiteChannelHomePage" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="d4e373a0-eb1e-46fd-92c3-842a0d51ae36" system="true" />
+      <field column="WebsiteChannelPrimaryContentLanguageID" columnprecision="0" columntype="integer" enabled="true" guid="5d9b81dd-4a20-4a76-bc4e-4225f370f2c2" refobjtype="cms.contentlanguage" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="WebsiteChannelDefaultCookieLevel" columnprecision="0" columntype="integer" enabled="true" guid="0c298374-1681-4591-9907-271de8923db0" system="true">
+        <properties>
+          <defaultvalue>1000</defaultvalue>
+        </properties>
+      </field>
+      <field column="WebsiteChannelStoreFormerUrls" columnprecision="0" columntype="boolean" enabled="true" guid="e06f58f0-e9ba-45a3-92c0-76c5582cecc9" system="true">
+        <properties>
+          <defaultvalue>True</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>2f6bb2c4-a3d6-40a1-a43a-1142c0d4c84b</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.WebsiteChannel</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Websites</CodeName>
+    <GUID>87975c89-f788-4e6c-a91f-08f38097cc32</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_WebsiteChannel</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

@@ -1,0 +1,87 @@
+@using Kentico.Community.Portal.Web.Components.Sections.Grid
+
+@model GridSectionViewModel
+
+@{
+  string containerClass = Model.Layout switch
+  {
+    Layouts._1_Column_Full_Width => "",
+    _ => "container"
+  };
+
+  string columnsClass = Model.Layout switch
+  {
+    Layouts._3_Columns_33_33_33 => "row-cols-1 row-cols-md-3",
+    Layouts._2_Columns_50_50 => "row-cols-1 row-cols-md-2",
+    Layouts._1_Column_Full_Width => "row-cols-1",
+    Layouts._1_Column or Layouts._1_Column_Max_Width_Limited or _ => "row-cols-1",
+  };
+
+  string bodyAlignmentClass = Model.BodyAlignment switch
+  {
+    Alignments.Center => "d-flex justify-content-center",
+    Alignments.Left or _ => "",
+  };
+
+  string backgroundColorClass = Model.BackgroundColor switch
+  {
+    BackgroundColors.Dark => "bg-light-subtle",
+    BackgroundColors.Secondary_Light => "bg-purple-100",
+    BackgroundColors.Light => "bg-light",
+    BackgroundColors.White or _ => "",
+  };
+
+  string paddingTopClass = Model.PaddingTop switch
+  {
+    VerticalPaddings.Large => "pt-7",
+    VerticalPaddings.Medium => "pt-5",
+    VerticalPaddings.Small => "pt-3",
+    VerticalPaddings.None or _ => ""
+  };
+
+  string paddingBottomClass = Model.PaddingBottom switch
+  {
+    VerticalPaddings.Large => "pb-7",
+    VerticalPaddings.Medium => "pb-5",
+    VerticalPaddings.Small => "pb-3",
+    VerticalPaddings.None or _ => ""
+  };
+}
+
+<div class="c-section @paddingTopClass @paddingBottomClass @backgroundColorClass">
+  <div class="@containerClass">
+    @if (!string.IsNullOrWhiteSpace(Model.Heading))
+    {
+      string slug = View.SlugHelper.GenerateSlug($"gridSection-{Model.Heading}");
+
+      string alignmentClass = Model.HeadingAlignment switch
+      {
+        Alignments.Center => "text-center",
+        Alignments.Left or _ => "text-left"
+      };
+
+      <h2 id="@slug" class="@alignmentClass">@Model.Heading
+        @if (Model.IsHeadingAnchorLinkVisible)
+        {
+          <span class="ml-2"><a href="#@slug">#</a></span>
+        }
+      </h2>
+    }
+
+    <div class="row @columnsClass row-gap-5 @bodyAlignmentClass">
+      @foreach (int i in Enumerable.Range(1, Model.WidgetZoneCount))
+      {
+        string columnClass = Model.Layout switch
+        {
+          Layouts._1_Column_Narrow => "col-12 col-lg-6",
+          Layouts._1_Column_Max_Width_Limited => "col-xl-10 col-xxl-9",
+          _ => "col"
+        };
+
+        <div class="@columnClass">
+          <widget-zone />
+        </div>
+      }
+    </div>
+  </div>
+</div>

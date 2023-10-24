@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactMapping>
+    <form>
+      <field column="ContactEmail" mappedtofield="Email" />
+      <field column="ContactFirstName" mappedtofield="FirstName" />
+      <field column="ContactLastName" mappedtofield="LastName" />
+    </form>
+  </ClassContactMapping>
+  <ClassContactOverwriteEnabled>True</ClassContactOverwriteEnabled>
+  <ClassDisplayName>User</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="UserID" columntype="integer" guid="153b1cec-1580-43ae-adf8-ca0e4879d168" isPK="true" isunique="true" system="true" />
+      <field column="UserName" columnsize="254" columntype="text" guid="aa4122b7-db14-48a5-885e-07a242f84702" system="true" />
+      <field allowempty="true" column="FirstName" columnsize="100" columntype="text" guid="60af25ea-ad95-49ba-a446-2ea754cd10be" system="true" />
+      <field allowempty="true" column="LastName" columnsize="100" columntype="text" guid="67305fcf-928a-45ea-8e29-735f17da0972" system="true" />
+      <field allowempty="true" column="Email" columnsize="254" columntype="text" guid="fcef0fb3-6145-48ed-8f41-e28b71a665a8" system="true" />
+      <field column="UserPassword" columnsize="100" columntype="text" guid="adaad374-af5a-4e1b-afc7-72b4fb798d19" system="true" />
+      <field column="UserEnabled" columntype="boolean" guid="d5d58e7d-6b71-4a51-9226-d7ce166e8580" system="true" />
+      <field allowempty="true" column="UserCreated" columnprecision="7" columntype="datetime" guid="d75ebe3e-3d7d-44ab-af34-0ee947c3a3eb" system="true" />
+      <field allowempty="true" column="LastLogon" columnprecision="7" columntype="datetime" guid="8bb80186-0c9b-45cb-91d1-cbec14b8fdc7" system="true" />
+      <field column="UserGUID" columntype="guid" guid="89fae932-ca98-420b-92a0-0fc146856ce3" system="true" />
+      <field column="UserLastModified" columnprecision="7" columntype="datetime" guid="e1f9c8fd-8c5d-415c-ad0e-935034d751de" system="true" />
+      <field allowempty="true" column="UserPasswordLastChanged" columnprecision="7" columntype="datetime" guid="48ea571d-9507-49c9-82f5-2b58f3601e26" system="true" />
+      <field allowempty="true" column="UserSecurityStamp" columnsize="72" columntype="text" guid="52911de8-d111-4afd-8567-cd0150927a95" system="true" />
+      <field column="UserIsPendingRegistration" columntype="boolean" guid="4ffddbf8-cde2-42ce-a65e-b3f42c2914ee" system="true" />
+      <field allowempty="true" column="UserRegistrationLinkExpiration" columnprecision="7" columntype="datetime" guid="c6aa3f2a-3f5f-4559-9c9a-32dc88734368" system="true" />
+      <field column="UserAdministrationAccess" columntype="boolean" guid="8e548958-20ef-4c6a-9545-6bf439f0d0d8" system="true" />
+      <field column="UserIsExternal" columnprecision="0" columntype="boolean" enabled="true" guid="21bda78d-41a1-4aa9-a10e-1337a98b1ce7" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>2e02c378-0f3d-45de-9b2d-b8cf2bd87b55</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>cms.user</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Membership</CodeName>
+    <GUID>d4b7561a-f188-420c-8f68-63b5c573b2bf</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_User</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>

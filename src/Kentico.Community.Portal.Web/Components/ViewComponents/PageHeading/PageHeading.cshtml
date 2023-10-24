@@ -1,0 +1,16 @@
+@model Kentico.Community.Portal.Web.Components.ViewComponents.PageHeading.PageHeadingViewModel
+
+<div class="c-section default">
+    <div class="container">
+        <h1 class="text-center k-dot">@Model.Title</h1>
+
+        @if (Model.Description is string description)
+        {
+            <div class="row justify-content-center">
+                <div class="col-10 col-md-8 col-lg-6 col-xxl-4">
+                    <p class="text-center">@description</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,243 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": ".NET: build (Solution)",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": ".NET: rebuild (Solution)",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "--no-incremental",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": ".NET: clean (Solution)",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "clean",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": ".NET: publish (Web)",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "publish",
+        "${workspaceFolder}/src/Kentico.Community.Portal.Web/Kentico.Community.Portal.Web.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": ".NET: watch (Web)",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "watch",
+        "run",
+        "--project",
+        "${workspaceFolder}/src/Kentico.Community.Portal.Web/Kentico.Community.Portal.Web.csproj"
+      ],
+      "options": {
+        "env": {
+          "DOTNET_WATCH_RESTART_ON_RUDE_EDIT": "true"
+        }
+      },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": ".NET: run (Web)",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "run",
+        "--project",
+        "${workspaceFolder}/src/Kentico.Community.Portal.Web/Kentico.Community.Portal.Web.csproj"
+      ],
+      "problemMatcher": "$msCompile",
+      "isBackground": true
+    },
+    {
+      "label": ".NET: test (Install Playwright Dependencies)",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/Download-PlaywrightBrowsers.ps1",
+      "args": ["-WorkspaceFolder", "${workspaceFolder}"],
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": ".NET: test (Solution)",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["test", "-s", "./test/basic.runsettings"],
+      "problemMatcher": "$msCompile",
+      "isTestCommand": true
+    },
+    {
+      "label": ".NET: test (E2E)",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["test", "-s", "./test/e2e.runsettings", "--no-build"],
+      "dependsOn": [
+        ".NET: build (Test E2E)",
+        ".NET: test (Install Playwright Dependencies)"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": "$msCompile",
+      "isTestCommand": true
+    },
+    {
+      "label": ".NET: build (Test E2E)",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["build"],
+      "problemMatcher": "$msCompile",
+      "options": {
+        "cwd": "${workspaceFolder}/test/Kentico.Community.Portal.Web.E2E.Tests/"
+      }
+    },
+    {
+      "label": "npm: install (Web)",
+      "type": "npm",
+      "script": "install",
+      "group": "none",
+      "problemMatcher": [],
+      "path": "src/Kentico.Community.Portal.Web",
+      "detail": "Install Web npm dependencies"
+    },
+    {
+      "label": "npm: install (Admin)",
+      "type": "npm",
+      "script": "install",
+      "path": "src/Kentico.Community.Portal.Admin/Client",
+      "group": "none",
+      "problemMatcher": [],
+      "detail": "Install Admin npm dependencies"
+    },
+    {
+      "label": "npm: dev (Web)",
+      "type": "npm",
+      "script": "dev",
+      "problemMatcher": [],
+      "path": "src/Kentico.Community.Portal.Web",
+      "dependsOn": ["npm: install (Web)"],
+      "detail": "Vite development server"
+    },
+    {
+      "label": "npm: dev (Admin)",
+      "type": "npm",
+      "script": "start",
+      "group": "build",
+      "problemMatcher": [],
+      "path": "src/Kentico.Community.Portal.Admin/Client",
+      "dependsOn": ["npm: install (Admin)"],
+      "detail": "Webpack development server"
+    },
+    {
+      "label": "Xperience: CI Store",
+      "detail": "Updates the CI repository with all valid objects from the local database",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/Store-CI.ps1",
+      "args": ["-WorkspaceFolder", "${workspaceFolder}"],
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "Xperience: CI Restore",
+      "detail": "Updates the local database with all the objects in the CI repository",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/Restore-CI.ps1",
+      "args": ["-WorkspaceFolder", "${workspaceFolder}"],
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "Xperience: Application Update",
+      "detail": "Updates local database data and schema to the version of the project's referenced Xperience NuGet package",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/Update-Xperience.ps1",
+      "args": ["-WorkspaceFolder", "${workspaceFolder}"],
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "Xperience: Update Generated Code Files",
+      "detail": "Updates generated code files in the repository for custom Form, Content, and Data Types",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/Refresh-GeneratedCode.ps1",
+      "args": ["-WorkspaceFolder", "${workspaceFolder}"],
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "Xperience: Generate Deployment Package",
+      "detail": "Generates a deployment package of the project for the Xperience SaaS environment",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/Export-DeploymentPackage.ps1",
+      "args": ["-WorkspaceFolder", "${workspaceFolder}"],
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    }
+  ]
+}

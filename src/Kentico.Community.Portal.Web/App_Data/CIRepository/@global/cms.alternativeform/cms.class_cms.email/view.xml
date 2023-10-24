@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>cms.email</CodeName>
+    <GUID>488f275e-7311-4136-a127-4c970cd4060f</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="EmailID" guid="521d5e92-1ffd-4b57-8efe-de86ea04e86b" />
+      <field column="EmailFrom" columnprecision="0" enabled="true" guid="c2397191-6419-4c90-8602-438740d5de70" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.emailqueue.emailFrom$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="EmailTo" columnprecision="0" enabled="true" guid="f47a699d-f3d6-4da7-84e8-a7a54e7de8a9" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.emailqueue.emailTo$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="EmailReplyTo" columnprecision="0" enabled="true" guid="7faf43c9-3882-43fb-9004-520b188a8b5a" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.emailqueue.replyTo$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="EmailCc" columnprecision="0" enabled="true" guid="10e8d6ce-d8b9-4bf8-a84d-8f9688e29981" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.emailqueue.emailCc$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="EmailBcc" columnprecision="0" enabled="true" guid="cedfd4fc-8e1b-4156-960e-552fc1246aeb" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.emailqueue.emailBcc$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="EmailSubject" columnprecision="0" enabled="true" guid="601fdfbe-281e-458d-8cc0-a29306087c87" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.emailqueue.subject$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="EmailBody" columnprecision="0" enabled="true" guid="ad000851-1cdf-41c8-95ee-eff669981220" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.emailqueue.emailBody$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field allowempty="true" column="EmailAttachments" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="6967c6c4-32f5-49f2-9adf-a232b2776411" system="true" visible="true" order="8">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.emailqueue.emailAttachments$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+      <field column="EmailPlainTextBody" columnprecision="0" enabled="true" guid="c96fa853-4a36-4f3d-b661-fcdb58434d1c" visible="true" order="9">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.emailqueue.plainText$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="EmailFormat" guid="dcfbdec6-2369-4292-b406-9995bb2889bf" order="10" />
+      <field column="EmailPriority" guid="b7feb9c1-7f2e-42e1-9be6-8e7100f9c669" order="11" />
+      <field column="EmailLastSendResult" columnprecision="0" enabled="true" guid="40755371-af41-4836-9e1c-6e512a280e66" visible="true" order="12">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.emailqueue.lastSendResult$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="EmailLastSendAttempt" guid="b5be875d-5220-454c-a099-6b936c3485c0" order="13" />
+      <field column="EmailGUID" guid="c78068ea-bd20-4004-b3d4-25028ffd07e8" order="14" />
+      <field column="EmailCreated" guid="f8d87b02-84bb-4b8f-b25b-7610dd41e3b1" order="15" />
+      <field column="EmailStatus" guid="227556a7-9cc7-4f9b-96ad-2ccd667605b1" order="16" />
+      <field column="EmailHeaders" guid="df673a9f-31e4-40c5-9f13-3a5af25dd895" order="17" />
+      <field column="EmailEmailConfigurationID" guid="5a39c0c1-c723-41cd-8df2-cf53de161f1b" order="18" />
+      <field column="EmailMailoutGuid" guid="fb8caeb5-5777-4dda-adb4-acae7b54a3f9" order="19" />
+    </form>
+  </FormDefinition>
+  <FormDisplayName>view</FormDisplayName>
+  <FormGUID>b2fd87ae-4c2d-423f-bc0e-9a637d468865</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>View</FormName>
+</cms.alternativeform>

@@ -1,0 +1,56 @@
+@model Kentico.Community.Portal.Web.Features.QAndA.QAndAQuestionPageViewModel
+
+@{
+    ClientAssets.RequirePrism();
+}
+
+<main>
+    <section class="c-section default">
+        <div class="container">
+
+            <div class="row justify-content-center">
+                <div class="col-xl-10 col-xxl-9">
+                    <p>
+                        <a href="/q-and-a">Back to Q&A</a>
+                    </p>
+                </div>
+                <div class="col-xl-10 col-xxl-9">
+                    <div role="main">
+                        <div class="mb-5">
+                            <partial name="~/Features/QAndA/_QAndAQuestionDetail.cshtml" model="Model.Question" />
+                        </div>
+
+                        <div>
+                            <h2 class="h3" data-ktc-search-exclude>Answers</h2>
+
+                            @foreach (var answer in Model.Answers)
+                            {
+                                <partial name="~/Features/QAndA/_QAndAAnswerDetail.cshtml" model="answer" />
+
+                                <hr>
+                            }
+                        </div>
+
+                        @if (Model.Question.Permissions.CanAnswer)
+                        {
+                            <button class="btn btn-primary btn-lighter px-5 mt-4" hx-get hx-controller="QAndAAnswer"
+                                hx-action="DisplayCreateAnswerForm" hx-route-questionID="@Model.Question.ID"
+                                hx-target="this" hx-swap="outerHTML">
+                                Answer Question
+                            </button>
+                        }
+                        else
+                        {
+                            <p data-ktc-search-exclude class="text-center mt-3">
+                                To answer this question, you have to
+                                <a asp-controller="Authentication" asp-action="Login"
+                                    asp-route-returnUrl="@Context.Request.Path" class="c-link">login first</a>.
+                            </p>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>5c450578-5dac-430d-b918-0ac813a4d99d</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Assembly-errors-running-on-Azure9b179958-localtest</CodeName>
+      <GUID>d82c4e00-138c-4983-a080-5b66db5a2552</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>6360fec1-cebc-4e8e-ba30-4504fb7fee97</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>19</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+Hi all,
+
+We are currently facing the following issue after we deployed our Solution into Azure DevOps:
+
+```
+**Server Error in '/' Application.**
+
+Could not load file or assembly 'CMS.Base, Version=13.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040)
+
+Description: An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code.
+
+Exception Details: System.IO.FileLoadException: Could not load file or assembly 'CMS.Base, Version=13.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040)
+
+Source Error:
+An unhandled exception was generated during the execution of the current web request. Information regarding the origin and location of the exception can be identified using the exception stack trace below.
+
+Assembly Load Trace: The following information can be helpful to determine why the assembly 'CMS.Base, Version=13.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9' could not be loaded.
+
+WRN: Assembly binding logging is turned OFF.
+To enable assembly bind failure logging, set the registry value
+[HKLM\Software\Microsoft\Fusion!EnableLog] (DWORD) to 1.
+Note: There is some performance penalty associated with assembly bind failure logging.
+To turn this feature off, remove the registry value [HKLM\Software\Microsoft\Fusion!EnableLog].
+```
+
+Full stack trace below:
+
+```
+[FileLoadException: Could not load file or assembly 'CMS.Base, Version=13.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040)]
+System.ModuleHandle.ResolveMethod(RuntimeModule module, Int32 methodToken, IntPtr* typeInstArgs, Int32 typeInstCount, IntPtr* methodInstArgs, Int32 methodInstCount) +0
+System.ModuleHandle.ResolveMethodHandleInternalCore(RuntimeModule module, Int32 methodToken, IntPtr[] typeInstantiationContext, Int32 typeInstCount, IntPtr[] methodInstantiationContext, Int32 methodInstCount) +162
+System.ModuleHandle.ResolveMethodHandleInternal(RuntimeModule module, Int32 methodToken, RuntimeTypeHandle[] typeInstantiationContext, RuntimeTypeHandle[] methodInstantiationContext) +96
+System.Reflection.CustomAttributeData..ctor(RuntimeModule scope, CustomAttributeRecord caRecord) +79
+System.Reflection.CustomAttributeData.GetCustomAttributes(RuntimeModule module, Int32 tkTarget) +119
+System.Reflection.CustomAttributeData.GetCustomAttributesInternal(RuntimeAssembly target) +83
+CMS.Core.AssemblyDiscovery.IsAssemblyDiscoverable(Assembly assembly) +19
+CMS.Core.AssemblyDiscovery.AddOnlyDiscoverableAssembly(ICollection`1 assemblies, Dictionary`2 preloadedAssemblies, AssemblyName assemblyName, String filePath) +72
+CMS.Core.AssemblyDiscovery.ExecuteGetAssemblies(Boolean onlyDiscoverable) +1168
+CMS.Core.AssemblyDiscovery.get_DiscoverableAssemblies() +31
+CMS.Core.AssemblyDiscoveryHelper.GetAssemblies(Boolean discoverableOnly) +75
+CMS.Core.ModuleDiscovery.GetModules() +99
+CMS.Core.ModuleEntryManager.GetDiscoverableModules() +29
+CMS.Core.ModuleEntryManager.ModuleCollectionsInitialization() +132
+CMS.Core.ModuleEntryManager.PreInit() +21
+CMS.Core.AppCore.PreInit() +133
+CMS.DataEngine.CMSApplication.PreInit(Boolean initializeContainer) +127
+Kentico.Web.Mvc.ApplicationBootstrapper.Run() +130
+[InvalidOperationException: The pre-application start initialization method Run on type Kentico.Web.Mvc.ApplicationBootstrapper threw an exception with the following error message: Could not load file or assembly 'CMS.Base, Version=13.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040).]
+System.Web.Compilation.BuildManager.InvokePreStartInitMethodsCore(ICollection`1 methods, Func`1 setHostingEnvironmentCultures) +919
+System.Web.Compilation.BuildManager.InvokePreStartInitMethods(ICollection`1 methods) +169
+System.Web.Compilation.BuildManager.CallPreStartInitMethods(String preStartInitListPath, Boolean& isRefAssemblyLoaded) +172
+System.Web.Compilation.BuildManager.ExecutePreAppStart() +172
+System.Web.Hosting.HostingEnvironment.Initialize(ApplicationManager appManager, IApplicationHost appHost, IConfigMapPathFactory configMapPathFactory, HostingEnvironmentParameters hostingParameters, PolicyLevel policyLevel, Exception appDomainCreationException) +854
+[HttpException (0x80004005): The pre-application start initialization method Run on type Kentico.Web.Mvc.ApplicationBootstrapper threw an exception with the following error message: Could not load file or assembly 'CMS.Base, Version=13.0.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040).]
+System.Web.HttpRuntime.FirstRequestInit(HttpContext context) +532
+System.Web.HttpRuntime.EnsureFirstRequestInit(HttpContext context) +111
+System.Web.HttpRuntime.ProcessRequestNotificationPrivate(IIS7WorkerRequest wr, HttpContext context) +724
+```
+
+Currently I have installed and/or updated to version 13.0.118...
+
+By the way, My Website app runs perfectly in my local end.
+
+I don't know what I have to do to fix this... Perhaps Should I try a restore of the DB on Azure??
+
+I will appreciate your help so much! Thank you!
+
+---
+
+**Environment**
+- Xperience by Kentico version: [26.6.0]
+- .NET version: [6]
+- Deployment environment: [SaaS|Azure|VM]
+- Link to relevant [Xperience by Kentico documentation](https://docs.xperience.io/xp)
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2023-10-21 01:40:31Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2023-10-21 01:40:31Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageTitle>Assembly errors running on Azure</QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Role</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="RoleID" columntype="integer" guid="0c8cc1de-1c82-4596-b6d0-b2c60bcad3b7" isPK="true" system="true" />
+      <field column="RoleDisplayName" columnsize="100" columntype="text" guid="c5f83fe3-f362-431f-80be-2d40122e469e" system="true" />
+      <field column="RoleName" columnsize="100" columntype="text" guid="918120c1-6d6b-42f5-be30-37f91af11666" system="true" />
+      <field allowempty="true" column="RoleDescription" columntype="longtext" guid="c465483d-4158-42e0-bb25-0c274769c74a" system="true" />
+      <field column="RoleGUID" columntype="guid" guid="ad0f25d2-15b7-4eae-86bd-fc64538c45f9" system="true" />
+      <field column="RoleLastModified" columntype="datetime" guid="11b1bf06-0088-48a8-87d6-cffafff290ca" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>1dba5a45-954e-442c-8a00-41927c501f2b</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>cms.Role</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Membership</CodeName>
+    <GUID>d4b7561a-f188-420c-8f68-63b5c573b2bf</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_Role</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

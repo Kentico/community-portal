@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Class</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ClassID" columntype="integer" guid="15a00747-3ff0-470a-ae7a-cc99c8a8259f" isPK="true" system="true" />
+      <field column="ClassDisplayName" columnsize="100" columntype="text" guid="b622e4bc-00e4-4ddd-bc24-952579b9812a" system="true" />
+      <field column="ClassName" columnsize="100" columntype="text" guid="11b3b0bd-6161-4ea6-b714-2249e4710ff3" isunique="true" system="true" />
+      <field column="ClassXmlSchema" columntype="longtext" guid="fa1ff4fd-b445-494b-9b34-538b978011c7" system="true" />
+      <field column="ClassFormDefinition" columntype="longtext" guid="0e36af3b-04b5-477b-86d9-e4fedbb6acfd" system="true" />
+      <field allowempty="true" column="ClassTableName" columnsize="100" columntype="text" guid="b211147b-2e77-4f0d-9546-e18990108532" system="true" />
+      <field allowempty="true" column="ClassShowTemplateSelection" columntype="boolean" guid="9d6a6d71-0f1a-49f3-810c-40b830a5cba9" system="true" />
+      <field column="ClassLastModified" columntype="datetime" guid="b0efc357-062e-4db3-a772-4761673faa81" system="true" />
+      <field column="ClassGUID" columntype="guid" guid="155ef725-c6a5-434f-90e6-f9a91f70d6cb" system="true" />
+      <field allowempty="true" column="ClassConnectionString" columnsize="100" columntype="text" guid="81f850e0-0dbd-4298-aebf-3a73bdc3b8e4" system="true" />
+      <field allowempty="true" column="ClassContactMapping" columntype="longtext" guid="fa0aa943-e3ef-42a0-ade2-179a27fc184b" system="true" />
+      <field allowempty="true" column="ClassContactOverwriteEnabled" columntype="boolean" guid="04b3aee9-b470-45b2-9c5e-90932d09cc19" system="true" />
+      <field allowempty="true" column="ClassDefaultObjectType" columnsize="100" columntype="text" guid="87954ccc-9d86-4dcc-8e05-90dc7bbdfeb6" system="true" />
+      <field allowempty="true" column="ClassResourceID" columntype="integer" guid="e8581cf4-a56e-4daf-9dd4-ee3f0d8a15b2" system="true" />
+      <field allowempty="true" column="ClassCodeGenerationSettings" columntype="longtext" guid="5a8428f9-3212-4ad6-be4e-7fd96928f699" system="true" />
+      <field allowempty="true" column="ClassIconClass" columnsize="200" columntype="text" guid="6db7bd4c-3a91-4f98-8540-a82a070677ff" system="true" />
+      <field column="ClassHasUnmanagedDbSchema" columnprecision="0" columntype="boolean" guid="cfeb12da-2006-4f45-aa24-919142788451" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+      <field column="ClassType" columnprecision="0" columnsize="10" columntype="text" enabled="true" guid="e6e0f7a9-f910-4ba2-8520-e6ca86a1f88b" system="true">
+        <properties>
+          <defaultvalue>Other</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="ClassContentTypeType" columnprecision="0" columnsize="10" columntype="text" enabled="true" guid="032be9ff-9648-4289-a55f-eba73d6ddce3" system="true" />
+      <field allowempty="true" column="ClassWebPageHasUrl" columnprecision="0" columntype="boolean" enabled="true" guid="f76db854-f389-421b-9c92-13bd12978c0c" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>d7e91104-201b-4b11-9550-e93ad9a4d81f</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>cms.class</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS</CodeName>
+    <GUID>ce1a65a0-80dc-4c53-b0e7-bdecf0aa8c02</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_Class</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

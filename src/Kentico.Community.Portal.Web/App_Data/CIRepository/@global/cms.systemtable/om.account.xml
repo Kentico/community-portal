@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassConnectionString>CMSOMConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Contact management - Account</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="AccountID" columntype="integer" guid="30e6d460-b720-4e7d-aa05-6755e7f42fb1" isPK="true" isunique="true" system="true" />
+      <field column="AccountName" columnsize="200" columntype="text" guid="2121ec13-08c4-410f-8bc5-4e144faaeda9" system="true" />
+      <field allowempty="true" column="AccountStatusID" columntype="integer" guid="1bded22a-f32a-405c-b0c3-c9f423876d0d" system="true" />
+      <field allowempty="true" column="AccountSubsidiaryOfID" columntype="integer" guid="898a28d9-f8de-4acc-839d-41eb1848ed73" system="true" />
+      <field allowempty="true" column="AccountOwnerUserID" columntype="integer" guid="81e30d84-b285-45a9-88a6-63701c66b2bc" system="true" />
+      <field allowempty="true" column="AccountAddress1" columnsize="100" columntype="text" guid="15aafbc2-50e0-479f-80a9-7b2fecba9a04" system="true" />
+      <field allowempty="true" column="AccountAddress2" columnsize="100" columntype="text" guid="78c861e1-58e5-4068-96ea-01b4965d1d36" system="true" />
+      <field allowempty="true" column="AccountCity" columnsize="100" columntype="text" guid="05698095-34d1-427c-8e05-92e1f1e002d8" system="true" />
+      <field allowempty="true" column="AccountZIP" columnsize="20" columntype="text" guid="3c5a601f-e091-48b6-a04f-b71470b0a78f" system="true" />
+      <field allowempty="true" column="AccountStateID" columntype="integer" guid="3f0535eb-1db7-4b81-9e24-70ce2dc8b46a" system="true" />
+      <field allowempty="true" column="AccountCountryID" columntype="integer" guid="8a936012-7ba3-40df-a979-7af60d3e66d1" system="true" />
+      <field allowempty="true" column="AccountPhone" columnsize="26" columntype="text" guid="0160de91-12cf-441f-a2da-3ea06b0a13b5" system="true" />
+      <field allowempty="true" column="AccountFax" columnsize="26" columntype="text" guid="c68fc6ef-67a1-4b5d-b31f-96a1720d4397" system="true" />
+      <field allowempty="true" column="AccountEmail" columnsize="254" columntype="text" guid="404a6653-8529-4750-af37-3397b866a3b9" system="true" />
+      <field allowempty="true" column="AccountWebSite" columnsize="200" columntype="text" guid="a707d146-d098-452d-bd16-03316fa14e8b" system="true" />
+      <field allowempty="true" column="AccountPrimaryContactID" columntype="integer" guid="1bede702-e61d-47a9-aefe-02b5fb9065ac" system="true" />
+      <field allowempty="true" column="AccountPrimaryContactRoleID" columntype="integer" dummy="mainform" guid="28e35579-b1db-49a5-a4ff-ca344da67aa6" system="true" />
+      <field allowempty="true" column="AccountSecondaryContactID" columntype="integer" guid="8d9118e3-dc00-4e5f-8a2c-c6bc16361e52" system="true" />
+      <field allowempty="true" column="AccountSecondaryContactRoleID" columntype="integer" dummy="mainform" guid="290200c8-62b3-4a63-953b-9af376af1bf2" system="true" />
+      <field allowempty="true" column="AccountNotes" columntype="longtext" guid="751d92e0-d2f5-4a36-aa19-5740b1044704" system="true" />
+      <field column="AccountGUID" columntype="guid" guid="5c423918-1f4c-4172-922e-00a7ba7ca96e" system="true" />
+      <field column="AccountLastModified" columnprecision="7" columntype="datetime" guid="5e1fdba4-9315-477e-8943-e1592abe8496" system="true" />
+      <field column="AccountCreated" columnprecision="7" columntype="datetime" guid="f69cda62-f20e-43e9-978b-6fd1c82448b5" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>8e13fd06-a0fa-47d9-b335-17ddffb0d0a7</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.Account</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContactManagement</CodeName>
+    <GUID>0e4beef1-989c-4687-80ca-ae21fec09734</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>OM_Account</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>

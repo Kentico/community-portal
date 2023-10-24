@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.query>
+  <ClassID>
+    <CodeName>cms.settingscategory</CodeName>
+    <GUID>e85e89d4-b387-48bc-b414-63ebbd2f6b40</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </ClassID>
+  <QueryConnectionString>CMSConnectionString</QueryConnectionString>
+  <QueryGUID>31c14f6e-ed5a-41c2-8b15-7cbf3b893d95</QueryGUID>
+  <QueryIsCustom>False</QueryIsCustom>
+  <QueryIsLocked>False</QueryIsLocked>
+  <QueryName>usedcategories</QueryName>
+  <QueryRequiresTransaction>False</QueryRequiresTransaction>
+  <QueryText>
+<![CDATA[
+WITH usedCategories AS
+(
+    SELECT *
+		FROM CMS_SettingsCategory 
+		WHERE CategoryID IN (SELECT KeyCategoryID 
+								FROM CMS_SettingsKey 
+								WHERE ISNULL(KeyIsHidden, 0) = 0)
+    UNION ALL
+    SELECT CMS_SettingsCategory.*
+		FROM CMS_SettingsCategory JOIN usedCategories 
+		ON CMS_SettingsCategory.CategoryID = usedCategories.CategoryParentID
+)
+SELECT DISTINCT * 
+FROM usedCategories
+WHERE CategoryIsGroup = 0
+ORDER BY CategoryLevel, CategoryOrder
+OPTION(MAXRECURSION 100)
+]]>
+  </QueryText>
+  <QueryTypeID>0</QueryTypeID>
+</cms.query>

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Macro rule</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="MacroRuleID" columntype="integer" guid="9c84abda-f7a5-4acb-b3b2-f53125e089dd" isPK="true" system="true" />
+      <field column="MacroRuleDisplayName" columnsize="500" columntype="text" guid="47507682-a9b6-46f9-9873-bfcaaff3ab99" system="true" />
+      <field column="MacroRuleName" columnsize="200" columntype="text" guid="1dbfae33-b237-4ef9-bfc2-c7ccbf3a85f0" system="true" />
+      <field allowempty="true" column="MacroRuleDescription" columnsize="450" columntype="text" guid="f5100e73-9900-4788-9827-4c9fe54f56ab" system="true" />
+      <field allowempty="true" column="MacroRuleEnabled" columntype="boolean" guid="c5f86a6e-0c2f-47de-a10a-459b06e48598" system="true">
+        <properties>
+          <defaultvalue>true</defaultvalue>
+        </properties>
+      </field>
+      <field column="MacroRuleText" columnsize="1000" columntype="text" guid="89a3fd80-b6a8-42bb-9634-f2d2dae25367" system="true" />
+      <field column="MacroRuleCondition" columntype="longtext" guid="8303608d-c1b0-4157-a719-79419d73cb02" system="true" />
+      <field allowempty="true" column="MacroRuleParameters" columntype="longtext" guid="121f077f-1d84-4988-931f-0ab8647cc34c" system="true" />
+      <field allowempty="true" column="MacroRuleIsCustom" columntype="boolean" guid="c95f8b92-72f1-40c6-af9c-56eb32201f23" system="true">
+        <properties>
+          <defaultvalue>false</defaultvalue>
+        </properties>
+      </field>
+      <field column="MacroRuleLastModified" columntype="datetime" guid="9cc32607-8d18-4275-802f-9c3c4c8b8f60" system="true" />
+      <field column="MacroRuleGUID" columntype="guid" guid="d23ff3a0-659e-4c3a-ab95-80c8345a003b" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>c59a88e0-c6e5-4537-b35d-0cc3d2b294c9</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.MacroRule</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS</CodeName>
+    <GUID>ce1a65a0-80dc-4c53-b0e7-bdecf0aa8c02</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_MacroRule</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

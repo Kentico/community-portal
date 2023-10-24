@@ -1,0 +1,80 @@
+@model Kentico.Community.Portal.Web.Features.QAndA.QAndAQuestionFormViewModel
+
+@{
+    var id = $"{(Model.EditedObjectID ?? Guid.NewGuid()):N}";
+    var formId = $"questionForm_{id}";
+    var rootElId = $"questionFormRoot_{id}";
+    var editormdId = $"editormd_{id}";
+    string action = Model.EditedObjectID is null ? "CreateQuestion" : "UpdateQuestion";
+}
+
+<div id="@rootElId" class="mb-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <h2>
+                @if (Model.EditedObjectID is null)
+                {
+                    <text>Create new question</text>
+                }
+                else
+                {
+                    <text>Edit question "@Model.Title"</text>
+                }
+            </h2>
+
+            <form id="@formId" method="post" hx-post hx-controller="QAndAQuestion" hx-action="@action"
+                hx-swap="outerHTML" hx-target="#@rootElId">
+                <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
+
+                <div class="row mb-5">
+                    <div class="col-12">
+                        <label asp-for="Title" class="form-label mt-3"></label>
+                        <input type="text" class="form-control" asp-for="@Model.Title" />
+                        <p class="small mt-1 text-muted">Enter a short title to describe your question.</p>
+                        <span asp-validation-for="@Model.Title" class="error"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    @Model.FormHelpMessageHTML
+                </div>
+
+                <div id="editor_@editormdId" style="height:800px;">
+                    <label for="@editormdId" class="form-label mt-3">Your question</label>
+                    <textarea asp-for="@Model.Content" id="@editormdId" class="form-control d-none"
+                        style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;"
+                        placeholder="Your full question description goes here"></textarea>
+                </div>
+
+                <div class="d-grid">
+                    <input asp-for="EditedObjectID">
+                    <button type="submit" class="btn btn-primary btn-lighter px-5 mt-4">Submit your
+                        question</button>
+
+                    @if (Model.EditedObjectID is Guid questionID)
+                    {
+                        <button class="btn btn-outline-warning px-5 mt-4" hx-get hx-controller="QAndAQuestionPage"
+                            hx-action="DisplayQuestionDetail" hx-route-questionID="@questionID" hx-swap="outerHTML"
+                            hx-target="#@rootElId">
+                            Cancel
+                        </button>
+                    }
+                </div>
+            </form>
+
+            <vc:editor-md-assets />
+
+            <script type="module">
+                asyncReady(async () => {
+                    const qanda = await import('@ClientAssets.ViteAssetPath("dist/js/q-and-a.js")');
+
+                    qanda.initQAndA({
+                        formElemID: '@formId',
+                        editorElemID: '@editormdId',
+                        formType: 'Question'
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</div>

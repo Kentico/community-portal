@@ -1,0 +1,44 @@
+using Kentico.Membership;
+using Microsoft.AspNetCore.Identity;
+using Kentico.Community.Portal.Web.Membership;
+
+namespace Microsoft.Extensions.DependencyInjection;
+
+public static class ServiceCollectionMembershipExtensions
+{
+    public static IServiceCollection AddAppXperienceMembership(this IServiceCollection services) =>
+        services
+            // Sets the validation interval of members security stamp to zero so member's security stamp is validated with each request.
+            .Configure<SecurityStampValidatorOptions>(options => options.ValidationInterval = TimeSpan.Zero)
+            .AddAuthentication()
+            .Services
+            .AddIdentity<CommunityMember, NoOpApplicationRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 10;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredUniqueChars = 1;
+
+                options.User.RequireUniqueEmail = true;
+
+                options.SignIn.RequireConfirmedAccount = true;
+            })
+            .AddDefaultTokenProviders()
+            .AddUserStore<ApplicationUserStore<CommunityMember>>()
+            .AddRoleStore<NoOpApplicationRoleStore>()
+            .AddUserManager<UserManager<CommunityMember>>()
+            .AddSignInManager<SignInManager<CommunityMember>>()
+            .Services
+            .AddScoped<MemberContactManager>()
+            .ConfigureApplicationCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromDays(1);
+                options.SlidingExpiration = true;
+                options.AccessDeniedPath = new PathString("/authentication/login");
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.SameSite = SameSiteMode.Lax;
+            })
+            .AddAuthorization();
+}

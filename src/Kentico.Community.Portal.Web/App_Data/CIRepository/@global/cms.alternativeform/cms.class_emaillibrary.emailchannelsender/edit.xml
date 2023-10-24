@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>EmailLibrary.EmailChannelSender</CodeName>
+    <GUID>50f47357-c564-4644-a8a7-cba132a18506</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="EmailChannelSenderID" guid="c9991d14-8f62-4bf5-9e79-0024d0c0e797" enabled="" />
+      <field column="EmailChannelSenderEmailChannelID" guid="4c594737-9ed9-4e6a-b675-1221e7d818eb" enabled="" />
+      <field column="EmailChannelSenderName" guid="8b533a28-55a0-4c13-96f1-e86405a148c1" enabled="" />
+      <field column="EmailChannelSenderGUID" guid="60094af8-c87e-420d-8eeb-987a107bdead" enabled="" order="3" />
+      <field column="EmailChannelSenderDisplayName" enabled="true" guid="5dcbd4f8-9a38-4b7e-b54d-179eed719232" visible="true" order="4">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.emailchannel.sender.name$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="EmailChannelSenderEmailAddress" columnprecision="0" columnsize="254" columntype="text" dummy="altform" enabled="true" guid="954ac27c-3e09-418a-8e18-cf9a54f1c8bc" system="true" visible="true" order="5">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalmarketing.emailchannel.sender.emailaddress$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.Email</ValidationRuleIdentifier>
+            <RuleValues>
+              <AllowMultipleAddresses>false</AllowMultipleAddresses>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field column="EmailChannelSenderCreated" guid="63913be2-2731-486d-a8b7-14eb5db79280" enabled="" order="6" />
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit</FormDisplayName>
+  <FormGUID>efe13f78-2939-48c9-b362-ccbaf67289a7</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>Edit</FormName>
+</cms.alternativeform>

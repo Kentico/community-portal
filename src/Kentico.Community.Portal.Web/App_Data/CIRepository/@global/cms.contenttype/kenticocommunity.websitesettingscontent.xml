@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassContentTypeType>Website</ClassContentTypeType>
+  <ClassDisplayName>Website Settings Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="e1a53a42-abd4-4a33-89f2-725653e4c3db" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="f5a8241d-4225-4019-843b-4bd28c50ac8d" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="06900411-eaec-4a9d-a941-4087aedafdb8" isunique="true" system="true" />
+      <field column="DocumentName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="1e0f27f5-f59a-4fa1-871f-5c2d946453ca" visible="true">
+        <properties>
+          <fieldcaption>Page name</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field column="WebsiteSettingsContentPageTitleFormat" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="376ec85a-c909-44f0-a8f7-deb3afd2d24f" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Page Title Format</fieldcaption>
+          <fielddescription>
+            <![CDATA[Format string syntax to populate the page <title> element]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field column="WebsiteSettingsContentFallbackOGMediaFileImage" columnprecision="0" columntype="assets" enabled="true" guid="130249b3-37be-45c6-b0d1-2127161a72da" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Fallback OG Image</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedExtensions>jpg;jpeg;png;webp;</AllowedExtensions>
+          <controlname>Kentico.Administration.AssetSelector</controlname>
+          <MaximumAssets>1</MaximumAssets>
+        </settings>
+      </field>
+      <field column="WebsiteSettingsContentFooterContentHTML" columnprecision="0" columntype="longtext" enabled="true" guid="f6376911-7b6e-418f-9c24-4a804c54ca83" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Footer Content</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <ConfigurationName>Kentico.Community.Portal.RichText</ConfigurationName>
+          <controlname>Kentico.Administration.RichTextEditor</controlname>
+        </settings>
+      </field>
+      <field column="WebsiteSettingsContentNotFoundContentHTML" columnprecision="0" columntype="longtext" enabled="true" guid="dab2801a-0dcb-449e-b304-8c72464f8476" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Not Found Content</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <ConfigurationName>Kentico.Community.Portal.RichText</ConfigurationName>
+          <controlname>Kentico.Administration.RichTextEditor</controlname>
+        </settings>
+      </field>
+      <field column="WebsiteSettingsContentExceptionContentHTML" columnprecision="0" columntype="longtext" enabled="true" guid="af757f30-490f-4b6e-ab16-aa5d8968fb0f" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Exception Content</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <ConfigurationName>Kentico.Community.Portal.RichText</ConfigurationName>
+          <controlname>Kentico.Administration.RichTextEditor</controlname>
+        </settings>
+      </field>
+      <field column="WebsiteSettingsContentRobotsTxt" columnprecision="0" columntype="longtext" enabled="true" guid="86324eaa-9e73-4949-a036-a22202e60815" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Robots.txt</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+      </field>
+      <field column="WebsiteSettingsContentCookieBannerHeading" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="1b47d55c-244b-4b3d-a551-b7f1dca9df1c" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Cookie Banner Heading</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field column="WebsiteSettingsContentCookiebannerContentHTML" columnprecision="0" columntype="longtext" enabled="true" guid="c8156d87-5d47-46de-a45e-d909bab833d9" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Cookie Banner Content</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <ConfigurationName>Kentico.Community.Portal.RichText</ConfigurationName>
+          <controlname>Kentico.Administration.RichTextEditor</controlname>
+        </settings>
+      </field>
+      <field column="WebsiteSettingsContentIsAlertBoxEnabled" columnprecision="0" columntype="boolean" enabled="true" guid="e7eebcb8-c372-4279-825a-4a2bef1ea31f" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Is Alert Box Enabled?</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+      </field>
+      <field column="WebsiteSettingsContentAlertBoxCookieExpirationDays" columnprecision="0" columntype="integer" enabled="true" guid="caaf2711-0f8a-4e4f-866b-c15e6fe8f697" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Alert Box Cookie Expiration (Days)</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.NumberInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="WebsiteSettingsContentAlertBoxContentHTML" columnprecision="0" columntype="longtext" enabled="true" guid="18bc45d7-82aa-4b9e-9f0f-0830dd466258" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Alert Box Content</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <ConfigurationName>Kentico.Community.Portal.RichText</ConfigurationName>
+          <controlname>Kentico.Administration.RichTextEditor</controlname>
+        </settings>
+      </field>
+      <field column="WebsiteSettingsContentFormsConfigurationJSON" columnprecision="0" columntype="longtext" enabled="true" guid="10620803-cb66-4538-8c97-6b0263495a04" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Forms Configuration (JSON)</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>5b89da15-eb20-4d77-bd1d-53f80f12a2f2</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-kentico</ClassIconClass>
+  <ClassName>KenticoCommunity.WebsiteSettingsContent</ClassName>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>KenticoCommunity_WebsiteSettingsContent</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

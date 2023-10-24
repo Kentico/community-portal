@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Email template</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="EmailTemplateID" columnprecision="0" columntype="integer" guid="08d9a3b4-0c76-417a-bb90-9e57771868ba" isPK="true" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="EmailTemplateName" columnprecision="0" columnsize="250" columntype="text" guid="27f053c1-41bc-440c-8695-6c08eaa2a0c2" system="true" />
+      <field column="EmailTemplateDisplayName" columnprecision="0" columnsize="250" columntype="text" guid="a19f6cfb-de18-4a94-9cb1-fc0a5b3f02ae" system="true" />
+      <field allowempty="true" column="EmailTemplateDescription" columnprecision="0" columntype="longtext" guid="471c95a6-2650-447b-8570-53ebbe983ede" system="true" />
+      <field column="EmailTemplateCode" columnprecision="0" columntype="longtext" guid="e4f71522-cdf4-45d5-a612-5a517e249c88" system="true" />
+      <field column="EmailTemplateGuid" columnprecision="0" columntype="guid" guid="b5ab4211-d8ca-4a8d-879d-80127b76e284" system="true" />
+      <field column="EmailTemplateLastModified" columnprecision="7" columntype="datetime" guid="5f6a057c-7562-49ae-acd9-633f1522a645" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>3872be3f-2a60-4e3f-839d-3a8b762238da</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>EmailLibrary.EmailTemplate</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.EmailLibrary</CodeName>
+    <GUID>028f4adc-346c-434a-8992-408c8b45a986</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>EmailLibrary_EmailTemplate</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

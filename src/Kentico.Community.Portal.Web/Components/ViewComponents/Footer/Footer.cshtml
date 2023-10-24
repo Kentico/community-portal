@@ -1,0 +1,10 @@
+@model Kentico.Community.Portal.Web.Components.ViewComponents.Footer.FooterViewModel
+
+@if (Model.Content == HtmlString.Empty)
+{
+    return;
+}
+
+<footer class="c-footer" data-ktc-search-exclude>
+    @Model.Content
+</footer>

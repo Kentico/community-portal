@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>5fb2eb69-581b-4188-86f1-b63a76e34d37</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>QuestionWithHTML-1qdt7d7g-localtest</CodeName>
+      <GUID>4e4d9f8f-6148-4179-b750-287c66be77b2</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>ba6cedc9-ce2e-449e-bd69-a13a4bdf4e9c</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>2</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+```html
+<editable-area 
+    area-identifier="main" 
+    area-options-allowed-widgets='new[] { "Sandbox.Widget.Hero", "Sandbox.Widget.CTA" }'
+    area-options-allowed-sections='new[] { "Sandbox.Section.OneColumn" }' />
+```
+
+```csharp
+public class User
+{
+   public string UserName { get; set; }
+   public bool Enabled { get; set; }
+}
+```
+
+```sql
+SELECT *
+FROM CMS_USER
+```
+
+---
+
+**Environment**
+- Xperience by Kentico version: [26.6.0]
+- .NET version: [6]
+- Deployment environment: [SaaS|Azure|VM]
+- Link to relevant [Xperience by Kentico documentation](https://docs.xperience.io/xp)
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>0001-01-01 05:00:00Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>0001-01-01 05:00:00Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageTitle>Question with HTML</QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

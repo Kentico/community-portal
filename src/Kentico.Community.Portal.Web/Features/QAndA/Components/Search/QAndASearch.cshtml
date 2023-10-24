@@ -1,0 +1,85 @@
+@model Kentico.Community.Portal.Web.Features.QAndA.QAndASearchViewModel
+
+<section class="c-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-xxl-9">
+                <form method="get" id="qAndASearchForm">
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-sm-10 col-lg-7">    
+                            <div class="input-group">
+                                <input asp-for="Query"
+                                        type="text"
+                                        class="form-control search rounded-pill"
+                                        placeholder="Search by tag, name or phrase"
+                                        aria-label="Search"
+                                        aria-describedby="button-search">
+                                <button class="btn btn-primary text-uppercase" type="submit" id="button-search">Search</button>
+                            </div>
+                        </div>
+                        <div class="col-sm-10 col-lg-3 d-flex justify-content-end align-items-center gap-3 mt-3">
+                            <label asp-for="SortBy" class="form-label text-nowrap mb-0">@HtmlLocalizer["Sort by"]</label>
+                            <select asp-for="SortBy" class="form-select form-select-sm w-auto" search-sort-by>
+                                <option value="relevance">@HtmlLocalizer["Relevance"]</option>
+                                <option value="date">@HtmlLocalizer["Date Created"]</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input asp-for="Page" />
+                </form>
+
+                <div class="row mt-4 mt-lg-5">
+                    
+                    <div class="col-sm-4">
+                        <a href="/q-and-a/new-question" rel="nofollow"
+                            class="btn btn-outline-primary w-100 d-sm-none">
+                            <svg class="c-icon me-1">
+                                <use xlink:href="/img/icons.svg#plus-circle"></use>
+                            </svg>
+                            @HtmlLocalizer["NEW QUESTION"]
+                        </a>
+                        <a href="/q-and-a/new-question" rel="nofollow"
+                            class="btn link-only text-primary d-none d-sm-inline-block mt-2">
+                            <svg class="c-icon me-1">
+                                <use xlink:href="/img/icons.svg#plus-circle"></use>
+                            </svg>
+                            @HtmlLocalizer["NEW QUESTION"]
+                        </a>
+                    </div>
+                </div>
+
+                @foreach (var question in Model.Questions)
+                {
+                    <div class="c-card question default-border mt-3">
+                        <div class="c-card_inner grid">
+                            <div class="c-card_content">
+                                <div class="c-card_title">
+                                    <h3 class="h3 mb-1">
+                                        <a href="@question.LinkPath" rel="nofollow">@question.Title</a>
+                                    </h3>
+                                </div>
+
+                                <p class="mb-2">@question.DateCreated.ToString("MMMM d, yyyy")
+                                    @question.DateCreated.ToString("t")</p>
+
+                                @if (question.IsAnswered)
+                                {
+                                    <div class="fs-sm-4 text-success mt-2">
+                                        <svg class="c-icon mt-1 me-2 ">
+                                            <use xlink:href="/img/icons.svg#check"></use>
+                                        </svg><small><b>Answered</b></small>
+                                    </div>
+                                }
+                            </div>
+                            <div class="c-card_footer p-1">
+                                <div class="fs-sm-1 text-secondary fw-bold lh-sm">@question.AnswersCount</div>
+                                <div class="fs-sm-4">Answers</div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <vc:pagination model="Model" />
+        </div>
+    </div>
+</section>

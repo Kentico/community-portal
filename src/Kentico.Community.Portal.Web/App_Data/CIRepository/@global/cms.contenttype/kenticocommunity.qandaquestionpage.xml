@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassContentTypeType>Website</ClassContentTypeType>
+  <ClassDisplayName>
+    <![CDATA[Q&A Question Page]]>
+  </ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="2d613d26-4ab8-49c9-ae25-a8adc5966b08" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="692c17bf-e031-4f4e-b448-c9c7c20cdf82" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="98e8135e-aa60-4726-9ce1-f22aad530ed0" isunique="true" system="true" />
+      <field column="QAndAQuestionPageTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="0be33a10-9303-4c4b-b6e7-be67056d9846" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Title</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field column="QAndAQuestionPageDateCreated" columnprecision="3" columntype="datetime" enabled="true" guid="81d352b5-02ac-4b82-a01c-00e4adce4fa0" visible="true">
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY hh:mm AM/PM</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Date Created</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+      </field>
+      <field column="QAndAQuestionPageDateModified" columnprecision="3" columntype="datetime" enabled="true" guid="28fadec9-4be0-4355-97e9-694db7387f90" visible="true">
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY hh:mm AM/PM</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Date Modified</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+      </field>
+      <field column="QAndAQuestionPageContent" columnprecision="0" columntype="longtext" enabled="true" guid="46aba6d0-4588-424c-b21a-414a29979283" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Content</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+      </field>
+      <field column="QAndAQuestionPageAuthorMemberID" columnprecision="0" columntype="integer" enabled="true" guid="9cf3c9fc-bd1c-4b33-b7b3-d791356ff81c" visible="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Author</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>CMS.Member</ObjectType>
+        </settings>
+      </field>
+      <field allowempty="true" column="QAndAQuestionPageAcceptedAnswerDataGUID" columnprecision="0" columntype="guid" enabled="true" guid="d650da7d-7e2f-4103-9c9f-ed53c5413753" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>c014abca-c95e-4f1e-8bea-9821bee891fc</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-bubbles</ClassIconClass>
+  <ClassName>KenticoCommunity.QAndAQuestionPage</ClassName>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>KenticoCommunity_QAndAQuestionPage</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>True</ClassWebPageHasUrl>
+</cms.contenttype>

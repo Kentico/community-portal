@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Web farm server</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ServerID" columntype="integer" guid="aa45d15a-369b-4d52-b349-50a6dd88bf99" isPK="true" isunique="true" system="true" />
+      <field column="ServerDisplayName" columnsize="300" columntype="text" guid="0faeba3a-902c-498b-86f1-adc10aecc480" system="true" />
+      <field column="ServerName" columnsize="300" columntype="text" guid="2b918771-1f4f-4b7e-8079-a9bc77580211" system="true" />
+      <field allowempty="true" column="ServerGUID" columntype="guid" guid="4a6c0fb1-566d-4a9f-b780-a6777aab8ac5" system="true" />
+      <field column="ServerLastModified" columntype="datetime" guid="08311544-ceb1-4df6-b40a-c7c7eb4b8048" system="true" />
+      <field column="ServerEnabled" columntype="boolean" guid="a7318ab5-b31f-4c39-a7e5-6f3fe9dff9c1" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>bb652b81-0792-4191-9d32-e7b8f2bd6e4f</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>cms.WebFarmServer</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.WebFarm</CodeName>
+    <GUID>b8cebc73-6fe5-4428-b522-8c7841d89af8</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_WebFarmServer</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

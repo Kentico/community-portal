@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.formclass>
+  <ClassContactMapping>
+    <form>
+      <field column="ContactEmail" enabled="true" guid="6c543422-ef7c-4524-b824-36725b9e5a27" mappedtofield="email" visible="true" />
+    </form>
+  </ClassContactMapping>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Newsletter Signup</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="Form_2023_09_22_15_53ID" columntype="integer" enabled="true" guid="a81470b4-2909-4e80-b782-e7afa2cb37d6" isPK="true">
+        <properties>
+          <fieldcaption>Form_2023_09_22_15_53ID</fieldcaption>
+        </properties>
+      </field>
+      <field column="FormInserted" columnprecision="7" columntype="datetime" enabled="true" guid="89ef9213-3e93-46fa-9bb0-8a5bb51c6d62" system="true">
+        <properties>
+          <fieldcaption>Form inserted</fieldcaption>
+        </properties>
+      </field>
+      <field column="FormUpdated" columnprecision="7" columntype="datetime" enabled="true" guid="1a5e82b1-02cc-4f81-b5cf-bf46fcacae8b" system="true">
+        <properties>
+          <fieldcaption>Form updated</fieldcaption>
+        </properties>
+      </field>
+      <field allowempty="true" column="Email" columnsize="500" columntype="text" enabled="true" guid="1abff9b6-cc5d-44a5-bc72-de46bb14278a" visible="true">
+        <properties>
+          <fieldcaption>Email</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.EmailInput</componentidentifier>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <Identifier>Kentico.MaximumLength</Identifier>
+            <ValidationRule>
+              <InstanceIdentifier>0e4f50f5-89fa-49fd-a4e3-9bb32ee6b244</InstanceIdentifier>
+              <ErrorMessage>Maximum allowed length of the input text is 254.</ErrorMessage>
+              <MaximumLength>254</MaximumLength>
+            </ValidationRule>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field allowempty="true" column="ConsentAgreement" columntype="guid" enabled="true" guid="8e3477c3-0bb5-40d1-a27f-f83f1f807593" visible="true">
+        <properties>
+          <fieldcaption>Consent agreement</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.ConsentAgreement</componentidentifier>
+          <ConsentCodeName>KenticoCommunityPortalTracking</ConsentCodeName>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>0545cc9f-9ec3-470d-9c9b-837adde8a0d1</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>BizForm.NewsletterSignup</ClassName>
+  <ClassTableName>Form_Kentico_Devnet_Form_2023_09_22_15_53</ClassTableName>
+  <ClassType>Form</ClassType>
+  <ClassXmlSchema>
+<![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Form_Kentico_Devnet_Form_2023_09_22_15_53">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Form_2023_09_22_15_53ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+              <xs:element name="FormInserted" type="xs:dateTime" />
+              <xs:element name="FormUpdated" type="xs:dateTime" />
+              <xs:element name="Email" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ConsentAgreement" msdata:DataType="System.Guid, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Form_Kentico_Devnet_Form_2023_09_22_15_53" />
+      <xs:field xpath="Form_2023_09_22_15_53ID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
+]]>
+  </ClassXmlSchema>
+</cms.formclass>

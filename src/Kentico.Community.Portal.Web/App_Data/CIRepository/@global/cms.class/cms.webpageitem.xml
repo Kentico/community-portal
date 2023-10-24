@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Web page item</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="WebPageItemID" columntype="integer" enabled="true" guid="eeca9a72-191d-48e9-a16c-36ef7996d062" isPK="true" system="true" />
+      <field allowempty="true" column="WebPageItemParentID" columntype="integer" enabled="true" guid="4c1afb3e-812b-43ed-bf88-404838f8c855" refobjtype="cms.webpageitem" reftype="Required" system="true" />
+      <field column="WebPageItemGUID" columntype="guid" enabled="true" guid="ea76beb7-b632-4e21-9145-ae734430a2bc" system="true" />
+      <field column="WebPageItemName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="66768124-a81e-4e7b-ab1b-9d87393ca2cb" system="true" />
+      <field column="WebPageItemTreePath" columnsize="850" columntype="text" enabled="true" guid="4f582c5c-c003-488e-a374-246b417e614e" system="true" />
+      <field column="WebPageItemWebsiteChannelID" columntype="integer" enabled="true" guid="743c175e-3e30-49a2-a928-d9d5024a7c1f" refobjtype="cms.websitechannel" reftype="Required" system="true" />
+      <field allowempty="true" column="WebPageItemContentItemID" columntype="integer" enabled="true" guid="485ef431-1157-4982-a6a4-91e7ae43658a" system="true" />
+      <field allowempty="true" column="WebPageItemOrder" columntype="integer" enabled="true" guid="c7f4777e-b512-4a0b-bc9e-b6de7404850b" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>9715d760-3c82-4f93-9597-4145d6494acc</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.WebPageItem</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Websites</CodeName>
+    <GUID>87975c89-f788-4e6c-a91f-08f38097cc32</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_WebPageItem</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSOMConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Activities - Activity type</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ActivityTypeID" columntype="integer" guid="eb811a14-d44f-4fae-ba89-ef3f4341f6f5" isPK="true" isunique="true" system="true" />
+      <field column="ActivityTypeDisplayName" columnsize="250" columntype="text" guid="d96c07e8-00fb-4b89-8015-8de31dc4e25f" system="true" />
+      <field column="ActivityTypeName" columnsize="250" columntype="text" guid="42c30a9e-4855-4bad-b0d3-3197e6114268" system="true" />
+      <field allowempty="true" column="ActivityTypeDescription" columntype="longtext" guid="74d0880f-9b39-4deb-9f06-c19c704f5307" system="true" />
+      <field allowempty="true" column="ActivityTypeIsCustom" columntype="boolean" guid="1434163d-dd6e-4f05-84b9-578c1e9d7dd6" system="true">
+        <properties>
+          <defaultvalue>true</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="ActivityTypeManualCreationAllowed" columntype="boolean" guid="cd4f230d-ddfc-4fc8-9772-99740c13dec2" system="true">
+        <properties>
+          <defaultvalue>false</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="ActivityTypeEnabled" columntype="boolean" guid="9b57bc43-521f-478f-867b-83b5e381240f" system="true">
+        <properties>
+          <defaultvalue>true</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="ActivityTypeColor" columnsize="7" columntype="text" guid="8a9c7f23-05a0-4e0f-a987-306e3840b0d1" system="true" />
+      <field allowempty="true" column="ActivityTypeMainFormControl" columnsize="200" columntype="text" guid="b8e414ba-b56d-4191-8692-7dcbd990e758" system="true" />
+      <field allowempty="true" column="ActivityTypeItemObjectType" columnsize="200" columntype="text" guid="271a3ee0-26bf-492b-b2e3-fcf104631503" system="true" />
+      <field allowempty="true" column="ActivityTypeDetailFormControl" columnsize="200" columntype="text" guid="632db9b8-7929-473e-9e38-9b2d43a76024" system="true" />
+      <field allowempty="true" column="ActivityTypeItemDetailObjectType" columnsize="200" columntype="text" guid="e0796f9b-7948-4b6b-85a3-3dfc2951f018" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>e1c6d908-d1f7-4495-a06b-c070ead822a9</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.ActivityType</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Activities</CodeName>
+    <GUID>f26ac0e2-0658-4598-bae8-4cc628758550</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>OM_ActivityType</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

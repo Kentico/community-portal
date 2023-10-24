@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>OM.ActivityType</CodeName>
+    <GUID>e1c6d908-d1f7-4495-a06b-c070ead822a9</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="ActivityTypeID" guid="eb811a14-d44f-4fae-ba89-ef3f4341f6f5" />
+      <field column="ActivityTypeIsCustom" guid="1434163d-dd6e-4f05-84b9-578c1e9d7dd6" order="1" />
+      <field column="ActivityTypeManualCreationAllowed" guid="cd4f230d-ddfc-4fc8-9772-99740c13dec2" order="2" />
+      <field column="ActivityTypeColor" guid="8a9c7f23-05a0-4e0f-a987-306e3840b0d1" order="3" />
+      <field column="ActivityTypeMainFormControl" guid="b8e414ba-b56d-4191-8692-7dcbd990e758" order="4" />
+      <field column="ActivityTypeItemObjectType" guid="271a3ee0-26bf-492b-b2e3-fcf104631503" order="5" />
+      <field column="ActivityTypeDetailFormControl" guid="632db9b8-7929-473e-9e38-9b2d43a76024" order="6" />
+      <field column="ActivityTypeItemDetailObjectType" guid="e0796f9b-7948-4b6b-85a3-3dfc2951f018" order="7" />
+      <field column="ActivityTypeDisplayName" columnprecision="0" enabled="true" guid="d96c07e8-00fb-4b89-8015-8de31dc4e25f" visible="true" order="8">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.activitytype.edit.displayname$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ActivityTypeName" columnprecision="0" enabled="true" guid="42c30a9e-4855-4bad-b0d3-3197e6114268" visible="true" order="9">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.activitytype.edit.codename$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ActivityTypeDescription" columnprecision="0" enabled="true" guid="74d0880f-9b39-4deb-9f06-c19c704f5307" visible="true" order="10">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.activitytype.edit.description$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ActivityTypeEnabled" columnprecision="0" enabled="true" guid="9b57bc43-521f-478f-867b-83b5e381240f" visible="true" order="11">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <defaultvalue>True</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.activitytype.edit.enabled$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>edit</FormDisplayName>
+  <FormGUID>e2eca1de-da6c-480d-bf98-592bca326c18</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>edit</FormName>
+</cms.alternativeform>

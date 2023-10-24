@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Email</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="EmailID" columntype="integer" guid="521d5e92-1ffd-4b57-8efe-de86ea04e86b" isPK="true" isunique="true" system="true" />
+      <field column="EmailFrom" columnsize="254" columntype="text" guid="c2397191-6419-4c90-8602-438740d5de70" system="true" />
+      <field allowempty="true" column="EmailTo" columnsize="998" columntype="text" guid="f47a699d-f3d6-4da7-84e8-a7a54e7de8a9" system="true" />
+      <field allowempty="true" column="EmailReplyTo" columnsize="254" columntype="text" guid="7faf43c9-3882-43fb-9004-520b188a8b5a" system="true" />
+      <field allowempty="true" column="EmailCc" columnsize="998" columntype="text" guid="10e8d6ce-d8b9-4bf8-a84d-8f9688e29981" system="true" />
+      <field allowempty="true" column="EmailBcc" columnsize="998" columntype="text" guid="cedfd4fc-8e1b-4156-960e-552fc1246aeb" system="true" />
+      <field column="EmailSubject" columnsize="450" columntype="text" guid="601fdfbe-281e-458d-8cc0-a29306087c87" system="true" />
+      <field allowempty="true" column="EmailBody" columntype="longtext" guid="ad000851-1cdf-41c8-95ee-eff669981220" system="true" />
+      <field allowempty="true" column="EmailPlainTextBody" columntype="longtext" guid="c96fa853-4a36-4f3d-b661-fcdb58434d1c" system="true" />
+      <field column="EmailFormat" columntype="integer" guid="dcfbdec6-2369-4292-b406-9995bb2889bf" system="true" />
+      <field column="EmailPriority" columntype="integer" guid="b7feb9c1-7f2e-42e1-9be6-8e7100f9c669" system="true" />
+      <field allowempty="true" column="EmailLastSendResult" columntype="longtext" guid="40755371-af41-4836-9e1c-6e512a280e66" system="true" />
+      <field allowempty="true" column="EmailLastSendAttempt" columnprecision="7" columntype="datetime" guid="b5be875d-5220-454c-a099-6b936c3485c0" system="true" />
+      <field column="EmailGUID" columntype="guid" guid="c78068ea-bd20-4004-b3d4-25028ffd07e8" system="true" />
+      <field allowempty="true" column="EmailCreated" columnprecision="7" columntype="datetime" guid="f8d87b02-84bb-4b8f-b25b-7610dd41e3b1" system="true" />
+      <field allowempty="true" column="EmailStatus" columntype="integer" guid="227556a7-9cc7-4f9b-96ad-2ccd667605b1" system="true" />
+      <field allowempty="true" column="EmailHeaders" columntype="longtext" guid="df673a9f-31e4-40c5-9f13-3a5af25dd895" system="true" />
+      <field allowempty="true" column="EmailEmailConfigurationID" columntype="integer" guid="5a39c0c1-c723-41cd-8df2-cf53de161f1b" system="true" />
+      <field allowempty="true" column="EmailMailoutGuid" columntype="guid" guid="fb8caeb5-5777-4dda-adb4-acae7b54a3f9" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>488f275e-7311-4136-a127-4c970cd4060f</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>cms.email</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.EmailEngine</CodeName>
+    <GUID>7675c4a8-a792-4d4c-b83e-38ed24b64eab</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_Email</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

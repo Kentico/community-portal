@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Content item</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemID" columntype="integer" enabled="true" guid="bacc7bc8-02cc-4ab3-a938-2b3cd9cb2e0d" isPK="true" system="true" />
+      <field column="ContentItemGUID" columnprecision="0" columntype="guid" enabled="true" guid="8d2787cc-c388-4ab6-bd19-a35584f2aa47" system="true" />
+      <field column="ContentItemName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="685443ee-18e8-4122-82f0-8dc69475cec6" system="true" />
+      <field column="ContentItemIsReusable" columnprecision="0" columntype="boolean" enabled="true" guid="895302be-672d-46a1-9b31-72d5c3fbf2ca" system="true" />
+      <field column="ContentItemIsSecured" columnprecision="0" columntype="boolean" enabled="true" guid="52886152-c97f-4049-9aec-f93f8a640c19" system="true" />
+      <field allowempty="true" column="ContentItemContentTypeID" columnprecision="0" columntype="integer" enabled="true" guid="280f08a5-edda-44c4-8f08-8ad90d5ec2f1" refobjtype="cms.contenttype" reftype="Required" system="true" />
+      <field allowempty="true" column="ContentItemChannelID" columnprecision="0" columntype="integer" enabled="true" guid="b4606050-d116-4019-b049-18e90e7ba3e1" refobjtype="cms.channel" reftype="Required" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>5cf455bb-64ad-420f-b605-4ea21fe4e045</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ContentItem</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentEngine</CodeName>
+    <GUID>eb76ebd1-752f-4969-a5b6-1fb984cae224</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ContentItem</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

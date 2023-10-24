@@ -1,0 +1,120 @@
+.c-header{
+  background: $white;
+  transition: .2s box-shadow;
+  border-bottom: 1px solid transparentize($gray-400, .5);
+  &.scrolled{
+    box-shadow: 0 8px 32px rgba(16, 33, 60, 0.24), 0 0 8px rgba(0, 0, 0, 0.03);
+    border-bottom: none;
+  }
+  .navbar-toggler{
+    margin-bottom: .75rem;
+    margin-left: 1rem;
+    margin-right: -1rem;
+  }
+
+  #sign-in-tablet{
+    display: none;
+    margin: 0 0 0.75rem auto;
+  }
+
+  @media (min-width: 400px) and (max-width: map-get($grid-breakpoints, md) - .02){
+    #sign-in-tablet{
+      display: block;
+    }
+    .nav-item.with-btn{
+      display: none;
+    }
+  }
+
+  @include media-breakpoint-down(lg){
+    .c-main-navbar{
+      padding-top: 1rem;
+      padding-bottom: 0.875rem;
+    }
+  }
+  @include media-breakpoint-down(md){
+    &:after{
+      content: '';
+      display: block;
+      position: absolute;
+      top: 4.5rem;
+      left: 0;
+      right: 0;
+      height: 0;
+      border-top: 1px solid transparentize($gray-500, .5);
+      opacity: 0;
+      transition: .15s opacity;
+    }
+    &.mobile-nav-open{
+      box-shadow: 0 8px 32px rgba(16, 33, 60, 0.24), 0 0 8px rgba(0, 0, 0, 0.03);
+      &:after{
+        opacity: 1;
+      }
+      .c-subnav,
+      .c-subnav-alt{
+        margin-top: -4rem;
+      }
+    }
+    .c-main-navbar{
+      padding-bottom: 0;
+      padding-top: .625rem;
+    }
+    .navbar-brand{
+      margin-bottom: 1rem;
+      margin-top: .25rem;
+    }
+  }
+  @include media-breakpoint-up(lg){
+    .c-main-navbar{
+      padding-bottom: 1.375rem;
+    }
+  }
+}
+
+.c-header-alert{
+  background: $secondary;
+  color: $white;
+  position: relative;
+  &_inner{
+    padding: .5rem 1.25rem .5rem .25rem;
+  }
+  .btn-close{
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+  }
+  p{
+    a{
+      color: white;
+      &:hover{
+        text-decoration: none;
+      }
+    }
+  }
+  @include media-breakpoint-down(xs){
+    font-size: .875rem;
+  }
+  @include media-breakpoint-up(sm){
+    &_inner{
+      padding: .5rem 1.5rem .5rem 1.25rem;
+    }
+  }
+  @include media-breakpoint-up(md){
+    &_inner{
+      padding: .75rem 1.5rem .75rem 1.25rem;
+    }
+    .btn-close{
+      top: .75rem;
+      right: .75rem;
+    }
+  }
+  @include media-breakpoint-up(lg){
+    text-align: center;
+  }
+  @include media-breakpoint-up(xxl){
+    font-size: 1.125rem;
+    .btn-close{
+      right: 3.625rem;
+    }
+  }
+}

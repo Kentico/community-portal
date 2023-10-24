@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Tracked website</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="TrackedWebsiteID" columntype="integer" guid="1c75d7f1-e902-4181-827d-1a60372a315d" isPK="true" system="true" />
+      <field allowempty="true" column="TrackedWebsiteGUID" columntype="guid" guid="3032fa33-8400-490d-9e6f-0d44e4f5cd33" system="true" />
+      <field column="TrackedWebsiteDisplayName" columnsize="200" columntype="text" guid="ce7edbe9-57c8-42f5-932d-b5255edb8fcf" system="true" />
+      <field column="TrackedWebsiteName" columnsize="100" columntype="text" guid="f5a73cf0-0dc1-4230-bffe-5f0e55a611b3" system="true" />
+      <field column="TrackedWebsiteURL" columnsize="400" columntype="text" guid="43382d3f-9bb7-484d-8da4-0015c083d668" system="true" />
+      <field allowempty="true" column="TrackedWebsiteDescription" columntype="longtext" guid="d4806096-b148-4ad7-8232-cc47ac56f36e" system="true" />
+      <field allowempty="true" column="TrackedWebsiteEnabled" columnprecision="0" columntype="boolean" guid="44254a4a-f7da-45c8-a452-e6691dc0fa0b" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="TrackedWebsiteLastModified" columnprecision="7" columntype="datetime" guid="04236e90-2b2e-430d-b73e-ca53866a957c" system="true" />
+      <field column="TrackedWebsiteChannelID" columnprecision="0" columntype="integer" enabled="true" guid="1987fc7f-c745-407c-9017-57d401083a4e" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>ffb2e77a-0462-48c5-9e16-564b119be413</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.TrackedWebsite</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.CrossSiteTracking</CodeName>
+    <GUID>93c9ba86-b40c-4cb3-b135-c0ac34021a18</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>OM_TrackedWebsite</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

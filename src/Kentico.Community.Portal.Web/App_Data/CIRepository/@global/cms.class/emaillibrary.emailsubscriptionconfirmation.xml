@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Email subscription confirmation</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="EmailSubscriptionConfirmationID" columntype="integer" enabled="true" guid="ed720f9a-dd00-4853-95db-36df6dac830b" isPK="true" system="true" />
+      <field column="EmailSubscriptionConfirmationContactID" columnprecision="0" columntype="integer" enabled="true" guid="3444bbcf-21fe-4f49-bd23-2214b09c970c" refobjtype="om.contact" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="EmailSubscriptionConfirmationRecipientListID" columnprecision="0" columntype="integer" enabled="true" guid="e359ea7d-f416-4c2c-8237-7401c787cab1" refobjtype="om.contactgroup" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="EmailSubscriptionConfirmationIsApproved" columnprecision="0" columntype="boolean" enabled="true" guid="f708de85-1029-44c8-89b5-98fc4f674978" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+      <field column="EmailSubscriptionConfirmationDate" columnprecision="7" columntype="datetime" enabled="true" guid="82e28ca5-4083-44ed-8880-2c121b72a77e" system="true" />
+      <field column="EmailSubscriptionConfirmationGUID" columnprecision="0" columntype="guid" enabled="true" guid="c174be3f-27cc-456a-b269-28a4673a6d3f" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>a6fbd04a-c5ce-4697-bbe9-7a02abd75738</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>EmailLibrary.EmailSubscriptionConfirmation</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.EmailLibrary</CodeName>
+    <GUID>028f4adc-346c-434a-8992-408c8b45a986</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>EmailLibrary_EmailSubscriptionConfirmation</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

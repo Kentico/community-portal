@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Resource translation</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="TranslationID" columntype="integer" guid="c8112329-5936-487a-9342-feddd0063e3c" isPK="true" system="true" />
+      <field column="TranslationStringID" columntype="integer" guid="cde19c89-b799-4ace-bf3d-720175c7c7b9" system="true" />
+      <field allowempty="true" column="TranslationText" columntype="longtext" guid="38379b99-94c9-4258-a234-936ba1c2e4fc" system="true" />
+      <field column="TranslationCultureID" columntype="integer" guid="f124bf8d-f2af-4780-baf6-87472416be11" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>38ab8c16-f476-4e9c-adbf-3957853aa8bf</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ResourceTranslation</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Localization</CodeName>
+    <GUID>4387e6da-cc0f-4a9d-9604-b8dd78234882</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_ResourceTranslation</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

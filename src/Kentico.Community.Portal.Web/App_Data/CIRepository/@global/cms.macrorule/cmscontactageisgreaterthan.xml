@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[Contact.ContactAge {op} ToInt({age}) && Contact.ContactAge != 0]]>
+  </MacroRuleCondition>
+  <MacroRuleDescription>
+    <![CDATA[{$macrorule.cmscontactageisgreaterthan.description$}]]>
+  </MacroRuleDescription>
+  <MacroRuleDisplayName>Contact age is</MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>35e625d4-dc0e-46e0-871e-11959b1a6520</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactAgeIsGreaterThan</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="age" columntype="integer" guid="c4daab7d-07d3-4741-a5ce-e533656a1061" visible="true">
+        <properties>
+          <fieldcaption>enter age</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.NumberInput</controlname>
+          <Maximum>100</Maximum>
+          <Minimum>0</Minimum>
+          <Step>1</Step>
+          <WatermarkText>enter age</WatermarkText>
+          <Width>112</Width>
+        </settings>
+      </field>
+      <field column="op" columnsize="100" columntype="text" guid="c82d8595-8fb6-42f7-9647-4f29ad705c5c" visible="true">
+        <properties>
+          <defaultvalue>
+            <![CDATA[>]]>
+          </defaultvalue>
+          <fieldcaption>select operator</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <EditText>False</EditText>
+          <Options>
+<![CDATA[
+==;equal to
+!=;does not equal to
+>;is greater than
+>=;is greater than or equal to
+<;is lower than
+<=;is lower than or equal to
+]]>
+          </Options>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>Contact age {op} {age}</MacroRuleText>
+</cms.macrorule>

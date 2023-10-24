@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Web farm server task</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ServerID" columntype="integer" guid="9451413d-6868-4575-9a2a-697220bf8385" isPK="true" refobjtype="cms.webfarmserver" reftype="Binding" system="true" />
+      <field column="TaskID" columntype="integer" guid="18895a79-d9a6-4118-b059-55271cff6483" refobjtype="cms.webfarmtask" reftype="Binding" system="true" />
+      <field allowempty="true" column="ErrorMessage" columntype="longtext" guid="aba5d8c3-642a-4b1b-b991-e1cdac55bc80" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>b9c53053-17e2-4f1c-80a0-59a2f57ad8d4</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>cms.webfarmservertask</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.WebFarm</CodeName>
+    <GUID>b8cebc73-6fe5-4428-b522-8c7841d89af8</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_WebFarmServerTask</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[{_perfectum}Contact.CameToLandingUrl("{url}")]]>
+  </MacroRuleCondition>
+  <MacroRuleDescription>
+    <![CDATA[Checks if the contact has visited the landing page with the specified URL.]]>
+  </MacroRuleDescription>
+  <MacroRuleDisplayName>
+    <![CDATA[Contact arrived on a landing page with a specific URL]]>
+  </MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>6921ea30-0cd0-4ab3-b5a9-5582fa499904</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactHasComeToLandingPageWithSpecifiedURL</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="_perfectum" columnsize="100" columntype="text" guid="8ebf5974-d7f8-4355-b1f0-04d2676ecd1d" visible="true">
+        <properties>
+          <defaultvalue>__is</defaultvalue>
+          <fieldcaption>select operation</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <IsPerfectum>True</IsPerfectum>
+          <Options>
+<![CDATA[
+__is;has
+__isnot;has not
+]]>
+          </Options>
+          <RepeatDirection>vertical</RepeatDirection>
+          <RepeatLayout>Flow</RepeatLayout>
+          <SortItems>False</SortItems>
+        </settings>
+      </field>
+      <field column="url" columnsize="1000" columntype="text" guid="89029fde-d53e-42f2-8787-b046047939c5" visible="true">
+        <properties>
+          <fieldcaption>enter text</fieldcaption>
+        </properties>
+        <settings>
+          <AutoCompleteEnableCaching>False</AutoCompleteEnableCaching>
+          <AutoCompleteFirstRowSelected>False</AutoCompleteFirstRowSelected>
+          <AutoCompleteShowOnlyCurrentWordInCompletionListItem>False</AutoCompleteShowOnlyCurrentWordInCompletionListItem>
+          <controlname>Kentico.Administration.TextInput</controlname>
+          <Trim>False</Trim>
+          <WatermarkText>enter text</WatermarkText>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>
+    <![CDATA[Contact {_perfectum} come to landing page with URL containing {url}]]>
+  </MacroRuleText>
+</cms.macrorule>

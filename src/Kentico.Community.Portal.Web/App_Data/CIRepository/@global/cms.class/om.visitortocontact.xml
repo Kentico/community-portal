@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSOMConnectionString</ClassConnectionString>
+  <ClassDisplayName>Contact management - Visitor to Contact</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="VisitorToContactID" columnprecision="0" columntype="integer" guid="359dcf2a-c994-41e3-a386-c8f3d798b20b" isPK="true" system="true" />
+      <field column="VisitorToContactVisitorGUID" columntype="guid" guid="b9d0b48d-d5ea-419a-9872-bcd3eece3d2d" system="true" />
+      <field column="VisitorToContactContactID" columntype="integer" guid="e0bac516-8abe-4ea3-a4f4-b9315978417e" refobjtype="om.contact" reftype="Required" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>cbe2b4c4-7379-429a-93ac-c80d7d18cc20</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.VisitorToContact</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContactManagement</CodeName>
+    <GUID>0e4beef1-989c-4687-80ca-ae21fec09734</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>OM_VisitorToContact</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

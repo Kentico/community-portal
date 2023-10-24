@@ -1,0 +1,30 @@
+@using Kentico.Community.Portal.Web.Features.QAndA
+
+@model ComponentViewModel<QAndANewQuestionPageTemplateProperties>
+
+<vc:q-and-a-new-question-page-heading page="Model.Page" />
+
+<main>
+    <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"
+        widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
+
+    @if (User.Identity is { IsAuthenticated: true })
+    {
+        <section class="c-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-10 col-xxl-9">
+                        <div role="main">
+
+                            <vc:q-and-a-question-form />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
+    <editable-area area-identifier="bottom" allow-widget-output-cache="View.CacheEnabled"
+        widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
+</main>

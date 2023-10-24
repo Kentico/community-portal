@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Email statistics hits</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="EmailStatisticsHitsID" columntype="longinteger" enabled="true" guid="81da40b2-0a7d-4274-9e84-e456d75059db" isPK="true" system="true" />
+      <field column="EmailStatisticsHitsEmailConfigurationID" columnprecision="0" columntype="integer" enabled="true" guid="5d3b4363-f723-4574-8cf9-4f51cda9e886" refobjtype="emaillibrary.emailconfiguration" reftype="Required" system="true" />
+      <field column="EmailStatisticsHitsType" columnprecision="0" columntype="integer" enabled="true" guid="589e51c3-bb5f-4a6b-a2a5-94bac77060de" system="true" />
+      <field column="EmailStatisticsHitsTime" columnprecision="7" columntype="datetime" enabled="true" guid="4da6c45c-8694-45a4-a74a-23f16a52ad73" system="true" />
+      <field column="EmailStatisticsHitsMailoutGUID" columnprecision="0" columntype="guid" enabled="true" guid="68923f7e-624e-4beb-836a-e170952bdef0" system="true" />
+      <field allowempty="true" column="EmailStatisticsHitsEmailLinkID" columnprecision="0" columntype="integer" enabled="true" guid="4fbe1749-1650-4282-8d80-ae454056ffdb" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>9d1dcca4-be57-4dae-bd8e-e25c00475fd9</ClassGUID>
+  <ClassHasUnmanagedDbSchema>True</ClassHasUnmanagedDbSchema>
+  <ClassName>EmailLibrary.EmailStatisticsHits</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.EmailLibrary</CodeName>
+    <GUID>028f4adc-346c-434a-8992-408c8b45a986</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>EmailLibrary_EmailStatisticsHits</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

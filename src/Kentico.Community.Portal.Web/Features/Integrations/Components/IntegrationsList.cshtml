@@ -1,0 +1,59 @@
+@using Kentico.Content.Web.Mvc
+
+@model Kentico.Community.Portal.Web.Features.Integrations.IntegrationsListViewModel
+
+<div class="c-section pb-7">
+    <div class="container">
+        <div class="row gx-lg-6 gx-xxl-7 mt-sm-n2 mt-lg-n4">
+            @foreach (var item in Model.Items)
+            {
+                <div class="col-sm-6 col-lg-4 mt-3 mt-sm-5 mt-lg-6">
+                    <div class="c-card widget default-border ">
+                        <div class="c-card_inner">
+                            @if (item.Logo is ImageAssetViewModel logo)
+                            {
+                                <div class="c-card_icon">
+                                    <img src="@logo.URLData.WithSizeConstraint(SizeConstraint.MaxWidthOrHeight(100)).RelativePath"
+                                        alt="@item.AuthorName" />
+                                </div>
+                            }
+                            <h3 class="h3 mt-2 pt-1">@item.Title</h3>
+                            <p class="c-note mt-2">by
+                                @if (item.AuthorURL is string authorURL)
+                                {
+                                    <a href="@authorURL">@item.AuthorName</a>
+                                }
+                                else
+                                {
+                                    @item.AuthorName
+                                }
+                            </p>
+                            <p class="mt-2">@item.ShortDescription</p>
+
+                            <div class="d-flex justify-content-around mt-3">
+                                @if (item.RepositoryURL is string repositoryURL)
+                                {
+                                    <a class="c-link silent text-primary" href="@repositoryURL">
+                                        Repository
+                                        <svg class="c-icon ms-2 chevron">
+                                            <use xlink:href="/img/icons.svg#chevron-right"></use>
+                                        </svg>
+                                    </a>
+                                }
+                                @if (item.LibraryURL is string libraryURL)
+                                {
+                                    <a class="c-link silent text-primary" href="@libraryURL">
+                                        Library
+                                        <svg class="c-icon ms-2 chevron">
+                                            <use xlink:href="/img/icons.svg#chevron-right"></use>
+                                        </svg>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

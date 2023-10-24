@@ -1,0 +1,54 @@
+@model Kentico.Community.Portal.Web.Components.Widgets.Licenses.LicensesWidgetViewModel
+
+<div class="content-wrapper">
+    <section class="c-section default">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-10 col-xxl-9">
+
+                    <main role="main" class="mt-2">
+
+                        <h1 class="text-center k-dot">@Model.Title</h1>
+
+                        @if (Model.Licenses.Links.Count > 0)
+                        {
+                            @foreach (var group in Model.Licenses.Links)
+                            {
+                                <h2 class="h2 mt-5">
+                                    @if (!string.IsNullOrWhiteSpace(group.Url))
+                                    {
+                                        <a class="inherit" href="@group.Url" target="_blank">@group.Name</a>
+                                    }
+                                    else
+                                    {
+                                        <span>@group.Name</span>
+                                    }
+                                </h2>
+
+                                <ul class="c-ul default mt-4">
+                                    @if (group.Links != null)
+                                    {
+                                        @foreach (var link in group.Links)
+                                        {
+                                            <li>
+                                                <p>
+                                                    @link.Name
+                                                    (<a href="@link.Url" target="_blank" class="text-break">@link.Name</a>)
+                                                </p>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            }
+                        }
+                        else
+                        {
+                            <span>@Model.NoLicensesText</span>
+                        }
+                    </main>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- .content-wrapper -->

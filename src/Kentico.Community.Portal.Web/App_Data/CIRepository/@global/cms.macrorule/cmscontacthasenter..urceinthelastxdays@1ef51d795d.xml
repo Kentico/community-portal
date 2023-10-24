@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[{_perfectum}Contact.EnteredData("{label}", ToInt({days}))]]>
+  </MacroRuleCondition>
+  <MacroRuleDescription>
+    <![CDATA[Checks if the contact has entered data through a source with the specified label in the last X days.]]>
+  </MacroRuleDescription>
+  <MacroRuleDisplayName>Contact has entered data in the last X days</MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>20b10524-d961-436e-a491-099d82b4087b</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>
+    <![CDATA[CMSContactHasEnteredDataThroughSpecifiedSourceInTheLastXDays]]>
+  </MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="_perfectum" columnsize="100" columntype="text" guid="52bd8bc6-2ce4-4bc8-aa3f-4c3cf2fecf61" visible="true">
+        <properties>
+          <defaultvalue>__is</defaultvalue>
+          <fieldcaption>select operation</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <EditText>False</EditText>
+          <IsPerfectum>True</IsPerfectum>
+          <Options>
+<![CDATA[
+__is;has
+__isnot;has not
+]]>
+          </Options>
+        </settings>
+      </field>
+      <field column="label" columnsize="250" columntype="text" guid="7b607ad7-14c4-4dac-be9d-0d21e5ddb6c0" visible="true">
+        <properties>
+          <fieldcaption>enter label</fieldcaption>
+        </properties>
+        <settings>
+          <AutoCompleteEnableCaching>False</AutoCompleteEnableCaching>
+          <AutoCompleteFirstRowSelected>False</AutoCompleteFirstRowSelected>
+          <AutoCompleteShowOnlyCurrentWordInCompletionListItem>False</AutoCompleteShowOnlyCurrentWordInCompletionListItem>
+          <controlname>Kentico.Administration.TextInput</controlname>
+          <Trim>False</Trim>
+          <WatermarkText>enter label</WatermarkText>
+        </settings>
+      </field>
+      <field allowempty="true" column="days" columntype="integer" guid="0e799834-1cbb-438e-80a4-bd80c0368c5a" visible="true">
+        <properties>
+          <fieldcaption>enter days</fieldcaption>
+        </properties>
+        <settings>
+          <AutoCompleteEnableCaching>False</AutoCompleteEnableCaching>
+          <AutoCompleteFirstRowSelected>False</AutoCompleteFirstRowSelected>
+          <AutoCompleteShowOnlyCurrentWordInCompletionListItem>False</AutoCompleteShowOnlyCurrentWordInCompletionListItem>
+          <controlname>Kentico.Administration.NumberInput</controlname>
+          <Trim>False</Trim>
+          <WatermarkText>enter number</WatermarkText>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>
+    <![CDATA[Contact {_perfectum} entered data through a source with label {label} in the last {days} days]]>
+  </MacroRuleText>
+</cms.macrorule>

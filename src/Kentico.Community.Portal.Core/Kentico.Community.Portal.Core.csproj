@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <AssemblyAttribute Include="CMS.AssemblyDiscoverableAttribute">
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CSharpFunctionalExtensions" />
+    <PackageReference Include="Kentico.Xperience.WebApp" />
+    <PackageReference Include="Mediatr" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="CSharpFunctionalExtensions" />
+    <Using Include="CMS.ContentEngine" />
+  </ItemGroup>
+
+</Project>

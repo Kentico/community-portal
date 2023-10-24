@@ -1,0 +1,21 @@
+﻿@model Kentico.Community.Portal.Web.Features.DataCollection.CookieBannerCompleteViewModel
+
+@if (Model.ShowMessage)
+{
+    <div id="@Model.MessageID" class="cookie-preferences__message">
+        Cookie preferences have been successfully updated.
+    </div>
+}
+
+<script type="module">
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+        'event': 'consent.update',
+        'consent': {
+            'functionality_storage': '@(Model.CookieLevelSelected >= 1 ? "granted" : "denied")',
+            'personalization_storage': '@(Model.CookieLevelSelected >= 2 ? "granted" : "denied")',
+            'analytics_storage': '@(Model.CookieLevelSelected >= 3 ? "granted" : "denied")',
+            'ad_storage': '@(Model.CookieLevelSelected == 4 ? "granted" : "denied")'
+        }
+    });
+</script>

@@ -1,0 +1,22 @@
+@model Kentico.Community.Portal.Web.Components.Widgets.LinkList.LinkListWidgetViewModel
+
+<div>
+  @if (!string.IsNullOrWhiteSpace(Model.Label))
+  {
+    string slug = View.SlugHelper.GenerateSlug($"linkList-{Model.Label}");
+
+    <h3 id="@slug">
+      @Model.Label <span class="ml-2"><a href="#@slug">#</a></span>
+    </h3>
+  }
+
+  <ul>
+    @foreach (var link in Model.Links)
+    {
+      <li>
+        <a href="@link.LinkContentPathOrURL"> @link.LinkContentLabel </a>
+        <p><small>@link.LinkContentShortDescription</small></p>
+      </li>
+    }
+  </ul>
+</div>

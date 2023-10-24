@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.formfeaturedfield>
+  <FormFeaturedFieldDescription>Featured email field</FormFeaturedFieldDescription>
+  <FormFeaturedFieldDisplayName>Email</FormFeaturedFieldDisplayName>
+  <FormFeaturedFieldEnabled>True</FormFeaturedFieldEnabled>
+  <FormFeaturedFieldFormDefinition>
+    <form version="2">
+      <field allowempty="true" column="Email" columnsize="500" columntype="text" visible="true">
+        <properties>
+          <fieldcaption>Email</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.EmailInput</componentidentifier>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <Identifier>Kentico.MaximumLength</Identifier>
+            <ValidationRule>
+              <InstanceIdentifier>0e4f50f5-89fa-49fd-a4e3-9bb32ee6b244</InstanceIdentifier>
+              <ErrorMessage>Maximum allowed length of the input text is 254.</ErrorMessage>
+              <MaximumLength>254</MaximumLength>
+            </ValidationRule>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+    </form>
+  </FormFeaturedFieldFormDefinition>
+  <FormFeaturedFieldGuid>459f38c1-8072-46cf-b009-ac77c9d60bfa</FormFeaturedFieldGuid>
+  <FormFeaturedFieldIconClass>icon-message</FormFeaturedFieldIconClass>
+  <FormFeaturedFieldMapping>ContactEmail</FormFeaturedFieldMapping>
+  <FormFeaturedFieldName>Kentico.Featured.Email</FormFeaturedFieldName>
+  <FormFeaturedFieldOrder>5</FormFeaturedFieldOrder>
+</cms.formfeaturedfield>

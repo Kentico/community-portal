@@ -1,0 +1,15 @@
+@using Kentico.Community.Portal.Web.Features.QAndA
+
+@model ComponentViewModel<QAndALandingPageTemplateProperties>
+
+<vc:q-and-a-landing-page-heading props="Model.Properties" />
+
+<main>
+    <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"
+        widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
+
+    <vc:q-and-a-search />
+
+    <editable-area area-identifier="bottom" allow-widget-output-cache="View.CacheEnabled"
+        widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
+</main>

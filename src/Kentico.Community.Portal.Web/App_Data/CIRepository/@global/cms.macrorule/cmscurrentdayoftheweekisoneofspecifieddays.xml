@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[{_is}CurrentDateTime.DayOfWeek.EqualsAny("{days}".Split("|"))]]>
+  </MacroRuleCondition>
+  <MacroRuleDescription>
+    <![CDATA[{$macrorule.cmscurrentdayoftheweekisoneofspecifieddays.description$}]]>
+  </MacroRuleDescription>
+  <MacroRuleDisplayName>Current day of the week is</MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>8dd2be4a-64b0-46d0-ba65-9f9600ad1849</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSCurrentDayOfTheWeekIsOneOfSpecifiedDays</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="days" columnsize="1000" columntype="text" guid="6d78332d-5ba4-4b55-936a-d509563e7d63" visible="true">
+        <properties>
+          <fieldcaption>select days</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+0;Sunday
+1;Monday
+2;Tuesday
+3;Wednesday
+4;Thursday
+5;Friday
+6;Saturday
+]]>
+          </Options>
+          <Placeholder>select days</Placeholder>
+          <RepeatDirection>vertical</RepeatDirection>
+        </settings>
+      </field>
+      <field column="_is" columnsize="100" columntype="text" guid="b2eb82d3-4694-4745-9cdc-23f011d9b014" visible="true">
+        <properties>
+          <defaultvalue>__is</defaultvalue>
+          <fieldcaption>select operation</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <IsPerfectum>True</IsPerfectum>
+          <Options>
+<![CDATA[
+__is;is
+__isnot;is not
+]]>
+          </Options>
+          <RepeatDirection>horizontal</RepeatDirection>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>
+    <![CDATA[Current day of the week {_is} one of the following: {days}]]>
+  </MacroRuleText>
+</cms.macrorule>

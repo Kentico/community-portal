@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[{_is}Contact.IsInContactGroup("{groups}", {_any})]]>
+  </MacroRuleCondition>
+  <MacroRuleDescription>
+    <![CDATA[{$macrorule.cmscontactisincontactgroup.description$}]]>
+  </MacroRuleDescription>
+  <MacroRuleDisplayName>Contact is in contact groups</MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>e775b355-70ad-42fe-9a75-ecd912221157</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactIsInContactGroup</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="groups" columnprecision="0" columntype="objectcodenames" guid="40973ae7-ca34-4ea0-a17f-a15d99cfe604" visible="true">
+        <properties>
+          <fieldcaption>contact groups</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectCodeNameSelector</controlname>
+          <MaximumItems>0</MaximumItems>
+          <ObjectType>om.contactgroup</ObjectType>
+          <Placeholder>select contact groups</Placeholder>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field column="_is" columnsize="100" columntype="text" guid="a48aa3a7-7d87-4fb8-9dca-149873787aa5" visible="true">
+        <properties>
+          <defaultvalue>__is</defaultvalue>
+          <fieldcaption>select operation</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <IsPerfectum>True</IsPerfectum>
+          <Options>
+<![CDATA[
+__is;is
+__isnot;is not
+]]>
+          </Options>
+          <RepeatDirection>horizontal</RepeatDirection>
+        </settings>
+      </field>
+      <field column="_any" columnsize="100" columntype="text" guid="d3a40411-e1c1-4262-958f-19ff06a9c3be" visible="true">
+        <properties>
+          <defaultvalue>false;any</defaultvalue>
+          <fieldcaption>select operation</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+false;any
+true;all
+]]>
+          </Options>
+          <RepeatDirection>horizontal</RepeatDirection>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>
+    <![CDATA[Contact {_is} in {_any} of the following contact groups: {groups}]]>
+  </MacroRuleText>
+</cms.macrorule>

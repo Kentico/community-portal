@@ -1,0 +1,10 @@
+@using Kentico.Community.Portal.Web.Features.ResourceHub
+
+@model ComponentViewModel<ResourceHubPageTemplateProperties>
+
+<vc:resource-hub-page-heading page="Model.Page" />
+
+<main>
+    <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"
+        widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
+</main>

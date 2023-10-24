@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>Contact.IsInactive({days})</MacroRuleCondition>
+  <MacroRuleDescription>
+    <![CDATA[{$macrorule.contactinactiveinthelastxdays.description$}]]>
+  </MacroRuleDescription>
+  <MacroRuleDisplayName>Contact has been inactive in the last X days</MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>aed1b954-df54-47b7-a7d1-1d8fac39d905</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactInactiveInTheLastXDays</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="days" columntype="integer" guid="9f630440-b5d0-4bc3-ac2a-b2711d7cd06a" visible="true">
+        <properties>
+          <fieldcaption>enter days</fieldcaption>
+        </properties>
+        <settings>
+          <AutoCompleteEnableCaching>False</AutoCompleteEnableCaching>
+          <AutoCompleteFirstRowSelected>False</AutoCompleteFirstRowSelected>
+          <AutoCompleteShowOnlyCurrentWordInCompletionListItem>False</AutoCompleteShowOnlyCurrentWordInCompletionListItem>
+          <controlname>Kentico.Administration.NumberInput</controlname>
+          <Trim>False</Trim>
+          <WatermarkText>enter number</WatermarkText>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>Contact has been inactive in the last {days} days</MacroRuleText>
+</cms.macrorule>

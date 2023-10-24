@@ -1,0 +1,71 @@
+@model Kentico.Community.Portal.Web.Features.Registration.RegisterViewModel
+
+<form id="registerForm" method="post" hx-swap="outerHTML" hx-post hx-controller="Registration" hx-action="Register"
+    test-id="register" hx-trigger="captchaReady">
+    <div class="form-horizontal">
+        <div asp-validation-summary="ModelOnly" class="text-danger field-validation-error"></div>
+        <div class="form-group">
+            <div class="editing-form-label-cell">
+                <label asp-for="UserName" class="control-label form-label mt-3"></label>
+            </div>
+            <div class="editing-form-value-cell">
+                <input asp-for="UserName" class="form-control" test-id="userName">
+                <span asp-validation-for="UserName" class="text-danger field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="editing-form-label-cell">
+                <label asp-for="Email" class="control-label form-label mt-3"></label>
+            </div>
+            <div class="editing-form-value-cell">
+                <input asp-for="Email" class="form-control" test-id="email">
+                <span asp-validation-for="Email" class="text-danger field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="editing-form-label-cell">
+                <label asp-for="Password" class="control-label form-label mt-3"></label>
+            </div>
+            <div class="editing-form-value-cell">
+                <input asp-for="Password" class="form-control" test-id="password">
+                <span asp-validation-for="Password" class="text-danger field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="editing-form-label-cell">
+                <label asp-for="PasswordConfirmation" class="control-label form-label mt-3"></label>
+            </div>
+            <div class="editing-form-value-cell">
+                <input asp-for="PasswordConfirmation" class="form-control" test-id="passwordConfirmation">
+                <span asp-validation-for="PasswordConfirmation" class="text-danger field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-group mt-3">
+
+            <div class="editing-form-value-cell">
+                <input class="form-check-input" asp-for="ConsentAgreement" test-id="consentAgreement">
+                <label class="form-check-label" asp-for="ConsentAgreement">
+                    <vc:consent consent-name="KenticoCommunityPortalTracking" />
+                </label>
+                <span asp-validation-for="ConsentAgreement" class="text-danger field-validation-error"></span>
+            </div>
+        </div>
+
+        <input asp-for="CaptchaToken">
+        <button id="register" type="submit" class="btn btn-primary mt-3">@HtmlLocalizer["Register"]</button>
+    </div>
+</form>
+
+<script type="module">
+    asyncReady(async () => {
+        const recaptcha = await import('@ClientAssets.ViteAssetPath("dist/js/recaptcha.js")');
+
+        recaptcha.initCaptcha({
+            formElemID: 'registerForm'
+        });
+    });
+</script>

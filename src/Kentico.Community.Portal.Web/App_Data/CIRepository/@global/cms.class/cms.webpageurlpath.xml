@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Web page url path</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="WebPageUrlPathID" columntype="integer" enabled="true" guid="cdb5b0df-1d8c-4b0a-8680-d52a7f997aa7" isPK="true" system="true" />
+      <field column="WebPageUrlPath" columnprecision="0" columnsize="2000" columntype="text" enabled="true" guid="716aa505-d3a1-49b0-b538-2bec5651148a" system="true" />
+      <field column="WebPageUrlPathHash" columnprecision="0" columnsize="64" columntype="text" enabled="true" guid="245c8978-19e3-496b-9224-4a30c4b476bf" system="true" />
+      <field column="WebPageUrlPathWebPageItemID" columnprecision="0" columntype="integer" enabled="true" guid="3e3fc495-6c06-499b-98ef-111dcaf11c11" refobjtype="cms.webpageitem" reftype="Required" system="true" />
+      <field column="WebPageUrlPathIsLatest" columnprecision="0" columntype="boolean" enabled="true" guid="e626957c-e8b7-418f-b72e-8b088190e120" system="true">
+        <properties>
+          <defaultvalue>True</defaultvalue>
+        </properties>
+      </field>
+      <field column="WebPageUrlPathGUID" columnprecision="0" columntype="guid" enabled="true" guid="415e65cf-3c19-4ff6-963a-0f08ce3b6520" system="true" />
+      <field column="WebPageUrlPathWebsiteChannelID" columnprecision="0" columntype="integer" enabled="true" guid="6aec1f3c-b53d-4a43-8d3d-fd87ebbf59ac" refobjtype="cms.websitechannel" reftype="Required" system="true" />
+      <field column="WebPageUrlPathContentLanguageID" columnprecision="0" columntype="integer" enabled="true" guid="7a64cbb2-279b-4b50-8232-b6d24a01e633" refobjtype="cms.contentlanguage" reftype="Required" system="true" />
+      <field column="WebPageUrlPathIsDraft" columnprecision="0" columntype="boolean" enabled="true" guid="5364f996-d8c2-4951-9022-14024d4fec8c" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>68de6e79-21cb-493e-98fb-b3d44d6e8cac</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.WebPageUrlPath</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Websites</CodeName>
+    <GUID>87975c89-f788-4e6c-a91f-08f38097cc32</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_WebPageUrlPath</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

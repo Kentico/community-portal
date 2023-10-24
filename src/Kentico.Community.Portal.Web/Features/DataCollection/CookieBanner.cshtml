@@ -1,0 +1,40 @@
+﻿@using Kentico.Community.Portal.Web.Features.DataCollection
+
+@model CookieBannerViewModel
+
+@if (Model.HideBanner)
+{
+    return;
+}
+
+@{
+    string messageId = "cookieBannerMessage";
+}
+
+<form asp-route="@CookiesController.ROUTE_SET_PREFERENCES" hx-post hx-route="@CookiesController.ROUTE_SET_PREFERENCES"
+    hx-swap="outerHTML" hx-target="#@messageId">
+
+    <div class="xpcookiebanner js-xpcookiebanner is-active position-relative">
+        <div class="xpcookiebanner__inner container">
+            <h5 class="xpcookiebanner__header">@Model.CookieBannerHeading</h5>
+            @Model.CookieBannerContentHTML
+            <div class="xpcookiebanner__ctas">
+
+                <input type="hidden" name="CookieLevelSelected" value="4">
+                <input type="hidden" name="ShowMessage" value="false">
+
+                <button type="submit" value="4" name="CookieLevelSelected"
+                    class="btn btn-secondary xpcookiebanner__cta js-close-cookie text-uppercase"
+                    data-tracking-code="CookieBar_Accept">
+                    Accept All
+                </button>
+
+                <a href="@Model.CookiePolicyPagePath" class="xpcookiebanner__cta" data-tracking-code="CookieBar_More">
+                    Configure
+                </a>
+
+            </div>
+        </div>
+        <div id="@messageId" class="xpcookiebanner__message"></div>
+    </div>
+</form>

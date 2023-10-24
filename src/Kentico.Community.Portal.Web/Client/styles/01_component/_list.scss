@@ -1,0 +1,36 @@
+ol, ul{
+  padding-left: 2.5rem;
+}
+
+.c-ul{
+  &.default{
+    list-style: none;
+    position: relative;
+    li{
+      position: relative;
+      &:before{
+        content: '';
+        width: .25rem;
+        height: .25rem;
+        border-radius: 50%;
+        background: $black;
+
+        position: absolute;
+        display: block;
+        left: -1.125rem;
+        top: .625rem;
+      }
+
+      &>.c-ul{
+        &.default{
+          li{
+            &:before{
+              background: transparent;
+              border: 1px solid $black;
+            }
+          }
+        }
+      }
+    }
+  }
+}

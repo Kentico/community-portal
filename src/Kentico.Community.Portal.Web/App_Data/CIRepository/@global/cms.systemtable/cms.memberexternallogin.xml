@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassDisplayName>MemberExternalLogin</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="MemberExternalLoginID" columntype="integer" enabled="true" guid="0d5c9993-808f-43ba-b5fb-090a3964d368" isPK="true" system="true" />
+      <field column="MemberExternalLoginMemberID" columnprecision="0" columntype="integer" enabled="true" guid="8b3360c7-5633-4031-b691-eb2a3b860349" refobjtype="cms.member" reftype="Required" system="true" />
+      <field column="MemberExternalLoginLoginProvider" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="ad645f47-6744-46e3-9737-11ef87244d42" system="true" />
+      <field column="MemberExternalLoginIdentityKey" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="94e1b2f1-ea99-4882-9b3b-6339dc28fccc" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>6ce2615a-40dc-4e15-884b-6252da6c3f36</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.MemberExternalLogin</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Membership</CodeName>
+    <GUID>d4b7561a-f188-420c-8f68-63b5c573b2bf</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_MemberExternalLogin</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>

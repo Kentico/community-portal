@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Content type channel</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentTypeChannelID" columntype="integer" enabled="true" guid="ecedebbe-d8f2-4021-9f83-bfda47204f20" isPK="true" system="true" />
+      <field column="ContentTypeChannelChannelID" columnprecision="0" columntype="integer" enabled="true" guid="7f0d8700-e366-4c75-b5d8-2debdc3ccffa" refobjtype="cms.channel" reftype="Required" system="true" />
+      <field column="ContentTypeChannelContentTypeID" columnprecision="0" columntype="integer" enabled="true" guid="ca53c1f2-ed60-45c8-b7d7-d986fb9d5949" refobjtype="cms.contenttype" reftype="Required" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>84719277-d9dc-451a-af43-afc8abad6928</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ContentTypeChannel</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentEngine</CodeName>
+    <GUID>eb76ebd1-752f-4969-a5b6-1fb984cae224</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ContentTypeChannel</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

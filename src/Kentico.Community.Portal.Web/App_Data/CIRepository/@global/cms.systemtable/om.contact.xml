@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassConnectionString>CMSOMConnectionString</ClassConnectionString>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Contact management - Contact</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContactID" columnprecision="0" columntype="integer" guid="18650e04-a7a9-47fc-98e9-f692386f29aa" isPK="true" isunique="true" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="ContactFirstName" columnprecision="0" columnsize="100" columntype="text" guid="84594ecb-a64d-4860-8f4a-d7ee5a08c354" system="true" />
+      <field allowempty="true" column="ContactMiddleName" columnprecision="0" columnsize="100" columntype="text" guid="ccf8d540-3f72-4b50-82a9-7349059035a3" system="true" />
+      <field allowempty="true" column="ContactLastName" columnprecision="0" columnsize="100" columntype="text" guid="cd41b1d5-e269-44d0-af12-d323ef2d9716" system="true" />
+      <field allowempty="true" column="ContactBirthday" columnprecision="7" columntype="datetime" guid="966346ba-d00e-4ac3-ab8a-1ad08bbd8ac6" system="true" />
+      <field allowempty="true" column="ContactGender" columnprecision="0" columntype="integer" guid="6eb0cdc8-d4f1-433c-a39d-9fef3487d29e" system="true" />
+      <field allowempty="true" column="ContactCompanyName" columnprecision="0" columnsize="100" columntype="text" guid="c8415f67-aaf4-4d43-87d4-cb195df99a30" system="true" />
+      <field allowempty="true" column="ContactJobTitle" columnprecision="0" columnsize="50" columntype="text" guid="2a60347a-6997-4fe1-90fc-ddc3e07d80c4" system="true" />
+      <field column="ContactCreated" columnprecision="7" columntype="datetime" guid="770b979e-92f8-44c3-8d84-410135a6b409" system="true" />
+      <field allowempty="true" column="ContactStatusID" columnprecision="0" columntype="integer" guid="db330726-0a21-4714-9374-18991f8f2cd7" system="true" />
+      <field allowempty="true" column="ContactMonitored" columnprecision="0" columntype="boolean" guid="cb68cef6-6a79-44d2-8b38-4afbf19c571a" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="ContactOwnerUserID" columnprecision="0" columntype="integer" guid="6b6c5e38-9b27-4500-b6c5-72511196d59c" system="true" />
+      <field allowempty="true" column="ContactCampaign" columnprecision="0" columnsize="200" columntype="text" guid="df3722c4-a6b7-47d2-9535-209ad749bbf5" system="true" />
+      <field allowempty="true" column="ContactAddress1" columnprecision="0" columnsize="100" columntype="text" guid="bd8c4074-63e8-4251-8293-f91987ede2de" system="true" />
+      <field allowempty="true" column="ContactCity" columnprecision="0" columnsize="100" columntype="text" guid="06f53e80-b855-4ab4-bd83-30d3056b1841" system="true" />
+      <field allowempty="true" column="ContactZIP" columnprecision="0" columnsize="100" columntype="text" guid="7692d80e-b523-4051-93dd-f7e6606d9d5e" system="true" />
+      <field allowempty="true" column="ContactStateID" columnprecision="0" columntype="integer" guid="9f851997-36c8-4d84-a627-3715fe954ce7" system="true" />
+      <field allowempty="true" column="ContactCountryID" columnprecision="0" columntype="integer" guid="02b0d2d1-854c-4771-9126-da1ba713890a" system="true" />
+      <field allowempty="true" column="ContactMobilePhone" columnprecision="0" columnsize="26" columntype="text" guid="2427c757-3860-431e-892e-eecd1da26410" system="true" />
+      <field allowempty="true" column="ContactBusinessPhone" columnprecision="0" columnsize="26" columntype="text" guid="278d9fd3-4c08-415c-8c1f-f0df9feab23b" system="true" />
+      <field allowempty="true" column="ContactEmail" columnprecision="0" columnsize="254" columntype="text" guid="cc4e5abe-0ab1-4526-b792-e8cdf907ad4c" system="true" />
+      <field allowempty="true" column="ContactNotes" columnprecision="0" columntype="longtext" guid="92e4dd75-3cbe-43f5-be33-0e4c99db025a" system="true" />
+      <field column="ContactGUID" columnprecision="0" columntype="guid" guid="e55c63af-e2e1-4f5b-9cc3-770e7f7d80eb" system="true" />
+      <field column="ContactLastModified" columnprecision="7" columntype="datetime" guid="9fe0b186-d2d0-40af-a791-f78e2c447cb4" system="true" />
+      <field allowempty="true" column="ContactBounces" columnprecision="0" columntype="integer" guid="0e414b04-bfd2-4191-998a-3f9f9124879f" system="true" />
+      <field allowempty="true" column="ContactSalesForceLeadID" columnprecision="0" columnsize="18" columntype="text" guid="d84aa39e-d95c-4e53-99c4-69e5ba4aab23" system="true" />
+      <field allowempty="true" column="ContactSalesForceLeadReplicationDisabled" columnprecision="0" columntype="boolean" guid="bbe2667c-538c-48fd-9d6c-9378207fb0df" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="ContactSalesForceLeadReplicationDateTime" columnprecision="7" columntype="datetime" guid="531e86dc-3c94-4fdc-83ab-ddad002c26fa" system="true" />
+      <field allowempty="true" column="ContactSalesForceLeadReplicationSuspensionDateTime" columnprecision="7" columntype="datetime" guid="d4655c8b-f017-45d4-863d-5f9283acd11d" system="true" />
+      <field allowempty="true" column="ContactSalesForceLeadReplicationRequired" columnprecision="0" columntype="boolean" guid="ed635ea1-58a9-40af-8429-501b10fe6f71" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>a7ca5324-19a5-4104-9579-ef54c7fca5fa</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.Contact</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContactManagement</CodeName>
+    <GUID>0e4beef1-989c-4687-80ca-ae21fec09734</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>OM_Contact</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>

@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>media.library</CodeName>
+    <GUID>dead7673-d566-4f83-87e3-e9a235b70e4f</GUID>
+    <ObjectType>cms.systemtable</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="LibraryID" guid="00fdb6b0-5f2e-4ef9-8648-1d3c7af8b721" />
+      <field column="LibraryDisplayName" columnprecision="0" enabled="true" guid="9b4aa82c-02df-4712-a5b9-3b9dee377b45" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$general.displayname$}</fieldcaption>
+          <fielddescription>{$content.medialibraries.displayname.description$}</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="LibraryName" columnprecision="0" enabled="true" guid="e4081abf-652e-47bd-82d0-313752f01873" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$general.codename$}</fieldcaption>
+          <fielddescription>{$content.medialibraries.name.description$}</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="LibraryDescription" columnprecision="0" enabled="true" guid="ac965989-ec7a-446f-81bb-ccb5043abf0b" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$general.description$}</fieldcaption>
+          <fielddescription>{$content.medialibraries.description.description$}</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="LibraryFolder" columnprecision="0" enabled="true" guid="06f6b6a9-08ca-4735-8732-20cc75d11802" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$general.foldername$}</fieldcaption>
+          <fielddescription>{$content.medialibraries.folder.description$}</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="LibraryAccess" guid="720d2865-0be4-43d3-8ed8-412b269b1d00" />
+      <field column="LibraryGUID" guid="512c11dd-a325-4bf2-b1be-4f7c54397132" />
+      <field column="LibraryLastModified" guid="54f9c352-5ac2-4e4b-ab98-65d41240e9e4" />
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Create</FormDisplayName>
+  <FormGUID>6b232938-0c19-4be2-830f-5c002a30b600</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>create</FormName>
+</cms.alternativeform>

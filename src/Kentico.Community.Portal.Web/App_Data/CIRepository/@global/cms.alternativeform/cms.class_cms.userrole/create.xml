@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>cms.UserRole</CodeName>
+    <GUID>7664a5c5-128c-4546-a7f9-c6d3e694c28a</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="UserRoleID" guid="a6ca4467-2aca-4cdb-b8e6-218521075d5a" />
+      <field column="UserID" guid="fade36d8-d004-4e7e-a354-614332e49bc9" />
+      <field column="RoleID" guid="61c16b7f-a96a-454e-aa67-9159e1e1d2d2" />
+      <field column="Users" columnprecision="0" columntype="objectcodenames" dummy="altform" enabled="true" guid="411a2046-b819-48a0-b0be-ba0996322cbf" system="true" visible="true" order="3">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.roles.adduser.users$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectCodeNameSelector</controlname>
+          <MaximumItems>0</MaximumItems>
+          <ObjectType>cms.user</ObjectType>
+        </settings>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Create</FormDisplayName>
+  <FormGUID>166dc33a-f65e-4805-a9a1-e94197c4d47f</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>Create</FormName>
+</cms.alternativeform>

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Content item reference</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemReferenceID" columntype="integer" enabled="true" guid="a1e45a34-be8b-415d-9f2d-f6b2eec895cc" isPK="true" system="true" />
+      <field column="ContentItemReferenceGUID" columnprecision="0" columntype="guid" enabled="true" guid="d1a6597c-356d-4126-b46e-c112402dbbbc" system="true" />
+      <field column="ContentItemReferenceSourceCommonDataID" columnprecision="0" columntype="integer" enabled="true" guid="2f9bc232-eea1-4ca0-88c7-5261e7fa1390" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemReferenceTargetItemID" columnprecision="0" columntype="integer" enabled="true" guid="8192e22b-e371-462d-b7b5-e8106c2d75e4" refobjtype="cms.contentitem" reftype="Required" system="true" />
+      <field column="ContentItemReferenceGroupGUID" columnprecision="0" columntype="guid" enabled="true" guid="6fe8f6ea-fe33-4fe0-891e-b0dc653b24dc" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>38f54a8a-ba27-413d-aba5-18f2ca55f0b8</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ContentItemReference</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentEngine</CodeName>
+    <GUID>eb76ebd1-752f-4969-a5b6-1fb984cae224</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ContentItemReference</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

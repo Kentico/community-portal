@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>CMS.Consent</CodeName>
+    <GUID>1de57768-d0cb-4e03-b3d9-7dd95c26c193</GUID>
+    <ObjectType>cms.systemtable</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="ConsentID" guid="85f3f6fb-6cb8-4cd3-bd85-6f1803970a6c" />
+      <field column="ConsentDisplayName" columnprecision="0" enabled="true" guid="678ba678-0658-47d4-a5b3-61684acf1398" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalmarketing.consentedit.displayname.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ConsentName" columnprecision="0" enabled="true" guid="e03d4f66-a288-4e2f-be3c-0ceed645441b" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.consentedit.codename.caption$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ConsentContent" guid="e4c8261f-1c95-4b63-9d71-33d853992475" />
+      <field column="ConsentGuid" guid="ef9baeba-8aca-4407-97b2-0ccd273138e3" />
+      <field column="ConsentLastModified" guid="86874899-0c72-47e7-8f47-cf920e909951" />
+      <field column="ConsentHash" guid="94daa148-b0f2-4a5d-8e0a-f2d7c06699e6" />
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Create</FormDisplayName>
+  <FormGUID>b9d0697a-6e52-496d-b613-a5c75bef5131</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>create</FormName>
+</cms.alternativeform>

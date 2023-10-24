@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Content language</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentLanguageID" columntype="integer" enabled="true" guid="03a5a4a7-8f67-4770-8d26-309c6ce18d97" isPK="true" system="true" />
+      <field column="ContentLanguageDisplayName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="aea88eb3-0f99-41f1-930d-1221043185f5" system="true" />
+      <field column="ContentLanguageName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="4ed549aa-0a29-4dc1-8215-253dff8acd6d" system="true" />
+      <field column="ContentLanguageIsDefault" columnprecision="0" columntype="boolean" enabled="true" guid="bd3fbada-af24-4e47-8807-2e82692cd710" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="ContentLanguageFallbackContentLanguageID" columnprecision="0" columntype="integer" enabled="true" guid="1f074d33-6319-41bf-8d1a-8c6299520e6d" refobjtype="cms.contentlanguage" reftype="NotRequired" system="true" />
+      <field column="ContentLanguageCultureFormat" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="349475df-32d9-4f37-a9dc-1fe661b71b12" system="true" />
+      <field column="ContentLanguageGUID" columnprecision="0" columntype="guid" enabled="true" guid="a2fee50a-81d8-400b-86d5-6d5337892e82" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>35adb641-9c37-4b73-bbe8-574b8c0d2301</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ContentLanguage</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentEngine</CodeName>
+    <GUID>eb76ebd1-752f-4969-a5b6-1fb984cae224</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ContentLanguage</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

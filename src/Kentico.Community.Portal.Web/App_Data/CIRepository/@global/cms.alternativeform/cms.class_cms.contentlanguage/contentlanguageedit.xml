@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>CMS.ContentLanguage</CodeName>
+    <GUID>35adb641-9c37-4b73-bbe8-574b8c0d2301</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="ContentLanguageID" guid="03a5a4a7-8f67-4770-8d26-309c6ce18d97" enabled="" />
+      <field column="ContentLanguageDisplayName" enabled="true" guid="aea88eb3-0f99-41f1-930d-1221043185f5" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.contentlanguages.language.displayname$}</fieldcaption>
+          <fielddescription>
+            <![CDATA[{$base.contentlanguages.language.displayname.tooltip$}]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ContentLanguageName" enabled="true" guid="4ed549aa-0a29-4dc1-8215-253dff8acd6d" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.contentlanguages.language.codename$}</fieldcaption>
+          <fielddescription>
+            <![CDATA[{$base.contentlanguages.language.codename.tooltip$}]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ContentLanguageCultureFormat" enabled="true" guid="349475df-32d9-4f37-a9dc-1fe661b71b12" visible="true" order="3">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.contentlanguages.language.cultureformat$}</fieldcaption>
+          <fielddescription>
+            <![CDATA[{$base.contentlanguages.language.cultureformat.tooltip$}]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ContentLanguageIsDefault" enabled="true" guid="bd3fbada-af24-4e47-8807-2e82692cd710" visible="true" order="4">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$base.contentlanguages.language.contentlanguageisdefault$}]]>
+          </fieldcaption>
+          <fielddescription>
+            <![CDATA[{$base.contentlanguages.language.contentlanguageisdefault.defaultlanguage.tooltip$}]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <category name="Fallback" order="5">
+        <properties>
+          <caption>
+            <![CDATA[{$base.contentlanguages.language.fallback.category$}]]>
+          </caption>
+          <visible>true</visible>
+        </properties>
+      </category>
+      <field column="ContentLanguageFallbackContentLanguageID" enabled="true" guid="1f074d33-6319-41bf-8d1a-8c6299520e6d" visible="true" refobjtype="" reftype="" order="6">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>cms.contentlanguage</ObjectType>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$base.contentlanguages.language.fallbacklanguage$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ContentLanguageGUID" guid="a2fee50a-81d8-400b-86d5-6d5337892e82" enabled="" order="7" />
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit content language</FormDisplayName>
+  <FormGUID>57eba40d-a607-4589-bbcc-104d43a64d81</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>ContentLanguageEdit</FormName>
+</cms.alternativeform>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.blogpostpage>
+  <BlogPostPageAuthor>
+    <![CDATA[[{"Identifier":"2dce9183-2830-4794-ad72-edd6bd9dc5c3"}]]]>
+  </BlogPostPageAuthor>
+  <BlogPostPageContentHTML />
+  <BlogPostPageContentMarkdown>
+<![CDATA[
+Check out the new Refresh in [our documentation](https://docs.xperience.io/xp/changelog#Changelog-Refresh(August10,2023)).
+
+This refresh includes the following enhancements
+
+## Content Hub filters
+
+New filters in the Content Hub improve your ability to quickly find the content you are searching for.
+
+![Content Hub filters dialog](/getmedia/fb65f832-79a4-490c-a694-c0faa220caaa/refresh-v26-5-0-content-hub-filters.jpg)
+
+## Custom Listing Filters
+
+You can now create [code defined listing filters](https://docs.xperience.io/xp/developers-and-admins/customization/extend-the-administration-interface/ui-pages/reference-ui-page-templates/listing-ui-page-template#ListingUIpagetemplate-Addalistingfilter) for Administration customizations.
+
+You can add a custom filter to a listing page like this:
+
+```csharp
+public override Task ConfigurePage()
+{
+    ...
+
+    // Assigns a listing filter model
+    PageConfiguration.FilterFormModel = new UserListFilterModel();
+}
+```
+
+## Local Lucene Search 
+
+We have a Lucene.NET search integration package which you can learn more about at [our GitHub repository](https://github.com/Kentico/xperience-by-kentico-lucene/) for this library.
+]]>
+  </BlogPostPageContentMarkdown>
+  <BlogPostPageContentType>markdown</BlogPostPageContentType>
+  <BlogPostPageDate>2023-08-10 18:46:00Z</BlogPostPageDate>
+  <BlogPostPageShortDescription>
+    <![CDATA[A new Xperience by Kentico Refresh is out with great features for filtering, UI form components, and search.]]>
+  </BlogPostPageShortDescription>
+  <BlogPostPageTaxonomy>Announcement</BlogPostPageTaxonomy>
+  <BlogPostPageTeaserMediaFileImage>
+    <![CDATA[[{"Identifier":"1441c1a7-37b5-45ac-a7d5-be3dc6f9a8c9","Name":"kentico-background.webp","Size":99376,"Dimensions":{"Width":5000,"Height":2960}}]]]>
+  </BlogPostPageTeaserMediaFileImage>
+  <ContentItemDataCommonDataID>
+    <GUID>d275f53d-650c-44dc-8bb5-0b19a93bd0f0</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>XperienceByKenticoRefresh-August10_2023-33v5xpsi-localtest</CodeName>
+      <GUID>90f2ff24-c0bb-4597-bb1f-2f26369879b0</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>e94b20c7-4450-4345-87d1-7efd1e28a97e</ContentItemDataGUID>
+  <DocumentName>Xperience by Kentico Refresh - August 10, 2023</DocumentName>
+</contentitemdata.kenticocommunity.blogpostpage>

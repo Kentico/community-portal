@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Content item language metadata</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemLanguageMetadataID" columntype="integer" enabled="true" guid="4e5672d5-eab0-4679-9d77-fb77800c9523" isPK="true" system="true" />
+      <field column="ContentItemLanguageMetadataContentItemID" columnprecision="0" columntype="integer" enabled="true" guid="76d14f15-9733-428f-89f8-8ed9a3e31a35" refobjtype="cms.contentitem" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="ContentItemLanguageMetadataDisplayName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="008702b3-20ed-498d-a09e-4b6dd298c468" system="true" />
+      <field column="ContentItemLanguageMetadataLatestVersionStatus" columnprecision="0" columntype="integer" enabled="true" guid="d3d03fb2-12b7-4f15-aed5-aaf94c148d8c" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="ContentItemLanguageMetadataGUID" columnprecision="0" columntype="guid" enabled="true" guid="df478a4b-f5e9-429a-a722-2c401ddf2720" system="true" />
+      <field column="ContentItemLanguageMetadataCreatedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="0bd76910-07d5-4880-ac3f-9747d3befbad" system="true" />
+      <field allowempty="true" column="ContentItemLanguageMetadataCreatedByUserID" columnprecision="0" columntype="integer" enabled="true" guid="4e0e8ec1-d651-4824-8f1b-0c05ca0f0bb2" refobjtype="cms.user" reftype="NotRequired" system="true" />
+      <field column="ContentItemLanguageMetadataModifiedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="4039b843-6615-4690-ac10-c90dbc057952" system="true" />
+      <field allowempty="true" column="ContentItemLanguageMetadataModifiedByUserID" columnprecision="0" columntype="integer" enabled="true" guid="509ad1c0-8032-4e5a-97e6-85b2f59d1ada" refobjtype="cms.user" reftype="NotRequired" system="true" />
+      <field column="ContentItemLanguageMetadataHasImageAsset" columnprecision="0" columntype="boolean" enabled="true" guid="2a98af52-9486-4d5b-bb47-b9f77bf3c100" system="true" />
+      <field column="ContentItemLanguageMetadataContentLanguageID" columnprecision="0" columntype="integer" enabled="true" guid="b1bbf71e-98ec-4896-9760-a016ba49a8e5" refobjtype="cms.contentlanguage" reftype="Required" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>b80834cb-b865-483f-87d3-e1725a66bd37</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ContentItemLanguageMetadata</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentEngine</CodeName>
+    <GUID>eb76ebd1-752f-4969-a5b6-1fb984cae224</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ContentItemLanguageMetadata</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

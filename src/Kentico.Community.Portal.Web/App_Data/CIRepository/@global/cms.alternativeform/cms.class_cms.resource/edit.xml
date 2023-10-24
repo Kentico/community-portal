@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>cms.resource</CodeName>
+    <GUID>93746c62-21e4-4fda-bcbd-61c5fcee9945</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="ResourceID" guid="870bc6d4-f89a-4116-80b3-45a32604b394" />
+      <field column="ResourceDisplayName" columnprecision="0" enabled="true" guid="e4714769-8c09-4488-82ee-69f0c7aeccac" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.modules.displayName$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ResourceName" columnprecision="0" enabled="true" guid="69930d99-46c8-4be2-b19c-5a9edb05fb79" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.modules.codeName$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ResourceDescription" columnprecision="0" enabled="true" guid="27828b12-d1fb-4cb1-866d-a15f683bb674" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.modules.description$}</fieldcaption>
+          <fielddescription>{$base.modules.description.description$}</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ResourceGUID" guid="2389fed5-9c07-45e7-88db-4e56ec0c2889" order="4" />
+      <field column="ResourceLastModified" guid="a43d2cef-9fdc-43a8-8cd8-37b161ef4582" order="5" />
+      <field column="ResourceIsInDevelopment" columnprecision="0" enabled="true" guid="787c2b57-e5e4-48c4-a865-321f8d90b4e9" visible="true" order="6">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.modules.isindevelopment$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>edit</FormDisplayName>
+  <FormGUID>28d9dd30-3643-43c6-8fc8-0713943b19cb</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>edit</FormName>
+</cms.alternativeform>

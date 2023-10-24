@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kentico.Community.Portal.Web", "src\Kentico.Community.Portal.Web\Kentico.Community.Portal.Web.csproj", "{846325D2-D3AB-486C-8D33-2CBD5F19D3E5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kentico.Community.Portal.Core", "src\Kentico.Community.Portal.Core\Kentico.Community.Portal.Core.csproj", "{7A280D97-1911-45B6-BF00-5FDA6C2427A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{84D05F8C-B1D0-47E2-BF2B-0C3DF02543B7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kentico.Community.Portal.Admin", "src\Kentico.Community.Portal.Admin\Kentico.Community.Portal.Admin.csproj", "{C8F84811-8D18-456B-B051-FD67916C960A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{3D7538F4-2939-4CFC-86AE-D41E4559D9D5}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{2661B5DB-21A5-439A-8A0B-A70C9CDF2446}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{E71B31CE-1F61-41E9-ACF7-DC36F64E2145}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "actions", "actions", "{3476CFDD-33A2-4101-9B52-85C6C568DD61}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\ci.yml = .github\workflows\ci.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{333535A3-F34A-4792-A14A-C65C80A039C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kentico.Community.Portal.Web.Tests", "test\Kentico.Community.Portal.Web.Tests\Kentico.Community.Portal.Web.Tests.csproj", "{9B41350E-7AB4-4F93-BA7B-CA1C9C7F469D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kentico.Community.Portal.Web.E2E.Tests", "test\Kentico.Community.Portal.Web.E2E.Tests\Kentico.Community.Portal.Web.E2E.Tests.csproj", "{5A8A3AA6-5322-4A76-BDF8-E9171BA12EFF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{846325D2-D3AB-486C-8D33-2CBD5F19D3E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{846325D2-D3AB-486C-8D33-2CBD5F19D3E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{846325D2-D3AB-486C-8D33-2CBD5F19D3E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{846325D2-D3AB-486C-8D33-2CBD5F19D3E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A280D97-1911-45B6-BF00-5FDA6C2427A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A280D97-1911-45B6-BF00-5FDA6C2427A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A280D97-1911-45B6-BF00-5FDA6C2427A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A280D97-1911-45B6-BF00-5FDA6C2427A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8F84811-8D18-456B-B051-FD67916C960A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8F84811-8D18-456B-B051-FD67916C960A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8F84811-8D18-456B-B051-FD67916C960A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8F84811-8D18-456B-B051-FD67916C960A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B41350E-7AB4-4F93-BA7B-CA1C9C7F469D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B41350E-7AB4-4F93-BA7B-CA1C9C7F469D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B41350E-7AB4-4F93-BA7B-CA1C9C7F469D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B41350E-7AB4-4F93-BA7B-CA1C9C7F469D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A8A3AA6-5322-4A76-BDF8-E9171BA12EFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A8A3AA6-5322-4A76-BDF8-E9171BA12EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A8A3AA6-5322-4A76-BDF8-E9171BA12EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A8A3AA6-5322-4A76-BDF8-E9171BA12EFF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{846325D2-D3AB-486C-8D33-2CBD5F19D3E5} = {84D05F8C-B1D0-47E2-BF2B-0C3DF02543B7}
+		{7A280D97-1911-45B6-BF00-5FDA6C2427A1} = {84D05F8C-B1D0-47E2-BF2B-0C3DF02543B7}
+		{C8F84811-8D18-456B-B051-FD67916C960A} = {84D05F8C-B1D0-47E2-BF2B-0C3DF02543B7}
+		{9B41350E-7AB4-4F93-BA7B-CA1C9C7F469D} = {333535A3-F34A-4792-A14A-C65C80A039C5}
+		{5A8A3AA6-5322-4A76-BDF8-E9171BA12EFF} = {333535A3-F34A-4792-A14A-C65C80A039C5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3A726AD7-34B2-4007-84EB-FC71DA366607}
+	EndGlobalSection
+EndGlobal

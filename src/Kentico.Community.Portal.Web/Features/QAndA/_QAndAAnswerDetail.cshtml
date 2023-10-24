@@ -1,0 +1,87 @@
+@using Kentico.Community.Portal.Web.Features.QAndA
+
+@model QAndAPostAnswerViewModel
+
+@{
+    var guid = $"{Model.GUID:N}";
+    string wrapperElId = $"answer_{guid}";
+    string markAnswerFormElId = $"markAsAnswerForm_{guid}";
+}
+
+<div id="@wrapperElId" class="my-3 target-bg p-2 rounded" style="--bg-target: var(--bg-purple-100)">
+    <div class="c-card p-0">
+        <div class="c-card_inner">
+
+            <div class="c-card_content">
+
+                <p class="mb-3 small">
+                    <span class="text-secondary fw-bold">@Model.Author.Name</span>
+                    answered on @Model.DateCreated.ToString("MMMM d, yyyy") @Model.DateCreated.ToString("t") <a
+                        href="#@wrapperElId" title="Link to this answer">🔗</a>
+                </p>
+
+                <div class="fr-view mb-3 member-generated-content">
+                    @Model.HTMLSanitizedContentHTML
+                </div>
+            </div>
+
+            @if (Model.IsAcceptedAnswer)
+            {
+                <div class="c-card_footer p-1 text-success">
+                    <div class="c-card_icon  text-success">
+                        <svg class="c-icon mt-1">
+                            <use xlink:href="/img/icons.svg#check"></use>
+                        </svg>
+                    </div>
+                    <div class="fs-sm-4">
+                        <small>
+                            <b>Answer</b>
+                        </small>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Permissions.CanInteract)
+            {
+                <div class="d-flex gap-1 mb-5">
+                    @if (Model.Permissions.CanMarkAnswered)
+                    {
+                        <form id="@markAnswerFormElId" method="post" hx-post hx-controller="QAndAAnswer"
+                            hx-action="MarkApprovedAnswer" hx-route-questionID="@Model.ParentQuestionID"
+                            hx-route-answerID="@Model.ID" class="align-self-center">
+                            <button type="submit" class="btn btn-primary btn-sm text-wrap">
+                                Mark as answer
+                            </button>
+                        </form>
+                    }
+
+                    @if (Model.Permissions.CanEdit)
+                    {
+                        <button type="button" class="btn btn-sm btn-outline-secondary" hx-get hx-controller="QAndAAnswer"
+                            hx-action="DisplayEditAnswerForm" hx-route-questionID="@Model.ParentQuestionID"
+                            hx-route-answerID="@Model.ID" hx-swap="outerHTML" hx-target="#@wrapperElId">
+                            Edit Answer
+                        </button>
+                    }
+                    @if (Model.Permissions.CanDelete)
+                    {
+                        <form method="post" hx-post hx-controller="QAndAAnswer" hx-action="DeleteAnswer"
+                            hx-route-answerID="@Model.ID" hx-swap="delete" hx-target="#@wrapperElId">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@{
+    if (Context.Request.IsHtmx())
+    {
+        <script type="module">
+            const el = document.querySelector('#@wrapperElId');
+            window.Prism.highlightAllUnder(el);
+        </script>
+    }
+}

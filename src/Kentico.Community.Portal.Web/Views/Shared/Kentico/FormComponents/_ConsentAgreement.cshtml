@@ -1,0 +1,24 @@
+@using Kentico.Forms.Web.Mvc
+
+@model ConsentAgreementComponent
+
+@{
+    var htmlAttributes = ViewData.Kentico().GetEditorHtmlAttributes();
+    var spanTitle = htmlAttributes.TryGetValue("title", out object title) ? title : String.Empty;
+    if (!Model.CheckboxEnabled)
+    {
+        htmlAttributes["disabled"] = "disabled";
+    }
+
+    htmlAttributes["class"] = htmlAttributes["class"] + " form-check-input";
+}
+
+<div title="@spanTitle">
+    @Html.CheckBoxFor(m => m.ConsentChecked, htmlAttributes)
+
+    <label for="@Html.IdFor(x => x.ConsentChecked)" class="form-check-label">
+        @(String.IsNullOrWhiteSpace(Model.Properties.ConsentText)
+            ? Html.Raw("&nbsp;")
+            : new HtmlString(Model.Properties.ConsentText))
+    </label>
+</div>

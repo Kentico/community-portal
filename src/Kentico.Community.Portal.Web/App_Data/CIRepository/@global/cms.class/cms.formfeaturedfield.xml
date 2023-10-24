@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassDisplayName>Form featured field</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="FormFeaturedFieldID" columntype="integer" guid="eb8fde48-a48f-4e0b-80d3-c7d614536da6" isPK="true" system="true" />
+      <field column="FormFeaturedFieldDisplayName" columnsize="200" columntype="text" guid="d0f01bcb-e874-4915-a327-655499ac97d1" system="true" />
+      <field column="FormFeaturedFieldName" columnsize="200" columntype="text" guid="e5c04558-ace8-41bb-89b4-d1f348a553ea" system="true" />
+      <field allowempty="true" column="FormFeaturedFieldDescription" columntype="longtext" guid="b2d84d3d-2f39-4ce1-a5c7-ae75f34c9ef4" system="true" />
+      <field column="FormFeaturedFieldFormDefinition" columntype="longtext" guid="117dd5b2-e3b5-44f4-bde8-44e01ce9f584" system="true" />
+      <field allowempty="true" column="FormFeaturedFieldMapping" columnsize="200" columntype="text" guid="88d9e1ec-1bb2-4e42-9d84-33706d815d47" system="true" />
+      <field column="FormFeaturedFieldOrder" columntype="integer" guid="53f7256b-e956-441c-b33f-c53fef9f69e7" system="true" />
+      <field column="FormFeaturedFieldGuid" columntype="guid" guid="9eed8946-40ad-464e-b529-defb59a2a84e" system="true" />
+      <field column="FormFeaturedFieldLastModified" columnprecision="7" columntype="datetime" guid="d4106a73-9dd6-4f79-b9bb-b124d5e084d4" system="true" />
+      <field column="FormFeaturedFieldIconClass" columnsize="200" columntype="text" guid="066f5eef-3e9c-4379-a41a-85303f342e51" system="true" />
+      <field column="FormFeaturedFieldEnabled" columnprecision="0" columntype="boolean" enabled="true" guid="a63f8d11-68cc-4a18-966c-728f8e1069b9" system="true">
+        <properties>
+          <defaultvalue>True</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>38815a72-92d5-4efe-bc35-563d034a671b</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.FormFeaturedField</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Form</CodeName>
+    <GUID>385e528a-e013-4a84-bad9-d5956408741a</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>CMS_FormFeaturedField</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

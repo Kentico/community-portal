@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>cms.AlternativeForm</CodeName>
+    <GUID>7d7cbe11-e101-469f-a4a3-ee452f3982df</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="FormID" guid="d65b8a4f-95fb-4a35-9f98-04c2a746f6de" isunique="true" />
+      <field column="FormDisplayName" columnprecision="0" enabled="true" guid="0be5e0a7-1704-47dc-b063-5e6fb3e91c46" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.uiforms.FormDisplayName$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="FormName" columnprecision="0" enabled="true" guid="4c90ce6a-e202-4035-a51d-f27469743148" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.uiforms.FormName$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="FormClassID" guid="5a4749e1-d4b8-4753-9b2e-298433d675c6" />
+      <field column="FormDefinition" guid="a1307cae-635b-48b5-a291-e992f746fc9e" />
+      <field column="FormGUID" guid="b1ff5048-0f5d-462f-818a-b6c582e45db1" />
+      <field column="FormLastModified" columnprecision="7" guid="12a04abb-af1c-493c-9350-c8c08f5736ff" />
+      <field column="FormCoupledClassID" guid="b9cb787e-87b6-4ebe-86ba-71470ae3e698" />
+      <field column="FormCustomizedColumns" guid="f2d242dd-c4ea-40f3-96f0-cd5ba27c13ce" />
+      <field column="FormIsCustom" guid="c587b0d7-34e7-4608-8e5e-de0cc240f898" />
+    </form>
+  </FormDefinition>
+  <FormDisplayName>FormEdit</FormDisplayName>
+  <FormGUID>0a4c1c76-35e4-431d-86a9-bc1ed1f310f8</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>FormEdit</FormName>
+</cms.alternativeform>

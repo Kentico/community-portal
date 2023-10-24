@@ -1,0 +1,22 @@
+﻿@using Kentico.Community.Portal.Web.Components.ViewComponents.AlertBox
+
+@model AlertBoxViewModel
+
+@if (Model.Closed || Model.AlertBoxMessageHTML is null)
+{
+    return;
+}
+
+<form hx-post hx-route="@AlertBoxController.ROUTE_CONFIRM_ALERT" hx-swap="outerHTML">
+    <div class="collapse show c-header-alert" id="headerAlert">
+        <div class="c-header-alert_inner">
+            <div class="container-xxl">
+                <p class="mb-0">
+                    @Model.AlertBoxMessageHTML
+                </p>
+                <button class="btn-close btn-close-white" type="submit" aria-label="Close" data-bs-toggle="collapse"
+                    data-bs-target="#headerAlert" aria-expanded="true" aria-controls="headerAlert"></button>
+            </div>
+        </div>
+    </div>
+</form>

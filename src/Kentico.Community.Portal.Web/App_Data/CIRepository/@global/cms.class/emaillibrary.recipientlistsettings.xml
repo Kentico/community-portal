@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Subscription Configuration</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="RecipientListSettingsID" columntype="integer" enabled="true" guid="8645021c-8a98-425e-bac6-18232af82a6c" isPK="true" system="true" />
+      <field column="RecipientListSettingsRecipientListID" columnprecision="0" columntype="integer" enabled="true" guid="e1117b12-b32d-4140-bdb2-f3db47797a62" refobjtype="om.contactgroup" reftype="Required" system="true" />
+      <field allowempty="true" column="RecipientListSettingsAfterUnsubscriptionPage" columnprecision="0" columntype="guid" enabled="true" guid="a65dabd0-d97c-44e8-87bf-afc41605cf34" system="true" />
+      <field column="RecipientListSettingsSendUnsubscriptionConfirmationEmail" columnprecision="0" columntype="boolean" enabled="true" guid="8e7d94a4-7e93-459f-b2b6-84590a13dae8" system="true" />
+      <field allowempty="true" column="RecipientListSettingsUnsubscriptionConfirmationEmailID" columnprecision="0" columntype="integer" enabled="true" guid="03e06279-79ae-4c06-8611-459d0545fcf2" refobjtype="emaillibrary.emailconfiguration" reftype="Required" system="true" />
+      <field allowempty="true" column="RecipientListSettingsAfterConfirmationPage" columnprecision="0" columntype="guid" enabled="true" guid="dd27e3f1-5ca6-49cb-8f83-639cc4b4ae8a" system="true" />
+      <field column="RecipientListSettingsSendSubscriptionConfirmationEmail" columnprecision="0" columntype="boolean" enabled="true" guid="d3168059-db22-4f25-a43f-a44683647e57" system="true" />
+      <field allowempty="true" column="RecipientListSettingsSubscriptionConfirmationEmailID" columnprecision="0" columntype="integer" enabled="true" guid="bd13dc59-3f1e-4add-b686-4b896238ffe9" refobjtype="emaillibrary.emailconfiguration" reftype="Required" system="true" />
+      <field column="RecipientListSettingsGUID" columnprecision="0" columntype="guid" enabled="true" guid="2c032ebc-3a6b-4585-bf24-45ef92c771e6" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>c607cdb5-9dbe-496d-bc81-22de395e3282</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>EmailLibrary.RecipientListSettings</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.EmailLibrary</CodeName>
+    <GUID>028f4adc-346c-434a-8992-408c8b45a986</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>EmailLibrary_RecipientListSettings</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

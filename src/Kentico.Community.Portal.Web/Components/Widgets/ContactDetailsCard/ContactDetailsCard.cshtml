@@ -1,0 +1,21 @@
+@model Kentico.Community.Portal.Web.Components.Widgets.ContactDetailsCard.ContactDetailsCardWidgetViewModel
+
+<div class="c-card default-border sidebar">
+    <div class="c-card_inner">
+
+        <h3 class="h5">@Model.Title</h3>
+        @if (Model.PhoneNumber is string phone)
+        {
+            <a class="d-inline-block fs-3 mt-2" href="tel:@phone">
+                @phone
+            </a>
+        }
+
+        @if (Model.EmailAddress is string email)
+        {
+            <a class="d-inline-block fs-3 mt-2" href="tel:@email">
+                @email
+            </a>
+        }
+    </div>
+</div>

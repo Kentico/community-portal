@@ -1,0 +1,8 @@
+@model Kentico.Community.Portal.Web.Components.ViewComponents.Consents.ConsentViewModel
+
+@if (Model.ConsentHTML == Microsoft.AspNetCore.Html.HtmlString.Empty)
+{
+    return;
+}
+
+@Model.ConsentHTML

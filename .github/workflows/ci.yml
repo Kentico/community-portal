@@ -1,0 +1,149 @@
+name: "CI: Build and Test"
+
+on:
+  # Disabled for now since the deploy.yml also does a build and almost all updates come through PRs
+  #  We don't need to duplicate the build once a PR merges
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - "**.cs"
+  #     - "**.csproj"
+  #     - "**.props"
+  #     - "**.targets"
+  #     - "**.sln"
+  #     - "**.ps1"
+  pull_request:
+    branches: [main]
+    paths:
+      - "**.cs"
+      - "**.csproj"
+      - "**.props"
+      - "**.targets"
+      - "**.sln"
+      - "**.ps1"
+
+jobs:
+  build_and_test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: pwsh
+
+    env:
+      ASPNETCORE_ENVIRONMENT: CI
+      DATABASE_BACKUP_FILENAME: ""
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      DOTNET_NOLOGO: 1
+      PROJECT_NAME: Kentico.Community.Portal.Web
+      ASPNETCORE_URLS: https://localhost:45039
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          global-json-file: global.json
+
+      - name: Install dependencies
+        run: dotnet restore --locked-mode
+
+      - name: Replace Test Connection String
+        run: |
+          $folderPath = "./test"
+          $newConnectionString = "${{ secrets.CI_CONNECTION_STRING }}"
+
+          $files = Get-ChildItem -Path $folderPath -Filter "Tests.config" -Recurse
+
+          # Iterate over each file
+          foreach ($file in $files) {
+              $xml = [xml](Get-Content $file.FullName)
+              $connectionStringNode = $xml.SelectSingleNode("//add[@name='CMSTestConnectionString']")
+              $connectionStringNode.SetAttribute("connectionString", $newConnectionString)
+
+              $xml.Save($file.FullName)
+          }
+
+      - name: Build Solution
+        run: |
+          dotnet build `
+            -c Release `
+            --no-restore
+
+      - name: Get Database Backup Name
+        run: |
+          $latestBackup = Get-Content -Path "./database/backups.txt" -TotalCount 1
+          "DATABASE_BACKUP_FILENAME=$latestBackup" >> $env:GITHUB_ENV
+
+      - name: Extract Database Backup
+        run: |
+          Expand-Archive `
+            -Path "./database/${{ env.DATABASE_BACKUP_FILENAME }}.zip" `
+            -DestinationPath "./database"
+
+      - name: Install a SQL Server suite of tools (SQLEngine, SQLPackage)
+        uses: potatoqualitee/mssqlsuite@v1.7
+        with:
+          install: sqlpackage, sqlengine
+          sa-password: Pass@12345
+          version: 2022
+
+      - name: Restore Database .bak
+        run: |
+          docker exec sql mkdir /var/opt/mssql/backup
+          docker cp "./database/${{ env.DATABASE_BACKUP_FILENAME }}" sql:/var/opt/mssql/backup
+          sqlcmd `
+            -S localhost `
+            -d master `
+            -U "sa" `
+            -P "Pass@12345" `
+            -Q "RESTORE DATABASE [Kentico.Community] FROM DISK='/var/opt/mssql/backup/${{ env.DATABASE_BACKUP_FILENAME }}' WITH MOVE 'Kentico.Community' TO '/var/opt/mssql/data/Kentico.Community.mdf', MOVE 'Kentico.Community_log' TO '/var/opt/mssql/data/Kentico.Community_log.ldf'"
+        if: endsWith(env.DATABASE_BACKUP_FILENAME, '.bak')
+
+      - name: Restore Database .bacpac
+        run: |
+          sqlpackage `
+            /a:Import `
+            /tsn:localhost `
+            /tdn:Kentico.Community `
+            /tu:sa `
+            /tp:Pass@12345 `
+            /sf:"./database/${{ env.DATABASE_BACKUP_FILENAME }}" `
+            /tec:False
+        if: endsWith(env.DATABASE_BACKUP_FILENAME, '.bacpac')
+
+      - name: Restore CI Repository
+        run: |
+          ./scripts/Restore-CI.ps1 -WorkspaceFolder $PWD
+
+      - name: Publish Application
+        run: |
+          dotnet publish `
+            ./src/${{ env.PROJECT_NAME }} `
+            -c Release `
+            -o ./publish `
+            --no-build `
+            --no-restore
+
+      - name: Install Playwright Dependencies
+        run: |
+          ./test/Kentico.Community.Portal.Web.E2E.Tests/bin/Release/net6.0/playwright.ps1 install
+
+      - name: Run Application and Test Solution
+        run: |
+          cd ./publish
+          Start-Job -ScriptBlock { dotnet ./${{ env.PROJECT_NAME }}.dll } -Name ${{ env.PROJECT_NAME }}
+          Receive-Job -Name ${{ env.PROJECT_NAME }}
+          cd ../
+
+          dotnet test `
+            -c Release `
+            --no-build `
+            --no-restore `
+            -s ./test/e2e.runsettings
+
+          Receive-Job -Name ${{ env.PROJECT_NAME }}
+          Stop-Job -Name ${{ env.PROJECT_NAME }}
+          Remove-Job -Name ${{ env.PROJECT_NAME }}

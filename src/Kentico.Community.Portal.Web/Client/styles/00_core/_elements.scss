@@ -1,0 +1,19 @@
+html {
+  /* Account for height of sticky header so anchor links work correctly */
+  --scroll-padding-top: 6rem;
+  scroll-padding-top: var(--scroll-padding-top);
+  @include media-breakpoint-up(lg) {
+    --scroll-padding-top: 8rem;
+  }
+}
+
+img {
+  height: auto;
+  width: 100%;
+}
+
+/* Default for code blocks with no specified language */
+code {
+  color: #905;
+  font-weight: bolder;
+}

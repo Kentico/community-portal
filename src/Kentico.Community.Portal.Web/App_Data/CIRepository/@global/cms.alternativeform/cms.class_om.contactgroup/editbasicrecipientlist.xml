@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>OM.ContactGroup</CodeName>
+    <GUID>97f104ff-d87a-48b8-a5db-216786f9344e</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="ContactGroupID" guid="8254be8f-7554-4c85-8d8b-f16e0ec2bd5f" />
+      <field column="ContactGroupEnabled" guid="b2572394-a920-4f7e-81a9-5cc435925099" order="1" />
+      <field column="ContactGroupLastModified" guid="b6dff322-4c32-46ec-a06b-2b096a148658" order="2" />
+      <field column="ContactGroupGUID" guid="affe9d0f-3c70-4a67-90f8-d61075eb1b55" order="3" />
+      <field column="ContactGroupStatus" guid="8c338293-e30c-4b0c-bae3-58eea2993f58" order="4" />
+      <field column="ContactGroupDynamicCondition" guid="fd9391ed-bfab-4753-bc4d-a98e0457ce1a" order="5" />
+      <field column="ContactGroupIsRecipientList" guid="ddca40fe-9ef4-4c98-9afc-fd00072b2db5" order="6" />
+      <field column="ContactGroupDisplayName" columnprecision="0" enabled="true" guid="0b8230c0-06a2-4378-9435-8f475865687a" visible="true" order="7">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.recipientlist.displayname$}</fieldcaption>
+          <fielddescription>
+            <![CDATA[{$digitalmarketing.recipientlist.displayname.description$}]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ContactGroupName" columnprecision="0" enabled="true" guid="5c5692fb-85c4-409f-a6e6-6f6670a52f7d" visible="true" isunique="" order="8">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.recipientlist.name$}</fieldcaption>
+          <fielddescription>
+            <![CDATA[{$digitalmarketing.recipientlist.name.description$}]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ContactGroupDescription" columnprecision="0" enabled="true" guid="99c12065-9aa0-4dce-835d-949a31f4162e" visible="true" order="9">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.recipientlist.description$}</fieldcaption>
+          <fielddescription>
+            <![CDATA[{$digitalmarketing.recipientlist.description.description$}]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit recipient list basic</FormDisplayName>
+  <FormGUID>337079a2-cca5-49c8-aa81-c7427aad0d16</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>editbasicrecipientlist</FormName>
+</cms.alternativeform>
