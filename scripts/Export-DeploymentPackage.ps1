@@ -28,8 +28,8 @@ $ErrorActionPreference = "Stop"
 Import-Module (Join-Path $WorkspaceFolder "scripts/Utilities.psm1")
 
 $projectPath = Get-WebProjectPath $WorkspaceFolder
-$configuration = "Release" # $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Release" : "Debug"
-$launchProfile = "Portal.Web" # $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Portal.WebCI" : "Portal.Web"
+$configuration = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Release" : "Debug"
+$launchProfile = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Portal.WebCI" : "Portal.Web"
 
 $OutputFolderPath = "./bin/CloudDeployment/"
 $MetadataFilePath = Join-Path $OutputFolderPath "cloud-metadata.json"

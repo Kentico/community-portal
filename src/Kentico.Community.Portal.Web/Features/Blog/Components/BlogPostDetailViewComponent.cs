@@ -43,7 +43,7 @@ public class BlogPostDetailViewComponent : ViewComponent
 
         var vm = new BlogPostDetailViewModel()
         {
-            Title = blog.DocumentName,
+            Title = blog.BlogPostPageTitle,
             Date = blog.BlogPostPageDate,
             HTMLSanitizedContentHTML = contentHTML,
             Teaser = teaser,
@@ -58,7 +58,7 @@ public class BlogPostDetailViewComponent : ViewComponent
             AbsoluteURL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}{Request.Path}"
         };
 
-        var meta = new Meta(blog.DocumentName, blog.BlogPostPageShortDescription);
+        var meta = new Meta(blog.BlogPostPageTitle, blog.BlogPostPageShortDescription);
 
         metaService.SetMeta(meta);
 

@@ -6,7 +6,6 @@ using CMS.Websites.Routing;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Community.Portal.Web.Resources;
-using Kentico.Membership;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -20,7 +19,7 @@ public class RegistrationController : Controller
     private readonly WebPageMetaService metaService;
     private readonly SignInManager<CommunityMember> signInManager;
     private readonly UserManager<CommunityMember> userManager;
-    private readonly AdminIdentityEmailOptions emailSettings;
+    private readonly SystemEmailOptions systemEmailOptions;
     private readonly CaptchaValidator captchaValidator;
     private readonly IStringLocalizer<SharedResources> localizer;
     private readonly IEventLogService log;
@@ -35,7 +34,7 @@ public class RegistrationController : Controller
         UserManager<CommunityMember> userManager,
         CaptchaValidator captchaValidator,
         IStringLocalizer<SharedResources> localizer,
-        IOptions<AdminIdentityOptions> emailSettings,
+        IOptions<SystemEmailOptions> systemEmailOptions,
         IEventLogService log,
         IEmailService emailService,
         IInfoProvider<ChannelInfo> channelProvider,
@@ -51,7 +50,7 @@ public class RegistrationController : Controller
         this.channelProvider = channelProvider;
         this.channelContext = channelContext;
         this.consentManager = consentManager;
-        this.emailSettings = emailSettings.Value.EmailOptions;
+        this.systemEmailOptions = systemEmailOptions.Value;
         this.captchaValidator = captchaValidator;
     }
 
@@ -191,7 +190,7 @@ public class RegistrationController : Controller
 
         await emailService.SendEmail(new EmailMessage()
         {
-            From = emailSettings.SenderAddress,
+            From = $"no-reply@{systemEmailOptions.SendingDomain}",
             Recipients = member.Email,
             Subject = $"Confirm your email for {channel.ChannelDisplayName}",
             Body = $"""

@@ -19,7 +19,7 @@ public class QAndALandingPageHeadingViewComponent : ViewComponent
     {
         var landingPage = await mediator.Send(new QAndALandingPageQuery());
 
-        metaService.SetMeta(new(landingPage.DocumentName, landingPage.QAndALandingPageShortDescription));
+        metaService.SetMeta(new(landingPage.Title, landingPage.QAndALandingPageShortDescription));
 
         return View("~/Features/QAndA/Components/LandingPage/QAndALandingPageHeading.cshtml", new QAndALandingPageHeadingViewModel
         {

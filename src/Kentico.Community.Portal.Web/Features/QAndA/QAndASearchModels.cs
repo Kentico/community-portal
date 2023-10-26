@@ -163,23 +163,36 @@ public class QAndASearchResult
     public bool IsAnswered { get; set; }
     public int AnswerCount { get; set; }
 
-    public static QAndASearchResult MapFromDocument(Document doc) => new()
+    public static QAndASearchResult MapFromDocument(Document doc)
     {
-        ID = int.Parse(doc.Get(nameof(QAndASearchModel.ID))),
-        Url = doc.Get(nameof(QAndASearchModel.Url)),
-        Title = doc.Get(nameof(QAndASearchModel.Title)),
-        AuthorUsername = doc.Get(nameof(QAndASearchModel.AuthorUsername)),
-        DateCreated = new DateTime(
-            DateTools.UnixTimeMillisecondsToTicks(
-                long.Parse(doc.Get(nameof(QAndASearchModel.DateMilliseconds)))
-            )),
-        IsAnswered = doc.Get(nameof(QAndASearchModel.IsAnswered)) switch
+        int id = int.TryParse(doc.Get(nameof(QAndASearchModel.ID)), out int modelID)
+            ? modelID
+            : 0;
+        string url = doc.Get(nameof(QAndASearchModel.Url)) ?? "";
+        string title = doc.Get(nameof(QAndASearchModel.Title));
+        string username = doc.Get(nameof(QAndASearchModel.AuthorUsername));
+        long ticks = DateTools.UnixTimeMillisecondsToTicks(
+            long.TryParse(doc.Get(nameof(QAndASearchModel.DateMilliseconds)), out long milliseconds)
+                ? milliseconds
+                : 0);
+        bool isAnswered = doc.Get(nameof(QAndASearchModel.IsAnswered)) switch
         {
             "1" => true,
             "0" or _ => false
-        },
-        AnswerCount = int.TryParse(doc.Get(nameof(QAndASearchModel.AnswerCount)), out int count)
-            ? count
-            : 0
-    };
+        };
+        int answerCount = int.TryParse(doc.Get(nameof(QAndASearchModel.AnswerCount)), out int count)
+                ? count
+                : 0;
+
+        return new()
+        {
+            ID = id,
+            Url = url,
+            Title = title,
+            AuthorUsername = username,
+            DateCreated = new DateTime(ticks),
+            IsAnswered = isAnswered,
+            AnswerCount = answerCount
+        };
+    }
 }

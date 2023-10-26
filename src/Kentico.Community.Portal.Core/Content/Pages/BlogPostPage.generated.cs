@@ -34,9 +34,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// DocumentName.
+		/// BlogPostPageTitle.
 		/// </summary>
-		public string DocumentName { get; set; }
+		public string BlogPostPageTitle { get; set; }
 
 
 		/// <summary>

@@ -120,7 +120,7 @@ public class BlogPostListWidget : ViewComponent
 
             vms.Add(new BlogPostViewModel()
             {
-                Title = post.DocumentName,
+                Title = post.BlogPostPageTitle,
                 Date = post.BlogPostPageDate,
                 LinkPath = url.RelativePath,
                 ShortDescription = post.BlogPostPageShortDescription,

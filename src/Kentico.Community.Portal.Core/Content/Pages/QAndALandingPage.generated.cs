@@ -33,9 +33,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// DocumentName.
+		/// QAndALandingPageTitle.
 		/// </summary>
-		public string DocumentName { get; set; }
+		public string QAndALandingPageTitle { get; set; }
 
 
 		/// <summary>

@@ -48,6 +48,13 @@
                     </div>
                 </div>
 
+                @if (Model.Questions.Count == 0 && Model.TotalPages == 0)
+                {
+                    <div>
+                        <p>No results could be found.</p>
+                    </div>
+                }
+
                 @foreach (var question in Model.Questions)
                 {
                     <div class="c-card question default-border mt-3">

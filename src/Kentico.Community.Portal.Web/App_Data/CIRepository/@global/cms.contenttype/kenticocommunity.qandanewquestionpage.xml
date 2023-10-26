@@ -10,9 +10,11 @@
       <field column="ContentItemDataID" columntype="integer" enabled="true" guid="7f77cb07-5844-486c-afe6-c8a2d9b74d93" isPK="true" />
       <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="7ecc67f8-d0c8-4393-81bb-2a4755073084" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
       <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="275f0219-75d4-4500-ad79-5cde62b0accf" isunique="true" system="true" />
-      <field column="DocumentName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="1e0f27f5-f59a-4fa1-871f-5c2d946453ca" visible="true">
+      <field column="QAndANewQuestionPageTitle" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="1e0f27f5-f59a-4fa1-871f-5c2d946453ca" visible="true">
         <properties>
-          <fieldcaption>Page name</fieldcaption>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Title</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>

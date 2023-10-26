@@ -49,6 +49,13 @@
             <input asp-for="@Model.Page" />
         </form>
 
+        @if (Model.BlogPosts.Count == 0 && Model.TotalPages == 0)
+        {
+            <div>
+                <p>No results could be found.</p>
+            </div>
+        }
+
         @foreach (var post in Model.BlogPosts)
         {
             <div class="c-card article nopic mt-3">

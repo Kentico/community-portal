@@ -33,12 +33,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// DocumentName.
-		/// </summary>
-		public string DocumentName { get; set; }
-
-
-		/// <summary>
 		/// LandingPageTitle.
 		/// </summary>
 		public string LandingPageTitle { get; set; }

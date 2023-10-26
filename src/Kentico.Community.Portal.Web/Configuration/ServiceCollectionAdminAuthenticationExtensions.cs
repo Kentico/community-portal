@@ -9,7 +9,6 @@ public static class ServiceCollectionAdminAuthenticationExtensions
 {
     public static IServiceCollection AddAppAdminAuthentication(this IServiceCollection services, IConfiguration config) =>
         services
-            .ConfigureOptions<AdminIdentityOptionsConfiguration>()
             .AddAdminExternalAuthenticationProvider(
                 authBuilder => authBuilder.AddMicrosoftIdentityWebApp(options =>
                 {

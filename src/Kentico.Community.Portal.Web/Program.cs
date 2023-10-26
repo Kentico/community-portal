@@ -8,9 +8,9 @@ var env = builder.Environment;
 var config = builder.Configuration;
 
 builder.Services
+    .AddAppXperienceMembership()
     .AddAppXperienceSaaS(config, env)
     .AddAppXperience(config, env)
-    .AddAppXperienceMembership()
     .AddAppAdminAuthentication(config)
     .AddAppLuceneSearch(config)
     .AddAppMvc(env)

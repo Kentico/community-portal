@@ -20,7 +20,7 @@ public class QAndANewQuestionPageHeadingViewComponent : ViewComponent
     {
         var questionPage = await mediator.Send(new QAndANewQuestionPageQuery());
 
-        metaService.SetMeta(new(questionPage.DocumentName, questionPage.QAndANewQuestionPageShortDescription));
+        metaService.SetMeta(new(questionPage.Title, questionPage.QAndANewQuestionPageShortDescription));
 
         return View("~/Features/QAndA/Components/NewQuestion/QAndANewQuestionPageHeading.cshtml", questionPage);
     }

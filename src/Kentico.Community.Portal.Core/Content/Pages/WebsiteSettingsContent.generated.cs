@@ -34,9 +34,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// DocumentName.
+		/// WebsiteSettingsContentWebsiteDisplayName.
 		/// </summary>
-		public string DocumentName { get; set; }
+		public string WebsiteSettingsContentWebsiteDisplayName { get; set; }
 
 
 		/// <summary>

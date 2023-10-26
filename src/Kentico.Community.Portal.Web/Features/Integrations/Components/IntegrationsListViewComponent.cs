@@ -29,7 +29,7 @@ public class IntegrationsListViewComponent : ViewComponent
 
             items.Add(new IntegrationItemViewModel
             {
-                Title = c.DocumentName,
+                Title = c.IntegrationContentTitle,
                 Logo = logo,
                 ShortDescription = c.IntegrationContentShortDescription,
                 RepositoryURL = string.IsNullOrWhiteSpace(c.IntegrationContentRepositoryLinkURL) ? null : c.IntegrationContentRepositoryLinkURL,

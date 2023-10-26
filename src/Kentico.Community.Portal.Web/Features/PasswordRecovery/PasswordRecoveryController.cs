@@ -8,7 +8,6 @@ using Kentico.Community.Portal.Web.Resources;
 using CMS.EmailEngine;
 using Microsoft.Extensions.Options;
 using Kentico.Community.Portal.Web.Features.Registration;
-using Kentico.Membership;
 
 namespace Kentico.Community.Portal.Web.Features.PasswordRecovery;
 
@@ -22,7 +21,7 @@ public class PasswordRecoveryController : Controller
 
     private readonly IStringLocalizer<SharedResources> localizer;
     private readonly IEmailService emailService;
-    private readonly AdminIdentityEmailOptions emailOptions;
+    private readonly SystemEmailOptions systemEmailOptions;
     private readonly UserManager<CommunityMember> userManager;
     private readonly SignInManager<CommunityMember> signInManager;
     private readonly WebPageMetaService metaService;
@@ -31,7 +30,7 @@ public class PasswordRecoveryController : Controller
         UserManager<CommunityMember> userManager,
         SignInManager<CommunityMember> signInManager,
         IStringLocalizer<SharedResources> localizer,
-        IOptions<AdminIdentityOptions> emailOptions,
+        IOptions<SystemEmailOptions> systemEmailOptions,
         IEmailService emailService,
         WebPageMetaService metaService)
     {
@@ -39,7 +38,7 @@ public class PasswordRecoveryController : Controller
         this.signInManager = signInManager;
         this.localizer = localizer;
         this.emailService = emailService;
-        this.emailOptions = emailOptions.Value.EmailOptions;
+        this.systemEmailOptions = systemEmailOptions.Value;
         this.metaService = metaService;
     }
 
@@ -103,7 +102,7 @@ public class PasswordRecoveryController : Controller
         await emailService
             .SendEmail(new EmailMessage()
             {
-                From = emailOptions.SenderAddress,
+                From = $"no-reply@{systemEmailOptions.SendingDomain}",
                 Recipients = model.Email,
                 Subject = "Password reset request",
                 Body = $"""

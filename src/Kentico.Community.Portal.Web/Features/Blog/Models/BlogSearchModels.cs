@@ -98,7 +98,7 @@ public class BlogSearchIndexingStrategy : DefaultLuceneIndexingStrategy
             string content = await webCrawler.CrawlWebPage(page);
             blogModel.Content = htmlSanitizer.SanitizeHtmlDocument(content);
 
-            blogModel.Title = page.DocumentName;
+            blogModel.Title = page.BlogPostPageTitle;
             blogModel.Taxonomy = page.BlogPostPageTaxonomy.ToLowerInvariant();
             blogModel.ShortDescription = page.BlogPostPageShortDescription;
 

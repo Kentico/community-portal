@@ -33,8 +33,8 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// DocumentName.
+		/// QAndAQuestionsRootPageName.
 		/// </summary>
-		public string DocumentName { get; set; }
+		public string QAndAQuestionsRootPageName { get; set; }
 	}
 }

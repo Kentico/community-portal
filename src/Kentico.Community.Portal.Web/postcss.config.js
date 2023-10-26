@@ -16,9 +16,7 @@ const config = ({ env }) => ({
           "note",
           // Syntax highlighting for inline code blocks
           "code",
-          // Form Builder forms
-          "form-control",
-          "form-field",
+          "/^form-control/",
         ],
       }),
     // https://www.npmjs.com/package/postcss-preset-env

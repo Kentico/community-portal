@@ -34,9 +34,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// DocumentName.
+		/// IntegrationContentTitle.
 		/// </summary>
-		public string DocumentName { get; set; }
+		public string IntegrationContentTitle { get; set; }
 
 
 		/// <summary>

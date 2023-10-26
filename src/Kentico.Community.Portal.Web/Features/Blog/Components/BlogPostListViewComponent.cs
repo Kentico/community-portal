@@ -56,7 +56,7 @@ public class BlogPostListViewComponent : ViewComponent
         return View("~/Features/Blog/Components/BlogPostList.cshtml", model);
     }
 
-    private IReadOnlyList<BlogPostViewModel> BuildPostPageViewModels(IEnumerable<BlogSearchResult>? results)
+    private static IReadOnlyList<BlogPostViewModel> BuildPostPageViewModels(IEnumerable<BlogSearchResult>? results)
     {
         if (results is null)
         {
@@ -89,24 +89,5 @@ public class BlogPostListViewComponent : ViewComponent
 
         return vms;
     }
-
-    // private async Task<AuthorContent> GetAuthor(BlogPostPage post)
-    // {
-    //     var author = post.BlogPostPageAuthor.FirstOrDefault();
-
-    //     if (author is not null)
-    //     {
-    //         return author;
-    //     }
-
-    //     var resp = await mediator.Send(new AuthorContentQuery(AuthorContent.KENTICO_AUTHOR_CODE_NAME));
-
-    //     if (resp.Author is null)
-    //     {
-    //         throw new Exception($"Missing Author [{AuthorContent.KENTICO_AUTHOR_CODE_NAME}] which is required to display Posts");
-    //     }
-
-    //     return resp.Author;
-    // }
 }
 
