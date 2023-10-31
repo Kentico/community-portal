@@ -4,9 +4,8 @@ using Kentico.Community.Portal.Web.Features.Support;
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.FormSupport;
 
-[ApiController]
-[Route("api/[controller]")]
-public class FormsController : ControllerBase
+[Route("[controller]/[action]")]
+public class FormsController : Controller
 {
     private readonly SupportFacade supportFacade;
     private readonly CaptchaValidator captchaValidator;
@@ -18,17 +17,23 @@ public class FormsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromForm] FormSupportWidgetViewModel requestModel)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> SubmitSupportForm([FromForm] FormSupportWidgetViewModel requestModel)
     {
         var captchaResponse = await captchaValidator.ValidateCaptcha(requestModel);
 
         if (!captchaResponse.IsSuccess)
         {
-            return BadRequest(captchaResponse);
+            ModelState.AddModelError(nameof(FormSupportWidgetViewModel.CaptchaToken), "Captcha is invalid.");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return PartialView("~/Components/Widgets/FormSupport/FormSupport.cshtml", requestModel);
         }
 
         await supportFacade.ProcessRequest(requestModel);
 
-        return Ok();
+        return PartialView("~/Components/Widgets/FormSupport/FormSupport.cshtml", new FormSupportWidgetViewModel { IsSuccess = true });
     }
 }

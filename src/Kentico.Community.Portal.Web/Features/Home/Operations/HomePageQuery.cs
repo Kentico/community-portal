@@ -13,7 +13,7 @@ public class HomePageQueryHandler : WebPageQueryHandler<HomePageQuery, HomePage>
     {
         var b = new ContentItemQueryBuilder().ForWebPage(WebsiteChannelContext, HomePage.CONTENT_TYPE_NAME, request.Page);
 
-        var r = await Executor.GetWebPageResult(b, Mapper.Map<HomePage>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<HomePage>, DefaultQueryOptions, cancellationToken);
 
         return r.First();
     }

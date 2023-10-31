@@ -68,6 +68,13 @@
                         </div>
 
                         <div class="t-article_footer mt-6">
+                            @if (Model.DiscussionLinkPath is string discussionPath)
+                            {
+                                <div>
+                                    <a class="btn btn-outline-primary" href="@discussionPath">Discuss this post in the
+                                        Q&A</a>
+                                </div>
+                            }
                             <div class="t-article_footer_share">
                                 <h5 class="h6">Share on:</h5>
                                 <div class="text-center mt-3 mt-sm-0">

@@ -14,7 +14,7 @@ public class LandingPageQueryHandler : WebPageQueryHandler<LandingPageQuery, Lan
     {
         var b = new ContentItemQueryBuilder().ForWebPage(WebsiteChannelContext, LandingPage.CONTENT_TYPE_NAME, request.Page);
 
-        var r = await Executor.GetWebPageResult(b, Mapper.Map<LandingPage>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<LandingPage>, DefaultQueryOptions, cancellationToken);
 
         return new(r.First());
     }

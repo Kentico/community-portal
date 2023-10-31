@@ -13,7 +13,7 @@ public class SupportPageQueryHandler : WebPageQueryHandler<SupportPageQuery, Sup
     {
         var b = new ContentItemQueryBuilder().ForWebPage(WebsiteChannelContext, SupportPage.CONTENT_TYPE_NAME, request.Page);
 
-        var r = await Executor.GetWebPageResult(b, Mapper.Map<SupportPage>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<SupportPage>, DefaultQueryOptions, cancellationToken);
 
         return r.First();
     }

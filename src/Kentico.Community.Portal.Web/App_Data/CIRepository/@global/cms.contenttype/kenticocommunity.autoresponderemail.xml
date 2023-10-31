@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Email</ClassContentTypeType>
+  <ClassDisplayName>Autoresponder Email</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="8ae652fc-f978-44db-9576-8045876d38fd" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="17eb15c1-9d5a-4cb4-b032-c6fb5c24dada" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="1887129c-7fd8-4a7d-bf10-95003244ac2c" isunique="true" system="true" />
+      <field allowempty="true" column="EmailSenderID" columntype="integer" enabled="true" guid="ef1926a3-1b21-4da1-a122-7b187912d05d" refobjtype="emaillibrary.emailchannelsender" reftype="NotRequired" system="true" />
+      <field column="EmailTemplateID" columntype="integer" enabled="true" guid="0afd3eb3-cf92-482b-8852-91c671d0cca8" refobjtype="emaillibrary.emailtemplate" reftype="Required" system="true" />
+      <field allowempty="true" column="EmailPlainText" columntype="longtext" enabled="true" guid="e0dd9bc1-c801-488c-8d13-edfdce431ce5" system="true" />
+      <field allowempty="true" column="EmailSubject" columnsize="450" columntype="text" enabled="true" guid="d61b0bb2-0ed0-4d29-807c-e9c35a2c1dfe" visible="true">
+        <properties>
+          <fieldcaption>{$digitalmarketing.emails.edit.subject$}</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field allowempty="true" column="EmailPreviewText" columntype="longtext" enabled="true" guid="459d7891-0cbd-4dab-ac4c-078218c3e8f7" visible="true">
+        <properties>
+          <fieldcaption>{$digitalmarketing.emails.edit.previewtext$}</fieldcaption>
+          <fielddescription>
+            <![CDATA[{$digitalmarketing.emails.edit.previewtext.tooltip$}]]>
+          </fielddescription>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+        </settings>
+      </field>
+      <field column="EmailContent" columnprecision="0" columntype="longtext" enabled="true" guid="bdb2afe2-b1f2-4b67-a055-9b2c17b7dccb" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Content</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <ConfigurationName>
+            <![CDATA[Kentico.Administration.EmailContentForAutoresponder]]>
+          </ConfigurationName>
+          <controlname>Kentico.Administration.RichTextEditor</controlname>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>70764325-6007-438e-93fe-dc319714c7a6</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-accordion</ClassIconClass>
+  <ClassName>KenticoCommunity.AutoresponderEmail</ClassName>
+  <ClassTableName>KenticoCommunity_AutoresponderEmail</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

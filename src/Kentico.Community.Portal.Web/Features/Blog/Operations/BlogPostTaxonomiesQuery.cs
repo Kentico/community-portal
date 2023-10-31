@@ -14,11 +14,11 @@ public class BlogPostTaxonomiesQueryHandler : ContentItemQueryHandler<BlogPostTa
 
     public override Task<BlogPostTaxonomiesQueryResponse> Handle(BlogPostTaxonomiesQuery request, CancellationToken cancellationToken = default)
     {
-        var dc = DataClassInfoProvider.GetDataClassInfo(BlogPostPage.CONTENT_TYPE_NAME);
+        var dc = DataClassInfoProvider.GetDataClassInfo(BlogPostContent.CONTENT_TYPE_NAME);
 
         var form = new FormInfo(dc.ClassFormDefinition);
 
-        var field = form.GetFormField(nameof(BlogPostPage.BlogPostPageTaxonomy));
+        var field = form.GetFormField(nameof(BlogPostContent.BlogPostContentTaxonomy));
 
         if (!field.Settings.ContainsKey("Options") || field.Settings["Options"] is not string options)
         {

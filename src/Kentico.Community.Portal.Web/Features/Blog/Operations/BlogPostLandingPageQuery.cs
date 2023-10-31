@@ -13,7 +13,7 @@ public class BlogLandingPageQueryHandler : WebPageQueryHandler<BlogLandingPageQu
     {
         var b = new ContentItemQueryBuilder().ForWebPage(WebsiteChannelContext, BlogLandingPage.CONTENT_TYPE_NAME, request.Page);
 
-        var r = await Executor.GetWebPageResult(b, Mapper.Map<BlogLandingPage>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<BlogLandingPage>, DefaultQueryOptions, cancellationToken);
 
         return r.First();
     }

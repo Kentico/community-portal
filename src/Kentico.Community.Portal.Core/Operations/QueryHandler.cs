@@ -9,14 +9,21 @@ namespace Kentico.Community.Portal.Core.Operations;
 public class WebPageQueryTools
 {
     public IContentQueryExecutor Executor { get; }
-    public IWebPageQueryResultMapper Mapper { get; }
+    public IWebPageQueryResultMapper WebPageMapper { get; }
+    public IContentQueryResultMapper ContentMapper { get; }
     public IWebPageUrlRetriever UrlRetriever { get; }
     public IWebsiteChannelContext WebsiteChannelContext { get; }
 
-    public WebPageQueryTools(IContentQueryExecutor executor, IWebPageQueryResultMapper mapper, IWebPageUrlRetriever urlRetriever, IWebsiteChannelContext websiteChannelContext)
+    public WebPageQueryTools(
+        IContentQueryExecutor executor,
+        IWebPageQueryResultMapper webPageMapper,
+        IContentQueryResultMapper contentMapper,
+        IWebPageUrlRetriever urlRetriever,
+        IWebsiteChannelContext websiteChannelContext)
     {
         Executor = executor;
-        Mapper = mapper;
+        WebPageMapper = webPageMapper;
+        ContentMapper = contentMapper;
         UrlRetriever = urlRetriever;
         WebsiteChannelContext = websiteChannelContext;
     }
@@ -33,7 +40,8 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
     public WebPageQueryHandler(WebPageQueryTools tools)
     {
         Executor = tools.Executor;
-        Mapper = tools.Mapper;
+        WebPageMapper = tools.WebPageMapper;
+        ContentMapper = tools.ContentMapper;
         UrlRetriever = tools.UrlRetriever;
         WebsiteChannelContext = tools.WebsiteChannelContext;
         DefaultQueryOptions = new ContentQueryExecutionOptions { ForPreview = tools.WebsiteChannelContext.IsPreview, IncludeSecuredItems = false };
@@ -42,7 +50,8 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
     private readonly HashSet<string> customKeys = new(StringComparer.OrdinalIgnoreCase);
 
     protected IContentQueryExecutor Executor { get; }
-    protected IWebPageQueryResultMapper Mapper { get; }
+    protected IWebPageQueryResultMapper WebPageMapper { get; }
+    protected IContentQueryResultMapper ContentMapper { get; }
     protected IWebPageUrlRetriever UrlRetriever { get; }
     protected IWebsiteChannelContext WebsiteChannelContext { get; }
     protected ContentQueryExecutionOptions DefaultQueryOptions { get; }

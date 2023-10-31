@@ -1,6 +1,6 @@
 namespace Kentico.Community.Portal.Core.Content;
 
-public partial class AuthorContent
+public partial class AuthorContent : IContentFieldsSource
 {
     /// <summary>
     /// The code name of the shared "Community" author

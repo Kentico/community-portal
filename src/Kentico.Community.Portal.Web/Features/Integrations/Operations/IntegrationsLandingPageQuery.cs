@@ -14,7 +14,7 @@ public class IntegrationsLandingPageQueryHandler : WebPageQueryHandler<Integrati
     {
         var b = new ContentItemQueryBuilder().ForWebPage(WebsiteChannelContext, IntegrationsLandingPage.CONTENT_TYPE_NAME, request.Page);
 
-        var r = await Executor.GetWebPageResult(b, Mapper.Map<IntegrationsLandingPage>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<IntegrationsLandingPage>, DefaultQueryOptions, cancellationToken);
 
         return new(r.First());
     }

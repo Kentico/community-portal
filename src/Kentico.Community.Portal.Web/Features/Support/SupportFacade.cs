@@ -42,17 +42,21 @@ public class SupportFacade
             EnsureDirectory(processedDirectory);
 
             await File.WriteAllTextAsync(filePath, payload);
-            await SendSupportCase(payload);
+            // await SendSupportCase(payload);
 
             File.Move(filePath, Path.Combine(processedDirectory, fileName));
 
-            eventLogService.LogEvent(EventTypeEnum.Information, nameof(SupportFacade), nameof(ProcessRequest),
+            eventLogService.LogInformation(
+                nameof(SupportFacade),
+                nameof(ProcessRequest),
                 fileName);
         }
         catch (Exception exception)
         {
-            eventLogService.LogEvent(EventTypeEnum.Error, nameof(SupportFacade), nameof(ProcessRequest),
-                exception.ToString());
+            eventLogService.LogException(
+                nameof(SupportFacade),
+                nameof(ProcessRequest),
+                exception);
         }
     }
 
@@ -87,12 +91,12 @@ public class SupportFacade
             Scenario = model.Cause,
             Version = model.Version,
             DevelopmentModel = model.DeploymentModel,
-            URL = model.Website,
-            Fix = model.Fix,
+            URL = model.WebsiteURL,
+            Fix = model.AttemptedResolution,
             FileName = model.Attachment?.FileName
         };
 
-        if (model.Attachment != null)
+        if (model.Attachment is not null)
         {
             supportCase.FileName = model.Attachment.FileName;
 
@@ -106,10 +110,7 @@ public class SupportFacade
 
 public class SupportCaseDto
 {
-    //[JsonRequired]
     public string FirstName { get; set; }
-
-    //[JsonRequired]
     public string LastName { get; set; }
 
     [JsonRequired]

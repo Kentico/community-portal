@@ -11,6 +11,8 @@ using Kentico.Community.Portal.Web.Features.SEO;
 using MediatR;
 using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
 using Kentico.Community.Portal.Core;
+using Kentico.Community.Portal.Web.Features.Home;
+using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -29,9 +31,12 @@ public static class ServiceCollectionAppExtensions
             })
             .AddMediatR(c =>
             {
-                _ = c.RegisterServicesFromAssemblyContaining<SupportPageQuery>();
+                _ = c.RegisterServicesFromAssembly(typeof(HomePageQuery).Assembly);
             })
+            .AddClosedGenericTypes(typeof(HomePageQuery).Assembly, typeof(IQueryHandler<,>), ServiceLifetime.Scoped)
+            .AddClosedGenericTypes(typeof(HomePageQuery).Assembly, typeof(ICommandHandler<,>), ServiceLifetime.Scoped)
             .Decorate(typeof(IRequestHandler<,>), typeof(QueryHandlerCacheDecorator<,>))
+            .Decorate(typeof(ICommandHandler<,>), typeof(CommandHandlerLogDecorator<,>))
             .AddScoped<CacheDependenciesStore>()
             .AddScoped<ICacheDependenciesStore>(s => s.GetRequiredService<CacheDependenciesStore>())
             .AddScoped<ICacheDependenciesScope>(s => s.GetRequiredService<CacheDependenciesStore>())
@@ -71,4 +76,20 @@ public static class ServiceCollectionAppExtensions
             })
             .AddHttpClient()
             .AddViteServices();
+
+    public static IServiceCollection AddClosedGenericTypes(
+        this IServiceCollection services,
+        Assembly assembly,
+        Type typeToRegister,
+        ServiceLifetime serviceLifetime)
+    {
+        _ = services.Scan(x => x.FromAssemblies(assembly)
+            .AddClasses(classes => classes.AssignableTo(typeToRegister)
+                .Where(t => !t.IsGenericType))
+            .AsImplementedInterfaces()
+            .WithLifetime(serviceLifetime));
+
+        return services;
+    }
+
 }

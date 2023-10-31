@@ -12,7 +12,6 @@
 using System;
 using System.Collections.Generic;
 using CMS.Websites;
-using CMS.MediaLibrary;
 
 namespace Kentico.Community.Portal.Core.Content
 {
@@ -40,56 +39,20 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// BlogPostPageBlogPostContent.
-		/// </summary>
-		public IEnumerable<BlogPostContent> BlogPostPageBlogPostContent { get; set; }
-
-
-		/// <summary>
-		/// BlogPostPageAuthor.
-		/// </summary>
-		public IEnumerable<AuthorContent> BlogPostPageAuthor { get; set; }
-
-
-		/// <summary>
-		/// BlogPostPageTeaserMediaFileImage.
-		/// </summary>
-		public IEnumerable<AssetRelatedItem> BlogPostPageTeaserMediaFileImage { get; set; }
-
-
-		/// <summary>
 		/// BlogPostPageShortDescription.
 		/// </summary>
 		public string BlogPostPageShortDescription { get; set; }
 
 
 		/// <summary>
-		/// BlogPostPageTaxonomy.
+		/// BlogPostPageBlogPostContent.
 		/// </summary>
-		public string BlogPostPageTaxonomy { get; set; }
+		public IEnumerable<BlogPostContent> BlogPostPageBlogPostContent { get; set; }
 
 
 		/// <summary>
-		/// BlogPostPageDate.
+		/// BlogPostPageQAndADiscussionLinkPath.
 		/// </summary>
-		public DateTime BlogPostPageDate { get; set; }
-
-
-		/// <summary>
-		/// BlogPostPageContentType.
-		/// </summary>
-		public string BlogPostPageContentType { get; set; }
-
-
-		/// <summary>
-		/// BlogPostPageContentMarkdown.
-		/// </summary>
-		public string BlogPostPageContentMarkdown { get; set; }
-
-
-		/// <summary>
-		/// BlogPostPageContentHTML.
-		/// </summary>
-		public string BlogPostPageContentHTML { get; set; }
+		public string BlogPostPageQAndADiscussionLinkPath { get; set; }
 	}
 }

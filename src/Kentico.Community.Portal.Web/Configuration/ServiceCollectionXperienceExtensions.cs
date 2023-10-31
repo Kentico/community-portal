@@ -55,6 +55,10 @@ public static class ServiceCollectionXperienceExtensions
 
                 features.UseWebPageRouting();
             })
+            .Configure<EmailQueueOptions>(o =>
+            {
+                o.ArchiveDuration = 14;
+            })
             .IfDevelopment(env, c =>
             {
                 _ = c.Configure<SmtpOptions>(config.GetSection("SmtpOptions"))

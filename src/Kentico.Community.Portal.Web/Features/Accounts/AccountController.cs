@@ -82,6 +82,7 @@ public class AccountController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<ActionResult> UpdatePassword(UpdatePasswordViewModel model)
     {
         if (!ModelState.IsValid)

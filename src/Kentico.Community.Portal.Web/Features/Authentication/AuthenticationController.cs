@@ -60,7 +60,7 @@ public class AuthenticationController : Controller
 
         try
         {
-            var member = await userManager.FindByNameAsync(model.UserName);
+            var member = await GetMember();
 
             if (member is null)
             {
@@ -80,7 +80,7 @@ public class AuthenticationController : Controller
             }
             else
             {
-                signInResult = await signInManager.PasswordSignInAsync(model.UserName, model.Password, model.StaySignedIn, false);
+                signInResult = await signInManager.PasswordSignInAsync(member.UserName, model.Password, model.StaySignedIn, false);
             }
 
             if (signInResult.Succeeded)
@@ -113,6 +113,18 @@ public class AuthenticationController : Controller
         return Request.IsHtmx()
             ? Ok()
             : Redirect(redirectUrl);
+
+        async Task<CommunityMember?> GetMember()
+        {
+            var member = await userManager.FindByNameAsync(model.UserNameOrEmail);
+
+            if (member is not null)
+            {
+                return member;
+            }
+
+            return await userManager.FindByEmailAsync(model.UserNameOrEmail);
+        }
     }
 
     [Authorize]

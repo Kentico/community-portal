@@ -11,57 +11,11 @@
       <field column="BlogPostPageTitle" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="1e0f27f5-f59a-4fa1-871f-5c2d946453ca" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Title</fieldcaption>
+          <fieldcaption>Page name</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
-        </settings>
-      </field>
-      <field allowempty="true" column="BlogPostPageBlogPostContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="9a93d64c-5cc7-47f0-94e8-f7b3cc48946e" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Blog Post Content</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <AllowedContentItemTypeIdentifiers>
-            <![CDATA[["2e7c68a6-f9c7-450a-9acb-a71db270ff71"]]]>
-          </AllowedContentItemTypeIdentifiers>
-          <controlname>Kentico.Administration.ContentItemSelector</controlname>
-        </settings>
-      </field>
-      <field column="BlogPostPageAuthor" columnprecision="0" columntype="contentitemreference" enabled="true" guid="9c22450d-9004-4168-bdac-884d9f5d09a7" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Author</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <AllowedContentItemTypeIdentifiers>
-            <![CDATA[["8033c6de-9e47-4618-ac1a-25fd361c6ac8"]]]>
-          </AllowedContentItemTypeIdentifiers>
-          <controlname>Kentico.Administration.ContentItemSelector</controlname>
-        </settings>
-        <validationrulesdata>
-          <validationrulesdata>
-            <ValidationRuleConfiguration>
-              <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
-              <RuleValues />
-            </ValidationRuleConfiguration>
-          </validationrulesdata>
-        </validationrulesdata>
-      </field>
-      <field column="BlogPostPageTeaserMediaFileImage" columnprecision="0" columntype="assets" enabled="true" guid="3f8f2da4-110d-4aad-9c70-bb6e0e9286d4" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Teaser Image</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <AllowedExtensions>jpg;jpeg;png;webp</AllowedExtensions>
-          <controlname>Kentico.Administration.AssetSelector</controlname>
-          <MaximumAssets>1</MaximumAssets>
         </settings>
       </field>
       <field column="BlogPostPageShortDescription" columnprecision="0" columntype="longtext" enabled="true" guid="cf1a3c2a-fe94-4331-a0a1-09274b84c255" visible="true">
@@ -77,77 +31,38 @@
           <MinRowsNumber>3</MinRowsNumber>
         </settings>
       </field>
-      <field column="BlogPostPageTaxonomy" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="a247523c-7e12-4aab-9809-84e6cb928ec0" visible="true">
+      <field allowempty="true" column="BlogPostPageBlogPostContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="9a93d64c-5cc7-47f0-94e8-f7b3cc48946e" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Taxonomy</fieldcaption>
+          <fieldcaption>Blog Post Content</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
-          <controlname>Kentico.Administration.DropDownSelector</controlname>
-          <Options>
-<![CDATA[
-Community
-Guide
-Announcement
-Media
-Article
-]]>
-          </Options>
-          <Placeholder>Article</Placeholder>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["2e7c68a6-f9c7-450a-9acb-a71db270ff71"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
         </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
       </field>
-      <field column="BlogPostPageDate" columnprecision="2" columntype="datetime" enabled="true" guid="1d3934d2-fa82-44f1-9262-ee7f819c46cd" visible="true">
+      <field allowempty="true" column="BlogPostPageQAndADiscussionLinkPath" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="ff894db0-a1fb-4872-ad0f-79f5c66cb563" visible="true">
         <properties>
-          <explanationtext>Enter a date: MM/DD/YYYY hh:mm AM/PM</explanationtext>
+          <explanationtext>
+            <![CDATA[Relative path link to the associated Q&A Question where the community can discuss the blog post]]>
+          </explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Date</fieldcaption>
+          <fieldcaption>
+            <![CDATA[Q&A Question Discussion Link]]>
+          </fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
-          <controlname>Kentico.Administration.DateTimeInput</controlname>
-        </settings>
-      </field>
-      <field column="BlogPostPageContentType" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="224afe3a-06a7-432e-9655-6cfc30904792" visible="true">
-        <properties>
-          <defaultvalue>markdown</defaultvalue>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Content Type</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.DropDownSelector</controlname>
-          <Options>
-<![CDATA[
-markdown;Markdown
-richText;Rich Text
-]]>
-          </Options>
-          <Placeholder>markdown</Placeholder>
-        </settings>
-      </field>
-      <field allowempty="true" column="BlogPostPageContentMarkdown" columnprecision="0" columntype="longtext" enabled="true" guid="09fee21b-eeba-4cfa-b270-2557f22fa0df" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Markdown Content</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.TextArea</controlname>
-          <CopyButtonVisible>False</CopyButtonVisible>
-          <MaxRowsNumber>20</MaxRowsNumber>
-          <MinRowsNumber>10</MinRowsNumber>
-        </settings>
-      </field>
-      <field allowempty="true" column="BlogPostPageContentHTML" columnprecision="0" columntype="longtext" enabled="true" guid="bdf3b790-e6aa-4363-b719-0ae643654f2c" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Rich Text Content</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <ConfigurationName>Kentico.Community.Portal.RichText</ConfigurationName>
-          <controlname>Kentico.Administration.RichTextEditor</controlname>
+          <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
       </field>
     </form>

@@ -50,6 +50,13 @@ export function validateCaptcha() {
   const captchaSiteKey = captchaSiteKeyMetaEl.content;
 
   return new Promise(function (resolve, reject) {
+    const grecaptcha = window.grecaptcha;
+
+    if (!grecaptcha) {
+      reject("Missing recaptcha library");
+      return;
+    }
+
     grecaptcha.ready(function () {
       grecaptcha
         .execute(captchaSiteKey, { action: "submit" })

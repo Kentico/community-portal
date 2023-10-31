@@ -92,7 +92,12 @@ public class AssetItemService
     {
         var req = contextAccessor.HttpContext.Request;
 
-        var uriBuilder = new UriBuilder(req.Scheme, req.Host.Host, req.Host.Port ?? -1, TrimLeadingTilde(url.RelativePath));
+        return BuildFullFileUrl(url, req);
+    }
+
+    public static string BuildFullFileUrl(IMediaFileUrl url, HttpRequest request)
+    {
+        var uriBuilder = new UriBuilder(request.Scheme, request.Host.Host, request.Host.Port ?? -1, TrimLeadingTilde(url.RelativePath));
         if (uriBuilder.Uri.IsDefaultPort)
         {
             uriBuilder.Port = -1;
@@ -111,4 +116,10 @@ public class AssetItemService
 
         return span.ToString();
     }
+}
+
+public static class MediaFileURLExtensions
+{
+    public static string AbsoluteURL(this IMediaFileUrl url, HttpRequest request) =>
+        AssetItemService.BuildFullFileUrl(url, request);
 }

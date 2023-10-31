@@ -9,25 +9,57 @@ public record BlogPostPagesLatestQuery(int Count) : IQuery<BlogPostPagesLatestQu
     public string CacheValueKey => Count.ToString();
 }
 public record BlogPostPagesLatestQueryResponse(IReadOnlyList<BlogPostPage> Items);
-public class BlogPostPagesLatestQueryHandler : ContentItemQueryHandler<BlogPostPagesLatestQuery, BlogPostPagesLatestQueryResponse>
+public class BlogPostPagesLatestQueryHandler : WebPageQueryHandler<BlogPostPagesLatestQuery, BlogPostPagesLatestQueryResponse>
 {
-    public BlogPostPagesLatestQueryHandler(ContentItemQueryTools tools) : base(tools) { }
+    public BlogPostPagesLatestQueryHandler(WebPageQueryTools tools) : base(tools) { }
 
     public override async Task<BlogPostPagesLatestQueryResponse> Handle(BlogPostPagesLatestQuery request, CancellationToken cancellationToken = default)
     {
-        var b = new ContentItemQueryBuilder().ForContentType(BlogPostPage.CONTENT_TYPE_NAME, queryParameters =>
+        // Optimized query to find content item identifiers
+        var identifiersQuery = new ContentItemQueryBuilder().ForContentType(BlogPostContent.CONTENT_TYPE_NAME, queryParameters =>
         {
             _ = queryParameters
-                .OrderBy(new[] { new OrderByColumn(nameof(BlogPostPage.BlogPostPageDate), OrderDirection.Descending) })
+                .OrderBy(new[] { new OrderByColumn(nameof(BlogPostContent.BlogPostContentPublishedDate), OrderDirection.Descending) })
                 .TopN(request.Count)
-                .WithLinkedItems(1);
+                .Columns(nameof(BlogPostContent.SystemFields.ContentItemID));
         });
 
-        var pages = await Executor.GetWebPageResult(b, WebPageMapper.Map<BlogPostPage>, DefaultQueryOptions, cancellationToken);
+        var contentItemIDs = (await Executor.GetWebPageResult(identifiersQuery, c => c.ContentItemID, DefaultQueryOptions, cancellationToken)).ToList();
 
-        return new(pages.ToList());
+        if (contentItemIDs.Count == 0)
+        {
+            return new(new List<BlogPostPage>());
+        }
+
+        // Full query to retrieve entire content graph
+        var postsQuery = new ContentItemQueryBuilder().ForContentType(BlogPostPage.CONTENT_TYPE_NAME, queryParams =>
+        {
+            _ = queryParams
+                .ForWebsite(WebsiteChannelContext.WebsiteChannelName)
+                .Linking(nameof(BlogPostPage.BlogPostPageBlogPostContent), contentItemIDs)
+                .WithLinkedItems(2);
+        });
+
+        var pages = await Executor.GetWebPageResult(postsQuery, WebPageMapper.Map<BlogPostPage>, DefaultQueryOptions, cancellationToken);
+
+        return new(pages.OrderBy(p => contentItemIDs.IndexOf(p.BlogPostPageBlogPostContent.FirstOrDefault().SystemFields.ContentItemID)).ToList());
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(BlogPostPagesLatestQuery query, BlogPostPagesLatestQueryResponse result, ICacheDependencyKeysBuilder builder) =>
-        builder.AllContentItems(BlogPostPage.CONTENT_TYPE_NAME);
+        builder
+            // Changes in post publish date for any post should invalidate this cache
+            .AllContentItems(BlogPostContent.CONTENT_TYPE_NAME)
+            .Collection(
+                result.Items,
+                (page, builder) => builder
+                    // Only depend on pages referencing these posts
+                    .WebPage(page.SystemFields.WebPageItemID)
+                    // Add related content dependencies
+                    .Collection(
+                        page.BlogPostPageBlogPostContent.SelectMany(c => c.BlogPostContentAuthor),
+                        (author, builder) => builder
+                            .ContentItem(author)
+                            .Collection(
+                                author.AuthorContentPhotoMediaFileImage,
+                                (image, builder) => builder.Media(image))));
 }

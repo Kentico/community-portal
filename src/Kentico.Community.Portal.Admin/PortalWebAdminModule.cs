@@ -47,9 +47,11 @@ internal class PortalWebAdminModule : AdminModule
         if (env.IsDevelopment())
         {
             WebPageEvents.Create.Before += EnsureLocalCodeNames;
+            ContentItemEvents.Create.Before += EnsureLocalCodeNames;
         }
 
         QAndAAnswerDataInfo.TYPEINFO.Events.Insert.After += CreateQuestionIndexTask;
+        ContentItemEvents.Publish.Execute += CreateBlogPostIndexTask;
     }
 
     /// <summary>
@@ -62,6 +64,18 @@ internal class PortalWebAdminModule : AdminModule
     {
         if (string.Equals(e.ContentTypeName, BlogPostPage.CONTENT_TYPE_NAME)
             || string.Equals(e.ContentTypeName, QAndAQuestionPage.CONTENT_TYPE_NAME))
+        {
+            if (e.Name.EndsWith("-localtest"))
+            {
+                return;
+            }
+
+            e.Name = e.Name[..Math.Min(90, e.Name.Length)] + "-localtest";
+        }
+    }
+    private void EnsureLocalCodeNames(object sender, CreateContentItemEventArgs e)
+    {
+        if (string.Equals(e.ContentTypeName, BlogPostContent.CONTENT_TYPE_NAME))
         {
             if (e.Name.EndsWith("-localtest"))
             {
@@ -86,15 +100,14 @@ internal class PortalWebAdminModule : AdminModule
             return;
         }
 
+        /*
+         * Only perform search indexing when a site is available (eg not during CI restore)
+         */
         var accessor = Service.Resolve<IHttpContextAccessor>();
         if (accessor.HttpContext is null)
         {
             return;
         }
-
-        /*
-         * Only perform search indexing when a site is available (eg not during CI restore)
-         */
         var channelContext = Service.Resolve<IWebsiteChannelContext>();
         if (string.IsNullOrWhiteSpace(channelContext.WebsiteChannelName))
         {
@@ -107,15 +120,13 @@ internal class PortalWebAdminModule : AdminModule
             .ForContentType(QAndAQuestionPage.CONTENT_TYPE_NAME, queryParameters =>
             {
                 _ = queryParameters
-                    .WithLinkedItems(1)
                     .ForWebsite(channelContext.WebsiteChannelName)
-                    .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemID), questionWebPageID));
+                    .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemID), questionWebPageID))
+                    .Columns(new[] { nameof(WebPageFields.WebPageItemGUID), nameof(WebPageFields.WebPageItemTreePath) });
             });
 
-        var webPageMapper = Service.Resolve<IWebPageQueryResultMapper>();
         var executor = Service.Resolve<IContentQueryExecutor>();
-
-        var page = executor.GetWebPageResult(b, webPageMapper.Map<QAndAQuestionPage>).GetAwaiter().GetResult().FirstOrDefault();
+        var page = executor.GetWebPageResult(b, c => new { c.WebPageItemGUID, c.WebPageItemTreePath }).GetAwaiter().GetResult().FirstOrDefault();
         if (page is null)
         {
             var log = Service.Resolve<IEventLogService>();
@@ -123,7 +134,7 @@ internal class PortalWebAdminModule : AdminModule
             log.LogWarning(
                 source: nameof(CreateQuestionIndexTask),
                 eventCode: "MISSING_QUESTION",
-                eventDescription: $"Could not find question web site page [{questionWebPageID}] for answer [{answer.QAndAAnswerDataGUID}]");
+                eventDescription: $"Could not find question web site page [{questionWebPageID}] for answer [{answer.QAndAAnswerDataGUID}].{Environment.NewLine}Skipping search indexing.");
 
             return;
         }
@@ -133,8 +144,66 @@ internal class PortalWebAdminModule : AdminModule
             ChannelName = channelContext.WebsiteChannelName,
             LanguageName = "en-US",
             TypeName = QAndAQuestionPage.CONTENT_TYPE_NAME,
-            WebPageItemGuid = page.SystemFields.WebPageItemGUID,
-            WebPageItemTreePath = page.SystemFields.WebPageItemTreePath
+            WebPageItemGuid = page.WebPageItemGUID,
+            WebPageItemTreePath = page.WebPageItemTreePath
+        };
+
+        var taskLogger = Service.Resolve<ILuceneTaskLogger>();
+        taskLogger.HandleEvent(model, WebPageEvents.Publish.Name).GetAwaiter().GetResult();
+    }
+
+    public void CreateBlogPostIndexTask(object sender, PublishContentItemEventArgs args)
+    {
+        /*
+         * Only perform search indexing when a site is available (eg not during CI restore)
+         */
+        var accessor = Service.Resolve<IHttpContextAccessor>();
+        if (accessor.HttpContext is null)
+        {
+            return;
+        }
+        var channelContext = Service.Resolve<IWebsiteChannelContext>();
+        if (string.IsNullOrWhiteSpace(channelContext.WebsiteChannelName))
+        {
+            return;
+        }
+
+        int contentItemID = args.ID;
+
+        /*
+         * We only need the values required for the IndexedItemModel, which come
+         * from the BlogPostPage web page item that links to the updated BlogPostContent content item
+         */
+        var b = new ContentItemQueryBuilder()
+            .ForContentType(BlogPostPage.CONTENT_TYPE_NAME, queryParameters =>
+            {
+                _ = queryParameters
+                    .ForWebsite(channelContext.WebsiteChannelName)
+                    .Linking(nameof(BlogPostPage.BlogPostPageBlogPostContent), new[] { contentItemID })
+                    .Columns(new[] { nameof(WebPageFields.WebPageItemGUID), nameof(WebPageFields.WebPageItemTreePath) });
+            });
+
+        var executor = Service.Resolve<IContentQueryExecutor>();
+        var page = executor.GetWebPageResult(b, c => new { c.WebPageItemGUID, c.WebPageItemTreePath }).GetAwaiter().GetResult().FirstOrDefault();
+        if (page is null)
+        {
+            var log = Service.Resolve<IEventLogService>();
+
+            log.LogWarning(
+                source: nameof(CreateBlogPostIndexTask),
+                eventCode: "MISSING_BLOGPOSTPAGE",
+                eventDescription: $"Could not find blog web site page for blog content [{contentItemID}].{Environment.NewLine}Skipping search indexing.");
+
+            return;
+        }
+
+        var model = new IndexedItemModel
+        {
+            ChannelName = channelContext.WebsiteChannelName,
+            LanguageName = "en-US",
+            TypeName = BlogPostPage.CONTENT_TYPE_NAME,
+            WebPageItemGuid = page.WebPageItemGUID,
+            WebPageItemTreePath = page.WebPageItemTreePath
         };
 
         var taskLogger = Service.Resolve<ILuceneTaskLogger>();

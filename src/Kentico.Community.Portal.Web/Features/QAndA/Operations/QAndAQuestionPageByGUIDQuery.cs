@@ -15,7 +15,7 @@ public class QAndAQuestionPageByGUIDQueryHandler : WebPageQueryHandler<QAndAQues
             _ = queryParameters.WithLinkedItems(1);
         });
 
-        var pages = await Executor.GetWebPageResult(b, Mapper.Map<QAndAQuestionPage>, DefaultQueryOptions, cancellationToken);
+        var pages = await Executor.GetWebPageResult(b, WebPageMapper.Map<QAndAQuestionPage>, DefaultQueryOptions, cancellationToken);
 
         return pages.First();
     }

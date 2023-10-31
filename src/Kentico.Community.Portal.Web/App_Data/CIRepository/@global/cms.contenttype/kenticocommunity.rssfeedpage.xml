@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Website</ClassContentTypeType>
+  <ClassDisplayName>RSS Feed Page</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="bd0654d4-4a78-4571-97f2-b96e82d6e872" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="394b3771-1d51-4a9c-a989-ac39be492c91" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="126465d0-62f7-405a-82f7-a008c625e60f" isunique="true" system="true" />
+      <field column="RSSFeedPageFeedName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="a1cc41ec-801a-4580-9f32-6dbb56e885b9" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Feed Name</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field column="RSSFeedPageFeedShortDescription" columnprecision="0" columntype="longtext" enabled="true" guid="828ab1cc-73ec-41b5-9bbd-ff7b314cc7d5" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Short Description</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+      </field>
+      <field column="RSSFeedPageWebPageContentType" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="deaf535f-6502-43c1-812f-1e930f92b840" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[Full code name of the content type exposed through this RSS Feed]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Web Page Content Type</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field column="RSSFeedPageItemsLimit" columnprecision="0" columntype="integer" enabled="true" guid="b9748487-877a-45fa-b682-f0e4286393cf" visible="true">
+        <properties>
+          <defaultvalue>25</defaultvalue>
+          <explanationtext>The maximum number of items in the RSS Feed</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Items limit</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.NumberInput</controlname>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>19b2843e-9577-4e17-ba1f-ac8ec58dd1fe</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-newspaper</ClassIconClass>
+  <ClassName>KenticoCommunity.RSSFeedPage</ClassName>
+  <ClassTableName>KenticoCommunity_RSSFeedPage</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>True</ClassWebPageHasUrl>
+</cms.contenttype>

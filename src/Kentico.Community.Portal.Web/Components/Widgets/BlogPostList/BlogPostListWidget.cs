@@ -83,16 +83,14 @@ public class BlogPostListWidget : ViewComponent
 
     private async Task<IReadOnlyList<BlogPostViewModel>> GetBlogPostsBySelection(BlogPostListWidgetProperties props)
     {
-        var selectedWebPageGUIDs = props.BlogPosts?.Select(a => a.WebPageGuid).ToList() ?? new();
-        if (selectedWebPageGUIDs.Count == 0)
+        var selectedWebPageGUIDs = props.BlogPosts?.Select(a => a.WebPageGuid).ToArray() ?? Array.Empty<Guid>();
+        if (selectedWebPageGUIDs.Length == 0)
         {
             return Array.Empty<BlogPostViewModel>();
         }
 
         var result = await mediator.Send(new BlogPostPagesByWebPageGUIDQuery(selectedWebPageGUIDs.ToArray()));
-        var posts = props.BlogPostSourceParsed == BlogPostSources.Individual_Selection
-            ? result.Items.OrderBy(p => selectedWebPageGUIDs.IndexOf(p.SystemFields.WebPageItemGUID)).ToList()
-            : result.Items;
+        var posts = result.Items.OrderBy(p => Array.IndexOf(selectedWebPageGUIDs, p.SystemFields.WebPageItemGUID)).ToList();
 
         return await BuildPostPageViewModels(posts, props);
     }
@@ -104,26 +102,32 @@ public class BlogPostListWidget : ViewComponent
         return await BuildPostPageViewModels(result.Items, props);
     }
 
-    private async Task<IReadOnlyList<BlogPostViewModel>> BuildPostPageViewModels(IEnumerable<BlogPostPage> posts, BlogPostListWidgetProperties props)
+    private async Task<IReadOnlyList<BlogPostViewModel>> BuildPostPageViewModels(IEnumerable<BlogPostPage> pages, BlogPostListWidgetProperties props)
     {
         var vms = new List<BlogPostViewModel>();
 
-        foreach (var post in posts)
+        foreach (var page in pages)
         {
-            var url = await urlRetriever.Retrieve(post);
-            var teaserImage = await itemService.RetrieveMediaFileImage(post.BlogPostPageTeaserMediaFileImage.FirstOrDefault());
+            var post = page.BlogPostPageBlogPostContent.FirstOrDefault();
+            if (post is null)
+            {
+                continue;
+            }
+
+            var url = await urlRetriever.Retrieve(page);
+            var teaserImage = await itemService.RetrieveMediaFileImage(post.BlogPostContentTeaserMediaFileImage.FirstOrDefault());
             var author = await GetAuthor(post);
             var authorImage = await itemService.RetrieveMediaFileImage(author.AuthorContentPhotoMediaFileImage.FirstOrDefault());
             string? taxonomy = props.BlogPostSourceParsed == BlogPostSources.Post_Taxonomy
                 ? null
-                : post.BlogPostPageTaxonomy;
+                : post.BlogPostContentTaxonomy;
 
             vms.Add(new BlogPostViewModel()
             {
-                Title = post.BlogPostPageTitle,
-                Date = post.BlogPostPageDate,
+                Title = post.BlogPostContentTitle,
+                Date = post.BlogPostContentPublishedDate,
                 LinkPath = url.RelativePath,
-                ShortDescription = post.BlogPostPageShortDescription,
+                ShortDescription = post.BlogPostContentShortDescription,
                 Author = new(author, authorImage, null), // TODO Connect to member
                 TeaserImage = teaserImage,
                 Taxonomy = taxonomy
@@ -133,9 +137,9 @@ public class BlogPostListWidget : ViewComponent
         return vms;
     }
 
-    private async Task<AuthorContent> GetAuthor(BlogPostPage post)
+    private async Task<AuthorContent> GetAuthor(BlogPostContent post)
     {
-        var author = post.BlogPostPageAuthor.FirstOrDefault();
+        var author = post.BlogPostContentAuthor.FirstOrDefault();
 
         if (author is not null)
         {

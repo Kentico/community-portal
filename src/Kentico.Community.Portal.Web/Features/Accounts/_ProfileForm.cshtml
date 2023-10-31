@@ -2,7 +2,7 @@
 
 @model ProfileViewModel
 
-<form id="profileUpdateForm" action="post" hx-post hx-controller="Account" hx-action="UpdateProfile" hx-swap="outerHTML"
+<form id="profileUpdateForm" method="post" hx-post hx-controller="Account" hx-action="UpdateProfile" hx-swap="outerHTML"
     test-id="profileUpdate">
     <div class="form-horizontal">
 
@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <button id="updatePassword" type="submit" class="btn btn-primary mt-3">@HtmlLocalizer["Update Profile"]</button>
+        <button id="updateProfile" type="submit" class="btn btn-primary mt-3">@HtmlLocalizer["Update Profile"]</button>
 
         @if (Model.State == UpdateState.Updated)
         {

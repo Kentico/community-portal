@@ -1,80 +1,79 @@
 /*! purgecss start ignore */
 form {
-    .form-field {
-      &:not(:first-child) {
-        margin-top: 1rem;
-      }
-  
-      .control-label {
-        margin-bottom: 0.375rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-      }
-  
-      .form-control[type="checkbox"] {
-        width: 16px;
-        height: 16px;
-        margin-top: 0.25em;
-        vertical-align: top;
-        background-color: #fff;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: contain;
-        border: 1px solid $purple;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        print-color-adjust: exact;
-        float: left;
-        border-radius: 0.25em;
-        padding: 0;
-        margin-right: 8px;
-      }
-  
-      .form-control:checked[type="checkbox"] {
-        background-image: url("#{$img-path}/icons/check.svg");
-        background-color: $purple;
-      }
-  
-      .ktc-checkbox {
-        label {
-          display: -webkit-box;
-        }
-      }
-    }
-  
-    input[type="submit"] {
-      font-size: 1rem;
-      font-weight: 400;
-      letter-spacing: 0;
-      line-height: 1rem;
-      padding: 0.875rem 2rem;
-      white-space: nowrap;
+  .form-field {
+    &:not(:first-child) {
       margin-top: 1rem;
-      display: inline-block;
-      text-align: center;
-      text-decoration: none;
-      vertical-align: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      border: 1px solid transparent;
-      border-radius: 1.75rem;
-      transition:
-        color 0.15s ease-in-out,
-        background-color 0.15s ease-in-out,
-        border-color 0.15s ease-in-out,
-        box-shadow 0.15s ease-in-out;
-      color: $white;
+    }
+
+    .control-label {
+      margin-bottom: 0.375rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .form-control[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin-top: 0.25em;
+      vertical-align: top;
+      background-color: #fff;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      border: 1px solid $purple;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      print-color-adjust: exact;
+      float: left;
+      border-radius: 0.25em;
+      padding: 0;
+      margin-right: 8px;
+    }
+
+    .form-control:checked[type="checkbox"] {
+      background-image: url("#{$img-path}/icons/check.svg");
       background-color: $purple;
-      border-color: $purple;
-  
-      &:hover {
-        background-color: $purple-dark;
-        border-color: $purple-dark;
+    }
+
+    .ktc-checkbox {
+      label {
+        display: -webkit-box;
       }
     }
   }
-  /*! purgecss stop ignore */
-  
+
+  input[type="submit"] {
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1rem;
+    padding: 0.875rem 2rem;
+    white-space: nowrap;
+    margin-top: 1rem;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    border-radius: 1.75rem;
+    transition:
+      color 0.15s ease-in-out,
+      background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out,
+      box-shadow 0.15s ease-in-out;
+    color: $white;
+    background-color: $purple;
+    border-color: $purple;
+
+    &:hover {
+      background-color: $purple-dark;
+      border-color: $purple-dark;
+    }
+  }
+}
+/*! purgecss stop ignore */

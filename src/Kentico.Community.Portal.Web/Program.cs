@@ -8,10 +8,11 @@ var env = builder.Environment;
 var config = builder.Configuration;
 
 builder.Services
-    .AddAppXperienceMembership()
+    // Customizes options configured via SaaS, so register this first
+    .AddAppAdminAuthentication(config)
     .AddAppXperienceSaaS(config, env)
     .AddAppXperience(config, env)
-    .AddAppAdminAuthentication(config)
+    .AddAppXperienceMembership()
     .AddAppLuceneSearch(config)
     .AddAppMvc(env)
     .AddApp(config);

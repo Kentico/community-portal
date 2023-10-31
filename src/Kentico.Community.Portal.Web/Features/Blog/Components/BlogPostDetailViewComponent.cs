@@ -29,22 +29,21 @@ public class BlogPostDetailViewComponent : ViewComponent
     public async Task<IViewComponentResult> InvokeAsync(IRoutedWebPage page)
     {
 
-        var resp = await mediator.Send(new BlogPostPageQuery(page));
+        var blogPage = await mediator.Send(new BlogPostPageQuery(page));
+        var post = blogPage.BlogPostPageBlogPostContent.First();
 
-        var blog = resp.Page;
-
-        var author = await GetAuthor(blog);
+        var author = await GetAuthor(post);
         var authorImage = await assetService.RetrieveMediaFileImage(author.AuthorContentPhotoMediaFileImage.FirstOrDefault());
 
-        var teaser = await assetService.RetrieveMediaFileImage(blog.BlogPostPageTeaserMediaFileImage.FirstOrDefault());
-        var contentHTML = blog.IsContentTypeMarkdown()
-            ? renderer.Render(blog.BlogPostPageContentMarkdown)
-            : new(blog.BlogPostPageContentHTML);
+        var teaser = await assetService.RetrieveMediaFileImage(post.BlogPostContentTeaserMediaFileImage.FirstOrDefault());
+        var contentHTML = post.IsContentTypeMarkdown()
+            ? renderer.Render(post.BlogPostContentContentMarkdown)
+            : new(post.BlogPostContentContentHTML);
 
         var vm = new BlogPostDetailViewModel()
         {
-            Title = blog.BlogPostPageTitle,
-            Date = blog.BlogPostPageDate,
+            Title = post.BlogPostContentTitle,
+            Date = post.BlogPostContentPublishedDate,
             HTMLSanitizedContentHTML = contentHTML,
             Teaser = teaser,
             Author = new()
@@ -55,19 +54,22 @@ public class BlogPostDetailViewComponent : ViewComponent
                 Name = author.FullName,
                 Title = "" // TODO collect from Member
             },
-            AbsoluteURL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}{Request.Path}"
+            AbsoluteURL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}{Request.Path}",
+            DiscussionLinkPath = string.IsNullOrWhiteSpace(blogPage.BlogPostPageQAndADiscussionLinkPath)
+                ? null
+                : blogPage.BlogPostPageQAndADiscussionLinkPath
         };
 
-        var meta = new Meta(blog.BlogPostPageTitle, blog.BlogPostPageShortDescription);
+        var meta = new Meta(blogPage.BlogPostPageTitle, blogPage.BlogPostPageShortDescription);
 
         metaService.SetMeta(meta);
 
         return View("~/Features/Blog/Components/BlogPostDetail.cshtml", vm);
     }
 
-    private async Task<AuthorContent> GetAuthor(BlogPostPage post)
+    private async Task<AuthorContent> GetAuthor(BlogPostContent post)
     {
-        var author = post.BlogPostPageAuthor.FirstOrDefault();
+        var author = post.BlogPostContentAuthor.FirstOrDefault();
 
         if (author is not null)
         {
@@ -93,6 +95,7 @@ public class BlogPostDetailViewModel
     public HtmlSanitizedHtmlString HTMLSanitizedContentHTML { get; init; }
     public AuthorViewModel Author { get; init; }
     public string AbsoluteURL { get; init; }
+    public string? DiscussionLinkPath { get; init; }
 }
 
 public class AuthorViewModel

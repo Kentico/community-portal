@@ -57,7 +57,14 @@ public class QueryHandlerCacheDecorator<TQuery, TResult> : IQueryHandler<TQuery,
 
         var entry = await cache.LoadAsync((cs, t) => GetCachedResult(query, store, creator, cs, t), settings, token);
 
-        if (entry.Result is Result<TResult> monad && monad.IsSuccess)
+        if (entry.Result is Result<TResult> monad)
+        {
+            if (monad.IsSuccess)
+            {
+                store.Store(entry.Keys);
+            }
+        }
+        else
         {
             store.Store(entry.Keys);
         }
@@ -96,8 +103,6 @@ public class QueryHandlerCacheDecorator<TQuery, TResult> : IQueryHandler<TQuery,
 
             return new CacheEntry<TResult>(result, keys);
         }
-
-        store.Store(keys);
 
         cs.GetCacheDependency = () => CacheHelper.GetCacheDependency(keys);
 

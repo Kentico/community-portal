@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.autoresponderemail>
+  <ContentItemDataCommonDataID>
+    <GUID>34182abe-555c-4c06-b080-dfdf7854023e</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>CommunityNewsletterOpt-In-5n2jd47n</CodeName>
+      <GUID>555d8a5e-b004-40e1-a011-c3ff1916c5e8</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>8087d43e-a3f4-4248-9328-557ce76e4e78</ContentItemDataGUID>
+  <EmailContent>
+    <![CDATA[<p>Hey {!ResolveDynamicText("Recipient.FirstName","there")!},</p><p>We noticed that you recently signed up for the Kentico Community Newsletter. We want to make sure you don't miss out on community news, insights, and events.</p><p>To start receiving our newsletter, please confirm your email address by clicking on the link below:</p><p>{!ResolveSubscriptionConfirmationLink("Confirm your subscription!","a4f0eaaa-9f80-4fd2-835b-9489991288b3")!}<br></p><p>We look forward to seeing you around the Kentico Community!</p><p>Cheers,</p><p>Kentico</p>]]>
+  </EmailContent>
+  <EmailPlainText>
+<![CDATA[
+Hey there, 
+
+We noticed that you recently signed up for the Kentico Community Newsletter.
+
+We want to make sure you don't miss out on community news, insights, and events.  To start receiving our newsletter, please confirm your email address by viewing the HTML version of this email and clicking the subscription confirmation link. 
+
+We look forward to seeing you around the Kentico Community!
+
+Cheers, Kentico
+]]>
+  </EmailPlainText>
+  <EmailPreviewText>Confirm ✅ your subscription!</EmailPreviewText>
+  <EmailSenderID>
+    <CodeName>no-reply</CodeName>
+    <GUID>24520bc4-cdda-401d-812a-e5a73699edac</GUID>
+    <ObjectType>emaillibrary.emailchannelsender</ObjectType>
+    <Parent>
+      <GUID>2b0fe19c-6251-455f-8233-407a1303b541</GUID>
+      <ObjectType>emaillibrary.emailchannel</ObjectType>
+      <Parent>
+        <CodeName>KenticoCommunityEmails</CodeName>
+        <GUID>1b41b848-ddd2-4a8d-9bc7-850a93e147c4</GUID>
+        <ObjectType>cms.channel</ObjectType>
+      </Parent>
+    </Parent>
+  </EmailSenderID>
+  <EmailSubject>
+    <![CDATA[Confirm your Kentico Community Newsletter Subscription]]>
+  </EmailSubject>
+  <EmailTemplateID>
+    <CodeName>CommunityAutoresponder</CodeName>
+    <GUID>7e959dee-df06-42b5-a033-0daabea045c7</GUID>
+    <ObjectType>emaillibrary.emailtemplate</ObjectType>
+  </EmailTemplateID>
+</contentitemdata.kenticocommunity.autoresponderemail>

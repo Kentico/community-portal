@@ -1,5 +1,4 @@
 using CMS.ContentEngine;
-using CMS.DataEngine;
 using Kentico.Community.Portal.Core.Operations;
 
 namespace Kentico.Community.Portal.Web.Features.Blog;
@@ -20,8 +19,7 @@ public class BlogPostPagesByWebPageGUIDQueryHandler : ContentItemQueryHandler<Bl
             _ = queryParameters
                 .ForWebsite(WebsiteChannelContextContext.WebsiteChannelName)
                 .Where(w => w.WhereIn(nameof(WebPageFields.WebPageItemGUID), request.WebPageGUIDs))
-                .OrderBy(new[] { new OrderByColumn(nameof(BlogPostPage.BlogPostPageDate), OrderDirection.Descending) })
-                .WithLinkedItems(1);
+                .WithLinkedItems(2);
         });
 
         var pages = await Executor.GetWebPageResult(b, WebPageMapper.Map<BlogPostPage>, DefaultQueryOptions, cancellationToken);
@@ -30,7 +28,20 @@ public class BlogPostPagesByWebPageGUIDQueryHandler : ContentItemQueryHandler<Bl
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(BlogPostPagesByWebPageGUIDQuery query, BlogPostPagesQueryResponse result, ICacheDependencyKeysBuilder builder) =>
-        builder.Collection(result.Items, (i, b) => b.WebPage(i.SystemFields.WebPageItemID));
+        builder.Collection(
+            result.Items,
+            (page, builder) => builder
+                .WebPage(page)
+                .Collection(
+                    page.BlogPostPageBlogPostContent,
+                    (content, builder) => builder
+                        .ContentItem(content)
+                        .Collection(
+                            content.BlogPostContentAuthor,
+                            (author, builder) => builder.ContentItem(author)
+                                .Collection(
+                                    author.AuthorContentPhotoMediaFileImage,
+                                    (image, builder) => builder.Media(image)))));
 }
 
 public record BlogPostPagesByWebPageIDQuery(int[] WebPageIDs) : IQuery<BlogPostPagesQueryResponse>, ICacheByValueQuery
@@ -48,8 +59,7 @@ public class BlogPostPagesByWebPageIDQueryHandler : ContentItemQueryHandler<Blog
             _ = queryParameters
                 .ForWebsite(WebsiteChannelContextContext.WebsiteChannelName)
                 .Where(w => w.WhereIn(nameof(WebPageFields.WebPageItemID), request.WebPageIDs))
-                .OrderBy(new[] { new OrderByColumn(nameof(BlogPostPage.BlogPostPageDate), OrderDirection.Descending) })
-                .WithLinkedItems(1);
+                .WithLinkedItems(2);
         });
 
         var pages = await Executor.GetWebPageResult(b, WebPageMapper.Map<BlogPostPage>, DefaultQueryOptions, cancellationToken);
@@ -58,5 +68,18 @@ public class BlogPostPagesByWebPageIDQueryHandler : ContentItemQueryHandler<Blog
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(BlogPostPagesByWebPageIDQuery query, BlogPostPagesQueryResponse result, ICacheDependencyKeysBuilder builder) =>
-        builder.Collection(result.Items, (i, b) => b.WebPage(i.SystemFields.WebPageItemID));
+        builder.Collection(
+            result.Items,
+            (page, builder) => builder
+                .WebPage(page)
+                .Collection(
+                    page.BlogPostPageBlogPostContent,
+                    (content, builder) => builder
+                        .ContentItem(content)
+                        .Collection(
+                            content.BlogPostContentAuthor,
+                            (author, builder) => builder.ContentItem(author)
+                                .Collection(
+                                    author.AuthorContentPhotoMediaFileImage,
+                                    (image, builder) => builder.Media(image)))));
 }

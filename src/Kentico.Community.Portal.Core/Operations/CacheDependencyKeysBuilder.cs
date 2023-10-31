@@ -1,6 +1,8 @@
 using CMS.DataEngine;
+using CMS.MediaLibrary;
 using CMS.Websites;
 using CMS.Websites.Routing;
+using Kentico.Community.Portal.Core.Content;
 
 namespace Kentico.Community.Portal.Core.Operations;
 
@@ -18,6 +20,12 @@ public interface ICacheDependencyKeysBuilder
     /// <param name="contentItemID"></param>
     /// <returns></returns>
     ICacheDependencyKeysBuilder ContentItem(int contentItemID);
+    /// <summary>
+    /// contentitem|byid|&lt;content item ID&gt;
+    /// </summary>
+    /// <param name="contentItemID"></param>
+    /// <returns></returns>
+    ICacheDependencyKeysBuilder ContentItem(IContentFieldsSource content);
     /// <summary>
     /// contentitem|byid|&lt;content item ID&gt;
     /// </summary>
@@ -124,6 +132,12 @@ public interface ICacheDependencyKeysBuilder
     /// <param name="webPageID"></param>
     /// <returns></returns>
     ICacheDependencyKeysBuilder WebPage(int webPageID);
+    /// <summary>
+    /// webpageitem|byid|&lt;web page id&gt;
+    /// </summary>
+    /// <param name="webPageID"></param>
+    /// <returns></returns>
+    ICacheDependencyKeysBuilder WebPage(IWebPageFieldsSource page);
     /// <summary>
     /// webpageitem|byid|&lt;web page id&gt;
     /// </summary>
@@ -373,6 +387,12 @@ public interface ICacheDependencyKeysBuilder
     /// </summary>
     /// <param name="mediaFileGUID"></param>
     /// <returns></returns>
+    ICacheDependencyKeysBuilder Media(AssetRelatedItem asset);
+    /// <summary>
+    /// mediafile|&lt;guid&gt;
+    /// </summary>
+    /// <param name="mediaFileGUID"></param>
+    /// <returns></returns>
     ICacheDependencyKeysBuilder Media(Maybe<Guid> mediaFileGUID);
 
     /// <summary>
@@ -472,6 +492,8 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
 
         return this;
     }
+    public ICacheDependencyKeysBuilder ContentItem(IContentFieldsSource content) =>
+        ContentItem(content.SystemFields.ContentItemID);
     public ICacheDependencyKeysBuilder ContentItem(Maybe<int> contentItemID, string languageName) =>
         contentItemID.TryGetValue(out int id)
             ? ContentItem(id, languageName)
@@ -659,6 +681,8 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
         webPageGUID.TryGetValue(out var guid)
             ? WebPage(guid, languageName)
             : this;
+    public ICacheDependencyKeysBuilder WebPage(IWebPageFieldsSource page) =>
+        WebPage(page.SystemFields.WebPageItemID);
     public ICacheDependencyKeysBuilder WebPage(Guid webPageGUID, string languageName)
     {
         if (webPageGUID == default)
@@ -881,6 +905,8 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
 
     public ICacheDependencyKeysBuilder Media(Maybe<Guid> mediaFileGUID) =>
         Media(mediaFileGUID.GetValueOrDefault());
+    public ICacheDependencyKeysBuilder Media(AssetRelatedItem asset) =>
+        Media(asset.Identifier);
     public ICacheDependencyKeysBuilder Media(Guid mediaFileGUID)
     {
         if (mediaFileGUID == default)

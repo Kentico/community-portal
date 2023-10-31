@@ -13,7 +13,7 @@ public class ResourceHubPageQueryHandler : WebPageQueryHandler<ResourceHubPageQu
     {
         var b = new ContentItemQueryBuilder().ForWebPage(WebsiteChannelContext, ResourceHubPage.CONTENT_TYPE_NAME, request.Page);
 
-        var r = await Executor.GetWebPageResult(b, Mapper.Map<ResourceHubPage>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<ResourceHubPage>, DefaultQueryOptions, cancellationToken);
 
         return r.First();
     }

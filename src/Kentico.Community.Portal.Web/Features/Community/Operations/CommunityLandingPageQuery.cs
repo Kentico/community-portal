@@ -14,7 +14,7 @@ public class CommunityLandingPageQueryHandler : WebPageQueryHandler<CommunityLan
     {
         var b = new ContentItemQueryBuilder().ForWebPage(WebsiteChannelContext, CommunityLandingPage.CONTENT_TYPE_NAME, request.Page);
 
-        var r = await Executor.GetWebPageResult(b, Mapper.Map<CommunityLandingPage>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<CommunityLandingPage>, DefaultQueryOptions, cancellationToken);
 
         return new(r.First());
     }
