@@ -5,7 +5,7 @@
 
 Xperience by Kentico solution for the Kentico managed SaaS hosted Kentico Community website
 
-Xperience Version: 27.0.1
+Xperience Version: 27.0.2
 
 ## Site Info
 
