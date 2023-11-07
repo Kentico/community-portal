@@ -35,9 +35,9 @@ public class QAndAQuestionCreateCommandHandler : WebPageCommandHandler<QAndAQues
         var webPageManager = WebPageManagerFactory.Create(WebsiteChannelContext.WebsiteChannelID, user.UserID);
 
         string filteredTitle = Regex.Replace(request.QuestionTitle, @"[^a-zA-Z0-9\d]", "-").RemoveRepeatedCharacters('-');
-        string displayName = filteredTitle[..Math.Min(100, filteredTitle.Length)];
         string uniqueID = Guid.NewGuid().ToString("N");
-        string codeName = $"{filteredTitle[..Math.Min(42, filteredTitle.Length)]}{uniqueID[..8]}";
+        string displayName = $"{filteredTitle[..Math.Min(91, filteredTitle.Length)]}-{uniqueID[..8]}";
+        string codeName = $"{filteredTitle[..Math.Min(41, filteredTitle.Length)]}-{uniqueID[..8]}";
         var now = clock.UtcNow;
 
         var itemData = new ContentItemData(new Dictionary<string, object>

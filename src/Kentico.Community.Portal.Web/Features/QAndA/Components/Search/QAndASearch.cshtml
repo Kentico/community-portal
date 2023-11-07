@@ -57,6 +57,10 @@
 
                 @foreach (var question in Model.Questions)
                 {
+                    string formattedName = string.IsNullOrWhiteSpace(question.Author.FullName)
+                        ? question.Author.Username
+                        : $"{question.Author.FullName} ({question.Author.Username})";
+
                     <div class="c-card question default-border mt-3">
                         <div class="c-card_inner grid">
                             <div class="c-card_content">
@@ -66,8 +70,17 @@
                                     </h3>
                                 </div>
 
-                                <p class="mb-2">@question.DateCreated.ToString("MMMM d, yyyy")
-                                    @question.DateCreated.ToString("t")</p>
+                                <p class="mb-2">
+                                    @question.DateCreated.ToString("MMMM d, yyyy") @question.DateCreated.ToString("t")<br>
+                                    @if(question.Author.MemberID > 0)
+                                    {
+                                        <a class="text-secondary" asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@question.Author.MemberID">@formattedName</a>
+                                    }
+                                    else
+                                    {
+                                        @formattedName
+                                    }
+                                </p>
 
                                 @if (question.IsAnswered)
                                 {

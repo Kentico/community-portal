@@ -11,11 +11,20 @@
         <div class="c-card default-border mt-3 question mb-3">
             <div class="c-card_inner">
                 <div class="c-card_content">
-                    <p class="mb-3 small">
-                        <span class="text-secondary fw-bold">@Model.Author.Name</span> asked
-                        on @Model.DateCreated.ToString("MMMM d, yyyy")
-                        @Model.DateCreated.ToString("t")
-                    </p>
+                    <div class="mb-3 d-flex justify-content-between">
+                        <span>
+                            @if (Model.Author.ID > 0)
+                            {
+                                <a asp-controller="Member" asp-action="MemberDetail" class="text-secondary"
+                                    asp-route-memberID="@Model.Author.ID">@Model.Author.FormattedName</a>
+                            }
+                            else
+                            {
+                                @Model.Author.FormattedName
+                            }
+                        </span>
+                        <span>@Model.DateCreated.ToString("MMMM d, yyyy") @Model.DateCreated.ToString("t")</span>
+                    </div>
 
                     <div class="fr-view mb-3 member-generated-content">@Model.HTMLSanitizedContentHTML</div>
                 </div>

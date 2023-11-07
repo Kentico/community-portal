@@ -5,6 +5,20 @@
 <vc:support-page-header page="Model.Page" />
 
 <main>
-    <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"
+    <div class="c-section default">
+        <div class="container">
+            <div class="c-layout">
+                <aside class="c-layout_sidebar">
+                    <editable-area area-identifier="side-panel" allow-widget-output-cache="View.CacheEnabled"
+                        widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
+                </aside>
+                <div role="main" class="c-layout_main">
+                    <vc:support-form />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <editable-area area-identifier="bottom" allow-widget-output-cache="View.CacheEnabled"
         widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
 </main>

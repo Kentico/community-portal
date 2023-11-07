@@ -24,7 +24,7 @@ public class BlogPostPagesByWebPageGUIDQueryHandler : ContentItemQueryHandler<Bl
 
         var pages = await Executor.GetWebPageResult(b, WebPageMapper.Map<BlogPostPage>, DefaultQueryOptions, cancellationToken);
 
-        return new(pages.ToList());
+        return new(pages.OrderBy(p => Array.IndexOf(request.WebPageGUIDs, p.SystemFields.WebPageItemGUID)).ToList());
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(BlogPostPagesByWebPageGUIDQuery query, BlogPostPagesQueryResponse result, ICacheDependencyKeysBuilder builder) =>

@@ -79,7 +79,8 @@ public class QAndAListingPage : ListingPage
     private static object ModelRetriever(object value, IDataContainer container)
     {
         int webPageItemID = ValidationHelper.GetInteger(container[nameof(WebPageItemInfo.WebPageItemID)], 0);
-        string label = $"{value.ToString()[..50]}...";
+        string valueStr = value.ToString();
+        string label = $"{valueStr[..Math.Min(valueStr.Length, 50)]}...";
 
         if (webPageItemID == 0)
         {

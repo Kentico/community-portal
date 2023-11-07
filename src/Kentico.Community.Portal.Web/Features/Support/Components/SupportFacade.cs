@@ -2,7 +2,6 @@
 using System.Text;
 using CMS.Core;
 using Newtonsoft.Json;
-using Kentico.Community.Portal.Web.Components.Widgets.FormSupport;
 using Microsoft.Extensions.Options;
 
 namespace Kentico.Community.Portal.Web.Features.Support;
@@ -26,7 +25,7 @@ public class SupportFacade
         dynamicsSettings = options.Value;
     }
 
-    public async Task ProcessRequest(FormSupportWidgetViewModel model)
+    public async Task ProcessRequest(SupportFormViewModel model)
     {
         try
         {
@@ -78,7 +77,7 @@ public class SupportFacade
         }
     }
 
-    private async Task<SupportCaseDto> GetSupportCaseAsync(FormSupportWidgetViewModel model)
+    private async Task<SupportCaseDto> GetSupportCaseAsync(SupportFormViewModel model)
     {
         var supportCase = new SupportCaseDto
         {

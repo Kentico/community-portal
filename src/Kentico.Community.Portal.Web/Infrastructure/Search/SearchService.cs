@@ -36,7 +36,7 @@ public class SearchService
 
         var index = IndexStore.Instance.GetIndex(BlogSearchModel.IndexName) ?? throw new Exception($"Index {BlogSearchModel.IndexName} was not found!!!");
 
-        var query = GetBlogTermQuery(searchText);
+        var query = GetBlogTermQuery(request);
 
         var combinedQuery = new BooleanQuery
         {
@@ -115,27 +115,40 @@ public class SearchService
         }
     }
 
-    private static Query GetBlogTermQuery(string searchText)
+    private static Query GetBlogTermQuery(BlogSearchRequest request)
     {
-        if (string.IsNullOrWhiteSpace(searchText))
+        string searchText = request.SearchText.Trim();
+
+        if (request.AreFiltersDefault)
         {
             return new MatchAllDocsQuery();
         }
 
-        var analyzer = new StandardAnalyzer(LuceneVersion.LUCENE_48);
-        var queryBuilder = new QueryBuilder(analyzer);
         var booleanQuery = new BooleanQuery();
-        var titleQuery = queryBuilder.CreatePhraseQuery(nameof(BlogSearchModel.Title), searchText, PHRASE_SLOP);
-        booleanQuery = AddToTermQuery(booleanQuery, titleQuery, 5);
 
-        var contentQuery = queryBuilder.CreatePhraseQuery(nameof(BlogSearchModel.Content), searchText, PHRASE_SLOP);
-        booleanQuery = AddToTermQuery(booleanQuery, contentQuery, 1);
+        if (request.AuthorMemberID > 0)
+        {
+            var authorQuery = NumericRangeQuery.NewInt32Range(nameof(BlogSearchModel.AuthorMemberID), request.AuthorMemberID, request.AuthorMemberID, true, true);
+            booleanQuery.Add(authorQuery, Occur.MUST);
+        }
 
-        var titleShould = queryBuilder.CreateBooleanQuery(nameof(BlogSearchModel.Title), searchText, Occur.SHOULD);
-        booleanQuery = AddToTermQuery(booleanQuery, titleShould, 0.5f);
+        if (!string.IsNullOrWhiteSpace(searchText))
+        {
+            var analyzer = new StandardAnalyzer(LuceneVersion.LUCENE_48);
+            var queryBuilder = new QueryBuilder(analyzer);
+            var titleQuery = queryBuilder.CreatePhraseQuery(nameof(BlogSearchModel.Title), searchText, PHRASE_SLOP);
+            booleanQuery = AddToTermQuery(booleanQuery, titleQuery, 5);
 
-        var contentShould = queryBuilder.CreateBooleanQuery(nameof(BlogSearchModel.Content), searchText, Occur.SHOULD);
-        booleanQuery = AddToTermQuery(booleanQuery, contentShould, 0.1f);
+            var contentQuery = queryBuilder.CreatePhraseQuery(nameof(BlogSearchModel.Content), searchText, PHRASE_SLOP);
+            booleanQuery = AddToTermQuery(booleanQuery, contentQuery, 1);
+
+            var titleShould = queryBuilder.CreateBooleanQuery(nameof(BlogSearchModel.Title), searchText, Occur.SHOULD);
+            booleanQuery = AddToTermQuery(booleanQuery, titleShould, 0.5f);
+
+            var contentShould = queryBuilder.CreateBooleanQuery(nameof(BlogSearchModel.Content), searchText, Occur.SHOULD);
+            booleanQuery = AddToTermQuery(booleanQuery, contentShould, 0.1f);
+        }
+
         return booleanQuery;
     }
 
@@ -143,9 +156,9 @@ public class SearchService
     {
         var index = IndexStore.Instance.GetIndex(QAndASearchModel.IndexName) ?? throw new Exception($"Index {QAndASearchModel.IndexName} was not found!!!");
 
-        var (searchText, sortBy, pageNumber, pageSize) = request;
+        var (searchText, sortBy, pageNumber, pageSize, authorMemberID) = request;
 
-        var query = GetQAndATermQuery(searchText);
+        var query = GetQAndATermQuery(request);
 
         try
         {
@@ -201,27 +214,39 @@ public class SearchService
         }
     }
 
-    private static Query GetQAndATermQuery(string searchText)
+    private static Query GetQAndATermQuery(QAndASearchRequest request)
     {
-        if (string.IsNullOrWhiteSpace(searchText))
+        string searchText = request.SearchText.Trim();
+
+        if (request.AreFiltersDefault)
         {
             return new MatchAllDocsQuery();
         }
 
-        var analyzer = new StandardAnalyzer(LuceneVersion.LUCENE_48);
-        var queryBuilder = new QueryBuilder(analyzer);
         var booleanQuery = new BooleanQuery();
-        var titleQuery = queryBuilder.CreatePhraseQuery(nameof(QAndASearchModel.Title), searchText, PHRASE_SLOP);
-        booleanQuery = AddToTermQuery(booleanQuery, titleQuery, 5);
 
-        var contentQuery = queryBuilder.CreatePhraseQuery(nameof(QAndASearchModel.Content), searchText, PHRASE_SLOP);
-        booleanQuery = AddToTermQuery(booleanQuery, contentQuery, 1);
+        if (request.AuthorMemberID > 0)
+        {
+            var authorQuery = NumericRangeQuery.NewInt32Range(nameof(QAndASearchModel.AuthorMemberID), request.AuthorMemberID, request.AuthorMemberID, true, true);
+            booleanQuery.Add(authorQuery, Occur.MUST);
+        }
 
-        var titleShould = queryBuilder.CreateBooleanQuery(nameof(QAndASearchModel.Title), searchText, Occur.SHOULD);
-        booleanQuery = AddToTermQuery(booleanQuery, titleShould, 0.5f);
+        if (!string.IsNullOrWhiteSpace(searchText))
+        {
+            var analyzer = new StandardAnalyzer(LuceneVersion.LUCENE_48);
+            var queryBuilder = new QueryBuilder(analyzer);
+            var titleQuery = queryBuilder.CreatePhraseQuery(nameof(QAndASearchModel.Title), searchText, PHRASE_SLOP);
+            booleanQuery = AddToTermQuery(booleanQuery, titleQuery, 5);
 
-        var contentShould = queryBuilder.CreateBooleanQuery(nameof(QAndASearchModel.Content), searchText, Occur.SHOULD);
-        booleanQuery = AddToTermQuery(booleanQuery, contentShould, 0.1f);
+            var contentQuery = queryBuilder.CreatePhraseQuery(nameof(QAndASearchModel.Content), searchText, PHRASE_SLOP);
+            booleanQuery = AddToTermQuery(booleanQuery, contentQuery, 1);
+
+            var titleShould = queryBuilder.CreateBooleanQuery(nameof(QAndASearchModel.Title), searchText, Occur.SHOULD);
+            booleanQuery = AddToTermQuery(booleanQuery, titleShould, 0.5f);
+
+            var contentShould = queryBuilder.CreateBooleanQuery(nameof(QAndASearchModel.Content), searchText, Occur.SHOULD);
+            booleanQuery = AddToTermQuery(booleanQuery, contentShould, 0.1f);
+        }
 
         return booleanQuery;
     }

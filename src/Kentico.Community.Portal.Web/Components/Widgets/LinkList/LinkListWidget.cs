@@ -54,6 +54,7 @@ public class LinkListWidget : ViewComponent
         return cvm.Properties.DesignParsed switch
         {
             LinkListDesign.Call_To_Actions => View("~/Components/Widgets/LinkList/CallToActions.cshtml", vm),
+            LinkListDesign.List_In_Card => View("~/Components/Widgets/LinkList/ListInCard.cshtml", vm),
             LinkListDesign.Link_List or _ => View("~/Components/Widgets/LinkList/LinkList.cshtml", vm)
         };
     }
@@ -93,6 +94,8 @@ public enum LinkListDesign
     Link_List,
     [Description("Call to actions")]
     Call_To_Actions,
+    [Description("List in Card")]
+    List_In_Card,
 }
 
 public class LinkListWidgetViewModel

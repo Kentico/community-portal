@@ -3,6 +3,7 @@ using Kentico.Community.Portal.Web.Features.Blog.Models;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 using MediatR;
 using Newtonsoft.Json;
+using System.Security.Policy;
 
 namespace Kentico.Community.Portal.Web.Features.Blog.Components;
 
@@ -78,9 +79,9 @@ public class BlogPostListViewComponent : ViewComponent
                 ShortDescription = result.ShortDescription,
                 Author = new()
                 {
+                    ID = result.AuthorMemberID,
                     Name = result.AuthorName,
                     Avatar = authorImage.ToImageAsset(),
-                    ProfileLinkPath = ""
                 },
                 TeaserImage = teaserImage.ToImageAsset(),
                 Taxonomy = result.Taxonomy

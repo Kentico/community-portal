@@ -1,0 +1,104 @@
+@model Kentico.Community.Portal.Web.Features.Members.MemberDetailViewModel
+
+<main>
+    <div class="c-section default">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="c-card article nopic bg-white">
+                        <div class="c-card_inner grid">
+                            <div class="c-card_title">
+                                <h1>
+                                    Member Profile
+                                </h1>
+                            </div>
+
+                            @{
+                                var member = Model.Member;
+                            }
+
+                            <div class="c-card_content">
+                                <p>
+                                    Username: @member.UserName
+                                </p>
+                                @if (!string.IsNullOrWhiteSpace(member.FullName))
+                                {
+                                    <p>
+                                        Name: @member.FullName
+                                    </p>
+                                }
+                                <p>
+                                    Joined: @member.Created.ToShortDateString()
+                                </p>
+                                @if (!string.IsNullOrWhiteSpace(member.LinkedInIdentifier))
+                                {
+                                    <p>
+                                        LinkedIn: <a
+                                            href="https://www.linkedin.com/in/@member.LinkedInIdentifier">@member.LinkedInIdentifier</a>
+                                    </p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Blog Posts</h3>
+                    @if (Model.BlogPostLinks.Count == 0)
+                    {
+                        <p>This member has not authored any <a href="/blog">blog posts</a>.</p>
+                    }
+
+                    @foreach (var link in Model.BlogPostLinks)
+                    {
+                        <div class="c-card article nopic mt-3">
+                            <div class="c-card_inner grid">
+                                <div class="c-card_title">
+                                    <h4>
+                                        <a class="slash" href="@link.Path">@link.Title</a>
+                                    </h4>
+                                </div>
+                                <div class="c-card_footer">
+                                    <span class="c-note me-1">Written on @link.PublishedDate.ToString("d",
+                                    View.Culture)</span>
+
+                                </div>
+                                <div class="c-card_tags">
+                                    <div class="c-group tags">
+                                        <span class="c-tag info">@link.Taxonomy</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-md-6">
+                    <h3>Q&A Questions</h3>
+
+                    @if (Model.QuestionsAsked.Count == 0)
+                    {
+                        <p>This member has not asked any <a href="/q-and-a">questions</a>.</p>
+                    }
+                    @foreach (var link in Model.QuestionsAsked)
+                    {
+                        <div class="c-card article nopic mt-3">
+                            <div class="c-card_inner grid">
+                                <div class="c-card_title">
+                                    <h4>
+                                        <a class="slash" href="@link.Path">@link.Label</a>
+                                    </h4>
+                                </div>
+                                <div class="c-card_footer">
+                                    <span class="c-note me-1">Written on @link.Date.ToString("d", View.Culture)</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

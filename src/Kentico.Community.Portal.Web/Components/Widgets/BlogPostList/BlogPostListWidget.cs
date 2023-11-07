@@ -90,22 +90,18 @@ public class BlogPostListWidget : ViewComponent
         }
 
         var result = await mediator.Send(new BlogPostPagesByWebPageGUIDQuery(selectedWebPageGUIDs.ToArray()));
-        var posts = result.Items.OrderBy(p => Array.IndexOf(selectedWebPageGUIDs, p.SystemFields.WebPageItemGUID)).ToList();
-
-        return await BuildPostPageViewModels(posts, props);
+        return await BuildPostPageViewModels(result.Items, props);
     }
 
     private async Task<IReadOnlyList<BlogPostViewModel>> GetLatestBlogPosts(BlogPostListWidgetProperties props)
     {
         var result = await mediator.Send(new BlogPostPagesLatestQuery(props.PostLimit));
-
         return await BuildPostPageViewModels(result.Items, props);
     }
 
     private async Task<IReadOnlyList<BlogPostViewModel>> BuildPostPageViewModels(IEnumerable<BlogPostPage> pages, BlogPostListWidgetProperties props)
     {
         var vms = new List<BlogPostViewModel>();
-
         foreach (var page in pages)
         {
             var post = page.BlogPostPageBlogPostContent.FirstOrDefault();
@@ -128,7 +124,7 @@ public class BlogPostListWidget : ViewComponent
                 Date = post.BlogPostContentPublishedDate,
                 LinkPath = url.RelativePath,
                 ShortDescription = post.BlogPostContentShortDescription,
-                Author = new(author, authorImage, null), // TODO Connect to member
+                Author = new(author, authorImage),
                 TeaserImage = teaserImage,
                 Taxonomy = taxonomy
             });

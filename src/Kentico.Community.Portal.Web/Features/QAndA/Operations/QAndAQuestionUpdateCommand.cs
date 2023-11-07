@@ -31,7 +31,8 @@ public class QAndAQuestionUpdateCommandHandler : WebPageCommandHandler<QAndAQues
     {
         var question = request.Question;
         string filteredTitle = Regex.Replace(request.UpdatedQuestionTitle, @"[^a-zA-Z0-9\d]", "-").RemoveRepeatedCharacters('-');
-        string displayName = filteredTitle[..Math.Min(100, filteredTitle.Length)];
+        string uniqueID = Guid.NewGuid().ToString("N");
+        string displayName = $"{filteredTitle[..Math.Min(91, filteredTitle.Length)]}-{uniqueID[..8]}";
 
         var user = await users.GetPublicMemberContentAuthor();
 

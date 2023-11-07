@@ -14,11 +14,21 @@
 
             <div class="c-card_content">
 
-                <p class="mb-3 small">
-                    <span class="text-secondary fw-bold">@Model.Author.Name</span>
-                    answered on @Model.DateCreated.ToString("MMMM d, yyyy") @Model.DateCreated.ToString("t") <a
-                        href="#@wrapperElId" title="Link to this answer">🔗</a>
-                </p>
+                <div class="mb-3 d-flex justify-content-between">
+                    <span>
+                        <a href="#@wrapperElId" class="answer-link" title="Link to this answer">🔗</a>
+                        @if (Model.Author.ID > 0)
+                        {
+                            <a asp-controller="Member" asp-action="MemberDetail" class="text-secondary"
+                                asp-route-memberID="@Model.Author.ID">@Model.Author.FormattedName</a>
+                        }
+                        else
+                        {
+                            @Model.Author.FormattedName
+                        }
+                    </span>
+                    <span>@Model.DateCreated.ToString("MMMM d, yyyy") @Model.DateCreated.ToString("t")</span>
+                </div>
 
                 <div class="fr-view mb-3 member-generated-content">
                     @Model.HTMLSanitizedContentHTML

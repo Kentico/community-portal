@@ -9,15 +9,17 @@ const config = ({ env }) => ({
       purgecss({
         content: ["./**/*.cshtml"],
 
-        safelist: [
-          // Footer is currently managed via HTML in the database (WebsiteSettingsContent)
-          "c-footer",
-          // .note comes from markdown :::note syntax
-          "note",
-          // Syntax highlighting for inline code blocks
-          "code",
-          "/^form-control/",
-        ],
+        safelist: {
+          standard: [
+            // Footer is currently managed via HTML in the database (WebsiteSettingsContent)
+            "c-footer",
+            // .note comes from markdown :::note syntax
+            "note",
+            // Syntax highlighting for inline code blocks
+            "code",
+          ],
+          greedy: [/form-/],
+        },
       }),
     // https://www.npmjs.com/package/postcss-preset-env
     env === "production" && postcssPresentEnv(),

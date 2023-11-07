@@ -157,7 +157,7 @@ public class RegistrationController : Controller
             });
         }
 
-        return View("~/Features/Registration/EmailNotConfirmation.cshtml", new EmailConfirmationViewModel()
+        return View("~/Features/Registration/EmailConfirmation.cshtml", new EmailConfirmationViewModel()
         {
             State = EmailConfirmationState.Failure_ConfirmationFailed,
             Message = localizer["Email Confirmation failed"],

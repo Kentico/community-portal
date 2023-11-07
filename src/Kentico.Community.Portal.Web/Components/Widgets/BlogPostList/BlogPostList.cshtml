@@ -21,9 +21,10 @@
                 </div>
                 <div class="c-card_footer">
                     <span class="c-note me-1">Written on @post.Date.ToString("d", View.Culture) by</span>
-                    @if (post.Author.ProfileLinkPath is string path)
+                    @if (post.Author.ID > 0)
                     {
-                        <a href="@path" class="c-tag secondary invert user">
+                        <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
+                            class="c-tag secondary invert user">
                             @if (post.Author.Avatar is ImageAssetViewModel image)
                             {
                                 <img src="@image.URLData.WithSizeConstraint(SizeConstraint.MaxWidthOrHeight(24)).RelativePath"
@@ -74,9 +75,9 @@
             <h3 class="h3 mt-2 pt-1">@post.Title</h3>
             <p class="c-note m-0">@post.Date.ToString("d", View.Culture)</p>
             <p class="c-note">by
-                @if (post.Author.ProfileLinkPath is string path)
+                @if (post.Author.ID > 0)
                 {
-                    <a href="@path">@post.Author.Name</a>
+                    <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID">@post.Author.Name</a>
                 }
                 else
                 {

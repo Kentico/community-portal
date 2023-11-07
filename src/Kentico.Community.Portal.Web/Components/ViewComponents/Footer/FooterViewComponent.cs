@@ -1,6 +1,6 @@
-﻿using Kentico.Community.Portal.Web.Infrastructure;
+﻿using CMS.DataEngine;
+using Kentico.Community.Portal.Core.Operations;
 using MediatR;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Components.ViewComponents.Footer;
@@ -13,14 +13,29 @@ public class FooterViewComponent : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var resp = await mediator.Send(new WebsiteSettingsContentQuery());
+        string version = await mediator.Send(new SettingXperienceVersionQuery());
 
-        var content = string.IsNullOrWhiteSpace(resp.Settings.WebsiteSettingsContentFooterContentHTML)
-            ? HtmlString.Empty
-            : new HtmlString(resp.Settings.WebsiteSettingsContentFooterContentHTML);
-
-        return View("~/Components/ViewComponents/Footer/Footer.cshtml", new FooterViewModel(content));
+        return View("~/Components/ViewComponents/Footer/Footer.cshtml", new FooterViewModel(version));
     }
 }
 
-public record FooterViewModel(HtmlString Content);
+public record FooterViewModel(string XperienceVersion);
+
+public record SettingXperienceVersionQuery : IQuery<string>;
+public class SettingXperienceVersionQueryHandler : DataItemQueryHandler<SettingXperienceVersionQuery, string>
+{
+    private readonly ISettingsKeyInfoProvider settings;
+
+    public SettingXperienceVersionQueryHandler(DataItemQueryTools tools, ISettingsKeyInfoProvider settings) : base(tools) =>
+        this.settings = settings;
+
+    public override async Task<string> Handle(SettingXperienceVersionQuery request, CancellationToken cancellationToken)
+    {
+        var setting = await settings.GetAsync("CMSDBVersion");
+
+        return setting.KeyValue;
+    }
+
+    protected override ICacheDependencyKeysBuilder AddDependencyKeys(SettingXperienceVersionQuery query, string result, ICacheDependencyKeysBuilder builder) =>
+        builder.SettingsKey("CMSDBVersion");
+}

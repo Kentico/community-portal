@@ -4,6 +4,7 @@ using CMS.DataEngine;
 using CMS.Membership;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
+using Kentico.Community.Portal.Web.Membership;
 using Kentico.Xperience.Lucene.Attributes;
 using Kentico.Xperience.Lucene.Models;
 using Kentico.Xperience.Lucene.Services.Implementations;
@@ -26,8 +27,12 @@ public class QAndASearchModel : LuceneSearchModel
     public string Content { get; set; } = "";
     [Int64Field(true)]
     public long DateMilliseconds { get; set; }
+    [Int32Field(true)]
+    public int AuthorMemberID { get; set; }
     [TextField(true)]
     public string AuthorUsername { get; set; } = "";
+    [TextField(true)]
+    public string AuthorFullName { get; set; } = "";
     [Int32Field(true)]
     public int IsAnswered { get; set; } = 0;
     [Int32Field(true)]
@@ -63,9 +68,12 @@ public class QAndASearchIndexingStrategy : DefaultLuceneIndexingStrategy
         var page = (await executor.GetWebPageResult(b, webPageMapper.Map<QAndAQuestionPage>)).FirstOrDefault();
         if (page is not null)
         {
+            var author = await GetAuthor(executor, contentItemMapper, memberProvider, page);
             blogModel.ID = page.SystemFields.WebPageItemID;
             blogModel.Title = page.QAndAQuestionPageTitle;
-            blogModel.AuthorUsername = await GetAuthorUsername(executor, contentItemMapper, memberProvider, page);
+            blogModel.AuthorUsername = author.Username;
+            blogModel.AuthorFullName = author.FullName;
+            blogModel.AuthorMemberID = author.MemberID;
             blogModel.Content = htmlSanitizer.SanitizeHtmlDocument(page.QAndAQuestionPageContent);
 
             var date = page.QAndAQuestionPageDateCreated != default
@@ -90,7 +98,9 @@ public class QAndASearchIndexingStrategy : DefaultLuceneIndexingStrategy
         return blogModel;
     }
 
-    private static async Task<string> GetAuthorUsername(
+    private record QAndAAuthor(int MemberID, string Username, string FullName);
+
+    private static async Task<QAndAAuthor> GetAuthor(
         IContentQueryExecutor executor,
         IContentQueryResultMapper mapper,
         IInfoProvider<MemberInfo> memberProvider,
@@ -98,12 +108,12 @@ public class QAndASearchIndexingStrategy : DefaultLuceneIndexingStrategy
     {
         var member = (await memberProvider.Get()
             .WhereEquals(nameof(MemberInfo.MemberID), page.QAndAQuestionPageAuthorMemberID)
-            .Columns(nameof(MemberInfo.MemberName))
             .GetEnumerableTypedResultAsync()).FirstOrDefault();
 
         if (member is not null)
         {
-            return member.MemberName;
+            var cm = CommunityMember.FromMemberInfo(member);
+            return new(cm.Id, cm.UserName, cm.FullName);
         }
 
         var b = new ContentItemQueryBuilder()
@@ -112,9 +122,10 @@ public class QAndASearchIndexingStrategy : DefaultLuceneIndexingStrategy
                 queryParameters.Where(w => w.WhereEquals(nameof(AuthorContent.AuthorContentCodeName), AuthorContent.KENTICO_AUTHOR_CODE_NAME));
             });
 
-        var author = await executor.GetResult(b, mapper.Map<AuthorContent>);
+        var authors = await executor.GetResult(b, mapper.Map<AuthorContent>);
+        var author = authors.First();
 
-        return author.First().FullName;
+        return new(0, author.AuthorContentCodeName, author.FullName);
     }
 }
 
@@ -137,20 +148,36 @@ public class QAndASearchRequest
                 ? p
                 : 1
             : 1;
+
+        AuthorMemberID = query.TryGetValue("author", out var authorValues)
+            ? int.TryParse(authorValues, out int a)
+                ? a
+                : 0
+            : 0;
     }
 
-    public void Deconstruct(out string searchText, out string sortBy, out int pageNumber, out int pageSize)
+    public QAndASearchRequest(string sortBy, int pageSize)
+    {
+        SortBy = sortBy;
+        PageSize = pageSize;
+    }
+
+    public void Deconstruct(out string searchText, out string sortBy, out int pageNumber, out int pageSize, out int authorMemberID)
     {
         searchText = SearchText;
         sortBy = SortBy;
         pageNumber = PageNumber;
         pageSize = PageSize;
+        authorMemberID = AuthorMemberID;
     }
 
     public string SearchText { get; } = "";
     public string SortBy { get; } = "";
     public int PageNumber { get; } = 1;
-    public int PageSize => PAGE_SIZE;
+    public int PageSize { get; } = PAGE_SIZE;
+    public int AuthorMemberID { get; set; }
+
+    public bool AreFiltersDefault => string.IsNullOrWhiteSpace(SearchText) && AuthorMemberID < 1;
 }
 
 public class QAndASearchResult
@@ -158,7 +185,9 @@ public class QAndASearchResult
     public int ID { get; set; }
     public string Url { get; set; } = "";
     public string Title { get; set; } = "";
+    public int AuthorMemberID { get; set; }
     public string AuthorUsername { get; set; } = "";
+    public string AuthorFullName { get; set; } = "";
     public DateTime DateCreated { get; set; }
     public bool IsAnswered { get; set; }
     public int AnswerCount { get; set; }
@@ -170,7 +199,11 @@ public class QAndASearchResult
             : 0;
         string url = doc.Get(nameof(QAndASearchModel.Url)) ?? "";
         string title = doc.Get(nameof(QAndASearchModel.Title));
+        int authorMemberID = int.TryParse(doc.Get(nameof(QAndASearchModel.AuthorMemberID)), out int memberID)
+            ? memberID
+            : 0;
         string username = doc.Get(nameof(QAndASearchModel.AuthorUsername));
+        string fullname = doc.Get(nameof(QAndASearchModel.AuthorFullName));
         long ticks = DateTools.UnixTimeMillisecondsToTicks(
             long.TryParse(doc.Get(nameof(QAndASearchModel.DateMilliseconds)), out long milliseconds)
                 ? milliseconds
@@ -189,7 +222,9 @@ public class QAndASearchResult
             ID = id,
             Url = url,
             Title = title,
+            AuthorMemberID = authorMemberID,
             AuthorUsername = username,
+            AuthorFullName = fullname,
             DateCreated = new DateTime(ticks),
             IsAnswered = isAnswered,
             AnswerCount = answerCount

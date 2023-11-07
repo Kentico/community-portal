@@ -70,7 +70,7 @@ public class QAndAPostViewModel
     public DateTime DateCreated { get; set; }
     public int AnswersCount { get; set; }
     public bool IsAnswered { get; set; }
-    public string Author { get; set; } = "";
+    public QAndAPostAuthorViewModel Author { get; set; } = new();
 
     public static QAndAPostViewModel GetModel(QAndASearchResult result) => new()
     {
@@ -78,9 +78,21 @@ public class QAndAPostViewModel
         DateCreated = result.DateCreated,
         AnswersCount = result.AnswerCount,
         IsAnswered = result.IsAnswered,
-        Author = result.AuthorUsername,
+        Author = new()
+        {
+            FullName = result.AuthorFullName,
+            MemberID = result.AuthorMemberID,
+            Username = result.AuthorUsername
+        },
         LinkPath = result.Url,
         ID = result.ID
     };
+}
+
+public class QAndAPostAuthorViewModel
+{
+    public int MemberID { get; set; }
+    public string Username { get; set; } = "";
+    public string FullName { get; set; } = "";
 }
 

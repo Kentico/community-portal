@@ -43,7 +43,7 @@ public class BlogPostsByTaxonomyQueryHandler : WebPageQueryHandler<BlogPostsByTa
 
         var pages = await Executor.GetWebPageResult(postsQuery, WebPageMapper.Map<BlogPostPage>, DefaultQueryOptions, cancellationToken);
 
-        return new(pages.ToList());
+        return new(pages.OrderBy(p => contentItemIDs.IndexOf(p.BlogPostPageBlogPostContent.FirstOrDefault().SystemFields.ContentItemID)).ToList());
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(BlogPostsByTaxonomyQuery query, BlogPostsByTaxonomyQueryResponse result, ICacheDependencyKeysBuilder builder) =>

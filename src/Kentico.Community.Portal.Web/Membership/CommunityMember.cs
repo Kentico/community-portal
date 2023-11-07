@@ -7,8 +7,17 @@ public class CommunityMember : ApplicationUser
 {
     public string FirstName { get; set; } = "";
     public string LastName { get; set; } = "";
+    public string FullName =>
+        (FirstName, LastName) switch
+        {
+            ("", "") => "",
+            (string first, "") => first,
+            ("", string last) => last,
+            (string first, string last) => $"{first} {last}",
+            (null, null) or _ => "",
+        };
     public string LinkedInIdentifier { get; set; } = "";
-    public DateTime Created { get; set; } = DateTime.MinValue;
+    public DateTime Created { get; set; }
 
     public override void MapToMemberInfo(MemberInfo target)
     {
@@ -49,4 +58,18 @@ public class CommunityMember : ApplicationUser
         LinkedInIdentifier = source.GetValue("MemberLinkedInIdentifier", "");
         Created = source.MemberCreated;
     }
+
+    public static CommunityMember FromMemberInfo(MemberInfo memberInfo)
+    {
+        var communityMember = new CommunityMember();
+        communityMember.MapFromMemberInfo(memberInfo);
+
+        return communityMember;
+    }
+}
+
+public static class MemberInfoExtensions
+{
+    public static CommunityMember AsCommunityMember(this MemberInfo member) =>
+        CommunityMember.FromMemberInfo(member);
 }

@@ -1,7 +1,7 @@
-@model Kentico.Community.Portal.Web.Components.Widgets.FormSupport.FormSupportWidgetViewModel
+@model Kentico.Community.Portal.Web.Features.Support.SupportFormViewModel
 
 <div class="c-card large secondary" style="--bs-danger-rgb: #fff;">
-    <form id="supportForm" method="post" hx-post hx-controller="Forms" hx-action="SubmitSupportForm"
+    <form id="supportForm" method="post" hx-post hx-controller="SupportForm" hx-action="SubmitSupportForm"
         hx-trigger="captchaReady" hx-swap="outerHTML" hx-select="#supportForm">
         <div class="row">
             <div class="col-sm">
@@ -79,8 +79,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <label asp-for="WebsiteURL" class="form-label mt-3">Website URL</label>
-                <input class="form-control" asp-for="WebsiteURL" id="Website" name="Website"
-                    value="@Model.WebsiteURL" />
+                <input class="form-control" asp-for="WebsiteURL" id="Website" />
                 <span asp-validation-for="WebsiteURL" class="error"></span>
             </div>
         </div>

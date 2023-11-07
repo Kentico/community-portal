@@ -1,38 +1,24 @@
-using Kentico.PageBuilder.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewComponents;
-using Kentico.Community.Portal.Web.Components.Widgets.FormSupport;
 using Kentico.Community.Portal.Web.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using Kentico.Xperience.Admin.Base.FormAnnotations;
 
-[assembly: RegisterWidget(
-    identifier: FormSupportWidgetViewComponent.Identifier,
-    viewComponentType: typeof(FormSupportWidgetViewComponent),
-    name: "Form support",
-    propertiesType: typeof(FormSupportWidgetProperties),
-    Description = "Displays a support form.",
-    IconClass = "icon-form")]
+namespace Kentico.Community.Portal.Web.Features.Support;
 
-namespace Kentico.Community.Portal.Web.Components.Widgets.FormSupport;
-
-public class FormSupportWidgetViewComponent : ViewComponent
+public class SupportFormViewComponent : ViewComponent
 {
     public const string Identifier = "CommunityPortal.FormSupport";
 
-    public ViewViewComponentResult Invoke()
+    public IViewComponentResult Invoke(SupportFormViewModel? model = default)
     {
-        var model = new FormSupportWidgetViewModel();
+        model ??= new SupportFormViewModel();
 
-        return View("~/Components/Widgets/FormSupport/FormSupport.cshtml", model);
+        return View("~/Features/Support/Components/SupportForm.cshtml", model);
     }
 }
 
-public class FormSupportWidgetProperties : IWidgetProperties
-{
-}
-
-public class FormSupportWidgetViewModel : ICaptchaClientResponse
+public class SupportFormViewModel : ICaptchaClientResponse
 {
     [DataType(DataType.Text)]
     [DisplayName("First name")]
@@ -68,9 +54,8 @@ public class FormSupportWidgetViewModel : ICaptchaClientResponse
     [Required]
     public string DeploymentModel { get; set; } = "";
 
-    [DataType(DataType.Url)]
     [Required]
-    [Url]
+    [UrlValidationRule]
     public string WebsiteURL { get; set; } = "";
 
     public IFormFile? Attachment { set; get; }

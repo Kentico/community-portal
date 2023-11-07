@@ -4,15 +4,15 @@ namespace Kentico.Community.Portal.Web.Features.Blog.Models;
 
 public class BlogPostAuthorViewModel
 {
+    public int ID { get; set; }
     public string Name { get; set; } = "";
     public ImageAssetViewModel Avatar { get; set; }
-    public string ProfileLinkPath { get; set; } = "";
 
-    public BlogPostAuthorViewModel(AuthorContent author, ImageAssetViewModel avatar, string profileLinkPath)
+    public BlogPostAuthorViewModel(AuthorContent author, ImageAssetViewModel avatar)
     {
         Name = author.FullName;
         Avatar = avatar;
-        ProfileLinkPath = profileLinkPath;
+        ID = author.AuthorContentMemberID;
     }
 
     public BlogPostAuthorViewModel()

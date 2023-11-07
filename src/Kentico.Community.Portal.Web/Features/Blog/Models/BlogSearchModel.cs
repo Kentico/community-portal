@@ -34,6 +34,8 @@ public class BlogSearchModel : LuceneSearchModel
     [TextField(true)]
     public string TeaserImageJSON { get; set; } = "{ }";
 
+    [Int32Field(true)]
+    public int AuthorMemberID { get; set; }
     [TextField(true)]
     public string AuthorName { get; set; } = "";
     [TextField(true)]
@@ -86,6 +88,7 @@ public class BlogSearchIndexingStrategy : DefaultLuceneIndexingStrategy
                 .TryFirst()
                 .Execute(async author =>
                 {
+                    blogModel.AuthorMemberID = author.AuthorContentMemberID;
                     blogModel.AuthorName = author.FullName;
                     blogModel.AuthorProfileLinkPath = "";
                     var authorImg = await assetService.RetrieveMediaFileImage(author.AuthorContentPhotoMediaFileImage.FirstOrDefault());
@@ -148,6 +151,12 @@ public class BlogSearchRequest
             : 1;
     }
 
+    public BlogSearchRequest(string sortBy, int pageSize)
+    {
+        SortBy = sortBy;
+        PageSize = pageSize;
+    }
+
     public void Deconstruct(out string searchText, out string facet, out string sortBy, out int pageNumber, out int pageSize)
     {
         searchText = SearchText;
@@ -161,16 +170,21 @@ public class BlogSearchRequest
     public string SearchText { get; } = "";
     public string SortBy { get; } = "";
     public int PageNumber { get; } = 1;
-    public int PageSize => PAGE_SIZE;
+    public int AuthorMemberID { get; set; }
+    public int PageSize { get; } = PAGE_SIZE;
+
+    public bool AreFiltersDefault => string.IsNullOrWhiteSpace(SearchText) && AuthorMemberID < 1;
 }
 
 public class BlogSearchResult
 {
     public int ID { get; set; }
+    public int ContentItemID { get; set; }
     public string Url { get; set; } = "";
     public string Title { get; set; } = "";
     public string Taxonomy { get; set; } = "";
     public string TeaserImageJSON { get; set; } = "{ }";
+    public int AuthorMemberID { get; set; }
     public string AuthorName { get; set; } = "";
     public string AuthorAvatarImageJSON { get; set; } = "{ }";
     public string ShortDescription { get; set; } = "";
@@ -178,12 +192,17 @@ public class BlogSearchResult
 
     public static BlogSearchResult MapFromDocument(Document doc) => new()
     {
-        ID = int.Parse(doc.Get(nameof(BlogSearchModel.ID))),
+        ID = int.TryParse(doc.Get(nameof(BlogSearchModel.ID)), out int id)
+            ? id
+            : 0,
         Title = doc.Get(nameof(BlogSearchModel.Title)),
         Url = doc.Get(nameof(BlogSearchModel.Url)),
         ShortDescription = doc.Get(nameof(BlogSearchModel.ShortDescription)),
         Taxonomy = doc.Get(nameof(BlogSearchModel.Taxonomy)),
         TeaserImageJSON = doc.Get(nameof(BlogSearchModel.TeaserImageJSON)),
+        AuthorMemberID = int.TryParse(doc.Get(nameof(BlogSearchModel.AuthorMemberID)), out int authorMemberID)
+            ? authorMemberID
+            : 0,
         AuthorName = doc.Get(nameof(BlogSearchModel.AuthorName)),
         AuthorAvatarImageJSON = doc.Get(nameof(BlogSearchModel.AuthorAvatarImageJSON)),
         PublishedDate = new DateTime(

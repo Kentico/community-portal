@@ -42,8 +42,6 @@ public class PageCustomMetaViewComponent : ViewComponent
             OGImageURL = meta.OGImageURL
         };
 
-        await Task.CompletedTask;
-
         return View("~/Components/ViewComponents/PageCustomMeta/PageCustomMeta.cshtml", vm);
     }
 }

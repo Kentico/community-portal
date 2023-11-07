@@ -177,7 +177,7 @@ public class QAndAQuestionPageController : Controller
         var member = await userManager.FindByIdAsync(memberID.ToString());
         if (member is not null)
         {
-            return new() { ID = memberID, Name = member.UserName };
+            return new(member);
         }
 
         var resp = await mediator.Send(new AuthorContentQuery(AuthorContent.KENTICO_AUTHOR_CODE_NAME));
@@ -222,13 +222,26 @@ public class QAndAPostAnswerViewModel
 
 public class QAndAAuthorViewModel
 {
-    public int ID { get; set; }
-    public string Name { get; set; } = "";
+    public int ID { get; }
+    public string Username { get; } = "";
+    public string FullName { get; } = "";
+    public string FormattedName =>
+        string.IsNullOrWhiteSpace(FullName)
+            ? Username
+            : $"{FullName} ({Username})";
+
+    public QAndAAuthorViewModel(CommunityMember member)
+    {
+        ID = member.Id;
+        Username = member.UserName;
+        FullName = member.FullName;
+    }
 
     public QAndAAuthorViewModel(AuthorContent author)
     {
-        ID = author.SystemFields.ContentItemID;
-        Name = author.FullName;
+        ID = 0;
+        FullName = author.FullName;
+        Username = author.AuthorContentCodeName;
     }
 
     public QAndAAuthorViewModel() { }
