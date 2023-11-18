@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc;
+using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Content.Web.Mvc;
 using MediatR;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.Blog.Components;
 
@@ -26,7 +27,7 @@ public class BlogPostDetailViewComponent : ViewComponent
         this.renderer = renderer;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(IRoutedWebPage page)
+    public async Task<IViewComponentResult> InvokeAsync(RoutedWebPage page)
     {
 
         var blogPage = await mediator.Send(new BlogPostPageQuery(page));
@@ -37,20 +38,20 @@ public class BlogPostDetailViewComponent : ViewComponent
 
         var teaser = await assetService.RetrieveMediaFileImage(post.BlogPostContentTeaserMediaFileImage.FirstOrDefault());
         var contentHTML = post.IsContentTypeMarkdown()
-            ? renderer.Render(post.BlogPostContentContentMarkdown)
+            ? renderer.RenderUnsafe(post.BlogPostContentContentMarkdown)
             : new(post.BlogPostContentContentHTML);
 
         var vm = new BlogPostDetailViewModel()
         {
             Title = post.BlogPostContentTitle,
             Date = post.BlogPostContentPublishedDate,
-            HTMLSanitizedContentHTML = contentHTML,
+            UnsanitizedContentHTML = contentHTML,
             Teaser = teaser,
             Author = new()
             {
                 Avatar = authorImage,
                 BiographyHTML = new(author.AuthorContentBiographyHTML),
-                LinkProfilePath = null, // TODO connect to Member
+                LinkProfilePath = GetAuthorMemberProfilePath(author),
                 Name = author.FullName,
                 Title = "" // TODO collect from Member
             },
@@ -85,6 +86,16 @@ public class BlogPostDetailViewComponent : ViewComponent
 
         return resp.Author;
     }
+
+    private Maybe<string> GetAuthorMemberProfilePath(AuthorContent author)
+    {
+        if (author.AuthorContentMemberID <= 0)
+        {
+            return Maybe<string>.None;
+        }
+
+        return Url.Action(nameof(MemberController.MemberDetail), "Member", new { memberID = author.AuthorContentMemberID });
+    }
 }
 
 public class BlogPostDetailViewModel
@@ -92,7 +103,7 @@ public class BlogPostDetailViewModel
     public ImageAssetViewModel Teaser { get; init; }
     public string Title { get; init; }
     public DateTime Date { get; init; }
-    public HtmlSanitizedHtmlString HTMLSanitizedContentHTML { get; init; }
+    public HtmlString UnsanitizedContentHTML { get; init; }
     public AuthorViewModel Author { get; init; }
     public string AbsoluteURL { get; init; }
     public string? DiscussionLinkPath { get; init; }
@@ -103,7 +114,7 @@ public class AuthorViewModel
     public string Name { get; init; }
     public string? Title { get; init; }
     public ImageAssetViewModel? Avatar { get; init; }
-    public string? LinkProfilePath { get; init; }
+    public Maybe<string> LinkProfilePath { get; init; }
     public HtmlString BiographyHTML { get; init; }
 }
 

@@ -12,6 +12,7 @@ namespace Kentico.Community.Portal.Web.Features.QAndA;
 public record QAndAQuestionCreateCommand(
     CommunityMember MemberAuthor,
     QAndAQuestionsRootPage QuestionParent,
+    int WebsiteChannelID,
     string QuestionTitle,
     string QuestionContent) : ICommand<int>;
 public class QAndAQuestionCreateCommandHandler : WebPageCommandHandler<QAndAQuestionCreateCommand, int>
@@ -32,7 +33,7 @@ public class QAndAQuestionCreateCommandHandler : WebPageCommandHandler<QAndAQues
     {
         var user = await users.GetPublicMemberContentAuthor();
 
-        var webPageManager = WebPageManagerFactory.Create(WebsiteChannelContext.WebsiteChannelID, user.UserID);
+        var webPageManager = WebPageManagerFactory.Create(request.WebsiteChannelID, user.UserID);
 
         string filteredTitle = Regex.Replace(request.QuestionTitle, @"[^a-zA-Z0-9\d]", "-").RemoveRepeatedCharacters('-');
         string uniqueID = Guid.NewGuid().ToString("N");

@@ -50,7 +50,7 @@ public class MembershipTests : CommunityPageTests
 
         TestContext.WriteLine("Submit login form");
 
-        await Page.Locator("[test-id=userName]").FillAsync(UserName);
+        await Page.Locator("[test-id=userNameOrEmail]").FillAsync(UserName);
         await Page.Locator("[test-id=password]").FillAsync(Password);
         await Page.Locator("form[test-id=signIn] button[type=submit]").ClickAsync();
         await Page.WaitForURLAsync("**/");

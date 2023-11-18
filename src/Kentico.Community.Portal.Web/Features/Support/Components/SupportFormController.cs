@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Kentico.Community.Portal.Web.Infrastructure;
+﻿using Kentico.Community.Portal.Web.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.Support;
 

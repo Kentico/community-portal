@@ -11,7 +11,11 @@
       <field allowempty="true" column="PageTemplateConfigurationDescription" columntype="longtext" guid="7cb27baa-1764-4880-a37a-df955bde0f1a" system="true" />
       <field column="PageTemplateConfigurationTemplate" columntype="longtext" guid="4d25c2dc-f0dc-49da-a5fa-a6da4459fe82" system="true" />
       <field allowempty="true" column="PageTemplateConfigurationWidgets" columntype="longtext" guid="8657d5bd-e2ac-4869-bf69-9310f64f63fb" system="true" />
-      <field allowempty="true" column="PageTemplateConfigurationIcon" columnprecision="0" columnsize="200" columntype="text" guid="bee5debf-ac2b-47c4-bc75-aa94958ab5c7" system="true" />
+      <field column="PageTemplateConfigurationIcon" columnprecision="0" columnsize="200" columntype="text" guid="bee5debf-ac2b-47c4-bc75-aa94958ab5c7" system="true">
+        <properties>
+          <defaultvalue>xp-layout</defaultvalue>
+        </properties>
+      </field>
     </form>
   </ClassFormDefinition>
   <ClassGUID>f3f579ea-6ea3-4ba8-a0ac-ccc9d0ba8bc4</ClassGUID>

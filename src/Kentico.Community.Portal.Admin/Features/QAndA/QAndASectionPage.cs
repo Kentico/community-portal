@@ -1,5 +1,5 @@
 using CMS.DataEngine;
-using Kentico.Community.Admin.Features.QAndA;
+using Kentico.Community.Portal.Admin.Features.QAndA;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
 
@@ -11,7 +11,7 @@ using Kentico.Xperience.Admin.Base;
     templateName: TemplateNames.SECTION_LAYOUT,
     order: 0)]
 
-namespace Kentico.Community.Admin.Features.QAndA;
+namespace Kentico.Community.Portal.Admin.Features.QAndA;
 
 public class QAndASectionPage : EditSectionPage<QAndAAnswerDataInfo>
 {

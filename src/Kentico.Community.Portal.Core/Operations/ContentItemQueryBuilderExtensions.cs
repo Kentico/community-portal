@@ -6,9 +6,9 @@ namespace CMS.ContentEngine;
 
 public static class ContentItemQueryBuilderExtensions
 {
-    public static ContentItemQueryBuilder ForWebPage(this ContentItemQueryBuilder builder, IWebsiteChannelContext channelContext, string contentTypeName, IRoutedWebPage page) =>
+    public static ContentItemQueryBuilder ForWebPage(this ContentItemQueryBuilder builder, IWebsiteChannelContext channelContext, RoutedWebPage page) =>
         builder
-            .ForContentType(contentTypeName, queryParameters =>
+            .ForContentType(page.ContentTypeName, queryParameters =>
             {
                 _ = queryParameters
                     .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemID), page.WebPageItemID))
@@ -16,9 +16,9 @@ public static class ContentItemQueryBuilderExtensions
                     .TopN(1);
             })
             .InLanguage(page.LanguageName);
-    public static ContentItemQueryBuilder ForWebPage(this ContentItemQueryBuilder builder, IWebsiteChannelContext channelContext, string contentTypeName, IRoutedWebPage page, Action<ContentTypeQueryParameters> configureParameters) =>
+    public static ContentItemQueryBuilder ForWebPage(this ContentItemQueryBuilder builder, IWebsiteChannelContext channelContext, RoutedWebPage page, Action<ContentTypeQueryParameters> configureParameters) =>
         builder
-            .ForContentType(contentTypeName, queryParameters =>
+            .ForContentType(page.ContentTypeName, queryParameters =>
             {
                 _ = queryParameters
                     .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemID), page.WebPageItemID))
@@ -26,6 +26,28 @@ public static class ContentItemQueryBuilderExtensions
                     .TopN(1);
 
                 configureParameters(queryParameters);
+            })
+            .InLanguage(page.LanguageName);
+    public static ContentItemQueryBuilder ForWebPage(this ContentItemQueryBuilder builder, string channelName, RoutedWebPage page, Action<ContentTypeQueryParameters> configureParameters) =>
+        builder
+            .ForContentType(page.ContentTypeName, queryParameters =>
+            {
+                _ = queryParameters
+                    .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemID), page.WebPageItemID))
+                    .ForWebsite(channelName)
+                    .TopN(1);
+
+                configureParameters(queryParameters);
+            })
+            .InLanguage(page.LanguageName);
+    public static ContentItemQueryBuilder ForWebPage(this ContentItemQueryBuilder builder, string channelName, RoutedWebPage page) =>
+        builder
+            .ForContentType(page.ContentTypeName, queryParameters =>
+            {
+                _ = queryParameters
+                    .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemID), page.WebPageItemID))
+                    .ForWebsite(channelName)
+                    .TopN(1);
             })
             .InLanguage(page.LanguageName);
     public static ContentItemQueryBuilder ForWebPage(this ContentItemQueryBuilder builder, IWebsiteChannelContext channelContext, string contentTypeName, int webPageID) =>

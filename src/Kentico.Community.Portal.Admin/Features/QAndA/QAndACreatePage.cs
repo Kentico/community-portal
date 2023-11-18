@@ -1,4 +1,4 @@
-using Kentico.Community.Admin.Features.QAndA;
+using Kentico.Community.Portal.Admin.Features.QAndA;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
@@ -12,7 +12,7 @@ using Kentico.Xperience.Admin.Base.Forms;
     templateName: TemplateNames.EDIT,
     order: UIPageOrder.NoOrder)]
 
-namespace Kentico.Community.Admin.Features.QAndA;
+namespace Kentico.Community.Portal.Admin.Features.QAndA;
 
 public class QAndACreatePage : CreatePage<QAndAAnswerDataInfo, QAndAEditPage>
 {

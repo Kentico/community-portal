@@ -1,4 +1,4 @@
-using Kentico.Community.Admin.Features.QAndA;
+using Kentico.Community.Portal.Admin.Features.QAndA;
 using Kentico.Community.Portal.Admin;
 using Kentico.Xperience.Admin.Base;
 
@@ -11,7 +11,7 @@ using Kentico.Xperience.Admin.Base;
     icon: Icons.RectangleParagraph,
     templateName: TemplateNames.SECTION_LAYOUT)]
 
-namespace Kentico.Community.Admin.Features.QAndA;
+namespace Kentico.Community.Portal.Admin.Features.QAndA;
 
 public class QAndAApplicationPage : ApplicationPage
 {

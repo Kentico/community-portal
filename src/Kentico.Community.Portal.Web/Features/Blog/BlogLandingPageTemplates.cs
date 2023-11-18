@@ -1,6 +1,5 @@
 using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
-using Kentico.Community.Portal.Core.Content;
 
 [assembly: RegisterPageTemplate(
     identifier: "KenticoCommunity.BlogLandingPage_Default",

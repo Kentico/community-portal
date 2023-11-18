@@ -1,14 +1,14 @@
+using System.Web;
+using CMS.Core;
+using Htmx;
+using Kentico.Community.Portal.Web.Features.Registration;
+using Kentico.Community.Portal.Web.Infrastructure;
+using Kentico.Community.Portal.Web.Membership;
+using Kentico.Community.Portal.Web.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using Kentico.Community.Portal.Web.Infrastructure;
-using Kentico.Community.Portal.Web.Resources;
-using Kentico.Community.Portal.Web.Features.Registration;
-using Htmx;
-using Kentico.Community.Portal.Web.Membership;
-using CMS.Core;
-using System.Web;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Kentico.Community.Portal.Web.Features.Authentication;

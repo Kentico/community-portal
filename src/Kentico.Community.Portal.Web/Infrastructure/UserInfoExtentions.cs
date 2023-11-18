@@ -13,6 +13,6 @@ public static class UserInfoExtensions
             .WhereEquals(nameof(UserInfo.UserName), CONTENT_AUTHOR_USERNAME)
             .GetEnumerableTypedResultAsync();
 
-        return users.FirstOrDefault() ?? throw new Exception($"Could not retrieve {nameof(CONTENT_AUTHOR_USERNAME)}.");
+        return users.FirstOrDefault() ?? throw new Exception($"Could not retrieve user {CONTENT_AUTHOR_USERNAME}.");
     }
 }

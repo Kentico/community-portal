@@ -1,6 +1,5 @@
-using Kentico.PageBuilder.Web.Mvc.PageTemplates;
 using Kentico.Community.Portal.Web.Features.Posts;
-using Kentico.Community.Portal.Core.Content;
+using Kentico.PageBuilder.Web.Mvc.PageTemplates;
 
 [assembly: RegisterPageTemplate(
     identifier: "KenticoCommunity.BlogPostPage_Default",

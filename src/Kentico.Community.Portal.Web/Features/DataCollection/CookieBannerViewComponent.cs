@@ -1,9 +1,9 @@
 using CMS.Helpers;
+using Kentico.Community.Portal.Web.Infrastructure;
+using Kentico.Web.Mvc;
+using MediatR;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
-using Kentico.Community.Portal.Web.Infrastructure;
-using MediatR;
-using Kentico.Web.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.DataCollection;
 

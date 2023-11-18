@@ -15,8 +15,8 @@
         </settings>
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>{$general.displayname$}</fieldcaption>
-          <fielddescription>{$content.medialibraries.displayname.description$}</fielddescription>
+          <fieldcaption>{$base.medialibraries.displayname$}</fieldcaption>
+          <fielddescription>{$base.medialibraries.displayname.description$}</fielddescription>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
@@ -27,7 +27,7 @@
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$general.codename$}</fieldcaption>
-          <fielddescription>{$content.medialibraries.name.description$}</fielddescription>
+          <fielddescription>{$base.medialibraries.name.description$}</fielddescription>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
@@ -35,11 +35,13 @@
         <settings>
           <controlname>Kentico.Administration.TextArea</controlname>
           <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
         </settings>
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$general.description$}</fieldcaption>
-          <fielddescription>{$content.medialibraries.description.description$}</fielddescription>
+          <fielddescription>{$base.medialibraries.description.description$}</fielddescription>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
@@ -50,7 +52,7 @@
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$general.foldername$}</fieldcaption>
-          <fielddescription>{$content.medialibraries.folder.description$}</fielddescription>
+          <fielddescription>{$base.medialibraries.folder.description$}</fielddescription>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>

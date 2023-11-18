@@ -1,10 +1,10 @@
 using CMS.Helpers;
+using Kentico.Community.Portal.Web.Features.DataCollection;
+using Kentico.Community.Portal.Web.Infrastructure;
+using Kentico.Web.Mvc;
+using MediatR;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
-using Kentico.Community.Portal.Web.Features.DataCollection;
-using MediatR;
-using Kentico.Web.Mvc;
-using Kentico.Community.Portal.Web.Infrastructure;
 
 namespace Kentico.Community.Portal.Web.Components.ViewComponents.AlertBox;
 

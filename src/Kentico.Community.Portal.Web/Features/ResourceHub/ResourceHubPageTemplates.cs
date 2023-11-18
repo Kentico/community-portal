@@ -1,4 +1,3 @@
-using Kentico.Community.Portal.Core.Content;
 using Kentico.Community.Portal.Web.Features.ResourceHub;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
 

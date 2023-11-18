@@ -1,5 +1,10 @@
 using CMS;
+using CMS.Base.Configuration;
+using CMS.EmailEngine;
 using Kentico.Activities.Web.Mvc;
+using Kentico.Community.Portal.Web.Components.Sections.Grid;
+using Kentico.Community.Portal.Web.Features.DataCollection;
+using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc.Routing;
 using Kentico.CrossSiteTracking.Web.Mvc;
 using Kentico.Forms.Web.Mvc;
@@ -7,11 +12,6 @@ using Kentico.OnlineMarketing.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Web.Mvc;
 using Microsoft.AspNetCore.Localization.Routing;
-using Kentico.Community.Portal.Web.Infrastructure;
-using CMS.EmailEngine;
-using Kentico.Community.Portal.Web.Components.Sections.Grid;
-using Kentico.Community.Portal.Web.Features.DataCollection;
-using CMS.Base.Configuration;
 
 [assembly: RegisterModule(typeof(StorageInitializationModule))]
 

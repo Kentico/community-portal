@@ -1,9 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
 using Kentico.Community.Portal.Web.Features.Blog.Models;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Security.Policy;
 
 namespace Kentico.Community.Portal.Web.Features.Blog.Components;
 

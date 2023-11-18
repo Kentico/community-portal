@@ -1,18 +1,20 @@
+using System.Reflection;
+using Kentico.Community.Portal.Core;
+using Kentico.Community.Portal.Core.Operations;
+using Kentico.Community.Portal.Web.Components.ViewComponents.GTM;
+using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
+using Kentico.Community.Portal.Web.Features.DataCollection;
+using Kentico.Community.Portal.Web.Features.Home;
+using Kentico.Community.Portal.Web.Features.SEO;
+using Kentico.Community.Portal.Web.Features.Support;
+using Kentico.Community.Portal.Web.Infrastructure;
+using Kentico.Community.Portal.Web.Rendering;
+using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Slugify;
 using Vite.AspNetCore.Extensions;
-using Kentico.Community.Portal.Core.Operations;
-using Kentico.Community.Portal.Web.Features.Support;
-using Kentico.Community.Portal.Web.Rendering;
-using Kentico.Community.Portal.Web.Infrastructure;
-using Kentico.Community.Portal.Web.Components.ViewComponents.GTM;
-using Kentico.Community.Portal.Web.Features.DataCollection;
-using Kentico.Community.Portal.Web.Features.SEO;
-using MediatR;
-using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
-using Kentico.Community.Portal.Core;
-using Kentico.Community.Portal.Web.Features.Home;
-using System.Reflection;
+using Kentico.Community.Portal.Web.Features.QAndA.Events;
+using Kentico.Community.Portal.Web.Features.Blog.Events;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -74,8 +76,15 @@ public static class ServiceCollectionAppExtensions
 
                 section.Bind(o);
             })
+            .AddGlobalEventHandlers()
             .AddHttpClient()
             .AddViteServices();
+
+    public static IServiceCollection AddGlobalEventHandlers(this IServiceCollection services) =>
+        services
+            .AddTransient<QAndAAnswerCreateSearchIndexTaskHandler>()
+            .AddTransient<BlogPostPublishCreateQAndAQuestionHandler>()
+            .AddTransient<BlogPostContentCreateSearchIndexTaskHandler>();
 
     public static IServiceCollection AddClosedGenericTypes(
         this IServiceCollection services,

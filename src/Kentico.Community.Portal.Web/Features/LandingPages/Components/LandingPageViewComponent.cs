@@ -16,7 +16,7 @@ public class LandingPageViewComponent : ViewComponent
         this.metaService = metaService;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(IRoutedWebPage page, LandingPageTemplateProperties props)
+    public async Task<IViewComponentResult> InvokeAsync(RoutedWebPage page, LandingPageTemplateProperties props)
     {
         var resp = await mediator.Send(new LandingPageQuery(page));
 

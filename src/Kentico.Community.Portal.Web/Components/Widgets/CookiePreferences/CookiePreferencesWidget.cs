@@ -1,11 +1,11 @@
 using CMS.Helpers;
+using Kentico.Community.Portal.Web.Components.Widgets.CookiePreferences;
+using Kentico.Community.Portal.Web.Features.DataCollection;
 using Kentico.PageBuilder.Web.Mvc;
+using Kentico.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
-using Kentico.Community.Portal.Web.Components.Widgets.CookiePreferences;
-using Kentico.Community.Portal.Web.Features.DataCollection;
-using Kentico.Web.Mvc;
 
 [assembly: RegisterWidget(
     identifier: CookiePreferencesWidget.Identifier,

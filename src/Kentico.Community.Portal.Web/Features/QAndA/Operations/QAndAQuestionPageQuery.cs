@@ -4,21 +4,20 @@ using Kentico.Content.Web.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public record QAndAQuestionPageQuery(IRoutedWebPage Page) : WebPageRoutedQuery<QAndAQuestionPageQueryResponse>(Page);
-public record QAndAQuestionPageQueryResponse(QAndAQuestionPage Page);
-public class QAndAQuestionPageQueryHandler : WebPageQueryHandler<QAndAQuestionPageQuery, QAndAQuestionPageQueryResponse>
+public record QAndAQuestionPageQuery(RoutedWebPage Page) : WebPageRoutedQuery<QAndAQuestionPage>(Page);
+public class QAndAQuestionPageQueryHandler : WebPageQueryHandler<QAndAQuestionPageQuery, QAndAQuestionPage>
 {
     public QAndAQuestionPageQueryHandler(WebPageQueryTools tools) : base(tools) { }
 
-    public override async Task<QAndAQuestionPageQueryResponse> Handle(QAndAQuestionPageQuery request, CancellationToken cancellationToken = default)
+    public override async Task<QAndAQuestionPage> Handle(QAndAQuestionPageQuery request, CancellationToken cancellationToken = default)
     {
-        var b = new ContentItemQueryBuilder().ForWebPage(WebsiteChannelContext, QAndAQuestionPage.CONTENT_TYPE_NAME, request.Page, queryParameters =>
+        var b = new ContentItemQueryBuilder().ForWebPage(WebsiteChannelContext, request.Page, queryParameters =>
         {
             _ = queryParameters.WithLinkedItems(1);
         });
 
         var pages = await Executor.GetWebPageResult(b, WebPageMapper.Map<QAndAQuestionPage>, DefaultQueryOptions, cancellationToken);
 
-        return new(pages.First());
+        return pages.First();
     }
 }

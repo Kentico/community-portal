@@ -1,8 +1,8 @@
 ﻿using System.Text;
-using Microsoft.AspNetCore.Mvc;
-using SimpleMvcSitemap;
 using Kentico.Community.Portal.Web.Infrastructure;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using SimpleMvcSitemap;
 
 namespace Kentico.Community.Portal.Web.Features.SEO;
 

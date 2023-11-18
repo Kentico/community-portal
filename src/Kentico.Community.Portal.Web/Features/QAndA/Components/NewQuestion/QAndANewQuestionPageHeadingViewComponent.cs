@@ -16,7 +16,7 @@ public class QAndANewQuestionPageHeadingViewComponent : ViewComponent
         this.metaService = metaService;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(IRoutedWebPage page)
+    public async Task<IViewComponentResult> InvokeAsync(RoutedWebPage page)
     {
         var questionPage = await mediator.Send(new QAndANewQuestionPageQuery());
 

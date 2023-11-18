@@ -17,6 +17,8 @@ const config = ({ env }) => ({
             "note",
             // Syntax highlighting for inline code blocks
             "code",
+            // Responsive embeds for youtube videos
+            "embed-container",
           ],
           greedy: [/form-/],
         },

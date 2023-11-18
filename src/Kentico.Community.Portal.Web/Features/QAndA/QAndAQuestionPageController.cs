@@ -2,6 +2,7 @@ using CMS.Membership;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.QAndA;
+using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Content.Web.Mvc;
@@ -24,6 +25,7 @@ public class QAndAQuestionPageController : Controller
     private readonly IWebPageDataContextRetriever dataContextRetriever;
     private readonly UserManager<CommunityMember> userManager;
     private readonly IUserInfoProvider userInfoProvider;
+    private readonly WebPageMetaService metaService;
     private readonly IMediator mediator;
     private readonly MarkdownRenderer markdownRenderer;
 
@@ -31,12 +33,14 @@ public class QAndAQuestionPageController : Controller
         IWebPageDataContextRetriever dataContextRetriever,
         UserManager<CommunityMember> userManager,
         IUserInfoProvider userInfoProvider,
+        WebPageMetaService metaService,
         IMediator mediator,
         MarkdownRenderer markdownRenderer)
     {
         this.dataContextRetriever = dataContextRetriever;
         this.userManager = userManager;
         this.userInfoProvider = userInfoProvider;
+        this.metaService = metaService;
         this.mediator = mediator;
         this.markdownRenderer = markdownRenderer;
     }
@@ -51,8 +55,9 @@ public class QAndAQuestionPageController : Controller
 
         var currentMember = await userManager.CurrentUser(HttpContext);
 
-        var result = await mediator.Send(new QAndAQuestionPageQuery(data.WebPage));
-        var question = result.Page;
+        var question = await mediator.Send(new QAndAQuestionPageQuery(data.WebPage));
+        metaService.SetMeta(new(question.QAndAQuestionPageTitle, $"View the discussion and answers for a question about {question.QAndAQuestionPageTitle} in the Kentico Community Q&A."));
+
         bool canManageContent = await userManager.CanManageContent(currentMember, userInfoProvider);
         var answers = await GetAnswers(question, currentMember, canManageContent);
 

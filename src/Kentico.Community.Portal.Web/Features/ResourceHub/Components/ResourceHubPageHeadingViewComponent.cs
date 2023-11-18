@@ -16,7 +16,7 @@ public class ResourceHubPageHeadingViewComponent : ViewComponent
         this.metaService = metaService;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(IRoutedWebPage page)
+    public async Task<IViewComponentResult> InvokeAsync(RoutedWebPage page)
     {
         var hubPage = await mediator.Send(new ResourceHubPageQuery(page));
 

@@ -1,13 +1,13 @@
 ﻿using System.Web;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
+using CMS.EmailEngine;
+using Kentico.Community.Portal.Web.Features.Registration;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Community.Portal.Web.Resources;
-using CMS.EmailEngine;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
-using Kentico.Community.Portal.Web.Features.Registration;
 
 namespace Kentico.Community.Portal.Web.Features.PasswordRecovery;
 

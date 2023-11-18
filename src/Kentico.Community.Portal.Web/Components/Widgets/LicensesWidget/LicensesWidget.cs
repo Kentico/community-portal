@@ -1,11 +1,11 @@
 ﻿using CMS.MediaLibrary;
+using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
+using Kentico.Community.Portal.Web.Rendering;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Newtonsoft.Json;
-using Kentico.Community.Portal.Web.Rendering;
-using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
 
 [assembly: RegisterWidget(
     identifier: LicensesWidgetViewComponent.Identifier,

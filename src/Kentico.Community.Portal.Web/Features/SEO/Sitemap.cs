@@ -1,9 +1,7 @@
-﻿using SimpleMvcSitemap;
+﻿using CMS.ContentEngine;
 using CMS.Helpers;
-using CMS.Websites;
-using CMS.ContentEngine;
 using CMS.Websites.Routing;
-using Kentico.Community.Portal.Core.Content;
+using SimpleMvcSitemap;
 
 namespace Kentico.Community.Portal.Web.Features.SEO;
 

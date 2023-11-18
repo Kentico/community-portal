@@ -1,8 +1,8 @@
 ﻿using System.Net.Http.Headers;
 using CMS.Core;
-using Newtonsoft.Json;
-using Kentico.Community.Portal.Web.Rendering;
 using CMS.Helpers;
+using Kentico.Community.Portal.Web.Rendering;
+using Newtonsoft.Json;
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.Licenses;
 

@@ -29,7 +29,6 @@ namespace Kentico.Community.Portal.Core.Modules
         /// </summary>
         public static readonly ObjectTypeInfo TYPEINFO = new ObjectTypeInfo(typeof(QAndAAnswerDataInfoProvider), OBJECT_TYPE, "KenticoCommunity.QAndAAnswerData", "QAndAAnswerDataID", "QAndAAnswerDataDateModified", "QAndAAnswerDataGUID", "QAndAAnswerDataCodeName", "QAndAAnswerDataCodeName", null, null, null)
         {
-            ModuleName = "KenticoCommunity",
             TouchCacheDependencies = true,
             DependsOn = new List<ObjectDependency>()
             {

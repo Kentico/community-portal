@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AssemblyAttribute Include="CMS.AssemblyDiscoverableAttribute">
-    </AssemblyAttribute>
+    <AssemblyAttribute Include="CMS.AssemblyDiscoverableAttribute"></AssemblyAttribute>
     <EmbeddedResource Include="Froala/RichTextEditorConfig.json" />
 
     <Compile Remove="Client\node_modules\**" />

@@ -16,7 +16,7 @@ public class CommunityLandingPageViewComponent : ViewComponent
         this.metaService = metaService;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(IRoutedWebPage page)
+    public async Task<IViewComponentResult> InvokeAsync(RoutedWebPage page)
     {
         var resp = await mediator.Send(new CommunityLandingPageQuery(page));
 

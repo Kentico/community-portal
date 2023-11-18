@@ -4,7 +4,7 @@ using Kentico.Content.Web.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.Community;
 
-public record CommunityLandingPageQuery(IRoutedWebPage Page) : WebPageRoutedQuery<CommunityLandingPageQueryResponse>(Page);
+public record CommunityLandingPageQuery(RoutedWebPage Page) : WebPageRoutedQuery<CommunityLandingPageQueryResponse>(Page);
 public record CommunityLandingPageQueryResponse(CommunityLandingPage Page);
 public class CommunityLandingPageQueryHandler : WebPageQueryHandler<CommunityLandingPageQuery, CommunityLandingPageQueryResponse>
 {
@@ -12,7 +12,7 @@ public class CommunityLandingPageQueryHandler : WebPageQueryHandler<CommunityLan
 
     public override async Task<CommunityLandingPageQueryResponse> Handle(CommunityLandingPageQuery request, CancellationToken cancellationToken = default)
     {
-        var b = new ContentItemQueryBuilder().ForWebPage(WebsiteChannelContext, CommunityLandingPage.CONTENT_TYPE_NAME, request.Page);
+        var b = new ContentItemQueryBuilder().ForWebPage(WebsiteChannelContext, request.Page);
 
         var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<CommunityLandingPage>, DefaultQueryOptions, cancellationToken);
 

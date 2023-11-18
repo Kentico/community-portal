@@ -1,16 +1,16 @@
-using Kentico.Xperience.Admin.Base.FormAnnotations;
-using Kentico.PageBuilder.Web.Mvc;
-using Microsoft.AspNetCore.Mvc;
-using Kentico.Community.Portal.Web.Components.Widgets.BlogPostList;
-using Kentico.Community.Portal.Web.Rendering;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Kentico.Community.Portal.Web.Features.Blog.Models;
-using Kentico.Xperience.Admin.Websites.FormAnnotations;
-using Kentico.Xperience.Admin.Base.Forms;
-using MediatR;
-using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Core.Operations;
+using Kentico.Community.Portal.Web.Components.Widgets.BlogPostList;
+using Kentico.Community.Portal.Web.Features.Blog;
+using Kentico.Community.Portal.Web.Features.Blog.Models;
+using Kentico.Community.Portal.Web.Rendering;
+using Kentico.PageBuilder.Web.Mvc;
+using Kentico.Xperience.Admin.Base.FormAnnotations;
+using Kentico.Xperience.Admin.Base.Forms;
+using Kentico.Xperience.Admin.Websites.FormAnnotations;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 [assembly: RegisterWidget(
     identifier: BlogPostListWidget.IDENTIFIER,

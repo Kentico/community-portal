@@ -1,6 +1,6 @@
+using Kentico.Community.Portal.Web.Membership;
 using Kentico.Membership;
 using Microsoft.AspNetCore.Identity;
-using Kentico.Community.Portal.Web.Membership;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

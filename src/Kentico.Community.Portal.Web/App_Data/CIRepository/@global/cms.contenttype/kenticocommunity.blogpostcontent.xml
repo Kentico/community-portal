@@ -106,7 +106,10 @@ richText;Rich Text
       </field>
       <field allowempty="true" column="BlogPostContentContentMarkdown" columnprecision="0" columntype="longtext" enabled="true" guid="90542128-fed3-4211-90f9-2afc6055f095" visible="true">
         <properties>
-          <explanationtextashtml>False</explanationtextashtml>
+          <explanationtext>
+            <![CDATA[To embed YouTube or Vimeo videos that are responsive, surround it with an <code>embed container</code><br> <pre>::: {.embed-container}</pre><pre>your embed code</pre><pre>:::</pre>]]>
+          </explanationtext>
+          <explanationtextashtml>True</explanationtextashtml>
           <fieldcaption>Markdown Content</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>

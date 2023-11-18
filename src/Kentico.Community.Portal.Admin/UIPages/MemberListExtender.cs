@@ -1,3 +1,5 @@
+using CMS.Membership;
+using CSharpFunctionalExtensions;
 using Kentico.Community.Portal.Admin.UIPages;
 using Kentico.Xperience.Admin.Base;
 using Kentico.Xperience.Admin.Base.UIPages;
@@ -27,11 +29,13 @@ public class MemberListExtender : PageExtender<MemberList>
             },
         });
 
-        var usernameConfig = configs.FirstOrDefault(c => string.Equals(c.Name, "MemberName", StringComparison.OrdinalIgnoreCase))!;
-        usernameConfig.Sorting.DefaultDirection = null;
+        configs
+            .TryFirst(c => string.Equals(c.Name, nameof(MemberInfo.MemberName), StringComparison.OrdinalIgnoreCase))
+            .Execute(c => c.Sorting.DefaultDirection = null);
 
-        var createdConfig = configs.FirstOrDefault(c => string.Equals(c.Name, "MemberCreated"))!;
-        createdConfig.Sorting.DefaultDirection = SortTypeEnum.Desc;
+        configs
+            .TryFirst(c => string.Equals(c.Name, nameof(MemberInfo.MemberCreated)))
+            .Execute(c => c.Sorting.DefaultDirection = SortTypeEnum.Desc);
 
         return Task.CompletedTask;
     }

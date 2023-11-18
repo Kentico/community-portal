@@ -2,9 +2,9 @@
 
 ## .NET Runtime
 
-.NET 6.0 SDK or newer
+.NET 8.0 SDK or newer
 
-- <https://dotnet.microsoft.com/en-us/download/dotnet/6.0>
+- <https://dotnet.microsoft.com/en-us/download/dotnet/8.0>
 - See `global.json` file for specific SDK requirements
 
 ## Node.js Runtime

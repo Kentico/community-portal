@@ -1,6 +1,5 @@
-using Kentico.PageBuilder.Web.Mvc.PageTemplates;
-using Kentico.Community.Portal.Core.Content;
 using Kentico.Community.Portal.Web.Features.LandingPages;
+using Kentico.PageBuilder.Web.Mvc.PageTemplates;
 
 [assembly: RegisterPageTemplate(
     identifier: "KenticoCommunity.LandingPage_Default",

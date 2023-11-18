@@ -7,17 +7,44 @@ namespace Kentico.Community.Portal.Web.Rendering;
 public class MarkdownRenderer
 {
     private readonly MarkdownPipeline defaultPipeline;
+    private readonly MarkdownPipeline unsafePipeline;
 
-    public MarkdownRenderer() =>
+    public MarkdownRenderer()
+    {
         defaultPipeline = new MarkdownPipelineBuilder()
             .UseAdvancedExtensions()
             .UseBootstrap()
             .DisableHtml()
             .Build();
 
-    public HtmlSanitizedHtmlString Render(string content)
+        unsafePipeline = new MarkdownPipelineBuilder()
+            .UseAdvancedExtensions()
+            .UseBootstrap()
+            .Build();
+    }
+
+    /// <summary>
+    /// Renders the given markdown to HTML using the default pipeline which encodes any HTML to prevent XSS
+    /// </summary>
+    /// <param name="markdownContent"></param>
+    /// <returns></returns>
+    public HtmlSanitizedHtmlString Render(string markdownContent)
     {
-        string contentHTML = Markdown.ToHtml(content, defaultPipeline);
+        string contentHTML = Markdown.ToHtml(markdownContent, defaultPipeline);
+
+        return new(contentHTML);
+    }
+
+    /// <summary>
+    /// Renders the given markdown to HTML using the unsafe pipeline which does not encode HTML
+    /// and could be vulnerable to XSS.
+    /// Only use this method with sources of markdown that are known to be safe (ex: content authored within the Xperience administration)
+    /// </summary>
+    /// <param name="contentWithHTML"></param>
+    /// <returns></returns>
+    public HtmlString RenderUnsafe(string contentWithHTML)
+    {
+        string contentHTML = Markdown.ToHtml(contentWithHTML, unsafePipeline);
 
         return new(contentHTML);
     }

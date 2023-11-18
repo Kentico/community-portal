@@ -1,0 +1,64 @@
+@using CMS.Helpers.Internal
+@using Kentico.Forms.Web.Mvc
+@using Kentico.Community.Portal.Web.Components.FormComponents.ReCaptcha
+
+@model CommunityReCaptchaFormComponent
+
+@{
+    var htmlAttributes = ViewData.Kentico().GetEditorHtmlAttributes();
+    var safeComponentId = Html.IdFor(x => x.Value).ToString().Replace("-", "_");
+    var renderFunctionName = "renderRecaptcha" + safeComponentId;
+    var recaptchaDivId = "google-recaptcha-" + Html.IdFor(x => x.Value);
+    bool isFormBuilder = VirtualContext.ItemIsSet(VirtualContext.PARAM_FORM_BUILDER_URL);
+}
+
+@if (isFormBuilder)
+{
+    <div>
+        @Html.Kentico().InfoMessage("reCAPTCHA will be displayed correctly when the form is placed on a page within a website channel. The solution must have reCAPTCHA settings configured in the appsettings.")
+    </div>
+}
+else
+{
+    @if (Model.IsConfigured)
+    {
+        var actionName = Model.GetBizFormComponentContext().FormInfo.FormName.Replace("-", "_") + "_submit";
+        var parentFormVarName = "recaptchaParentForm" + safeComponentId;
+        var tokenHiddenId = "recaptchaToken" + safeComponentId;
+        var actionHiddenId = "recaptchaAction" + safeComponentId;
+
+        <script type="module">
+            asyncReady(async () => {
+                const recaptcha = await import('@ClientAssets.ViteAssetPath("dist/js/recaptcha.js")');
+
+                recaptcha.initCaptcha({
+                    fieldElemID: '@tokenHiddenId',
+                    fieldName: 'g-recaptcha-response',
+                    actionName: '@actionName',
+                    onSubmit: function (event) {
+                        window.kentico.updatableFormHelper.submitForm(event);
+                    }
+                });
+            });
+
+            @if (!isFormBuilder)
+            {
+                <text>
+                        const @parentFormVarName = document.getElementById('@recaptchaDivId').closest("form");
+                        const newAttr = @(parentFormVarName).getAttribute('onsubmit').replace('window.kentico.updatableFormHelper.submitForm(event);', 'function noop(e) { }');
+                    @(parentFormVarName).setAttribute('onsubmit', newAttr);
+                </text>
+            }
+        </script>
+
+        <input id="@tokenHiddenId" type="hidden" name="g-recaptcha-response" value="" />
+        <input id="@actionHiddenId" type="hidden" name="g-recaptcha-action" value="@actionName" />
+        <div id="@recaptchaDivId"></div>
+    }
+    else
+    {
+        <div class="ktc-form-builder-mvc-invalid-component">
+            <span>@ResHelper.GetString("recaptcha.error.invalidconfiguration")</span>
+        </div>
+    }
+}

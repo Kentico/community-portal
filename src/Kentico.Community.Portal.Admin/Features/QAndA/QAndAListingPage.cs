@@ -1,7 +1,7 @@
 using CMS.Base;
 using CMS.Helpers;
 using CMS.Membership;
-using Kentico.Community.Admin.Features.QAndA;
+using Kentico.Community.Portal.Admin.Features.QAndA;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
 using CMS.Websites.Internal;
@@ -14,7 +14,7 @@ using CMS.Websites.Internal;
     templateName: TemplateNames.LISTING,
     order: 0)]
 
-namespace Kentico.Community.Admin.Features.QAndA;
+namespace Kentico.Community.Portal.Admin.Features.QAndA;
 
 public class QAndAListingPage : ListingPage
 {

@@ -1,9 +1,9 @@
-using Kentico.Xperience.Admin.Base.FormAnnotations;
-using Kentico.PageBuilder.Web.Mvc;
-using Microsoft.AspNetCore.Mvc;
-using Kentico.Community.Portal.Web.Components.Sections.Grid;
-using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 using System.ComponentModel.DataAnnotations;
+using Kentico.Community.Portal.Web.Components.Sections.Grid;
+using Kentico.PageBuilder.Web.Mvc;
+using Kentico.Xperience.Admin.Base.FormAnnotations;
+using Microsoft.AspNetCore.Mvc;
+using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 
 [assembly: RegisterSection(
     identifier: GridSection.IDENTIFIER,

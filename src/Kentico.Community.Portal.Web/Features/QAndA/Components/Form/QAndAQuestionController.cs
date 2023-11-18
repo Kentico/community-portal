@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CMS.Membership;
+using CMS.Websites.Routing;
+using Htmx;
+using Kentico.Community.Portal.Web.Membership;
+using Kentico.Content.Web.Mvc;
+using Kentico.Xperience.Admin.Base;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Kentico.Community.Portal.Web.Membership;
-using Kentico.Xperience.Admin.Base;
-using CMS.Membership;
-using Kentico.Content.Web.Mvc;
-using Htmx;
-using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
@@ -18,17 +19,20 @@ public class QAndAQuestionController : Controller
     private readonly IUserInfoProvider userInfoProvider;
     private readonly IMediator mediator;
     private readonly IWebPageUrlRetriever urlRetriever;
+    private readonly IWebsiteChannelContext channelContext;
 
     public QAndAQuestionController(
         UserManager<CommunityMember> userManager,
         IUserInfoProvider userInfoProvider,
         IMediator mediator,
-        IWebPageUrlRetriever urlRetriever)
+        IWebPageUrlRetriever urlRetriever,
+        IWebsiteChannelContext channelContext)
     {
         this.userManager = userManager;
         this.userInfoProvider = userInfoProvider;
         this.mediator = mediator;
         this.urlRetriever = urlRetriever;
+        this.channelContext = channelContext;
     }
 
     [HttpPost]
@@ -43,7 +47,12 @@ public class QAndAQuestionController : Controller
         var member = await userManager.CurrentUser(HttpContext)!;
         var questionParent = await mediator.Send(new QAndAQuestionsRootPageQuery());
 
-        _ = await mediator.Send(new QAndAQuestionCreateCommand(member, questionParent, requestModel.Title, requestModel.Content));
+        _ = await mediator.Send(new QAndAQuestionCreateCommand(
+            member,
+            questionParent,
+            channelContext.WebsiteChannelID,
+            requestModel.Title,
+            requestModel.Content));
 
         Response.Htmx(h => h.Redirect("/q-and-a"));
 

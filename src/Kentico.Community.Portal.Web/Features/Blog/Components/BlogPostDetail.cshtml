@@ -32,9 +32,9 @@
                                                     class="c-tag_icon" />
                                             }
                                         </div>
-                                        @if (Model.Author.LinkProfilePath is string path)
+                                        @if (Model.Author.LinkProfilePath.TryGetValue(out string p1))
                                         {
-                                            <a href="@Model.Author.LinkProfilePath">@Model.Author.Name</a>
+                                            <a href="@p1">@Model.Author.Name</a>
                                         }
                                         else
                                         {
@@ -63,7 +63,7 @@
 
                         <div role="main" class="t-article_body">
                             <div>
-                                @Model.HTMLSanitizedContentHTML
+                                @Model.UnsanitizedContentHTML
                             </div>
                         </div>
 
@@ -115,7 +115,16 @@
                                     }
                                 </div>
                                 <div class="c-card_content">
-                                    <h4 class="h4 mb-0 mt-1">@Model.Author.Name</h4>
+                                    <h4 class="h4 mb-0 mt-1">
+                                        @if (Model.Author.LinkProfilePath.TryGetValue(out string p2))
+                                        {
+                                            <a class="text-primary" href="@p2">@Model.Author.Name</a>
+                                        }
+                                        else
+                                        {
+                                            @Model.Author.Name
+                                        }
+                                    </h4>
                                     <div class="my-0">@Model.Author.BiographyHTML</div>
                                 </div>
                                 <div class="c-card_footer">

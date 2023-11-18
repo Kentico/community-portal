@@ -16,7 +16,7 @@ public class SupportPageHeaderViewComponent : ViewComponent
         this.metaService = metaService;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(IRoutedWebPage page)
+    public async Task<IViewComponentResult> InvokeAsync(RoutedWebPage page)
     {
         var supportPage = await mediator.Send(new SupportPageQuery(page));
 

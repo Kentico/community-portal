@@ -16,7 +16,7 @@ public class BlogLandingPageHeadingViewComponent : ViewComponent
         this.metaService = metaService;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(IRoutedWebPage page)
+    public async Task<IViewComponentResult> InvokeAsync(RoutedWebPage page)
     {
         var landingPage = await mediator.Send(new BlogLandingPageQuery(page));
 

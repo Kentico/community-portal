@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Kentico.Community.Portal.Web.Resources;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
-using Kentico.Community.Portal.Web.Resources;
 
 namespace Kentico.Community.Portal.Web.Components.ViewComponents.Navigation;
 
