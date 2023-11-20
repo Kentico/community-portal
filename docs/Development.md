@@ -23,7 +23,7 @@ Run the CI Restore PowerShell script to populate the database with changes from 
    - Run `npm install` and then `npm run dev` at the command line in the `.\src\Kentico.Community.Portal.Web` directory
 
    - Use the VS Code task `npm: dev (Admin)`
-   - Run `npm install` and then `npm run dev` at the command line in the `.\src\Kentico.Community.Portal.Admin` directory
+   - Run `npm install` and then `npm run dev` at the command line in the `.\src\Kentico.Community.Portal.Admin\Client` directory
 
 ## Start ASP.NET Core application
 
