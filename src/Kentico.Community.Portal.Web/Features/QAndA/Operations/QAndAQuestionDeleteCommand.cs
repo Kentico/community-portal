@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public record QAndAQuestionDeleteCommand(QAndAQuestionPage Question) : ICommand<Unit>;
+public record QAndAQuestionDeleteCommand(QAndAQuestionPage Question, int WebsiteChannelID) : ICommand<Unit>;
 public class QAndAQuestionDeleteCommandHandler : WebPageCommandHandler<QAndAQuestionDeleteCommand, Unit>
 {
     private readonly IInfoProvider<UserInfo> users;
@@ -24,7 +24,7 @@ public class QAndAQuestionDeleteCommandHandler : WebPageCommandHandler<QAndAQues
     {
         var user = await users.GetPublicMemberContentAuthor();
 
-        var webPageManager = WebPageManagerFactory.Create(WebsiteChannelContext.WebsiteChannelID, user.UserID);
+        var webPageManager = WebPageManagerFactory.Create(request.WebsiteChannelID, user.UserID);
 
         provider.BulkDelete(new WhereCondition().WhereEquals(nameof(QAndAAnswerDataInfo.QAndAAnswerDataQuestionWebPageItemID), request.Question.SystemFields.WebPageItemID));
 

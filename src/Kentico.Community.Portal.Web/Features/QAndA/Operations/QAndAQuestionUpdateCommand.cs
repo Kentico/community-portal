@@ -12,7 +12,8 @@ namespace Kentico.Community.Portal.Web.Features.QAndA;
 public record QAndAQuestionUpdateCommand(
     QAndAQuestionPage Question,
     string UpdatedQuestionTitle,
-    string UpdatedQuestionContent) : ICommand<Unit>;
+    string UpdatedQuestionContent,
+    int ChannelID) : ICommand<Unit>;
 public class QAndAQuestionUpdateCommandHandler : WebPageCommandHandler<QAndAQuestionUpdateCommand, Unit>
 {
     private readonly IInfoProvider<UserInfo> users;
@@ -37,7 +38,7 @@ public class QAndAQuestionUpdateCommandHandler : WebPageCommandHandler<QAndAQues
         var user = await users.GetPublicMemberContentAuthor();
 
         var contentItemManager = ContentItemManagerFactory.Create(user.UserID);
-        var webPageManager = WebPageManagerFactory.Create(WebsiteChannelContext.WebsiteChannelID, user.UserID);
+        var webPageManager = WebPageManagerFactory.Create(request.ChannelID, user.UserID);
 
         bool create = await webPageManager.TryCreateDraft(question.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
         if (!create)

@@ -1,4 +1,5 @@
 using CMS.Membership;
+using CMS.Websites.Routing;
 using Htmx;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Content.Web.Mvc;
@@ -18,18 +19,21 @@ public class QAndAAnswerController : Controller
     private readonly IWebPageUrlRetriever urlRetriever;
     private readonly IUserInfoProvider userInfoProvider;
     private readonly IMediator mediator;
+    private readonly IWebsiteChannelContext channelContext;
 
     public QAndAAnswerController(
         UserManager<CommunityMember> userManager,
         IWebPageUrlRetriever urlRetriever,
         IUserInfoProvider userInfoProvider,
-        IMediator mediator
+        IMediator mediator,
+        IWebsiteChannelContext channelContext
     )
     {
         this.userManager = userManager;
         this.urlRetriever = urlRetriever;
         this.userInfoProvider = userInfoProvider;
         this.mediator = mediator;
+        this.channelContext = channelContext;
     }
 
     [HttpPost]
@@ -43,7 +47,7 @@ public class QAndAAnswerController : Controller
             return ViewComponent(typeof(QAndAAnswerFormViewComponent), new { questionID });
         }
 
-        var parentQuestion = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
+        var parentQuestion = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
         if (parentQuestion is null)
         {
             ModelState.AddModelError(nameof(questionID), "Question is not valid");
@@ -78,7 +82,7 @@ public class QAndAAnswerController : Controller
             return NotFound();
         }
 
-        var parentQuestion = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
+        var parentQuestion = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
         if (parentQuestion is null)
         {
             ModelState.AddModelError(nameof(questionID), "Question is not valid");
@@ -129,7 +133,7 @@ public class QAndAAnswerController : Controller
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> MarkApprovedAnswer(Guid questionID, int answerID)
     {
-        var parentQuestion = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
+        var parentQuestion = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
         if (parentQuestion is null)
         {
             return NotFound();
@@ -149,7 +153,7 @@ public class QAndAAnswerController : Controller
 
         var answer = await mediator.Send(new QAndAAnswerDataByIDQuery(answerID));
 
-        _ = await mediator.Send(new QAndAQuestionMarkAnsweredCommand(parentQuestion, answer));
+        _ = await mediator.Send(new QAndAQuestionMarkAnsweredCommand(parentQuestion, answer, channelContext.WebsiteChannelID));
 
         string questionPath = (await urlRetriever.Retrieve(parentQuestion)).RelativePathTrimmed();
 

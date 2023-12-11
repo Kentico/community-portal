@@ -3,7 +3,7 @@ using Kentico.Community.Portal.Core.Operations;
 
 namespace Kentico.Community.Portal.Web.Features.Integrations;
 
-public record IntegrationContentsQuery() : IQuery<IntegrationContentsQueryResponse>;
+public record IntegrationContentsQuery : IQuery<IntegrationContentsQueryResponse>;
 public record IntegrationContentsQueryResponse(IReadOnlyList<IntegrationContent> Items);
 public class IntegrationContentsQueryHandler : ContentItemQueryHandler<IntegrationContentsQuery, IntegrationContentsQueryResponse>
 {

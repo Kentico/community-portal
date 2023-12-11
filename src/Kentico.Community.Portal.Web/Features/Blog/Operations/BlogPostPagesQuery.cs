@@ -3,7 +3,7 @@ using Kentico.Community.Portal.Core.Operations;
 
 namespace Kentico.Community.Portal.Web.Features.Blog;
 
-public record BlogPostPagesByWebPageGUIDQuery(Guid[] WebPageGUIDs) : IQuery<BlogPostPagesQueryResponse>, ICacheByValueQuery
+public record BlogPostPagesByWebPageGUIDQuery(Guid[] WebPageGUIDs, string ChannelName) : IQuery<BlogPostPagesQueryResponse>, ICacheByValueQuery, IChannelContentQuery
 {
     public string CacheValueKey => string.Join(",", WebPageGUIDs);
 }
@@ -17,7 +17,7 @@ public class BlogPostPagesByWebPageGUIDQueryHandler : ContentItemQueryHandler<Bl
         var b = new ContentItemQueryBuilder().ForContentType(BlogPostPage.CONTENT_TYPE_NAME, queryParameters =>
         {
             _ = queryParameters
-                .ForWebsite(WebsiteChannelContextContext.WebsiteChannelName)
+                .ForWebsite(request.ChannelName)
                 .Where(w => w.WhereIn(nameof(WebPageFields.WebPageItemGUID), request.WebPageGUIDs))
                 .WithLinkedItems(2);
         });
@@ -44,7 +44,7 @@ public class BlogPostPagesByWebPageGUIDQueryHandler : ContentItemQueryHandler<Bl
                                     (image, builder) => builder.Media(image)))));
 }
 
-public record BlogPostPagesByWebPageIDQuery(int[] WebPageIDs) : IQuery<BlogPostPagesQueryResponse>, ICacheByValueQuery
+public record BlogPostPagesByWebPageIDQuery(int[] WebPageIDs, string ChannelName) : IQuery<BlogPostPagesQueryResponse>, ICacheByValueQuery, IChannelContentQuery
 {
     public string CacheValueKey => string.Join(",", WebPageIDs);
 }
@@ -57,7 +57,7 @@ public class BlogPostPagesByWebPageIDQueryHandler : ContentItemQueryHandler<Blog
         var b = new ContentItemQueryBuilder().ForContentType(BlogPostPage.CONTENT_TYPE_NAME, queryParameters =>
         {
             _ = queryParameters
-                .ForWebsite(WebsiteChannelContextContext.WebsiteChannelName)
+                .ForWebsite(request.ChannelName)
                 .Where(w => w.WhereIn(nameof(WebPageFields.WebPageItemID), request.WebPageIDs))
                 .WithLinkedItems(2);
         });

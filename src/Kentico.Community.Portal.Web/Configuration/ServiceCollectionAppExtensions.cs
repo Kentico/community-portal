@@ -3,8 +3,10 @@ using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components.ViewComponents.GTM;
 using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
+using Kentico.Community.Portal.Web.Features.Blog.Events;
 using Kentico.Community.Portal.Web.Features.DataCollection;
 using Kentico.Community.Portal.Web.Features.Home;
+using Kentico.Community.Portal.Web.Features.QAndA.Events;
 using Kentico.Community.Portal.Web.Features.SEO;
 using Kentico.Community.Portal.Web.Features.Support;
 using Kentico.Community.Portal.Web.Infrastructure;
@@ -13,8 +15,6 @@ using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Slugify;
 using Vite.AspNetCore.Extensions;
-using Kentico.Community.Portal.Web.Features.QAndA.Events;
-using Kentico.Community.Portal.Web.Features.Blog.Events;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

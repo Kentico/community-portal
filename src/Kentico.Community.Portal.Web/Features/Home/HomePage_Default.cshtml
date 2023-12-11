@@ -1,8 +1,12 @@
 @using Kentico.Community.Portal.Web.Features.Home
 
-@model ComponentViewModel<HomePageTemplateProperties>
+@model TemplateViewModel<HomePageTemplateProperties>
 
-<vc:home-page-heading page="Model.Page" />
+@{
+    var templateModel = Model.GetTemplateModel<HomePage>();
+}
+
+<vc:page-heading page="templateModel" />
 
 <main>
     <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"

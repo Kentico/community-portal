@@ -1,4 +1,5 @@
 using CMS.Membership;
+using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.QAndA;
@@ -28,6 +29,7 @@ public class QAndAQuestionPageController : Controller
     private readonly WebPageMetaService metaService;
     private readonly IMediator mediator;
     private readonly MarkdownRenderer markdownRenderer;
+    private readonly IWebsiteChannelContext channelContext;
 
     public QAndAQuestionPageController(
         IWebPageDataContextRetriever dataContextRetriever,
@@ -35,7 +37,8 @@ public class QAndAQuestionPageController : Controller
         IUserInfoProvider userInfoProvider,
         WebPageMetaService metaService,
         IMediator mediator,
-        MarkdownRenderer markdownRenderer)
+        MarkdownRenderer markdownRenderer,
+        IWebsiteChannelContext channelContext)
     {
         this.dataContextRetriever = dataContextRetriever;
         this.userManager = userManager;
@@ -43,6 +46,7 @@ public class QAndAQuestionPageController : Controller
         this.metaService = metaService;
         this.mediator = mediator;
         this.markdownRenderer = markdownRenderer;
+        this.channelContext = channelContext;
     }
 
     [HttpGet]
@@ -55,7 +59,7 @@ public class QAndAQuestionPageController : Controller
 
         var currentMember = await userManager.CurrentUser(HttpContext);
 
-        var question = await mediator.Send(new QAndAQuestionPageQuery(data.WebPage));
+        var question = await mediator.Send(new QAndAQuestionPageQuery(data.WebPage, channelContext.WebsiteChannelName));
         metaService.SetMeta(new(question.QAndAQuestionPageTitle, $"View the discussion and answers for a question about {question.QAndAQuestionPageTitle} in the Kentico Community Q&A."));
 
         bool canManageContent = await userManager.CanManageContent(currentMember, userInfoProvider);
@@ -73,7 +77,7 @@ public class QAndAQuestionPageController : Controller
     [HttpGet]
     public async Task<ActionResult> DisplayQuestionDetail(Guid questionID)
     {
-        var question = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
+        var question = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
         if (question is null)
         {
             return NotFound();
@@ -98,7 +102,7 @@ public class QAndAQuestionPageController : Controller
 
         var currentMember = await userManager.CurrentUser(HttpContext);
         bool canManageContent = await userManager.CanManageContent(currentMember, userInfoProvider);
-        var question = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
+        var question = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
 
         var vm = await MapAnswer(question, answer, currentMember, canManageContent);
 

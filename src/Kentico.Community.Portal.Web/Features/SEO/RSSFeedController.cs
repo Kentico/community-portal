@@ -4,6 +4,7 @@ using System.Xml;
 using System.Xml.Linq;
 using CMS.Helpers;
 using CMS.MediaLibrary;
+using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Features.Blog;
@@ -30,6 +31,7 @@ public class RSSFeedController : Controller
     private readonly ISystemClock clock;
     private readonly IProgressiveCache cache;
     private readonly ICacheDependencyKeysBuilder keysBuilder;
+    private readonly IWebsiteChannelContext channelContext;
 
     public RSSFeedController(
         IMediator mediator,
@@ -38,7 +40,8 @@ public class RSSFeedController : Controller
         AssetItemService assetService,
         ISystemClock clock,
         IProgressiveCache cache,
-        ICacheDependencyKeysBuilder keysBuilder)
+        ICacheDependencyKeysBuilder keysBuilder,
+        IWebsiteChannelContext channelContext)
     {
         this.mediator = mediator;
         this.webPageDataContextRetriever = webPageDataContextRetriever;
@@ -47,6 +50,7 @@ public class RSSFeedController : Controller
         this.clock = clock;
         this.cache = cache;
         this.keysBuilder = keysBuilder;
+        this.channelContext = channelContext;
     }
 
     [ResponseCache(Duration = 1200)]
@@ -57,7 +61,7 @@ public class RSSFeedController : Controller
             return NotFound();
         }
 
-        var feedPage = await mediator.Send(new RSSFeedPageQuery(data.WebPage));
+        var feedPage = await mediator.Send(new RSSFeedPageQuery(data.WebPage, channelContext.WebsiteChannelName));
 
         if (!string.Equals(feedPage.RSSFeedPageWebPageContentType, BlogPostPage.CONTENT_TYPE_NAME, StringComparison.OrdinalIgnoreCase))
         {
@@ -100,7 +104,7 @@ public class RSSFeedController : Controller
     {
         var feedURL = await webPageUrlRetriever.Retrieve(feedPage);
 
-        var postPagesResult = await mediator.Send(new BlogPostPagesLatestQuery(feedPage.RSSFeedPageItemsLimit));
+        var postPagesResult = await mediator.Send(new BlogPostPagesLatestQuery(feedPage.RSSFeedPageItemsLimit, channelContext.WebsiteChannelName));
 
         var feed = new SyndicationFeed(
             feedPage.RSSFeedPageFeedName,

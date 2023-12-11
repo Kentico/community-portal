@@ -1,8 +1,12 @@
 @using Kentico.Community.Portal.Web.Features.Blog
 
-@model ComponentViewModel<BlogLandingPageTemplateProperties>
+@model TemplateViewModel<BlogLandingPageTemplateProperties>
 
-<vc:blog-landing-page-heading page="Model.Page" />
+@{
+    var templateModel = Model.GetTemplateModel<BlogLandingPage>();
+}
+
+<vc:page-heading page="templateModel" />
 
 <main>
     <vc:blog-post-list />

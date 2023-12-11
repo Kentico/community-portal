@@ -1,4 +1,3 @@
-using CMS.ContentEngine;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Content.Web.Mvc;
@@ -14,22 +13,16 @@ public class BlogPostPublishCreateQAndAQuestionHandler
 {
     private readonly IHttpContextAccessor accessor;
     private readonly IMediator mediator;
-    private readonly IContentQueryExecutor executor;
-    private readonly IWebPageQueryResultMapper mapper;
     private readonly IWebPageUrlRetriever pageUrlRetriever;
 
     public BlogPostPublishCreateQAndAQuestionHandler(
         IHttpContextAccessor accessor,
         IMediator mediator,
-        IContentQueryExecutor executor,
-        IWebPageQueryResultMapper mapper,
         IWebPageUrlRetriever pageUrlRetriever
     )
     {
         this.accessor = accessor;
         this.mediator = mediator;
-        this.executor = executor;
-        this.mapper = mapper;
         this.pageUrlRetriever = pageUrlRetriever;
     }
 
@@ -43,24 +36,19 @@ public class BlogPostPublishCreateQAndAQuestionHandler
             return;
         }
 
-        /*
-         * We don't use the pre-built queries for this page and the root page below
-         * because they are heavily dependent on the IWebsiteChannelContext which
-         * doesn't work in an environment where the Admin runs under a different
-         * domain from the website channel - as is the case with most multi-website
-         * channel solutions
-         * 
-         * TODO - consider using a wrapper that can fallback to a custom context
-         * populated manually before queries are executed 🤔
-         */
-        var page = await GetBlogPostPage(args);
+        var page = await mediator.Send(new BlogPostPageQuery(new RoutedWebPage
+        {
+            ContentTypeName = args.ContentTypeName,
+            LanguageName = args.ContentLanguageName,
+            WebPageItemID = args.ID
+        }, args.WebsiteChannelName));
 
         if (!string.IsNullOrEmpty(page.BlogPostPageQAndADiscussionLinkPath))
         {
             return;
         }
 
-        var rootQuestionPage = await GetRootPage(args);
+        var rootQuestionPage = await mediator.Send(new QAndAQuestionsRootPageQuery(args.WebsiteChannelName));
 
         var url = await pageUrlRetriever.Retrieve(page);
         string questionTitle = $"Blog Discussion: {page.BlogPostPageTitle}";
@@ -82,30 +70,5 @@ public class BlogPostPublishCreateQAndAQuestionHandler
          * but we guard against updating a blog post page that already has a question path
          */
         _ = await mediator.Send(new BlogPostPageUpdateCommand(page, args.WebsiteChannelID, questionPageURL));
-    }
-
-    private async Task<BlogPostPage> GetBlogPostPage(PublishWebPageEventArgs args)
-    {
-        var routedPage = new RoutedWebPage
-        {
-            ContentTypeName = args.ContentTypeName,
-            LanguageName = args.ContentLanguageName,
-            WebPageItemID = args.ID
-        };
-
-        var b = new ContentItemQueryBuilder().ForWebPage(args.WebsiteChannelName, routedPage);
-        var pages = await executor.GetWebPageResult(b, mapper.Map<BlogPostPage>);
-
-        return pages.First();
-    }
-
-    private async Task<QAndAQuestionsRootPage> GetRootPage(PublishWebPageEventArgs args)
-    {
-        var b = new ContentItemQueryBuilder()
-            .ForContentType(QAndAQuestionsRootPage.CONTENT_TYPE_NAME, parameters => parameters.ForWebsite(args.WebsiteChannelName).TopN(1));
-
-        var pages = await executor.GetWebPageResult(b, mapper.Map<QAndAQuestionsRootPage>);
-
-        return pages.First();
     }
 }

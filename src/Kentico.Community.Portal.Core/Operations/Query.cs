@@ -4,6 +4,10 @@ using MediatR;
 namespace Kentico.Community.Portal.Core.Operations;
 
 public interface IQuery<out TResult> : IRequest<TResult> { }
+public interface IChannelContentQuery
+{
+    string ChannelName { get; }
+}
 public abstract record WebPageRoutedQuery<TResult>(RoutedWebPage Page) : IQuery<TResult>, ICacheByValueQuery
 {
     public virtual string CacheValueKey => $"{Page.WebPageItemID}|{Page.LanguageName}";
@@ -19,7 +23,6 @@ public abstract record WebPageByIDQuery<TResult>(int WebPageID) : IQuery<TResult
     public string CacheValueKey => WebPageID.ToString();
 }
 
-public abstract record ContentItemQuery<TResult>() : IQuery<TResult>;
 public interface ICacheByValueQuery
 {
     string CacheValueKey { get; }

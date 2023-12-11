@@ -1,8 +1,12 @@
 @using Kentico.Community.Portal.Web.Features.Support
 
-@model ComponentViewModel<SupportPageTemplateProperties>
+@model TemplateViewModel<SupportPageTemplateProperties>
 
-<vc:support-page-header page="Model.Page" />
+@{
+    var templateModel = Model.GetTemplateModel<SupportPage>();
+}
+
+<vc:page-heading page="templateModel" />
 
 <main>
     <div class="c-section default">

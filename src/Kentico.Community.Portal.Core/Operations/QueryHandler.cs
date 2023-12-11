@@ -43,7 +43,6 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
         WebPageMapper = tools.WebPageMapper;
         ContentMapper = tools.ContentMapper;
         UrlRetriever = tools.UrlRetriever;
-        WebsiteChannelContext = tools.WebsiteChannelContext;
         DefaultQueryOptions = new ContentQueryExecutionOptions { ForPreview = tools.WebsiteChannelContext.IsPreview, IncludeSecuredItems = false };
     }
 
@@ -53,7 +52,6 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
     protected IWebPageQueryResultMapper WebPageMapper { get; }
     protected IContentQueryResultMapper ContentMapper { get; }
     protected IWebPageUrlRetriever UrlRetriever { get; }
-    protected IWebsiteChannelContext WebsiteChannelContext { get; }
     protected ContentQueryExecutionOptions DefaultQueryOptions { get; }
 
 
@@ -77,28 +75,35 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
 
     public string[] DependencyKeys(TQuery query, TResult result)
     {
-        var builder = new CacheDependencyKeysBuilder(WebsiteChannelContext);
+        var builder = new CacheDependencyKeysBuilder();
         _ = builder.CustomKeys(customKeys);
         _ = AddDependencyKeys(query, result, builder);
 
         return builder.GetKeys().ToArray();
     }
 
-    public virtual object[] ItemNameParts(TQuery query) =>
-        query is ICacheByValueQuery cacheByValueQuery
+    public virtual object[] ItemNameParts(TQuery query)
+    {
+        string channelName = query is IChannelContentQuery channelQuery
+            ? channelQuery.ChannelName
+            : "";
+
+        return query is ICacheByValueQuery cacheByValueQuery
             ? new object[]
                 {
                     query.GetType().Name,
-                    WebsiteChannelContext.WebsiteChannelName,
+                    channelName,
                     CultureInfo.CurrentCulture.Name,
                     cacheByValueQuery.CacheValueKey
                 }
             : new object[]
                 {
                     query.GetType().Name,
-                    WebsiteChannelContext.WebsiteChannelName,
+                    channelName,
                     CultureInfo.CurrentCulture.Name,
                 };
+    }
+
 
     public virtual CacheSettings CustomizeCacheSettings(DefaultQueryCacheSettings settings, IQueryCacheKeysCreator<TQuery, TResult> creator, TQuery query)
     {
@@ -138,7 +143,6 @@ public abstract class ContentItemQueryHandler<TQuery, TResult> :
         Executor = tools.Executor;
         ContentItemMapper = tools.ContentItemMapper;
         WebPageMapper = tools.WebPageMapper;
-        WebsiteChannelContextContext = tools.WebsiteChannelContext;
         DefaultQueryOptions = new ContentQueryExecutionOptions { ForPreview = tools.WebsiteChannelContext.IsPreview };
     }
 
@@ -147,7 +151,6 @@ public abstract class ContentItemQueryHandler<TQuery, TResult> :
     protected IContentQueryExecutor Executor { get; }
     protected IContentQueryResultMapper ContentItemMapper { get; }
     protected IWebPageQueryResultMapper WebPageMapper { get; }
-    protected IWebsiteChannelContext WebsiteChannelContextContext { get; }
     protected ContentQueryExecutionOptions DefaultQueryOptions { get; }
 
 
@@ -164,28 +167,35 @@ public abstract class ContentItemQueryHandler<TQuery, TResult> :
 
     public string[] DependencyKeys(TQuery query, TResult result)
     {
-        var builder = new CacheDependencyKeysBuilder(WebsiteChannelContextContext);
+        var builder = new CacheDependencyKeysBuilder();
         _ = builder.CustomKeys(customKeys);
         _ = AddDependencyKeys(query, result, builder);
 
         return builder.GetKeys().ToArray();
     }
 
-    public virtual object[] ItemNameParts(TQuery query) =>
-        query is ICacheByValueQuery cacheByValueQuery
+    public virtual object[] ItemNameParts(TQuery query)
+    {
+        string channelName = query is IChannelContentQuery channelQuery
+            ? channelQuery.ChannelName
+            : "";
+
+        return query is ICacheByValueQuery cacheByValueQuery
             ? new object[]
                 {
-                        query.GetType().Name,
-                        WebsiteChannelContextContext.WebsiteChannelName,
-                        CultureInfo.CurrentCulture.Name,
-                        cacheByValueQuery.CacheValueKey
+                    query.GetType().Name,
+                    channelName,
+                    CultureInfo.CurrentCulture.Name,
+                    cacheByValueQuery.CacheValueKey
                 }
             : new object[]
                 {
-                        query.GetType().Name,
-                        WebsiteChannelContextContext.WebsiteChannelName,
-                        CultureInfo.CurrentCulture.Name,
+                    query.GetType().Name,
+                    channelName,
+                    CultureInfo.CurrentCulture.Name,
                 };
+    }
+
     public virtual CacheSettings CustomizeCacheSettings(DefaultQueryCacheSettings settings, IQueryCacheKeysCreator<TQuery, TResult> creator, TQuery query)
     {
         var cs = new CacheSettings(
@@ -199,9 +209,7 @@ public abstract class ContentItemQueryHandler<TQuery, TResult> :
 
 public class DataItemQueryTools
 {
-    public IWebsiteChannelContext WebsiteChannelContext { get; }
 
-    public DataItemQueryTools(IWebsiteChannelContext websiteChannelContext) => WebsiteChannelContext = websiteChannelContext;
 }
 
 public abstract class DataItemQueryHandler<TQuery, TResult> :
@@ -210,12 +218,12 @@ public abstract class DataItemQueryHandler<TQuery, TResult> :
     IQueryCacheSettingsCustomizer<TQuery, TResult>
     where TQuery : IQuery<TResult>
 {
-    public DataItemQueryHandler(DataItemQueryTools tools) => WebsiteChannelContextContext = tools.WebsiteChannelContext;
+#pragma warning disable IDE0052
+    private readonly DataItemQueryTools tools;
+#pragma warning restore IDE0052
+    public DataItemQueryHandler(DataItemQueryTools tools) => this.tools = tools;
 
     private readonly HashSet<string> customKeys = new(StringComparer.OrdinalIgnoreCase);
-
-    protected IWebsiteChannelContext WebsiteChannelContextContext { get; }
-
 
     public abstract Task<TResult> Handle(TQuery request, CancellationToken cancellationToken);
 
@@ -230,28 +238,35 @@ public abstract class DataItemQueryHandler<TQuery, TResult> :
 
     public string[] DependencyKeys(TQuery query, TResult result)
     {
-        var builder = new CacheDependencyKeysBuilder(WebsiteChannelContextContext);
+        var builder = new CacheDependencyKeysBuilder();
         _ = builder.CustomKeys(customKeys);
         _ = AddDependencyKeys(query, result, builder);
 
         return builder.GetKeys().ToArray();
     }
 
-    public virtual object[] ItemNameParts(TQuery query) =>
-        query is ICacheByValueQuery cacheByValueQuery
+    public virtual object[] ItemNameParts(TQuery query)
+    {
+        string channelName = query is IChannelContentQuery channelQuery
+            ? channelQuery.ChannelName
+            : "";
+
+        return query is ICacheByValueQuery cacheByValueQuery
             ? new object[]
                 {
-                        query.GetType().Name,
-                        WebsiteChannelContextContext.WebsiteChannelName,
-                        CultureInfo.CurrentCulture.Name,
-                        cacheByValueQuery.CacheValueKey
+                    query.GetType().Name,
+                    channelName,
+                    CultureInfo.CurrentCulture.Name,
+                    cacheByValueQuery.CacheValueKey
                 }
             : new object[]
                 {
-                        query.GetType().Name,
-                        WebsiteChannelContextContext.WebsiteChannelName,
-                        CultureInfo.CurrentCulture.Name,
+                    query.GetType().Name,
+                    channelName,
+                    CultureInfo.CurrentCulture.Name,
                 };
+    }
+
     public virtual CacheSettings CustomizeCacheSettings(DefaultQueryCacheSettings settings, IQueryCacheKeysCreator<TQuery, TResult> creator, TQuery query)
     {
         var cs = new CacheSettings(

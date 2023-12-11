@@ -1,8 +1,29 @@
 @using Kentico.Community.Portal.Web.Features.QAndA
 
-@model ComponentViewModel<QAndANewQuestionPageTemplateProperties>
+@model TemplateViewModel<QAndANewQuestionPageTemplateProperties>
 
-<vc:q-and-a-new-question-page-heading page="Model.Page" />
+@{
+    var templateModel = Model.GetTemplateModel<QAndANewQuestionPage>();
+}
+
+@if (User.Identity is { IsAuthenticated: true })
+{
+    <vc:page-heading page="templateModel" />
+}
+else
+{
+    <div class="c-section default">
+        <div class="container">
+            <h1 class="text-center">Want to ask or answer a question?</h1>
+            <h2 class="text-center">Please login</h2>
+            <p class="text-center mt-5">
+                To post new question, you have to
+                <a asp-controller="Authentication" asp-action="Login" asp-route-returnUrl="@Context.Request.Path"
+                    class="c-link">login first</a>.
+            </p>
+        </div>
+    </div>
+}
 
 <main>
     <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"

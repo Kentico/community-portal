@@ -1,7 +1,6 @@
 using CMS.DataEngine;
 using CMS.MediaLibrary;
 using CMS.Websites;
-using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core.Content;
 
 namespace Kentico.Community.Portal.Core.Operations;
@@ -117,7 +116,6 @@ public interface ICacheDependencyKeysBuilder
     /// <remarks>Generates a cache dependency key for all web pages across all channels</remarks>
     /// <returns></returns>
     ICacheDependencyKeysBuilder AllWebPages();
-    ICacheDependencyKeysBuilder AllWebPagesFromContext();
     /// <summary>
     /// webpageitem|bychannel|&lt;channel name&gt;|all
     /// </summary>
@@ -236,24 +234,6 @@ public interface ICacheDependencyKeysBuilder
     /// webpageItem|bychannel|&lt;channel name&gt;|bycontenttype|&lt;content type name&gt;
     /// </summary>
     /// <param name="contentTypeName"></param>
-    /// <remarks>
-    /// Same as <see cref="WebPageType{string, string}"/> but uses the current request's web channel
-    /// </remarks>
-    /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPageTypeFromContext(string contentTypeName);
-    /// <summary>
-    /// webpageItem|bychannel|&lt;channel name&gt;|bycontenttype|&lt;content type name&gt|&lt;language name&gt;
-    /// </summary>
-    /// <param name="contentTypeName"></param>
-    /// <remarks>
-    /// Same as <see cref="WebPageType{string, string}"/> but uses the current request's web channel
-    /// </remarks>
-    /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPageTypeFromContext(string contentTypeName, string languageName);
-    /// <summary>
-    /// webpageItem|bychannel|&lt;channel name&gt;|bycontenttype|&lt;content type name&gt;
-    /// </summary>
-    /// <param name="contentTypeName"></param>
     /// <param name="channelName"></param>
     /// <returns></returns>
     ICacheDependencyKeysBuilder WebPageType(string contentTypeName, string channelName);
@@ -266,10 +246,6 @@ public interface ICacheDependencyKeysBuilder
     /// <returns></returns>
     ICacheDependencyKeysBuilder WebPageType(string contentTypeName, string channelName, string languageName);
 
-    ICacheDependencyKeysBuilder WebPageByPathFromContext(string path);
-    ICacheDependencyKeysBuilder WebPageByPathFromContext(Maybe<string> path);
-    ICacheDependencyKeysBuilder WebPageByPathFromContext(string path, string languageName);
-    ICacheDependencyKeysBuilder WebPageByPathFromContext(Maybe<string> path, string languageName);
     /// <summary>
     /// webpageitem|bychannel|&lt;channel name&gt;|bypath|&lt;path&gt;
     /// </summary>
@@ -287,15 +263,7 @@ public interface ICacheDependencyKeysBuilder
     /// <returns></returns>
     ICacheDependencyKeysBuilder WebPageByPath(string path, string channelName, string languageName);
     ICacheDependencyKeysBuilder WebPageByPath(Maybe<string> path, string channelName, string languageName);
-    /// <summary>
-    /// webpageitem|bychannel|&lt;channel name&gt;|childrenofpath|&lt;path&gt;
-    /// </summary>
-    /// <param name="path"></param>
-    /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPageChildrenByPathFromContext(string path);
-    ICacheDependencyKeysBuilder WebPageChildrenByPathFromContext(Maybe<string> path);
-    ICacheDependencyKeysBuilder WebPageChildrenByPathFromContext(string path, string languageName);
-    ICacheDependencyKeysBuilder WebPageChildrenByPathFromContext(Maybe<string> path, string languageName);
+
     /// <summary>
     /// webpageitem|bychannel|&lt;channel name&gt;|childrenofpath|&lt;path&gt;
     /// </summary>
@@ -464,9 +432,6 @@ public interface ICacheDependencyKeysBuilder
 public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
 {
     private readonly HashSet<string> dependencyKeys = new(StringComparer.InvariantCultureIgnoreCase);
-    private readonly IWebsiteChannelContext context;
-
-    public CacheDependencyKeysBuilder(IWebsiteChannelContext context) => this.context = context;
 
     public ISet<string> GetKeys() => dependencyKeys;
 
@@ -591,8 +556,6 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
 
         return this;
     }
-    public ICacheDependencyKeysBuilder AllWebPagesFromContext() =>
-        AllWebPages(context.WebsiteChannelName);
     public ICacheDependencyKeysBuilder AllWebPages(string channelName)
     {
         _ = dependencyKeys.Add($"webpageitem|bychannel|{channelName}|all");
@@ -709,12 +672,6 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
 
         return this;
     }
-
-    public ICacheDependencyKeysBuilder WebPageTypeFromContext(string contentTypeName) =>
-        WebPageType(contentTypeName, context.WebsiteChannelName);
-    public ICacheDependencyKeysBuilder WebPageTypeFromContext(string contentTypeName, string languageName) =>
-        WebPageType(contentTypeName, context.WebsiteChannelName, languageName);
-
     public ICacheDependencyKeysBuilder WebPageType(string contentTypeName, string channelName)
     {
         _ = dependencyKeys.Add($"webpageitem|bychannel|{channelName}|bycontenttype|{contentTypeName}");
@@ -727,15 +684,6 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
 
         return this;
     }
-
-    public ICacheDependencyKeysBuilder WebPageByPathFromContext(Maybe<string> path) =>
-        WebPageByPath(path, context.WebsiteChannelName);
-    public ICacheDependencyKeysBuilder WebPageByPathFromContext(string path) =>
-        WebPageByPath(path, context.WebsiteChannelName);
-    public ICacheDependencyKeysBuilder WebPageByPathFromContext(Maybe<string> path, string languageName) =>
-        WebPageByPath(path, context.WebsiteChannelName, languageName);
-    public ICacheDependencyKeysBuilder WebPageByPathFromContext(string path, string languageName) =>
-        WebPageByPath(path, context.WebsiteChannelName, languageName);
 
     public ICacheDependencyKeysBuilder WebPageByPath(Maybe<string> path, string channelName) =>
         path.TryGetValue(out string p)
@@ -764,37 +712,6 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
         }
 
         _ = dependencyKeys.Add($"webpageitem|bychannel|{channelName}|bypath|{path}|{languageName}");
-
-        return this;
-    }
-
-    public ICacheDependencyKeysBuilder WebPageChildrenByPathFromContext(Maybe<string> path) =>
-        path.TryGetValue(out string p)
-            ? WebPageChildrenByPathFromContext(p)
-            : this;
-    public ICacheDependencyKeysBuilder WebPageChildrenByPathFromContext(string path)
-    {
-        if (string.IsNullOrWhiteSpace(path))
-        {
-            return this;
-        }
-
-        _ = dependencyKeys.Add($"webpageitem|bychannel|{context.WebsiteChannelName}|childrenofpath|{path}");
-
-        return this;
-    }
-    public ICacheDependencyKeysBuilder WebPageChildrenByPathFromContext(Maybe<string> path, string languageName) =>
-        path.TryGetValue(out string p)
-            ? WebPageChildrenByPathFromContext(p, languageName)
-            : this;
-    public ICacheDependencyKeysBuilder WebPageChildrenByPathFromContext(string path, string languageName)
-    {
-        if (string.IsNullOrWhiteSpace(path))
-        {
-            return this;
-        }
-
-        _ = dependencyKeys.Add($"webpageitem|bychannel|{context.WebsiteChannelName}|childrenofpath|{path}|{languageName}");
 
         return this;
     }

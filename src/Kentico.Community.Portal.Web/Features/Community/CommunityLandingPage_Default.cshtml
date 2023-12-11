@@ -1,8 +1,12 @@
 @using Kentico.Community.Portal.Web.Features.Community
 
-@model ComponentViewModel<CommunityLandingPageTemplateProperties>
+@model TemplateViewModel<CommunityLandingPageTemplateProperties>
 
-<vc:community-landing-page page="Model.Page" />
+@{
+    var templateModel = Model.GetTemplateModel<CommunityLandingPage>();
+}
+
+<vc:page-heading page="templateModel" />
 
 <main>
     <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"

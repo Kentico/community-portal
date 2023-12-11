@@ -1,8 +1,12 @@
 @using Kentico.Community.Portal.Web.Features.Integrations
 
-@model ComponentViewModel<IntegrationsLandingPageTemplateProperties>
+@model TemplateViewModel<IntegrationsLandingPageTemplateProperties>
 
-<vc:integrations-landing-page page="Model.Page" />
+@{
+    var templateModel = Model.GetTemplateModel<IntegrationsLandingPage>();
+}
+
+<vc:page-heading page="templateModel" />
 
 <main>
     <vc:integrations-list />

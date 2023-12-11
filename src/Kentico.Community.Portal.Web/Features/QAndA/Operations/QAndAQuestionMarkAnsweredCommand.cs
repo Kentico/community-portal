@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public record QAndAQuestionMarkAnsweredCommand(QAndAQuestionPage QuestionPage, QAndAAnswerDataInfo Answer) : ICommand<Unit>;
+public record QAndAQuestionMarkAnsweredCommand(QAndAQuestionPage QuestionPage, QAndAAnswerDataInfo Answer, int ChannelID) : ICommand<Unit>;
 public class QAndAQuestionMarkAnsweredCommandHandler : WebPageCommandHandler<QAndAQuestionMarkAnsweredCommand, Unit>
 {
     private readonly IInfoProvider<UserInfo> users;
@@ -22,7 +22,7 @@ public class QAndAQuestionMarkAnsweredCommandHandler : WebPageCommandHandler<QAn
         var user = await users.GetPublicMemberContentAuthor();
         var question = request.QuestionPage;
 
-        var webPageManager = WebPageManagerFactory.Create(WebsiteChannelContext.WebsiteChannelID, user.UserID);
+        var webPageManager = WebPageManagerFactory.Create(request.ChannelID, user.UserID);
 
         bool create = await webPageManager.TryCreateDraft(question.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
         if (!create)

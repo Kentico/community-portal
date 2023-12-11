@@ -1,8 +1,12 @@
 @using Kentico.Community.Portal.Web.Features.QAndA
 
-@model ComponentViewModel<QAndALandingPageTemplateProperties>
+@model TemplateViewModel<QAndALandingPageTemplateProperties>
 
-<vc:q-and-a-landing-page-heading props="Model.Properties" />
+@{
+    var templateModel = Model.GetTemplateModel<QAndALandingPage>();
+}
+
+<vc:page-heading page="templateModel" display-description="Model.Properties.DisplayPageDescription" />
 
 <main>
     <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"

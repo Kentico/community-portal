@@ -4,7 +4,7 @@ using Kentico.Community.Portal.Core.Operations;
 
 namespace Kentico.Community.Portal.Web.Features.Blog;
 
-public record BlogPostsByTaxonomyQuery(string TaxonomyName, int Limit) : IQuery<BlogPostsByTaxonomyQueryResponse>, ICacheByValueQuery
+public record BlogPostsByTaxonomyQuery(string TaxonomyName, int Limit, string ChannelName) : IQuery<BlogPostsByTaxonomyQueryResponse>, ICacheByValueQuery, IChannelContentQuery
 {
     public string CacheValueKey => $"{TaxonomyName}|{Limit}";
 }
@@ -36,7 +36,7 @@ public class BlogPostsByTaxonomyQueryHandler : WebPageQueryHandler<BlogPostsByTa
         var postsQuery = new ContentItemQueryBuilder().ForContentType(BlogPostPage.CONTENT_TYPE_NAME, queryParams =>
         {
             _ = queryParams
-                .ForWebsite(WebsiteChannelContext.WebsiteChannelName)
+                .ForWebsite(request.ChannelName)
                 .Linking(nameof(BlogPostPage.BlogPostPageBlogPostContent), contentItemIDs)
                 .WithLinkedItems(2);
         });

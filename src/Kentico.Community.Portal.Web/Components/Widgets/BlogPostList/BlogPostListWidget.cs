@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components.Widgets.BlogPostList;
 using Kentico.Community.Portal.Web.Features.Blog;
@@ -31,17 +32,20 @@ public class BlogPostListWidget : ViewComponent
     private readonly IMediator mediator;
     private readonly AssetItemService itemService;
     private readonly ICacheDependenciesScope scope;
+    private readonly IWebsiteChannelContext channelContext;
 
     public BlogPostListWidget(
         IMediator mediator,
         IWebPageUrlRetriever urlRetriever,
         AssetItemService itemService,
-        ICacheDependenciesScope scope)
+        ICacheDependenciesScope scope,
+        IWebsiteChannelContext channelContext)
     {
         this.urlRetriever = urlRetriever;
         this.mediator = mediator;
         this.itemService = itemService;
         this.scope = scope;
+        this.channelContext = channelContext;
     }
 
     public async Task<IViewComponentResult> InvokeAsync(ComponentViewModel<BlogPostListWidgetProperties> cvm)
@@ -76,7 +80,7 @@ public class BlogPostListWidget : ViewComponent
             return Array.Empty<BlogPostViewModel>();
         }
 
-        var resp = await mediator.Send(new BlogPostsByTaxonomyQuery(taxnomyName, props.PostLimit));
+        var resp = await mediator.Send(new BlogPostsByTaxonomyQuery(taxnomyName, props.PostLimit, channelContext.WebsiteChannelName));
         var posts = resp.Items;
         return await BuildPostPageViewModels(posts, props);
     }
@@ -89,13 +93,13 @@ public class BlogPostListWidget : ViewComponent
             return Array.Empty<BlogPostViewModel>();
         }
 
-        var result = await mediator.Send(new BlogPostPagesByWebPageGUIDQuery(selectedWebPageGUIDs.ToArray()));
+        var result = await mediator.Send(new BlogPostPagesByWebPageGUIDQuery(selectedWebPageGUIDs.ToArray(), channelContext.WebsiteChannelName));
         return await BuildPostPageViewModels(result.Items, props);
     }
 
     private async Task<IReadOnlyList<BlogPostViewModel>> GetLatestBlogPosts(BlogPostListWidgetProperties props)
     {
-        var result = await mediator.Send(new BlogPostPagesLatestQuery(props.PostLimit));
+        var result = await mediator.Send(new BlogPostPagesLatestQuery(props.PostLimit, channelContext.WebsiteChannelName));
         return await BuildPostPageViewModels(result.Items, props);
     }
 

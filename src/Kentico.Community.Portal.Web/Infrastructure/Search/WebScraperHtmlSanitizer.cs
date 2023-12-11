@@ -10,10 +10,10 @@ public class WebScraperHtmlSanitizer
     {
 
         var parser = new HtmlParser();
-#pragma warning disable CS8625 //  Cannot convert null literal to non-nullable reference type.
+
         // null is relevant parameter
         var nodes = parser.ParseFragment(htmlContent, null);
-#pragma warning restore CS8625 //  Cannot convert null literal to non-nullable reference type.
+
 
         // Removes script tags
         foreach (var element in nodes.QuerySelectorAll("script"))

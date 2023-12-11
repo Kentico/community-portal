@@ -45,7 +45,7 @@ public class QAndAQuestionController : Controller
         }
 
         var member = await userManager.CurrentUser(HttpContext)!;
-        var questionParent = await mediator.Send(new QAndAQuestionsRootPageQuery());
+        var questionParent = await mediator.Send(new QAndAQuestionsRootPageQuery(channelContext.WebsiteChannelName));
 
         _ = await mediator.Send(new QAndAQuestionCreateCommand(
             member,
@@ -75,13 +75,13 @@ public class QAndAQuestionController : Controller
 
         var user = await userManager.CurrentUser(HttpContext)!;
 
-        var question = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
+        var question = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
         if (question is null)
         {
             return NotFound();
         }
 
-        _ = await mediator.Send(new QAndAQuestionUpdateCommand(question, requestModel.Title, requestModel.Content));
+        _ = await mediator.Send(new QAndAQuestionUpdateCommand(question, requestModel.Title, requestModel.Content, channelContext.WebsiteChannelID));
 
         string redirectURL = (await urlRetriever.Retrieve(question)).RelativePathTrimmed();
 
@@ -95,7 +95,7 @@ public class QAndAQuestionController : Controller
     {
         var user = await userManager.CurrentUser(HttpContext);
 
-        var question = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
+        var question = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
         if (question is null)
         {
             return NotFound();
@@ -126,13 +126,13 @@ public class QAndAQuestionController : Controller
             return Forbid();
         }
 
-        var question = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
+        var question = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
         if (question is null)
         {
             return NotFound();
         }
 
-        _ = await mediator.Send(new QAndAQuestionDeleteCommand(question));
+        _ = await mediator.Send(new QAndAQuestionDeleteCommand(question, channelContext.WebsiteChannelID));
 
         return Ok();
     }

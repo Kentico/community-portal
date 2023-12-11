@@ -2,8 +2,8 @@ using CMS;
 using CMS.ContentEngine;
 using CMS.Core;
 using CMS.DataEngine;
-using Kentico.Community.Portal.Web.Configuration;
 using Kentico.Community.Portal.Core.Modules;
+using Kentico.Community.Portal.Web.Configuration;
 using Kentico.Community.Portal.Web.Features.Blog.Events;
 using Kentico.Community.Portal.Web.Features.QAndA.Events;
 

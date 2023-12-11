@@ -4,14 +4,14 @@ using Kentico.Content.Web.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.Blog;
 
-public record BlogLandingPageQuery(RoutedWebPage Page) : WebPageRoutedQuery<BlogLandingPage>(Page);
+public record BlogLandingPageQuery(RoutedWebPage Page, string ChannelName) : WebPageRoutedQuery<BlogLandingPage>(Page), IChannelContentQuery;
 public class BlogLandingPageQueryHandler : WebPageQueryHandler<BlogLandingPageQuery, BlogLandingPage>
 {
     public BlogLandingPageQueryHandler(WebPageQueryTools tools) : base(tools) { }
 
     public override async Task<BlogLandingPage> Handle(BlogLandingPageQuery request, CancellationToken cancellationToken = default)
     {
-        var b = new ContentItemQueryBuilder().ForWebPage(WebsiteChannelContext, request.Page);
+        var b = new ContentItemQueryBuilder().ForWebPage(request.ChannelName, request.Page);
 
         var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<BlogLandingPage>, DefaultQueryOptions, cancellationToken);
 

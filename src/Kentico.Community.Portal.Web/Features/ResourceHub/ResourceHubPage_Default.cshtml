@@ -1,8 +1,12 @@
 @using Kentico.Community.Portal.Web.Features.ResourceHub
 
-@model ComponentViewModel<ResourceHubPageTemplateProperties>
+@model TemplateViewModel<ResourceHubPageTemplateProperties>
 
-<vc:resource-hub-page-heading page="Model.Page" />
+@{
+    var templateModel = Model.GetTemplateModel<ResourceHubPage>();
+}
+
+<vc:page-heading page="templateModel" />
 
 <main>
     <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"

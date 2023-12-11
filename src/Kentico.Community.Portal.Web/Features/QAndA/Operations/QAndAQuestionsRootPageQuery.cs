@@ -3,7 +3,7 @@ using Kentico.Community.Portal.Core.Operations;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public record QAndAQuestionsRootPageQuery : IQuery<QAndAQuestionsRootPage>;
+public record QAndAQuestionsRootPageQuery(string ChannelName) : IQuery<QAndAQuestionsRootPage>, IChannelContentQuery;
 public class QAndAQuestionsRootPageQueryHandler : ContentItemQueryHandler<QAndAQuestionsRootPageQuery, QAndAQuestionsRootPage>
 {
     public QAndAQuestionsRootPageQueryHandler(ContentItemQueryTools tools) : base(tools) { }
@@ -13,7 +13,7 @@ public class QAndAQuestionsRootPageQueryHandler : ContentItemQueryHandler<QAndAQ
         var b = new ContentItemQueryBuilder().ForContentType(QAndAQuestionsRootPage.CONTENT_TYPE_NAME, queryParameters =>
         {
             _ = queryParameters
-                .ForWebsite(WebsiteChannelContextContext.WebsiteChannelName)
+                .ForWebsite(request.ChannelName)
                 .TopN(1);
         });
 

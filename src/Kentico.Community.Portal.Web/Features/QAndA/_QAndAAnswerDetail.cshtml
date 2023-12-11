@@ -30,7 +30,7 @@
                     <span>@Model.DateCreated.ToString("MMMM d, yyyy") @Model.DateCreated.ToString("t")</span>
                 </div>
 
-                <div class="fr-view mb-3 member-generated-content">
+                <div class="fr-view mb-3 member-generated-content" hx-disable>
                     @Model.HTMLSanitizedContentHTML
                 </div>
             </div>

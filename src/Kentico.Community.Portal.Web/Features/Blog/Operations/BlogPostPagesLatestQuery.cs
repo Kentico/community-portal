@@ -4,7 +4,7 @@ using Kentico.Community.Portal.Core.Operations;
 
 namespace Kentico.Community.Portal.Web.Features.Blog;
 
-public record BlogPostPagesLatestQuery(int Count) : IQuery<BlogPostPagesLatestQueryResponse>, ICacheByValueQuery
+public record BlogPostPagesLatestQuery(int Count, string ChannelName) : IQuery<BlogPostPagesLatestQueryResponse>, ICacheByValueQuery, IChannelContentQuery
 {
     public string CacheValueKey => Count.ToString();
 }
@@ -35,7 +35,7 @@ public class BlogPostPagesLatestQueryHandler : WebPageQueryHandler<BlogPostPages
         var postsQuery = new ContentItemQueryBuilder().ForContentType(BlogPostPage.CONTENT_TYPE_NAME, queryParams =>
         {
             _ = queryParams
-                .ForWebsite(WebsiteChannelContext.WebsiteChannelName)
+                .ForWebsite(request.ChannelName)
                 .Linking(nameof(BlogPostPage.BlogPostPageBlogPostContent), contentItemIDs)
                 .WithLinkedItems(2);
         });

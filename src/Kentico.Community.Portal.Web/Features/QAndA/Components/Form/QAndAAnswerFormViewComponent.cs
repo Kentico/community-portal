@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using CMS.Websites.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
@@ -8,12 +9,17 @@ namespace Kentico.Community.Portal.Web.Features.QAndA;
 public class QAndAAnswerFormViewComponent : ViewComponent
 {
     private readonly IMediator mediator;
+    private readonly IWebsiteChannelContext channelContext;
 
-    public QAndAAnswerFormViewComponent(IMediator mediator) => this.mediator = mediator;
+    public QAndAAnswerFormViewComponent(IMediator mediator, IWebsiteChannelContext channelContext)
+    {
+        this.mediator = mediator;
+        this.channelContext = channelContext;
+    }
 
     public async Task<IViewComponentResult> InvokeAsync(Guid questionID, int? answerID = null)
     {
-        var rootPage = await mediator.Send(new QAndALandingPageQuery());
+        var rootPage = await mediator.Send(new QAndALandingPageQuery(channelContext.WebsiteChannelName));
 
         if (rootPage is null)
         {
