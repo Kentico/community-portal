@@ -19,6 +19,8 @@ const config = ({ env }) => ({
             "code",
             // Responsive embeds for youtube videos
             "embed-container",
+            // Used in blog posts and Q&A
+            "blockquote",
           ],
           greedy: [/form-/],
         },
