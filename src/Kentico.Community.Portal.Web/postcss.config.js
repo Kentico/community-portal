@@ -11,8 +11,6 @@ const config = ({ env }) => ({
 
         safelist: {
           standard: [
-            // Footer is currently managed via HTML in the database (WebsiteSettingsContent)
-            "c-footer",
             // .note comes from markdown :::note syntax
             "note",
             // Syntax highlighting for inline code blocks

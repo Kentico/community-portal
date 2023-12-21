@@ -5,9 +5,9 @@
 <div class="c-section">
     <div class="container">
 
-        @if (Model.Heading is string heading)
+        @if (Model.Heading is not null)
         {
-            <h3>@heading</h3>
+            <h3>@Model.Heading</h3>
         }
 
         <form method="get" id="blog-search-form">
@@ -84,9 +84,12 @@
                         {
                             var image = post.Author.Avatar;
 
-                            <img src="@image.URLData.WithSizeConstraint(SizeConstraint.MaxWidthOrHeight(24)).RelativePath"
-                                alt="@image.AltText" width="@image.Dimensions.Width" height="@image.Dimensions.Height"
-                                title="@image.Title" class="c-tag_icon me-1" />
+                            if (image is not null)
+                            {
+                                <img src="@image.URLData.WithSizeConstraint(SizeConstraint.MaxWidthOrHeight(24)).RelativePath"
+                                    alt="@image.AltText" width="@image.Dimensions.Width" height="@image.Dimensions.Height"
+                                    title="@image.Title" class="c-tag_icon me-1" />
+                            }
 
                             <span>@post.Author.Name</span>
                         }

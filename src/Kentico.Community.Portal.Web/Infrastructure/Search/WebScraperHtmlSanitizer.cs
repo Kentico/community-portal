@@ -8,12 +8,10 @@ public class WebScraperHtmlSanitizer
 {
     public virtual string SanitizeHtmlFragment(string htmlContent)
     {
-
         var parser = new HtmlParser();
 
         // null is relevant parameter
-        var nodes = parser.ParseFragment(htmlContent, null);
-
+        var nodes = parser.ParseFragment(htmlContent, null!);
 
         // Removes script tags
         foreach (var element in nodes.QuerySelectorAll("script"))
@@ -100,12 +98,12 @@ public class WebScraperHtmlSanitizer
                 textContent = HTMLHelper.RegexHtmlToTextWhiteSpace.Replace(textContent, " ");
                 textContent = textContent.Trim();
 
-                string title = doc.Head.QuerySelector("title")?.TextContent;
-                string description = doc.Head.QuerySelector("meta[name='description']")?.GetAttribute("content");
+                string title = doc.Head?.QuerySelector("title")?.TextContent ?? "";
+                string description = doc.Head?.QuerySelector("meta[name='description']")?.GetAttribute("content") ?? "";
 
-                return string.Join(" ",
-                    new string[] { title, description, textContent }.Where(i => !string.IsNullOrWhiteSpace(i))
-                    );
+                return string.Join(
+                    " ",
+                    new string[] { title, description, textContent }.Where(i => !string.IsNullOrWhiteSpace(i)));
             }
         }
 

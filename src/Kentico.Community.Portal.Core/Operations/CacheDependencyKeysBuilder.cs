@@ -24,7 +24,7 @@ public interface ICacheDependencyKeysBuilder
     /// </summary>
     /// <param name="contentItemID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder ContentItem(IContentFieldsSource content);
+    ICacheDependencyKeysBuilder ContentItem(IContentItemFieldsSource? content);
     /// <summary>
     /// contentitem|byid|&lt;content item ID&gt;
     /// </summary>
@@ -375,7 +375,7 @@ public interface ICacheDependencyKeysBuilder
     /// 
     /// builder.Collection(items, (i, b) => b.Node(i));
     /// </example>
-    ICacheDependencyKeysBuilder Collection<T>(IEnumerable<T> items, Action<T, ICacheDependencyKeysBuilder> action);
+    ICacheDependencyKeysBuilder Collection<T>(IEnumerable<T>? items, Action<T, ICacheDependencyKeysBuilder> action);
     /// <summary>
     /// Executes the <paramref name="action"/> on each item in the collectio <paramref name="items"/>
     /// </summary>
@@ -457,8 +457,10 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
 
         return this;
     }
-    public ICacheDependencyKeysBuilder ContentItem(IContentFieldsSource content) =>
-        ContentItem(content.SystemFields.ContentItemID);
+    public ICacheDependencyKeysBuilder ContentItem(IContentItemFieldsSource? content) =>
+        content is null
+            ? this
+            : ContentItem(content.SystemFields.ContentItemID);
     public ICacheDependencyKeysBuilder ContentItem(Maybe<int> contentItemID, string languageName) =>
         contentItemID.TryGetValue(out int id)
             ? ContentItem(id, languageName)
@@ -476,10 +478,10 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
     }
 
     public ICacheDependencyKeysBuilder ContentItem(Maybe<string> contentItemCodeName) =>
-        contentItemCodeName.TryGetValue(out string name)
+        contentItemCodeName.TryGetValue(out string? name)
             ? ContentItem(name)
             : this;
-    public ICacheDependencyKeysBuilder ContentItem(string contentItemCodeName)
+    public ICacheDependencyKeysBuilder ContentItem(string? contentItemCodeName)
     {
         if (string.IsNullOrWhiteSpace(contentItemCodeName))
         {
@@ -491,10 +493,10 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
         return this;
     }
     public ICacheDependencyKeysBuilder ContentItem(Maybe<string> contentItemCodeName, string languageName) =>
-        contentItemCodeName.TryGetValue(out string name)
+        contentItemCodeName.TryGetValue(out string? name)
             ? ContentItem(name, languageName)
             : this;
-    public ICacheDependencyKeysBuilder ContentItem(string contentItemCodeName, string languageName)
+    public ICacheDependencyKeysBuilder ContentItem(string? contentItemCodeName, string languageName)
     {
         if (string.IsNullOrWhiteSpace(contentItemCodeName))
         {
@@ -595,10 +597,10 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
     }
 
     public ICacheDependencyKeysBuilder WebPage(Maybe<string> webPageName) =>
-        webPageName.TryGetValue(out string name)
+        webPageName.TryGetValue(out string? name)
             ? WebPage(name)
             : this;
-    public ICacheDependencyKeysBuilder WebPage(string webPageName)
+    public ICacheDependencyKeysBuilder WebPage(string? webPageName)
     {
         if (string.IsNullOrWhiteSpace(webPageName))
         {
@@ -610,10 +612,10 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
         return this;
     }
     public ICacheDependencyKeysBuilder WebPage(Maybe<string> webPageName, string languageName) =>
-        webPageName.TryGetValue(out string name)
+        webPageName.TryGetValue(out string? name)
             ? WebPage(name, languageName)
             : this;
-    public ICacheDependencyKeysBuilder WebPage(string webPageName, string languageName)
+    public ICacheDependencyKeysBuilder WebPage(string? webPageName, string languageName)
     {
         if (string.IsNullOrWhiteSpace(webPageName))
         {
@@ -686,10 +688,10 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
     }
 
     public ICacheDependencyKeysBuilder WebPageByPath(Maybe<string> path, string channelName) =>
-        path.TryGetValue(out string p)
+        path.TryGetValue(out string? p)
             ? WebPageByPath(p, channelName)
             : this;
-    public ICacheDependencyKeysBuilder WebPageByPath(string path, string channelName)
+    public ICacheDependencyKeysBuilder WebPageByPath(string? path, string channelName)
     {
         if (string.IsNullOrWhiteSpace(path))
         {
@@ -701,10 +703,10 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
         return this;
     }
     public ICacheDependencyKeysBuilder WebPageByPath(Maybe<string> path, string channelName, string languageName) =>
-        path.TryGetValue(out string p)
+        path.TryGetValue(out string? p)
             ? WebPageByPath(p, channelName, languageName)
             : this;
-    public ICacheDependencyKeysBuilder WebPageByPath(string path, string channelName, string languageName)
+    public ICacheDependencyKeysBuilder WebPageByPath(string? path, string channelName, string languageName)
     {
         if (string.IsNullOrWhiteSpace(path))
         {
@@ -717,10 +719,10 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
     }
 
     public ICacheDependencyKeysBuilder WebPageChildrenByPath(Maybe<string> path, string channelName) =>
-        path.TryGetValue(out string p)
+        path.TryGetValue(out string? p)
             ? WebPageChildrenByPath(p, channelName)
             : this;
-    public ICacheDependencyKeysBuilder WebPageChildrenByPath(string path, string channelName)
+    public ICacheDependencyKeysBuilder WebPageChildrenByPath(string? path, string channelName)
     {
         if (string.IsNullOrWhiteSpace(path))
         {
@@ -732,10 +734,10 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
         return this;
     }
     public ICacheDependencyKeysBuilder WebPageChildrenByPath(Maybe<string> path, string channelName, string languageName) =>
-        path.TryGetValue(out string p)
+        path.TryGetValue(out string? p)
             ? WebPageChildrenByPath(p, channelName, languageName)
             : this;
-    public ICacheDependencyKeysBuilder WebPageChildrenByPath(string path, string channelName, string languageName)
+    public ICacheDependencyKeysBuilder WebPageChildrenByPath(string? path, string channelName, string languageName)
     {
         if (string.IsNullOrWhiteSpace(path))
         {
@@ -784,10 +786,10 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
     }
 
     public ICacheDependencyKeysBuilder Object(string objectType, Maybe<string> objectCodeName) =>
-        objectCodeName.TryGetValue(out string name)
+        objectCodeName.TryGetValue(out string? name)
             ? Object(objectType, name)
             : this;
-    public ICacheDependencyKeysBuilder Object(string objectType, string objectCodeName)
+    public ICacheDependencyKeysBuilder Object(string objectType, string? objectCodeName)
     {
         if (string.IsNullOrWhiteSpace(objectType) || string.IsNullOrWhiteSpace(objectCodeName))
         {
@@ -838,8 +840,13 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
 
     public ICacheDependencyKeysBuilder Collection<T>(IEnumerable<Maybe<T>> items, Action<T, ICacheDependencyKeysBuilder> action) =>
         Collection(items.Choose(), action);
-    public ICacheDependencyKeysBuilder Collection<T>(IEnumerable<T> items, Action<T, ICacheDependencyKeysBuilder> action)
+    public ICacheDependencyKeysBuilder Collection<T>(IEnumerable<T>? items, Action<T, ICacheDependencyKeysBuilder> action)
     {
+        if (items is null)
+        {
+            return this;
+        }
+
         foreach (var item in items)
         {
             action(item, this);

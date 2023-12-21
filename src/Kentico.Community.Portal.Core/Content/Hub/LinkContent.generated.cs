@@ -18,7 +18,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// <summary>
 	/// Represents a content item of type <see cref="LinkContent"/>.
 	/// </summary>
-	public partial class LinkContent
+	public partial class LinkContent : IContentItemFieldsSource
 	{
 		/// <summary>
 		/// Code name of the content type.

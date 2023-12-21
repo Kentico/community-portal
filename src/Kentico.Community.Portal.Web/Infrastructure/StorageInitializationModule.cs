@@ -11,19 +11,15 @@ public class StorageInitializationModule : Module
     private const string LocalStorageAssetsDirectoryName = "$StorageAssets";
     private const string ContainerName = "default";
 
-    private IWebHostEnvironment environment;
+    public StorageInitializationModule() : base(nameof(StorageInitializationModule)) { }
 
-    public StorageInitializationModule() : base(nameof(StorageInitializationModule))
-    {
-    }
-
-    public IWebHostEnvironment Environment => environment ??= Service.Resolve<IWebHostEnvironment>();
-
-    protected override void OnInit()
+    protected override void OnInit(ModuleInitParameters parameters)
     {
         base.OnInit();
 
-        if (Environment.IsQa() || Environment.IsUat() || Environment.IsProduction())
+        var environment = parameters.Services.GetRequiredService<IWebHostEnvironment>();
+
+        if (environment.IsQa() || environment.IsUat() || environment.IsProduction())
         {
             // Maps the assets directory (e.g. media files) to the Azure storage provider
             MapAzureStoragePath($"~/assets/");

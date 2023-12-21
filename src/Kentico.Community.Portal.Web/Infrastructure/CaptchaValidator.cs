@@ -31,6 +31,11 @@ public class CaptchaValidator
 
         var response = JsonConvert.DeserializeObject<CaptchaResponse>(data);
 
+        if (response is null)
+        {
+            return new CaptchaValidationResult { IsSuccess = false, ErrorMessage = "Could not validate captcha" };
+        }
+
         if (response.Score < settings.ScoreThredhold)
         {
             return new CaptchaValidationResult { IsSuccess = false, ErrorMessage = "Invalid captcha score" };
@@ -49,7 +54,7 @@ public class CaptchaValidator
         [JsonProperty("success")]
         public bool IsSuccess { get; set; }
         [JsonProperty("error-codes")]
-        public List<string> ErrorMessages { get; set; }
+        public List<string> ErrorMessages { get; set; } = new();
 
         [JsonProperty("score")]
         public double Score { get; set; }

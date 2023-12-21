@@ -38,14 +38,14 @@ public class BlogPostListViewComponent : ViewComponent
                 .Select(x => new FacetOption()
                 {
                     Label = x.DisplayName,
-                    Value = searchResult.Facets?.FirstOrDefault(y => y.Label == x.DisplayName.ToLowerInvariant())?.Value ?? 0,
+                    Value = searchResult?.Facets?.FirstOrDefault(y => y.Label == x.DisplayName.ToLowerInvariant())?.Value ?? 0,
                     IsSelected = chosenFacets.Contains(x.DisplayName, StringComparer.OrdinalIgnoreCase)
                 })
                 .Where(x => x.Value != 0)
                 .OrderBy(f => f.Label)
                 .ToList(),
             ChosenFacets = chosenFacets,
-            TotalPages = searchResult.TotalPages
+            TotalPages = searchResult?.TotalPages ?? 0
         };
 
         foreach (var facetOption in model.Facets)
@@ -70,19 +70,18 @@ public class BlogPostListViewComponent : ViewComponent
             var teaserImage = JsonConvert.DeserializeObject<ImageAssetViewModelSerializable>(result.TeaserImageJSON ?? "{ }");
             var authorImage = JsonConvert.DeserializeObject<ImageAssetViewModelSerializable>(result.AuthorAvatarImageJSON ?? "{ }");
 
-            vms.Add(new BlogPostViewModel()
+            vms.Add(new BlogPostViewModel(new()
+            {
+                ID = result.AuthorMemberID,
+                Name = result.AuthorName,
+                Avatar = authorImage?.ToImageAsset(),
+            })
             {
                 Title = result.Title,
                 Date = result.PublishedDate,
                 LinkPath = result.Url,
                 ShortDescription = result.ShortDescription,
-                Author = new()
-                {
-                    ID = result.AuthorMemberID,
-                    Name = result.AuthorName,
-                    Avatar = authorImage.ToImageAsset(),
-                },
-                TeaserImage = teaserImage.ToImageAsset(),
+                TeaserImage = teaserImage?.ToImageAsset(),
                 Taxonomy = result.Taxonomy
             });
         }

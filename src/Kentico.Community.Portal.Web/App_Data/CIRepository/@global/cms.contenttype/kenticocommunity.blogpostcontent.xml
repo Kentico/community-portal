@@ -86,9 +86,10 @@ Article
           <controlname>Kentico.Administration.DateTimeInput</controlname>
         </settings>
       </field>
-      <field column="BlogPostPageContentSourceType" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="63d87e99-6afd-4ac3-b82f-8d1be785c80e" visible="true">
+      <field column="BlogPostContentSourceType" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="63d87e99-6afd-4ac3-b82f-8d1be785c80e" visible="true">
         <properties>
           <defaultvalue>markdown</defaultvalue>
+          <explanationtext>The format of the content of the blog</explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Content Source Type</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
@@ -137,6 +138,7 @@ richText;Rich Text
   <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
   <ClassIconClass>xp-paragraph</ClassIconClass>
   <ClassName>KenticoCommunity.BlogPostContent</ClassName>
+  <ClassShortName>KenticoCommunityBlogPostContent</ClassShortName>
   <ClassTableName>KenticoCommunity_BlogPostContent</ClassTableName>
   <ClassType>Content</ClassType>
   <ClassWebPageHasUrl>False</ClassWebPageHasUrl>

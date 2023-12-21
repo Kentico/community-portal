@@ -31,7 +31,7 @@ public class QAndAQuestionUpdateCommandHandler : WebPageCommandHandler<QAndAQues
     public override async Task<Unit> Handle(QAndAQuestionUpdateCommand request, CancellationToken cancellationToken)
     {
         var question = request.Question;
-        string filteredTitle = Regex.Replace(request.UpdatedQuestionTitle, @"[^a-zA-Z0-9\d]", "-").RemoveRepeatedCharacters('-');
+        string filteredTitle = Regex.Replace(request.UpdatedQuestionTitle, @"[^a-zA-Z0-9\d]", "-").RemoveRepeatedCharacters('-') ?? "";
         string uniqueID = Guid.NewGuid().ToString("N");
         string displayName = $"{filteredTitle[..Math.Min(91, filteredTitle.Length)]}-{uniqueID[..8]}";
 

@@ -71,7 +71,7 @@ public class LicensesWidgetViewComponent : ViewComponent
 
         try
         {
-            return JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
+            return JsonConvert.DeserializeObject<Dictionary<string, string>>(value) ?? new();
         }
         catch
         {
@@ -101,7 +101,7 @@ public class LicensesWidgetProperties : IWidgetProperties
 
 public class LicensesWidgetViewModel
 {
-    public string Title { get; set; }
-    public string NoLicensesText { get; set; }
-    public LicensesViewModel Licenses { get; set; }
+    public string Title { get; set; } = "";
+    public string NoLicensesText { get; set; } = "";
+    public LicensesViewModel Licenses { get; set; } = new();
 }

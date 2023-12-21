@@ -47,7 +47,7 @@ public class ClientAssets
 
         if (manifest.ContainsKey(assetPath))
         {
-            return $"/{manifest[assetPath].File}";
+            return $"/{manifest[assetPath]?.File}";
         }
 
         return "";

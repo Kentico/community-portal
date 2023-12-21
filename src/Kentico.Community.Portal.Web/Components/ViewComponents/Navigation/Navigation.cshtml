@@ -1,14 +1,14 @@
 @using Kentico.Community.Portal.Web.Components.ViewComponents.Navigation
 
-@model HeaderViewModel
+@model NavigationViewModel
 
 @{
-    string GetCurrentClass(MenuItemViewModel item)
+    string? GetCurrentClass(MenuItemViewModel item)
     {
         return item.IsActive ? "active" : null;
     }
 
-    string GetAriaAttribute(MenuItemViewModel item)
+    string? GetAriaAttribute(MenuItemViewModel item)
     {
         return item.IsActive ? "aria-current=page" : null;
     }
@@ -37,7 +37,7 @@
             <div class="collapse navbar-collapse d-none d-md-block" id="navbarNavDropdown">
                 <ul class="c-main-nav navbar-nav ms-auto">
                     <div class="c-navbar-dropdown-bg"></div>
-                    @foreach (var item in Model.FirstLevel)
+                    @foreach (var item in Model.NavItems)
                     {
                         <li class="nav-item">
                             <a class="nav-link @GetCurrentClass(item)" @GetAriaAttribute(item)
@@ -91,7 +91,7 @@
     <div class="collapse navbar-collapse position-static d-md-none" id="navbarNavDropdown">
         <ul class="c-main-nav navbar-nav ms-auto">
             <div class="c-navbar-dropdown-bg"></div>
-            @foreach (var item in Model.FirstLevel)
+            @foreach (var item in Model.NavItems)
             {
                 <li class="nav-item">
                     <a class="nav-link @GetCurrentClass(item)" @GetAriaAttribute(item) href="@item.Url">@item.Caption</a>

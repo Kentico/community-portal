@@ -72,27 +72,28 @@ public class BlogPostPageTemplateController : Controller
             ? renderer.RenderUnsafe(post.BlogPostContentContentMarkdown)
             : new(post.BlogPostContentContentHTML);
 
-        var vm = new BlogPostDetailViewModel()
+        var vm = new BlogPostDetailViewModel(teaser, new()
+        {
+            Avatar = authorImage,
+            BiographyHTML = new(author.AuthorContentBiographyHTML),
+            LinkProfilePath = GetAuthorMemberProfilePath(author),
+            Name = author.FullName,
+            Title = "" // TODO collect from Member
+        })
         {
             Title = post.BlogPostContentTitle,
             Date = post.BlogPostContentPublishedDate,
             UnsanitizedContentHTML = contentHTML,
-            Teaser = teaser,
-            Author = new()
-            {
-                Avatar = authorImage,
-                BiographyHTML = new(author.AuthorContentBiographyHTML),
-                LinkProfilePath = GetAuthorMemberProfilePath(author),
-                Name = author.FullName,
-                Title = "" // TODO collect from Member
-            },
             AbsoluteURL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}{Request.Path}",
             DiscussionLinkPath = string.IsNullOrWhiteSpace(blogPage.BlogPostPageQAndADiscussionLinkPath)
                 ? null
                 : blogPage.BlogPostPageQAndADiscussionLinkPath
         };
 
-        var meta = new Meta(blogPage.BlogPostPageTitle, blogPage.BlogPostPageShortDescription);
+        var meta = new Meta(blogPage.BlogPostPageTitle, blogPage.BlogPostPageShortDescription)
+        {
+            CanonicalURL = blogPage.BlogPostPageCanonicalURL
+        };
 
         metaService.SetMeta(meta);
 
@@ -125,26 +126,36 @@ public class BlogPostPageTemplateController : Controller
             return Maybe<string>.None;
         }
 
-        return Url.Action(nameof(MemberController.MemberDetail), "Member", new { memberID = author.AuthorContentMemberID });
+        string? path = Url.Action(nameof(MemberController.MemberDetail), "Member", new { memberID = author.AuthorContentMemberID });
+
+        return string.IsNullOrWhiteSpace(path)
+            ? Maybe<string>.None
+            : path;
     }
 }
 
 public class BlogPostDetailViewModel
 {
-    public ImageAssetViewModel Teaser { get; init; }
-    public string Title { get; init; }
+    public BlogPostDetailViewModel(ImageAssetViewModel? teaser, AuthorViewModel author)
+    {
+        Teaser = teaser;
+        Author = author;
+    }
+
+    public ImageAssetViewModel? Teaser { get; init; }
+    public string Title { get; init; } = "";
     public DateTime Date { get; init; }
-    public HtmlString UnsanitizedContentHTML { get; init; }
+    public HtmlString UnsanitizedContentHTML { get; init; } = HtmlString.Empty;
     public AuthorViewModel Author { get; init; }
-    public string AbsoluteURL { get; init; }
+    public string AbsoluteURL { get; init; } = "";
     public string? DiscussionLinkPath { get; init; }
 }
 
 public class AuthorViewModel
 {
-    public string Name { get; init; }
+    public string Name { get; init; } = "";
     public string? Title { get; init; }
     public ImageAssetViewModel? Avatar { get; init; }
     public Maybe<string> LinkProfilePath { get; init; }
-    public HtmlString BiographyHTML { get; init; }
+    public HtmlString BiographyHTML { get; init; } = HtmlString.Empty;
 }

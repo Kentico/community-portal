@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Headless token</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="HeadlessTokenID" columntype="integer" enabled="true" guid="f4b0ec5a-3aa8-4cb6-bcdf-155125ce8535" isPK="true" system="true" />
+      <field column="HeadlessTokenGUID" columnprecision="0" columntype="guid" enabled="true" guid="7621694b-da38-4546-9526-06bd6b22e2cc" system="true" />
+      <field column="HeadlessTokenHeadlessChannelID" columnprecision="0" columntype="integer" enabled="true" guid="141cb16a-4949-476a-80d0-6fb6b234c9d8" refobjtype="cms.headlesschannel" reftype="Required" system="true" />
+      <field column="HeadlessTokenDisplayName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="0e7e0a21-3825-456a-a64e-2fdffa2df13a" system="true" />
+      <field column="HeadlessTokenEnabled" columnprecision="0" columntype="boolean" enabled="true" guid="39f57a5a-dddd-4a96-8a77-066434aba9cd" system="true">
+        <properties>
+          <defaultvalue>True</defaultvalue>
+        </properties>
+      </field>
+      <field column="HeadlessTokenCreatedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="b6354c93-7b40-4b46-9407-2fa29231d7e1" system="true" />
+      <field allowempty="true" column="HeadlessTokenCreatedByUserID" columnprecision="0" columntype="integer" enabled="true" guid="8fa26d2c-81d5-4d8b-92b3-4e8345a7d6d7" refobjtype="cms.user" reftype="Required" system="true" />
+      <field column="HeadlessTokenModifiedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="1f71225e-2d98-406b-9993-7b72ffd21aac" system="true" />
+      <field allowempty="true" column="HeadlessTokenModifiedByUserID" columnprecision="0" columntype="integer" enabled="true" guid="f4811caf-c35c-4e88-ad94-e65fdb45ba81" refobjtype="cms.user" reftype="Required" system="true" />
+      <field column="HeadlessTokenHash" columnprecision="0" columnsize="64" columntype="text" enabled="true" guid="aee168f4-1fb8-4f5f-8dd1-b5e06f828d84" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>8b80473b-018d-460b-858f-e0cfcc89007d</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.HeadlessToken</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Headless</CodeName>
+    <GUID>a29b271d-8329-48a7-870a-619fc8c3c277</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_HeadlessToken</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

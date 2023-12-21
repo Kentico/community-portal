@@ -28,6 +28,6 @@ public class AuthorContentQueryHandler : ContentItemQueryHandler<AuthorContentQu
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(AuthorContentQuery query, AuthorContentQueryResponse result, ICacheDependencyKeysBuilder builder) =>
         builder.ContentItem(result.Author)
             .Collection(
-                result.Author.AuthorContentPhotoMediaFileImage,
+                result.Author?.AuthorContentPhotoMediaFileImage,
                 (image, builder) => builder.Media(image));
 }

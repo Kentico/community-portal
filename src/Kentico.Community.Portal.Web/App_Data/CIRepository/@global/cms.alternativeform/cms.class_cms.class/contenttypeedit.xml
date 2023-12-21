@@ -61,6 +61,7 @@
 Reusable;{$contentengine.contenttypes.typedropdown.options.reusable$}
 Website;{$contentengine.contenttypes.typedropdown.options.website$}
 Email;{$contentengine.contenttypes.typedropdown.options.email$}
+Headless;{$contentengine.contenttypes.typedropdown.options.headless$}
 ]]>
           </Options>
           <Placeholder>{$base.forms.dropdown.placeholder$}</Placeholder>
@@ -69,7 +70,7 @@ Email;{$contentengine.contenttypes.typedropdown.options.email$}
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$contentengine.contenttypes.typedropdown$}</fieldcaption>
           <fielddescription>
-            <![CDATA[{$contentengine.contenttypes.typedropdown.tooltip$}<ul><li>{$contentengine.contenttypes.typedropdown.tooltip.reusable$}</li><li>{$contentengine.contenttypes.typedropdown.tooltip.pages$}</li><li>{$contentengine.contenttypes.typedropdown.tooltip.emails$}</li></ul>]]>
+            <![CDATA[{$contentengine.contenttypes.typedropdown.tooltip$}<ul><li>{$contentengine.contenttypes.typedropdown.tooltip.reusable$}</li><li>{$contentengine.contenttypes.typedropdown.tooltip.pages$}</li><li>{$contentengine.contenttypes.typedropdown.tooltip.emails$}</li><li>{$contentengine.contenttypes.typedropdown.tooltip.headless$}</li></ul>]]>
           </fielddescription>
           <fielddescriptionashtml>True</fielddescriptionashtml>
         </properties>
@@ -84,6 +85,16 @@ Email;{$contentengine.contenttypes.typedropdown.options.email$}
           <fielddescription>
             <![CDATA[{$contentengine.contenttypes.webpagehasurl.tooltip$}]]>
           </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ClassShortName" enabled="true" guid="6eca5a7e-4abb-4e2a-b4f0-1f7d2dfc3b33" visible="true" allowempty="">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$contentengine.contenttypes.classhortname$}</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>

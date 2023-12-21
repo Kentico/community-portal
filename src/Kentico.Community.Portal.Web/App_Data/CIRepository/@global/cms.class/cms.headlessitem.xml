@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Headless item</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="HeadlessItemID" columntype="integer" enabled="true" guid="f03264f7-db78-40fa-be4e-e3bbec90ce07" isPK="true" system="true" />
+      <field column="HeadlessItemGUID" columnprecision="0" columntype="guid" enabled="true" guid="5b784ffc-7e07-4abd-a066-779de1484bd8" system="true">
+        <properties>
+          <defaultvalue>00000000-0000-0000-0000-000000000000</defaultvalue>
+        </properties>
+      </field>
+      <field column="HeadlessItemHeadlessChannelID" columnprecision="0" columntype="integer" enabled="true" guid="062f0559-12b3-4a73-88bb-4b3667c52cfa" refobjtype="cms.headlesschannel" reftype="NotRequired" system="true" />
+      <field column="HeadlessItemContentItemID" columnprecision="0" columntype="integer" enabled="true" guid="81489424-dcf9-4a36-90c4-9f2503a18a1e" refobjtype="cms.contentitem" reftype="NotRequired" system="true" />
+      <field column="HeadlessItemName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="0511b8ad-6ea5-4c37-96a5-30335eb17e7b" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>ceeed7cd-8751-40eb-b799-73401e46b40b</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.HeadlessItem</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Headless</CodeName>
+    <GUID>a29b271d-8329-48a7-870a-619fc8c3c277</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_HeadlessItem</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

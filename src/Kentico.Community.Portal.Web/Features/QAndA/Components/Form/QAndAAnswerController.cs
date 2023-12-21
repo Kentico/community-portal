@@ -55,7 +55,12 @@ public class QAndAAnswerController : Controller
             return ViewComponent(typeof(QAndAAnswerFormViewComponent), new { questionID });
         }
 
-        var member = await userManager.CurrentUser(HttpContext)!;
+        var member = await userManager.CurrentUser(HttpContext);
+
+        if (member is null)
+        {
+            return Unauthorized();
+        }
 
         _ = await mediator.Send(new QAndAAnswerCreateCommand(member, requestModel.Content, parentQuestion));
 
@@ -113,15 +118,20 @@ public class QAndAAnswerController : Controller
     [HttpGet]
     public async Task<ActionResult> DisplayEditAnswerForm(Guid questionID, int answerID)
     {
-        var user = await userManager.CurrentUser(HttpContext);
+        var member = await userManager.CurrentUser(HttpContext);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
         var answer = await mediator.Send(new QAndAAnswerDataByIDQuery(answerID));
         if (answer is null)
         {
             return NotFound();
         }
 
-        bool canManageContent = await userManager.CanManageContent(user, userInfoProvider);
-        if (answer.QAndAAnswerDataAuthorMemberID != user.Id && !canManageContent)
+        bool canManageContent = await userManager.CanManageContent(member, userInfoProvider);
+        if (answer.QAndAAnswerDataAuthorMemberID != member.Id && !canManageContent)
         {
             return Forbid();
         }
@@ -139,9 +149,14 @@ public class QAndAAnswerController : Controller
             return NotFound();
         }
 
-        var user = await userManager.CurrentUser(HttpContext)!;
-        bool canManageContent = await userManager.CanManageContent(user, userInfoProvider);
-        if (parentQuestion.QAndAQuestionPageAuthorMemberID != user.Id && !canManageContent)
+        var member = await userManager.CurrentUser(HttpContext);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        bool canManageContent = await userManager.CanManageContent(member, userInfoProvider);
+        if (parentQuestion.QAndAQuestionPageAuthorMemberID != member.Id && !canManageContent)
         {
             return Forbid();
         }
@@ -166,15 +181,20 @@ public class QAndAAnswerController : Controller
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> DeleteAnswer(int answerID)
     {
+        var member = await userManager.CurrentUser(HttpContext);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
         var answer = await mediator.Send(new QAndAAnswerDataByIDQuery(answerID));
         if (answer is null)
         {
             return NotFound();
         }
 
-        var user = await userManager.CurrentUser(HttpContext)!;
-        bool canManageContent = await userManager.CanManageContent(user, userInfoProvider);
-        if (answer.QAndAAnswerDataAuthorMemberID != user.Id && !canManageContent)
+        bool canManageContent = await userManager.CanManageContent(member, userInfoProvider);
+        if (answer.QAndAAnswerDataAuthorMemberID != member.Id && !canManageContent)
         {
             return Forbid();
         }

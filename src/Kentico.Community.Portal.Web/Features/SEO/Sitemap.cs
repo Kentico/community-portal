@@ -86,31 +86,27 @@ public class Sitemap
             bool isInSitemap = !c.TryGetValue(nameof(LandingPage.LandingPageIncludeInSitemap), out bool? val)
                 || (val ?? true);
 
-            return new SitemapPage
+            return new SitemapPage(new()
             {
-                SystemFields = new()
-                {
-                    WebPageItemID = c.WebPageItemID,
-                    WebPageItemGUID = c.WebPageItemGUID,
-                    WebPageItemName = c.WebPageItemName,
-                    WebPageItemOrder = c.WebPageItemOrder,
-                    /*
-                     * Accessing this field throws an exception
-                     */
-                    // WebPageItemParentID = c.WebPageItemParentID,
-                    WebPageItemTreePath = c.WebPageItemTreePath,
-                    WebPageUrlPath = c.WebPageUrlPath,
+                WebPageItemID = c.WebPageItemID,
+                WebPageItemGUID = c.WebPageItemGUID,
+                WebPageItemName = c.WebPageItemName,
+                WebPageItemOrder = c.WebPageItemOrder,
+                /*
+                 * Accessing this field throws an exception
+                 */
+                // WebPageItemParentID = c.WebPageItemParentID,
+                WebPageItemTreePath = c.WebPageItemTreePath,
+                WebPageUrlPath = c.WebPageUrlPath,
 
-                    ContentItemCommonDataContentLanguageID = c.ContentItemCommonDataContentLanguageID,
-                    ContentItemCommonDataVersionStatus = c.ContentItemCommonDataVersionStatus,
-                    ContentItemContentTypeID = c.ContentItemContentTypeID,
-                    ContentItemGUID = c.ContentItemGUID,
-                    ContentItemID = c.ContentItemID,
-                    ContentItemIsSecured = c.ContentItemIsSecured,
-                    ContentItemName = c.ContentItemName
-                },
-                IsInSitemap = isInSitemap
-            };
+                ContentItemCommonDataContentLanguageID = c.ContentItemCommonDataContentLanguageID,
+                ContentItemCommonDataVersionStatus = c.ContentItemCommonDataVersionStatus,
+                ContentItemContentTypeID = c.ContentItemContentTypeID,
+                ContentItemGUID = c.ContentItemGUID,
+                ContentItemID = c.ContentItemID,
+                ContentItemIsSecured = c.ContentItemIsSecured,
+                ContentItemName = c.ContentItemName
+            }, isInSitemap);
         });
 
         foreach (var page in pages)
@@ -134,8 +130,14 @@ public class Sitemap
         return nodes;
     }
 
-    public class SitemapPage : IWebPageFieldsSource
+    public struct SitemapPage : IWebPageFieldsSource
     {
+        public SitemapPage(WebPageFields systemFields, bool isInSitemap)
+        {
+            SystemFields = systemFields;
+            IsInSitemap = isInSitemap;
+        }
+
         public WebPageFields SystemFields { get; set; }
         public bool IsInSitemap { get; set; }
     }

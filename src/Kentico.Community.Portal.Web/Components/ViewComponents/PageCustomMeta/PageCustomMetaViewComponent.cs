@@ -29,7 +29,7 @@ public class PageCustomMetaViewComponent : ViewComponent
     {
         var meta = await metaService.GetMeta();
 
-        string url = contextAccessor.HttpContext.Request.GetEncodedUrl();
+        string url = contextAccessor.HttpContext?.Request.GetEncodedUrl() ?? "";
 
         var settingsResult = await mediator.Send(new WebsiteSettingsContentQuery());
 
@@ -54,7 +54,9 @@ public class PageCustomMetaViewModel
     {
         Title = meta.Title;
         Description = meta.Description;
-        CanonicalURL = meta.CanonicalURL;
+        CanonicalURL = string.IsNullOrWhiteSpace(meta.CanonicalURL)
+            ? Maybe<string>.None
+            : meta.CanonicalURL;
     }
 
     private PageCustomMetaViewModel()
@@ -65,15 +67,14 @@ public class PageCustomMetaViewModel
         SiteName = "";
         CaptchaSiteKey = null;
         MetaRobotsContent = null;
-        CanonicalURL = null;
     }
 
     public string URL { get; init; } = "";
-    public string OGImageURL { get; init; } = "";
+    public string? OGImageURL { get; init; } = "";
     public string Title { get; init; } = "";
     public string Description { get; init; } = "";
     public string? CaptchaSiteKey { get; init; } = null;
     public string SiteName { get; init; } = "";
     public string? MetaRobotsContent { get; init; } = null;
-    public string? CanonicalURL { get; init; } = null;
+    public Maybe<string> CanonicalURL { get; init; }
 }

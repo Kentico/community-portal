@@ -16,4 +16,9 @@
     <Using Include="CMS.ContentEngine" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <!-- Required to prevent type conflicts with CSharpFunctionalExtensions types -->
+    <HotChocolateImplicitUsings>disable</HotChocolateImplicitUsings>
+  </PropertyGroup>
+
 </Project>

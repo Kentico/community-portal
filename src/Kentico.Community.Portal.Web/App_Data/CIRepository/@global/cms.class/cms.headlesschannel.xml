@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Headless channel</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="HeadlessChannelID" columntype="integer" enabled="true" guid="04a4d06d-3bdf-4b83-8493-21c7cfd6f362" isPK="true" system="true" />
+      <field column="HeadlessChannelGUID" columnprecision="0" columntype="guid" enabled="true" guid="fdce1096-b402-4f86-9b50-bc45995100ea" system="true">
+        <properties>
+          <defaultvalue>00000000-0000-0000-0000-000000000000</defaultvalue>
+        </properties>
+      </field>
+      <field column="HeadlessChannelChannelID" columnprecision="0" columntype="integer" enabled="true" guid="a12b08d8-33e7-409a-9138-1e570354bf78" refobjtype="cms.channel" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="HeadlessChannelPrimaryContentLanguageID" columnprecision="0" columntype="integer" enabled="true" guid="4df6f01f-d86b-4193-8c4c-f3159384224b" refobjtype="cms.contentlanguage" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>e81cea29-6c36-4902-aca6-f7ef2ada0de2</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.HeadlessChannel</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Headless</CodeName>
+    <GUID>a29b271d-8329-48a7-870a-619fc8c3c277</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_HeadlessChannel</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

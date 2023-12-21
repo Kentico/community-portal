@@ -92,7 +92,7 @@ public class SupportFacade
             DevelopmentModel = model.DeploymentModel,
             URL = model.WebsiteURL,
             Fix = model.AttemptedResolution,
-            FileName = model.Attachment?.FileName
+            FileName = model.Attachment?.FileName ?? "unknown"
         };
 
         if (model.Attachment is not null)
@@ -109,38 +109,38 @@ public class SupportFacade
 
 public class SupportCaseDto
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    public string FirstName { get; set; } = "";
+    public string LastName { get; set; } = "";
 
     [JsonRequired]
-    public string Email { get; set; }
+    public string Email { get; set; } = "";
 
-    public string Company { get; set; }
-
-    [JsonRequired]
-    public string Subject { get; set; }
+    public string Company { get; set; } = "";
 
     [JsonRequired]
-    public string Description { get; set; }
+    public string Subject { get; set; } = "";
 
-    public string Version { get; set; }
+    [JsonRequired]
+    public string Description { get; set; } = "";
 
-    public string Hotfix { get; set; }
+    public string Version { get; set; } = "";
 
-    public string DevelopmentModel { get; set; }
+    public string Hotfix { get; set; } = "";
 
-    public string URL { get; set; }
+    public string DevelopmentModel { get; set; } = "";
 
-    public string Scenario { get; set; }
+    public string URL { get; set; } = "";
 
-    public string Fix { get; set; }
+    public string Scenario { get; set; } = "";
+
+    public string Fix { get; set; } = "";
 
     /// <summary>
     /// Base64 encoded file
     /// </summary>
-    public string File { get; set; }
+    public string File { get; set; } = "";
 
-    public string FileName { get; set; }
+    public string FileName { get; set; } = "";
 }
 
 public static class FormFileExtensions
@@ -156,7 +156,7 @@ public static class FormFileExtensions
 
 public class MicrosoftDynamicsSettings
 {
-    public string Url { get; set; }
-    public string SupportCasesDirectory { get; set; }
-    public string ProcessedCasesDirectory { get; set; }
+    public string Url { get; set; } = "";
+    public string SupportCasesDirectory { get; set; } = "";
+    public string ProcessedCasesDirectory { get; set; } = "";
 }

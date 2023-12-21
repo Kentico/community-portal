@@ -37,6 +37,11 @@
     <Using Include="Kentico.Community.Portal.Core.Content" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <!-- Required to prevent type conflicts with CSharpFunctionalExtensions types -->
+    <HotChocolateImplicitUsings>disable</HotChocolateImplicitUsings>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Update="app_offline.htm_">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -44,7 +49,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Using a prerelease Lucene integration to support v27 -->
     <Reference Include="Kentico.Xperience.Lucene">
       <HintPath>..\..\lib\Kentico.Xperience.Lucene.dll</HintPath>
     </Reference>

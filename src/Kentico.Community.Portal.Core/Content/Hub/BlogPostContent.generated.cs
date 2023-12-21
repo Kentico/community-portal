@@ -19,7 +19,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// <summary>
 	/// Represents a content item of type <see cref="BlogPostContent"/>.
 	/// </summary>
-	public partial class BlogPostContent
+	public partial class BlogPostContent : IContentItemFieldsSource
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -70,9 +70,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// BlogPostPageContentSourceType.
+		/// BlogPostContentSourceType.
 		/// </summary>
-		public string BlogPostPageContentSourceType { get; set; }
+		public string BlogPostContentSourceType { get; set; }
 
 
 		/// <summary>

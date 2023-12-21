@@ -52,12 +52,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// WebsiteSettingsContentFooterContentHTML.
-		/// </summary>
-		public string WebsiteSettingsContentFooterContentHTML { get; set; }
-
-
-		/// <summary>
 		/// WebsiteSettingsContentNotFoundContentHTML.
 		/// </summary>
 		public string WebsiteSettingsContentNotFoundContentHTML { get; set; }

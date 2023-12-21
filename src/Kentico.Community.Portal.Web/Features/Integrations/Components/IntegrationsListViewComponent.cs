@@ -57,6 +57,6 @@ public class IntegrationItemViewModel
     public string? RepositoryURL { get; set; }
     public string? LibraryURL { get; set; }
     public IntegrationType Type { get; set; }
-    public string AuthorName { get; set; }
+    public string AuthorName { get; set; } = "";
     public string? AuthorURL { get; set; }
 }

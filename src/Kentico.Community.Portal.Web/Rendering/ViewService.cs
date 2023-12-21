@@ -8,7 +8,7 @@ public class ViewService
 {
     private readonly IHttpContextAccessor contextAccessor;
     private readonly IWebHostEnvironment env;
-    private IRequestCultureFeature? cultureFeature;
+    private IRequestCultureFeature cultureFeature = null!;
 
     public ViewService(
         IHttpContextAccessor contextAccessor,
@@ -24,7 +24,7 @@ public class ViewService
     {
         get
         {
-            cultureFeature ??= contextAccessor.HttpContext.Features.Get<IRequestCultureFeature>();
+            cultureFeature ??= contextAccessor.HttpContext!.Features.Get<IRequestCultureFeature>()!;
 
             return cultureFeature.RequestCulture.Culture;
         }

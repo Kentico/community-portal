@@ -1,15 +1,14 @@
 <Project>
   <!-- See https://aka.ms/dotnet/msbuild/customize for more details on customizing your build -->
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <VersionPrefix>28.0.2.1</VersionPrefix>
+    <VersionPrefix>28.1.0.2</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-    <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-    <NoWarn>$(NoWarn);CS8632</NoWarn>
-    <!-- TODO Remove CS8632 when nullable reference types are enabled for the entire solution -->
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <WarningsAsErrors>nullable</WarningsAsErrors>
+    <NoWarn>$(NoWarn)</NoWarn>
   </PropertyGroup>
 </Project>

@@ -54,5 +54,11 @@ namespace Kentico.Community.Portal.Core.Content
 		/// BlogPostPageQAndADiscussionLinkPath.
 		/// </summary>
 		public string BlogPostPageQAndADiscussionLinkPath { get; set; }
+
+
+		/// <summary>
+		/// BlogPostPageCanonicalURL.
+		/// </summary>
+		public string BlogPostPageCanonicalURL { get; set; }
 	}
 }

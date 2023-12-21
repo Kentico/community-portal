@@ -186,7 +186,7 @@ public class RegistrationController : Controller
             memberEmail = member.Email,
             confirmToken
         },
-        Request.Scheme);
+        Request.Scheme) ?? "";
 
         await emailService.SendEmail(new EmailMessage()
         {

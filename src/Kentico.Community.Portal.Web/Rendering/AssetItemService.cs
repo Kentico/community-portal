@@ -47,7 +47,10 @@ public class AssetItemService
         {
             var image = await RetrieveMediaFileImage(item);
 
-            images.Add(image);
+            if (image is not null)
+            {
+                images.Add(image);
+            }
         }
 
         return images;
@@ -90,7 +93,12 @@ public class AssetItemService
     /// <returns></returns>
     public string BuildFullFileUrl(IMediaFileUrl url)
     {
-        var req = contextAccessor.HttpContext.Request;
+        var req = contextAccessor.HttpContext?.Request;
+
+        if (req is null)
+        {
+            return "";
+        }
 
         return BuildFullFileUrl(url, req);
     }

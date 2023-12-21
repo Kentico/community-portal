@@ -10,7 +10,7 @@ public class RequestRecoveryEmailViewModel
     [Display(Name = "Email address")]
     [EmailAddress(ErrorMessage = "Invalid email address.")]
     [MaxLength(254, ErrorMessage = "The Email address cannot be longer than 254 characters.")]
-    public string Email { get; set; }
+    public string Email { get; set; } = "";
 
     public string Title { get; set; } = "Reset Your Password";
 }

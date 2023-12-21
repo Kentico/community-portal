@@ -4,7 +4,10 @@
 
 @{
     var htmlAttributes = ViewData.Kentico().GetEditorHtmlAttributes();
-    var spanTitle = htmlAttributes.TryGetValue("title", out object title) ? title : String.Empty;
+    string spanTitle = htmlAttributes.TryGetValue("title", out object? title)
+    ? title?.ToString() ?? ""
+    : String.Empty;
+
     if (!Model.CheckboxEnabled)
     {
         htmlAttributes["disabled"] = "disabled";

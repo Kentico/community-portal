@@ -1,6 +1,6 @@
 namespace Kentico.Community.Portal.Core.Content;
 
-public partial class BlogPostContent : IContentFieldsSource
+public partial class BlogPostContent
 {
     public static class ContentTypes
     {
@@ -8,5 +8,5 @@ public partial class BlogPostContent : IContentFieldsSource
         public const string RICH_TEXT = "richText";
     }
 
-    public bool IsContentTypeMarkdown() => string.Equals(BlogPostPageContentSourceType, ContentTypes.MARKDOWN, StringComparison.OrdinalIgnoreCase);
+    public bool IsContentTypeMarkdown() => string.Equals(BlogPostContentSourceType, ContentTypes.MARKDOWN, StringComparison.OrdinalIgnoreCase);
 }

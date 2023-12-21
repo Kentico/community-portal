@@ -23,7 +23,7 @@ public class WebPageMetaService
         var settings = resp.Settings;
 
         string titlePattern = settings.WebsiteSettingsContentPageTitleFormat ?? "{0}";
-        string pageTitle = meta?.Title ?? "";
+        string pageTitle = meta.Title;
 
         string fullTitle = string.Format(titlePattern, pageTitle).Trim(' ').TrimStart('|').Trim(' ');
 

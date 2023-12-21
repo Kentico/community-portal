@@ -7,7 +7,10 @@
 
 <link rel="canonical" href="@Model.URL">
 
-<meta name="og:image" content="@Model.OGImageURL">
+@if (Model.OGImageURL is string ogImageURL)
+{
+    <meta name="og:image" content="@ogImageURL">
+}
 <meta name="og:title" content="@Model.Title">
 <meta name="og:description" content="@Model.Description">
 <meta name="og:url" content="@Model.URL">
@@ -30,9 +33,9 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
-@if (!string.IsNullOrWhiteSpace(Model.CanonicalURL))
+@if (Model.CanonicalURL.TryGetValue(out var url))
 {
-    <link rel="canonical" href="@Model.CanonicalURL">
+    <link rel="canonical" href="@url">
 }
 
 @if (!string.IsNullOrWhiteSpace(Model.CaptchaSiteKey))

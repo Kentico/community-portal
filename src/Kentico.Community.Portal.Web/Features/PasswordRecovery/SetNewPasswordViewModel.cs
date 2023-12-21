@@ -10,19 +10,19 @@ public class SetNewPasswordViewModel
     public int UserId { get; set; }
 
     [HiddenInput]
-    public string Token { get; set; }
+    public string Token { get; set; } = "";
 
     [DataType(DataType.Password)]
     [Required(ErrorMessage = "The password cannot be empty.")]
     [DisplayName("Password")]
     [MaxLength(100, ErrorMessage = "The password cannot be longer than 100 characters.")]
-    public string Password { get; set; }
+    public string Password { get; set; } = "";
 
     [DataType(DataType.Password)]
     [DisplayName("Password confirmation")]
     [MaxLength(100, ErrorMessage = "The password cannot be longer than 100 characters.")]
     [Compare(nameof(Password), ErrorMessage = "The entered passwords do not match.")]
-    public string PasswordConfirmation { get; set; }
+    public string PasswordConfirmation { get; set; } = "";
 
     public State SubmissionState { get; set; } = State.Not_Reset;
 }

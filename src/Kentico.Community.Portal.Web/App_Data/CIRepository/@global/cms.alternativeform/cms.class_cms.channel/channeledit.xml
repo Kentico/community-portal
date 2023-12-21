@@ -34,8 +34,9 @@
           <controlname>Kentico.Administration.DropDownSelector</controlname>
           <Options>
 <![CDATA[
-Website;Website
-Email;Email
+Website;{$base.channels.channel.website.caption$}
+Email;{$base.channels.channel.email.caption$}
+Headless;{$base.channels.channel.headless.caption$}
 ]]>
           </Options>
         </settings>

@@ -27,7 +27,7 @@ public class FormSubmitAutomationEmailProvider : IFormSubmitAutomationEmailProvi
         this.mediator = mediator;
     }
 
-    public async Task<AutomationEmail> GetEmail(BizFormInfo form, BizFormItem formData, ContactInfo contact)
+    public async Task<AutomationEmail?> GetEmail(BizFormInfo form, BizFormItem formData, ContactInfo contact)
     {
         string recipient = contact.ContactEmail;
 
@@ -50,7 +50,7 @@ public class FormSubmitAutomationEmailProvider : IFormSubmitAutomationEmailProvi
         return email ?? await defaultAutomationEmailProvider.GetEmail(form, formData, contact);
     }
 
-    private AutomationEmail GetEmail(string formName, string recipient,
+    private AutomationEmail? GetEmail(string formName, string recipient,
         Dictionary<string, EmailNotificationDto> formsConfiguration)
     {
         var configuration =
@@ -79,7 +79,7 @@ public class FormSubmitAutomationEmailProvider : IFormSubmitAutomationEmailProvi
 
         try
         {
-            return JsonConvert.DeserializeObject<Dictionary<string, EmailNotificationDto>>(value);
+            return JsonConvert.DeserializeObject<Dictionary<string, EmailNotificationDto>>(value) ?? new();
         }
         catch
         {
@@ -90,7 +90,7 @@ public class FormSubmitAutomationEmailProvider : IFormSubmitAutomationEmailProvi
 
 public class EmailNotificationDto
 {
-    public string Subject { get; set; }
-    public string Sender { get; set; }
-    public string Body { get; set; }
+    public string Subject { get; set; } = "";
+    public string Sender { get; set; } = "";
+    public string Body { get; set; } = "";
 }

@@ -12,7 +12,7 @@ public interface IPagedViewModel
 {
     int Page { get; set; }
     int TotalPages { get; set; }
-    Dictionary<string, string> GetRouteData(int page);
+    Dictionary<string, string?> GetRouteData(int page);
     string PageLinkPath(int pageNumber, string path) => QueryHelpers.AddQueryString(path, GetRouteData(pageNumber));
     string PageLinkPath(int pageNumber, HttpRequest request) => QueryHelpers.AddQueryString(request.Path, GetRouteData(pageNumber));
 }

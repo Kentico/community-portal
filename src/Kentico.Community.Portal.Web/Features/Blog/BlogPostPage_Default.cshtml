@@ -12,11 +12,14 @@
         <div class="content-wrapper">
             <section class="c-section hero-article">
                 <section class="template-banner blog greyscale">
-                    <div class="template-banner__bg">
-                        <img class="t-article_hero-picture img-fluid" src="@post.Teaser.URLData.RelativePath"
-                            alt="@post.Teaser.AltText" title="post.Teaser.Title" width="@post.Teaser.Dimensions.Width"
-                            height="@post.Teaser.Dimensions.Height" />
-                    </div>
+                    @if (post.Teaser is ImageAssetViewModel teaser)
+                    {
+                        <div class="template-banner__bg">
+                            <img class="t-article_hero-picture img-fluid" src="@teaser.URLData.RelativePath"
+                                alt="@teaser.AltText" title="teaser.Title" width="@teaser.Dimensions.Width"
+                                height="@teaser.Dimensions.Height" />
+                        </div>
+                    }
                     <div class="site-wide grid-container grid-container--full">
                         <div class="grid-column">
                             <div class="template-banner__content-wrapper">
@@ -34,7 +37,7 @@
                                                         class="c-tag_icon" />
                                                 }
                                             </div>
-                                            @if (post.Author.LinkProfilePath.TryGetValue(out string p1))
+                                            @if (post.Author.LinkProfilePath.TryGetValue(out string? p1))
                                             {
                                                 <a href="@p1">@post.Author.Name</a>
                                             }
@@ -118,7 +121,7 @@
                                     </div>
                                     <div class="c-card_content">
                                         <h4 class="h4 mb-0 mt-1">
-                                            @if (post.Author.LinkProfilePath.TryGetValue(out string p2))
+                                            @if (post.Author.LinkProfilePath.TryGetValue(out string? p2))
                                             {
                                                 <a class="text-primary" href="@p2">@post.Author.Name</a>
                                             }

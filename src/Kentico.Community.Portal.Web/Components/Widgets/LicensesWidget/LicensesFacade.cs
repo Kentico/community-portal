@@ -55,14 +55,14 @@ public class LicensesFacade
             httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(UserAgent, UserAgentVersion));
 
             string data = await httpClient.GetStringAsync(url);
-            var groups = JsonConvert.DeserializeObject<Dictionary<string, List<LicenseDto>>>(data);
+            var groups = JsonConvert.DeserializeObject<Dictionary<string, List<LicenseDto>>>(data) ?? new();
 
             foreach (var linksGroup in groups)
             {
                 var group = new LicenseLinkViewModel()
                 {
                     Name = linksGroup.Key,
-                    Url = GetLicenseTypeLink(linksGroup.Key, licenseTypeLinks),
+                    Url = GetLicenseTypeLink(linksGroup.Key, licenseTypeLinks) ?? "",
                     Links = linksGroup.Value.Select((item, index) =>
                         new LicenseLinkViewModel() { Name = item.Name, Url = item.Link }).ToList()
                 };
@@ -79,7 +79,7 @@ public class LicensesFacade
         return result;
     }
 
-    private string GetLicenseTypeLink(string name, Dictionary<string, string> dictionary)
+    private string? GetLicenseTypeLink(string name, Dictionary<string, string> dictionary)
     {
         if (dictionary == null || dictionary.Count == 0 || string.IsNullOrWhiteSpace(name))
         {
@@ -91,9 +91,9 @@ public class LicensesFacade
 
     private class LicenseDto
     {
-        public string Name { get; set; }
-        public string Version { get; set; }
-        public string Link { get; set; }
+        public string Name { get; set; } = "";
+        public string Version { get; set; } = "";
+        public string Link { get; set; } = "";
     }
 }
 

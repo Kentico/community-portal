@@ -92,11 +92,17 @@ public class BlogSearchIndexingStrategy : DefaultLuceneIndexingStrategy
                     blogModel.AuthorName = author.FullName;
                     blogModel.AuthorProfileLinkPath = "";
                     var authorImg = await assetService.RetrieveMediaFileImage(author.AuthorContentPhotoMediaFileImage.FirstOrDefault());
-                    blogModel.AuthorAvatarImageJSON = JsonConvert.SerializeObject(new ImageAssetViewModelSerializable(authorImg));
+                    if (authorImg is not null)
+                    {
+                        blogModel.AuthorAvatarImageJSON = JsonConvert.SerializeObject(new ImageAssetViewModelSerializable(authorImg));
+                    }
                 });
 
             var blogImg = await assetService.RetrieveMediaFileImage(blogPost.BlogPostContentTeaserMediaFileImage.FirstOrDefault());
-            blogModel.TeaserImageJSON = JsonConvert.SerializeObject(new ImageAssetViewModelSerializable(blogImg));
+            if (blogImg is not null)
+            {
+                blogModel.TeaserImageJSON = JsonConvert.SerializeObject(new ImageAssetViewModelSerializable(blogImg));
+            }
 
             string content = await webCrawler.CrawlWebPage(page);
             blogModel.Content = htmlSanitizer.SanitizeHtmlDocument(content);
@@ -264,8 +270,8 @@ public class SerializableMediaFileUrl
 
 public class DefaultMediaFileUrl : IMediaFileUrl
 {
-    public string RelativePath { get; set; }
-    public string DirectPath { get; set; }
-    public NameValueCollection QueryStringParameters { get; set; }
+    public string RelativePath { get; set; } = "";
+    public string DirectPath { get; set; } = "";
+    public NameValueCollection QueryStringParameters { get; set; } = new();
     public bool IsImage { get; set; }
 }

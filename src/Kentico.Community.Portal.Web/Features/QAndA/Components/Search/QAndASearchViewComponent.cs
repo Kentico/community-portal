@@ -47,13 +47,13 @@ public class QAndASearchViewModel : IPagedViewModel
 {
     public IReadOnlyList<QAndAPostViewModel> Questions { get; set; } = new List<QAndAPostViewModel>();
 
-    public string Query { get; set; }
+    public string Query { get; set; } = "";
     [HiddenInput]
     public int Page { get; set; }
-    public string SortBy { get; set; }
+    public string SortBy { get; set; } = "";
     public int TotalPages { get; set; }
 
-    public Dictionary<string, string> GetRouteData(int page) =>
+    public Dictionary<string, string?> GetRouteData(int page) =>
         new()
         {
             { "query", Query },

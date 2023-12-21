@@ -44,9 +44,7 @@ public class CommunityReCaptchaFormComponent : FormComponent<CommunityReCaptchaF
     private readonly IHttpContextAccessor httpContextAccessor;
     private readonly ILocalizationService localizationService;
     private readonly ReCaptchaSettings captchaOptions;
-    private string mPublicKeyV3;
-    private string mPrivateKeyV3;
-    private string mLanguage;
+    private string mLanguage = "";
     private bool? mSkipRecaptcha;
 
 
@@ -57,43 +55,7 @@ public class CommunityReCaptchaFormComponent : FormComponent<CommunityReCaptchaF
     {
         get;
         set;
-    }
-
-    /// <summary>
-    /// reCAPTCHA v3 site key from https://www.google.com/recaptcha/admin.
-    /// </summary>
-    public string PublicKeyV3
-    {
-        get
-        {
-            if (string.IsNullOrEmpty(mPublicKeyV3))
-            {
-                mPublicKeyV3 = captchaOptions.SiteKey;
-            }
-
-            return mPublicKeyV3;
-        }
-        set => mPublicKeyV3 = value;
-    }
-
-
-    /// <summary>
-    /// reCAPTCHA v3 private key from https://www.google.com/recaptcha/admin.
-    /// </summary>
-    public string PrivateKeyV3
-    {
-        get
-        {
-            if (string.IsNullOrEmpty(mPrivateKeyV3))
-            {
-                mPrivateKeyV3 = captchaOptions.SecretKey;
-            }
-
-            return mPrivateKeyV3;
-        }
-        set => mPrivateKeyV3 = value;
-    }
-
+    } = "";
 
     /// <summary>
     /// Optional. Forces the reCAPTCHA to render in a specific language.
@@ -144,13 +106,13 @@ public class CommunityReCaptchaFormComponent : FormComponent<CommunityReCaptchaF
     /// <summary>
     /// Indicates whether both required keys are configured in the Settings application.
     /// </summary>
-    private bool AreKeysConfigured => !string.IsNullOrEmpty(PublicKeyV3) && !string.IsNullOrEmpty(PrivateKeyV3);
+    private bool AreKeysConfigured => !string.IsNullOrEmpty(captchaOptions.SiteKey) && !string.IsNullOrEmpty(captchaOptions.SecretKey);
 
 
     /// <summary>
     /// Label "for" cannot be used for this component. 
     /// </summary>
-    public override string LabelForPropertyName => null;
+    public override string LabelForPropertyName => null!;
 
 
     /// <summary>
@@ -213,6 +175,12 @@ public class CommunityReCaptchaFormComponent : FormComponent<CommunityReCaptchaF
         }
 
         var httpContext = httpContextAccessor.HttpContext;
+
+        if (httpContext is null)
+        {
+            return new List<ValidationResult> { new("Cannot validate captcha without outside of an active HTTP request") };
+        }
+
         var validationResult = ValidateResponse(httpContext);
         if (validationResult != null)
         {
@@ -245,7 +213,7 @@ public class CommunityReCaptchaFormComponent : FormComponent<CommunityReCaptchaF
     {
         var validator = new RecaptchaValidator
         {
-            PrivateKey = PrivateKeyV3,
+            PrivateKey = captchaOptions.SecretKey,
             RemoteIP = RequestContext.UserHostAddress,
             Response = httpContext.Request.Form.TryGetValue(RESPONSE_KEY, out var value) ? value[0] : string.Empty
         };
@@ -265,8 +233,8 @@ public class CommunityReCaptchaFormComponentProperties : FormComponentProperties
     }
 
     public override bool Required { get; set; }
-    public override string DefaultValue { get; set; }
+    public override string DefaultValue { get; set; } = "";
     public override bool SmartField { get; set; }
-    public override string Tooltip { get; set; }
+    public override string Tooltip { get; set; } = "";
 }
 

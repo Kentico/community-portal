@@ -21,7 +21,7 @@ public class QAndAAnswerCreateCommandHandler : DataItemCommandHandler<QAndAAnswe
 
     public override Task<int> Handle(QAndAAnswerCreateCommand request, CancellationToken cancellationToken)
     {
-        string filteredContent = Regex.Replace(request.AnswerContent, @"[^a-zA-Z0-9\d]", "-").RemoveRepeatedCharacters('-');
+        string filteredContent = Regex.Replace(request.AnswerContent, @"[^a-zA-Z0-9\d]", "-").RemoveRepeatedCharacters('-') ?? "";
         string uniqueID = Guid.NewGuid().ToString("N");
         string codeName = $"{filteredContent[..Math.Min(42, filteredContent.Length)]}{uniqueID[..8]}";
         var now = clock.UtcNow;

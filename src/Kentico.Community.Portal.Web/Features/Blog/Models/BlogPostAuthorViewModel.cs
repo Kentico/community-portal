@@ -6,9 +6,9 @@ public class BlogPostAuthorViewModel
 {
     public int ID { get; set; }
     public string Name { get; set; } = "";
-    public ImageAssetViewModel Avatar { get; set; }
+    public ImageAssetViewModel? Avatar { get; set; }
 
-    public BlogPostAuthorViewModel(AuthorContent author, ImageAssetViewModel avatar)
+    public BlogPostAuthorViewModel(AuthorContent author, ImageAssetViewModel? avatar)
     {
         Name = author.FullName;
         Avatar = avatar;

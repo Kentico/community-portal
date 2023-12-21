@@ -13,13 +13,6 @@ public class NavigationViewComponent : ViewComponent
 
     public IViewComponentResult Invoke()
     {
-        var model = GetMenuItems();
-
-        return View("~/Components/ViewComponents/Navigation/Navigation.cshtml", model);
-    }
-
-    private HeaderViewModel GetMenuItems()
-    {
         var menuItems = new List<MenuItemViewModel>()
         {
             new()
@@ -58,25 +51,25 @@ public class NavigationViewComponent : ViewComponent
                 Url = "/support",
                 Level = 1,
             }
-        };
-
-        var model = new HeaderViewModel()
+        }
+        .Select(m =>
         {
-            FirstLevel = menuItems.Select(m =>
-            {
-                m.IsActive = Request.Path.StartsWithSegments(m.Url);
-                return m;
-            })
-            .ToList(),
-        };
+            m.IsActive = Request.Path.StartsWithSegments(m.Url);
+            return m;
+        })
+        .ToList();
 
-        return model;
+        var model = new NavigationViewModel(menuItems);
+
+        return View("~/Components/ViewComponents/Navigation/Navigation.cshtml", model);
     }
 }
 
-public class HeaderViewModel
+public class NavigationViewModel
 {
-    public List<MenuItemViewModel> FirstLevel { get; set; }
+    public NavigationViewModel(IReadOnlyList<MenuItemViewModel> navItems) => NavItems = navItems;
+
+    public IReadOnlyList<MenuItemViewModel> NavItems { get; }
 }
 
 public class MenuItemViewModel : LinkViewModel
@@ -90,7 +83,7 @@ public class MenuItemViewModel : LinkViewModel
 
 public class LinkViewModel
 {
-    public string Caption { get; set; }
-    public string Url { get; set; }
+    public string Caption { get; set; } = "";
+    public string Url { get; set; } = "";
     public bool IsSelected { get; set; }
 }

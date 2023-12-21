@@ -13,7 +13,7 @@ namespace Kentico.Community.Portal.Web.Configuration;
 
 internal class GlobalEventsModule : Module
 {
-    private IServiceProvider services;
+    private IServiceProvider services = null!;
 
     public GlobalEventsModule() : base(nameof(GlobalEventsModule)) { }
 
@@ -45,7 +45,7 @@ internal class GlobalEventsModule : Module
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void EnsureLocalCodeNames(object sender, CreateWebPageEventArgs e)
+    private void EnsureLocalCodeNames(object? sender, CreateWebPageEventArgs e)
     {
         if (string.Equals(e.ContentTypeName, BlogPostPage.CONTENT_TYPE_NAME)
             || string.Equals(e.ContentTypeName, QAndAQuestionPage.CONTENT_TYPE_NAME))
@@ -58,7 +58,7 @@ internal class GlobalEventsModule : Module
             e.Name = e.Name[..Math.Min(90, e.Name.Length)] + "-localtest";
         }
     }
-    private void EnsureLocalCodeNames(object sender, CreateContentItemEventArgs e)
+    private void EnsureLocalCodeNames(object? sender, CreateContentItemEventArgs e)
     {
         if (string.Equals(e.ContentTypeName, BlogPostContent.CONTENT_TYPE_NAME))
         {
@@ -71,7 +71,7 @@ internal class GlobalEventsModule : Module
         }
     }
 
-    private void QAndAAnswerDataInfo_InsertAfter(object sender, ObjectEventArgs e)
+    private void QAndAAnswerDataInfo_InsertAfter(object? sender, ObjectEventArgs e)
     {
         if (e.Object is not QAndAAnswerDataInfo answer)
         {
@@ -83,7 +83,7 @@ internal class GlobalEventsModule : Module
             .GetResult();
     }
 
-    public void ContentItem_PublishExecute(object sender, PublishContentItemEventArgs args)
+    public void ContentItem_PublishExecute(object? sender, PublishContentItemEventArgs args)
     {
         if (string.Equals(args.ContentTypeName, BlogPostContent.CONTENT_TYPE_NAME))
         {
@@ -93,7 +93,7 @@ internal class GlobalEventsModule : Module
         }
     }
 
-    public void WebPage_PublishExecute(object sender, PublishWebPageEventArgs args)
+    public void WebPage_PublishExecute(object? sender, PublishWebPageEventArgs args)
     {
         if (string.Equals(args.ContentTypeName, BlogPostPage.CONTENT_TYPE_NAME))
         {

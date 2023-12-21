@@ -259,7 +259,7 @@ public class SearchService
         return query;
     }
 
-    private static SortField GetSortOption(string sortBy = null) =>
+    private static SortField? GetSortOption(string? sortBy = null) =>
         sortBy switch
         {
             "date" => new SortField(nameof(QAndASearchModel.DateMilliseconds), FieldCache.NUMERIC_UTILS_INT64_PARSER, true),

@@ -74,7 +74,7 @@ public class RSSFeedController : Controller
             {
                 _ = keysBuilder.WebPage(feedPage).AllContentItems(BlogPostPage.CONTENT_TYPE_NAME).AllContentItems(BlogPostContent.CONTENT_TYPE_NAME);
 
-                var keys = (keysBuilder as CacheDependencyKeysBuilder).GetKeys();
+                var keys = (keysBuilder as CacheDependencyKeysBuilder)?.GetKeys();
 
                 return CacheHelper.GetCacheDependency(keys);
             }
@@ -145,7 +145,10 @@ public class RSSFeedController : Controller
             {
                 var image = await assetService.RetrieveMediaFileImage(asset);
 
-                item.ElementExtensions.Add(new XElement("image", image.URLData.AbsoluteURL(Request)));
+                if (image is not null)
+                {
+                    item.ElementExtensions.Add(new XElement("image", image.URLData.AbsoluteURL(Request)));
+                }
             }
 
             items.Add(item);

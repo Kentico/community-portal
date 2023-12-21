@@ -49,9 +49,8 @@ public class MemberController : Controller
             AuthorMemberID = member.Id,
         });
 
-        var model = new MemberDetailViewModel
+        var model = new MemberDetailViewModel(member)
         {
-            Member = member,
             BlogPostLinks = blogResult.Hits.Select(h => new BlogPostLink(h.Url, h.Title, h.PublishedDate, h.Taxonomy)).ToList(),
             QuestionsAsked = qandaResult.Hits.Select(h => new Link(h.Url, h.Title, h.DateCreated)).ToList()
         };
@@ -62,9 +61,11 @@ public class MemberController : Controller
 
 public class MemberDetailViewModel
 {
-    public CommunityMember Member { get; set; }
-    public IReadOnlyList<Link> QuestionsAsked { get; set; } = new List<Link>();
-    public IReadOnlyList<BlogPostLink> BlogPostLinks { get; set; } = new List<BlogPostLink>();
+    public MemberDetailViewModel(CommunityMember member) => Member = member;
+
+    public CommunityMember Member { get; init; }
+    public IReadOnlyList<Link> QuestionsAsked { get; init; } = new List<Link>();
+    public IReadOnlyList<BlogPostLink> BlogPostLinks { get; init; } = new List<BlogPostLink>();
 }
 
 public record BlogPostLink(

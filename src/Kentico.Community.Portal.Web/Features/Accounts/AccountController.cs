@@ -169,11 +169,11 @@ public class UpdatePasswordViewModel
     [Required(ErrorMessage = "The new password cannot be empty.")]
     [DisplayName("New Password")]
     [MaxLength(100, ErrorMessage = "The password cannot be longer than 100 characters.")]
-    public string NewPassword { get; set; }
+    public string NewPassword { get; set; } = "";
 
     [DataType(DataType.Password)]
     [DisplayName("Password confirmation")]
     [MaxLength(100, ErrorMessage = "The password confirmation cannot be longer than 100 characters.")]
     [Compare(nameof(NewPassword), ErrorMessage = "The entered passwords do not match.")]
-    public string PasswordConfirmation { get; set; }
+    public string PasswordConfirmation { get; set; } = "";
 }

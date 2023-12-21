@@ -83,7 +83,7 @@ public class AuthenticationController : Controller
                 signInResult = await signInManager.PasswordSignInAsync(member.UserName, model.Password, model.StaySignedIn, false);
             }
 
-            if (signInResult.Succeeded)
+            if (signInResult.Succeeded && member is not null)
             {
                 _ = contactManager.SetMemberAsCurrentContact(member);
             }
@@ -102,7 +102,7 @@ public class AuthenticationController : Controller
             return PartialView("~/Features/Authentication/_LoginForm.cshtml", model);
         }
 
-        string decodedReturnUrl = HttpUtility.UrlDecode(returnUrl);
+        string decodedReturnUrl = HttpUtility.UrlDecode(returnUrl) ?? "";
 
         string redirectUrl = !string.IsNullOrEmpty(decodedReturnUrl) && Url.IsLocalUrl(decodedReturnUrl)
             ? decodedReturnUrl

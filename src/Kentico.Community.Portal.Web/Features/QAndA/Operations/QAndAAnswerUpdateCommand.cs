@@ -23,7 +23,7 @@ public class QAndAAnswerUpdateCommandHandler : DataItemCommandHandler<QAndAAnswe
     {
         var answer = request.Answer;
 
-        string filteredContent = Regex.Replace(request.UpdatedAnswerContent, @"[^a-zA-Z0-9\d]", "-").RemoveRepeatedCharacters('-');
+        string filteredContent = Regex.Replace(request.UpdatedAnswerContent, @"[^a-zA-Z0-9\d]", "-").RemoveRepeatedCharacters('-') ?? "";
         string uniqueID = Guid.NewGuid().ToString("N");
         string codeName = $"{filteredContent[..Math.Min(42, filteredContent.Length)]}{uniqueID[..8]}";
 

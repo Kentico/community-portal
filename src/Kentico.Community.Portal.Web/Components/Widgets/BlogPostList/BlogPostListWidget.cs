@@ -122,13 +122,12 @@ public class BlogPostListWidget : ViewComponent
                 ? null
                 : post.BlogPostContentTaxonomy;
 
-            vms.Add(new BlogPostViewModel()
+            vms.Add(new BlogPostViewModel(new(author, authorImage))
             {
                 Title = post.BlogPostContentTitle,
                 Date = post.BlogPostContentPublishedDate,
                 LinkPath = url.RelativePath,
                 ShortDescription = post.BlogPostContentShortDescription,
-                Author = new(author, authorImage),
                 TeaserImage = teaserImage,
                 Taxonomy = taxonomy
             });
@@ -153,7 +152,7 @@ public class BlogPostListWidget : ViewComponent
             throw new Exception($"Missing Author [{AuthorContent.KENTICO_AUTHOR_CODE_NAME}] which is required to display Posts");
         }
 
-        return author;
+        return resp.Author;
     }
 
     private void SetValidationErrors(BlogPostListWidgetProperties props, IReadOnlyList<BlogPostViewModel> posts)

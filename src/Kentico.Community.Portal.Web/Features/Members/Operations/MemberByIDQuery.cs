@@ -24,6 +24,6 @@ public class MemberByIDQueryHandler : DataItemQueryHandler<MemberByIDQuery, Memb
         return members.FirstOrDefault();
     }
 
-    protected override ICacheDependencyKeysBuilder AddDependencyKeys(MemberByIDQuery query, MemberInfo result, ICacheDependencyKeysBuilder builder) =>
+    protected override ICacheDependencyKeysBuilder AddDependencyKeys(MemberByIDQuery query, MemberInfo? result, ICacheDependencyKeysBuilder builder) =>
         builder.Object(MemberInfo.OBJECT_TYPE, query.MemberID);
 }

@@ -50,43 +50,43 @@ public class CookiePreferencesWidget : ViewComponent
 public class CookiePreferencesWidgetProperties : IWidgetProperties
 {
     [TextInputComponent(Label = "Necessary cookie header", Order = 1)]
-    public string NecessaryHeader { get; set; }
+    public string NecessaryHeader { get; set; } = "";
 
     [TextInputComponent(Label = "Necessary cookie description", Order = 2)]
-    public string NecessaryDescription { get; set; }
+    public string NecessaryDescription { get; set; } = "";
 
     [TextInputComponent(Label = "Preference cookie header", Order = 3)]
-    public string PreferenceHeader { get; set; }
+    public string PreferenceHeader { get; set; } = "";
 
     [TextInputComponent(Label = "Preference cookie description", Order = 4)]
-    public string PreferenceDescription { get; set; }
+    public string PreferenceDescription { get; set; } = "";
 
     [TextInputComponent(Label = "Analytical cookie header", Order = 5)]
-    public string AnalyticalHeader { get; set; }
+    public string AnalyticalHeader { get; set; } = "";
 
     [TextInputComponent(Label = "Analytical cookie description", Order = 6)]
-    public string AnalyticalDescription { get; set; }
+    public string AnalyticalDescription { get; set; } = "";
 
     [TextInputComponent(Label = "Marketing cookie header", Order = 7)]
-    public string MarketingHeader { get; set; }
+    public string MarketingHeader { get; set; } = "";
 
     [TextInputComponent(Label = "Marketing cookie description", Order = 8)]
-    public string MarketingDescription { get; set; }
+    public string MarketingDescription { get; set; } = "";
 
     [TextInputComponent(Label = "Button text", Order = 9)]
-    public string ButtonText { get; set; }
+    public string ButtonText { get; set; } = "";
 }
 
 public class CookiePreferencesWidgetViewModel
 {
-    public string NecessaryHeader { get; set; }
-    public string NecessaryDescription { get; set; }
-    public string PreferenceHeader { get; set; }
-    public string PreferenceDescription { get; set; }
-    public string AnalyticalHeader { get; set; }
-    public string AnalyticalDescription { get; set; }
-    public string MarketingHeader { get; set; }
-    public string MarketingDescription { get; set; }
-    public string ButtonText { get; set; }
+    public string NecessaryHeader { get; set; } = "";
+    public string NecessaryDescription { get; set; } = "";
+    public string PreferenceHeader { get; set; } = "";
+    public string PreferenceDescription { get; set; } = "";
+    public string AnalyticalHeader { get; set; } = "";
+    public string AnalyticalDescription { get; set; } = "";
+    public string MarketingHeader { get; set; } = "";
+    public string MarketingDescription { get; set; } = "";
+    public string ButtonText { get; set; } = "";
     public int CookieLevelSelected { get; set; }
 }

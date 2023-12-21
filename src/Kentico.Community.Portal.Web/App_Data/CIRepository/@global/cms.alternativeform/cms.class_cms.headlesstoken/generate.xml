@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>CMS.HeadlessToken</CodeName>
+    <GUID>8b80473b-018d-460b-858f-e0cfcc89007d</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="HeadlessTokenID" guid="f4b0ec5a-3aa8-4cb6-bcdf-155125ce8535" enabled="" />
+      <field column="HeadlessTokenGUID" guid="7621694b-da38-4546-9526-06bd6b22e2cc" enabled="" />
+      <field column="HeadlessTokenHeadlessChannelID" guid="141cb16a-4949-476a-80d0-6fb6b234c9d8" enabled="" />
+      <field column="HeadlessTokenDisplayName" guid="0e7e0a21-3825-456a-a64e-2fdffa2df13a" enabled="" />
+      <field column="HeadlessTokenEnabled" guid="39f57a5a-dddd-4a96-8a77-066434aba9cd" enabled="" />
+      <field column="HeadlessTokenCreatedWhen" guid="b6354c93-7b40-4b46-9407-2fa29231d7e1" enabled="" />
+      <field column="HeadlessTokenCreatedByUserID" guid="8fa26d2c-81d5-4d8b-92b3-4e8345a7d6d7" enabled="" />
+      <field column="HeadlessTokenModifiedWhen" guid="1f71225e-2d98-406b-9993-7b72ffd21aac" enabled="" />
+      <field column="HeadlessTokenModifiedByUserID" guid="f4811caf-c35c-4e88-ad94-e65fdb45ba81" enabled="" />
+      <field column="HeadlessTokenHash" guid="aee168f4-1fb8-4f5f-8dd1-b5e06f828d84" enabled="" />
+      <field allowempty="true" column="HeadlessToken" columnprecision="0" columnsize="200" columntype="text" dummy="altform" guid="75375093-dfbc-4466-ac8f-3924a1271841" system="true" visible="true" order="10">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$headless.headlesschannel.apikeys.generate.apikeycaption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Generate</FormDisplayName>
+  <FormGUID>d498bf2e-243a-46aa-acc2-1739f5bf45e7</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>generate</FormName>
+</cms.alternativeform>

@@ -18,5 +18,5 @@ public class GTMViewComponent : ViewComponent
 
 public class GoogleTagManagerSettings
 {
-    public string Code { get; set; }
+    public string Code { get; set; } = "";
 }

@@ -44,7 +44,13 @@ public class QAndAQuestionController : Controller
             return ViewComponent(typeof(QAndAQuestionFormViewComponent));
         }
 
-        var member = await userManager.CurrentUser(HttpContext)!;
+        var member = await userManager.CurrentUser(HttpContext);
+
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
         var questionParent = await mediator.Send(new QAndAQuestionsRootPageQuery(channelContext.WebsiteChannelName));
 
         _ = await mediator.Send(new QAndAQuestionCreateCommand(
@@ -93,7 +99,12 @@ public class QAndAQuestionController : Controller
     [HttpGet]
     public async Task<IActionResult> DisplayEditQuestionForm(Guid questionID)
     {
-        var user = await userManager.CurrentUser(HttpContext);
+        var member = await userManager.CurrentUser(HttpContext);
+
+        if (member is null)
+        {
+            return Unauthorized();
+        }
 
         var question = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
         if (question is null)
@@ -101,9 +112,9 @@ public class QAndAQuestionController : Controller
             return NotFound();
         }
 
-        bool canManageContent = await userManager.CanManageContent(user, userInfoProvider);
+        bool canManageContent = await userManager.CanManageContent(member, userInfoProvider);
 
-        if (question.QAndAQuestionPageAuthorMemberID != user.Id && !canManageContent)
+        if (question.QAndAQuestionPageAuthorMemberID != member.Id && !canManageContent)
         {
             return Forbid();
         }

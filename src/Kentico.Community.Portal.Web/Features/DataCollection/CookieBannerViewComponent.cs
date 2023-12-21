@@ -26,7 +26,7 @@ public class CookieBannerViewComponent : ViewComponent
         var settings = resp.Settings;
 
         bool accepted = ValidationHelper.GetBoolean(cookies.Get(CookieNames.COOKIE_ACCEPTANCE), false);
-        bool isCookiePolicyPage = contextAccessor.HttpContext.Request.Path.ToString().Equals("/cookies-policy", StringComparison.InvariantCultureIgnoreCase);
+        bool isCookiePolicyPage = contextAccessor.HttpContext?.Request.Path.ToString().Equals("/cookies-policy", StringComparison.InvariantCultureIgnoreCase) ?? false;
 
         bool hideBanner = isCookiePolicyPage || accepted || string.Equals(cookies.Get(CookieNames.COOKIE_CONSENT_LEVEL), "4", StringComparison.OrdinalIgnoreCase);
 
@@ -44,8 +44,8 @@ public class CookieBannerViewComponent : ViewComponent
 
 public class CookieBannerViewModel
 {
-    public string CookieBannerHeading { get; set; }
-    public HtmlString CookieBannerContentHTML { get; set; }
-    public string CookiePolicyPagePath { get; set; }
+    public string CookieBannerHeading { get; set; } = "";
+    public HtmlString CookieBannerContentHTML { get; set; } = HtmlString.Empty;
+    public string CookiePolicyPagePath { get; set; } = "";
     public bool HideBanner { get; set; }
 }
