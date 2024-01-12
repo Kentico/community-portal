@@ -11,6 +11,7 @@ using Kentico.Community.Portal.Web.Features.SEO;
 using Kentico.Community.Portal.Web.Features.Support;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Rendering;
+using Kentico.Community.Portal.Web.Rendering.Events;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Slugify;
@@ -84,7 +85,7 @@ public static class ServiceCollectionAppExtensions
         services
             .AddTransient<QAndAAnswerCreateSearchIndexTaskHandler>()
             .AddTransient<BlogPostPublishCreateQAndAQuestionHandler>()
-            .AddTransient<BlogPostContentCreateSearchIndexTaskHandler>();
+            .AddTransient<MediaAssetContentMetadataHandler>();
 
     public static IServiceCollection AddClosedGenericTypes(
         this IServiceCollection services,

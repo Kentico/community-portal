@@ -91,7 +91,7 @@
           <componentidentifier>Kentico.TextArea</componentidentifier>
         </settings>
       </field>
-      <field allowempty="true" column="ReCaptcha" columnsize="1" columntype="text" enabled="true" guid="479c948e-a32a-4189-90aa-027bd99555ad" visible="true">
+      <field allowempty="true" column="Recaptcha_FormComponent" columnsize="1" columntype="text" enabled="true" guid="be332105-2a94-4361-b798-4de47368dbfb" visible="true">
         <properties>
           <fieldcaption>Community ReCaptcha</fieldcaption>
           <smart>False</smart>
@@ -148,7 +148,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="ReCaptcha" minOccurs="0">
+              <xs:element name="Recaptcha_FormComponent" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="1" />

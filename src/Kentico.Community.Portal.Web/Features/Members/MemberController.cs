@@ -52,7 +52,7 @@ public class MemberController : Controller
         var model = new MemberDetailViewModel(member)
         {
             BlogPostLinks = blogResult.Hits.Select(h => new BlogPostLink(h.Url, h.Title, h.PublishedDate, h.Taxonomy)).ToList(),
-            QuestionsAsked = qandaResult.Hits.Select(h => new Link(h.Url, h.Title, h.DateCreated)).ToList()
+            QuestionsAsked = qandaResult.Hits.Select(h => new Link(h.Url, h.Title, h.PublishedDate)).ToList()
         };
 
         return View("~/Features/Members/MemberDetail.cshtml", model);

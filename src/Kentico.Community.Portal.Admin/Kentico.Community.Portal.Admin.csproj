@@ -25,12 +25,6 @@
     <ProjectReference Include="..\Kentico.Community.Portal.Core\Kentico.Community.Portal.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Kentico.Xperience.Lucene">
-      <HintPath>..\..\lib\Kentico.Xperience.Lucene.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
   <Target Name="NpmInstall" BeforeTargets="NpmBuildClient" Condition=" '$(Configuration)|$(Platform)' != 'Debug|AnyCPU' ">
     <Exec Command="npm ci --no-audit --no-fund" WorkingDirectory="$(MSBuildProjectDirectory)\Client" />
   </Target>

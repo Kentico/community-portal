@@ -8,16 +8,16 @@ public class WebCrawlerService
 {
     private readonly HttpClient httpClient;
     private readonly IWebPageUrlRetriever urlRetriever;
-    private readonly IEventLogService eventLogService;
+    private readonly IEventLogService log;
 
-    public WebCrawlerService(HttpClient httpClient, IWebPageUrlRetriever urlRetriever, IEventLogService eventLogService, IOptions<LuceneSearchOptions> searchOptions)
+    public WebCrawlerService(HttpClient httpClient, IWebPageUrlRetriever urlRetriever, IEventLogService log, IOptions<LuceneSearchOptions> searchOptions)
     {
         this.httpClient = httpClient;
         this.httpClient.DefaultRequestHeaders.Add(HeaderNames.UserAgent, "SearchCrawler");
         this.httpClient.BaseAddress = new Uri(searchOptions.Value.WebCrawlerBaseUrl);
 
         this.urlRetriever = urlRetriever;
-        this.eventLogService = eventLogService;
+        this.log = log;
     }
 
     public async Task<string> CrawlWebPage(IWebPageFieldsSource page)
@@ -31,7 +31,7 @@ public class WebCrawlerService
         }
         catch (Exception ex)
         {
-            eventLogService.LogException(nameof(WebCrawlerService), nameof(CrawlWebPage), ex, $"Tree Path: {page.SystemFields.WebPageItemTreePath}");
+            log.LogException(nameof(WebCrawlerService), nameof(CrawlWebPage), ex, $"Tree Path: {page.SystemFields.WebPageItemTreePath}");
         }
         return "";
     }
@@ -45,7 +45,7 @@ public class WebCrawlerService
         }
         catch (Exception ex)
         {
-            eventLogService.LogException(
+            log.LogException(
                 nameof(WebCrawlerService),
                 nameof(CrawlPage),
                 ex,

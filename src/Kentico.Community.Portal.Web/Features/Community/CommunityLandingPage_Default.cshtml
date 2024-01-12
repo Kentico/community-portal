@@ -3,10 +3,56 @@
 @model TemplateViewModel<CommunityLandingPageTemplateProperties>
 
 @{
-    var templateModel = Model.GetTemplateModel<CommunityLandingPage>();
+    var templateModel = Model.GetTemplateModel<CommunityLandingPageViewModel>();
 }
 
-<vc:page-heading page="templateModel" />
+<vc:page-heading page="templateModel.Page" />
+
+<div class="c-section pb-7">
+    <div class="container">
+        <div class="row gx-lg-6 gx-xxl-7 mt-sm-n2 mt-lg-n4">
+            <h2>Community Groups</h2>
+
+            @foreach (var item in templateModel.Groups)
+            {
+                <div class="col-sm-6 col-lg-4 mt-3 mt-sm-5 mt-lg-6">
+                    <div class="c-card widget default-border ">
+                        <div class="c-card_inner">
+                            @if (item.CommunityGroupContentPrimaryImageMediaAssets.FirstOrDefault() is MediaAssetContent logo)
+                            {
+                                    <img src="@logo.MediaAssetContentAsset.Url" class="card-img-top"
+                                        alt="@logo.MediaAssetContentTitle" width="@logo.MediaAssetContentImageWidth" height="@logo.MediaAssetContentImageHeight" />
+                             
+                            }
+                            <h3 class="h3 mt-2 pt-1">
+                                @if (!string.IsNullOrWhiteSpace(item.CommunityGroupContentWebsiteURL))
+                                {
+                                    <a href="@item.CommunityGroupContentWebsiteURL">@item.CommunityGroupContentTitle</a>
+                                }
+                                else
+                                {
+                                    <text>@item.CommunityGroupContentTitle</text>
+                                }
+                            </h3>
+                            <p class="c-note mt-2">
+                                @if (!string.IsNullOrWhiteSpace(item.CommunityGroupContentAddressStateOrProvince))
+                                {
+                                    <text>@item.CommunityGroupContentAddressCity, @item.CommunityGroupContentAddressStateOrProvince,</text>
+                                }
+                                else
+                                {
+                                    <text>@item.CommunityGroupContentAddressCity,</text>
+                                }
+                                @item.CommunityGroupContentAddressCountry
+                            </p>
+                            <p class="mt-2">@item.CommunityGroupContentShortDescription</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 
 <main>
     <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"

@@ -1,5 +1,34 @@
 # Architecture Decision Record
 
+## 2024-01-02 - Image media asset processing
+
+Xperience by Kentico's media library analyzes uploaded media and extracts metadata for specific file types - specifically image width/height values (`Media_File.FileImageWidth` and `Media_File.FileImageHeight`). This is a feature that comes from previous versions of Kentico.
+
+However, current guidance is to [model media as a reusable content type](https://docs.xperience.io/x/Do3WCQ#Generalcontentmodelingrecommendations-Digitalmarketingfeatures) which means using the `ContentItemAsset` type to contain the media file.
+
+Unfortunately, this approach to media management is still immature - Xperience doesn't perform this same metadata extraction and doesn't expose obvious APIs to enable a developer to perfor it themselves.
+
+Here's an example of what the stored asset metadata looks like:
+
+```json
+{
+    "Identifier": "84366bac-bb9a-48c1-87cc-bece7b52e68c",
+    "Name": "milwaukee-kentico-user-group-logo.webp",
+    "Extension": ".webp",
+    "Size": 89882,
+    "LastModified": "2023-12-16T18:54:59.8226954Z"
+}
+```
+
+Ideally, Xperience would read the media metadata and store it in this JSON structure or allow a developer to customize the metadata.
+
+Image width/height values are important for [prevening layout shift when rendering images](https://www.aleksandrhovhannisyan.com/blog/setting-width-and-height-on-images/) on the web.
+
+To reproduce the media library behavior store this metadata, we have a custom `MediaAssetContentMetadataHandler` which uses the `MetadataExtractor` library to read the minimum amount of file binary to determine the stored width/height of an image file.
+This metadata extraction is performed every time the custom `MediaAssetContent` content type is updated since we don't have any other hook into media file upload process where we could gather metadata and store it.
+
+Ideally, in the future when Xperience's media asset pipeline is more advanced we can move this custom behavior to a different area of the application or remove it altogether.
+
 ## 2023-12-04 - Explicit channel context for data queries/commands
 
 There are several global events triggered by operations performed in the Admin application.

@@ -6,6 +6,7 @@ using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Configuration;
 using Kentico.Community.Portal.Web.Features.Blog.Events;
 using Kentico.Community.Portal.Web.Features.QAndA.Events;
+using Kentico.Community.Portal.Web.Rendering.Events;
 
 [assembly: RegisterModule(typeof(GlobalEventsModule))]
 
@@ -33,7 +34,7 @@ internal class GlobalEventsModule : Module
         }
 
         QAndAAnswerDataInfo.TYPEINFO.Events.Insert.After += QAndAAnswerDataInfo_InsertAfter;
-        ContentItemEvents.Publish.Execute += ContentItem_PublishExecute;
+        ContentItemEvents.UpdateDraft.Before += ContentItem_UpdateDraftBefore;
         WebPageEvents.Publish.Execute += WebPage_PublishExecute;
 
         base.OnInit(parameters);
@@ -83,13 +84,11 @@ internal class GlobalEventsModule : Module
             .GetResult();
     }
 
-    public void ContentItem_PublishExecute(object? sender, PublishContentItemEventArgs args)
+    public void ContentItem_UpdateDraftBefore(object? sender, UpdateContentItemDraftEventArgs args)
     {
-        if (string.Equals(args.ContentTypeName, BlogPostContent.CONTENT_TYPE_NAME))
+        if (string.Equals(args.ContentTypeName, MediaAssetContent.CONTENT_TYPE_NAME))
         {
-            services.GetRequiredService<BlogPostContentCreateSearchIndexTaskHandler>().Handle(args)
-                .GetAwaiter()
-                .GetResult();
+            services.GetRequiredService<MediaAssetContentMetadataHandler>().Handle(args);
         }
     }
 

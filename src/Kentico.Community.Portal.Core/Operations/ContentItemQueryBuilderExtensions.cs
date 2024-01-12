@@ -74,7 +74,8 @@ public static class ContentItemQueryBuilderExtensions
             {
                 _ = queryParameters
                     .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemGUID), webPageGUID))
-                    .ForWebsite(channelContext.WebsiteChannelName);
+                    .ForWebsite(channelContext.WebsiteChannelName)
+                    .TopN(1);
             });
     public static ContentItemQueryBuilder ForWebPage(this ContentItemQueryBuilder builder, IWebsiteChannelContext channelContext, string contentTypeName, Guid webPageGUID, Action<ContentTypeQueryParameters> configureParameters) =>
         builder
@@ -82,7 +83,8 @@ public static class ContentItemQueryBuilderExtensions
             {
                 _ = queryParameters
                     .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemGUID), webPageGUID))
-                    .ForWebsite(channelContext.WebsiteChannelName);
+                    .ForWebsite(channelContext.WebsiteChannelName)
+                    .TopN(1);
 
                 configureParameters(queryParameters);
             });
@@ -92,7 +94,8 @@ public static class ContentItemQueryBuilderExtensions
             {
                 _ = queryParameters
                     .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemGUID), webPageGUID))
-                    .ForWebsite(channelName);
+                    .ForWebsite(channelName)
+                    .TopN(1);
             });
     public static ContentItemQueryBuilder ForWebPage(this ContentItemQueryBuilder builder, string channelName, string contentTypeName, Guid webPageGUID, Action<ContentTypeQueryParameters> configureParameters) =>
         builder
@@ -100,6 +103,7 @@ public static class ContentItemQueryBuilderExtensions
             {
                 _ = queryParameters
                     .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemGUID), webPageGUID))
+                    .TopN(1)
                     .ForWebsite(channelName);
 
                 configureParameters(queryParameters);

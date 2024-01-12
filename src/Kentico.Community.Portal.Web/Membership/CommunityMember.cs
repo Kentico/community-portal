@@ -21,32 +21,28 @@ public class CommunityMember : ApplicationUser
 
     public override void MapToMemberInfo(MemberInfo target)
     {
-        //base.MapToMemberInfo(target);
-
-        //Base has been updated in the latest version to set the target.MemberPassword everytime, however we do not want to set it if the 
-        //PasswordHash == null
-        //Instead we set all the other properties and do not call the base at all
-        //target.MemberPassword = PasswordHash;
-
         if (target == null)
         {
             throw new ArgumentNullException(nameof(target));
         }
 
-        target.MemberName = UserName;
-        target.MemberEmail = Email;
-        target.MemberEnabled = Enabled;
-        target.MemberSecurityStamp = SecurityStamp;
-        target.MemberIsExternal = IsExternal;
+        /*
+         * base.MapToMemberInfo will set target.MemberPassword everytime
+         * however we do not want to set it if PasswordHash is null,
+         * and this stores the original so we can revert it
+         */
+        string originalPasswordHash = target.MemberPassword;
+
+        base.MapToMemberInfo(target);
+
+        if (PasswordHash is null)
+        {
+            target.MemberPassword = originalPasswordHash;
+        }
 
         _ = target.SetValue("MemberFirstName", FirstName);
         _ = target.SetValue("MemberLastName", LastName);
         _ = target.SetValue("MemberLinkedInIdentifier", LinkedInIdentifier);
-
-        if (PasswordHash != null)
-        {
-            target.MemberPassword = PasswordHash;
-        }
     }
 
     public override void MapFromMemberInfo(MemberInfo source)

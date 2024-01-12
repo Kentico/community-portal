@@ -208,7 +208,28 @@
       }
     },
     {
-      "label": "Xperience: Update Generated Code Files",
+      "label": "Xperience: Update Generated Content Code Files",
+      "detail": "Updates generated code files in the repository for custom Form, Content, and Data Types",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/Refresh-GeneratedCode.ps1",
+      "args": [
+        "-WorkspaceFolder",
+        "${workspaceFolder}",
+        "-ContentOnly",
+        "$True"
+      ],
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "Xperience: Update All Generated Code Files",
       "detail": "Updates generated code files in the repository for custom Form, Content, and Data Types",
       "type": "shell",
       "command": "${workspaceFolder}/scripts/Refresh-GeneratedCode.ps1",

@@ -9,7 +9,7 @@ public class BlogPostListWidgetViewModel : IPagedViewModel
     public string? Heading { get; } = "";
     public IReadOnlyList<BlogPostViewModel> BlogPosts { get; set; } = new List<BlogPostViewModel>();
     public ItemLayout Layout { get; set; } = ItemLayout.Minimal;
-    public string Query { get; set; } = "";
+    public string? Query { get; set; } = "";
     public string SortBy { get; set; } = "";
     [HiddenInput]
     public string Facet { get; set; } = "";

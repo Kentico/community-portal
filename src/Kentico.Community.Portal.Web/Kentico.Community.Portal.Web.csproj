@@ -14,7 +14,7 @@
     <PackageReference Include="Kentico.Xperience.AzureStorage" />
     <PackageReference Include="Kentico.Xperience.Cloud" />
     <PackageReference Include="Kentico.Xperience.ImageProcessing" />
-    <!-- <PackageReference Include="Kentico.Xperience.Lucene" /> -->
+    <PackageReference Include="Kentico.Xperience.Lucene" />
     <PackageReference Include="Kentico.Xperience.SendGrid" />
     <PackageReference Include="Kentico.Xperience.WebApp" />
     <PackageReference Include="Lucene.Net" />
@@ -29,6 +29,7 @@
     <PackageReference Include="Slugify.Core" />
     <PackageReference Include="System.ServiceModel.Syndication" />
     <PackageReference Include="Vite.AspNetCore" />
+    <PackageReference Include="MetadataExtractor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,12 +47,6 @@
     <None Update="app_offline.htm_">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Kentico.Xperience.Lucene">
-      <HintPath>..\..\lib\Kentico.Xperience.Lucene.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>

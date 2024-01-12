@@ -2,8 +2,7 @@ using CMS.ContentEngine;
 using CMS.Core;
 using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core.Modules;
-using Kentico.Xperience.Lucene.Models;
-using Kentico.Xperience.Lucene.Services;
+using Kentico.Xperience.Lucene.Indexing;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA.Events;
 
@@ -15,6 +14,7 @@ namespace Kentico.Community.Portal.Web.Features.QAndA.Events;
 public class QAndAAnswerCreateSearchIndexTaskHandler
 {
     private readonly IHttpContextAccessor accessor;
+    private readonly IWebPageQueryResultMapper mapper;
     private readonly IWebsiteChannelContext channelContext;
     private readonly IContentQueryExecutor executor;
     private readonly IEventLogService log;
@@ -22,12 +22,14 @@ public class QAndAAnswerCreateSearchIndexTaskHandler
 
     public QAndAAnswerCreateSearchIndexTaskHandler(
         IHttpContextAccessor accessor,
+        IWebPageQueryResultMapper mapper,
         IWebsiteChannelContext channelContext,
         IContentQueryExecutor executor,
         IEventLogService log,
         ILuceneTaskLogger taskLogger)
     {
         this.accessor = accessor;
+        this.mapper = mapper;
         this.channelContext = channelContext;
         this.executor = executor;
         this.log = log;
@@ -56,11 +58,10 @@ public class QAndAAnswerCreateSearchIndexTaskHandler
             {
                 _ = queryParameters
                     .ForWebsite(channelContext.WebsiteChannelName)
-                    .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemID), questionWebPageID))
-                    .Columns(new[] { nameof(WebPageFields.WebPageItemGUID), nameof(WebPageFields.WebPageItemTreePath) });
+                    .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemID), questionWebPageID));
             });
 
-        var page = (await executor.GetWebPageResult(b, c => new { c.WebPageItemGUID, c.WebPageItemTreePath })).FirstOrDefault();
+        var page = (await executor.GetWebPageResult(b, mapper.Map<QAndAQuestionPage>)).FirstOrDefault();
         if (page is null)
         {
             log.LogWarning(
@@ -71,14 +72,20 @@ public class QAndAAnswerCreateSearchIndexTaskHandler
             return;
         }
 
-        var model = new IndexedItemModel
-        {
-            ChannelName = channelContext.WebsiteChannelName,
-            LanguageName = "en-US",
-            TypeName = QAndAQuestionPage.CONTENT_TYPE_NAME,
-            WebPageItemGuid = page.WebPageItemGUID,
-            WebPageItemTreePath = page.WebPageItemTreePath
-        };
+        var model = new IndexEventWebPageItemModel(
+            page.SystemFields.WebPageItemID,
+            page.SystemFields.WebPageItemGUID,
+            "en-US",
+            QAndAQuestionPage.CONTENT_TYPE_NAME,
+            page.SystemFields.WebPageItemName,
+            page.SystemFields.ContentItemIsSecured,
+            page.SystemFields.ContentItemContentTypeID,
+            page.SystemFields.ContentItemCommonDataContentLanguageID,
+            channelContext.WebsiteChannelName,
+            page.SystemFields.WebPageItemTreePath,
+            page.SystemFields.WebPageItemParentID,
+            page.SystemFields.WebPageItemOrder)
+        { };
 
         await taskLogger.HandleEvent(model, WebPageEvents.Publish.Name);
     }

@@ -109,7 +109,10 @@ public class SupportFacade
 
 public class SupportCaseDto
 {
+    [JsonRequired]
     public string FirstName { get; set; } = "";
+
+    [JsonRequired]
     public string LastName { get; set; } = "";
 
     [JsonRequired]
@@ -117,10 +120,11 @@ public class SupportCaseDto
 
     public string Company { get; set; } = "";
 
+    #region Data for email only
+
     [JsonRequired]
     public string Subject { get; set; } = "";
 
-    [JsonRequired]
     public string Description { get; set; } = "";
 
     public string Version { get; set; } = "";
@@ -131,16 +135,57 @@ public class SupportCaseDto
 
     public string URL { get; set; } = "";
 
+    #region Support Issue only
+
     public string Scenario { get; set; } = "";
 
     public string Fix { get; set; } = "";
 
+    public string Phone { get; set; } = "";
+
+    #endregion Support Issue only
+
+    #region SLA only
+
+    public string TicketLevel { get; set; } = "";
+
+    public string ExpectedOutcome { get; set; } = "";
+
+    public string StepsYouHavePerformed { get; set; } = "";
+
+    public string IssueComments { get; set; } = "";
+
+    public string ActualOutcome { get; set; } = "";
+
+    public string CMSVersion { get; set; } = "";
+
+    public string WasTheCMSUpgraded { get; set; } = "";
+
+    public string Browser { get; set; } = "";
+
+    public string IISVersion { get; set; } = "";
+
+    public string SQLServer { get; set; } = "";
+
+    public string OperatingSystem { get; set; } = "";
+
+    public string DOTNETVersion { get; set; } = "";
+
+    #endregion SLA only
+
+    #endregion Data for email only
+
     /// <summary>
     /// Base64 encoded file
+    /// Devnet name: Screenshot
     /// </summary>
     public string File { get; set; } = "";
 
     public string FileName { get; set; } = "";
+
+    public bool IsSLA { get; set; }
+
+    public bool Is2Level { get; set; }
 }
 
 public static class FormFileExtensions

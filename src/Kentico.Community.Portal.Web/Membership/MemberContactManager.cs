@@ -22,9 +22,14 @@ public class MemberContactManager
         this.contactCreator = contactCreator;
     }
 
-    public ContactInfo SetMemberAsCurrentContact(CommunityMember member)
+    public ContactInfo? SetMemberAsCurrentContact(CommunityMember member)
     {
         var contact = currentContactProvider.GetCurrentContact();
+
+        if (contact is null)
+        {
+            return null;
+        }
 
         contact.ContactLastName = string.IsNullOrWhiteSpace(member.LastName)
             ? member.UserName

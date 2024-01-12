@@ -47,7 +47,7 @@ public class QAndASearchViewModel : IPagedViewModel
 {
     public IReadOnlyList<QAndAPostViewModel> Questions { get; set; } = new List<QAndAPostViewModel>();
 
-    public string Query { get; set; } = "";
+    public string? Query { get; set; } = "";
     [HiddenInput]
     public int Page { get; set; }
     public string SortBy { get; set; } = "";
@@ -72,10 +72,10 @@ public class QAndAPostViewModel
     public bool IsAnswered { get; set; }
     public QAndAPostAuthorViewModel Author { get; set; } = new();
 
-    public static QAndAPostViewModel GetModel(QAndASearchResult result) => new()
+    public static QAndAPostViewModel GetModel(QAndASearchModel result) => new()
     {
         Title = result.Title,
-        DateCreated = result.DateCreated,
+        DateCreated = result.PublishedDate,
         AnswersCount = result.AnswerCount,
         IsAnswered = result.IsAnswered,
         Author = new()

@@ -52,10 +52,24 @@ public class CommunityLandingPageTemplateController : Controller
             return NotFound();
         }
 
-        var resp = await mediator.Send(new CommunityLandingPageQuery(data.WebPage, channelContext.WebsiteChannelName));
+        var page = await mediator.Send(new CommunityLandingPageQuery(data.WebPage, channelContext.WebsiteChannelName));
 
-        metaService.SetMeta(new(resp.CommunityLandingPageTitle, resp.CommunityLandingPageShortDescription));
+        metaService.SetMeta(new(page.CommunityLandingPageTitle, page.CommunityLandingPageShortDescription));
 
-        return new TemplateResult(resp);
+        var resp = await mediator.Send(new CommunityGroupContentsQuery());
+
+        return new TemplateResult(new CommunityLandingPageViewModel(page, resp.Items));
     }
+}
+
+public class CommunityLandingPageViewModel
+{
+    public CommunityLandingPageViewModel(CommunityLandingPage page, IReadOnlyList<CommunityGroupContent> groups)
+    {
+        Page = page;
+        Groups = groups;
+    }
+
+    public CommunityLandingPage Page { get; }
+    public IReadOnlyList<CommunityGroupContent> Groups { get; }
 }

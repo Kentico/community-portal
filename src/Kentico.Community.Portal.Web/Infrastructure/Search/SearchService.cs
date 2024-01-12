@@ -1,9 +1,8 @@
 ﻿using CMS.Core;
 using Kentico.Community.Portal.Web.Features.Blog.Models;
 using Kentico.Community.Portal.Web.Features.QAndA;
-using Kentico.Xperience.Lucene;
-using Kentico.Xperience.Lucene.Models;
-using Kentico.Xperience.Lucene.Services;
+using Kentico.Xperience.Lucene.Indexing;
+using Kentico.Xperience.Lucene.Search;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Facet;
 using Lucene.Net.Search;
@@ -21,20 +20,22 @@ public class SearchService
     private const int PHRASE_SLOP = 3;
     private const int MAX_RESULTS = 1000;
 
-    private readonly ILuceneIndexService luceneIndexService;
+    private readonly ILuceneSearchService luceneSearchService;
     private readonly IEventLogService log;
+    private readonly BlogSearchIndexingStrategy strategy;
 
-    public SearchService(ILuceneIndexService luceneIndexService, IEventLogService log)
+    public SearchService(ILuceneSearchService luceneSearchService, IEventLogService log, BlogSearchIndexingStrategy strategy)
     {
-        this.luceneIndexService = luceneIndexService;
+        this.luceneSearchService = luceneSearchService;
         this.log = log;
+        this.strategy = strategy;
     }
 
-    public LuceneSearchResultModel<BlogSearchResult> SearchBlog(BlogSearchRequest request)
+    public LuceneSearchResultModel<BlogSearchModel> SearchBlog(BlogSearchRequest request)
     {
         var (searchText, facet, sortBy, pageNumber, pageSize) = request;
 
-        var index = IndexStore.Instance.GetIndex(BlogSearchModel.IndexName) ?? throw new Exception($"Index {BlogSearchModel.IndexName} was not found!!!");
+        var index = LuceneIndexStore.Instance.GetRequiredIndex(BlogSearchModel.IndexName);
 
         var query = GetBlogTermQuery(request);
 
@@ -45,8 +46,7 @@ public class SearchService
 
         if (facet != null)
         {
-            var indexingStrategy = new BlogSearchIndexingStrategy();
-            var drillDownQuery = new DrillDownQuery(indexingStrategy.FacetsConfigFactory());
+            var drillDownQuery = new DrillDownQuery(strategy.FacetsConfigFactory());
 
             string[] subFacets = facet.Split(';', StringSplitOptions.RemoveEmptyEntries);
 
@@ -60,7 +60,7 @@ public class SearchService
 
         try
         {
-            return luceneIndexService.UseSearcherWithFacets(
+            return luceneSearchService.UseSearcherWithFacets(
                 index,
                 query, 20,
                 (searcher, facets) =>
@@ -77,7 +77,7 @@ public class SearchService
                     int offset = pageSize * (pageNumber - 1);
                     int limit = pageSize;
 
-                    return new GlobalSearchResultViewModel<BlogSearchResult>
+                    return new GlobalSearchResultViewModel<BlogSearchModel>
                     {
                         Query = searchText ?? "",
                         Page = pageNumber,
@@ -87,7 +87,7 @@ public class SearchService
                         Hits = topDocs.ScoreDocs
                             .Skip(offset)
                             .Take(limit)
-                            .Select(d => BlogSearchResult.MapFromDocument(searcher.Doc(d.Doc)))
+                            .Select(d => BlogSearchModel.FromDocument(searcher.Doc(d.Doc)))
                             .ToList(),
                         Facet = facet,
                         Facets = facets?.GetTopChildren(10, nameof(BlogSearchModel.Taxonomy), chosenSubFacets.ToArray())?.LabelValues.ToArray(),
@@ -100,11 +100,11 @@ public class SearchService
         {
             log.LogException(nameof(SearchService), "BLOG_SEARCH_FAILURE", ex);
 
-            return new GlobalSearchResultViewModel<BlogSearchResult>
+            return new GlobalSearchResultViewModel<BlogSearchModel>
             {
                 Facet = null,
                 Facets = Array.Empty<LabelAndValue>(),
-                Hits = Enumerable.Empty<BlogSearchResult>(),
+                Hits = Enumerable.Empty<BlogSearchModel>(),
                 Page = request.PageNumber,
                 PageSize = request.PageSize,
                 Query = request.SearchText,
@@ -152,9 +152,9 @@ public class SearchService
         return booleanQuery;
     }
 
-    public GlobalSearchResultViewModel<QAndASearchResult> SearchQAndA(QAndASearchRequest request)
+    public GlobalSearchResultViewModel<QAndASearchModel> SearchQAndA(QAndASearchRequest request)
     {
-        var index = IndexStore.Instance.GetIndex(QAndASearchModel.IndexName) ?? throw new Exception($"Index {QAndASearchModel.IndexName} was not found!!!");
+        var index = LuceneIndexStore.Instance.GetRequiredIndex(QAndASearchModel.IndexName);
 
         var (searchText, sortBy, pageNumber, pageSize, authorMemberID) = request;
 
@@ -162,7 +162,7 @@ public class SearchService
 
         try
         {
-            return luceneIndexService.UseSearcher(
+            return luceneSearchService.UseSearcher(
                 index,
                 (searcher) =>
                 {
@@ -178,7 +178,7 @@ public class SearchService
                     int offset = pageSize * (pageNumber - 1);
                     int limit = pageSize;
 
-                    return new GlobalSearchResultViewModel<QAndASearchResult>
+                    return new GlobalSearchResultViewModel<QAndASearchModel>
                     {
                         Query = searchText ?? "",
                         Page = pageNumber,
@@ -188,7 +188,7 @@ public class SearchService
                         Hits = topDocs.ScoreDocs
                             .Skip(offset)
                             .Take(limit)
-                            .Select(d => QAndASearchResult.MapFromDocument(searcher.Doc(d.Doc)))
+                            .Select(d => QAndASearchModel.FromDocument(searcher.Doc(d.Doc)))
                             .ToList(),
                         SortBy = sortBy
                     };
@@ -199,11 +199,11 @@ public class SearchService
         {
             log.LogException(nameof(SearchService), "Q&A_SEARCH_FAILURE", ex);
 
-            return new GlobalSearchResultViewModel<QAndASearchResult>
+            return new GlobalSearchResultViewModel<QAndASearchModel>
             {
                 Facet = null,
                 Facets = Array.Empty<LabelAndValue>(),
-                Hits = Enumerable.Empty<QAndASearchResult>(),
+                Hits = Enumerable.Empty<QAndASearchModel>(),
                 Page = request.PageNumber,
                 PageSize = request.PageSize,
                 Query = request.SearchText,
@@ -262,7 +262,7 @@ public class SearchService
     private static SortField? GetSortOption(string? sortBy = null) =>
         sortBy switch
         {
-            "date" => new SortField(nameof(QAndASearchModel.DateMilliseconds), FieldCache.NUMERIC_UTILS_INT64_PARSER, true),
+            "date" => new SortField(nameof(QAndASearchModel.PublishedDate), FieldCache.NUMERIC_UTILS_INT64_PARSER, true),
             _ => null,
         };
 }

@@ -2,7 +2,6 @@ using Kentico.Community.Portal.Web.Features.Blog.Models;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace Kentico.Community.Portal.Web.Features.Blog.Components;
 
@@ -56,7 +55,7 @@ public class BlogPostListViewComponent : ViewComponent
         return View("~/Features/Blog/Components/BlogPostList.cshtml", model);
     }
 
-    private static IReadOnlyList<BlogPostViewModel> BuildPostPageViewModels(IEnumerable<BlogSearchResult>? results)
+    private static IReadOnlyList<BlogPostViewModel> BuildPostPageViewModels(IEnumerable<BlogSearchModel>? results)
     {
         if (results is null)
         {
@@ -67,21 +66,18 @@ public class BlogPostListViewComponent : ViewComponent
 
         foreach (var result in results)
         {
-            var teaserImage = JsonConvert.DeserializeObject<ImageAssetViewModelSerializable>(result.TeaserImageJSON ?? "{ }");
-            var authorImage = JsonConvert.DeserializeObject<ImageAssetViewModelSerializable>(result.AuthorAvatarImageJSON ?? "{ }");
-
             vms.Add(new BlogPostViewModel(new()
             {
                 ID = result.AuthorMemberID,
                 Name = result.AuthorName,
-                Avatar = authorImage?.ToImageAsset(),
+                Avatar = result.AuthorAvatarImage?.ToImageAsset(),
             })
             {
                 Title = result.Title,
                 Date = result.PublishedDate,
                 LinkPath = result.Url,
                 ShortDescription = result.ShortDescription,
-                TeaserImage = teaserImage?.ToImageAsset(),
+                TeaserImage = result.TeaserImage?.ToImageAsset(),
                 Taxonomy = result.Taxonomy
             });
         }

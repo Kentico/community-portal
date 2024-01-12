@@ -4,7 +4,8 @@
 #>
 
 param (
-    [string]$WorkspaceFolder = ".."
+    [string]$WorkspaceFolder = "..",
+    [bool]$ContentOnly = $False
 )
 
 Import-Module (Join-Path $WorkspaceFolder "scripts/Utilities.psm1")
@@ -37,17 +38,19 @@ $command = "dotnet run " + `
 
 Invoke-ExpressionWithException $command
 
-$command = "dotnet run " + `
-    "--project $projectPath " + `
-    "--no-restore " + `
-    "--no-build " + `
-    "-- --kxp-codegen " + `
-    "--skip-confirmation " + `
-    "--type `"Classes`" " + `
-    "--namespace `"Kentico.Community.Portal.Core.Modules`"" + `
-    "--location `"../Kentico.Community.Portal.Core/Modules/{name}`""
+if ($ContentOnly -eq $False) {
+    $command = "dotnet run " + `
+        "--project $projectPath " + `
+        "--no-restore " + `
+        "--no-build " + `
+        "-- --kxp-codegen " + `
+        "--skip-confirmation " + `
+        "--type `"Classes`" " + `
+        "--namespace `"Kentico.Community.Portal.Core.Modules`"" + `
+        "--location `"../Kentico.Community.Portal.Core/Modules/{name}`""
 
-Invoke-ExpressionWithException $command
+    Invoke-ExpressionWithException $command
+}
 
 Write-Host "Code generation complete"
 

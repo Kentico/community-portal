@@ -1,90 +1,137 @@
 ﻿using CMS.ContentEngine;
-using CMS.Core;
 using CMS.DataEngine;
 using CMS.Membership;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 using Kentico.Community.Portal.Web.Membership;
-using Kentico.Xperience.Lucene.Attributes;
-using Kentico.Xperience.Lucene.Models;
-using Kentico.Xperience.Lucene.Services.Implementations;
+using Kentico.Xperience.Lucene.Indexing;
 using Lucene.Net.Documents;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-[IncludedPath("/", ContentTypes = new string[] {
-    QAndAQuestionPage.CONTENT_TYPE_NAME
-})]
-public class QAndASearchModel : LuceneSearchModel
+public class QAndASearchModel
 {
-    public const string IndexName = "QAndASearchModel";
+    public const string IndexName = "QANDA_SEARCH";
 
-    [Int32Field(true)]
     public int ID { get; set; }
-    [TextField(true)]
+    public string Url { get; set; } = "";
     public string Title { get; set; } = "";
-    [TextField(false)]
     public string Content { get; set; } = "";
-    [Int64Field(true)]
-    public long DateMilliseconds { get; set; }
-    [Int32Field(true)]
+    public DateTime PublishedDate { get; set; }
     public int AuthorMemberID { get; set; }
-    [TextField(true)]
     public string AuthorUsername { get; set; } = "";
-    [TextField(true)]
     public string AuthorFullName { get; set; } = "";
-    [Int32Field(true)]
-    public int IsAnswered { get; set; } = 0;
-    [Int32Field(true)]
+    public bool IsAnswered { get; set; }
     public int AnswerCount { get; set; } = 0;
+
+    public Document ToDocument()
+    {
+        var indexDocument = new Document()
+        {
+            new Int32Field(nameof(ID), ID, Field.Store.YES),
+            new TextField(nameof(Title), Title, Field.Store.YES),
+            new TextField(nameof(Content), Content, Field.Store.NO),
+            new Int64Field(nameof(PublishedDate), DateTools.TicksToUnixTimeMilliseconds(PublishedDate.Ticks), Field.Store.YES),
+            new Int32Field(nameof(AuthorMemberID), AuthorMemberID, Field.Store.YES),
+            new TextField(nameof(AuthorUsername), AuthorUsername, Field.Store.YES),
+            new TextField(nameof(AuthorFullName), AuthorFullName, Field.Store.YES),
+            new Int32Field(nameof(IsAnswered), IsAnswered ? 1 : 0, Field.Store.YES),
+            new Int32Field(nameof(AnswerCount), AnswerCount, Field.Store.YES),
+        };
+
+        return indexDocument;
+    }
+
+    public static QAndASearchModel FromDocument(Document doc)
+    {
+        var model = new QAndASearchModel
+        {
+            ID = int.TryParse(doc.Get(nameof(ID)), out int id)
+                ? id
+                : 0,
+            Title = doc.Get(nameof(Title)),
+            Url = doc.Get(nameof(Url)) ?? "",
+            Content = doc.Get(nameof(Content)),
+            AuthorUsername = doc.Get(nameof(AuthorUsername)),
+            AuthorFullName = doc.Get(nameof(AuthorFullName)),
+            AuthorMemberID = int.TryParse(doc.Get(nameof(AuthorMemberID)), out int authorMemberID)
+                ? authorMemberID
+                : 0,
+            IsAnswered = doc.Get(nameof(IsAnswered)) switch
+            {
+                "1" => true,
+                "0" or _ => false
+            },
+            AnswerCount = int.TryParse(doc.Get(nameof(AnswerCount)), out int answerCount)
+                ? answerCount
+                : 0,
+            PublishedDate = new DateTime(
+                DateTools.UnixTimeMillisecondsToTicks(
+                    long.Parse(doc.Get(nameof(PublishedDate)))
+                ))
+        };
+
+        return model;
+    }
 }
 
 public class QAndASearchIndexingStrategy : DefaultLuceneIndexingStrategy
 {
-    public override async Task<LuceneSearchModel> OnIndexingNode(IndexedItemModel lucenePageItem, LuceneSearchModel model)
+    public QAndASearchIndexingStrategy(
+        IWebPageQueryResultMapper webPageMapper,
+        IContentQueryResultMapper contentItemMapper,
+        IContentQueryExecutor executor,
+        WebScraperHtmlSanitizer htmlSanitizer,
+        IInfoProvider<MemberInfo> memberProvider,
+        IQAndAAnswerDataInfoProvider answerProvider
+    )
     {
-        var webPageMapper = Service.Resolve<IWebPageQueryResultMapper>();
-        var contentItemMapper = Service.Resolve<IContentQueryResultMapper>();
-        var executor = Service.Resolve<IContentQueryExecutor>();
-        var htmlSanitizer = Service.Resolve<WebScraperHtmlSanitizer>();
-        var memberProvider = Service.Resolve<IInfoProvider<MemberInfo>>();
-        var answerProvider = Service.Resolve<IQAndAAnswerDataInfoProvider>();
+        this.webPageMapper = webPageMapper;
+        this.contentItemMapper = contentItemMapper;
+        this.executor = executor;
+        this.htmlSanitizer = htmlSanitizer;
+        this.memberProvider = memberProvider;
+        this.answerProvider = answerProvider;
+    }
 
-        var blogModel = new QAndASearchModel
+    public const string IDENTIFIER = "QANDA_SEARCH";
+
+    // TODO - temporary until more advanced web page querying is available : https://roadmap.kentico.com/c/193-new-api-cross-content-type-querying
+    public const string WEBSITE_CHANNEL_NAME = "devnet";
+
+    private readonly IWebPageQueryResultMapper webPageMapper;
+    private readonly IContentQueryResultMapper contentItemMapper;
+    private readonly IContentQueryExecutor executor;
+    private readonly WebScraperHtmlSanitizer htmlSanitizer;
+    private readonly IInfoProvider<MemberInfo> memberProvider;
+    private readonly IQAndAAnswerDataInfoProvider answerProvider;
+
+    public override async Task<Document?> MapToLuceneDocumentOrNull(IIndexEventItemModel item)
+    {
+        if (item is not IndexEventWebPageItemModel webpageItem)
         {
-            Url = model.Url,
-            ObjectID = model.ObjectID
-        };
+            return null;
+        }
+
+        var qandaModel = new QAndASearchModel();
 
         var b = new ContentItemQueryBuilder()
-            .ForContentType(QAndAQuestionPage.CONTENT_TYPE_NAME, queryParameters =>
-            {
-                _ = queryParameters
-                    .WithLinkedItems(1)
-                    .ForWebsite(lucenePageItem.ChannelName)
-                    .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemGUID), lucenePageItem.WebPageItemGuid));
-            });
+            .ForWebPage(webpageItem.WebsiteChannelName, QAndAQuestionPage.CONTENT_TYPE_NAME, item.ItemGuid, queryParameters => queryParameters.WithLinkedItems(1));
 
         var page = (await executor.GetWebPageResult(b, webPageMapper.Map<QAndAQuestionPage>)).FirstOrDefault();
         if (page is not null)
         {
             var author = await GetAuthor(executor, contentItemMapper, memberProvider, page);
-            blogModel.ID = page.SystemFields.WebPageItemID;
-            blogModel.Title = page.QAndAQuestionPageTitle;
-            blogModel.AuthorUsername = author.Username;
-            blogModel.AuthorFullName = author.FullName;
-            blogModel.AuthorMemberID = author.MemberID;
-            blogModel.Content = htmlSanitizer.SanitizeHtmlDocument(page.QAndAQuestionPageContent);
-
-            var date = page.QAndAQuestionPageDateCreated != default
+            qandaModel.ID = page.SystemFields.WebPageItemID;
+            qandaModel.Title = page.QAndAQuestionPageTitle;
+            qandaModel.AuthorUsername = author.Username;
+            qandaModel.AuthorFullName = author.FullName;
+            qandaModel.AuthorMemberID = author.MemberID;
+            qandaModel.Content = htmlSanitizer.SanitizeHtmlDocument(page.QAndAQuestionPageContent);
+            qandaModel.PublishedDate = page.QAndAQuestionPageDateCreated != default
                 ? page.QAndAQuestionPageDateCreated
                 : DateTime.MinValue;
-
-            blogModel.DateMilliseconds = DateTools.TicksToUnixTimeMilliseconds(date.Ticks);
-
-            blogModel.IsAnswered = page.QAndAQuestionPageAcceptedAnswerDataGUID == default
-                ? 0
-                : 1;
+            qandaModel.IsAnswered = page.QAndAQuestionPageAcceptedAnswerDataGUID != default;
 
             var answers = await answerProvider
                 .Get()
@@ -92,10 +139,10 @@ public class QAndASearchIndexingStrategy : DefaultLuceneIndexingStrategy
                 .Columns(nameof(QAndAAnswerDataInfo.QAndAAnswerDataID))
                 .GetEnumerableTypedResultAsync();
 
-            blogModel.AnswerCount = answers.Count();
+            qandaModel.AnswerCount = answers.Count();
         }
 
-        return blogModel;
+        return qandaModel.ToDocument();
     }
 
     private record QAndAAuthor(int MemberID, string Username, string FullName);
@@ -119,7 +166,7 @@ public class QAndASearchIndexingStrategy : DefaultLuceneIndexingStrategy
         var b = new ContentItemQueryBuilder()
             .ForContentType(AuthorContent.CONTENT_TYPE_NAME, queryParameters =>
             {
-                queryParameters.Where(w => w.WhereEquals(nameof(AuthorContent.AuthorContentCodeName), AuthorContent.KENTICO_AUTHOR_CODE_NAME));
+                _ = queryParameters.Where(w => w.WhereEquals(nameof(AuthorContent.AuthorContentCodeName), AuthorContent.KENTICO_AUTHOR_CODE_NAME));
             });
 
         var authors = await executor.GetResult(b, mapper.Map<AuthorContent>);
@@ -178,56 +225,4 @@ public class QAndASearchRequest
     public int AuthorMemberID { get; set; }
 
     public bool AreFiltersDefault => string.IsNullOrWhiteSpace(SearchText) && AuthorMemberID < 1;
-}
-
-public class QAndASearchResult
-{
-    public int ID { get; set; }
-    public string Url { get; set; } = "";
-    public string Title { get; set; } = "";
-    public int AuthorMemberID { get; set; }
-    public string AuthorUsername { get; set; } = "";
-    public string AuthorFullName { get; set; } = "";
-    public DateTime DateCreated { get; set; }
-    public bool IsAnswered { get; set; }
-    public int AnswerCount { get; set; }
-
-    public static QAndASearchResult MapFromDocument(Document doc)
-    {
-        int id = int.TryParse(doc.Get(nameof(QAndASearchModel.ID)), out int modelID)
-            ? modelID
-            : 0;
-        string url = doc.Get(nameof(QAndASearchModel.Url)) ?? "";
-        string title = doc.Get(nameof(QAndASearchModel.Title));
-        int authorMemberID = int.TryParse(doc.Get(nameof(QAndASearchModel.AuthorMemberID)), out int memberID)
-            ? memberID
-            : 0;
-        string username = doc.Get(nameof(QAndASearchModel.AuthorUsername));
-        string fullname = doc.Get(nameof(QAndASearchModel.AuthorFullName));
-        long ticks = DateTools.UnixTimeMillisecondsToTicks(
-            long.TryParse(doc.Get(nameof(QAndASearchModel.DateMilliseconds)), out long milliseconds)
-                ? milliseconds
-                : 0);
-        bool isAnswered = doc.Get(nameof(QAndASearchModel.IsAnswered)) switch
-        {
-            "1" => true,
-            "0" or _ => false
-        };
-        int answerCount = int.TryParse(doc.Get(nameof(QAndASearchModel.AnswerCount)), out int count)
-                ? count
-                : 0;
-
-        return new()
-        {
-            ID = id,
-            Url = url,
-            Title = title,
-            AuthorMemberID = authorMemberID,
-            AuthorUsername = username,
-            AuthorFullName = fullname,
-            DateCreated = new DateTime(ticks),
-            IsAnswered = isAnswered,
-            AnswerCount = answerCount
-        };
-    }
 }
