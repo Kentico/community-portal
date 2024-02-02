@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
     name: "Blog Page - Default",
     propertiesType: typeof(BlogLandingPageTemplateProperties),
     customViewName: "~/Features/Blog/BlogLandingPage_Default.cshtml",
-    ContentTypeNames = new[] { BlogLandingPage.CONTENT_TYPE_NAME },
+    ContentTypeNames = [BlogLandingPage.CONTENT_TYPE_NAME],
     Description = "",
     IconClass = ""
 )]

@@ -81,7 +81,7 @@ public class PasswordRecoveryController : Controller
                 State = EmailConfirmationState.Failure_NotYetConfirmed,
                 Message = "You cannot reset your password until you confirm your email address.",
                 SendButtonText = "Send confirmation email",
-                Username = user.UserName
+                Username = user.UserName!
             });
         }
 
@@ -140,7 +140,7 @@ public class PasswordRecoveryController : Controller
             return View(VIEW_PATH_ERROR);
         }
 
-        var user = await userManager.FindByIdAsync(userId.ToString());
+        var user = await userManager.FindByIdAsync(userId?.ToString() ?? "");
 
         if (user is null)
         {
@@ -170,7 +170,7 @@ public class PasswordRecoveryController : Controller
 
         var model = new SetNewPasswordViewModel
         {
-            UserId = userId.Value,
+            UserId = userId ?? 0,
             Token = token
         };
 

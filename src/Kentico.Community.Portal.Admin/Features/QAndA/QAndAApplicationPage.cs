@@ -1,5 +1,5 @@
-using Kentico.Community.Portal.Admin.Features.QAndA;
 using Kentico.Community.Portal.Admin;
+using Kentico.Community.Portal.Admin.Features.QAndA;
 using Kentico.Xperience.Admin.Base;
 
 [assembly: UIApplication(

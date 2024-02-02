@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Channel Code Snippet</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ChannelCodeSnippetID" columntype="integer" enabled="true" guid="f2236963-55fc-4c4b-956f-b50f1df3aed1" isPK="true" />
+      <field column="ChannelCodeSnippetChannelID" columntype="integer" enabled="true" guid="414b223d-d038-4501-ab30-6595ab7dcec5" refobjtype="cms.channel" reftype="Required" />
+      <field allowempty="true" column="ChannelCodeSnippetConsentID" columntype="integer" enabled="true" guid="9267a03a-9518-4aa9-ad25-07cd411ce66e" refobjtype="cms.consent" reftype="Required">
+        <settings>
+          <controlname>Kentico.Administration.ObjectIdSelector</controlname>
+        </settings>
+      </field>
+      <field column="ChannelCodeSnippetGuid" columntype="guid" enabled="true" guid="7bcd7c4e-fbc1-47de-9250-f7eb743ebf2b" />
+      <field column="ChannelCodeSnippetName" columntype="text" enabled="true" guid="4ca0f6ec-5946-4eab-baab-a64cd270ac3b" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+          <Label>Code name</Label>
+        </settings>
+      </field>
+      <field column="ChannelCodeSnippetLastModified" columntype="datetime" enabled="true" guid="3133b790-b424-480a-89e7-6ae84b26d1e2" />
+      <field allowempty="true" column="ChannelCodeSnippetCode" columnprecision="0" columnsize="5000" columntype="longtext" enabled="true" guid="47576c3c-c2d7-4c0d-a5ad-568a94a963e3">
+        <settings>
+          <controlname>Kentico.Administration.CodeEditor</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="ChannelCodeSnippetGTMID" columnprecision="0" columnsize="25" columntype="text" enabled="true" guid="a021f8e8-a907-4234-924a-ce1ef374ed64" />
+      <field allowempty="true" column="ChannelCodeSnippetType" columnprecision="0" columnsize="25" columntype="text" enabled="true" guid="b4518faa-e8a5-4317-943b-ec83e1e3c457" />
+      <field allowempty="true" column="ChannelCodeSnippetLocation" columnprecision="0" columnsize="25" columntype="text" enabled="true" guid="3a7ff5b2-7c23-4388-a69a-41d681e6c713" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>df3c3732-9aec-4119-a0f6-a216cf9bc7da</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>KenticoTagManager.ChannelCodeSnippet</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Integration.TagManager</CodeName>
+    <GUID>b44632ed-8ce7-4e51-b75a-e0d9fdbdead9</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>KenticoTagManager_ChannelCodeSnippet</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

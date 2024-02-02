@@ -5,40 +5,42 @@
 
 param (
     [string]$WorkspaceFolder = "..",
-    [bool]$ContentOnly = $False
+    [string[]]$Types = ''
 )
 
 Import-Module (Join-Path $WorkspaceFolder "scripts/Utilities.psm1")
 
 $projectPath = Get-WebProjectPath $WorkspaceFolder
 
-Write-Host "Re-generating code for Project: $projectPath"
+function GeneratePageTypes {
+    $command = "dotnet run " + `
+        "--project $projectPath " + `
+        "--no-restore " + `
+        "--no-build " + `
+        "-- --kxp-codegen " + `
+        "--skip-confirmation " + `
+        "--type `"PageContentTypes`" " + `
+        "--namespace `"Kentico.Community.Portal.Core.Content`"" + `
+        "--location `"../Kentico.Community.Portal.Core/Content/Pages/`""
 
-$command = "dotnet run " + `
-    "--project $projectPath " + `
-    "--no-restore " + `
-    "--no-build " + `
-    "-- --kxp-codegen " + `
-    "--skip-confirmation " + `
-    "--type `"PageContentTypes`" " + `
-    "--namespace `"Kentico.Community.Portal.Core.Content`"" + `
-    "--location `"../Kentico.Community.Portal.Core/Content/Pages/`""
+    Invoke-ExpressionWithException $command
+}
 
-Invoke-ExpressionWithException $command
+function GenerateResusableTypes {
+    $command = "dotnet run " + `
+        "--project $projectPath " + `
+        "--no-restore " + `
+        "--no-build " + `
+        "-- --kxp-codegen " + `
+        "--skip-confirmation " + `
+        "--type `"ReusableContentTypes`" " + `
+        "--namespace `"Kentico.Community.Portal.Core.Content`"" + `
+        "--location `"../Kentico.Community.Portal.Core/Content/Hub/`""
 
-$command = "dotnet run " + `
-    "--project $projectPath " + `
-    "--no-restore " + `
-    "--no-build " + `
-    "-- --kxp-codegen " + `
-    "--skip-confirmation " + `
-    "--type `"ReusableContentTypes`" " + `
-    "--namespace `"Kentico.Community.Portal.Core.Content`"" + `
-    "--location `"../Kentico.Community.Portal.Core/Content/Hub/`""
+    Invoke-ExpressionWithException $command
+}
 
-Invoke-ExpressionWithException $command
-
-if ($ContentOnly -eq $False) {
+function GenerateDataTypes {
     $command = "dotnet run " + `
         "--project $projectPath " + `
         "--no-restore " + `
@@ -50,6 +52,38 @@ if ($ContentOnly -eq $False) {
         "--location `"../Kentico.Community.Portal.Core/Modules/{name}`""
 
     Invoke-ExpressionWithException $command
+}
+
+function GenerateForms {
+    $command = "dotnet run " + `
+        "--project $projectPath " + `
+        "--no-restore " + `
+        "--no-build " + `
+        "-- --kxp-codegen " + `
+        "--skip-confirmation " + `
+        "--type `"Forms`" " + `
+        "--namespace `"Kentico.Community.Portal.Core.Forms`"" + `
+        "--location `"../Kentico.Community.Portal.Core/Forms/{name}`""
+
+    Invoke-ExpressionWithException $command
+}
+
+Write-Host "Re-generating code for Project: $projectPath"
+
+if ($Types -contains 'Pages') {
+    GeneratePageTypes
+}
+
+if ($Types -contains 'Reusable') {
+    GenerateResusableTypes
+}
+
+if ($Types -contains 'DataTypes') {
+    GenerateDataTypes
+}
+
+if ($Types -contains 'Forms') {
+    GenerateForms
 }
 
 Write-Host "Code generation complete"

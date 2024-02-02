@@ -2,16 +2,20 @@ namespace Kentico.Community.Portal.Web.E2E.Tests;
 
 public class CommunityPageTests : PageTest
 {
-    public override BrowserNewContextOptions ContextOptions() =>
-        new()
+    protected Uri RootUri { get; private set; } = new("https://localhost:45039");
+
+    public override BrowserNewContextOptions ContextOptions()
+    {
+        var options = base.ContextOptions() ?? new();
+        options.ColorScheme = ColorScheme.Light;
+        options.ViewportSize = new()
         {
-            ColorScheme = ColorScheme.Light,
-            ViewportSize = new()
-            {
-                Width = 1920,
-                Height = 1080
-            },
-            BaseURL = "https://localhost:45039",
-            IgnoreHTTPSErrors = true
+            Height = 1920,
+            Width = 1080
         };
+        options.BaseURL = RootUri.ToString();
+        options.IgnoreHTTPSErrors = true;
+
+        return options;
+    }
 }

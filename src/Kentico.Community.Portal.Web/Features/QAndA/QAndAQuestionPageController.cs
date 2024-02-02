@@ -242,7 +242,7 @@ public class QAndAAuthorViewModel
     public QAndAAuthorViewModel(CommunityMember member)
     {
         ID = member.Id;
-        Username = member.UserName;
+        Username = member.UserName!;
         FullName = member.FullName;
     }
 

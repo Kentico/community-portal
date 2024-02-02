@@ -1,100 +1,102 @@
 @using Kentico.Community.Portal.Web.Components.Widgets.BlogPostList
-@using Kentico.Community.Portal.Web.Features.Blog.Models
+@using Kentico.Community.Portal.Web.Features.Blog
 
 @model BlogPostListWidgetViewModel
 
-@if (Model.Heading is string heading)
-{
-    <h3>@heading</h3>
-}
-
-@foreach (var post in Model.BlogPosts)
-{
-    if (Model.Layout == ItemLayout.Minimal)
+<div xpc-preview-outline="Blog Post List Widget">
+    @if (Model.Heading is string heading)
     {
-        <div class="c-card article nopic mt-3">
-            <div class="c-card_inner grid">
-                <div class="c-card_title">
-                    <h4>
-                        <a class="slash" href="@post.LinkPath">@post.Title</a>
-                    </h4>
+        <h3>@heading</h3>
+    }
+
+    @foreach (var post in Model.BlogPosts)
+    {
+        if (Model.Layout == ItemLayout.Minimal)
+        {
+            <div class="c-card article nopic mt-3">
+                <div class="c-card_inner grid">
+                    <div class="c-card_title">
+                        <h4>
+                            <a class="slash" href="@post.LinkPath">@post.Title</a>
+                        </h4>
+                    </div>
+                    <div class="c-card_footer">
+                        <span class="c-note me-1">Written on @post.Date.ToString("d", View.Culture) by</span>
+                        @if (post.Author.ID > 0)
+                        {
+                            <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
+                                class="c-tag secondary invert user">
+                                @if (post.Author.Avatar is ImageAssetViewModel av1)
+                                {
+                                    <img src="@av1.URLData.WithSizeConstraint(SizeConstraint.MaxWidthOrHeight(24)).RelativePath"
+                                        alt="@av1.AltText" width="@av1.Dimensions.Width" height="@av1.Dimensions.Height"
+                                        title="@av1.Title" class="c-tag_icon me-1" />
+                                }
+                                <span>@post.Author.Name</span>
+                            </a>
+                        }
+                        else
+                        {
+                            @if (post.Author.Avatar is ImageAssetViewModel av2)
+                            {
+                                <img src="@av2.URLData.WithSizeConstraint(SizeConstraint.MaxWidthOrHeight(24)).RelativePath"
+                                    alt="@av2.AltText" width="@av2.Dimensions.Width" height="@av2.Dimensions.Height"
+                                    title="@av2.Title" class="c-tag_icon me-1" />
+                            }
+
+                            <span>@post.Author.Name</span>
+                        }
+
+                    </div>
+                    <div class="c-card_content">
+                        <p>
+                            @post.ShortDescription
+                        </p>
+                    </div>
+                    @if (post.Taxonomy is string taxonomy)
+                    {
+                        <div class="c-card_tags">
+                            <div class="c-group tags">
+                                <span class="c-tag info">@taxonomy</span>
+                            </div>
+                        </div>
+                    }
                 </div>
-                <div class="c-card_footer">
-                    <span class="c-note me-1">Written on @post.Date.ToString("d", View.Culture) by</span>
+            </div>
+        }
+        else if (Model.Layout == ItemLayout.Full)
+        {
+            <div class="c-card_inner">
+                <div class="c-card_icon">
+                    @if (post.TeaserImage is ImageAssetViewModel image)
+                    {
+                        <img src="@image.URLData.WithSizeConstraint(SizeConstraint.MaxWidthOrHeight(400)).RelativePath"
+                            alt="@post.Title" width="@image.Dimensions.Width" height="@image.Dimensions.Height" title="@image.Title" />
+                    }
+                </div>
+                <h3 class="h3 mt-2 pt-1">@post.Title</h3>
+                <p class="c-note m-0">@post.Date.ToString("d", View.Culture)</p>
+                <p class="c-note">by
                     @if (post.Author.ID > 0)
                     {
-                        <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
-                            class="c-tag secondary invert user">
-                            @if (post.Author.Avatar is ImageAssetViewModel av1)
-                            {
-                                <img src="@av1.URLData.WithSizeConstraint(SizeConstraint.MaxWidthOrHeight(24)).RelativePath"
-                                    alt="@av1.AltText" width="@av1.Dimensions.Width" height="@av1.Dimensions.Height"
-                                    title="@av1.Title" class="c-tag_icon me-1" />
-                            }
-                            <span>@post.Author.Name</span>
-                        </a>
+                        <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID">@post.Author.Name</a>
                     }
                     else
                     {
-                        @if (post.Author.Avatar is ImageAssetViewModel av2)
-                        {
-                            <img src="@av2.URLData.WithSizeConstraint(SizeConstraint.MaxWidthOrHeight(24)).RelativePath"
-                                alt="@av2.AltText" width="@av2.Dimensions.Width" height="@av2.Dimensions.Height"
-                                title="@av2.Title" class="c-tag_icon me-1" />
-                        }
-
-                        <span>@post.Author.Name</span>
+                        @post.Author.Name
                     }
+                </p>
+                <p class="mt-2">@post.ShortDescription</p>
 
+                <div>
+                    <a class="c-link silent text-primary" href="@post.LinkPath">
+                        Read More
+                        <svg class="c-icon ms-2 chevron">
+                            <use xlink:href="/img/icons.svg#chevron-right"></use>
+                        </svg>
+                    </a>
                 </div>
-                <div class="c-card_content">
-                    <p>
-                        @post.ShortDescription
-                    </p>
-                </div>
-                @if (post.Taxonomy is string taxonomy)
-                {
-                    <div class="c-card_tags">
-                        <div class="c-group tags">
-                            <span class="c-tag info">@taxonomy</span>
-                        </div>
-                    </div>
-                }
             </div>
-        </div>
+        }
     }
-    else if (Model.Layout == ItemLayout.Full)
-    {
-        <div class="c-card_inner">
-            <div class="c-card_icon">
-                @if (post.TeaserImage is ImageAssetViewModel image)
-                {
-                    <img src="@image.URLData.WithSizeConstraint(SizeConstraint.MaxWidthOrHeight(400)).RelativePath"
-                        alt="@post.Title" width="@image.Dimensions.Width" height="@image.Dimensions.Height" title="@image.Title" />
-                }
-            </div>
-            <h3 class="h3 mt-2 pt-1">@post.Title</h3>
-            <p class="c-note m-0">@post.Date.ToString("d", View.Culture)</p>
-            <p class="c-note">by
-                @if (post.Author.ID > 0)
-                {
-                    <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID">@post.Author.Name</a>
-                }
-                else
-                {
-                    @post.Author.Name
-                }
-            </p>
-            <p class="mt-2">@post.ShortDescription</p>
-
-            <div>
-                <a class="c-link silent text-primary" href="@post.LinkPath">
-                    Read More
-                    <svg class="c-icon ms-2 chevron">
-                        <use xlink:href="/img/icons.svg#chevron-right"></use>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    }
-}
+</div>

@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
     name: "Blog Post Page - Default",
     propertiesType: typeof(BlogPostPageTemplateProperties),
     customViewName: "~/Features/Blog/BlogPostPage_Default.cshtml",
-    ContentTypeNames = new[] { BlogPostPage.CONTENT_TYPE_NAME },
+    ContentTypeNames = [BlogPostPage.CONTENT_TYPE_NAME],
     Description = "",
     IconClass = ""
 )]

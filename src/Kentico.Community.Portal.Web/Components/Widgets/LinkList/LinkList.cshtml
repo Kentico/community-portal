@@ -1,6 +1,6 @@
 @model Kentico.Community.Portal.Web.Components.Widgets.LinkList.LinkListWidgetViewModel
 
-<div>
+<div xpc-preview-outline="Link List Widget">
   @if (!string.IsNullOrWhiteSpace(Model.Label))
   {
     string slug = View.SlugHelper.GenerateSlug($"linkList-{Model.Label}");

@@ -66,7 +66,7 @@ public class FormSubmitAutomationEmailProvider : IFormSubmitAutomationEmailProvi
             Sender = configuration.Value.Sender,
             Body = configuration.Value.Body,
             Subject = configuration.Value.Subject,
-            Recipients = new List<string> { recipient }
+            Recipients = [recipient]
         };
     }
 
@@ -74,16 +74,16 @@ public class FormSubmitAutomationEmailProvider : IFormSubmitAutomationEmailProvi
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            return new Dictionary<string, EmailNotificationDto>();
+            return [];
         }
 
         try
         {
-            return JsonConvert.DeserializeObject<Dictionary<string, EmailNotificationDto>>(value) ?? new();
+            return JsonConvert.DeserializeObject<Dictionary<string, EmailNotificationDto>>(value) ?? [];
         }
         catch
         {
-            return new Dictionary<string, EmailNotificationDto>();
+            return [];
         }
     }
 }

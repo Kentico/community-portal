@@ -9,12 +9,12 @@
     <meta charset="UTF-8" />
     <meta name="view-transition" content="same-origin">
 
-    <link rel="preload" href='@ClientAssets.ViteAssetPath("dist/styles/style.scss")' as="style" />
-    <link rel="modulepreload" href='@ClientAssets.ViteAssetPath("dist/js/main.js")' as="script" />
+    <link rel="preload" href='@ClientAssets.ViteAssetPath("styles/style.scss")' as="style" />
+    <link rel="modulepreload" href='@ClientAssets.ViteAssetPath("js/main.js")' as="script" />
 
     <vc:page-custom-meta />
 
-    <link rel="stylesheet" href='@ClientAssets.ViteAssetPath("dist/styles/style.scss")' />
+    <link rel="stylesheet" href='@ClientAssets.ViteAssetPath("styles/style.scss")' />
 
     @if (ClientAssets.PrismRequired)
     {
@@ -28,7 +28,6 @@
         <page-builder-styles />
     }
 
-    <vc:gtm is-head="true" />
     <vc:cookies-init />
     <script>
         window.asyncReady = function (callback) {
@@ -38,8 +37,6 @@
 </head>
 
 <body>
-    <vc:gtm is-head="false" />
-
     <vc:navigation />
 
     <div id="overlay">
@@ -66,7 +63,7 @@
         </div>
     </div>
 
-    <script type="module" src='@ClientAssets.ViteAssetPath("dist/js/main.js")'></script>
+    <script type="module" src='@ClientAssets.ViteAssetPath("js/main.js")'></script>
 
     @if (!ClientAssets.EditormdRequired)
     {

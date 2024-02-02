@@ -27,6 +27,6 @@ public static class ServiceCollectionAdminAuthenticationExtensions
             .Configure<AdminIdentityOptions>(options =>
             {
                 options.AuthenticationOptions.Mode = AdminAuthenticationMode.MaintainForms;
-                options.AuthenticationOptions.ExpireTimeSpan = TimeSpan.FromHours(6);
+                options.AuthenticationOptions.ExpireTimeSpan = TimeSpan.FromHours(12);
             });
 }

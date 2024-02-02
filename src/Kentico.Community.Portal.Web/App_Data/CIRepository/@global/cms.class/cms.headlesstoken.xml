@@ -17,6 +17,11 @@
       <field column="HeadlessTokenModifiedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="1f71225e-2d98-406b-9993-7b72ffd21aac" system="true" />
       <field allowempty="true" column="HeadlessTokenModifiedByUserID" columnprecision="0" columntype="integer" enabled="true" guid="f4811caf-c35c-4e88-ad94-e65fdb45ba81" refobjtype="cms.user" reftype="Required" system="true" />
       <field column="HeadlessTokenHash" columnprecision="0" columnsize="64" columntype="text" enabled="true" guid="aee168f4-1fb8-4f5f-8dd1-b5e06f828d84" system="true" />
+      <field column="HeadlessTokenAccessType" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="147f30d7-4dd3-40e1-ba06-a27723300635" system="true">
+        <properties>
+          <defaultvalue>Published</defaultvalue>
+        </properties>
+      </field>
     </form>
   </ClassFormDefinition>
   <ClassGUID>8b80473b-018d-460b-858f-e0cfcc89007d</ClassGUID>

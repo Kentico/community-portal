@@ -57,6 +57,12 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
+		/// CommunityGroupContentDescription.
+		/// </summary>
+		public string CommunityGroupContentDescription { get; set; }
+
+
+		/// <summary>
 		/// CommunityGroupContentAddressCity.
 		/// </summary>
 		public string CommunityGroupContentAddressCity { get; set; }

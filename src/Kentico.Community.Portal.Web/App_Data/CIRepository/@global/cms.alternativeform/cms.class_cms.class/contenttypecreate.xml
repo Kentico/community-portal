@@ -92,13 +92,16 @@ Headless;{$contentengine.contenttypes.typedropdown.options.headless$}
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="ClassShortName" enabled="true" guid="6eca5a7e-4abb-4e2a-b4f0-1f7d2dfc3b33" visible="true" allowempty="" order="23">
+      <field column="ClassShortName" enabled="true" guid="6eca5a7e-4abb-4e2a-b4f0-1f7d2dfc3b33" visible="true" order="23">
         <settings>
           <controlname>Kentico.Administration.TextWithLabel</controlname>
         </settings>
         <properties>
           <explanationtextashtml>True</explanationtextashtml>
           <fieldcaption>{$contentengine.contenttypes.classhortname$}</fieldcaption>
+          <fielddescription>
+            <![CDATA[{$contentengine.contenttypes.shortcodename.tooltip$}]]>
+          </fielddescription>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>

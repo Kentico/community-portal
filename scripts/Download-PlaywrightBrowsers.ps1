@@ -10,7 +10,7 @@ param (
 
 Import-Module (Join-Path $WorkspaceFolder "scripts/Utilities.psm1")
 
-$scriptPath = Join-Path $WorkspaceFolder "test/Kentico.Community.Portal.Web.E2E.Tests/bin/Debug/net6.0/playwright.ps1"
+$scriptPath = Join-Path $WorkspaceFolder "test/Kentico.Community.Portal.Web.E2E.Tests/bin/Debug/net8.0/playwright.ps1"
 
 if (-not (Test-Path $scriptPath)) {
     $errorMessage = "The file '$scriptPath' does not exist. Please run a Debug build of the E2E project before running this script."

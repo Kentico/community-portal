@@ -22,6 +22,7 @@ var app = builder.Build();
 app
     .InitKentico()
     .IfDevelopment(env, b => b.UseDeveloperExceptionPage())
+    .IfNotDevelopment(env, b => b.UseExceptionHandler("/error/500"))
     .UseStaticFiles()
     .UseCors()
     .UseCookiePolicy()
@@ -33,6 +34,6 @@ app
     .UseAuthorization()
     .UseKenticoRoutes(app)
     .UseAppControllers()
-    .IfDevelopment(env, b => b.UseViteDevMiddleware());
+    .IfDevelopment(env, b => b.UseViteDevelopmentServer(true));
 
 app.Run();

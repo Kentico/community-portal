@@ -72,7 +72,7 @@ internal record CacheScope
     protected CacheScope()
     {
         HasFailure = true;
-        keysInternal = new();
+        keysInternal = [];
     }
 
     protected CacheScope(HashSet<string> keys)
@@ -99,7 +99,7 @@ public class CacheDependenciesStore : ICacheDependenciesStore, ICacheDependencie
         }
     }
 
-    public void Begin() => cacheScopes.Push(CacheScope.Success(new()));
+    public void Begin() => cacheScopes.Push(CacheScope.Success([]));
 
     public void Store(string[] keys)
     {

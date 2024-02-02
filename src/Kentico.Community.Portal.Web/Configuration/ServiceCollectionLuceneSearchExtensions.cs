@@ -1,4 +1,4 @@
-﻿using Kentico.Community.Portal.Web.Features.Blog.Models;
+﻿using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 
@@ -8,7 +8,7 @@ public static class ServiceCollectionLuceneSearchExtensions
 {
     public static IServiceCollection AddAppLuceneSearch(this IServiceCollection services, IConfiguration config) =>
         services
-            .AddLucene(builder =>
+            .AddKenticoLucene(builder =>
             {
                 _ = builder
                     .RegisterStrategy<BlogSearchIndexingStrategy>(BlogSearchIndexingStrategy.IDENTIFIER)

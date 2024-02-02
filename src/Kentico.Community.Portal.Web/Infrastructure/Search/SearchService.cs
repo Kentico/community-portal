@@ -1,5 +1,5 @@
 ﻿using CMS.Core;
-using Kentico.Community.Portal.Web.Features.Blog.Models;
+using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Xperience.Lucene.Indexing;
 using Kentico.Xperience.Lucene.Search;

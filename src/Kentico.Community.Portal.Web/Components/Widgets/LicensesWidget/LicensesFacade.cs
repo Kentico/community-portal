@@ -47,7 +47,7 @@ public class LicensesFacade
 
         var result = new LicensesViewModel()
         {
-            Links = new List<LicenseLinkViewModel>()
+            Links = []
         };
 
         try
@@ -55,7 +55,7 @@ public class LicensesFacade
             httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(UserAgent, UserAgentVersion));
 
             string data = await httpClient.GetStringAsync(url);
-            var groups = JsonConvert.DeserializeObject<Dictionary<string, List<LicenseDto>>>(data) ?? new();
+            var groups = JsonConvert.DeserializeObject<Dictionary<string, List<LicenseDto>>>(data) ?? [];
 
             foreach (var linksGroup in groups)
             {
@@ -99,12 +99,12 @@ public class LicensesFacade
 
 public class LicensesViewModel
 {
-    public List<LicenseLinkViewModel> Links { get; set; } = new();
+    public List<LicenseLinkViewModel> Links { get; set; } = [];
 }
 
 public class LicenseLinkViewModel
 {
     public string Name { get; set; } = "";
     public string Url { get; set; } = "";
-    public List<LicenseLinkViewModel> Links { get; set; } = new();
+    public List<LicenseLinkViewModel> Links { get; set; } = [];
 }

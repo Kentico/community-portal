@@ -27,8 +27,8 @@ public static class ServiceCollectionXperienceExtensions
                 {
                     DefaultSectionIdentifier = GridSection.IDENTIFIER,
                     RegisterDefaultSection = false,
-                    ContentTypeNames = new[]
-                    {
+                    ContentTypeNames =
+                    [
                         HomePage.CONTENT_TYPE_NAME,
                         ResourceHubPage.CONTENT_TYPE_NAME,
                         QAndAQuestionPage.CONTENT_TYPE_NAME,
@@ -40,7 +40,7 @@ public static class ServiceCollectionXperienceExtensions
                         SupportPage.CONTENT_TYPE_NAME,
                         IntegrationsLandingPage.CONTENT_TYPE_NAME,
                         LandingPage.CONTENT_TYPE_NAME
-                    }
+                    ]
                 });
 
                 features.UseEmailMarketing();
@@ -55,6 +55,8 @@ public static class ServiceCollectionXperienceExtensions
 
                 features.UseWebPageRouting();
             })
+            .AddKenticoTagManager()
+            .AddPreviewComponentOutlines()
             .Configure<EmailQueueOptions>(o =>
             {
                 o.ArchiveDuration = 14;

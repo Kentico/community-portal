@@ -3,7 +3,6 @@
   <PropertyGroup Label="Globals">
     <PackageId>Kentico.Community.Portal.Web</PackageId>
     <UserSecretsId>3df470e6-54c4-41d8-b8f0-36955d9433d2</UserSecretsId>
-    <LangVersion>11.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,10 +15,8 @@
     <PackageReference Include="Kentico.Xperience.ImageProcessing" />
     <PackageReference Include="Kentico.Xperience.Lucene" />
     <PackageReference Include="Kentico.Xperience.SendGrid" />
+    <PackageReference Include="Kentico.Xperience.TagManager" />
     <PackageReference Include="Kentico.Xperience.WebApp" />
-    <PackageReference Include="Lucene.Net" />
-    <PackageReference Include="Lucene.Net.Analysis.Common" />
-    <PackageReference Include="Lucene.Net.Facet" />
     <PackageReference Include="Markdig" />
     <PackageReference Include="Microsoft.Identity.Web" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
@@ -30,6 +27,7 @@
     <PackageReference Include="System.ServiceModel.Syndication" />
     <PackageReference Include="Vite.AspNetCore" />
     <PackageReference Include="MetadataExtractor" />
+    <PackageReference Include="XperienceCommunity.PreviewComponentOutlines" />
   </ItemGroup>
 
   <ItemGroup>

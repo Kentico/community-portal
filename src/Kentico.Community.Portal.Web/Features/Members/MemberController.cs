@@ -1,4 +1,4 @@
-using Kentico.Community.Portal.Web.Features.Blog.Models;
+using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
@@ -64,8 +64,8 @@ public class MemberDetailViewModel
     public MemberDetailViewModel(CommunityMember member) => Member = member;
 
     public CommunityMember Member { get; init; }
-    public IReadOnlyList<Link> QuestionsAsked { get; init; } = new List<Link>();
-    public IReadOnlyList<BlogPostLink> BlogPostLinks { get; init; } = new List<BlogPostLink>();
+    public IReadOnlyList<Link> QuestionsAsked { get; init; } = [];
+    public IReadOnlyList<BlogPostLink> BlogPostLinks { get; init; } = [];
 }
 
 public record BlogPostLink(

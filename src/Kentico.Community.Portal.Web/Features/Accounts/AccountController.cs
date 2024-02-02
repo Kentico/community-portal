@@ -36,10 +36,15 @@ public class AccountController : Controller
 
         var member = await userManager.GetUserAsync(User);
 
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
         var vm = new MyAccountViewModel
         {
-            Username = member.UserName,
-            Email = member.Email,
+            Username = member.UserName ?? "",
+            Email = member.Email ?? "",
             Profile = new()
             {
                 FirstName = member.FirstName,
@@ -63,6 +68,11 @@ public class AccountController : Controller
         }
 
         var member = await userManager.GetUserAsync(User);
+
+        if (member is null)
+        {
+            return Unauthorized();
+        }
 
         member.FirstName = model.FirstName;
         member.LastName = model.LastName;
@@ -92,6 +102,11 @@ public class AccountController : Controller
         }
 
         var user = await userManager.GetUserAsync(User);
+
+        if (user is null)
+        {
+            return Unauthorized();
+        }
 
         var result = await userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
 

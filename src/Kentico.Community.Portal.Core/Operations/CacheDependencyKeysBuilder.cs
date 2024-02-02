@@ -1,7 +1,6 @@
 using CMS.DataEngine;
 using CMS.MediaLibrary;
 using CMS.Websites;
-using Kentico.Community.Portal.Core.Content;
 
 namespace Kentico.Community.Portal.Core.Operations;
 

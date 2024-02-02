@@ -19,6 +19,7 @@ const config = ({ env }) => ({
             "embed-container",
             // Used in blog posts and Q&A
             "blockquote",
+            "figure",
           ],
           greedy: [/form-/],
         },

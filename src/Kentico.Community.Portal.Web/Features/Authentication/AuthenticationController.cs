@@ -73,14 +73,14 @@ public class AuthenticationController : Controller
                     State = EmailConfirmationState.Failure_NotYetConfirmed,
                     Message = localizer["This Email Is Not Verified Yet"],
                     SendButtonText = localizer["Send Verification Email"],
-                    Username = member.UserName
+                    Username = member.UserName!
                 };
 
                 return PartialView("~/Features/Registration/EmailConfirmation.cshtml", emailConfirmationModel);
             }
             else
             {
-                signInResult = await signInManager.PasswordSignInAsync(member.UserName, model.Password, model.StaySignedIn, false);
+                signInResult = await signInManager.PasswordSignInAsync(member.UserName!, model.Password, model.StaySignedIn, false);
             }
 
             if (signInResult.Succeeded && member is not null)

@@ -32,6 +32,7 @@ jobs:
 
     env:
       ASPNETCORE_ENVIRONMENT: CI
+      NODE_VERSION: ""
       DATABASE_BACKUP_FILENAME: ""
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -41,6 +42,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: "Get node.js version from package.json"
+        run: |
+          $nodeVersion = (Get-Content -Raw -Path ./src/${{ env.PROJECT_NAME }}/package.json | ConvertFrom-Json).engines.node
+          "NODE_VERSION=$nodeVersion" >> $env:GITHUB_ENV
+
+      - name: "Install Node.js from package.json version"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "${{ env.NODE_VERSION }}"
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
@@ -129,7 +140,7 @@ jobs:
 
       - name: Install Playwright Dependencies
         run: |
-          ./test/Kentico.Community.Portal.Web.E2E.Tests/bin/Release/net6.0/playwright.ps1 install
+          ./test/Kentico.Community.Portal.Web.E2E.Tests/bin/Release/net8.0/playwright.ps1 install
 
       - name: Run Application and Test Solution
         run: |

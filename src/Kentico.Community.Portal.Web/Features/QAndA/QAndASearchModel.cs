@@ -119,28 +119,30 @@ public class QAndASearchIndexingStrategy : DefaultLuceneIndexingStrategy
             .ForWebPage(webpageItem.WebsiteChannelName, QAndAQuestionPage.CONTENT_TYPE_NAME, item.ItemGuid, queryParameters => queryParameters.WithLinkedItems(1));
 
         var page = (await executor.GetWebPageResult(b, webPageMapper.Map<QAndAQuestionPage>)).FirstOrDefault();
-        if (page is not null)
+        if (page is null)
         {
-            var author = await GetAuthor(executor, contentItemMapper, memberProvider, page);
-            qandaModel.ID = page.SystemFields.WebPageItemID;
-            qandaModel.Title = page.QAndAQuestionPageTitle;
-            qandaModel.AuthorUsername = author.Username;
-            qandaModel.AuthorFullName = author.FullName;
-            qandaModel.AuthorMemberID = author.MemberID;
-            qandaModel.Content = htmlSanitizer.SanitizeHtmlDocument(page.QAndAQuestionPageContent);
-            qandaModel.PublishedDate = page.QAndAQuestionPageDateCreated != default
-                ? page.QAndAQuestionPageDateCreated
-                : DateTime.MinValue;
-            qandaModel.IsAnswered = page.QAndAQuestionPageAcceptedAnswerDataGUID != default;
-
-            var answers = await answerProvider
-                .Get()
-                .WhereEquals(nameof(QAndAAnswerDataInfo.QAndAAnswerDataQuestionWebPageItemID), page.SystemFields.WebPageItemID)
-                .Columns(nameof(QAndAAnswerDataInfo.QAndAAnswerDataID))
-                .GetEnumerableTypedResultAsync();
-
-            qandaModel.AnswerCount = answers.Count();
+            return null;
         }
+
+        var author = await GetAuthor(executor, contentItemMapper, memberProvider, page);
+        qandaModel.ID = page.SystemFields.WebPageItemID;
+        qandaModel.Title = page.QAndAQuestionPageTitle;
+        qandaModel.AuthorUsername = author.Username;
+        qandaModel.AuthorFullName = author.FullName;
+        qandaModel.AuthorMemberID = author.MemberID;
+        qandaModel.Content = htmlSanitizer.SanitizeHtmlDocument(page.QAndAQuestionPageContent);
+        qandaModel.PublishedDate = page.QAndAQuestionPageDateCreated != default
+            ? page.QAndAQuestionPageDateCreated
+            : DateTime.MinValue;
+        qandaModel.IsAnswered = page.QAndAQuestionPageAcceptedAnswerDataGUID != default;
+
+        var answers = await answerProvider
+            .Get()
+            .WhereEquals(nameof(QAndAAnswerDataInfo.QAndAAnswerDataQuestionWebPageItemID), page.SystemFields.WebPageItemID)
+            .Columns(nameof(QAndAAnswerDataInfo.QAndAAnswerDataID))
+            .GetEnumerableTypedResultAsync();
+
+        qandaModel.AnswerCount = answers.Count();
 
         return qandaModel.ToDocument();
     }
@@ -160,7 +162,7 @@ public class QAndASearchIndexingStrategy : DefaultLuceneIndexingStrategy
         if (member is not null)
         {
             var cm = CommunityMember.FromMemberInfo(member);
-            return new(cm.Id, cm.UserName, cm.FullName);
+            return new(cm.Id, cm.UserName!, cm.FullName);
         }
 
         var b = new ContentItemQueryBuilder()

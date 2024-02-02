@@ -1,4 +1,5 @@
-using Vite.AspNetCore.Abstractions;
+using Microsoft.Extensions.Options;
+using Vite.AspNetCore;
 
 namespace Kentico.Community.Portal.Web.Rendering;
 
@@ -6,11 +7,13 @@ public class ClientAssets
 {
     private readonly IWebHostEnvironment env;
     private readonly IViteManifest manifest;
+    private readonly string basePath;
 
-    public ClientAssets(IWebHostEnvironment env, IViteManifest manifest)
+    public ClientAssets(IWebHostEnvironment env, IViteManifest manifest, IOptions<ViteOptions> options)
     {
         this.env = env;
         this.manifest = manifest;
+        basePath = $"~/{options.Value.Base?.Trim('/')}";
     }
 
     /// <summary>
@@ -42,12 +45,13 @@ public class ClientAssets
     {
         if (env.IsDevelopment())
         {
-            return $"/{assetPath}";
+            return $"{basePath}/{assetPath}";
         }
 
         if (manifest.ContainsKey(assetPath))
         {
-            return $"/{manifest[assetPath]?.File}";
+            string file = $"{basePath}/{manifest[assetPath]?.File}";
+            return file;
         }
 
         return "";

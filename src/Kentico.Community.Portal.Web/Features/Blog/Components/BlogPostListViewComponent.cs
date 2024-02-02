@@ -1,4 +1,3 @@
-using Kentico.Community.Portal.Web.Features.Blog.Models;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +23,7 @@ public class BlogPostListViewComponent : ViewComponent
         var taxonomies = result.Items;
 
         var searchResult = searchService.SearchBlog(request);
-        var chosenFacets = request.Facet.ToLower().Split(";", StringSplitOptions.RemoveEmptyEntries)?.ToList() ?? new List<string>();
+        var chosenFacets = request.Facet.ToLower().Split(";", StringSplitOptions.RemoveEmptyEntries)?.ToList() ?? [];
 
         var model = new BlogPostListWidgetViewModel()
         {
@@ -33,7 +32,7 @@ public class BlogPostListViewComponent : ViewComponent
             Query = request.SearchText,
             SortBy = request.SortBy,
             Facet = request.Facet,
-            Facets = taxonomies
+            Facets = [.. taxonomies
                 .Select(x => new FacetOption()
                 {
                     Label = x.DisplayName,
@@ -41,8 +40,7 @@ public class BlogPostListViewComponent : ViewComponent
                     IsSelected = chosenFacets.Contains(x.DisplayName, StringComparer.OrdinalIgnoreCase)
                 })
                 .Where(x => x.Value != 0)
-                .OrderBy(f => f.Label)
-                .ToList(),
+                .OrderBy(f => f.Label)],
             ChosenFacets = chosenFacets,
             TotalPages = searchResult?.TotalPages ?? 0
         };
@@ -59,7 +57,7 @@ public class BlogPostListViewComponent : ViewComponent
     {
         if (results is null)
         {
-            return new List<BlogPostViewModel>();
+            return [];
         }
 
         var vms = new List<BlogPostViewModel>();

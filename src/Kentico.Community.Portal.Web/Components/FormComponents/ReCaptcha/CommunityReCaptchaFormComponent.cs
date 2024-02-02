@@ -222,8 +222,20 @@ public class CommunityReCaptchaFormComponent : FormComponent<CommunityReCaptchaF
     }
 
 
-    private static bool ActionIsValid(HttpContext httpContext, RecaptchaResponse validationResult) =>
-        httpContext.Request.Form.TryGetValue("g-recaptcha-action", out var action) && action[0].Equals(validationResult.Action, StringComparison.OrdinalIgnoreCase);
+    private static bool ActionIsValid(HttpContext httpContext, RecaptchaResponse validationResult)
+    {
+        if (!httpContext.Request.Form.TryGetValue("g-recaptcha-action", out var action))
+        {
+            return false;
+        }
+
+        if (action[0] is not string actionValue)
+        {
+            return false;
+        }
+
+        return actionValue.Equals(validationResult.Action, StringComparison.OrdinalIgnoreCase);
+    }
 }
 
 public class CommunityReCaptchaFormComponentProperties : FormComponentProperties<string>

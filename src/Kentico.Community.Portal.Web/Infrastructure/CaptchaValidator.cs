@@ -54,7 +54,7 @@ public class CaptchaValidator
         [JsonProperty("success")]
         public bool IsSuccess { get; set; }
         [JsonProperty("error-codes")]
-        public List<string> ErrorMessages { get; set; } = new();
+        public List<string> ErrorMessages { get; set; } = [];
 
         [JsonProperty("score")]
         public double Score { get; set; }

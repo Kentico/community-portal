@@ -30,7 +30,27 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="HeadlessTokenEnabled" enabled="true" guid="39f57a5a-dddd-4a96-8a77-066434aba9cd" visible="true" order="8">
+      <field column="HeadlessTokenHash" guid="aee168f4-1fb8-4f5f-8dd1-b5e06f828d84" enabled="" order="8" />
+      <field column="HeadlessTokenAccessType" guid="147f30d7-4dd3-40e1-ba06-a27723300635" visible="true" enabled="" order="9">
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+Published;{$headless.headlesschannel.apikeys.create.accesstype.values.published$}
+Draft;{$headless.headlesschannel.apikeys.create.accesstype.values.draft$}
+TrackingAPI;{$headless.headlesschannel.apikeys.create.accesstype.values.trackingapi$}
+]]>
+          </Options>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$headless.headlesschannel.apikeys.edit.accesstypecaption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="HeadlessTokenEnabled" enabled="true" guid="39f57a5a-dddd-4a96-8a77-066434aba9cd" visible="true" order="10">
         <settings>
           <controlname>Kentico.Administration.Checkbox</controlname>
         </settings>
@@ -42,7 +62,6 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="HeadlessTokenHash" guid="aee168f4-1fb8-4f5f-8dd1-b5e06f828d84" enabled="" />
     </form>
   </FormDefinition>
   <FormDisplayName>Edit</FormDisplayName>

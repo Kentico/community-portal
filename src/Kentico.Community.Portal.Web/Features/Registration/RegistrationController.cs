@@ -96,10 +96,7 @@ public class RegistrationController : Controller
         catch (Exception ex)
         {
             log.LogException(nameof(RegistrationController), nameof(Register), ex);
-            registerResult = IdentityResult.Failed(new[]
-            {
-                new IdentityError { Code = "Failure", Description = "Your registration was not successful." }
-            });
+            registerResult = IdentityResult.Failed([new() { Code = "Failure", Description = "Your registration was not successful." }]);
         }
 
         if (!registerResult.Succeeded)
@@ -128,6 +125,17 @@ public class RegistrationController : Controller
         IdentityResult confirmResult;
 
         var user = await userManager.FindByEmailAsync(memberEmail);
+
+        if (user is null)
+        {
+            return View("~/Features/Registration/EmailConfirmation.cshtml", new EmailConfirmationViewModel()
+            {
+                State = EmailConfirmationState.Failure_ConfirmationFailed,
+                Message = localizer["Email Confirmation failed"],
+                SendButtonText = localizer["Send Again"],
+                Username = ""
+            });
+        }
 
         if (user.Enabled)
         {
@@ -162,7 +170,7 @@ public class RegistrationController : Controller
             State = EmailConfirmationState.Failure_ConfirmationFailed,
             Message = localizer["Email Confirmation failed"],
             SendButtonText = localizer["Send Again"],
-            Username = user.UserName
+            Username = user.UserName!
         });
     }
 
@@ -170,6 +178,11 @@ public class RegistrationController : Controller
     public async Task<ActionResult> ResendVerificationEmail([FromQuery] string username)
     {
         var member = await userManager.FindByNameAsync(username);
+
+        if (member is null)
+        {
+            return PartialView("~/Features/Registration/_VerifyEmail.cshtml");
+        }
 
         await SendVerificationEmail(member);
 

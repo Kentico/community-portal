@@ -62,7 +62,7 @@
 
 <script type="module">
     asyncReady(async () => {
-        const recaptcha = await import('@ClientAssets.ViteAssetPath("dist/js/recaptcha.js")');
+        const recaptcha = await import('@ClientAssets.ViteAssetPath("js/recaptcha.js")');
 
         recaptcha.initCaptcha({
             formElemID: 'registerForm'

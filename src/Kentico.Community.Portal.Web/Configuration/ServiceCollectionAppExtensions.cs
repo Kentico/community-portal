@@ -1,7 +1,6 @@
 using System.Reflection;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Operations;
-using Kentico.Community.Portal.Web.Components.ViewComponents.GTM;
 using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
 using Kentico.Community.Portal.Web.Features.Blog.Events;
 using Kentico.Community.Portal.Web.Features.DataCollection;
@@ -62,12 +61,6 @@ public static class ServiceCollectionAppExtensions
             .Configure<ReCaptchaSettings>(o =>
             {
                 var section = config.GetSection("ReCaptcha");
-
-                section.Bind(o);
-            })
-            .Configure<GoogleTagManagerSettings>(o =>
-            {
-                var section = config.GetSection("GoogleTagManager");
 
                 section.Bind(o);
             })

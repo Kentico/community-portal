@@ -66,16 +66,16 @@ public class LicensesWidgetViewComponent : ViewComponent
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            return new Dictionary<string, string>();
+            return [];
         }
 
         try
         {
-            return JsonConvert.DeserializeObject<Dictionary<string, string>>(value) ?? new();
+            return JsonConvert.DeserializeObject<Dictionary<string, string>>(value) ?? [];
         }
         catch
         {
-            return new Dictionary<string, string>();
+            return [];
         }
     }
 }
