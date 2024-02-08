@@ -8,18 +8,25 @@ using SimpleMvcSitemap;
 
 namespace Kentico.Community.Portal.Web.Features.SEO;
 
-public class Sitemap
+public class Sitemap(
+    IProgressiveCache cache,
+    IWebPageUrlRetriever urlRetriever,
+    IWebsiteChannelContext website,
+    IContentQueryExecutor executor,
+    IWebPageQueryResultMapper mapper,
+    IConversionService conversion,
+    ISystemClock clock)
 {
-    private readonly IProgressiveCache cache;
-    private readonly IWebPageUrlRetriever urlRetriever;
-    private readonly IWebsiteChannelContext website;
-    private readonly IContentQueryExecutor executor;
-    private readonly IWebPageQueryResultMapper mapper;
-    private readonly IConversionService conversion;
-    private readonly ISystemClock clock;
+    private readonly IProgressiveCache cache = cache;
+    private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
+    private readonly IWebsiteChannelContext website = website;
+    private readonly IContentQueryExecutor executor = executor;
+    private readonly IWebPageQueryResultMapper mapper = mapper;
+    private readonly IConversionService conversion = conversion;
+    private readonly ISystemClock clock = clock;
 
-    private static readonly string[] contentTypeDependencies = new[]
-    {
+    private static readonly string[] contentTypeDependencies =
+    [
         BlogLandingPage.CONTENT_TYPE_NAME,
         BlogPostPage.CONTENT_TYPE_NAME,
         CommunityLandingPage.CONTENT_TYPE_NAME,
@@ -31,25 +38,7 @@ public class Sitemap
         QAndAQuestionPage.CONTENT_TYPE_NAME,
         ResourceHubPage.CONTENT_TYPE_NAME,
         SupportPage.CONTENT_TYPE_NAME
-    };
-
-    public Sitemap(
-        IProgressiveCache cache,
-        IWebPageUrlRetriever urlRetriever,
-        IWebsiteChannelContext website,
-        IContentQueryExecutor executor,
-        IWebPageQueryResultMapper mapper,
-        IConversionService conversion,
-        ISystemClock clock)
-    {
-        this.cache = cache;
-        this.urlRetriever = urlRetriever;
-        this.website = website;
-        this.executor = executor;
-        this.mapper = mapper;
-        this.conversion = conversion;
-        this.clock = clock;
-    }
+    ];
 
     public async Task<List<SitemapNode>> GetSitemapNodes() =>
         await cache.LoadAsync(cs =>
@@ -83,8 +72,9 @@ public class Sitemap
              * Using a "bool" out param would throw an exception when the value is null
              * so we use a nullable bool to match the null|true|false cases for this field.
              */
-            bool isInSitemap = !c.TryGetValue(nameof(LandingPage.LandingPageIncludeInSitemap), out bool? val)
-                || (val ?? true);
+            bool isInSitemap = !c.TryGetValue(nameof(IWebPageMeta.WebPageMetaExcludeFromSitemap), out bool? val)
+                || val is not bool isExcluded
+                || !isExcluded;
 
             return new SitemapPage(new()
             {
@@ -130,15 +120,9 @@ public class Sitemap
         return nodes;
     }
 
-    public struct SitemapPage : IWebPageFieldsSource
+    public struct SitemapPage(WebPageFields systemFields, bool isInSitemap) : IWebPageFieldsSource
     {
-        public SitemapPage(WebPageFields systemFields, bool isInSitemap)
-        {
-            SystemFields = systemFields;
-            IsInSitemap = isInSitemap;
-        }
-
-        public WebPageFields SystemFields { get; set; }
-        public bool IsInSitemap { get; set; }
+        public WebPageFields SystemFields { get; set; } = systemFields;
+        public bool IsInSitemap { get; set; } = isInSitemap;
     }
 }

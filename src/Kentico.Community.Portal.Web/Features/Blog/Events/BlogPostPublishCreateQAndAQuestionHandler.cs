@@ -40,8 +40,9 @@ public class BlogPostPublishCreateQAndAQuestionHandler
         {
             ContentTypeName = args.ContentTypeName,
             LanguageName = args.ContentLanguageName,
-            WebPageItemID = args.ID
-        }, args.WebsiteChannelName));
+            WebPageItemID = args.ID,
+            WebsiteChannelName = args.WebsiteChannelName
+        }));
 
         if (!string.IsNullOrEmpty(page.BlogPostPageQAndADiscussionLinkPath))
         {
@@ -51,9 +52,10 @@ public class BlogPostPublishCreateQAndAQuestionHandler
         var rootQuestionPage = await mediator.Send(new QAndAQuestionsRootPageQuery(args.WebsiteChannelName));
 
         var url = await pageUrlRetriever.Retrieve(page);
-        string questionTitle = $"Blog Discussion: {page.BlogPostPageTitle}";
+        string postTitle = page.BlogPostPageBlogPostContent.FirstOrDefault()?.BlogPostContentTitle ?? "";
+        string questionTitle = $"Blog Discussion: {postTitle}";
         string questionContent = $"""
-            Blog Post: [{page.BlogPostPageTitle}]({url.RelativePathTrimmed()})
+            Blog Post: [{postTitle}]({url.RelativePathTrimmed()})
 
             Continue discussions 🤗 on this blog post below.
             """;

@@ -20,17 +20,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.LinkList;
 
-public class LinkListWidget : ViewComponent
+public class LinkListWidget(IMediator mediator, ICacheDependenciesScope scope) : ViewComponent
 {
     public const string IDENTIFIER = "CommunityPortal.Components.Widgets.LinkList";
-    private readonly IMediator mediator;
-    private readonly ICacheDependenciesScope scope;
-
-    public LinkListWidget(IMediator mediator, ICacheDependenciesScope scope)
-    {
-        this.mediator = mediator;
-        this.scope = scope;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly ICacheDependenciesScope scope = scope;
 
     public async Task<IViewComponentResult> InvokeAsync(ComponentViewModel<LinkListWidgetProperties> cvm)
     {
@@ -98,16 +92,10 @@ public enum LinkListDesign
     List_In_Card,
 }
 
-public class LinkListWidgetViewModel
+public class LinkListWidgetViewModel(LinkListWidgetProperties props, IReadOnlyList<LinkContent> links)
 {
-    public LinkListWidgetViewModel(LinkListWidgetProperties props, IReadOnlyList<LinkContent> links)
-    {
-        Label = props.Label;
-        Links = links;
-    }
-
-    public string Label { get; }
-    public IReadOnlyList<LinkContent> Links { get; }
+    public string Label { get; } = props.Label;
+    public IReadOnlyList<LinkContent> Links { get; } = links;
 }
 
 public record LinkContentsQuery(Guid[] ContentItemGUIDs) : IQuery<LinkContentsQueryResponse>, ICacheByValueQuery
@@ -116,10 +104,8 @@ public record LinkContentsQuery(Guid[] ContentItemGUIDs) : IQuery<LinkContentsQu
 }
 
 public record LinkContentsQueryResponse(IReadOnlyList<LinkContent> Items);
-public class LinkContentQueryHandler : ContentItemQueryHandler<LinkContentsQuery, LinkContentsQueryResponse>
+public class LinkContentQueryHandler(ContentItemQueryTools tools) : ContentItemQueryHandler<LinkContentsQuery, LinkContentsQueryResponse>(tools)
 {
-    public LinkContentQueryHandler(ContentItemQueryTools tools) : base(tools) { }
-
     public override async Task<LinkContentsQueryResponse> Handle(LinkContentsQuery request, CancellationToken cancellationToken = default)
     {
         var b = new ContentItemQueryBuilder().ForContentType(LinkContent.CONTENT_TYPE_NAME, queryParameters =>

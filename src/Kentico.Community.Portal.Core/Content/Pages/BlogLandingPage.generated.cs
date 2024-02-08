@@ -18,7 +18,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// <summary>
 	/// Represents a page of type <see cref="BlogLandingPage"/>.
 	/// </summary>
-	public partial class BlogLandingPage : IWebPageFieldsSource
+	public partial class BlogLandingPage : IWebPageFieldsSource, IWebPageMeta
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -42,5 +42,29 @@ namespace Kentico.Community.Portal.Core.Content
 		/// BlogLandingPageShortDescription.
 		/// </summary>
 		public string BlogLandingPageShortDescription { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaTitle.
+		/// </summary>
+		public string WebPageMetaTitle { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaDescription.
+		/// </summary>
+		public string WebPageMetaDescription { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaExcludeFromSitemap.
+		/// </summary>
+		public bool WebPageMetaExcludeFromSitemap { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaRobots.
+		/// </summary>
+		public string WebPageMetaRobots { get; set; }
 	}
 }

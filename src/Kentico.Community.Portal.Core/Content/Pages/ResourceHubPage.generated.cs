@@ -18,7 +18,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// <summary>
 	/// Represents a page of type <see cref="ResourceHubPage"/>.
 	/// </summary>
-	public partial class ResourceHubPage : IWebPageFieldsSource
+	public partial class ResourceHubPage : IWebPageFieldsSource, IWebPageMeta
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -42,5 +42,29 @@ namespace Kentico.Community.Portal.Core.Content
 		/// ResourceHubPageShortDescription.
 		/// </summary>
 		public string ResourceHubPageShortDescription { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaTitle.
+		/// </summary>
+		public string WebPageMetaTitle { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaDescription.
+		/// </summary>
+		public string WebPageMetaDescription { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaExcludeFromSitemap.
+		/// </summary>
+		public bool WebPageMetaExcludeFromSitemap { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaRobots.
+		/// </summary>
+		public string WebPageMetaRobots { get; set; }
 	}
 }

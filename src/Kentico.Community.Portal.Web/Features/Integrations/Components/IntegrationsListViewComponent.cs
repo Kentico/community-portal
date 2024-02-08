@@ -6,16 +6,10 @@ using static Kentico.Community.Portal.Core.Content.IntegrationContent;
 
 namespace Kentico.Community.Portal.Web.Features.Integrations;
 
-public class IntegrationsListViewComponent : ViewComponent
+public class IntegrationsListViewComponent(IMediator mediator, AssetItemService itemService) : ViewComponent
 {
-    private readonly IMediator mediator;
-    private readonly AssetItemService itemService;
-
-    public IntegrationsListViewComponent(IMediator mediator, AssetItemService itemService)
-    {
-        this.mediator = mediator;
-        this.itemService = itemService;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly AssetItemService itemService = itemService;
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
@@ -46,7 +40,7 @@ public class IntegrationsListViewComponent : ViewComponent
 
 public class IntegrationsListViewModel
 {
-    public IReadOnlyList<IntegrationItemViewModel> Items { get; set; } = new List<IntegrationItemViewModel>();
+    public IReadOnlyList<IntegrationItemViewModel> Items { get; set; } = [];
 }
 
 public class IntegrationItemViewModel

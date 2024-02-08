@@ -1,4 +1,3 @@
-using CMS.Websites.Routing;
 using Kentico.Community.Portal.Web.Features.Support;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
@@ -12,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
     name: "Support Page - Default",
     propertiesType: typeof(SupportPageTemplateProperties),
     customViewName: "~/Features/Support/SupportPage_Default.cshtml",
-    ContentTypeNames = new[] { SupportPage.CONTENT_TYPE_NAME },
+    ContentTypeNames = [SupportPage.CONTENT_TYPE_NAME],
     Description = "",
     IconClass = ""
 )]
@@ -26,24 +25,14 @@ namespace Kentico.Community.Portal.Web.Features.Support;
 
 public class SupportPageTemplateProperties : IPageTemplateProperties { }
 
-public class SupportPageTemplateController : Controller
+public class SupportPageTemplateController(
+    IMediator mediator,
+    WebPageMetaService metaService,
+    IWebPageDataContextRetriever contextRetriever) : Controller
 {
-    private readonly IMediator mediator;
-    private readonly WebPageMetaService metaService;
-    private readonly IWebsiteChannelContext channelContext;
-    private readonly IWebPageDataContextRetriever contextRetriever;
-
-    public SupportPageTemplateController(
-        IMediator mediator,
-        WebPageMetaService metaService,
-        IWebsiteChannelContext channelContext,
-        IWebPageDataContextRetriever contextRetriever)
-    {
-        this.mediator = mediator;
-        this.metaService = metaService;
-        this.channelContext = channelContext;
-        this.contextRetriever = contextRetriever;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly WebPageMetaService metaService = metaService;
+    private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
 
     public async Task<ActionResult> Index()
     {
@@ -52,9 +41,9 @@ public class SupportPageTemplateController : Controller
             return NotFound();
         }
 
-        var supportPage = await mediator.Send(new SupportPageQuery(data.WebPage, channelContext.WebsiteChannelName));
+        var supportPage = await mediator.Send(new SupportPageQuery(data.WebPage));
 
-        metaService.SetMeta(new(supportPage.Title, supportPage.ShortDescription));
+        metaService.SetMeta(new(supportPage));
 
         return new TemplateResult(supportPage);
     }

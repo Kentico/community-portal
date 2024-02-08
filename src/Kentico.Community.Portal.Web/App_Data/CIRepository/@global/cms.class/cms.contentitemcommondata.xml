@@ -17,6 +17,68 @@
       <field allowempty="true" column="ContentItemCommonDataPageTemplateConfiguration" columnprecision="0" columntype="longtext" enabled="true" guid="0d5a573b-759a-4dd7-a86b-be2ef2f5bac4" system="true" />
       <field allowempty="true" column="ContentItemCommonDataFirstPublishedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="1318327e-9a4c-47e7-be2e-3da0fe99c15e" system="true" />
       <field allowempty="true" column="ContentItemCommonDataLastPublishedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="169ce320-e362-4b70-b4dd-cc055082c254" system="true" />
+      <schema guid="19eeca92-ebc9-4489-ad27-3d51bd2d2622" name="WebPageMeta">
+        <properties>
+          <description>
+            <![CDATA[Used to populate open graph and web page meta fields]]>
+          </description>
+          <fieldcaption>Web page meta</fieldcaption>
+        </properties>
+      </schema>
+      <field allowempty="true" column="WebPageMetaTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="fe9adebc-ed72-413d-a65d-cbc384745dfc" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Title</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>19eeca92-ebc9-4489-ad27-3d51bd2d2622</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="WebPageMetaDescription" columnprecision="0" columntype="longtext" enabled="true" guid="6333dad9-facf-4677-8165-9fc220e0c9c6" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Description</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>19eeca92-ebc9-4489-ad27-3d51bd2d2622</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+      </field>
+      <field allowempty="true" column="WebPageMetaExcludeFromSitemap" columnprecision="0" columntype="boolean" enabled="true" guid="bd34098d-e63c-4f37-8789-f78506bef421" visible="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+          <explanationtext>
+            <![CDATA[Excludes the current page from the XML sitemap, and often combined with the "Robots meta value" option below]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Sitemap - exclude</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>19eeca92-ebc9-4489-ad27-3d51bd2d2622</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="WebPageMetaRobots" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="621d6b47-0558-46e7-b3e1-6556c8871d86" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[Adds the <a href="https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag#robotsmeta">robots meta tag</a> to the current page with the given value]]>
+          </explanationtext>
+          <explanationtextashtml>True</explanationtextashtml>
+          <fieldcaption>Robots meta value</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>19eeca92-ebc9-4489-ad27-3d51bd2d2622</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
     </form>
   </ClassFormDefinition>
   <ClassGUID>a6581fb3-892a-45b4-981a-012ce4b50b43</ClassGUID>

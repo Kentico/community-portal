@@ -4,7 +4,7 @@ using Kentico.Content.Web.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.Support;
 
-public record SupportPageQuery(RoutedWebPage Page, string ChannelName) : WebPageRoutedQuery<SupportPage>(Page), IChannelContentQuery;
+public record SupportPageQuery(RoutedWebPage Page) : WebPageRoutedQuery<SupportPage>(Page);
 
 public class SupportPageQueryHandler : WebPageQueryHandler<SupportPageQuery, SupportPage>
 {
@@ -12,7 +12,7 @@ public class SupportPageQueryHandler : WebPageQueryHandler<SupportPageQuery, Sup
 
     public override async Task<SupportPage> Handle(SupportPageQuery request, CancellationToken cancellationToken)
     {
-        var b = new ContentItemQueryBuilder().ForWebPage(request.ChannelName, request.Page);
+        var b = new ContentItemQueryBuilder().ForWebPage(request.Page.WebsiteChannelName, request.Page);
 
         var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<SupportPage>, DefaultQueryOptions, cancellationToken);
 

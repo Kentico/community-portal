@@ -1,4 +1,3 @@
-using CMS.Websites.Routing;
 using Kentico.Community.Portal.Web.Features.LandingPages;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
@@ -12,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
     name: "Landing Page - Default",
     propertiesType: typeof(LandingPageDefaultTemplateProperties),
     customViewName: "~/Features/LandingPages/LandingPage_Default.cshtml",
-    ContentTypeNames = new[] { LandingPage.CONTENT_TYPE_NAME },
+    ContentTypeNames = [LandingPage.CONTENT_TYPE_NAME],
     Description = "Default Landing Page template with a heading",
     IconClass = "xp-l-header-text"
 )]
@@ -22,7 +21,7 @@ using Microsoft.AspNetCore.Mvc;
     name: "Landing Page - Empty",
     propertiesType: typeof(LandingPageEmptyTemplateProperties),
     customViewName: "~/Features/LandingPages/LandingPage_Empty.cshtml",
-    ContentTypeNames = new[] { LandingPage.CONTENT_TYPE_NAME },
+    ContentTypeNames = [LandingPage.CONTENT_TYPE_NAME],
     Description = "Landing Page template with no content and a single Editable Area",
     IconClass = "xp-l-text"
 )]
@@ -38,24 +37,14 @@ public class LandingPageTemplateProperties : IPageTemplateProperties { }
 public class LandingPageDefaultTemplateProperties : LandingPageTemplateProperties { }
 public class LandingPageEmptyTemplateProperties : LandingPageTemplateProperties { }
 
-public class LandingPageTemplateController : Controller
+public class LandingPageTemplateController(
+    IMediator mediator,
+    WebPageMetaService metaService,
+    IWebPageDataContextRetriever contextRetriever) : Controller
 {
-    private readonly IMediator mediator;
-    private readonly WebPageMetaService metaService;
-    private readonly IWebsiteChannelContext channelContext;
-    private readonly IWebPageDataContextRetriever contextRetriever;
-
-    public LandingPageTemplateController(
-        IMediator mediator,
-        WebPageMetaService metaService,
-        IWebsiteChannelContext channelContext,
-        IWebPageDataContextRetriever contextRetriever)
-    {
-        this.mediator = mediator;
-        this.metaService = metaService;
-        this.channelContext = channelContext;
-        this.contextRetriever = contextRetriever;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly WebPageMetaService metaService = metaService;
+    private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
 
     public async Task<ActionResult> Index()
     {
@@ -64,9 +53,9 @@ public class LandingPageTemplateController : Controller
             return NotFound();
         }
 
-        var landingPage = await mediator.Send(new LandingPageQuery(data.WebPage, channelContext.WebsiteChannelName));
+        var landingPage = await mediator.Send(new LandingPageQuery(data.WebPage));
 
-        metaService.SetMeta(new(landingPage.LandingPageTitle, landingPage.LandingPageShortDescription));
+        metaService.SetMeta(new(landingPage));
 
         return new TemplateResult(landingPage);
     }

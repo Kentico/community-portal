@@ -13,27 +13,18 @@ namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 [Authorize]
 [Route("[controller]/[action]")]
-public class QAndAQuestionController : Controller
+public class QAndAQuestionController(
+    UserManager<CommunityMember> userManager,
+    IUserInfoProvider userInfoProvider,
+    IMediator mediator,
+    IWebPageUrlRetriever urlRetriever,
+    IWebsiteChannelContext channelContext) : Controller
 {
-    private readonly UserManager<CommunityMember> userManager;
-    private readonly IUserInfoProvider userInfoProvider;
-    private readonly IMediator mediator;
-    private readonly IWebPageUrlRetriever urlRetriever;
-    private readonly IWebsiteChannelContext channelContext;
-
-    public QAndAQuestionController(
-        UserManager<CommunityMember> userManager,
-        IUserInfoProvider userInfoProvider,
-        IMediator mediator,
-        IWebPageUrlRetriever urlRetriever,
-        IWebsiteChannelContext channelContext)
-    {
-        this.userManager = userManager;
-        this.userInfoProvider = userInfoProvider;
-        this.mediator = mediator;
-        this.urlRetriever = urlRetriever;
-        this.channelContext = channelContext;
-    }
+    private readonly UserManager<CommunityMember> userManager = userManager;
+    private readonly IUserInfoProvider userInfoProvider = userInfoProvider;
+    private readonly IMediator mediator = mediator;
+    private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
+    private readonly IWebsiteChannelContext channelContext = channelContext;
 
     [HttpPost]
     [ValidateAntiForgeryToken]

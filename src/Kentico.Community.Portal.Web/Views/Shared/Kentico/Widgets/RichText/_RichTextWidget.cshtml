@@ -1,0 +1,24 @@
+@using Kentico.PageBuilder.Web.Mvc
+@using Kentico.Components.Web.Mvc.Widgets.Internal
+
+@model ComponentViewModel<RichTextWidgetProperties>
+
+@*
+By adding a view with the same name/path as a view in the product
+we can override it.
+This is a copy of the Rich Text Widget view included in Xperience, customized
+with the "xpc-preview-outline" tag helper to have the Rich Text Widget show up
+in Page Builder Preview with a component outline.
+*@
+
+
+@if (Context.Kentico().PageBuilder().EditMode)
+{
+    Html.Kentico().RichTextEditor(nameof(Model.Properties.Content));
+}
+else
+{
+    <div class="fr-view" xpc-preview-outline="Rich Text Widget">
+        @Html.Raw(Html.Kentico().ResolveRichText(Model.Properties.Content))
+    </div>
+}

@@ -1,4 +1,3 @@
-using CMS.Websites.Routing;
 using Kentico.Community.Portal.Web.Features.ResourceHub;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
@@ -12,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
     name: "ResourceHub Page - Default",
     propertiesType: typeof(ResourceHubPageTemplateProperties),
     customViewName: "~/Features/ResourceHub/ResourceHubPage_Default.cshtml",
-    ContentTypeNames = new[] { ResourceHubPage.CONTENT_TYPE_NAME },
+    ContentTypeNames = [ResourceHubPage.CONTENT_TYPE_NAME],
     Description = "",
     IconClass = ""
 )]
@@ -26,24 +25,14 @@ namespace Kentico.Community.Portal.Web.Features.ResourceHub;
 
 public class ResourceHubPageTemplateProperties : IPageTemplateProperties { }
 
-public class ResourceHubPageTemplateController : Controller
+public class ResourceHubPageTemplateController(
+    IMediator mediator,
+    WebPageMetaService metaService,
+    IWebPageDataContextRetriever contextRetriever) : Controller
 {
-    private readonly IMediator mediator;
-    private readonly WebPageMetaService metaService;
-    private readonly IWebsiteChannelContext channelContext;
-    private readonly IWebPageDataContextRetriever contextRetriever;
-
-    public ResourceHubPageTemplateController(
-        IMediator mediator,
-        WebPageMetaService metaService,
-        IWebsiteChannelContext channelContext,
-        IWebPageDataContextRetriever contextRetriever)
-    {
-        this.mediator = mediator;
-        this.metaService = metaService;
-        this.channelContext = channelContext;
-        this.contextRetriever = contextRetriever;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly WebPageMetaService metaService = metaService;
+    private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
 
     public async Task<ActionResult> Index()
     {
@@ -52,9 +41,9 @@ public class ResourceHubPageTemplateController : Controller
             return NotFound();
         }
 
-        var hubPage = await mediator.Send(new ResourceHubPageQuery(data.WebPage, channelContext.WebsiteChannelName));
+        var hubPage = await mediator.Send(new ResourceHubPageQuery(data.WebPage));
 
-        metaService.SetMeta(new(hubPage.Title, hubPage.ShortDescription));
+        metaService.SetMeta(new(hubPage));
 
         return new TemplateResult(hubPage);
     }

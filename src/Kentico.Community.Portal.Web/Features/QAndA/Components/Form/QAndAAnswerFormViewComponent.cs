@@ -6,16 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public class QAndAAnswerFormViewComponent : ViewComponent
+public class QAndAAnswerFormViewComponent(IMediator mediator, IWebsiteChannelContext channelContext) : ViewComponent
 {
-    private readonly IMediator mediator;
-    private readonly IWebsiteChannelContext channelContext;
-
-    public QAndAAnswerFormViewComponent(IMediator mediator, IWebsiteChannelContext channelContext)
-    {
-        this.mediator = mediator;
-        this.channelContext = channelContext;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly IWebsiteChannelContext channelContext = channelContext;
 
     public async Task<IViewComponentResult> InvokeAsync(Guid questionID, int? answerID = null)
     {

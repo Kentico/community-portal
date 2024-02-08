@@ -48,6 +48,9 @@ public class WebPageMetaService
 
 public record Meta(string Title, string Description)
 {
+    public Meta(IWebPageMeta meta) : this(meta.WebPageMetaTitle, meta.WebPageMetaDescription) => Robots = meta.WebPageMetaRobots;
+
     public string? CanonicalURL { get; init; }
     public string? OGImageURL { get; init; }
+    public string? Robots { get; set; } = null;
 };

@@ -1,29 +1,21 @@
-using System.Text.RegularExpressions;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
-using Kentico.Community.Portal.Web.Infrastructure;
 using MediatR;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 public record QAndAAnswerUpdateCommand(QAndAAnswerDataInfo Answer, string UpdatedAnswerContent) : ICommand<Unit>;
-public class QAndAAnswerUpdateCommandHandler : DataItemCommandHandler<QAndAAnswerUpdateCommand, Unit>
+public class QAndAAnswerUpdateCommandHandler(DataItemCommandTools tools, ISystemClock clock, IQAndAAnswerDataInfoProvider provider) : DataItemCommandHandler<QAndAAnswerUpdateCommand, Unit>(tools)
 {
-    private readonly ISystemClock clock;
-    private readonly IQAndAAnswerDataInfoProvider provider;
-
-    public QAndAAnswerUpdateCommandHandler(DataItemCommandTools tools, ISystemClock clock, IQAndAAnswerDataInfoProvider provider) : base(tools)
-    {
-        this.clock = clock;
-        this.provider = provider;
-    }
+    private readonly ISystemClock clock = clock;
+    private readonly IQAndAAnswerDataInfoProvider provider = provider;
 
     public override Task<Unit> Handle(QAndAAnswerUpdateCommand request, CancellationToken cancellationToken)
     {
         var answer = request.Answer;
 
-        string filteredContent = Regex.Replace(request.UpdatedAnswerContent, @"[^a-zA-Z0-9\d]", "-").RemoveRepeatedCharacters('-') ?? "";
+        string filteredContent = QandAContentParser.Alphanumeric(request.UpdatedAnswerContent);
         string uniqueID = Guid.NewGuid().ToString("N");
         string codeName = $"{filteredContent[..Math.Min(42, filteredContent.Length)]}{uniqueID[..8]}";
 

@@ -103,8 +103,8 @@ public class SearchService
             return new GlobalSearchResultViewModel<BlogSearchModel>
             {
                 Facet = null,
-                Facets = Array.Empty<LabelAndValue>(),
-                Hits = Enumerable.Empty<BlogSearchModel>(),
+                Facets = [],
+                Hits = [],
                 Page = request.PageNumber,
                 PageSize = request.PageSize,
                 Query = request.SearchText,
@@ -202,8 +202,8 @@ public class SearchService
             return new GlobalSearchResultViewModel<QAndASearchModel>
             {
                 Facet = null,
-                Facets = Array.Empty<LabelAndValue>(),
-                Hits = Enumerable.Empty<QAndASearchModel>(),
+                Facets = [],
+                Hits = [],
                 Page = request.PageNumber,
                 PageSize = request.PageSize,
                 Query = request.SearchText,
@@ -262,7 +262,8 @@ public class SearchService
     private static SortField? GetSortOption(string? sortBy = null) =>
         sortBy switch
         {
-            "date" => new SortField(nameof(QAndASearchModel.PublishedDate), FieldCache.NUMERIC_UTILS_INT64_PARSER, true),
+            "date" or "publishdate" => new SortField(nameof(QAndASearchModel.PublishedDate), FieldCache.NUMERIC_UTILS_INT64_PARSER, true),
+            "responsedate" => new SortField(nameof(QAndASearchModel.LatestResponseDate), FieldCache.NUMERIC_UTILS_INT64_PARSER, true),
             _ => null,
         };
 }

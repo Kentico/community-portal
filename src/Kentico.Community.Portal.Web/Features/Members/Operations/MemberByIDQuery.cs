@@ -9,11 +9,9 @@ public record MemberByIDQuery(int MemberID) : IQuery<MemberInfo?>, ICacheByValue
     public string CacheValueKey => MemberID.ToString();
 }
 
-public class MemberByIDQueryHandler : DataItemQueryHandler<MemberByIDQuery, MemberInfo?>
+public class MemberByIDQueryHandler(DataItemQueryTools tools, IInfoProvider<MemberInfo> provider) : DataItemQueryHandler<MemberByIDQuery, MemberInfo?>(tools)
 {
-    private readonly IInfoProvider<MemberInfo> provider;
-
-    public MemberByIDQueryHandler(DataItemQueryTools tools, IInfoProvider<MemberInfo> provider) : base(tools) => this.provider = provider;
+    private readonly IInfoProvider<MemberInfo> provider = provider;
 
     public override async Task<MemberInfo?> Handle(MemberByIDQuery request, CancellationToken cancellationToken)
     {

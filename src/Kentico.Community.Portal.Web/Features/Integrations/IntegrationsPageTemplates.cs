@@ -1,4 +1,3 @@
-using CMS.Websites.Routing;
 using Kentico.Community.Portal.Web.Features.Integrations;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
@@ -12,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
     name: "Integrations Landing Page - Default",
     propertiesType: typeof(IntegrationsLandingPageTemplateProperties),
     customViewName: "~/Features/Integrations/IntegrationsLandingPage_Default.cshtml",
-    ContentTypeNames = new[] { IntegrationsLandingPage.CONTENT_TYPE_NAME },
+    ContentTypeNames = [IntegrationsLandingPage.CONTENT_TYPE_NAME],
     Description = "",
     IconClass = ""
 )]
@@ -26,24 +25,14 @@ namespace Kentico.Community.Portal.Web.Features.Integrations;
 
 public class IntegrationsLandingPageTemplateProperties : IPageTemplateProperties { }
 
-public class IntegrationsLandingPageTemplateController : Controller
+public class IntegrationsLandingPageTemplateController(
+    IMediator mediator,
+    WebPageMetaService metaService,
+    IWebPageDataContextRetriever contextRetriever) : Controller
 {
-    private readonly IMediator mediator;
-    private readonly WebPageMetaService metaService;
-    private readonly IWebsiteChannelContext channelContext;
-    private readonly IWebPageDataContextRetriever contextRetriever;
-
-    public IntegrationsLandingPageTemplateController(
-        IMediator mediator,
-        WebPageMetaService metaService,
-        IWebsiteChannelContext channelContext,
-        IWebPageDataContextRetriever contextRetriever)
-    {
-        this.mediator = mediator;
-        this.metaService = metaService;
-        this.channelContext = channelContext;
-        this.contextRetriever = contextRetriever;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly WebPageMetaService metaService = metaService;
+    private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
 
     public async Task<ActionResult> Index()
     {
@@ -52,9 +41,9 @@ public class IntegrationsLandingPageTemplateController : Controller
             return NotFound();
         }
 
-        var landingPage = await mediator.Send(new IntegrationsLandingPageQuery(data.WebPage, channelContext.WebsiteChannelName));
+        var landingPage = await mediator.Send(new IntegrationsLandingPageQuery(data.WebPage));
 
-        metaService.SetMeta(new(landingPage.IntegrationsLandingPageTitle, landingPage.IntegrationsLandingPageShortDescription));
+        metaService.SetMeta(new(landingPage));
 
         return new TemplateResult(landingPage);
     }

@@ -9,21 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kentico.Community.Portal.Web.Features.Members;
 
 [Route("[controller]")]
-public class MemberController : Controller
+public class MemberController(
+    IMediator mediator,
+    WebPageMetaService metaService,
+    SearchService search) : Controller
 {
-    private readonly IMediator mediator;
-    private readonly WebPageMetaService metaService;
-    private readonly SearchService search;
-
-    public MemberController(
-        IMediator mediator,
-        WebPageMetaService metaService,
-        SearchService search)
-    {
-        this.mediator = mediator;
-        this.metaService = metaService;
-        this.search = search;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly WebPageMetaService metaService = metaService;
+    private readonly SearchService search = search;
 
     [HttpGet("{memberID:int}")]
     public async Task<IActionResult> MemberDetail(int memberID)
@@ -59,11 +52,9 @@ public class MemberController : Controller
     }
 }
 
-public class MemberDetailViewModel
+public class MemberDetailViewModel(CommunityMember member)
 {
-    public MemberDetailViewModel(CommunityMember member) => Member = member;
-
-    public CommunityMember Member { get; init; }
+    public CommunityMember Member { get; init; } = member;
     public IReadOnlyList<Link> QuestionsAsked { get; init; } = [];
     public IReadOnlyList<BlogPostLink> BlogPostLinks { get; init; } = [];
 }

@@ -1,5 +1,23 @@
 # Architecture Decision Record
 
+## 2024-02-08 - Overriding Xperience views
+
+Adding the `XperienceCommunity.PreviewComponentOutlines` NuGet package enables component annotations to be visible in the Preview view of the Page Builder.
+
+![Community home page with Preview Component Outlines](/docs/images/XperienceCommunity.PreviewComponentOutlines-home-page.jpg)
+
+This requires annotating the HTML of the components in the solution to function correctly. It normally is not possible to customize the HTML of the components built into
+Xperience - the Rich Text and Form Widgets.
+
+By adding copies of the Xperience Razor view files into this solution's application, using the same path and file name, ASP.NET Core will select our "override"
+view at runtime. This means we can add our HTML annotations for the preview outlines.
+
+There is a concern that future updates to the Form and Rich Text Widget Razor views could break the solution, as this kind of view overriding _is not_ supported by the product.
+Mitigating any issues will require reviewing the [Changelog](https://docs.xperience.io/xp/changelog) with each release and testing these components regularly to catch any
+problems.
+
+If there are any big problems in the future, we might delete these Razor views and accept not having component outlines for these Widgets.
+
 ## 2024-01-02 - Image media asset processing
 
 Xperience by Kentico's media library analyzes uploaded media and extracts metadata for specific file types - specifically image width/height values (`Media_File.FileImageWidth` and `Media_File.FileImageHeight`). This is a feature that comes from previous versions of Kentico.

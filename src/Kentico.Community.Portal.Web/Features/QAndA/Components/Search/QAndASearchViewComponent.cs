@@ -4,11 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public class QAndASearchViewComponent : ViewComponent
+public class QAndASearchViewComponent(SearchService searchService) : ViewComponent
 {
-    private readonly SearchService searchService;
-
-    public QAndASearchViewComponent(SearchService searchService) => this.searchService = searchService;
+    private readonly SearchService searchService = searchService;
 
     public IViewComponentResult Invoke()
     {
@@ -45,7 +43,7 @@ public class QAndASearchViewComponent : ViewComponent
 
 public class QAndASearchViewModel : IPagedViewModel
 {
-    public IReadOnlyList<QAndAPostViewModel> Questions { get; set; } = new List<QAndAPostViewModel>();
+    public IReadOnlyList<QAndAPostViewModel> Questions { get; set; } = [];
 
     public string? Query { get; set; } = "";
     [HiddenInput]
@@ -68,16 +66,18 @@ public class QAndAPostViewModel
     public string Title { get; set; } = "";
     public string LinkPath { get; set; } = "";
     public DateTime DateCreated { get; set; }
-    public int AnswersCount { get; set; }
-    public bool IsAnswered { get; set; }
+    public int ResponseCount { get; set; }
+    public DateTime LatestResponseDate { get; set; }
+    public bool HasAcceptedResponse { get; set; }
     public QAndAPostAuthorViewModel Author { get; set; } = new();
 
     public static QAndAPostViewModel GetModel(QAndASearchModel result) => new()
     {
         Title = result.Title,
         DateCreated = result.PublishedDate,
-        AnswersCount = result.AnswerCount,
-        IsAnswered = result.IsAnswered,
+        ResponseCount = result.ResponseCount,
+        LatestResponseDate = result.LatestResponseDate,
+        HasAcceptedResponse = result.HasAcceptedResponse,
         Author = new()
         {
             FullName = result.AuthorFullName,

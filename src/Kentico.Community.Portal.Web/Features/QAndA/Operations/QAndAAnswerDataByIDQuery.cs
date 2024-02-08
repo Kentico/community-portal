@@ -8,11 +8,9 @@ public record QAndAAnswerDataByIDQuery(int AnswerDataID) : IQuery<QAndAAnswerDat
     public string CacheValueKey => AnswerDataID.ToString();
 }
 
-public class QAndAAnswerDataByIDQueryHandler : DataItemQueryHandler<QAndAAnswerDataByIDQuery, QAndAAnswerDataInfo>
+public class QAndAAnswerDataByIDQueryHandler(DataItemQueryTools tools, IQAndAAnswerDataInfoProvider provider) : DataItemQueryHandler<QAndAAnswerDataByIDQuery, QAndAAnswerDataInfo>(tools)
 {
-    private readonly IQAndAAnswerDataInfoProvider provider;
-
-    public QAndAAnswerDataByIDQueryHandler(DataItemQueryTools tools, IQAndAAnswerDataInfoProvider provider) : base(tools) => this.provider = provider;
+    private readonly IQAndAAnswerDataInfoProvider provider = provider;
 
     public override async Task<QAndAAnswerDataInfo> Handle(QAndAAnswerDataByIDQuery request, CancellationToken cancellationToken = default)
     {

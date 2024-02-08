@@ -21,7 +21,8 @@
                             <label asp-for="SortBy" class="form-label text-nowrap mb-0">@HtmlLocalizer["Sort by"]</label>
                             <select asp-for="SortBy" class="form-select form-select-sm w-auto" search-sort-by>
                                 <option value="relevance">@HtmlLocalizer["Relevance"]</option>
-                                <option value="date">@HtmlLocalizer["Date Created"]</option>
+                                <option value="publishdate">@HtmlLocalizer["Latest question"]</option>
+                                <option value="responsedate">@HtmlLocalizer["Latest response"]</option>
                             </select>
                         </div>
                     </div>
@@ -60,6 +61,7 @@
                     string formattedName = string.IsNullOrWhiteSpace(question.Author.FullName)
                         ? question.Author.Username
                         : $"{question.Author.FullName} ({question.Author.Username})";
+                    bool isBlogDiscussion = question.Title.StartsWith("Blog Discussion:", StringComparison.OrdinalIgnoreCase);
 
                     <div class="c-card question default-border mt-3">
                         <div class="c-card_inner grid">
@@ -71,7 +73,7 @@
                                 </div>
 
                                 <p class="mb-2">
-                                    @question.DateCreated.ToString("MMMM d, yyyy") @question.DateCreated.ToString("t")<br>
+                                    Created: @question.DateCreated.ToString("d", View.Culture) @question.DateCreated.ToString("t")<br>
                                     @if(question.Author.MemberID > 0)
                                     {
                                         <a class="text-secondary" asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@question.Author.MemberID">@formattedName</a>
@@ -82,7 +84,7 @@
                                     }
                                 </p>
 
-                                @if (question.IsAnswered)
+                                @if (question.HasAcceptedResponse)
                                 {
                                     <div class="fs-sm-4 text-success mt-2">
                                         <svg class="c-icon mt-1 me-2 ">
@@ -92,8 +94,34 @@
                                 }
                             </div>
                             <div class="c-card_footer p-1">
-                                <div class="fs-sm-1 text-secondary fw-bold lh-sm">@question.AnswersCount</div>
-                                <div class="fs-sm-4">Answers</div>
+                                <div class="fs-sm-1 text-secondary fw-bold lh-sm">@question.ResponseCount</div>
+                                <div class="fs-sm-4">
+                                    @if (isBlogDiscussion)
+                                    {
+                                        string text = question.ResponseCount switch
+                                        {
+                                            0 or > 1 => "Comments",
+                                            1 => "Comment",
+                                            _ => ""
+                                        };
+                                        <text>@text</text>
+                                    }
+                                    else
+                                    {
+                                        string text = question.ResponseCount switch
+                                        {
+                                            0 or > 1 => "Answers",
+                                            1 => "Answer",
+                                            _ => ""
+                                        };
+                                        <text>@text</text>
+                                    }
+                                </div>
+                                @if (question.ResponseCount > 0)
+                                {
+                                    <small>Latest response
+                                        <br> @question.LatestResponseDate.ToString("d", View.Culture) @question.LatestResponseDate.ToString("t")</small>
+                                }
                             </div>
                         </div>
                     </div>

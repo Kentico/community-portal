@@ -4,16 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kentico.Community.Portal.Web.Features.Support;
 
 [Route("[controller]/[action]")]
-public class SupportFormController : Controller
+public class SupportFormController(SupportFacade supportFacade, CaptchaValidator captchaValidator) : Controller
 {
-    private readonly SupportFacade supportFacade;
-    private readonly CaptchaValidator captchaValidator;
-
-    public SupportFormController(SupportFacade supportFacade, CaptchaValidator captchaValidator)
-    {
-        this.supportFacade = supportFacade;
-        this.captchaValidator = captchaValidator;
-    }
+    private readonly SupportFacade supportFacade = supportFacade;
+    private readonly CaptchaValidator captchaValidator = captchaValidator;
 
     [HttpPost]
     [ValidateAntiForgeryToken]

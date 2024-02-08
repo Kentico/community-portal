@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using CMS.ContentEngine;
 using CMS.DataEngine;
 using CMS.Membership;
@@ -14,24 +13,18 @@ public record QAndAQuestionUpdateCommand(
     string UpdatedQuestionTitle,
     string UpdatedQuestionContent,
     int ChannelID) : ICommand<Unit>;
-public class QAndAQuestionUpdateCommandHandler : WebPageCommandHandler<QAndAQuestionUpdateCommand, Unit>
+public class QAndAQuestionUpdateCommandHandler(
+    WebPageCommandTools tools,
+    IInfoProvider<UserInfo> users,
+    ISystemClock clock) : WebPageCommandHandler<QAndAQuestionUpdateCommand, Unit>(tools)
 {
-    private readonly IInfoProvider<UserInfo> users;
-    private readonly ISystemClock clock;
-
-    public QAndAQuestionUpdateCommandHandler(
-        WebPageCommandTools tools,
-        IInfoProvider<UserInfo> users,
-        ISystemClock clock) : base(tools)
-    {
-        this.users = users;
-        this.clock = clock;
-    }
+    private readonly IInfoProvider<UserInfo> users = users;
+    private readonly ISystemClock clock = clock;
 
     public override async Task<Unit> Handle(QAndAQuestionUpdateCommand request, CancellationToken cancellationToken)
     {
         var question = request.Question;
-        string filteredTitle = Regex.Replace(request.UpdatedQuestionTitle, @"[^a-zA-Z0-9\d]", "-").RemoveRepeatedCharacters('-') ?? "";
+        string filteredTitle = QandAContentParser.Alphanumeric(request.UpdatedQuestionTitle);
         string uniqueID = Guid.NewGuid().ToString("N");
         string displayName = $"{filteredTitle[..Math.Min(91, filteredTitle.Length)]}-{uniqueID[..8]}";
 
@@ -54,7 +47,7 @@ public class QAndAQuestionUpdateCommandHandler : WebPageCommandHandler<QAndAQues
         {
             { nameof(QAndAQuestionPage.QAndAQuestionPageDateModified), clock.UtcNow },
             { nameof(QAndAQuestionPage.QAndAQuestionPageTitle), request.UpdatedQuestionTitle },
-            // Content is not sanitized because it can included fenced code blocks.
+            // Content is not sanitized because it can include fenced code blocks.
             { nameof(QAndAQuestionPage.QAndAQuestionPageContent), request.UpdatedQuestionContent },
         });
         var draftData = new UpdateDraftData(itemData);

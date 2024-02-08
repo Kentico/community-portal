@@ -6,10 +6,8 @@ namespace Kentico.Community.Portal.Web.Features.Community;
 
 public record CommunityGroupContentsQuery : IQuery<CommunityGroupContentsQueryResponse>;
 public record CommunityGroupContentsQueryResponse(IReadOnlyList<CommunityGroupContent> Items);
-public class CommunityGroupContentsQueryHandler : ContentItemQueryHandler<CommunityGroupContentsQuery, CommunityGroupContentsQueryResponse>
+public class CommunityGroupContentsQueryHandler(ContentItemQueryTools tools) : ContentItemQueryHandler<CommunityGroupContentsQuery, CommunityGroupContentsQueryResponse>(tools)
 {
-    public CommunityGroupContentsQueryHandler(ContentItemQueryTools tools) : base(tools) { }
-
     public override async Task<CommunityGroupContentsQueryResponse> Handle(CommunityGroupContentsQuery request, CancellationToken cancellationToken)
     {
         var b = new ContentItemQueryBuilder()

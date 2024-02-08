@@ -7,16 +7,10 @@ using SimpleMvcSitemap;
 namespace Kentico.Community.Portal.Web.Features.SEO;
 
 [Route("")]
-public class SeoController : Controller
+public class SeoController(Sitemap sitemap, IMediator mediator) : Controller
 {
-    private readonly Sitemap sitemap;
-    private readonly IMediator mediator;
-
-    public SeoController(Sitemap sitemap, IMediator mediator)
-    {
-        this.sitemap = sitemap;
-        this.mediator = mediator;
-    }
+    private readonly Sitemap sitemap = sitemap;
+    private readonly IMediator mediator = mediator;
 
     [HttpGet("sitemap.xml")]
     public async Task<IActionResult> Sitemap()

@@ -9,13 +9,11 @@ using MediatR;
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 public record QAndAQuestionMarkAnsweredCommand(QAndAQuestionPage QuestionPage, QAndAAnswerDataInfo Answer, int ChannelID) : ICommand<Unit>;
-public class QAndAQuestionMarkAnsweredCommandHandler : WebPageCommandHandler<QAndAQuestionMarkAnsweredCommand, Unit>
+public class QAndAQuestionMarkAnsweredCommandHandler(
+    WebPageCommandTools tools,
+    IInfoProvider<UserInfo> users) : WebPageCommandHandler<QAndAQuestionMarkAnsweredCommand, Unit>(tools)
 {
-    private readonly IInfoProvider<UserInfo> users;
-
-    public QAndAQuestionMarkAnsweredCommandHandler(
-        WebPageCommandTools tools,
-        IInfoProvider<UserInfo> users) : base(tools) => this.users = users;
+    private readonly IInfoProvider<UserInfo> users = users;
 
     public override async Task<Unit> Handle(QAndAQuestionMarkAnsweredCommand request, CancellationToken cancellationToken)
     {

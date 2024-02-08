@@ -18,7 +18,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// <summary>
 	/// Represents a page of type <see cref="BlogPostPage"/>.
 	/// </summary>
-	public partial class BlogPostPage : IWebPageFieldsSource
+	public partial class BlogPostPage : IWebPageFieldsSource, IWebPageMeta
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -30,18 +30,6 @@ namespace Kentico.Community.Portal.Core.Content
 		/// Represents system properties for a web page item.
 		/// </summary>
 		public WebPageFields SystemFields { get; set; }
-
-
-		/// <summary>
-		/// BlogPostPageTitle.
-		/// </summary>
-		public string BlogPostPageTitle { get; set; }
-
-
-		/// <summary>
-		/// BlogPostPageShortDescription.
-		/// </summary>
-		public string BlogPostPageShortDescription { get; set; }
 
 
 		/// <summary>
@@ -60,5 +48,29 @@ namespace Kentico.Community.Portal.Core.Content
 		/// BlogPostPageCanonicalURL.
 		/// </summary>
 		public string BlogPostPageCanonicalURL { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaTitle.
+		/// </summary>
+		public string WebPageMetaTitle { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaDescription.
+		/// </summary>
+		public string WebPageMetaDescription { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaExcludeFromSitemap.
+		/// </summary>
+		public bool WebPageMetaExcludeFromSitemap { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaRobots.
+		/// </summary>
+		public string WebPageMetaRobots { get; set; }
 	}
 }

@@ -1,4 +1,3 @@
-using CMS.Websites.Routing;
 using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Infrastructure;
@@ -29,30 +28,18 @@ namespace Kentico.Community.Portal.Web.Features.Blog;
 
 public class BlogPostPageTemplateProperties : IPageTemplateProperties { }
 
-public class BlogPostPageTemplateController : Controller
+public class BlogPostPageTemplateController(
+    AssetItemService assetService,
+    WebPageMetaService metaService,
+    IMediator mediator,
+    MarkdownRenderer renderer,
+    IWebPageDataContextRetriever contextRetriever) : Controller
 {
-    private readonly AssetItemService assetService;
-    private readonly WebPageMetaService metaService;
-    private readonly IMediator mediator;
-    private readonly MarkdownRenderer renderer;
-    private readonly IWebsiteChannelContext channelContext;
-    private readonly IWebPageDataContextRetriever contextRetriever;
-
-    public BlogPostPageTemplateController(
-        AssetItemService assetService,
-        WebPageMetaService metaService,
-        IMediator mediator,
-        MarkdownRenderer renderer,
-        IWebsiteChannelContext channelContext,
-        IWebPageDataContextRetriever contextRetriever)
-    {
-        this.assetService = assetService;
-        this.metaService = metaService;
-        this.mediator = mediator;
-        this.renderer = renderer;
-        this.channelContext = channelContext;
-        this.contextRetriever = contextRetriever;
-    }
+    private readonly AssetItemService assetService = assetService;
+    private readonly WebPageMetaService metaService = metaService;
+    private readonly IMediator mediator = mediator;
+    private readonly MarkdownRenderer renderer = renderer;
+    private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
 
     public async Task<ActionResult> Index()
     {
@@ -61,7 +48,7 @@ public class BlogPostPageTemplateController : Controller
             return NotFound();
         }
 
-        var blogPage = await mediator.Send(new BlogPostPageQuery(data.WebPage, channelContext.WebsiteChannelName));
+        var blogPage = await mediator.Send(new BlogPostPageQuery(data.WebPage));
         var post = blogPage.BlogPostPageBlogPostContent.First();
 
         var author = await GetAuthor(post);
@@ -90,12 +77,17 @@ public class BlogPostPageTemplateController : Controller
                 : blogPage.BlogPostPageQAndADiscussionLinkPath
         };
 
-        var meta = new Meta(blogPage.BlogPostPageTitle, blogPage.BlogPostPageShortDescription)
+        string metaTitle = string.IsNullOrWhiteSpace(blogPage.WebPageMetaTitle)
+            ? post.BlogPostContentTitle
+            : blogPage.WebPageMetaTitle;
+        string metaDescription = string.IsNullOrWhiteSpace(blogPage.WebPageMetaDescription)
+            ? post.BlogPostContentShortDescription
+            : blogPage.WebPageMetaDescription;
+
+        metaService.SetMeta(new(metaTitle, metaDescription)
         {
             CanonicalURL = blogPage.BlogPostPageCanonicalURL
-        };
-
-        metaService.SetMeta(meta);
+        });
 
         return new TemplateResult(vm);
     }
@@ -134,19 +126,13 @@ public class BlogPostPageTemplateController : Controller
     }
 }
 
-public class BlogPostDetailViewModel
+public class BlogPostDetailViewModel(ImageAssetViewModel? teaser, AuthorViewModel author)
 {
-    public BlogPostDetailViewModel(ImageAssetViewModel? teaser, AuthorViewModel author)
-    {
-        Teaser = teaser;
-        Author = author;
-    }
-
-    public ImageAssetViewModel? Teaser { get; init; }
+    public ImageAssetViewModel? Teaser { get; init; } = teaser;
     public string Title { get; init; } = "";
     public DateTime Date { get; init; }
     public HtmlString UnsanitizedContentHTML { get; init; } = HtmlString.Empty;
-    public AuthorViewModel Author { get; init; }
+    public AuthorViewModel Author { get; init; } = author;
     public string AbsoluteURL { get; init; } = "";
     public string? DiscussionLinkPath { get; init; }
 }

@@ -8,11 +8,9 @@ public record QAndAAnswerDatasByQuestionQuery(int QuestionWebPageItemID) : IQuer
     public string CacheValueKey => QuestionWebPageItemID.ToString();
 }
 public record QAndAAnswerDatasByQuestionQueryResponse(IReadOnlyList<QAndAAnswerDataInfo> Items);
-public class QAndAAnswerDatasByQuestionQueryHandler : DataItemQueryHandler<QAndAAnswerDatasByQuestionQuery, QAndAAnswerDatasByQuestionQueryResponse>
+public class QAndAAnswerDatasByQuestionQueryHandler(DataItemQueryTools tools, IQAndAAnswerDataInfoProvider provider) : DataItemQueryHandler<QAndAAnswerDatasByQuestionQuery, QAndAAnswerDatasByQuestionQueryResponse>(tools)
 {
-    private readonly IQAndAAnswerDataInfoProvider provider;
-
-    public QAndAAnswerDatasByQuestionQueryHandler(DataItemQueryTools tools, IQAndAAnswerDataInfoProvider provider) : base(tools) => this.provider = provider;
+    private readonly IQAndAAnswerDataInfoProvider provider = provider;
 
     public override async Task<QAndAAnswerDatasByQuestionQueryResponse> Handle(QAndAAnswerDatasByQuestionQuery request, CancellationToken cancellationToken)
     {

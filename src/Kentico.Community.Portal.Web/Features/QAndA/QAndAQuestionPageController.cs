@@ -21,33 +21,22 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 [Route("[controller]/[action]")]
-public class QAndAQuestionPageController : Controller
+public class QAndAQuestionPageController(
+    IWebPageDataContextRetriever dataContextRetriever,
+    UserManager<CommunityMember> userManager,
+    IUserInfoProvider userInfoProvider,
+    WebPageMetaService metaService,
+    IMediator mediator,
+    MarkdownRenderer markdownRenderer,
+    IWebsiteChannelContext channelContext) : Controller
 {
-    private readonly IWebPageDataContextRetriever dataContextRetriever;
-    private readonly UserManager<CommunityMember> userManager;
-    private readonly IUserInfoProvider userInfoProvider;
-    private readonly WebPageMetaService metaService;
-    private readonly IMediator mediator;
-    private readonly MarkdownRenderer markdownRenderer;
-    private readonly IWebsiteChannelContext channelContext;
-
-    public QAndAQuestionPageController(
-        IWebPageDataContextRetriever dataContextRetriever,
-        UserManager<CommunityMember> userManager,
-        IUserInfoProvider userInfoProvider,
-        WebPageMetaService metaService,
-        IMediator mediator,
-        MarkdownRenderer markdownRenderer,
-        IWebsiteChannelContext channelContext)
-    {
-        this.dataContextRetriever = dataContextRetriever;
-        this.userManager = userManager;
-        this.userInfoProvider = userInfoProvider;
-        this.metaService = metaService;
-        this.mediator = mediator;
-        this.markdownRenderer = markdownRenderer;
-        this.channelContext = channelContext;
-    }
+    private readonly IWebPageDataContextRetriever dataContextRetriever = dataContextRetriever;
+    private readonly UserManager<CommunityMember> userManager = userManager;
+    private readonly IUserInfoProvider userInfoProvider = userInfoProvider;
+    private readonly WebPageMetaService metaService = metaService;
+    private readonly IMediator mediator = mediator;
+    private readonly MarkdownRenderer markdownRenderer = markdownRenderer;
+    private readonly IWebsiteChannelContext channelContext = channelContext;
 
     [HttpGet]
     public async Task<ActionResult> Index()
@@ -59,8 +48,8 @@ public class QAndAQuestionPageController : Controller
 
         var currentMember = await userManager.CurrentUser(HttpContext);
 
-        var question = await mediator.Send(new QAndAQuestionPageQuery(data.WebPage, channelContext.WebsiteChannelName));
-        metaService.SetMeta(new(question.QAndAQuestionPageTitle, $"View the discussion and answers for a question about {question.QAndAQuestionPageTitle} in the Kentico Community Q&A."));
+        var question = await mediator.Send(new QAndAQuestionPageQuery(data.WebPage));
+        metaService.SetMeta(new(question.QAndAQuestionPageTitle, $"View the discussion about {question.QAndAQuestionPageTitle} in the Kentico Community Portal Q&A."));
 
         bool canManageContent = await userManager.CanManageContent(currentMember, userInfoProvider);
         var answers = await GetAnswers(question, currentMember, canManageContent);
@@ -202,7 +191,7 @@ public class QAndAQuestionPageController : Controller
 public class QAndAQuestionPageViewModel
 {
     public QAndAPostQuestionViewModel Question { get; set; } = new();
-    public IReadOnlyList<QAndAPostAnswerViewModel> Answers { get; set; } = new List<QAndAPostAnswerViewModel>();
+    public IReadOnlyList<QAndAPostAnswerViewModel> Answers { get; set; } = [];
 }
 
 public class QAndAPostQuestionViewModel

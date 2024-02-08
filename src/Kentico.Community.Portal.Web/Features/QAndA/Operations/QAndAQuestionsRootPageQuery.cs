@@ -4,10 +4,8 @@ using Kentico.Community.Portal.Core.Operations;
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 public record QAndAQuestionsRootPageQuery(string ChannelName) : IQuery<QAndAQuestionsRootPage>, IChannelContentQuery;
-public class QAndAQuestionsRootPageQueryHandler : ContentItemQueryHandler<QAndAQuestionsRootPageQuery, QAndAQuestionsRootPage>
+public class QAndAQuestionsRootPageQueryHandler(ContentItemQueryTools tools) : ContentItemQueryHandler<QAndAQuestionsRootPageQuery, QAndAQuestionsRootPage>(tools)
 {
-    public QAndAQuestionsRootPageQueryHandler(ContentItemQueryTools tools) : base(tools) { }
-
     public override async Task<QAndAQuestionsRootPage> Handle(QAndAQuestionsRootPageQuery request, CancellationToken cancellationToken = default)
     {
         var b = new ContentItemQueryBuilder().ForContentType(QAndAQuestionsRootPage.CONTENT_TYPE_NAME, queryParameters =>

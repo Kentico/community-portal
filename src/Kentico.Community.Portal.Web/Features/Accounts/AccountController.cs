@@ -10,24 +10,16 @@ namespace Kentico.Community.Portal.Web.Features.Accounts;
 
 [Route("[controller]/[action]")]
 [Authorize]
-public class AccountController : Controller
+public class AccountController(
+    WebPageMetaService metaService,
+    UserManager<CommunityMember> userManager,
+    SignInManager<CommunityMember> signInManager,
+    MemberContactManager contactManager) : Controller
 {
-    private readonly WebPageMetaService metaService;
-    private readonly UserManager<CommunityMember> userManager;
-    private readonly SignInManager<CommunityMember> signInManager;
-    private readonly MemberContactManager contactManager;
-
-    public AccountController(
-        WebPageMetaService metaService,
-        UserManager<CommunityMember> userManager,
-        SignInManager<CommunityMember> signInManager,
-        MemberContactManager contactManager)
-    {
-        this.metaService = metaService;
-        this.userManager = userManager;
-        this.signInManager = signInManager;
-        this.contactManager = contactManager;
-    }
+    private readonly WebPageMetaService metaService = metaService;
+    private readonly UserManager<CommunityMember> userManager = userManager;
+    private readonly SignInManager<CommunityMember> signInManager = signInManager;
+    private readonly MemberContactManager contactManager = contactManager;
 
     [HttpGet]
     public async Task<ActionResult> MyAccount()
@@ -74,9 +66,9 @@ public class AccountController : Controller
             return Unauthorized();
         }
 
-        member.FirstName = model.FirstName;
-        member.LastName = model.LastName;
-        member.LinkedInIdentifier = model.LinkedInIdentifier;
+        member.FirstName = model.FirstName ?? "";
+        member.LastName = model.LastName ?? "";
+        member.LinkedInIdentifier = model.LinkedInIdentifier ?? "";
 
         _ = await userManager.UpdateAsync(member);
 
@@ -147,18 +139,18 @@ public class ProfileViewModel
 {
     [DataType(DataType.Text)]
     [DisplayName("First name")]
-    [MaxLength(25, ErrorMessage = "First Name be longer than 25 characters.")]
-    public string FirstName { get; set; } = "";
+    [MaxLength(40, ErrorMessage = "First Name be longer than 40 characters.")]
+    public string? FirstName { get; set; } = "";
 
     [DataType(DataType.Text)]
     [DisplayName("Last Name")]
-    [MaxLength(25, ErrorMessage = "Last Name be longer than 25 characters.")]
-    public string LastName { get; set; } = "";
+    [MaxLength(40, ErrorMessage = "Last Name be longer than 40 characters.")]
+    public string? LastName { get; set; } = "";
 
     [DataType(DataType.Text)]
     [DisplayName("LinkedIn Identifier")]
-    [MaxLength(25, ErrorMessage = "The LinkedIn Identifier cannot be longer than 25 characters")]
-    public string LinkedInIdentifier { get; set; } = "";
+    [MaxLength(40, ErrorMessage = "The LinkedIn Identifier cannot be longer than 40 characters")]
+    public string? LinkedInIdentifier { get; set; } = "";
 
     public UpdateState State { get; set; } = UpdateState.Unmodified;
 }

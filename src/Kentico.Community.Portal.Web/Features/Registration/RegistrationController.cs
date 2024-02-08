@@ -14,45 +14,30 @@ using Microsoft.Extensions.Options;
 namespace Kentico.Community.Portal.Web.Features.Registration;
 
 [Route("[controller]/[action]")]
-public class RegistrationController : Controller
+public class RegistrationController(
+    WebPageMetaService metaService,
+    SignInManager<CommunityMember> signInManager,
+    UserManager<CommunityMember> userManager,
+    CaptchaValidator captchaValidator,
+    IStringLocalizer<SharedResources> localizer,
+    IOptions<SystemEmailOptions> systemEmailOptions,
+    IEventLogService log,
+    IEmailService emailService,
+    IInfoProvider<ChannelInfo> channelProvider,
+    IWebsiteChannelContext channelContext,
+    ConsentManager consentManager) : Controller
 {
-    private readonly WebPageMetaService metaService;
-    private readonly SignInManager<CommunityMember> signInManager;
-    private readonly UserManager<CommunityMember> userManager;
-    private readonly SystemEmailOptions systemEmailOptions;
-    private readonly CaptchaValidator captchaValidator;
-    private readonly IStringLocalizer<SharedResources> localizer;
-    private readonly IEventLogService log;
-    private readonly IEmailService emailService;
-    private readonly IInfoProvider<ChannelInfo> channelProvider;
-    private readonly IWebsiteChannelContext channelContext;
-    private readonly ConsentManager consentManager;
-
-    public RegistrationController(
-        WebPageMetaService metaService,
-        SignInManager<CommunityMember> signInManager,
-        UserManager<CommunityMember> userManager,
-        CaptchaValidator captchaValidator,
-        IStringLocalizer<SharedResources> localizer,
-        IOptions<SystemEmailOptions> systemEmailOptions,
-        IEventLogService log,
-        IEmailService emailService,
-        IInfoProvider<ChannelInfo> channelProvider,
-        IWebsiteChannelContext channelContext,
-        ConsentManager consentManager)
-    {
-        this.metaService = metaService;
-        this.signInManager = signInManager;
-        this.userManager = userManager;
-        this.log = log;
-        this.localizer = localizer;
-        this.emailService = emailService;
-        this.channelProvider = channelProvider;
-        this.channelContext = channelContext;
-        this.consentManager = consentManager;
-        this.systemEmailOptions = systemEmailOptions.Value;
-        this.captchaValidator = captchaValidator;
-    }
+    private readonly WebPageMetaService metaService = metaService;
+    private readonly SignInManager<CommunityMember> signInManager = signInManager;
+    private readonly UserManager<CommunityMember> userManager = userManager;
+    private readonly SystemEmailOptions systemEmailOptions = systemEmailOptions.Value;
+    private readonly CaptchaValidator captchaValidator = captchaValidator;
+    private readonly IStringLocalizer<SharedResources> localizer = localizer;
+    private readonly IEventLogService log = log;
+    private readonly IEmailService emailService = emailService;
+    private readonly IInfoProvider<ChannelInfo> channelProvider = channelProvider;
+    private readonly IWebsiteChannelContext channelContext = channelContext;
+    private readonly ConsentManager consentManager = consentManager;
 
     [HttpGet]
     public ActionResult Register()

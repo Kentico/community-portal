@@ -10,7 +10,7 @@ public interface IChannelContentQuery
 }
 public abstract record WebPageRoutedQuery<TResult>(RoutedWebPage Page) : IQuery<TResult>, ICacheByValueQuery
 {
-    public virtual string CacheValueKey => $"{Page.WebPageItemID}|{Page.LanguageName}";
+    public virtual string CacheValueKey => $"{Page.WebPageItemID}|{Page.WebsiteChannelName}|{Page.LanguageName}";
 }
 
 public abstract record WebPageByGUIDQuery<TResult>(Guid WebPageGUID) : IQuery<TResult>, ICacheByValueQuery

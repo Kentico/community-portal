@@ -96,12 +96,12 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
                     CultureInfo.CurrentCulture.Name,
                     cacheByValueQuery.CacheValueKey
                 }
-            : new object[]
-                {
+            :
+                [
                     query.GetType().Name,
                     channelName,
                     CultureInfo.CurrentCulture.Name,
-                };
+                ];
     }
 
 
@@ -188,12 +188,12 @@ public abstract class ContentItemQueryHandler<TQuery, TResult> :
                     CultureInfo.CurrentCulture.Name,
                     cacheByValueQuery.CacheValueKey
                 }
-            : new object[]
-                {
+            :
+                [
                     query.GetType().Name,
                     channelName,
                     CultureInfo.CurrentCulture.Name,
-                };
+                ];
     }
 
     public virtual CacheSettings CustomizeCacheSettings(DefaultQueryCacheSettings settings, IQueryCacheKeysCreator<TQuery, TResult> creator, TQuery query)
@@ -259,12 +259,12 @@ public abstract class DataItemQueryHandler<TQuery, TResult> :
                     CultureInfo.CurrentCulture.Name,
                     cacheByValueQuery.CacheValueKey
                 }
-            : new object[]
-                {
+            :
+                [
                     query.GetType().Name,
                     channelName,
                     CultureInfo.CurrentCulture.Name,
-                };
+                ];
     }
 
     public virtual CacheSettings CustomizeCacheSettings(DefaultQueryCacheSettings settings, IQueryCacheKeysCreator<TQuery, TResult> creator, TQuery query)

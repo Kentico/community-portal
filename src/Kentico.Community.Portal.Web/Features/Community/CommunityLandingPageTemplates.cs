@@ -1,4 +1,3 @@
-using CMS.Websites.Routing;
 using Kentico.Community.Portal.Web.Features.Community;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
@@ -12,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
     name: "Community Page - Default",
     propertiesType: typeof(CommunityLandingPageTemplateProperties),
     customViewName: "~/Features/Community/CommunityLandingPage_Default.cshtml",
-    ContentTypeNames = new[] { CommunityLandingPage.CONTENT_TYPE_NAME },
+    ContentTypeNames = [CommunityLandingPage.CONTENT_TYPE_NAME],
     Description = "",
     IconClass = ""
 )]
@@ -26,24 +25,14 @@ namespace Kentico.Community.Portal.Web.Features.Community;
 
 public class CommunityLandingPageTemplateProperties : IPageTemplateProperties { }
 
-public class CommunityLandingPageTemplateController : Controller
+public class CommunityLandingPageTemplateController(
+    IMediator mediator,
+    WebPageMetaService metaService,
+    IWebPageDataContextRetriever contextRetriever) : Controller
 {
-    private readonly IMediator mediator;
-    private readonly WebPageMetaService metaService;
-    private readonly IWebsiteChannelContext channelContext;
-    private readonly IWebPageDataContextRetriever contextRetriever;
-
-    public CommunityLandingPageTemplateController(
-        IMediator mediator,
-        WebPageMetaService metaService,
-        IWebsiteChannelContext channelContext,
-        IWebPageDataContextRetriever contextRetriever)
-    {
-        this.mediator = mediator;
-        this.metaService = metaService;
-        this.channelContext = channelContext;
-        this.contextRetriever = contextRetriever;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly WebPageMetaService metaService = metaService;
+    private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
 
     public async Task<ActionResult> Index()
     {
@@ -52,9 +41,9 @@ public class CommunityLandingPageTemplateController : Controller
             return NotFound();
         }
 
-        var page = await mediator.Send(new CommunityLandingPageQuery(data.WebPage, channelContext.WebsiteChannelName));
+        var page = await mediator.Send(new CommunityLandingPageQuery(data.WebPage));
 
-        metaService.SetMeta(new(page.CommunityLandingPageTitle, page.CommunityLandingPageShortDescription));
+        metaService.SetMeta(new(page));
 
         var resp = await mediator.Send(new CommunityGroupContentsQuery());
 
@@ -62,14 +51,8 @@ public class CommunityLandingPageTemplateController : Controller
     }
 }
 
-public class CommunityLandingPageViewModel
+public class CommunityLandingPageViewModel(CommunityLandingPage page, IReadOnlyList<CommunityGroupContent> groups)
 {
-    public CommunityLandingPageViewModel(CommunityLandingPage page, IReadOnlyList<CommunityGroupContent> groups)
-    {
-        Page = page;
-        Groups = groups;
-    }
-
-    public CommunityLandingPage Page { get; }
-    public IReadOnlyList<CommunityGroupContent> Groups { get; }
+    public CommunityLandingPage Page { get; } = page;
+    public IReadOnlyList<CommunityGroupContent> Groups { get; } = groups;
 }

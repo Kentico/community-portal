@@ -39,7 +39,8 @@ public class PageCustomMetaViewComponent : ViewComponent
             URL = url,
             // TODO set this based on the current page specifying to include it
             CaptchaSiteKey = settings.SiteKey,
-            OGImageURL = meta.OGImageURL
+            OGImageURL = meta.OGImageURL,
+            MetaRobotsContent = meta.Robots
         };
 
         return View("~/Components/ViewComponents/PageCustomMeta/PageCustomMeta.cshtml", vm);

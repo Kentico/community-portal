@@ -35,7 +35,7 @@ public class CommunityReCaptchaFormComponent : FormComponent<CommunityReCaptchaF
 
     private static readonly Lazy<HashSet<string>> mFullLanguageCodes = new(() =>
     {
-        string[] codes = new[] { "zh-HK", "zh-CN", "zh-TW", "en-GB", "fr-CA", "de-AT", "de-CH", "pt-BR", "pt-PT" };
+        string[] codes = ["zh-HK", "zh-CN", "zh-TW", "en-GB", "fr-CA", "de-AT", "de-CH", "pt-BR", "pt-PT"];
 
         return new HashSet<string>(codes, StringComparer.OrdinalIgnoreCase);
     });

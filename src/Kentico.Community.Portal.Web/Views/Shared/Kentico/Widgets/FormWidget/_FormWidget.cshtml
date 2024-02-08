@@ -1,0 +1,44 @@
+@using CMS.Core;
+@using CMS.Base;
+
+@using Kentico.Forms.Web.Mvc.Widgets;
+@using Kentico.Forms.Web.Mvc.Widgets.Internal;
+
+@model ComponentViewModel<FormWidgetProperties>
+
+@*
+By adding a view with the same name/path as a view in the product
+we can override it.
+This is a copy of the Form Widget view included in Xperience, customized
+with the "xpc-preview-outline" tag helper to have the Form Widget show up
+in Page Builder Preview with a component outline.
+*@
+
+<div xpc-preview-outline="Form Widget">
+    @{
+        try
+        {
+            var formWidgetService = Service.Resolve<IKenticoFormWidgetService>();
+
+            var model = formWidgetService.GetViewModel(Model, ViewData);
+
+            if (model != null)
+            {
+                var markup = await Html.PartialAsync("~/Views/Shared/Kentico/Widgets/FormWidget/_FormWidgetForm.cshtml", model);
+                @markup
+                ;
+            }
+        }
+        catch (Exception ex)
+        {
+            var eventLogService = Service.Resolve<IEventLogService>();
+            var selectedForm = Model.Properties?.SelectedForm.FirstOrDefault()?.ObjectCodeName;
+            FormWidgetUtils.LogFormException(eventLogService, selectedForm, ex);
+
+            if (Service.Resolve<IPageBuilderDataContextRetriever>().Retrieve().EditMode)
+            {
+                <span class="formwidget-error">@ResHelper.GetStringFormat("kentico.formbuilder.error", selectedForm)</span>
+            }
+        }
+    }
+</div>

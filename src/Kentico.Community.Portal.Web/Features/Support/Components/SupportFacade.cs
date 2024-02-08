@@ -6,24 +6,16 @@ using Newtonsoft.Json;
 
 namespace Kentico.Community.Portal.Web.Features.Support;
 
-public class SupportFacade
+public class SupportFacade(
+    IWebHostEnvironment environment,
+    IHttpClientFactory httpClientFactory,
+    IEventLogService eventLogService,
+    IOptions<MicrosoftDynamicsSettings> options)
 {
-    private readonly IWebHostEnvironment environment;
-    private readonly IHttpClientFactory httpClientFactory;
-    private readonly IEventLogService eventLogService;
-    private readonly MicrosoftDynamicsSettings dynamicsSettings;
-
-    public SupportFacade(
-        IWebHostEnvironment environment,
-        IHttpClientFactory httpClientFactory,
-        IEventLogService eventLogService,
-        IOptions<MicrosoftDynamicsSettings> options)
-    {
-        this.environment = environment;
-        this.httpClientFactory = httpClientFactory;
-        this.eventLogService = eventLogService;
-        dynamicsSettings = options.Value;
-    }
+    private readonly IWebHostEnvironment environment = environment;
+    private readonly IHttpClientFactory httpClientFactory = httpClientFactory;
+    private readonly IEventLogService eventLogService = eventLogService;
+    private readonly MicrosoftDynamicsSettings dynamicsSettings = options.Value;
 
     public async Task ProcessRequest(SupportFormViewModel model)
     {

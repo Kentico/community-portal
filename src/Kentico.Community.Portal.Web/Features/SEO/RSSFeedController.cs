@@ -22,36 +22,24 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.SEO;
 
-public class RSSFeedController : Controller
+public class RSSFeedController(
+    IMediator mediator,
+    IWebPageDataContextRetriever webPageDataContextRetriever,
+    IWebPageUrlRetriever webPageUrlRetriever,
+    AssetItemService assetService,
+    ISystemClock clock,
+    IProgressiveCache cache,
+    ICacheDependencyKeysBuilder keysBuilder,
+    IWebsiteChannelContext channelContext) : Controller
 {
-    private readonly IMediator mediator;
-    private readonly IWebPageDataContextRetriever webPageDataContextRetriever;
-    private readonly IWebPageUrlRetriever webPageUrlRetriever;
-    private readonly AssetItemService assetService;
-    private readonly ISystemClock clock;
-    private readonly IProgressiveCache cache;
-    private readonly ICacheDependencyKeysBuilder keysBuilder;
-    private readonly IWebsiteChannelContext channelContext;
-
-    public RSSFeedController(
-        IMediator mediator,
-        IWebPageDataContextRetriever webPageDataContextRetriever,
-        IWebPageUrlRetriever webPageUrlRetriever,
-        AssetItemService assetService,
-        ISystemClock clock,
-        IProgressiveCache cache,
-        ICacheDependencyKeysBuilder keysBuilder,
-        IWebsiteChannelContext channelContext)
-    {
-        this.mediator = mediator;
-        this.webPageDataContextRetriever = webPageDataContextRetriever;
-        this.webPageUrlRetriever = webPageUrlRetriever;
-        this.assetService = assetService;
-        this.clock = clock;
-        this.cache = cache;
-        this.keysBuilder = keysBuilder;
-        this.channelContext = channelContext;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly IWebPageDataContextRetriever webPageDataContextRetriever = webPageDataContextRetriever;
+    private readonly IWebPageUrlRetriever webPageUrlRetriever = webPageUrlRetriever;
+    private readonly AssetItemService assetService = assetService;
+    private readonly ISystemClock clock = clock;
+    private readonly IProgressiveCache cache = cache;
+    private readonly ICacheDependencyKeysBuilder keysBuilder = keysBuilder;
+    private readonly IWebsiteChannelContext channelContext = channelContext;
 
     [ResponseCache(Duration = 1200)]
     public async Task<ActionResult> RSSFeed()
@@ -61,7 +49,7 @@ public class RSSFeedController : Controller
             return NotFound();
         }
 
-        var feedPage = await mediator.Send(new RSSFeedPageQuery(data.WebPage, channelContext.WebsiteChannelName));
+        var feedPage = await mediator.Send(new RSSFeedPageQuery(data.WebPage));
 
         if (!string.Equals(feedPage.RSSFeedPageWebPageContentType, BlogPostPage.CONTENT_TYPE_NAME, StringComparison.OrdinalIgnoreCase))
         {
@@ -124,8 +112,14 @@ public class RSSFeedController : Controller
             }
 
             var postURL = await webPageUrlRetriever.Retrieve(postPage);
-            string title = postPage.BlogPostPageTitle;
-            string description = postPage.BlogPostPageShortDescription;
+            string title = postPage.BlogPostPageBlogPostContent
+                .TryFirst()
+                .Map(c => c.BlogPostContentTitle)
+                .GetValueOrDefault("");
+            string description = postPage.BlogPostPageBlogPostContent
+                .TryFirst()
+                .Map(c => c.BlogPostContentShortDescription)
+                .GetValueOrDefault("");
             var absoluteURI = new Uri(postURL.AbsoluteURL(Request));
             string pageID = postPage.SystemFields.WebPageItemGUID.ToString("N");
             var item = new SyndicationItem(title, description, absoluteURI, pageID, post.BlogPostContentPublishedDate)

@@ -1,4 +1,3 @@
-using CMS.Websites.Routing;
 using Kentico.Community.Portal.Web.Features.Home;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
@@ -12,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
     name: "Home Page - Default",
     propertiesType: typeof(HomePageTemplateProperties),
     customViewName: "~/Features/Home/HomePage_Default.cshtml",
-    ContentTypeNames = new[] { HomePage.CONTENT_TYPE_NAME },
+    ContentTypeNames = [HomePage.CONTENT_TYPE_NAME],
     Description = "",
     IconClass = ""
 )]
@@ -26,20 +25,11 @@ namespace Kentico.Community.Portal.Web.Features.Home;
 
 public class HomePageTemplateProperties : IPageTemplateProperties { }
 
-public class HomePageTemplateController : Controller
+public class HomePageTemplateController(IMediator mediator, WebPageMetaService metaService, IWebPageDataContextRetriever contextRetriever) : Controller
 {
-    private readonly IMediator mediator;
-    private readonly WebPageMetaService metaService;
-    private readonly IWebsiteChannelContext channelContext;
-    private readonly IWebPageDataContextRetriever contextRetriever;
-
-    public HomePageTemplateController(IMediator mediator, WebPageMetaService metaService, IWebsiteChannelContext channelContext, IWebPageDataContextRetriever contextRetriever)
-    {
-        this.mediator = mediator;
-        this.metaService = metaService;
-        this.channelContext = channelContext;
-        this.contextRetriever = contextRetriever;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly WebPageMetaService metaService = metaService;
+    private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
 
     public async Task<ActionResult> Index()
     {
@@ -48,9 +38,9 @@ public class HomePageTemplateController : Controller
             return NotFound();
         }
 
-        var homePage = await mediator.Send(new HomePageQuery(data.WebPage, channelContext.WebsiteChannelName));
+        var homePage = await mediator.Send(new HomePageQuery(data.WebPage));
 
-        metaService.SetMeta(new("Home", homePage.HomePageShortDescription));
+        metaService.SetMeta(new(homePage));
 
         return new TemplateResult(homePage);
     }

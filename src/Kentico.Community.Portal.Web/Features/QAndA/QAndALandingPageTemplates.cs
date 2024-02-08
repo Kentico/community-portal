@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
     name: "Q&A Landing Page - Default",
     propertiesType: typeof(QAndALandingPageTemplateProperties),
     customViewName: "~/Features/QAndA/QAndALandingPage_Default.cshtml",
-    ContentTypeNames = new[] { QAndALandingPage.CONTENT_TYPE_NAME },
+    ContentTypeNames = [QAndALandingPage.CONTENT_TYPE_NAME],
     Description = "",
     IconClass = ""
 )]
@@ -34,24 +34,17 @@ public class QAndALandingPageTemplateProperties : IPageTemplateProperties
     public bool DisplayPageDescription { get; set; } = true;
 }
 
-public class QAndALandingPageTemplateController : Controller
+public class QAndALandingPageTemplateController(IMediator mediator, WebPageMetaService metaService, IWebsiteChannelContext channelContext) : Controller
 {
-    private readonly IMediator mediator;
-    private readonly WebPageMetaService metaService;
-    private readonly IWebsiteChannelContext channelContext;
-
-    public QAndALandingPageTemplateController(IMediator mediator, WebPageMetaService metaService, IWebsiteChannelContext channelContext)
-    {
-        this.mediator = mediator;
-        this.metaService = metaService;
-        this.channelContext = channelContext;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly WebPageMetaService metaService = metaService;
+    private readonly IWebsiteChannelContext channelContext = channelContext;
 
     public async Task<ActionResult> Index()
     {
         var landingPage = await mediator.Send(new QAndALandingPageQuery(channelContext.WebsiteChannelName));
 
-        metaService.SetMeta(new(landingPage.Title, landingPage.QAndALandingPageShortDescription));
+        metaService.SetMeta(new(landingPage));
 
         return new TemplateResult(landingPage);
     }

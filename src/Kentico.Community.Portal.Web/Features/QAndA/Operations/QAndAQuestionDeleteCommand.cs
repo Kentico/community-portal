@@ -1,5 +1,4 @@
 using CMS.DataEngine;
-using CMS.DataEngine.Internal;
 using CMS.Membership;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
@@ -9,16 +8,10 @@ using MediatR;
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 public record QAndAQuestionDeleteCommand(QAndAQuestionPage Question, int WebsiteChannelID) : ICommand<Unit>;
-public class QAndAQuestionDeleteCommandHandler : WebPageCommandHandler<QAndAQuestionDeleteCommand, Unit>
+public class QAndAQuestionDeleteCommandHandler(WebPageCommandTools tools, IInfoProvider<UserInfo> users, IQAndAAnswerDataInfoProvider provider) : WebPageCommandHandler<QAndAQuestionDeleteCommand, Unit>(tools)
 {
-    private readonly IInfoProvider<UserInfo> users;
-    private readonly IQAndAAnswerDataInfoProvider provider;
-
-    public QAndAQuestionDeleteCommandHandler(WebPageCommandTools tools, IInfoProvider<UserInfo> users, IQAndAAnswerDataInfoProvider provider) : base(tools)
-    {
-        this.users = users;
-        this.provider = provider;
-    }
+    private readonly IInfoProvider<UserInfo> users = users;
+    private readonly IQAndAAnswerDataInfoProvider provider = provider;
 
     public override async Task<Unit> Handle(QAndAQuestionDeleteCommand request, CancellationToken cancellationToken)
     {
