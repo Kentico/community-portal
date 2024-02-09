@@ -29,6 +29,7 @@ app
     .UseAuthentication()
     .UseKenticoCloud()
     .UseKentico()
+    .UseRequestLocalization()
     .UseStatusCodePagesWithReExecute("/error/{0}")
     .IfNotDevelopment(env, b => b.UseHsts())
     .UseAuthorization()
