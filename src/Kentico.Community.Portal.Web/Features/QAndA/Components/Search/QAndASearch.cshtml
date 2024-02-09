@@ -6,7 +6,7 @@
             <div class="col-xl-10 col-xxl-9">
                 <form method="get" id="qAndASearchForm">
                     <div class="row justify-content-center mt-4">
-                        <div class="col-sm-10 col-lg-7">    
+                        <div class="col-sm-10">    
                             <div class="input-group">
                                 <input asp-for="Query"
                                         type="text"
@@ -17,13 +17,30 @@
                                 <button class="btn btn-primary text-uppercase" type="submit" id="button-search">Search</button>
                             </div>
                         </div>
-                        <div class="col-sm-10 col-lg-3 d-flex justify-content-end align-items-center gap-3 mt-3">
-                            <label asp-for="SortBy" class="form-label text-nowrap mb-0">@HtmlLocalizer["Sort by"]</label>
-                            <select asp-for="SortBy" class="form-select form-select-sm w-auto" search-sort-by>
-                                <option value="relevance">@HtmlLocalizer["Relevance"]</option>
-                                <option value="publishdate">@HtmlLocalizer["Latest question"]</option>
-                                <option value="responsedate">@HtmlLocalizer["Latest response"]</option>
-                            </select>
+                        <div class="col-sm-10 d-flex justify-content-between align-items-center flex-wrap gap-3 mt-3">
+                            <div class="d-flex justify-content-between align-items-center gap-3">
+                                <label asp-for="SortBy" class="form-label text-nowrap mb-0">@HtmlLocalizer["Sort by"]</label>
+                                <select asp-for="SortBy" class="form-select form-select-sm w-auto" search-sort-by>
+                                    <option value="relevance">@HtmlLocalizer["Relevance"]</option>
+                                    <option value="publishdate">@HtmlLocalizer["Latest question"]</option>
+                                    <option value="responsedate">@HtmlLocalizer["Latest response"]</option>
+                                </select>
+                            </div>
+
+                            <div class="form-check">
+                                @*
+                                    Using the long form modeling binding instead of asp-for so that we don't generate the hidden input
+                                    to handle submitting a value when the checkbox is unchecked. This would be fine for a POST, but
+                                    it clutters up the URL with a GET
+
+                                    See: https://www.learnrazorpages.com/razor-pages/forms/checkboxes#razor-checkboxes
+                                *@
+                                <input type="checkbox" class="form-check-input" name="OnlyAcceptedResponses" id="OnlyAcceptedResponses" checked="@(Model.OnlyAcceptedResponses)" search-checkbox>
+                                <label class="form-check-label" asp-for="OnlyAcceptedResponses">
+                                    Only Accepted Responses
+                                </label>
+                            </div>
+
                         </div>
                     </div>
                     <input asp-for="Page" />
@@ -63,7 +80,7 @@
                         : $"{question.Author.FullName} ({question.Author.Username})";
                     bool isBlogDiscussion = question.Title.StartsWith("Blog Discussion:", StringComparison.OrdinalIgnoreCase);
 
-                    <div class="c-card question default-border mt-3">
+                    <div class="c-card question default-border mt-3 @(question.HasAcceptedResponse ? "success" : "")">
                         <div class="c-card_inner grid">
                             <div class="c-card_content">
                                 <div class="c-card_title">
@@ -89,7 +106,7 @@
                                     <div class="fs-sm-4 text-success mt-2">
                                         <svg class="c-icon mt-1 me-2 ">
                                             <use xlink:href="/img/icons.svg#check"></use>
-                                        </svg><small><b>Answered</b></small>
+                                        </svg><small><b>Accepted Response</b></small>
                                     </div>
                                 }
                             </div>

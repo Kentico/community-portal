@@ -5,6 +5,7 @@ using Kentico.Xperience.Lucene.Indexing;
 using Kentico.Xperience.Lucene.Search;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Facet;
+using Lucene.Net.Index;
 using Lucene.Net.Search;
 using Lucene.Net.Util;
 
@@ -156,8 +157,6 @@ public class SearchService
     {
         var index = LuceneIndexStore.Instance.GetRequiredIndex(QAndASearchModel.IndexName);
 
-        var (searchText, sortBy, pageNumber, pageSize, authorMemberID) = request;
-
         var query = GetQAndATermQuery(request);
 
         try
@@ -166,21 +165,21 @@ public class SearchService
                 index,
                 (searcher) =>
                 {
-                    var sortOptions = GetSortOption(sortBy);
+                    var sortOptions = GetSortOption(request.SortBy);
 
                     var topDocs = sortOptions == null
                         ? searcher.Search(query, MAX_RESULTS)
                         : searcher.Search(query, MAX_RESULTS, new Sort(sortOptions));
 
-                    pageSize = Math.Max(1, pageSize);
-                    pageNumber = Math.Max(1, pageNumber);
+                    int pageSize = Math.Max(1, request.PageSize);
+                    int pageNumber = Math.Max(1, request.PageNumber);
 
                     int offset = pageSize * (pageNumber - 1);
                     int limit = pageSize;
 
                     return new GlobalSearchResultViewModel<QAndASearchModel>
                     {
-                        Query = searchText ?? "",
+                        Query = request.SearchText ?? "",
                         Page = pageNumber,
                         PageSize = pageSize,
                         TotalPages = topDocs.TotalHits <= 0 ? 0 : ((topDocs.TotalHits - 1) / pageSize) + 1,
@@ -190,7 +189,7 @@ public class SearchService
                             .Take(limit)
                             .Select(d => QAndASearchModel.FromDocument(searcher.Doc(d.Doc)))
                             .ToList(),
-                        SortBy = sortBy
+                        SortBy = request.SortBy
                     };
                 }
             );
@@ -231,10 +230,10 @@ public class SearchService
             booleanQuery.Add(authorQuery, Occur.MUST);
         }
 
+        var analyzer = new StandardAnalyzer(LuceneVersion.LUCENE_48);
+        var queryBuilder = new QueryBuilder(analyzer);
         if (!string.IsNullOrWhiteSpace(searchText))
         {
-            var analyzer = new StandardAnalyzer(LuceneVersion.LUCENE_48);
-            var queryBuilder = new QueryBuilder(analyzer);
             var titleQuery = queryBuilder.CreatePhraseQuery(nameof(QAndASearchModel.Title), searchText, PHRASE_SLOP);
             booleanQuery = AddToTermQuery(booleanQuery, titleQuery, 5);
 
@@ -246,6 +245,13 @@ public class SearchService
 
             var contentShould = queryBuilder.CreateBooleanQuery(nameof(QAndASearchModel.Content), searchText, Occur.SHOULD);
             booleanQuery = AddToTermQuery(booleanQuery, contentShould, 0.1f);
+        }
+
+        if (request.OnlyAcceptedResponses)
+        {
+            var bytes = new BytesRef(NumericUtils.BUF_SIZE_INT32);
+            NumericUtils.Int32ToPrefixCoded(int.Parse("1"), 0, bytes);
+            booleanQuery.Add(new TermQuery(new Term(nameof(QAndASearchModel.HasAcceptedResponse), bytes)), Occur.MUST);
         }
 
         return booleanQuery;

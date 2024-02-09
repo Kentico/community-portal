@@ -36,6 +36,7 @@ public class QAndASearchViewComponent(SearchService searchService) : ViewCompone
         vm.SortBy = request.SortBy;
         vm.Query = request.SearchText;
         vm.TotalPages = searchResult.TotalPages;
+        vm.OnlyAcceptedResponses = request.OnlyAcceptedResponses;
 
         return View("~/Features/QAndA/Components/Search/QAndASearch.cshtml", vm);
     }
@@ -49,6 +50,7 @@ public class QAndASearchViewModel : IPagedViewModel
     [HiddenInput]
     public int Page { get; set; }
     public string SortBy { get; set; } = "";
+    public bool OnlyAcceptedResponses { get; set; } = false;
     public int TotalPages { get; set; }
 
     public Dictionary<string, string?> GetRouteData(int page) =>

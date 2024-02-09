@@ -27,20 +27,41 @@ function initializeSortByOnForm(formEl) {
   }
 }
 
+/**
+ *
+ * @param {HTMLFormElement} formEl
+ */
+function initializeCheckboxOnForm(formEl) {
+  let checkboxes = document.querySelectorAll("[search-checkbox]");
+
+  for (let i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener("change", function (e) {
+      if (formEl !== null) {
+        if (e.target instanceof HTMLInputElement) {
+          // For aspnet core model binding
+          e.target.value = e.target.checked;
+        }
+        const loadPanel = document.getElementById("overlay");
+        showLoadPanel(loadPanel);
+        formEl.submit();
+      }
+    });
+  }
+}
+
 function initializeQAndASearch() {
   const form = document.querySelector("#qAndASearchForm");
   if (!(form instanceof HTMLFormElement)) {
-    console.info("Q&A search skipped");
     return;
   }
 
   initializeSortByOnForm(form);
+  initializeCheckboxOnForm(form);
 }
 
 function initializeBlogSearch() {
   const form = document.getElementById("blog-search-form");
   if (!(form instanceof HTMLFormElement)) {
-    console.info("Blog search skipped");
     return;
   }
 

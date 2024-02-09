@@ -205,6 +205,10 @@ public class QAndASearchRequest
                 ? a
                 : 0
             : 0;
+
+        OnlyAcceptedResponses = query.TryGetValue(nameof(OnlyAcceptedResponses), out var acceptedResponsesValues)
+            && acceptedResponsesValues.Count > 0 && bool.TryParse(acceptedResponsesValues[0], out bool ar)
+            && ar;
     }
 
     public QAndASearchRequest(string sortBy, int pageSize)
@@ -213,20 +217,12 @@ public class QAndASearchRequest
         PageSize = pageSize;
     }
 
-    public void Deconstruct(out string searchText, out string sortBy, out int pageNumber, out int pageSize, out int authorMemberID)
-    {
-        searchText = SearchText;
-        sortBy = SortBy;
-        pageNumber = PageNumber;
-        pageSize = PageSize;
-        authorMemberID = AuthorMemberID;
-    }
-
     public string SearchText { get; } = "";
     public string SortBy { get; } = "";
     public int PageNumber { get; } = 1;
     public int PageSize { get; } = PAGE_SIZE;
     public int AuthorMemberID { get; set; }
+    public bool OnlyAcceptedResponses { get; set; }
 
-    public bool AreFiltersDefault => string.IsNullOrWhiteSpace(SearchText) && AuthorMemberID < 1;
+    public bool AreFiltersDefault => string.IsNullOrWhiteSpace(SearchText) && AuthorMemberID < 1 && !OnlyAcceptedResponses;
 }
