@@ -64,7 +64,7 @@ jobs:
       - name: Replace Test Connection String
         run: |
           $folderPath = "./test"
-          $newConnectionString = "${{ secrets.CI_CONNECTION_STRING }}"
+          $newConnectionString = "${{ vars.CI_CONNECTION_STRING }}"
 
           $files = Get-ChildItem -Path $folderPath -Filter "Tests.config" -Recurse
 
