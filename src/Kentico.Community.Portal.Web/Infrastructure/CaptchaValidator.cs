@@ -16,6 +16,11 @@ public class CaptchaValidator
 
     public async Task<CaptchaValidationResult> ValidateCaptcha(ICaptchaClientResponse clientResponse)
     {
+        if (settings.IsValidationDisabled)
+        {
+            return new() { IsSuccess = true };
+        }
+
         string secret = settings.SecretKey;
         var client = httpClientFactory.CreateClient();
         string requestURL = string.Format(
@@ -33,20 +38,20 @@ public class CaptchaValidator
 
         if (response is null)
         {
-            return new CaptchaValidationResult { IsSuccess = false, ErrorMessage = "Could not validate captcha" };
+            return new() { IsSuccess = false, ErrorMessage = "Could not validate captcha" };
         }
 
         if (response.Score < settings.ScoreThredhold)
         {
-            return new CaptchaValidationResult { IsSuccess = false, ErrorMessage = "Invalid captcha score" };
+            return new() { IsSuccess = false, ErrorMessage = "Invalid captcha score" };
         }
 
         if (!response.IsSuccess)
         {
-            return new CaptchaValidationResult { IsSuccess = false, ErrorMessage = response.ErrorMessages.FirstOrDefault() ?? "Captcha failed" };
+            return new() { IsSuccess = false, ErrorMessage = response.ErrorMessages.FirstOrDefault() ?? "Captcha failed" };
         }
 
-        return new CaptchaValidationResult { IsSuccess = true };
+        return new() { IsSuccess = true };
     }
 
     public class CaptchaResponse
@@ -74,6 +79,10 @@ public class CaptchaValidationResult
 
 public class ReCaptchaSettings
 {
+    /// <summary>
+    /// Used to disable server-side captcha validation in specific scenarios (ex: CI)
+    /// </summary>
+    public bool IsValidationDisabled { get; set; }
     public string SiteKey { get; set; } = "";
     public string SecretKey { get; set; } = "";
     public double ScoreThredhold { get; set; }
