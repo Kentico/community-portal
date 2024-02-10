@@ -1,17 +1,6 @@
 name: "CI: Build and Test"
 
 on:
-  # Disabled for now since the deploy.yml also does a build and almost all updates come through PRs
-  #  We don't need to duplicate the build once a PR merges
-  # push:
-  #   branches: [main]
-  #   paths:
-  #     - "**.cs"
-  #     - "**.csproj"
-  #     - "**.props"
-  #     - "**.targets"
-  #     - "**.sln"
-  #     - "**.ps1"
   pull_request:
     branches: [main]
     paths:
@@ -94,7 +83,7 @@ jobs:
             -DestinationPath "./database"
 
       - name: Install a SQL Server suite of tools (SQLEngine, SQLPackage)
-        uses: potatoqualitee/mssqlsuite@v1.7
+        uses: potatoqualitee/mssqlsuite@9a0136e208df60b8ecb62909f076bc34854fa55a # set as a commit hash for security - v1.7
         with:
           install: sqlpackage, sqlengine
           sa-password: Pass@12345
