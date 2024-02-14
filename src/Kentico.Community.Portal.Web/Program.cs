@@ -1,5 +1,6 @@
 using Kentico.Web.Mvc;
 using Kentico.Xperience.Cloud;
+using Microsoft.AspNetCore.Localization;
 using Vite.AspNetCore.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +30,10 @@ app
     .UseAuthentication()
     .UseKenticoCloud()
     .UseKentico()
+    .UseRequestLocalization(new RequestLocalizationOptions
+    {
+        DefaultRequestCulture = new RequestCulture("en-US"),
+    })
     .UseStatusCodePagesWithReExecute("/error/{0}")
     .IfNotDevelopment(env, b => b.UseHsts())
     .UseAuthorization()
