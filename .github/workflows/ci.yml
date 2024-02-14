@@ -32,21 +32,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Replace Test Connection String
-        run: |
-          $jsonContent = Get-Content -Path "./src/${{ env.PROJECT_NAME }}/appsettings.CI.json" -Raw
-          $config = $jsonContent | ConvertFrom-Json
-          $ciConnectionString = $config.ConnectionStrings.CMSConnectionString
-          $files = Get-ChildItem -Path "./test" -Filter "Tests.config" -Recurse
-
-          foreach ($file in $files) {
-              $xml = [xml](Get-Content $file.FullName)
-              $connectionStringNode = $xml.SelectSingleNode("//add[@name='CMSTestConnectionString']")
-              $connectionStringNode.SetAttribute("connectionString", $ciConnectionString)
-
-              $xml.Save($file.FullName)
-          }
-
       - name: "Get node.js version from package.json"
         run: |
           $nodeVersion = (Get-Content -Raw -Path ./src/${{ env.PROJECT_NAME }}/package.json | ConvertFrom-Json).engines.node
