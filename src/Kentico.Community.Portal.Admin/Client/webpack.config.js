@@ -63,9 +63,6 @@ function buildConfig(baseConfig, opts, argv) {
     devServer: {
       port: 3009,
       server: {
-        // Will not work because Xperience makes proxy requests
-        // to webpack over 127.0.0.1 host
-        // See https://kentico.atlassian.net/browse/KX-7576
         type: 'https',
         options: {
           key,
