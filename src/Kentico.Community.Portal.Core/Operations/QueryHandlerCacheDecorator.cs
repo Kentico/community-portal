@@ -10,34 +10,24 @@ namespace Kentico.Community.Portal.Core.Operations;
 /// </summary>
 /// <typeparam name="TQuery"></typeparam>
 /// <typeparam name="TResult"></typeparam>
-public class QueryHandlerCacheDecorator<TQuery, TResult> : IQueryHandler<TQuery, TResult> where TQuery : IQuery<TResult>
+public class QueryHandlerCacheDecorator<TQuery, TResult>(
+    IQueryHandler<TQuery, TResult> decorated,
+    IProgressiveCache cache,
+    IEnumerable<IQueryCacheKeysCreator<TQuery, TResult>> creators,
+    IEnumerable<IQueryCacheSettingsCustomizer<TQuery, TResult>> cacheCustomizers,
+    ICacheDependenciesStore store,
+    IOptions<DefaultQueryCacheSettings> settings) : IQueryHandler<TQuery, TResult> where TQuery : IQuery<TResult>
 {
-    private readonly IQueryHandler<TQuery, TResult> decorated;
-    private readonly IProgressiveCache cache;
+    private readonly IQueryHandler<TQuery, TResult> decorated = decorated;
+    private readonly IProgressiveCache cache = cache;
 
     /// <summary>
     /// Could be 0 or 1 items in this collection
     /// </summary>
-    private readonly IEnumerable<IQueryCacheKeysCreator<TQuery, TResult>> creators;
-    private readonly IEnumerable<IQueryCacheSettingsCustomizer<TQuery, TResult>> cacheCustomizers;
-    private readonly ICacheDependenciesStore store;
-    private readonly DefaultQueryCacheSettings settings;
-
-    public QueryHandlerCacheDecorator(
-        IQueryHandler<TQuery, TResult> decorated,
-        IProgressiveCache cache,
-        IEnumerable<IQueryCacheKeysCreator<TQuery, TResult>> creators,
-        IEnumerable<IQueryCacheSettingsCustomizer<TQuery, TResult>> cacheCustomizers,
-        ICacheDependenciesStore store,
-        IOptions<DefaultQueryCacheSettings> settings)
-    {
-        this.decorated = decorated;
-        this.cache = cache;
-        this.creators = creators;
-        this.cacheCustomizers = cacheCustomizers;
-        this.store = store;
-        this.settings = settings.Value;
-    }
+    private readonly IEnumerable<IQueryCacheKeysCreator<TQuery, TResult>> creators = creators;
+    private readonly IEnumerable<IQueryCacheSettingsCustomizer<TQuery, TResult>> cacheCustomizers = cacheCustomizers;
+    private readonly ICacheDependenciesStore store = store;
+    private readonly DefaultQueryCacheSettings settings = settings.Value;
 
     public async Task<TResult> Handle(TQuery query, CancellationToken token = default)
     {

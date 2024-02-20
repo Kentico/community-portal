@@ -8,10 +8,8 @@ public record BlogPostTaxonomiesQuery() : IQuery<BlogPostTaxonomiesQueryResponse
 
 public record BlogPostTaxonomy(string Value, string DisplayName);
 public record BlogPostTaxonomiesQueryResponse(IReadOnlyList<BlogPostTaxonomy> Items, int ClassID);
-public class BlogPostTaxonomiesQueryHandler : ContentItemQueryHandler<BlogPostTaxonomiesQuery, BlogPostTaxonomiesQueryResponse>
+public class BlogPostTaxonomiesQueryHandler(ContentItemQueryTools tools) : ContentItemQueryHandler<BlogPostTaxonomiesQuery, BlogPostTaxonomiesQueryResponse>(tools)
 {
-    public BlogPostTaxonomiesQueryHandler(ContentItemQueryTools tools) : base(tools) { }
-
     public override Task<BlogPostTaxonomiesQueryResponse> Handle(BlogPostTaxonomiesQuery request, CancellationToken cancellationToken = default)
     {
         var dc = DataClassInfoProvider.GetDataClassInfo(BlogPostContent.CONTENT_TYPE_NAME);
@@ -22,7 +20,7 @@ public class BlogPostTaxonomiesQueryHandler : ContentItemQueryHandler<BlogPostTa
 
         if (!field.Settings.ContainsKey("Options") || field.Settings["Options"] is not string options)
         {
-            return Task.FromResult(new BlogPostTaxonomiesQueryResponse(new List<BlogPostTaxonomy>(), dc.ClassID));
+            return Task.FromResult(new BlogPostTaxonomiesQueryResponse([], dc.ClassID));
         }
 
         var taxonomies = options

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>KenticoCommunity.SupportRequestConfiguration</CodeName>
+    <GUID>ba7872de-4cfc-4692-a716-501f8d2cf2ee</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="SupportRequestConfigurationID" guid="7ac465f1-107a-45b4-ab57-9651c7f7fe00" enabled="" />
+      <field column="SupportRequestConfigurationGUID" guid="05a6a22f-2d3d-4dca-81af-0e284529a620" enabled="" />
+      <field column="SupportRequestConfigurationLastModified" guid="bd549b68-b7e4-4464-ad01-54c2ac281db6" enabled="" order="2" />
+      <field column="SupportRequestConfigurationIsQueueProcessingEnabled" enabled="true" guid="5a41b9ed-92c7-462a-8120-85595a2d3438" visible="true" order="3">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <explanationtext>
+            <![CDATA[If true, the queue of support request messages will be processed.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Queue Processing Is Enabled?</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="SupportRequestConfigurationExternalEndpointURL" enabled="true" guid="9095688a-0274-4470-a904-d8b1a9dd7fb5" visible="true" order="4">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtext>
+            <![CDATA[The URL that all queued support request messages should be sent to for support team triage.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>External Endpoint URL</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit</FormDisplayName>
+  <FormGUID>8c845470-3413-46dc-a825-c7c1794e7e0e</FormGUID>
+  <FormIsCustom>True</FormIsCustom>
+  <FormName>edit</FormName>
+</cms.alternativeform>

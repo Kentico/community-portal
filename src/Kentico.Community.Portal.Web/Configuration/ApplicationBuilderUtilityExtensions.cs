@@ -31,9 +31,11 @@ public static class ApplicationBuilderUtilityExtensions
         return app;
     }
 
-    public static WebApplication UseAppControllers(this WebApplication app)
+    public static WebApplication UseAppRoutes(this WebApplication app)
     {
-        app.MapControllers();
+        _ = app.MapControllers();
+
+        _ = app.MapHealthChecks("status");
 
         return app;
     }

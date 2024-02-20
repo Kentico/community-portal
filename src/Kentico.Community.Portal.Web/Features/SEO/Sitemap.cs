@@ -3,6 +3,7 @@ using CMS.Core;
 using CMS.Helpers;
 using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core;
+using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
 using SimpleMvcSitemap;
 
@@ -62,7 +63,7 @@ public class Sitemap(
         foreach (string t in contentTypeDependencies)
         {
             b = b.ForContentType(t, c => c.ForWebsite(website.WebsiteChannelName))
-                .InLanguage("en-US");
+                .InLanguage(PortalWebSiteChannel.DEFAULT_LANGUAGE);
         }
 
         var pages = await executor.GetWebPageResult(b, c =>

@@ -9,10 +9,8 @@ public record AuthorContentQuery(string AuthorCodeName) : IQuery<AuthorContentQu
 }
 
 public record AuthorContentQueryResponse(AuthorContent? Author);
-public class AuthorContentQueryHandler : ContentItemQueryHandler<AuthorContentQuery, AuthorContentQueryResponse>
+public class AuthorContentQueryHandler(ContentItemQueryTools tools) : ContentItemQueryHandler<AuthorContentQuery, AuthorContentQueryResponse>(tools)
 {
-    public AuthorContentQueryHandler(ContentItemQueryTools tools) : base(tools) { }
-
     public override async Task<AuthorContentQueryResponse> Handle(AuthorContentQuery request, CancellationToken cancellationToken = default)
     {
         var b = new ContentItemQueryBuilder().ForContentType(AuthorContent.CONTENT_TYPE_NAME, queryParams =>

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Support Request Processing Event</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="SupportRequestProcessingEventID" columntype="integer" enabled="true" guid="58b8c70c-ed57-4dd1-9b10-500a2f033a5e" isPK="true" />
+      <field column="SupportRequestProcessingEventLastModified" columnprecision="3" columntype="datetime" enabled="true" guid="c2f489c9-06a8-4712-a48f-bf3477a792f4" />
+      <field column="SupportRequestProcessingEventMessageID" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="b5a1c88d-6881-40d0-bd67-96d69933391d" />
+      <field column="SupportRequestProcessingEventMessage" columnprecision="0" columntype="longtext" enabled="true" guid="16db6aa5-9128-4166-a9dd-4ea793befab6" />
+      <field column="SupportRequestProcessingEventStatus" columnprecision="0" columnsize="10" columntype="text" enabled="true" guid="a9548d41-2667-42cc-851d-005f2d65c0da" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>e289d712-e4c1-4e60-ba93-44bdeb10ba65</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>KenticoCommunity.SupportRequestProcessingEvent</ClassName>
+  <ClassResourceID>
+    <CodeName>KenticoCommunity</CodeName>
+    <GUID>5e10e4ec-a038-4b97-a9f6-c17724896c89</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>KenticoCommunity_SupportRequestProcessingEvent</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

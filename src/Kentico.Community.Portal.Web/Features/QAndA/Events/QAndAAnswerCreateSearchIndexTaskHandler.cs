@@ -11,30 +11,20 @@ namespace Kentico.Community.Portal.Web.Features.QAndA.Events;
 /// trigger an index update of their associated questions since the Lucene
 /// integration doesn't yet track object graphs
 /// </summary>
-public class QAndAAnswerCreateSearchIndexTaskHandler
+public class QAndAAnswerCreateSearchIndexTaskHandler(
+    IHttpContextAccessor accessor,
+    IWebPageQueryResultMapper mapper,
+    IWebsiteChannelContext channelContext,
+    IContentQueryExecutor executor,
+    IEventLogService log,
+    ILuceneTaskLogger taskLogger)
 {
-    private readonly IHttpContextAccessor accessor;
-    private readonly IWebPageQueryResultMapper mapper;
-    private readonly IWebsiteChannelContext channelContext;
-    private readonly IContentQueryExecutor executor;
-    private readonly IEventLogService log;
-    private readonly ILuceneTaskLogger taskLogger;
-
-    public QAndAAnswerCreateSearchIndexTaskHandler(
-        IHttpContextAccessor accessor,
-        IWebPageQueryResultMapper mapper,
-        IWebsiteChannelContext channelContext,
-        IContentQueryExecutor executor,
-        IEventLogService log,
-        ILuceneTaskLogger taskLogger)
-    {
-        this.accessor = accessor;
-        this.mapper = mapper;
-        this.channelContext = channelContext;
-        this.executor = executor;
-        this.log = log;
-        this.taskLogger = taskLogger;
-    }
+    private readonly IHttpContextAccessor accessor = accessor;
+    private readonly IWebPageQueryResultMapper mapper = mapper;
+    private readonly IWebsiteChannelContext channelContext = channelContext;
+    private readonly IContentQueryExecutor executor = executor;
+    private readonly IEventLogService log = log;
+    private readonly ILuceneTaskLogger taskLogger = taskLogger;
 
     public async Task Handle(QAndAAnswerDataInfo answer)
     {

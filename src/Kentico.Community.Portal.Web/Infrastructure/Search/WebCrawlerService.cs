@@ -10,7 +10,7 @@ public class WebCrawlerService
     private readonly IWebPageUrlRetriever urlRetriever;
     private readonly IEventLogService log;
 
-    public WebCrawlerService(HttpClient httpClient, IWebPageUrlRetriever urlRetriever, IEventLogService log, IOptions<LuceneSearchOptions> searchOptions)
+    public WebCrawlerService(HttpClient httpClient, IWebPageUrlRetriever urlRetriever, IEventLogService log, IOptions<CommunityLuceneSearchOptions> searchOptions)
     {
         this.httpClient = httpClient;
         this.httpClient.DefaultRequestHeaders.Add(HeaderNames.UserAgent, "SearchCrawler");

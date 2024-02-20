@@ -16,7 +16,7 @@ export function initQAndA({ editorElemID, formElemID = null, formType = "" }) {
 - Xperience by Kentico version: [28.2.1]
 - .NET version: [8]
 - Deployment environment: [SaaS|Azure|VM]
-- Link to relevant [Xperience by Kentico documentation](https://docs.xperience.io/xp)`
+- Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)`
       : "[detail your answer]";
 
   const excludedToolbarItems = [

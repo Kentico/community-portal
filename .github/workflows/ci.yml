@@ -30,7 +30,8 @@ jobs:
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
       DOTNET_NOLOGO: 1
       PROJECT_NAME: Kentico.Community.Portal.Web
-      ASPNETCORE_URLS: https://localhost:45039
+      ASPNETCORE_URLS: https://localhost:45039;https://localhost:45040
+      STATUS_CHECK_URL: https://localhost:45039/status
 
     steps:
       - uses: actions/checkout@v4
@@ -118,19 +119,52 @@ jobs:
         run: |
           ./test/Kentico.Community.Portal.Web.E2E.Tests/bin/Release/net8.0/playwright.ps1 install
 
-      - name: Run Application and Test Solution
+      - name: Install Azurite
+        id: azuright
+        uses: potatoqualitee/azuright@e56d2754eb15218d507961493bc83ca037216887 # set as a commit hash for security - v1.1
+
+      - name: Run Application and E2E Tests
         run: |
+          # Run the ASP.NET Core app as a background job
           cd ./publish
           Start-Job -ScriptBlock { dotnet ./${{ env.PROJECT_NAME }}.dll } -Name ${{ env.PROJECT_NAME }}
           Receive-Job -Name ${{ env.PROJECT_NAME }}
           cd ../
 
+          # The ASP.NET Core app can take a few seconds to start, so we delay running tests
+          #   until it is ready, and fail if we go over a maximum wait time
+          $limit = 10
+          $attempts = 0
+          $success = $false
+
+          while ($attempts -lt $limit -and -not $success) {
+              Start-Sleep -Seconds 1
+              try {
+                  $response = Invoke-WebRequest -Uri ${{ env.STATUS_CHECK_URL }} -Method Get -SkipCertificateCheck
+                  if ($response.StatusCode -eq 200) {
+                      Write-Output "Application is ready."
+                      $success = $true
+                  }
+              }
+              catch {
+                  Write-Output "Attempt $attempts - Application not ready yet."
+              }
+              $attempts++
+          }
+
+          if (-not $success) {
+              Write-Output "Application did not respond in time."
+              exit 1
+          }
+
+          # Run the E2E tests
           dotnet test `
             -c Release `
             --no-build `
             --no-restore `
             -s ./test/e2e.runsettings
 
+          # Stop the background ASP.NET Core application
           Receive-Job -Name ${{ env.PROJECT_NAME }}
           Stop-Job -Name ${{ env.PROJECT_NAME }}
           Remove-Job -Name ${{ env.PROJECT_NAME }}

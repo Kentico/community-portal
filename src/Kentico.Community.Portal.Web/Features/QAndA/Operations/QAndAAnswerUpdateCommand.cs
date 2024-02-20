@@ -1,3 +1,4 @@
+using CMS.DataEngine;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
@@ -6,10 +7,10 @@ using MediatR;
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 public record QAndAAnswerUpdateCommand(QAndAAnswerDataInfo Answer, string UpdatedAnswerContent) : ICommand<Unit>;
-public class QAndAAnswerUpdateCommandHandler(DataItemCommandTools tools, ISystemClock clock, IQAndAAnswerDataInfoProvider provider) : DataItemCommandHandler<QAndAAnswerUpdateCommand, Unit>(tools)
+public class QAndAAnswerUpdateCommandHandler(DataItemCommandTools tools, ISystemClock clock, IInfoProvider<QAndAAnswerDataInfo> provider) : DataItemCommandHandler<QAndAAnswerUpdateCommand, Unit>(tools)
 {
     private readonly ISystemClock clock = clock;
-    private readonly IQAndAAnswerDataInfoProvider provider = provider;
+    private readonly IInfoProvider<QAndAAnswerDataInfo> provider = provider;
 
     public override Task<Unit> Handle(QAndAAnswerUpdateCommand request, CancellationToken cancellationToken)
     {

@@ -25,6 +25,14 @@ Run the CI Restore PowerShell script to populate the database with changes from 
    - Use the VS Code task `npm: dev (Admin)`
    - Run `npm install` and then `npm run dev` at the command line in the `.\src\Kentico.Community.Portal.Admin\Client` directory (alternative)
 
+## Start Azurite
+
+1. Enable Azurite for local Azure Storage access
+
+   - Install the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=Azurite.azurite) (installed with recommended extensions)
+   - Run Azurite from the VS Code command palette (`ctrl+shift+p`) with `Azurite: Start`
+   - Use the [Azurite documentation](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio%2Cblob-storage#install-azurite) to install or start it with your IDE of choice (alternative)
+
 ## Start ASP.NET Core application
 
 1. Launch server. App should now be running on localhost (Currently <http://localhost:45038/> ).
@@ -51,7 +59,7 @@ The Vite build process compiles the SCSS and JS in the `~/Client` folder into th
 
 ## Xperience Upgrades
 
-After [applying a new hotfix or Refresh](https://docs.xperience.io/xp/developers-and-admins/installation/update-xperience-by-kentico-projects#UpdateXperiencebyKenticoprojects-UpdatedevelopmentprojectswithContinuousIntegration), create
+After [applying a new hotfix or Refresh](https://docs.kentico.com/developers-and-admins/installation/update-xperience-by-kentico-projects#UpdateXperiencebyKenticoprojects-UpdatedevelopmentprojectswithContinuousIntegration), create
 a backup of the database - either a `.bacpac` or `.bak` file and add it to the `.\database` folder.
 
 Then, add its file name to the first line of `backups.txt` to make this new backup the starting point for any CI tests. This will also be the backup that developers new to the project will use when setting up their environment.

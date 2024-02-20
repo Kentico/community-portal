@@ -11,16 +11,14 @@
     "**/bin": true,
     // hidden to simplify the explorer view
     "**/packages.lock.json": true,
-    "**/package-lock.json": true
+    "**/package-lock.json": true,
+    "**/*.csproj.user": true,
+    "azurite_storage": true
   },
 
   "search.exclude": {
-    "**/node_modules": true,
-    "**/bower_components": true,
     "**/*.code-search": true,
-    "**/CIRepository/**": true,
-    "**/obj": true,
-    "**/bin": true
+    "**/CIRepository/**": true
   },
 
   "editor.formatOnSave": true,
@@ -66,6 +64,11 @@
   "[powershell]": {
     "editor.defaultFormatter": "ms-vscode.powershell"
   },
+
+  "terminal.integrated.defaultProfile.osx": "pwsh",
+
+  "azurite.location": "azurite_storage",
+
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#1f6fd0",
     "activityBar.background": "#1f6fd0",

@@ -8,10 +8,8 @@ public record BlogPostPagesByWebPageGUIDQuery(Guid[] WebPageGUIDs, string Channe
     public string CacheValueKey => string.Join(",", WebPageGUIDs);
 }
 public record BlogPostPagesQueryResponse(IReadOnlyList<BlogPostPage> Items);
-public class BlogPostPagesByWebPageGUIDQueryHandler : ContentItemQueryHandler<BlogPostPagesByWebPageGUIDQuery, BlogPostPagesQueryResponse>
+public class BlogPostPagesByWebPageGUIDQueryHandler(ContentItemQueryTools tools) : ContentItemQueryHandler<BlogPostPagesByWebPageGUIDQuery, BlogPostPagesQueryResponse>(tools)
 {
-    public BlogPostPagesByWebPageGUIDQueryHandler(ContentItemQueryTools tools) : base(tools) { }
-
     public override async Task<BlogPostPagesQueryResponse> Handle(BlogPostPagesByWebPageGUIDQuery request, CancellationToken cancellationToken = default)
     {
         var b = new ContentItemQueryBuilder().ForContentType(BlogPostPage.CONTENT_TYPE_NAME, queryParameters =>
@@ -24,7 +22,7 @@ public class BlogPostPagesByWebPageGUIDQueryHandler : ContentItemQueryHandler<Bl
 
         var pages = await Executor.GetWebPageResult(b, WebPageMapper.Map<BlogPostPage>, DefaultQueryOptions, cancellationToken);
 
-        return new(pages.OrderBy(p => Array.IndexOf(request.WebPageGUIDs, p.SystemFields.WebPageItemGUID)).ToList());
+        return new([.. pages.OrderBy(p => Array.IndexOf(request.WebPageGUIDs, p.SystemFields.WebPageItemGUID))]);
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(BlogPostPagesByWebPageGUIDQuery query, BlogPostPagesQueryResponse result, ICacheDependencyKeysBuilder builder) =>

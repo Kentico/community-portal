@@ -1,3 +1,4 @@
+using CMS.DataEngine;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
@@ -6,10 +7,10 @@ using Kentico.Community.Portal.Web.Membership;
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 public record QAndAAnswerCreateCommand(CommunityMember MemberAuthor, string AnswerContent, QAndAQuestionPage ParentQuestion) : ICommand<int>;
-public class QAndAAnswerCreateCommandHandler(DataItemCommandTools tools, ISystemClock clock, IQAndAAnswerDataInfoProvider provider) : DataItemCommandHandler<QAndAAnswerCreateCommand, int>(tools)
+public class QAndAAnswerCreateCommandHandler(DataItemCommandTools tools, ISystemClock clock, IInfoProvider<QAndAAnswerDataInfo> provider) : DataItemCommandHandler<QAndAAnswerCreateCommand, int>(tools)
 {
     private readonly ISystemClock clock = clock;
-    private readonly IQAndAAnswerDataInfoProvider provider = provider;
+    private readonly IInfoProvider<QAndAAnswerDataInfo> provider = provider;
 
     public override Task<int> Handle(QAndAAnswerCreateCommand request, CancellationToken cancellationToken)
     {

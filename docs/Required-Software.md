@@ -35,6 +35,13 @@
 - MS SQL Server Management Studio
 - Azure Data Studio
 
+## Azure Storage
+
+Azure storage is used locally for data storage and background job processing
+
+- [Azurite](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio%2Cblob-storage)
+- [Azure Storage Explorer](https://azure.microsoft.com/en-us/products/storage/storage-explorer/)
+
 ## Email SMTP Server
 
 - [MailHog](https://github.com/mailhog/MailHog), [Mailpit](https://github.com/axllent/mailpit) or a similar local SMTP server for local email testing

@@ -9,10 +9,8 @@ public record BlogPostsByTaxonomyQuery(string TaxonomyName, int Limit, string Ch
     public string CacheValueKey => $"{TaxonomyName}|{Limit}";
 }
 public record BlogPostsByTaxonomyQueryResponse(IReadOnlyList<BlogPostPage> Items);
-public class BlogPostsByTaxonomyQueryHandler : WebPageQueryHandler<BlogPostsByTaxonomyQuery, BlogPostsByTaxonomyQueryResponse>
+public class BlogPostsByTaxonomyQueryHandler(WebPageQueryTools tools) : WebPageQueryHandler<BlogPostsByTaxonomyQuery, BlogPostsByTaxonomyQueryResponse>(tools)
 {
-    public BlogPostsByTaxonomyQueryHandler(WebPageQueryTools tools) : base(tools) { }
-
     public override async Task<BlogPostsByTaxonomyQueryResponse> Handle(BlogPostsByTaxonomyQuery request, CancellationToken cancellationToken = default)
     {
         // Optimized query to find content item identifiers
@@ -29,7 +27,7 @@ public class BlogPostsByTaxonomyQueryHandler : WebPageQueryHandler<BlogPostsByTa
 
         if (contentItemIDs.Count == 0)
         {
-            return new(new List<BlogPostPage>());
+            return new([]);
         }
 
         // Full query to retrieve entire content graph
@@ -43,9 +41,7 @@ public class BlogPostsByTaxonomyQueryHandler : WebPageQueryHandler<BlogPostsByTa
 
         var pages = await Executor.GetWebPageResult(postsQuery, WebPageMapper.Map<BlogPostPage>, DefaultQueryOptions, cancellationToken);
 
-        return new(pages
-            .OrderBy(p => contentItemIDs.IndexOf(p.BlogPostPageBlogPostContent.FirstOrDefault()?.SystemFields.ContentItemID ?? 0))
-            .ToList());
+        return new([.. pages.OrderBy(p => contentItemIDs.IndexOf(p.BlogPostPageBlogPostContent.FirstOrDefault()?.SystemFields.ContentItemID ?? 0))]);
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(BlogPostsByTaxonomyQuery query, BlogPostsByTaxonomyQueryResponse result, ICacheDependencyKeysBuilder builder) =>

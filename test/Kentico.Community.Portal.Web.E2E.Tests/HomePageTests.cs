@@ -5,7 +5,7 @@ namespace Kentico.Community.Portal.Web.E2E.Tests;
 public class HomePageTests : CommunityPageTests
 {
     [Test]
-    public async Task User_Can_Perform_Registration_And_Login()
+    public async Task User_Can_Visit_Home_Page_And_View_Content()
     {
         TestContext.WriteLine("Navigate to home page");
 

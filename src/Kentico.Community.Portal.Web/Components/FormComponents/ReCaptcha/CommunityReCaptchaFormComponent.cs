@@ -178,7 +178,7 @@ public class CommunityReCaptchaFormComponent : FormComponent<CommunityReCaptchaF
 
         if (httpContext is null)
         {
-            return new List<ValidationResult> { new("Cannot validate captcha without outside of an active HTTP request") };
+            return [new("Cannot validate captcha without outside of an active HTTP request")];
         }
 
         var validationResult = ValidateResponse(httpContext);

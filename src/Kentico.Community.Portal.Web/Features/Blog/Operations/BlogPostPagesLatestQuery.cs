@@ -9,10 +9,8 @@ public record BlogPostPagesLatestQuery(int Count, string ChannelName) : IQuery<B
     public string CacheValueKey => Count.ToString();
 }
 public record BlogPostPagesLatestQueryResponse(IReadOnlyList<BlogPostPage> Items);
-public class BlogPostPagesLatestQueryHandler : WebPageQueryHandler<BlogPostPagesLatestQuery, BlogPostPagesLatestQueryResponse>
+public class BlogPostPagesLatestQueryHandler(WebPageQueryTools tools) : WebPageQueryHandler<BlogPostPagesLatestQuery, BlogPostPagesLatestQueryResponse>(tools)
 {
-    public BlogPostPagesLatestQueryHandler(WebPageQueryTools tools) : base(tools) { }
-
     public override async Task<BlogPostPagesLatestQueryResponse> Handle(BlogPostPagesLatestQuery request, CancellationToken cancellationToken = default)
     {
         // Optimized query to find content item identifiers
@@ -28,7 +26,7 @@ public class BlogPostPagesLatestQueryHandler : WebPageQueryHandler<BlogPostPages
 
         if (contentItemIDs.Count == 0)
         {
-            return new(new List<BlogPostPage>());
+            return new([]);
         }
 
         // Full query to retrieve entire content graph
@@ -42,7 +40,7 @@ public class BlogPostPagesLatestQueryHandler : WebPageQueryHandler<BlogPostPages
 
         var pages = await Executor.GetWebPageResult(postsQuery, WebPageMapper.Map<BlogPostPage>, DefaultQueryOptions, cancellationToken);
 
-        return new(pages.OrderBy(p => contentItemIDs.IndexOf(p.BlogPostPageBlogPostContent.FirstOrDefault()?.SystemFields.ContentItemID ?? 0)).ToList());
+        return new([.. pages.OrderBy(p => contentItemIDs.IndexOf(p.BlogPostPageBlogPostContent.FirstOrDefault()?.SystemFields.ContentItemID ?? 0))]);
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(BlogPostPagesLatestQuery query, BlogPostPagesLatestQueryResponse result, ICacheDependencyKeysBuilder builder) =>

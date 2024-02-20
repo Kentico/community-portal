@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassCodeGenerationSettings>
+    <Data>
+      <GUIDColumn>SupportRequestConfigurationGUID</GUIDColumn>
+      <LastModifiedColumn>SupportRequestConfigurationLastModified</LastModifiedColumn>
+      <ObjectType>KenticoCommunity.SupportRequestConfiguration</ObjectType>
+      <UseGuidHashtable>False</UseGuidHashtable>
+      <UseIdHashtable>False</UseIdHashtable>
+      <UseNameHashtable>False</UseNameHashtable>
+    </Data>
+  </ClassCodeGenerationSettings>
+  <ClassDisplayName>Support Request Configuration</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="SupportRequestConfigurationID" columntype="integer" enabled="true" guid="7ac465f1-107a-45b4-ab57-9651c7f7fe00" isPK="true" />
+      <field column="SupportRequestConfigurationGUID" columnprecision="0" columntype="guid" enabled="true" guid="05a6a22f-2d3d-4dca-81af-0e284529a620" />
+      <field column="SupportRequestConfigurationIsQueueProcessingEnabled" columnprecision="0" columntype="boolean" enabled="true" guid="5a41b9ed-92c7-462a-8120-85595a2d3438">
+        <properties>
+          <defaultvalue>True</defaultvalue>
+        </properties>
+      </field>
+      <field column="SupportRequestConfigurationExternalEndpointURL" columnprecision="0" columnsize="300" columntype="text" enabled="true" guid="9095688a-0274-4470-a904-d8b1a9dd7fb5" />
+      <field column="SupportRequestConfigurationLastModified" columnprecision="3" columntype="datetime" enabled="true" guid="bd549b68-b7e4-4464-ad01-54c2ac281db6" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>ba7872de-4cfc-4692-a716-501f8d2cf2ee</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>KenticoCommunity.SupportRequestConfiguration</ClassName>
+  <ClassResourceID>
+    <CodeName>KenticoCommunity</CodeName>
+    <GUID>5e10e4ec-a038-4b97-a9f6-c17724896c89</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>KenticoCommunity_SupportRequestConfiguration</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

@@ -9,22 +9,14 @@ namespace Kentico.Community.Portal.Web.Features.Blog.Events;
 /// Handles automatically creating a new Q and A Question
 /// used for discussion of a blog post when a <see cref="BlogPostPage"/> is published
 /// </summary>
-public class BlogPostPublishCreateQAndAQuestionHandler
+public class BlogPostPublishCreateQAndAQuestionHandler(
+    IHttpContextAccessor accessor,
+    IMediator mediator,
+    IWebPageUrlRetriever pageUrlRetriever)
 {
-    private readonly IHttpContextAccessor accessor;
-    private readonly IMediator mediator;
-    private readonly IWebPageUrlRetriever pageUrlRetriever;
-
-    public BlogPostPublishCreateQAndAQuestionHandler(
-        IHttpContextAccessor accessor,
-        IMediator mediator,
-        IWebPageUrlRetriever pageUrlRetriever
-    )
-    {
-        this.accessor = accessor;
-        this.mediator = mediator;
-        this.pageUrlRetriever = pageUrlRetriever;
-    }
+    private readonly IHttpContextAccessor accessor = accessor;
+    private readonly IMediator mediator = mediator;
+    private readonly IWebPageUrlRetriever pageUrlRetriever = pageUrlRetriever;
 
     public async Task Handle(PublishWebPageEventArgs args)
     {

@@ -1,3 +1,4 @@
+using CMS.DataEngine;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using MediatR;
@@ -5,9 +6,9 @@ using MediatR;
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 public record QAndAAnswerDeleteCommand(QAndAAnswerDataInfo Answer) : ICommand<Unit>;
-public class QAndAAnswerDeleteCommandHandler(DataItemCommandTools tools, IQAndAAnswerDataInfoProvider provider) : DataItemCommandHandler<QAndAAnswerDeleteCommand, Unit>(tools)
+public class QAndAAnswerDeleteCommandHandler(DataItemCommandTools tools, IInfoProvider<QAndAAnswerDataInfo> provider) : DataItemCommandHandler<QAndAAnswerDeleteCommand, Unit>(tools)
 {
-    private readonly IQAndAAnswerDataInfoProvider provider = provider;
+    private readonly IInfoProvider<QAndAAnswerDataInfo> provider = provider;
 
     public override Task<Unit> Handle(QAndAAnswerDeleteCommand request, CancellationToken cancellationToken)
     {

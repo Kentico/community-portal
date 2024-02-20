@@ -4,7 +4,7 @@ using CMS.IO;
 using Kentico.Xperience.AzureStorage;
 using Kentico.Xperience.Cloud;
 
-namespace Kentico.Community.Portal.Web.Infrastructure;
+namespace Kentico.Community.Portal.Web.Infrastructure.Storage;
 
 public class StorageInitializationModule : Module
 {

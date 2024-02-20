@@ -1,3 +1,4 @@
+using CMS.DataEngine;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 
@@ -8,9 +9,9 @@ public record QAndAAnswerDataByIDQuery(int AnswerDataID) : IQuery<QAndAAnswerDat
     public string CacheValueKey => AnswerDataID.ToString();
 }
 
-public class QAndAAnswerDataByIDQueryHandler(DataItemQueryTools tools, IQAndAAnswerDataInfoProvider provider) : DataItemQueryHandler<QAndAAnswerDataByIDQuery, QAndAAnswerDataInfo>(tools)
+public class QAndAAnswerDataByIDQueryHandler(DataItemQueryTools tools, IInfoProvider<QAndAAnswerDataInfo> provider) : DataItemQueryHandler<QAndAAnswerDataByIDQuery, QAndAAnswerDataInfo>(tools)
 {
-    private readonly IQAndAAnswerDataInfoProvider provider = provider;
+    private readonly IInfoProvider<QAndAAnswerDataInfo> provider = provider;
 
     public override async Task<QAndAAnswerDataInfo> Handle(QAndAAnswerDataByIDQuery request, CancellationToken cancellationToken = default)
     {

@@ -1,4 +1,3 @@
-using System.Globalization;
 using CMS.DataProtection;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Microsoft.AspNetCore.Html;
@@ -21,7 +20,7 @@ public class ConsentViewComponent : ViewComponent
             return View("~/Components/ViewComponents/Consents/Consent.cshtml", new ConsentViewModel());
         }
 
-        var cultureText = await consent.GetConsentTextAsync(CultureInfo.CurrentCulture.Name);
+        var cultureText = await consent.GetConsentTextAsync(PortalWebSiteChannel.DEFAULT_LANGUAGE);
 
         return View("~/Components/ViewComponents/Consents/Consent.cshtml", new ConsentViewModel
         {

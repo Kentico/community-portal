@@ -8,10 +8,10 @@ using MediatR;
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 public record QAndAQuestionDeleteCommand(QAndAQuestionPage Question, int WebsiteChannelID) : ICommand<Unit>;
-public class QAndAQuestionDeleteCommandHandler(WebPageCommandTools tools, IInfoProvider<UserInfo> users, IQAndAAnswerDataInfoProvider provider) : WebPageCommandHandler<QAndAQuestionDeleteCommand, Unit>(tools)
+public class QAndAQuestionDeleteCommandHandler(WebPageCommandTools tools, IInfoProvider<UserInfo> users, IInfoProvider<QAndAAnswerDataInfo> provider) : WebPageCommandHandler<QAndAQuestionDeleteCommand, Unit>(tools)
 {
     private readonly IInfoProvider<UserInfo> users = users;
-    private readonly IQAndAAnswerDataInfoProvider provider = provider;
+    private readonly IInfoProvider<QAndAAnswerDataInfo> provider = provider;
 
     public override async Task<Unit> Handle(QAndAQuestionDeleteCommand request, CancellationToken cancellationToken)
     {

@@ -6,27 +6,20 @@ using MediatR;
 
 namespace Kentico.Community.Portal.Core.Operations;
 
-public class WebPageQueryTools
+public class WebPageQueryTools(
+    IContentQueryExecutor executor,
+    IWebPageQueryResultMapper webPageMapper,
+    IContentQueryResultMapper contentMapper,
+    IWebPageUrlRetriever urlRetriever,
+    IWebsiteChannelContext websiteChannelContext,
+    ILinkedItemsDependencyAsyncRetriever dependencyRetriever)
 {
-    public IContentQueryExecutor Executor { get; }
-    public IWebPageQueryResultMapper WebPageMapper { get; }
-    public IContentQueryResultMapper ContentMapper { get; }
-    public IWebPageUrlRetriever UrlRetriever { get; }
-    public IWebsiteChannelContext WebsiteChannelContext { get; }
-
-    public WebPageQueryTools(
-        IContentQueryExecutor executor,
-        IWebPageQueryResultMapper webPageMapper,
-        IContentQueryResultMapper contentMapper,
-        IWebPageUrlRetriever urlRetriever,
-        IWebsiteChannelContext websiteChannelContext)
-    {
-        Executor = executor;
-        WebPageMapper = webPageMapper;
-        ContentMapper = contentMapper;
-        UrlRetriever = urlRetriever;
-        WebsiteChannelContext = websiteChannelContext;
-    }
+    public IContentQueryExecutor Executor { get; } = executor;
+    public IWebPageQueryResultMapper WebPageMapper { get; } = webPageMapper;
+    public IContentQueryResultMapper ContentMapper { get; } = contentMapper;
+    public IWebPageUrlRetriever UrlRetriever { get; } = urlRetriever;
+    public IWebsiteChannelContext WebsiteChannelContext { get; } = websiteChannelContext;
+    public ILinkedItemsDependencyAsyncRetriever DependencyRetriever { get; } = dependencyRetriever;
 }
 
 public interface IQueryHandler<in TQuery, TResult> : IRequestHandler<TQuery, TResult> where TQuery : IQuery<TResult> { }
@@ -43,6 +36,7 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
         WebPageMapper = tools.WebPageMapper;
         ContentMapper = tools.ContentMapper;
         UrlRetriever = tools.UrlRetriever;
+        DependencyRetriever = tools.DependencyRetriever;
         DefaultQueryOptions = new ContentQueryExecutionOptions { ForPreview = tools.WebsiteChannelContext.IsPreview, IncludeSecuredItems = false };
     }
 
@@ -53,6 +47,7 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
     protected IContentQueryResultMapper ContentMapper { get; }
     protected IWebPageUrlRetriever UrlRetriever { get; }
     protected ContentQueryExecutionOptions DefaultQueryOptions { get; }
+    protected ILinkedItemsDependencyAsyncRetriever DependencyRetriever { get; }
 
 
     public abstract Task<TResult> Handle(TQuery request, CancellationToken cancellationToken);
@@ -79,7 +74,7 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
         _ = builder.CustomKeys(customKeys);
         _ = AddDependencyKeys(query, result, builder);
 
-        return builder.GetKeys().ToArray();
+        return [.. builder.GetKeys()];
     }
 
     public virtual object[] ItemNameParts(TQuery query)
@@ -116,20 +111,18 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
     }
 }
 
-public class ContentItemQueryTools
+public class ContentItemQueryTools(
+    IContentQueryExecutor executor,
+    IContentQueryResultMapper contentItemMapper,
+    IWebPageQueryResultMapper webPageMapper,
+    IWebsiteChannelContext websiteChannelContext,
+    ILinkedItemsDependencyAsyncRetriever dependencyRetriever)
 {
-    public IContentQueryExecutor Executor { get; }
-    public IContentQueryResultMapper ContentItemMapper { get; }
-    public IWebPageQueryResultMapper WebPageMapper { get; }
-    public IWebsiteChannelContext WebsiteChannelContext { get; }
-
-    public ContentItemQueryTools(IContentQueryExecutor executor, IContentQueryResultMapper contentItemMapper, IWebPageQueryResultMapper webPageMapper, IWebsiteChannelContext websiteChannelContext)
-    {
-        Executor = executor;
-        ContentItemMapper = contentItemMapper;
-        WebPageMapper = webPageMapper;
-        WebsiteChannelContext = websiteChannelContext;
-    }
+    public IContentQueryExecutor Executor { get; } = executor;
+    public IContentQueryResultMapper ContentItemMapper { get; } = contentItemMapper;
+    public IWebPageQueryResultMapper WebPageMapper { get; } = webPageMapper;
+    public IWebsiteChannelContext WebsiteChannelContext { get; } = websiteChannelContext;
+    public ILinkedItemsDependencyAsyncRetriever DependencyRetriever { get; } = dependencyRetriever;
 }
 
 public abstract class ContentItemQueryHandler<TQuery, TResult> :
@@ -143,6 +136,7 @@ public abstract class ContentItemQueryHandler<TQuery, TResult> :
         Executor = tools.Executor;
         ContentItemMapper = tools.ContentItemMapper;
         WebPageMapper = tools.WebPageMapper;
+        DependencyRetriever = tools.DependencyRetriever;
         DefaultQueryOptions = new ContentQueryExecutionOptions { ForPreview = tools.WebsiteChannelContext.IsPreview };
     }
 
@@ -152,6 +146,7 @@ public abstract class ContentItemQueryHandler<TQuery, TResult> :
     protected IContentQueryResultMapper ContentItemMapper { get; }
     protected IWebPageQueryResultMapper WebPageMapper { get; }
     protected ContentQueryExecutionOptions DefaultQueryOptions { get; }
+    protected ILinkedItemsDependencyAsyncRetriever DependencyRetriever { get; }
 
 
     public abstract Task<TResult> Handle(TQuery request, CancellationToken cancellationToken);
@@ -171,7 +166,7 @@ public abstract class ContentItemQueryHandler<TQuery, TResult> :
         _ = builder.CustomKeys(customKeys);
         _ = AddDependencyKeys(query, result, builder);
 
-        return builder.GetKeys().ToArray();
+        return [.. builder.GetKeys()];
     }
 
     public virtual object[] ItemNameParts(TQuery query)
@@ -242,7 +237,7 @@ public abstract class DataItemQueryHandler<TQuery, TResult> :
         _ = builder.CustomKeys(customKeys);
         _ = AddDependencyKeys(query, result, builder);
 
-        return builder.GetKeys().ToArray();
+        return [.. builder.GetKeys()];
     }
 
     public virtual object[] ItemNameParts(TQuery query)

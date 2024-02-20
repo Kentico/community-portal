@@ -2,16 +2,10 @@ using CMS.Core;
 
 namespace Kentico.Community.Portal.Core.Operations;
 
-public class CommandHandlerLogDecorator<TCommand, TResult> : ICommandHandler<TCommand, TResult> where TCommand : ICommand<TResult>
+public class CommandHandlerLogDecorator<TCommand, TResult>(IEventLogService log, ICommandHandler<TCommand, TResult> decorated) : ICommandHandler<TCommand, TResult> where TCommand : ICommand<TResult>
 {
-    private readonly IEventLogService log;
-    private readonly ICommandHandler<TCommand, TResult> decorated;
-
-    public CommandHandlerLogDecorator(IEventLogService log, ICommandHandler<TCommand, TResult> decorated)
-    {
-        this.log = log;
-        this.decorated = decorated;
-    }
+    private readonly IEventLogService log = log;
+    private readonly ICommandHandler<TCommand, TResult> decorated = decorated;
 
     public async Task<TResult> Handle(TCommand request, CancellationToken cancellationToken)
     {

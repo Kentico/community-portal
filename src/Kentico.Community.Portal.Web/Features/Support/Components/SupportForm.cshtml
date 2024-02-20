@@ -2,7 +2,7 @@
 
 <div class="c-card large secondary" style="--bs-danger-rgb: #fff;">
     <form id="supportForm" method="post" hx-post hx-controller="SupportForm" hx-action="SubmitSupportForm"
-        hx-trigger="captchaReady" hx-swap="outerHTML" hx-select="#supportForm">
+        hx-trigger="captchaReady" hx-swap="outerHTML" hx-select="#supportForm" enctype="multipart/form-data">
         <div class="row">
             <div class="col-sm">
                 <label asp-for="FirstName" class="form-label mt-3"></label>

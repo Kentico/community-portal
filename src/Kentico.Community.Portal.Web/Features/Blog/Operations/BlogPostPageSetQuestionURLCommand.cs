@@ -12,13 +12,11 @@ public record BlogPostPageUpdateCommand(
     BlogPostPage BlogPost,
     int WebsiteChannelID,
     WebPageUrl QuestionPageURL) : ICommand<Unit>;
-public class BlogPostPageUpdateCommandHandler : WebPageCommandHandler<BlogPostPageUpdateCommand, Unit>
+public class BlogPostPageUpdateCommandHandler(
+    WebPageCommandTools tools,
+    IInfoProvider<UserInfo> users) : WebPageCommandHandler<BlogPostPageUpdateCommand, Unit>(tools)
 {
-    private readonly IInfoProvider<UserInfo> users;
-
-    public BlogPostPageUpdateCommandHandler(
-        WebPageCommandTools tools,
-        IInfoProvider<UserInfo> users) : base(tools) => this.users = users;
+    private readonly IInfoProvider<UserInfo> users = users;
 
     public override async Task<Unit> Handle(BlogPostPageUpdateCommand request, CancellationToken cancellationToken)
     {

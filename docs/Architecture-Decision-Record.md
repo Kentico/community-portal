@@ -1,8 +1,40 @@
 # Architecture Decision Record
 
+## 2024-02-19 - Support Requests Processing
+
+Support requests (submitted through the website [support form](https://community.kentico.com/support)) were processed within the submission HTTP request.
+
+This meant a failure to submit the support data to the internal Azure Function endpoint would prevent the user from submitting their request. In case of failures, support request data and files were stored on the transient App Service file system. If a deployment occurred or an App Service restarted, those files would be lost.
+
+Additionally, the form submittered would have to wait for their support request submission _and_ the processing of that request (JSON serialization, file base64 encoding, POST request to the Azure Function) before they knew their submission had been successfully received or failed.
+
+To mitigate the issues with losing form submissions, processing has been moved to `SupportMessageProcessorHostedService` which is an [ASP.NET Core background service](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-8.0&tabs=visual-studio#backgroundservice-base-class).
+
+Submissions are now uploaded to Blob Storage as a JSON serialized file and a message is added to Queue Storage with the name of the blob. Although this still requires the serialization and encoding time, if the Azure Function endpoint is having issues, the support request isn't lost.
+
+The background service checks for queue messages and processes them. This processing can be disabled through a new [custom module](https://docs.kentico.com/x/yASiCQ).
+
+If processing a support request, the request is moved to a dead-letter Blob Container and a queue message is added to a dead-letter queue for future processing.
+
+This change requires using [Azurite](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio%2Cblob-storage) for local development and the CI pipeline E2E tests, which adds complexity to the solution.
+
+Future improvements include customizing the Support Requests Admin UI to allow re-queuing of failed support requests (via dead-letter queue),
+and changing the dequeue delay for the background service.
+
+## 2024-02-12 - Headless channel for content promotion
+
+A new headless channel has been added to expose some of the solution's structured content from the Content hub - specifically Community Group Content items -
+which can be used in web components to promote the Kentico Community Portal through other website channels.
+
+This channel requires manual updating when new content is authored.
+
+Future improvements include using [global events](https://docs.kentico.com/x/r4t1CQ) to automatically update the headless channel items
+when new Content hub content items are created. For example, if the latest blog posts of each of the blog taxonomies is exposed through the headless channel,
+then we should update that referenced content item when a new blog post is published.
+
 ## 2024-02-08 - Overriding Xperience views
 
-Adding the `XperienceCommunity.PreviewComponentOutlines` NuGet package enables component annotations to be visible in the Preview view of the Page Builder.
+Adding the [XperienceCommunity.PreviewComponentOutlines](https://github.com/seangwright/xperience-community-preview-component-outlines) NuGet package enables component annotations to be visible in the Preview view of the Page Builder.
 
 ![Community home page with Preview Component Outlines](/docs/images/XperienceCommunity.PreviewComponentOutlines-home-page.jpg)
 
@@ -13,7 +45,7 @@ By adding copies of the Xperience Razor view files into this solution's applicat
 view at runtime. This means we can add our HTML annotations for the preview outlines.
 
 There is a concern that future updates to the Form and Rich Text Widget Razor views could break the solution, as this kind of view overriding _is not_ supported by the product.
-Mitigating any issues will require reviewing the [Changelog](https://docs.xperience.io/xp/changelog) with each release and testing these components regularly to catch any
+Mitigating any issues will require reviewing the [Changelog](https://docs.kentico.com/changelog) with each release and testing these components regularly to catch any
 problems.
 
 If there are any big problems in the future, we might delete these Razor views and accept not having component outlines for these Widgets.

@@ -9,12 +9,11 @@ using Kentico.Community.Portal.Web.Features.QAndA.Events;
 using Kentico.Community.Portal.Web.Features.SEO;
 using Kentico.Community.Portal.Web.Features.Support;
 using Kentico.Community.Portal.Web.Infrastructure;
+using Kentico.Community.Portal.Web.Infrastructure.Storage;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Community.Portal.Web.Rendering.Events;
 using MediatR;
-using Microsoft.Extensions.Caching.Memory;
 using Slugify;
-using Vite.AspNetCore.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -22,19 +21,21 @@ public static class ServiceCollectionAppExtensions
 {
     public static IServiceCollection AddApp(this IServiceCollection services, IConfiguration config) =>
         services
-            .AddSingleton<IMemoryCache, MemoryCache>()
-            .AddSingleton(s => new MarkdownRenderer())
-            .AddSingleton<ISlugHelper>(_ => new SlugHelper(new SlugHelperConfiguration()))
-            .AddScoped<ICacheDependencyKeysBuilder, CacheDependencyKeysBuilder>()
-            .Configure<DefaultQueryCacheSettings>(s =>
-            {
-                var section = config.GetSection("Cache:Query");
-                section.Bind(s);
-            })
-            .AddMediatR(c =>
-            {
-                _ = c.RegisterServicesFromAssembly(typeof(HomePageQuery).Assembly);
-            })
+            .AddScoped<LicensesFacade>()
+            .AddScoped<CookieConsentManager>()
+            .AddScoped<ConsentManager>()
+            .AddRendering()
+            .AddSEO()
+            .AddOperations(config)
+            .AddInfrastructure(config)
+            .AddSupport()
+            .AddQAndA()
+            .AddBlogs();
+
+    private static IServiceCollection AddOperations(this IServiceCollection services, IConfiguration config) =>
+        services.AddScoped<ICacheDependencyKeysBuilder, CacheDependencyKeysBuilder>()
+            .Configure<DefaultQueryCacheSettings>(config.GetSection("Cache:Query"))
+            .AddMediatR(c => c.RegisterServicesFromAssembly(typeof(HomePageQuery).Assembly))
             .AddClosedGenericTypes(typeof(HomePageQuery).Assembly, typeof(IQueryHandler<,>), ServiceLifetime.Scoped)
             .AddClosedGenericTypes(typeof(HomePageQuery).Assembly, typeof(ICommandHandler<,>), ServiceLifetime.Scoped)
             .Decorate(typeof(IRequestHandler<,>), typeof(QueryHandlerCacheDecorator<,>))
@@ -42,45 +43,43 @@ public static class ServiceCollectionAppExtensions
             .AddScoped<CacheDependenciesStore>()
             .AddScoped<ICacheDependenciesStore>(s => s.GetRequiredService<CacheDependenciesStore>())
             .AddScoped<ICacheDependenciesScope>(s => s.GetRequiredService<CacheDependenciesStore>())
-            .AddSingleton<ISystemClock, SystemClock>()
-            .AddSingleton<AssetItemService>()
-            .AddScoped<WebPageMetaService>()
-            .AddScoped<CaptchaValidator>()
             .AddTransient<WebPageCommandTools>()
             .AddTransient<WebPageQueryTools>()
             .AddTransient<ContentItemQueryTools>()
             .AddTransient<DataItemCommandTools>()
-            .AddTransient<DataItemQueryTools>()
-            .AddScoped<ViewService>()
-            .AddScoped<ClientAssets>()
-            .AddScoped<SupportFacade>()
-            .AddScoped<LicensesFacade>()
-            .AddScoped<CookieConsentManager>()
-            .AddScoped<ConsentManager>()
-            .AddTransient<Sitemap>()
-            .Configure<ReCaptchaSettings>(o =>
-            {
-                var section = config.GetSection("ReCaptcha");
+            .AddTransient<DataItemQueryTools>();
 
-                section.Bind(o);
-            })
-            .Configure<MicrosoftDynamicsSettings>(o =>
-            {
-                var section = config.GetSection("MicrosoftDynamics");
-
-                section.Bind(o);
-            })
-            .AddGlobalEventHandlers()
-            .AddHttpClient()
-            .AddViteServices();
-
-    public static IServiceCollection AddGlobalEventHandlers(this IServiceCollection services) =>
+    private static IServiceCollection AddRendering(this IServiceCollection services) =>
         services
-            .AddTransient<QAndAAnswerCreateSearchIndexTaskHandler>()
-            .AddTransient<BlogPostPublishCreateQAndAQuestionHandler>()
-            .AddTransient<MediaAssetContentMetadataHandler>();
+            .AddSingleton(s => new MarkdownRenderer())
+            .AddSingleton<ISlugHelper>(_ => new SlugHelper(new SlugHelperConfiguration()))
+            .AddScoped<ViewService>()
+            .AddScoped<ClientAssets>();
 
-    public static IServiceCollection AddClosedGenericTypes(
+    private static IServiceCollection AddSEO(this IServiceCollection services) =>
+        services
+            .AddScoped<WebPageMetaService>()
+            .AddTransient<Sitemap>();
+
+    private static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config) =>
+        services
+            .AddSingleton<AzureStorageClientFactory>()
+            .AddSingleton<ISystemClock, SystemClock>()
+            .AddSingleton<AssetItemService>()
+            .AddTransient<MediaAssetContentMetadataHandler>()
+            .AddScoped<CaptchaValidator>()
+            .Configure<ReCaptchaSettings>(config.GetSection("ReCaptcha"));
+
+
+    private static IServiceCollection AddSupport(this IServiceCollection services) =>
+        services.AddHostedService<SupportMessageProcessorHostedService>();
+
+    private static IServiceCollection AddQAndA(this IServiceCollection services) =>
+        services.AddTransient<QAndAAnswerCreateSearchIndexTaskHandler>();
+    private static IServiceCollection AddBlogs(this IServiceCollection services) =>
+        services.AddTransient<BlogPostPublishCreateQAndAQuestionHandler>();
+
+    private static IServiceCollection AddClosedGenericTypes(
         this IServiceCollection services,
         Assembly assembly,
         Type typeToRegister,
@@ -94,5 +93,4 @@ public static class ServiceCollectionAppExtensions
 
         return services;
     }
-
 }

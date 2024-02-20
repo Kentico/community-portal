@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
+using System.Linq;
 
 using CMS;
 using CMS.DataEngine;
@@ -16,7 +17,7 @@ namespace Kentico.Community.Portal.Core.Modules
     /// Data container class for <see cref="QAndAAnswerDataInfo"/>.
     /// </summary>
     [Serializable, InfoCache(InfoCacheBy.ID)]
-    public partial class QAndAAnswerDataInfo : AbstractInfo<QAndAAnswerDataInfo, IQAndAAnswerDataInfoProvider>
+    public partial class QAndAAnswerDataInfo : AbstractInfo<QAndAAnswerDataInfo, IInfoProvider<QAndAAnswerDataInfo>>, IInfoWithId, IInfoWithName, IInfoWithGuid
     {
         /// <summary>
         /// Object type.
@@ -27,7 +28,7 @@ namespace Kentico.Community.Portal.Core.Modules
         /// <summary>
         /// Type information.
         /// </summary>
-        public static readonly ObjectTypeInfo TYPEINFO = new ObjectTypeInfo(typeof(QAndAAnswerDataInfoProvider), OBJECT_TYPE, "KenticoCommunity.QAndAAnswerData", "QAndAAnswerDataID", "QAndAAnswerDataDateModified", "QAndAAnswerDataGUID", "QAndAAnswerDataCodeName", "QAndAAnswerDataCodeName", null, null, null)
+        public static readonly ObjectTypeInfo TYPEINFO = new ObjectTypeInfo(typeof(IInfoProvider<QAndAAnswerDataInfo>), OBJECT_TYPE, "KenticoCommunity.QAndAAnswerData", "QAndAAnswerDataID", "QAndAAnswerDataDateModified", "QAndAAnswerDataGUID", "QAndAAnswerDataCodeName", "QAndAAnswerDataCodeName", null, null, null)
         {
             TouchCacheDependencies = true,
             DependsOn = new List<ObjectDependency>()

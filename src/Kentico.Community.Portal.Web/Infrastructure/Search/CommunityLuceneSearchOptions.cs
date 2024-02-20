@@ -1,6 +1,6 @@
 namespace Kentico.Community.Portal.Web.Infrastructure.Search;
 
-public class LuceneSearchOptions
+public class CommunityLuceneSearchOptions
 {
     public string WebCrawlerBaseUrl { get; set; } = "";
 }

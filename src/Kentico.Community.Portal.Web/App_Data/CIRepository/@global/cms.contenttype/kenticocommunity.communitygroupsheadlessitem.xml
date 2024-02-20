@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Headless</ClassContentTypeType>
+  <ClassDisplayName>Community Groups Headless Item</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="f02453c4-0eab-4c67-ba09-4659e383424f" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="42eb830e-15c2-4dce-ab02-61d7200736d4" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="0228c8f4-b8b2-4d1e-9be8-7a9f5556298f" isunique="true" system="true" />
+      <field column="CommunityGroupsHeadlessItemCTALabel" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="11884f6f-9e1c-452e-802d-75faa36204ce" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>CTA Label</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field column="CommunityGroupsHeadlessItemCTALinkURL" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="520680ee-9446-4215-9f18-8dc34747eeb7" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>CTA Link</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Community.Portal.ValidationRule.URL</ValidationRuleIdentifier>
+            <RuleValues>
+              <RequireHTTPS>true</RequireHTTPS>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field allowempty="true" column="CommunityGroupsHeadlessItemGroups" columnprecision="0" columntype="contentitemreference" enabled="true" guid="d4c37c7e-ebb8-4f33-95f8-fbf6fe4c8fec" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Groups</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["4b1c60dd-075e-463f-9869-39242ef2ee32"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>9eb6b9ec-beea-4a69-83bc-a6ef84cb4c62</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-personalisation-variants</ClassIconClass>
+  <ClassName>KenticoCommunity.CommunityGroupsHeadlessItem</ClassName>
+  <ClassShortName>KenticoCommunityCommunityGroupsHeadlessItem</ClassShortName>
+  <ClassTableName>KenticoCommunity_CommunityGroupsHeadlessItem</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

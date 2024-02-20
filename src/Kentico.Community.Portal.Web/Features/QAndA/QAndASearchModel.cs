@@ -89,7 +89,7 @@ public class QAndASearchIndexingStrategy(
     IContentQueryExecutor executor,
     WebScraperHtmlSanitizer htmlSanitizer,
     IInfoProvider<MemberInfo> memberProvider,
-    IQAndAAnswerDataInfoProvider answerProvider
+    IInfoProvider<QAndAAnswerDataInfo> answerProvider
     ) : DefaultLuceneIndexingStrategy
 {
     public const string IDENTIFIER = "QANDA_SEARCH";
@@ -102,7 +102,7 @@ public class QAndASearchIndexingStrategy(
     private readonly IContentQueryExecutor executor = executor;
     private readonly WebScraperHtmlSanitizer htmlSanitizer = htmlSanitizer;
     private readonly IInfoProvider<MemberInfo> memberProvider = memberProvider;
-    private readonly IQAndAAnswerDataInfoProvider answerProvider = answerProvider;
+    private readonly IInfoProvider<QAndAAnswerDataInfo> answerProvider = answerProvider;
 
     public override async Task<Document?> MapToLuceneDocumentOrNull(IIndexEventItemModel item)
     {

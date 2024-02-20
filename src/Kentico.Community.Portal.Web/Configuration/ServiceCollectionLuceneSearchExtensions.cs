@@ -18,5 +18,5 @@ public static class ServiceCollectionLuceneSearchExtensions
             .AddHttpClient<WebCrawlerService>()
             .Services
             .AddSingleton<SearchService>()
-            .Configure<LuceneSearchOptions>(config.GetSection("xperience.lucene"));
+            .Configure<CommunityLuceneSearchOptions>(config.GetSection("Kentico.Xperience.Lucene.Custom"));
 }
