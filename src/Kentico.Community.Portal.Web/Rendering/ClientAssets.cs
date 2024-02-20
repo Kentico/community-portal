@@ -13,7 +13,7 @@ public class ClientAssets
     {
         this.env = env;
         this.manifest = manifest;
-        basePath = $"~/{options.Value.Base?.Trim('/')}";
+        basePath = $"/{options.Value.Base?.Trim('/')}";
     }
 
     /// <summary>

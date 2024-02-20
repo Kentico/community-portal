@@ -71,6 +71,14 @@ public static class ServiceCollectionMvcExtensions
                     new("ro-RO"),
                 ]);
             })
+            .Configure<StaticFileOptions>(o =>
+            {
+                o.OnPrepareResponse = context =>
+                {
+                    // Caches static files for 7 days
+                    context.Context.Response.Headers.Append("Cache-Control", "public,max-age=604800");
+                };
+            })
             .AddControllersWithViews(config =>
             {
                 if (!env.IsDevelopment())

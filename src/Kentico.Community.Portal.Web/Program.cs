@@ -23,15 +23,7 @@ app
     .InitKentico()
     .IfDevelopment(env, b => b.UseDeveloperExceptionPage())
     .IfNotDevelopment(env, b => b.UseExceptionHandler("/error/500"))
-    .UseStaticFiles(new StaticFileOptions
-    {
-        OnPrepareResponse = context =>
-        {
-            // Caches static files for 7 days
-            context.Context.Response.Headers.Append("Cache-Control", "public,max-age=604800");
-        }
-    })
-
+    .UseStaticFiles()
     .UseCors()
     .UseCookiePolicy()
     .UseAuthentication()
