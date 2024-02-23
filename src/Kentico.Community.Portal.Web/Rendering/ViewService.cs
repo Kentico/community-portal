@@ -1,36 +1,17 @@
 using System.Globalization;
-using Microsoft.AspNetCore.Localization;
 using Slugify;
 
 namespace Kentico.Community.Portal.Web.Rendering;
 
-public class ViewService
+public class ViewService(
+    ISlugHelper slugHelper,
+    IWebHostEnvironment env)
 {
-    private readonly IHttpContextAccessor contextAccessor;
-    private readonly IWebHostEnvironment env;
-    private IRequestCultureFeature cultureFeature = null!;
+    private readonly IWebHostEnvironment env = env;
 
-    public ViewService(
-        IHttpContextAccessor contextAccessor,
-        ISlugHelper slugHelper,
-        IWebHostEnvironment env)
-    {
-        this.contextAccessor = contextAccessor;
-        SlugHelper = slugHelper;
-        this.env = env;
-    }
+    public CultureInfo Culture => CultureInfo.CurrentUICulture;
 
-    public CultureInfo Culture
-    {
-        get
-        {
-            cultureFeature ??= contextAccessor.HttpContext!.Features.Get<IRequestCultureFeature>()!;
-
-            return cultureFeature.RequestCulture.Culture;
-        }
-    }
-
-    public ISlugHelper SlugHelper { get; }
+    public ISlugHelper SlugHelper { get; } = slugHelper;
 
     /// <summary>
     /// Determines if View caching is enabled for the current request

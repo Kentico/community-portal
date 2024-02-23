@@ -1,5 +1,20 @@
 # Architecture Decision Record
 
+## 2024-02-22 - Auto search index rebuilding
+
+Lucene search indexes are stored on the file system and when deployments in SaaS swap Azure App Service slots. After a deployment, a search index's files might not be up-to-date or even available.
+
+Ideally, we could trigger a search index rebuild immediately after a deployment, but currently there's no way to determine (from the application's perspective) that a deployment took place.
+
+We do have access to `ApplicationEvents.PostStart` which is an event triggered after an application has initialized and handled a request, but this event is triggered even after app pool recycles.
+If we relied on this event to auto rebuild a search index, we'd have to accept that the index would be rebuilt too often, wasting resources and potentially impacting site performance after an app pool recycle.
+
+We could also track assembly version numbers (of the deployed application) and compare the stored version to the version of the running application in the `ApplicationEvents.PostStart` event.
+This would let us know when we encountered an app pool recycle and skip index rebuilding.
+
+Because of the complexity of assembly version comparisons and the resource usage penalty without it, for now, we will manually rebuild search indexes after deployments.
+This can be revisited in the future to improve the ability to fully automate deployments.
+
 ## 2024-02-19 - Support Requests Processing
 
 Support requests (submitted through the website [support form](https://community.kentico.com/support)) were processed within the submission HTTP request.

@@ -1,4 +1,5 @@
 ﻿using CMS.Helpers;
+using CMS.Websites.Routing;
 using Microsoft.Extensions.Options;
 
 namespace Kentico.Community.Portal.Core.Operations;
@@ -16,6 +17,7 @@ public class QueryHandlerCacheDecorator<TQuery, TResult>(
     IEnumerable<IQueryCacheKeysCreator<TQuery, TResult>> creators,
     IEnumerable<IQueryCacheSettingsCustomizer<TQuery, TResult>> cacheCustomizers,
     ICacheDependenciesStore store,
+    IWebsiteChannelContext channelContext,
     IOptions<DefaultQueryCacheSettings> settings) : IQueryHandler<TQuery, TResult> where TQuery : IQuery<TResult>
 {
     private readonly IQueryHandler<TQuery, TResult> decorated = decorated;
@@ -27,13 +29,19 @@ public class QueryHandlerCacheDecorator<TQuery, TResult>(
     private readonly IEnumerable<IQueryCacheKeysCreator<TQuery, TResult>> creators = creators;
     private readonly IEnumerable<IQueryCacheSettingsCustomizer<TQuery, TResult>> cacheCustomizers = cacheCustomizers;
     private readonly ICacheDependenciesStore store = store;
+    private readonly IWebsiteChannelContext channelContext = channelContext;
     private readonly DefaultQueryCacheSettings settings = settings.Value;
 
     public async Task<TResult> Handle(TQuery query, CancellationToken token = default)
     {
         var creator = creators.FirstOrDefault();
 
-        if (!this.settings.IsEnabled || creator is null)
+        /*
+         * Skip caching is we are in preview mode, caching is disabled, or we cannot generate cache keys for the current query
+         */
+        if (channelContext.IsPreview ||
+            !this.settings.IsEnabled ||
+            creator is null)
         {
             return await decorated.Handle(query, token);
         }
@@ -76,7 +84,7 @@ public class QueryHandlerCacheDecorator<TQuery, TResult>(
 
             store.MarkCacheDisabled();
 
-            return new CacheEntry<TResult>(result, Array.Empty<string>());
+            return new CacheEntry<TResult>(result, []);
         }
 
         var resultValue = result is Result<TResult> success

@@ -16,21 +16,14 @@ public class GlobalSearchResultViewModel<T> : LuceneSearchResultModel<T>
     public string SortBy { get; set; } = "";
 }
 
-public class SearchService
+public class SearchService(ILuceneSearchService luceneSearchService, IEventLogService log, BlogSearchIndexingStrategy strategy)
 {
     private const int PHRASE_SLOP = 3;
     private const int MAX_RESULTS = 1000;
 
-    private readonly ILuceneSearchService luceneSearchService;
-    private readonly IEventLogService log;
-    private readonly BlogSearchIndexingStrategy strategy;
-
-    public SearchService(ILuceneSearchService luceneSearchService, IEventLogService log, BlogSearchIndexingStrategy strategy)
-    {
-        this.luceneSearchService = luceneSearchService;
-        this.log = log;
-        this.strategy = strategy;
-    }
+    private readonly ILuceneSearchService luceneSearchService = luceneSearchService;
+    private readonly IEventLogService log = log;
+    private readonly BlogSearchIndexingStrategy strategy = strategy;
 
     public LuceneSearchResultModel<BlogSearchModel> SearchBlog(BlogSearchRequest request)
     {

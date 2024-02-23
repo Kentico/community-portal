@@ -4,10 +4,8 @@ using Kentico.Community.Portal.Core.Operations;
 namespace Kentico.Community.Portal.Web.Rendering;
 
 public record MediaAssetContentQuery(int ContentItemID) : IQuery<MediaAssetContent>;
-public class MediaAssetContentQueryHandler : ContentItemQueryHandler<MediaAssetContentQuery, MediaAssetContent>
+public class MediaAssetContentQueryHandler(ContentItemQueryTools tools) : ContentItemQueryHandler<MediaAssetContentQuery, MediaAssetContent>(tools)
 {
-    public MediaAssetContentQueryHandler(ContentItemQueryTools tools) : base(tools) { }
-
     public override async Task<MediaAssetContent> Handle(MediaAssetContentQuery request, CancellationToken cancellationToken)
     {
         var b = new ContentItemQueryBuilder()

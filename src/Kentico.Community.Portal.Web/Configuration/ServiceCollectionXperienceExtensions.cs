@@ -81,8 +81,8 @@ public static class ServiceCollectionXperienceExtensions
             })
             .Configure<FormBuilderBundlesOptions>(options =>
             {
-                options.JQueryCustomBundleWebRootPath = "Scripts/jquery-3.5.1.min.js";
-                options.JQueryUnobtrusiveAjaxCustomBundleWebRootPath = "Scripts/jquery.unobtrusive-ajax.min.js";
+                options.JQueryCustomBundleWebRootPath = "vendor/js/jquery-3.5.1.min.js";
+                options.JQueryUnobtrusiveAjaxCustomBundleWebRootPath = "vendor/js/jquery.unobtrusive-ajax.min.js";
             })
             .Configure<FileUploadOptions>(options =>
             {

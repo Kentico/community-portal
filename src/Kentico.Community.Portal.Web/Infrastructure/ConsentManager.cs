@@ -4,23 +4,16 @@ using CMS.Helpers;
 
 namespace Kentico.Community.Portal.Web.Infrastructure;
 
-public class ConsentManager
+public class ConsentManager(
+    IConsentAgreementService consentAgreementService,
+    IConsentInfoProvider consentProvider,
+    IProgressiveCache cache)
 {
     public const string MARKETING_CONSENT = "KenticoCommunityPortalTracking";
 
-    private readonly IConsentAgreementService consentAgreementService;
-    private readonly IConsentInfoProvider consentProvider;
-    private readonly IProgressiveCache cache;
-
-    public ConsentManager(
-        IConsentAgreementService consentAgreementService,
-        IConsentInfoProvider consentProvider,
-        IProgressiveCache cache)
-    {
-        this.consentAgreementService = consentAgreementService;
-        this.consentProvider = consentProvider;
-        this.cache = cache;
-    }
+    private readonly IConsentAgreementService consentAgreementService = consentAgreementService;
+    private readonly IConsentInfoProvider consentProvider = consentProvider;
+    private readonly IProgressiveCache cache = cache;
 
     public async Task<ConsentInfo?> GetConsent(string consentCodeName) =>
         await cache.LoadAsync(cs => consentProvider.GetAsync(consentCodeName), new CacheSettings(5, nameof(ConsentInfo), consentCodeName));

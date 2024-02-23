@@ -68,4 +68,7 @@ public class SupportFormViewModel : ICaptchaClientResponse
     public bool ConsentAgreement { get; set; } = false;
 
     public bool IsSuccess { get; set; } = false;
+
+    [DisplayName("This is a Kentico SaaS production issue")]
+    public bool IsKenticoSaaSProductionIssue { get; set; } = false;
 }

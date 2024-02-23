@@ -21,7 +21,7 @@ public class CommunityMember : ApplicationUser
 
     public override void MapToMemberInfo(MemberInfo target)
     {
-        if (target == null)
+        if (target is null)
         {
             throw new ArgumentNullException(nameof(target));
         }

@@ -244,4 +244,6 @@ public class SupportRequestMessage
     public bool IsSLA { get; set; }
 
     public bool Is2Level { get; set; }
+
+    public bool IsKenticoSaaSProductionIssue { get; set; }
 }

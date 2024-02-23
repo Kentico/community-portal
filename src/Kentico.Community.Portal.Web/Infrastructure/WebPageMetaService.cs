@@ -3,19 +3,13 @@ using MediatR;
 
 namespace Kentico.Community.Portal.Web.Infrastructure;
 
-public class WebPageMetaService
+public class WebPageMetaService(
+    IMediator mediator,
+    AssetItemService assetItemService)
 {
-    private readonly IMediator mediator;
-    private readonly AssetItemService assetItemService;
+    private readonly IMediator mediator = mediator;
+    private readonly AssetItemService assetItemService = assetItemService;
     private Meta meta = new("", "");
-
-    public WebPageMetaService(
-        IMediator mediator,
-        AssetItemService assetItemService)
-    {
-        this.mediator = mediator;
-        this.assetItemService = assetItemService;
-    }
 
     public async Task<Meta> GetMeta()
     {

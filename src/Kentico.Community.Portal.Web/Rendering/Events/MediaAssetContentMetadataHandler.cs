@@ -9,19 +9,12 @@ using MetadataExtractor.Formats.WebP;
 
 namespace Kentico.Community.Portal.Web.Rendering.Events;
 
-public class MediaAssetContentMetadataHandler
+public class MediaAssetContentMetadataHandler(
+    IHttpContextAccessor accessor,
+    IContentItemAssetPathProvider pathProvider)
 {
-    private readonly IHttpContextAccessor accessor;
-    private readonly IContentItemAssetPathProvider pathProvider;
-
-    public MediaAssetContentMetadataHandler(
-        IHttpContextAccessor accessor,
-        IContentItemAssetPathProvider pathProvider
-    )
-    {
-        this.accessor = accessor;
-        this.pathProvider = pathProvider;
-    }
+    private readonly IHttpContextAccessor accessor = accessor;
+    private readonly IContentItemAssetPathProvider pathProvider = pathProvider;
 
     public void Handle(UpdateContentItemDraftEventArgs args)
     {

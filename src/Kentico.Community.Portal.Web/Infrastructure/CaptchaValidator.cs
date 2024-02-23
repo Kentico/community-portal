@@ -3,16 +3,10 @@ using Newtonsoft.Json;
 
 namespace Kentico.Community.Portal.Web.Infrastructure;
 
-public class CaptchaValidator
+public class CaptchaValidator(IOptions<ReCaptchaSettings> options, IHttpClientFactory httpClientFactory)
 {
-    private readonly ReCaptchaSettings settings;
-    private readonly IHttpClientFactory httpClientFactory;
-
-    public CaptchaValidator(IOptions<ReCaptchaSettings> options, IHttpClientFactory httpClientFactory)
-    {
-        settings = options.Value;
-        this.httpClientFactory = httpClientFactory;
-    }
+    private readonly ReCaptchaSettings settings = options.Value;
+    private readonly IHttpClientFactory httpClientFactory = httpClientFactory;
 
     public async Task<CaptchaValidationResult> ValidateCaptcha(ICaptchaClientResponse clientResponse)
     {

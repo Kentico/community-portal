@@ -2,25 +2,16 @@ using CMS.ContactManagement;
 
 namespace Kentico.Community.Portal.Web.Membership;
 
-public class MemberContactManager
+public class MemberContactManager(
+    IContactInfoProvider contactProvider,
+    ICurrentContactProvider currentContactProvider,
+    IContactMergeService contactMerge,
+    IContactCreator contactCreator)
 {
-    private readonly IContactInfoProvider contactProvider;
-    private readonly ICurrentContactProvider currentContactProvider;
-    private readonly IContactMergeService contactMerge;
-    private readonly IContactCreator contactCreator;
-
-    public MemberContactManager(
-        IContactInfoProvider contactProvider,
-        ICurrentContactProvider currentContactProvider,
-        IContactMergeService contactMerge,
-        IContactCreator contactCreator
-    )
-    {
-        this.contactProvider = contactProvider;
-        this.currentContactProvider = currentContactProvider;
-        this.contactMerge = contactMerge;
-        this.contactCreator = contactCreator;
-    }
+    private readonly IContactInfoProvider contactProvider = contactProvider;
+    private readonly ICurrentContactProvider currentContactProvider = currentContactProvider;
+    private readonly IContactMergeService contactMerge = contactMerge;
+    private readonly IContactCreator contactCreator = contactCreator;
 
     public ContactInfo? SetMemberAsCurrentContact(CommunityMember member)
     {

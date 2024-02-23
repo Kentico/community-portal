@@ -3,18 +3,11 @@ using Vite.AspNetCore;
 
 namespace Kentico.Community.Portal.Web.Rendering;
 
-public class ClientAssets
+public class ClientAssets(IWebHostEnvironment env, IViteManifest manifest, IOptions<ViteOptions> options)
 {
-    private readonly IWebHostEnvironment env;
-    private readonly IViteManifest manifest;
-    private readonly string basePath;
-
-    public ClientAssets(IWebHostEnvironment env, IViteManifest manifest, IOptions<ViteOptions> options)
-    {
-        this.env = env;
-        this.manifest = manifest;
-        basePath = $"/{options.Value.Base?.Trim('/')}";
-    }
+    private readonly IWebHostEnvironment env = env;
+    private readonly IViteManifest manifest = manifest;
+    private readonly string basePath = $"/{options.Value.Base?.Trim('/')}";
 
     /// <summary>
     /// Returns true if editormd is required on the current page

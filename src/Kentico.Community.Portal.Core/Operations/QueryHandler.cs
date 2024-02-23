@@ -37,7 +37,7 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
         ContentMapper = tools.ContentMapper;
         UrlRetriever = tools.UrlRetriever;
         DependencyRetriever = tools.DependencyRetriever;
-        DefaultQueryOptions = new ContentQueryExecutionOptions { ForPreview = tools.WebsiteChannelContext.IsPreview, IncludeSecuredItems = false };
+        DefaultQueryOptions = new ContentQueryExecutionOptions { ForPreview = tools.WebsiteChannelContext.IsPreview };
     }
 
     private readonly HashSet<string> customKeys = new(StringComparer.OrdinalIgnoreCase);

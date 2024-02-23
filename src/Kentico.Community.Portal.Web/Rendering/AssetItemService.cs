@@ -4,20 +4,12 @@ using Kentico.Content.Web.Mvc;
 
 namespace Kentico.Community.Portal.Web.Rendering;
 
-public class AssetItemService
+public class AssetItemService(IMediaFileInfoProvider mediaFileInfoProvider, IMediaFileUrlRetriever mediaFileUrlRetriever, IHttpContextAccessor contextAccessor, IProgressiveCache cache)
 {
-    private readonly IMediaFileInfoProvider mediaFileInfoProvider;
-    private readonly IMediaFileUrlRetriever mediaFileUrlRetriever;
-    private readonly IHttpContextAccessor contextAccessor;
-    private readonly IProgressiveCache cache;
-
-    public AssetItemService(IMediaFileInfoProvider mediaFileInfoProvider, IMediaFileUrlRetriever mediaFileUrlRetriever, IHttpContextAccessor contextAccessor, IProgressiveCache cache)
-    {
-        this.mediaFileInfoProvider = mediaFileInfoProvider;
-        this.mediaFileUrlRetriever = mediaFileUrlRetriever;
-        this.contextAccessor = contextAccessor;
-        this.cache = cache;
-    }
+    private readonly IMediaFileInfoProvider mediaFileInfoProvider = mediaFileInfoProvider;
+    private readonly IMediaFileUrlRetriever mediaFileUrlRetriever = mediaFileUrlRetriever;
+    private readonly IHttpContextAccessor contextAccessor = contextAccessor;
+    private readonly IProgressiveCache cache = cache;
 
     public async Task<AssetViewModel?> RetrieveMediaFile(AssetRelatedItem? item)
     {

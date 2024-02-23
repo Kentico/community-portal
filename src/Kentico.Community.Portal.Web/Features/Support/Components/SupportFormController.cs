@@ -68,7 +68,8 @@ public class SupportFormController(
             DevelopmentModel = model.DeploymentModel,
             URL = model.WebsiteURL,
             Fix = model.AttemptedResolution,
-            FileName = model.Attachment?.FileName ?? "unknown"
+            FileName = model.Attachment?.FileName ?? "unknown",
+            IsKenticoSaaSProductionIssue = model.IsKenticoSaaSProductionIssue
         };
 
         if (model.Attachment is not null)

@@ -1,4 +1,5 @@
 ﻿using CMS;
+using CMS.Core;
 using Kentico.Community.Portal.Admin;
 using Kentico.Xperience.Admin.Base;
 
@@ -25,10 +26,10 @@ internal class PortalWebAdminModule : AdminModule
 
     public PortalWebAdminModule() : base(nameof(PortalWebAdminModule)) { }
 
-    protected override void OnInit()
+    protected override void OnInit(ModuleInitParameters parameters)
     {
         RegisterClientModule("kentico-community", "portal-web-admin");
 
-        base.OnInit();
+        base.OnInit(parameters);
     }
 }

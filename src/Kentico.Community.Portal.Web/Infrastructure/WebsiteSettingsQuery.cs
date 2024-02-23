@@ -6,10 +6,8 @@ namespace Kentico.Community.Portal.Web.Infrastructure;
 public record WebsiteSettingsContentQuery : IQuery<WebsiteSettingsContentQueryResponse>;
 public record WebsiteSettingsContentQueryResponse(WebsiteSettingsContent Settings);
 
-public class WebsiteSettingsContentQueryHandler : ContentItemQueryHandler<WebsiteSettingsContentQuery, WebsiteSettingsContentQueryResponse>
+public class WebsiteSettingsContentQueryHandler(ContentItemQueryTools tools) : ContentItemQueryHandler<WebsiteSettingsContentQuery, WebsiteSettingsContentQueryResponse>(tools)
 {
-    public WebsiteSettingsContentQueryHandler(ContentItemQueryTools tools) : base(tools) { }
-
     public override async Task<WebsiteSettingsContentQueryResponse> Handle(WebsiteSettingsContentQuery request, CancellationToken cancellationToken)
     {
         var b = new ContentItemQueryBuilder().ForContentType(WebsiteSettingsContent.CONTENT_TYPE_NAME);
