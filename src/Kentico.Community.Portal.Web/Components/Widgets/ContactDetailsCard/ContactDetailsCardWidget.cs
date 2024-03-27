@@ -18,13 +18,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.ContactDetailsCard;
 
-public class ContactDetailsCardWidget : ViewComponent
+public class ContactDetailsCardWidget(IMediator mediator) : ViewComponent
 {
     public const string IDENTIFIER = "CommunityPortal.Widget.ContactDetailsCard";
 
-    private readonly IMediator mediator;
-
-    public ContactDetailsCardWidget(IMediator mediator) => this.mediator = mediator;
+    private readonly IMediator mediator = mediator;
 
     public async Task<IViewComponentResult> InvokeAsync(ComponentViewModel<ContactDetailsCardWidgetProperties> vm)
     {
@@ -61,18 +59,11 @@ public class ContactDetailsCardWidgetProperties : IWidgetProperties
     public IEnumerable<ContentItemReference> ContactDetails { get; set; } = Enumerable.Empty<ContentItemReference>();
 }
 
-public class ContactDetailsCardWidgetViewModel
+public class ContactDetailsCardWidgetViewModel(ContactDetailsContent item)
 {
-    public ContactDetailsCardWidgetViewModel(ContactDetailsContent item)
-    {
-        Title = item.ContactDetailsContentTitle;
-        PhoneNumber = item.ContactDetailsContentPhoneNumber;
-        EmailAddress = item.ContactDetailsContentEmailAddress;
-    }
-
-    public string Title { get; set; } = "";
-    public string? PhoneNumber { get; set; } = null;
-    public string? EmailAddress { get; set; } = null;
+    public string Title { get; set; } = item.ContactDetailsContentTitle;
+    public string? PhoneNumber { get; set; } = item.ContactDetailsContentPhoneNumber;
+    public string? EmailAddress { get; set; } = item.ContactDetailsContentEmailAddress;
 }
 
 public record ContactDetailsContentsQuery(Guid[] ContentItemGUIDs) : IQuery<ContactDetailsContentsQueryResponse>, ICacheByValueQuery
@@ -81,10 +72,8 @@ public record ContactDetailsContentsQuery(Guid[] ContentItemGUIDs) : IQuery<Cont
 }
 
 public record ContactDetailsContentsQueryResponse(IReadOnlyList<ContactDetailsContent> Items);
-public class ContactDetailsContentQueryHandler : ContentItemQueryHandler<ContactDetailsContentsQuery, ContactDetailsContentsQueryResponse>
+public class ContactDetailsContentQueryHandler(ContentItemQueryTools tools) : ContentItemQueryHandler<ContactDetailsContentsQuery, ContactDetailsContentsQueryResponse>(tools)
 {
-    public ContactDetailsContentQueryHandler(ContentItemQueryTools tools) : base(tools) { }
-
     public override async Task<ContactDetailsContentsQueryResponse> Handle(ContactDetailsContentsQuery request, CancellationToken cancellationToken = default)
     {
         var b = new ContentItemQueryBuilder().ForContentType(ContactDetailsContent.CONTENT_TYPE_NAME, c =>

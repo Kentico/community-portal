@@ -1,15 +1,14 @@
 using CMS.DataProtection;
+using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Components.ViewComponents.Consents;
 
-public class ConsentViewComponent : ViewComponent
+public class ConsentViewComponent(ConsentManager consentManager) : ViewComponent
 {
-    private readonly ConsentManager consentManager;
-
-    public ConsentViewComponent(ConsentManager consentManager) => this.consentManager = consentManager;
+    private readonly ConsentManager consentManager = consentManager;
 
     public async Task<IViewComponentResult> InvokeAsync(string consentName)
     {

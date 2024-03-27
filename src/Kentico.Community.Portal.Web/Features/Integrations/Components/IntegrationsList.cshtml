@@ -18,15 +18,17 @@
                                 </div>
                             }
                             <h3 class="h3 mt-2 pt-1">@item.Title</h3>
-                            <p class="c-note mt-2">by
-                                @if (item.AuthorURL is string authorURL)
-                                {
-                                    <a href="@authorURL">@item.AuthorName</a>
-                                }
-                                else
-                                {
-                                    @item.AuthorName
-                                }
+                            <p class="mt-2">by
+                                <small>
+                                    @if (item.AuthorURL is string authorURL)
+                                    {
+                                        <a href="@authorURL">@item.AuthorName</a>
+                                    }
+                                    else
+                                    {
+                                        @item.AuthorName
+                                    }
+                                </small>
                             </p>
                             <p class="mt-2">@item.ShortDescription</p>
 

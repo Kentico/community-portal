@@ -1,19 +1,12 @@
-using Kentico.Community.Portal.Web.Infrastructure.Search;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.Blog.Components;
 
-public class BlogPostListViewComponent : ViewComponent
+public class BlogPostListViewComponent(IMediator mediator, BlogSearchService searchService) : ViewComponent
 {
-    private readonly IMediator mediator;
-    private readonly SearchService searchService;
-
-    public BlogPostListViewComponent(IMediator mediator, SearchService searchService)
-    {
-        this.mediator = mediator;
-        this.searchService = searchService;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly BlogSearchService searchService = searchService;
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
@@ -36,7 +29,7 @@ public class BlogPostListViewComponent : ViewComponent
                 .Select(x => new FacetOption()
                 {
                     Label = x.DisplayName,
-                    Value = searchResult?.Facets?.FirstOrDefault(y => y.Label == x.DisplayName.ToLowerInvariant())?.Value ?? 0,
+                    Value = searchResult?.Facets?.FirstOrDefault(y => y.Label.Equals(x.DisplayName, StringComparison.InvariantCultureIgnoreCase))?.Value ?? 0,
                     IsSelected = chosenFacets.Contains(x.DisplayName, StringComparer.OrdinalIgnoreCase)
                 })
                 .Where(x => x.Value != 0)
@@ -53,7 +46,7 @@ public class BlogPostListViewComponent : ViewComponent
         return View("~/Features/Blog/Components/BlogPostList.cshtml", model);
     }
 
-    private static IReadOnlyList<BlogPostViewModel> BuildPostPageViewModels(IEnumerable<BlogSearchModel>? results)
+    private static List<BlogPostViewModel> BuildPostPageViewModels(IEnumerable<BlogSearchModel>? results)
     {
         if (results is null)
         {

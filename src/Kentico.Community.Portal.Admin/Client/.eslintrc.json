@@ -5,7 +5,8 @@
   },
   "extends": [
     "plugin:react/recommended",
-    "standard-with-typescript",
+    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:import/recommended",
     "prettier"
   ],
   "overrides": [],
@@ -164,6 +165,14 @@
   "settings": {
     "react": {
       "version": "18.2.0"
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "project": "."
+      }
     }
   }
 }

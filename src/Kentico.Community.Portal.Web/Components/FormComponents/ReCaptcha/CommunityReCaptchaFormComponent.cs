@@ -24,7 +24,14 @@ namespace Kentico.Community.Portal.Web.Components.FormComponents.ReCaptcha;
 /// <summary>
 /// Represents a reCAPTCHA form component.
 /// </summary>
-public class CommunityReCaptchaFormComponent : FormComponent<CommunityReCaptchaFormComponentProperties, string>
+/// <remarks>
+/// Initializes a new instance of <see cref="RecaptchaComponent"/>
+/// </remarks>
+public class CommunityReCaptchaFormComponent(
+    IAppSettingsService appSettingsService,
+    IHttpContextAccessor httpContextAccessor,
+    ILocalizationService localizationService,
+    IOptions<ReCaptchaSettings> captchaOptions) : FormComponent<CommunityReCaptchaFormComponentProperties, string>
 {
     /// <summary>
     /// Represents the <see cref="CommunityReCaptchaFormComponent"/> identifier.
@@ -40,10 +47,10 @@ public class CommunityReCaptchaFormComponent : FormComponent<CommunityReCaptchaF
         return new HashSet<string>(codes, StringComparer.OrdinalIgnoreCase);
     });
 
-    private readonly IAppSettingsService appSettingsService;
-    private readonly IHttpContextAccessor httpContextAccessor;
-    private readonly ILocalizationService localizationService;
-    private readonly ReCaptchaSettings captchaOptions;
+    private readonly IAppSettingsService appSettingsService = appSettingsService;
+    private readonly IHttpContextAccessor httpContextAccessor = httpContextAccessor;
+    private readonly ILocalizationService localizationService = localizationService;
+    private readonly ReCaptchaSettings captchaOptions = captchaOptions.Value;
     private string mLanguage = "";
     private bool? mSkipRecaptcha;
 
@@ -113,22 +120,6 @@ public class CommunityReCaptchaFormComponent : FormComponent<CommunityReCaptchaF
     /// Label "for" cannot be used for this component. 
     /// </summary>
     public override string LabelForPropertyName => null!;
-
-
-    /// <summary>
-    /// Initializes a new instance of <see cref="RecaptchaComponent"/>
-    /// </summary>
-    public CommunityReCaptchaFormComponent(
-        IAppSettingsService appSettingsService,
-        IHttpContextAccessor httpContextAccessor,
-        ILocalizationService localizationService,
-        IOptions<ReCaptchaSettings> captchaOptions)
-    {
-        this.appSettingsService = appSettingsService;
-        this.httpContextAccessor = httpContextAccessor;
-        this.localizationService = localizationService;
-        this.captchaOptions = captchaOptions.Value;
-    }
 
 
     /// <inheritdoc/>

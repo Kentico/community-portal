@@ -1,6 +1,7 @@
 using CMS.ContentEngine;
 using CMS.DataEngine;
 using CMS.Membership;
+using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
@@ -8,17 +9,17 @@ using MediatR;
 
 namespace Kentico.Community.Portal.Web.Features.Blog;
 
-public record BlogPostPageUpdateCommand(
+public record BlogPostPageSetQuestionURLCommand(
     BlogPostPage BlogPost,
     int WebsiteChannelID,
     WebPageUrl QuestionPageURL) : ICommand<Unit>;
-public class BlogPostPageUpdateCommandHandler(
+public class BlogPostPageSetQuestionURLCommandHandler(
     WebPageCommandTools tools,
-    IInfoProvider<UserInfo> users) : WebPageCommandHandler<BlogPostPageUpdateCommand, Unit>(tools)
+    IInfoProvider<UserInfo> users) : WebPageCommandHandler<BlogPostPageSetQuestionURLCommand, Unit>(tools)
 {
     private readonly IInfoProvider<UserInfo> users = users;
 
-    public override async Task<Unit> Handle(BlogPostPageUpdateCommand request, CancellationToken cancellationToken)
+    public override async Task<Unit> Handle(BlogPostPageSetQuestionURLCommand request, CancellationToken cancellationToken)
     {
         var blogPost = request.BlogPost;
         var user = await users.GetPublicMemberContentAuthor();

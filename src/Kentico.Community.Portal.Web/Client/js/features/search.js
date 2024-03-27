@@ -49,25 +49,10 @@ function initializeCheckboxOnForm(formEl) {
   }
 }
 
-function initializeQAndASearch() {
-  const form = document.querySelector("#qAndASearchForm");
-  if (!(form instanceof HTMLFormElement)) {
-    return;
-  }
-
-  initializeSortByOnForm(form);
-  initializeCheckboxOnForm(form);
-}
-
-function initializeBlogSearch() {
-  const form = document.getElementById("blog-search-form");
-  if (!(form instanceof HTMLFormElement)) {
-    return;
-  }
-
-  const submitButton = document.querySelector("#blogSearch");
+function initializeFacetsOnForm(formEl) {
+  const submitButton = document.querySelector("#submitSearch");
   if (!(submitButton instanceof HTMLButtonElement)) {
-    throw new Error("Missing blog search button");
+    throw new Error("Missing search submit button");
   }
 
   const facetInput = document.querySelector("[selected-facet-value]");
@@ -87,8 +72,6 @@ function initializeBlogSearch() {
 
   let facets = document.querySelectorAll("[facet-value]");
 
-  initializeSortByOnForm(form);
-
   const loadPanel = document.getElementById("overlay");
 
   for (let i = 0; i < facets.length; i++) {
@@ -101,7 +84,7 @@ function initializeBlogSearch() {
         facets[i].setAttribute("facet-selected", "");
       }
       addFacetsToFacetInput();
-      form.submit();
+      formEl.submit();
     });
   }
 
@@ -109,4 +92,25 @@ function initializeBlogSearch() {
     showLoadPanel(loadPanel);
     addFacetsToFacetInput();
   });
+}
+
+function initializeQAndASearch() {
+  const form = document.querySelector("#qAndASearchForm");
+  if (!(form instanceof HTMLFormElement)) {
+    return;
+  }
+
+  initializeSortByOnForm(form);
+  initializeCheckboxOnForm(form);
+  initializeFacetsOnForm(form);
+}
+
+function initializeBlogSearch() {
+  const form = document.getElementById("blogSearchForm");
+  if (!(form instanceof HTMLFormElement)) {
+    return;
+  }
+
+  initializeFacetsOnForm(form);
+  initializeSortByOnForm(form);
 }

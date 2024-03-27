@@ -4,11 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.DataCollection;
 
-public class CookiesInitViewComponent : ViewComponent
+public class CookiesInitViewComponent(ICookieAccessor cookies) : ViewComponent
 {
-    private readonly ICookieAccessor cookies;
-
-    public CookiesInitViewComponent(ICookieAccessor cookies) => this.cookies = cookies;
+    private readonly ICookieAccessor cookies = cookies;
 
     public IViewComponentResult Invoke()
     {

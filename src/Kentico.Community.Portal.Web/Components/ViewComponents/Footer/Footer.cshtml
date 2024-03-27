@@ -1,6 +1,6 @@
 @model Kentico.Community.Portal.Web.Components.ViewComponents.Footer.FooterViewModel
 
-<footer class="c-footer" data-ktc-search-exclude>
+<footer id="footer" data-ktc-search-exclude>
     <div class="container-xxl">
         <div class="row">
             <div class="col-sm-3">
@@ -21,9 +21,11 @@
                     </ul>
                 </nav>
 
-                <p class="c-note mb-0">
-                    This site runs on Xperience by Kentico v@(Model.XperienceVersion), Copyright &copy;
-                    2004-@DateTime.Now.Date.ToString("yyyy", View.Culture)
+                <p class="mb-0 text-end">
+                    <small>
+                        This site runs on Xperience by Kentico v@(Model.XperienceVersion), Copyright &copy;
+                        2004-@DateTime.Now.Date.ToString("yyyy", View.Culture)
+                    </small>
                 </p>
             </div>
         </div>

@@ -6,6 +6,7 @@ using Kentico.Community.Portal.Web.Infrastructure.Search;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Xperience.Lucene.Indexing;
 using Lucene.Net.Documents;
+using Lucene.Net.Facet;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
@@ -23,6 +24,8 @@ public class QAndASearchModel
     public string AuthorUsername { get; set; } = "";
     public string AuthorFullName { get; set; } = "";
     public bool HasAcceptedResponse { get; set; }
+    public string DiscussionType { get; set; } = "";
+    public IEnumerable<string> Topics { get; set; } = [];
     public int ResponseCount { get; set; } = 0;
 
     public Document ToDocument()
@@ -39,7 +42,13 @@ public class QAndASearchModel
             new TextField(nameof(AuthorFullName), AuthorFullName, Field.Store.YES),
             new Int32Field(nameof(HasAcceptedResponse), HasAcceptedResponse ? 1 : 0, Field.Store.YES),
             new Int32Field(nameof(ResponseCount), ResponseCount, Field.Store.YES),
+            new FacetField(nameof(DiscussionType), (string.IsNullOrWhiteSpace(DiscussionType) ? "None" : DiscussionType).ToLowerInvariant()),
         };
+
+        if (Topics.Any())
+        {
+            indexDocument.Add(new FacetField(nameof(Topics), Topics.Select(t => t.ToLowerInvariant()).ToArray()));
+        }
 
         return indexDocument;
     }
@@ -76,7 +85,9 @@ public class QAndASearchModel
             LatestResponseDate = new DateTime(
                 DateTools.UnixTimeMillisecondsToTicks(
                     long.TryParse(doc.Get(nameof(LatestResponseDate)), out long responseVal) ? responseVal : DateTools.TicksToUnixTimeMilliseconds(DefaultTime.Ticks)
-                ))
+                )),
+            DiscussionType = doc.Get(nameof(DiscussionType)) ?? "",
+            Topics = doc.GetValues(nameof(Topics)) ?? []
         };
 
         return model;
@@ -84,23 +95,17 @@ public class QAndASearchModel
 }
 
 public class QAndASearchIndexingStrategy(
-    IWebPageQueryResultMapper webPageMapper,
-    IContentQueryResultMapper contentItemMapper,
     IContentQueryExecutor executor,
     WebScraperHtmlSanitizer htmlSanitizer,
     IInfoProvider<MemberInfo> memberProvider,
-    IInfoProvider<QAndAAnswerDataInfo> answerProvider
-    ) : DefaultLuceneIndexingStrategy
+    ITaxonomyRetriever taxonomyRetriever,
+    IInfoProvider<QAndAAnswerDataInfo> answerProvider) : DefaultLuceneIndexingStrategy
 {
     public const string IDENTIFIER = "QANDA_SEARCH";
 
-    // TODO - temporary until more advanced web page querying is available : https://roadmap.kentico.com/c/193-new-api-cross-content-type-querying
-    public const string WEBSITE_CHANNEL_NAME = "devnet";
-
-    private readonly IWebPageQueryResultMapper webPageMapper = webPageMapper;
-    private readonly IContentQueryResultMapper contentItemMapper = contentItemMapper;
     private readonly IContentQueryExecutor executor = executor;
     private readonly WebScraperHtmlSanitizer htmlSanitizer = htmlSanitizer;
+    private readonly ITaxonomyRetriever taxonomyRetriever = taxonomyRetriever;
     private readonly IInfoProvider<MemberInfo> memberProvider = memberProvider;
     private readonly IInfoProvider<QAndAAnswerDataInfo> answerProvider = answerProvider;
 
@@ -114,15 +119,15 @@ public class QAndASearchIndexingStrategy(
         var qandaModel = new QAndASearchModel();
 
         var b = new ContentItemQueryBuilder()
-            .ForWebPage(webpageItem.WebsiteChannelName, QAndAQuestionPage.CONTENT_TYPE_NAME, item.ItemGuid, queryParameters => queryParameters.WithLinkedItems(1));
+            .ForWebPage(QAndAQuestionPage.CONTENT_TYPE_NAME, item.ItemGuid, p => p.WithLinkedItems(1));
 
-        var page = (await executor.GetWebPageResult(b, webPageMapper.Map<QAndAQuestionPage>)).FirstOrDefault();
+        var page = (await executor.GetMappedWebPageResult<QAndAQuestionPage>(b)).FirstOrDefault();
         if (page is null)
         {
             return null;
         }
 
-        var author = await GetAuthor(executor, contentItemMapper, memberProvider, page);
+        var author = await GetAuthor(executor, memberProvider, page);
         qandaModel.ID = page.SystemFields.WebPageItemID;
         qandaModel.Title = page.QAndAQuestionPageTitle;
         qandaModel.AuthorUsername = author.Username;
@@ -133,6 +138,8 @@ public class QAndASearchIndexingStrategy(
             ? page.QAndAQuestionPageDateCreated
             : DateTime.MinValue;
         qandaModel.HasAcceptedResponse = page.QAndAQuestionPageAcceptedAnswerDataGUID != default;
+        qandaModel.DiscussionType = await GetDiscussionType(page, item);
+        qandaModel.Topics = await GetTopics(page, item);
 
         var answers = (await answerProvider
             .Get()
@@ -149,11 +156,20 @@ public class QAndASearchIndexingStrategy(
         return qandaModel.ToDocument();
     }
 
+    public override FacetsConfig FacetsConfigFactory()
+    {
+        var facetConfig = new FacetsConfig();
+
+        facetConfig.SetMultiValued(nameof(QAndASearchModel.Topics), true);
+        facetConfig.SetMultiValued(nameof(QAndASearchModel.DiscussionType), false);
+
+        return facetConfig;
+    }
+
     private record QAndAAuthor(int MemberID, string Username, string FullName);
 
     private static async Task<QAndAAuthor> GetAuthor(
         IContentQueryExecutor executor,
-        IContentQueryResultMapper mapper,
         IInfoProvider<MemberInfo> memberProvider,
         QAndAQuestionPage page)
     {
@@ -173,10 +189,24 @@ public class QAndASearchIndexingStrategy(
                 _ = queryParameters.Where(w => w.WhereEquals(nameof(AuthorContent.AuthorContentCodeName), AuthorContent.KENTICO_AUTHOR_CODE_NAME));
             });
 
-        var authors = await executor.GetResult(b, mapper.Map<AuthorContent>);
+        var authors = await executor.GetMappedResult<AuthorContent>(b);
         var author = authors.First();
 
         return new(0, author.AuthorContentCodeName, author.FullName);
+    }
+
+    private async Task<string> GetDiscussionType(QAndAQuestionPage page, IIndexEventItemModel item)
+    {
+        var tag = (await taxonomyRetriever.RetrieveTags(page.QAndAQuestionPageDiscussionType.Select(t => t.Identifier), item.LanguageName)).FirstOrDefault();
+
+        return tag?.Title ?? "";
+    }
+
+    private async Task<IEnumerable<string>> GetTopics(QAndAQuestionPage page, IIndexEventItemModel item)
+    {
+        var tags = await taxonomyRetriever.RetrieveTags(page.QAndAQuestionPageDXTopics.Select(t => t.Identifier), item.LanguageName);
+
+        return tags.Select(t => t.Title);
     }
 }
 
@@ -188,6 +218,9 @@ public class QAndASearchRequest
     {
         var query = request.Query;
 
+        Facet = query.TryGetValue("facet", out var facetValues)
+            ? facetValues.ToString()
+            : "";
         SearchText = query.TryGetValue("query", out var queryValues)
             ? queryValues.ToString()
             : "";
@@ -223,6 +256,7 @@ public class QAndASearchRequest
     public int PageSize { get; } = PAGE_SIZE;
     public int AuthorMemberID { get; set; }
     public bool OnlyAcceptedResponses { get; set; }
+    public string Facet { get; set; } = "";
 
     public bool AreFiltersDefault => string.IsNullOrWhiteSpace(SearchText) && AuthorMemberID < 1 && !OnlyAcceptedResponses;
 }

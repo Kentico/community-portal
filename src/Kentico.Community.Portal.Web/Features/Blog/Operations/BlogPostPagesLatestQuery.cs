@@ -38,7 +38,7 @@ public class BlogPostPagesLatestQueryHandler(WebPageQueryTools tools) : WebPageQ
                 .WithLinkedItems(2);
         });
 
-        var pages = await Executor.GetWebPageResult(postsQuery, WebPageMapper.Map<BlogPostPage>, DefaultQueryOptions, cancellationToken);
+        var pages = await Executor.GetMappedWebPageResult<BlogPostPage>(postsQuery, DefaultQueryOptions, cancellationToken);
 
         return new([.. pages.OrderBy(p => contentItemIDs.IndexOf(p.BlogPostPageBlogPostContent.FirstOrDefault()?.SystemFields.ContentItemID ?? 0))]);
     }

@@ -11,11 +11,9 @@ namespace Kentico.Community.Portal.Web.Components.TagHelpers;
 /// in Page Builder or Preview mode
 /// </summary>
 [HtmlTargetElement("xpc-page-builder-content", TagStructure = TagStructure.NormalOrSelfClosing)]
-public class PageBuilderContentTagHelper : TagHelper
+public class PageBuilderContentTagHelper(IWebsiteChannelContext channelContext) : TagHelper
 {
-    private readonly IWebsiteChannelContext channelContext;
-
-    public PageBuilderContentTagHelper(IWebsiteChannelContext channelContext) => this.channelContext = channelContext;
+    private readonly IWebsiteChannelContext channelContext = channelContext;
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
@@ -33,11 +31,9 @@ public class PageBuilderContentTagHelper : TagHelper
 /// in Page Builder or Preview mode.
 /// </summary>
 [HtmlTargetElement("xpc-misconfigured-widget-instructions", TagStructure = TagStructure.WithoutEndTag)]
-public class MisconfiguredWidgetInstructionsTagHelper : TagHelper
+public class MisconfiguredWidgetInstructionsTagHelper(IHttpContextAccessor accessor) : TagHelper
 {
-    private readonly IHttpContextAccessor accessor;
-
-    public MisconfiguredWidgetInstructionsTagHelper(IHttpContextAccessor accessor) => this.accessor = accessor;
+    private readonly IHttpContextAccessor accessor = accessor;
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {

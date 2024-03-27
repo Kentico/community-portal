@@ -1,6 +1,9 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using CMS.ContentEngine;
 using CMS.Websites.Routing;
+using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components.Widgets.BlogPostList;
 using Kentico.Community.Portal.Web.Features.Blog;
@@ -23,29 +26,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.BlogPostList;
 
-public class BlogPostListWidget : ViewComponent
+public class BlogPostListWidget(
+    IMediator mediator,
+    IWebPageUrlRetriever urlRetriever,
+    AssetItemService itemService,
+    ICacheDependenciesScope scope,
+    IWebsiteChannelContext channelContext,
+    ITaxonomyRetriever taxonomyRetriever) : ViewComponent
 {
     public const string IDENTIFIER = "CommunityPortal.Components.BlogPost-List-Widget";
 
-    private readonly IWebPageUrlRetriever urlRetriever;
-    private readonly IMediator mediator;
-    private readonly AssetItemService itemService;
-    private readonly ICacheDependenciesScope scope;
-    private readonly IWebsiteChannelContext channelContext;
-
-    public BlogPostListWidget(
-        IMediator mediator,
-        IWebPageUrlRetriever urlRetriever,
-        AssetItemService itemService,
-        ICacheDependenciesScope scope,
-        IWebsiteChannelContext channelContext)
-    {
-        this.urlRetriever = urlRetriever;
-        this.mediator = mediator;
-        this.itemService = itemService;
-        this.scope = scope;
-        this.channelContext = channelContext;
-    }
+    private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
+    private readonly IMediator mediator = mediator;
+    private readonly AssetItemService itemService = itemService;
+    private readonly ICacheDependenciesScope scope = scope;
+    private readonly IWebsiteChannelContext channelContext = channelContext;
+    private readonly ITaxonomyRetriever taxonomyRetriever = taxonomyRetriever;
 
     public async Task<IViewComponentResult> InvokeAsync(ComponentViewModel<BlogPostListWidgetProperties> cvm)
     {
@@ -74,25 +70,26 @@ public class BlogPostListWidget : ViewComponent
     private async Task<IReadOnlyList<BlogPostViewModel>> GetBlogPostsByTaxonomy(BlogPostListWidgetProperties props)
     {
         string taxnomyName = props.Taxonomy;
-        if (string.IsNullOrWhiteSpace(taxnomyName))
+        var tagReferences = props.TagReferences;
+        if (string.IsNullOrWhiteSpace(taxnomyName) && !tagReferences.Any())
         {
-            return Array.Empty<BlogPostViewModel>();
+            return [];
         }
 
-        var resp = await mediator.Send(new BlogPostsByTaxonomyQuery(taxnomyName, props.PostLimit, channelContext.WebsiteChannelName));
+        var resp = await mediator.Send(new BlogPostsByTaxonomyQuery([.. tagReferences.Select(t => t.Identifier)], props.Taxonomy, props.PostLimit, channelContext.WebsiteChannelName));
         var posts = resp.Items;
         return await BuildPostPageViewModels(posts, props);
     }
 
     private async Task<IReadOnlyList<BlogPostViewModel>> GetBlogPostsBySelection(BlogPostListWidgetProperties props)
     {
-        var selectedWebPageGUIDs = props.BlogPosts?.Select(a => a.WebPageGuid).ToArray() ?? Array.Empty<Guid>();
+        var selectedWebPageGUIDs = props.BlogPosts?.Select(a => a.WebPageGuid).ToArray() ?? [];
         if (selectedWebPageGUIDs.Length == 0)
         {
-            return Array.Empty<BlogPostViewModel>();
+            return [];
         }
 
-        var result = await mediator.Send(new BlogPostPagesByWebPageGUIDQuery(selectedWebPageGUIDs.ToArray(), channelContext.WebsiteChannelName));
+        var result = await mediator.Send(new BlogPostPagesByWebPageGUIDQuery(selectedWebPageGUIDs, channelContext.WebsiteChannelName));
         return await BuildPostPageViewModels(result.Items, props);
     }
 
@@ -117,9 +114,7 @@ public class BlogPostListWidget : ViewComponent
             var teaserImage = await itemService.RetrieveMediaFileImage(post.BlogPostContentTeaserMediaFileImage.FirstOrDefault());
             var author = await GetAuthor(post);
             var authorImage = await itemService.RetrieveMediaFileImage(author.AuthorContentPhotoMediaFileImage.FirstOrDefault());
-            string? taxonomy = props.BlogPostSourceParsed == BlogPostSources.Post_Taxonomy
-                ? null
-                : post.BlogPostContentTaxonomy;
+            string? taxonomy = await GetTaxonomyName(props, post);
 
             vms.Add(new BlogPostViewModel(new(author, authorImage))
             {
@@ -172,6 +167,28 @@ public class BlogPostListWidget : ViewComponent
             ModelState.AddModelError("", "(optional) Add a Heading");
         }
     }
+
+    private async Task<string?> GetTaxonomyName(BlogPostListWidgetProperties props, BlogPostContent post)
+    {
+        if (props.BlogPostSourceParsed == BlogPostSources.Post_Taxonomy)
+        {
+            return null;
+        }
+
+        if (!string.IsNullOrWhiteSpace(post.BlogPostContentTaxonomy))
+        {
+            return post.BlogPostContentTaxonomy;
+        }
+
+        if (props.TagReferences.FirstOrDefault() is { } tagReference)
+        {
+            var tags = await taxonomyRetriever.RetrieveTags([tagReference.Identifier], CultureInfo.CurrentCulture.Name);
+
+            return tags.Select(t => t.Title).FirstOrDefault();
+        }
+
+        return null;
+    }
 }
 
 public class BlogPostListWidgetProperties : IWidgetProperties
@@ -193,9 +210,9 @@ public class BlogPostListWidgetProperties : IWidgetProperties
     public BlogPostSources BlogPostSourceParsed => EnumDropDownOptionsProvider<BlogPostSources>.Parse(BlogPostSource, BlogPostSources.Individual_Selection);
 
     [DropDownComponent(
-        Label = "Taxonomies",
+        Label = "Taxonomy",
         ExplanationText = """
-        <p>The taxonomy assigned to the posts that are displayed</p>
+        <p>The taxonomy assigned to the posts that are displayed. This value should match the tag selected in the Blog Type field.</p>
         """,
         ExplanationTextAsHtml = true,
         DataProviderType = typeof(BlogPostTaxonomyDropDownOptionsProvider),
@@ -207,6 +224,15 @@ public class BlogPostListWidgetProperties : IWidgetProperties
         StringComparison.OrdinalIgnoreCase
     )]
     public string Taxonomy { get; set; } = "";
+
+    [TagSelectorComponent(
+        SystemTaxonomies.BlogTypeTaxonomy.CodeName,
+        Label = "Blog Type",
+        ExplanationText = """
+        <p>The taxonomy tag assigned to the posts that are displayed. This value should match the taxonomy selected in the Taxonomy field.</p>
+        """,
+        Order = 3)]
+    public IEnumerable<TagReference> TagReferences { get; set; } = [];
 
     [NumberInputComponent(
         Label = "Post Limit",
@@ -233,7 +259,7 @@ public class BlogPostListWidgetProperties : IWidgetProperties
         nameof(BlogPostSources.Individual_Selection),
         StringComparison.OrdinalIgnoreCase
     )]
-    public IEnumerable<WebPageRelatedItem> BlogPosts { get; set; } = Enumerable.Empty<WebPageRelatedItem>();
+    public IEnumerable<WebPageRelatedItem> BlogPosts { get; set; } = [];
 
     [DropDownComponent(
         Label = "Item Layout",

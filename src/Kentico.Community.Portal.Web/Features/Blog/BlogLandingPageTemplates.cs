@@ -26,24 +26,16 @@ namespace Kentico.Community.Portal.Web.Features.Blog;
 
 public class BlogLandingPageTemplateProperties : IPageTemplateProperties { }
 
-public class BlogLandingPageTemplateController : Controller
+public class BlogLandingPageTemplateController(
+    IMediator mediator,
+    WebPageMetaService metaService,
+    IWebsiteChannelContext channelContext,
+    IWebPageDataContextRetriever contextRetriever) : Controller
 {
-    private readonly IMediator mediator;
-    private readonly WebPageMetaService metaService;
-    private readonly IWebsiteChannelContext channelContext;
-    private readonly IWebPageDataContextRetriever contextRetriever;
-
-    public BlogLandingPageTemplateController(
-        IMediator mediator,
-        WebPageMetaService metaService,
-        IWebsiteChannelContext channelContext,
-        IWebPageDataContextRetriever contextRetriever)
-    {
-        this.mediator = mediator;
-        this.metaService = metaService;
-        this.channelContext = channelContext;
-        this.contextRetriever = contextRetriever;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly WebPageMetaService metaService = metaService;
+    private readonly IWebsiteChannelContext channelContext = channelContext;
+    private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
 
     public async Task<ActionResult> Index()
     {

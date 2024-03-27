@@ -8,22 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Components.ViewComponents.AlertBox;
 
-public class AlertBoxViewComponent : ViewComponent
+public class AlertBoxViewComponent(IMediator mediator, ICookieAccessor cookies) : ViewComponent
 {
-    private readonly IMediator mediator;
-    private readonly ICookieAccessor cookies;
-
-    public AlertBoxViewComponent(IMediator mediator, ICookieAccessor cookies)
-    {
-        this.mediator = mediator;
-        this.cookies = cookies;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly ICookieAccessor cookies = cookies;
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var resp = await mediator.Send(new WebsiteSettingsContentQuery());
-
-        var settings = resp.Settings;
+        var settings = await mediator.Send(new WebsiteSettingsContentQuery());
 
         var vm = new AlertBoxViewModel
         {

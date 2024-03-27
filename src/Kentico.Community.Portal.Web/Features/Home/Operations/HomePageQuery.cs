@@ -9,9 +9,9 @@ public class HomePageQueryHandler(WebPageQueryTools tools) : WebPageQueryHandler
 {
     public override async Task<HomePage> Handle(HomePageQuery request, CancellationToken cancellationToken = default)
     {
-        var b = new ContentItemQueryBuilder().ForWebPage(request.Page.WebsiteChannelName, request.Page);
+        var b = new ContentItemQueryBuilder().ForWebPage(request.Page);
 
-        var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<HomePage>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetMappedWebPageResult<HomePage>(b, DefaultQueryOptions, cancellationToken);
 
         return r.First();
     }

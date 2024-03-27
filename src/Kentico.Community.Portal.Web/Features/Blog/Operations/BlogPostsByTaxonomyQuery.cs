@@ -4,26 +4,30 @@ using Kentico.Community.Portal.Core.Operations;
 
 namespace Kentico.Community.Portal.Web.Features.Blog;
 
-public record BlogPostsByTaxonomyQuery(string TaxonomyName, int Limit, string ChannelName) : IQuery<BlogPostsByTaxonomyQueryResponse>, ICacheByValueQuery, IChannelContentQuery
+public record BlogPostsByTaxonomyQuery(Guid[] TagIdentifiers, string TaxonomyName, int Limit, string ChannelName) : IQuery<BlogPostsByTaxonomyQueryResponse>, ICacheByValueQuery, IChannelContentQuery
 {
     public string CacheValueKey => $"{TaxonomyName}|{Limit}";
 }
+
 public record BlogPostsByTaxonomyQueryResponse(IReadOnlyList<BlogPostPage> Items);
 public class BlogPostsByTaxonomyQueryHandler(WebPageQueryTools tools) : WebPageQueryHandler<BlogPostsByTaxonomyQuery, BlogPostsByTaxonomyQueryResponse>(tools)
 {
     public override async Task<BlogPostsByTaxonomyQueryResponse> Handle(BlogPostsByTaxonomyQuery request, CancellationToken cancellationToken = default)
     {
-        // Optimized query to find content item identifiers
-        var identifiersQuery = new ContentItemQueryBuilder().ForContentType(BlogPostContent.CONTENT_TYPE_NAME, queryParams =>
+        // Optimized query to return only content item identifiers
+        var contentsQuery = new ContentItemQueryBuilder().ForContentType(BlogPostContent.CONTENT_TYPE_NAME, queryParams =>
         {
             _ = queryParams
-                .Where(w => w.WhereEquals(nameof(BlogPostContent.BlogPostContentTaxonomy), request.TaxonomyName))
+                .Where(w => w
+                    .WhereContainsTags(nameof(BlogPostContent.BlogPostContentBlogType), request.TagIdentifiers)
+                    .Or()
+                    .WhereEquals(nameof(BlogPostContent.BlogPostContentTaxonomy), request.TaxonomyName))
                 .OrderBy(new[] { new OrderByColumn(nameof(BlogPostContent.BlogPostContentPublishedDate), OrderDirection.Descending) })
                 .TopN(request.Limit)
                 .Columns(nameof(BlogPostContent.SystemFields.ContentItemID));
         });
 
-        var contentItemIDs = (await Executor.GetResult(identifiersQuery, c => c.ContentItemID, DefaultQueryOptions, cancellationToken)).ToList();
+        var contentItemIDs = (await Executor.GetResult(contentsQuery, c => c.ContentItemID, DefaultQueryOptions, cancellationToken)).ToList();
 
         if (contentItemIDs.Count == 0)
         {
@@ -39,7 +43,7 @@ public class BlogPostsByTaxonomyQueryHandler(WebPageQueryTools tools) : WebPageQ
                 .WithLinkedItems(2);
         });
 
-        var pages = await Executor.GetWebPageResult(postsQuery, WebPageMapper.Map<BlogPostPage>, DefaultQueryOptions, cancellationToken);
+        var pages = await Executor.GetMappedWebPageResult<BlogPostPage>(postsQuery, DefaultQueryOptions, cancellationToken);
 
         return new([.. pages.OrderBy(p => contentItemIDs.IndexOf(p.BlogPostPageBlogPostContent.FirstOrDefault()?.SystemFields.ContentItemID ?? 0))]);
     }

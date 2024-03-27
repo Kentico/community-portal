@@ -9,9 +9,9 @@ public class RSSFeedPageQueryHandler(WebPageQueryTools tools) : WebPageQueryHand
 {
     public override async Task<RSSFeedPage> Handle(RSSFeedPageQuery request, CancellationToken cancellationToken = default)
     {
-        var b = new ContentItemQueryBuilder().ForWebPage(request.Page.WebsiteChannelName, request.Page);
+        var b = new ContentItemQueryBuilder().ForWebPage(request.Page);
 
-        var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<RSSFeedPage>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetMappedWebPageResult<RSSFeedPage>(b, DefaultQueryOptions, cancellationToken);
 
         return r.First();
     }

@@ -16,4 +16,13 @@ namespace Kentico.Community.Portal.Admin.Features.SupportRequests;
 public class SupportRequestProcessingEventsApplicationPage : ApplicationPage
 {
     public const string IDENTIFIER = "support-request-processing-events-app";
+
+    public override async Task<TemplateClientProperties> ConfigureTemplateProperties(TemplateClientProperties properties)
+    {
+        var props = await base.ConfigureTemplateProperties(properties);
+        props.Navigation.Items = [];
+        props.Breadcrumbs.Label = "Support Request Processing Events";
+
+        return props;
+    }
 }

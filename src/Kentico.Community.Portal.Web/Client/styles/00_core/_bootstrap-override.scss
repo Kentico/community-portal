@@ -1,185 +1,191 @@
-p a{
+p a {
   font-weight: $font-weight-medium;
   text-decoration: underline;
-  &:hover{
+  &:hover {
     text-decoration: underline;
   }
 }
-// navbar
 
-.navbar-brand{
-  img{
+.navbar-brand {
+  img {
     height: 32px;
   }
-  @include media-breakpoint-up(lg){
-    img{
+  @include media-breakpoint-up(lg) {
+    img {
       height: 40px;
     }
   }
 }
-.nav-link{
+.nav-link {
   white-space: nowrap;
   font-weight: 500;
-  @include media-breakpoint-up(md){
-    padding-top: .625rem;
-    padding-bottom: .625rem;
+  @include media-breakpoint-up(md) {
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
   }
-  @include media-breakpoint-up(lg){
-    padding-top: .875rem;
-    padding-bottom: .875rem;
+  @include media-breakpoint-up(lg) {
+    padding-top: 0.875rem;
+    padding-bottom: 0.875rem;
   }
 }
-.navbar-nav{
-  .nav-link{
+.navbar-nav {
+  .nav-link {
     position: relative;
     display: inline-block;
-    &.active{
+    &.active {
       color: $primary;
     }
-    @include media-breakpoint-down(md){
-      &:before{
-        .navbar-collapse &{
+    @include media-breakpoint-down(md) {
+      &:before {
+        .navbar-collapse & {
           left: 0;
           right: 0;
         }
       }
-      &.arrow-before:before{
-        .navbar-collapse &{
+      &.arrow-before:before {
+        .navbar-collapse & {
           left: 1.625rem;
         }
       }
     }
-    @include media-breakpoint-up(lg){
-      &:before{
-        bottom: .75rem;
+    @include media-breakpoint-up(lg) {
+      &:before {
+        bottom: 0.75rem;
       }
     }
   }
 }
 
-
 //buttons
 
-button, [type=button], [type=reset], [type=submit], .form-select {
+button,
+[type="button"],
+[type="reset"],
+[type="submit"],
+.form-select {
+  appearance: none;
   -webkit-appearance: none;
 }
 
-.btn{
-  letter-spacing: .1em;
+.btn {
+  letter-spacing: 0.1em;
   white-space: nowrap;
-  &.link-only{
-    padding: .25rem 0;
+  &.link-only {
+    padding: 0.25rem 0;
   }
 }
-.btn-lg{
+.btn-lg {
   line-height: 1.5rem;
-  @include media-breakpoint-up(lg){
-    padding: .75rem 2rem;
+  @include media-breakpoint-up(lg) {
+    padding: 0.75rem 2rem;
   }
 }
-.btn-primary{
+.btn-primary {
   color: $white;
-  &:disabled{
+  &:disabled {
     background-color: $disabled;
     border-color: $disabled;
   }
 }
 .btn-primary,
-.btn-outline-primary{
-  &:hover{
+.btn-outline-primary {
+  &:hover {
     border-color: $primary-dark;
     background-color: $primary-dark;
     color: $white;
   }
-  &:focus{
+  &:focus {
     background-color: $primary-focus;
     border-color: $primary-focus;
     color: $white;
   }
 }
-.btn-invisible-primary{
+.btn-invisible-primary {
   background: transparent;
   border-color: transparent;
   color: $primary;
-  &:hover{
+  &:hover {
     background: $primary-opacity;
     color: $primary;
   }
-  &:focus{
+  &:focus {
     background: $primary-opacity-2;
     color: $primary;
   }
 }
-.btn-secondary{
-  background-color: transparentize($primary, .86);
+.btn-primary-light {
+  background-color: transparentize($primary, 0.86);
   border-color: transparent;
   color: $primary;
   &:hover,
-  &:focus{
-    background-color: transparentize($primary, .78);
+  &:focus {
+    background-color: transparentize($primary, 0.78);
     border-color: transparent;
     color: $primary;
   }
 }
 .btn-outline-secondary {
-    background: $white;
+  background: $white;
 
-    &:hover {
-        border-color: $white
-    }
+  &:hover {
+    border-color: $white;
+  }
 }
-.btn{
-  &.btn-lighter{
-    font-size: .875rem;
+.btn {
+  &.btn-lighter {
+    font-size: 0.875rem;
     font-weight: 400;
     letter-spacing: 0;
     line-height: 1rem;
-    padding: .875rem 2rem;
+    padding: 0.875rem 2rem;
   }
-  &-social{
+  &-social {
     width: 2.25rem;
     height: 2.25rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: .5rem;
+    padding: 0.5rem;
     color: $white;
     &:hover,
-    &:focus{
+    &:focus {
       color: $white;
     }
   }
 }
 
-.input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu),
-.input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3){
+.input-group:not(.has-validation)
+  > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu),
+.input-group:not(.has-validation) > .dropdown-toggle:nth-last-child(n + 3) {
   border-top-right-radius: 1.75rem;
   border-bottom-right-radius: 1.75rem;
 }
-.input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+.input-group
+  > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+    .valid-feedback
+  ):not(.invalid-tooltip):not(.invalid-feedback) {
   margin-left: 1rem;
   border-top-left-radius: 1.75rem;
   border-bottom-left-radius: 1.75rem;
 }
-
 
 // accordion
 
 .accordion-item,
 .accordion-item:last-of-type,
 .accordion-item:first-of-type,
-.accordion-button{
-  border-radius: 2rem .75rem 2rem .75rem;
+.accordion-button {
+  border-radius: 2rem 0.75rem 2rem 0.75rem;
 }
-.accordion-item:first-of-type .accordion-button{
+.accordion-item:first-of-type .accordion-button {
   border-top-left-radius: 2rem;
-  border-top-right-radius: .75rem;
+  border-top-right-radius: 0.75rem;
 }
-.accordion-button:not(.collapsed){
+.accordion-button:not(.collapsed) {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
-.accordion-button{
+.accordion-button {
   font-size: inherit;
   font-weight: inherit;
 }
@@ -187,37 +193,35 @@ button, [type=button], [type=reset], [type=submit], .form-select {
   border-top: 1px solid $gray-200;
   margin-top: 1rem;
 }
-.accordion-button::after{
+.accordion-button::after {
   background-position: center center;
 }
 
-
 // pagination
 
-.page-item{
-  padding: 0 .25rem;
-  &.active{
-    .page-link{
+.page-item {
+  padding: 0 0.25rem;
+  &.active {
+    .page-link {
       font-weight: 700;
     }
   }
 }
-.page-link{
-  font-size: .875rem;
+.page-link {
+  font-size: 0.875rem;
   height: 1.5rem;
   min-width: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
 }
-
 
 // file input
 
-.form-control[type=file]{
+.form-control[type="file"] {
   border: 0;
-  &:focus{
+  &:focus {
     box-shadow: none;
   }
   &::file-selector-button {
@@ -227,36 +231,30 @@ button, [type=button], [type=reset], [type=submit], .form-select {
 
 // dropdown
 
-.dropdown-menu{
+.dropdown-menu {
   padding: 0 0 0.5rem;
   flex-direction: column;
   align-items: flex-start;
   min-width: 8.5rem;
-  &.show{
+  &.show {
     display: flex;
   }
-  @include media-breakpoint-up(md){
+  @include media-breakpoint-up(md) {
     padding: 0.5rem 0;
-    box-shadow: 0 8px 32px rgba(16, 33, 60, 0.24), 0 0 8px rgba(0, 0, 0, 0.03);
+    box-shadow:
+      0 8px 32px rgba(16, 33, 60, 0.24),
+      0 0 8px rgba(0, 0, 0, 0.03);
   }
 }
-.dropdown-toggle{
-  &:after{
+.dropdown-toggle {
+  &:after {
     content: none;
     display: none;
-    /*margin-left: 0.625em;
-    width: 6px;
-    height: 6px;
-    border-top: 0;
-    border-left: 0;
-    border-right: 1px solid;
-    border-bottom: 1px solid;
-    transform: rotate(45deg);*/
   }
-  &.arrow-before{
+  &.arrow-before {
     display: inline-flex;
     align-items: center;
-    &:after{
+    &:after {
       order: -1;
       margin: -0.375rem 1.25rem 0 0;
     }
@@ -266,50 +264,52 @@ button, [type=button], [type=reset], [type=submit], .form-select {
   left: auto;
   right: 0;
 }
-.dropdown-item.active{
+.dropdown-item.active {
   text-decoration: underline;
 }
 
 // navbar toggler
 
-.navbar-toggler{
+.navbar-toggler {
   padding: 1rem;
-  &-bar{
-    transition: .15s opacity, .15s transform, .15s background-color;
+  &-bar {
+    transition:
+      0.15s opacity,
+      0.15s transform,
+      0.15s background-color;
     transform-origin: right;
     display: block;
     width: 1.25rem;
     height: 1px;
     background: $black;
-    &+&{
-      margin-top: .375rem;
+    & + & {
+      margin-top: 0.375rem;
     }
-    &:nth-of-type(1){
+    &:nth-of-type(1) {
       transform: translateX(-3px) rotate(-45deg);
     }
-    &:nth-of-type(2){
+    &:nth-of-type(2) {
       transform: translateX(1rem);
       opacity: 0;
     }
-    &:nth-of-type(3){
+    &:nth-of-type(3) {
       transform: translateX(-3px) rotate(45deg);
     }
   }
   &:focus,
-  &:hover{
+  &:hover {
     box-shadow: none;
-    .navbar-toggler-bar{
+    .navbar-toggler-bar {
       background: $primary;
     }
   }
-  &.collapsed{
-    .navbar-toggler-bar{
+  &.collapsed {
+    .navbar-toggler-bar {
       transform: none;
       opacity: 1;
     }
   }
 }
-
 
 // utils
 :root {
@@ -318,19 +318,19 @@ button, [type=button], [type=reset], [type=submit], .form-select {
   }
 }
 
-@include media-breakpoint-up(sm){
-  .fs-sm{
+@include media-breakpoint-up(sm) {
+  .fs-sm {
     @each $i, $s in $font-sizes {
-      &-#{$i}{
+      &-#{$i} {
         font-size: $s !important;
       }
     }
   }
 }
-@include media-breakpoint-up(md){
-  .fs-md{
+@include media-breakpoint-up(md) {
+  .fs-md {
     @each $i, $s in $font-sizes {
-      &-#{$i}{
+      &-#{$i} {
         font-size: $s !important;
       }
     }

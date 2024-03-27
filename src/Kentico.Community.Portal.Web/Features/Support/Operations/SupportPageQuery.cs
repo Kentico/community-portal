@@ -6,15 +6,13 @@ namespace Kentico.Community.Portal.Web.Features.Support;
 
 public record SupportPageQuery(RoutedWebPage Page) : WebPageRoutedQuery<SupportPage>(Page);
 
-public class SupportPageQueryHandler : WebPageQueryHandler<SupportPageQuery, SupportPage>
+public class SupportPageQueryHandler(WebPageQueryTools tools) : WebPageQueryHandler<SupportPageQuery, SupportPage>(tools)
 {
-    public SupportPageQueryHandler(WebPageQueryTools tools) : base(tools) { }
-
     public override async Task<SupportPage> Handle(SupportPageQuery request, CancellationToken cancellationToken)
     {
-        var b = new ContentItemQueryBuilder().ForWebPage(request.Page.WebsiteChannelName, request.Page);
+        var b = new ContentItemQueryBuilder().ForWebPage(request.Page);
 
-        var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<SupportPage>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetMappedWebPageResult<SupportPage>(b, DefaultQueryOptions, cancellationToken);
 
         return r.First();
     }

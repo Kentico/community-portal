@@ -3,7 +3,6 @@ using CMS.Core;
 using CMS.Helpers;
 using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core;
-using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
 using SimpleMvcSitemap;
 
@@ -47,7 +46,7 @@ public class Sitemap(
             cs.CacheDependency = CacheHelper.GetCacheDependency(BuildCacheDependencyKeys());
 
             return GetSitemapNodesInternal();
-        }, new CacheSettings(3, new[] { nameof(GetSitemapNodes) }) { });
+        }, new CacheSettings(3, [nameof(GetSitemapNodes)]) { });
 
     private string[] BuildCacheDependencyKeys() =>
         contentTypeDependencies
@@ -58,13 +57,11 @@ public class Sitemap(
     {
         var nodes = new List<SitemapNode>();
 
-        var b = new ContentItemQueryBuilder();
-
-        foreach (string t in contentTypeDependencies)
-        {
-            b = b.ForContentType(t, c => c.ForWebsite(website.WebsiteChannelName))
-                .InLanguage(PortalWebSiteChannel.DEFAULT_LANGUAGE);
-        }
+        var b = new ContentItemQueryBuilder()
+            .ForContentTypes(c => c
+                .OfReusableSchema("WebPageMeta")
+                .ForWebsite(website.WebsiteChannelName))
+            .InLanguage(PortalWebSiteChannel.DEFAULT_LANGUAGE);
 
         var pages = await executor.GetWebPageResult(b, c =>
         {

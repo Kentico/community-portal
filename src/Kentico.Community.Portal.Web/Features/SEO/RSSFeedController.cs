@@ -56,7 +56,7 @@ public class RSSFeedController(
             return NotFound("Only blog post RSS feeds are currently enabled");
         }
 
-        var cacheSettings = new CacheSettings(5, new[] { nameof(RSSFeed), feedPage.RSSFeedPageWebPageContentType })
+        var cacheSettings = new CacheSettings(5, [nameof(RSSFeed), feedPage.RSSFeedPageWebPageContentType])
         {
             GetCacheDependency = () =>
             {

@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using CMS.ContentEngine;
 using CMS.Websites;
 
 namespace Kentico.Community.Portal.Core.Content
@@ -18,6 +19,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// <summary>
 	/// Represents a page of type <see cref="QAndAQuestionPage"/>.
 	/// </summary>
+	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
 	public partial class QAndAQuestionPage : IWebPageFieldsSource
 	{
 		/// <summary>
@@ -29,6 +31,7 @@ namespace Kentico.Community.Portal.Core.Content
 		/// <summary>
 		/// Represents system properties for a web page item.
 		/// </summary>
+		[SystemField]
 		public WebPageFields SystemFields { get; set; }
 
 
@@ -60,6 +63,18 @@ namespace Kentico.Community.Portal.Core.Content
 		/// QAndAQuestionPageAuthorMemberID.
 		/// </summary>
 		public int QAndAQuestionPageAuthorMemberID { get; set; }
+
+
+		/// <summary>
+		/// QAndAQuestionPageDiscussionType.
+		/// </summary>
+		public IEnumerable<TagReference> QAndAQuestionPageDiscussionType { get; set; }
+
+
+		/// <summary>
+		/// QAndAQuestionPageDXTopics.
+		/// </summary>
+		public IEnumerable<TagReference> QAndAQuestionPageDXTopics { get; set; }
 
 
 		/// <summary>

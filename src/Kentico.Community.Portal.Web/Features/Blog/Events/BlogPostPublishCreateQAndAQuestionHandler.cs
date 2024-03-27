@@ -1,3 +1,4 @@
+using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Content.Web.Mvc;
@@ -55,7 +56,7 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
         {
             Id = 0 // Only the Id is required and an Id of 0 will result in the author being the Kentico Community author
         };
-        var command = new QAndAQuestionCreateCommand(member, rootQuestionPage, args.WebsiteChannelID, questionTitle, questionContent);
+        var command = new QAndAQuestionCreateCommand(member, rootQuestionPage, args.WebsiteChannelID, questionTitle, questionContent, SystemTaxonomies.QAndADiscussionTypeTaxonomy.BlogTag.GUID);
         int questionWebPageID = await mediator.Send(command, default);
         var questionPageURL = await pageUrlRetriever.Retrieve(questionWebPageID, args.ContentLanguageName);
 
@@ -63,6 +64,6 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
          * This will recurse on this handler because it publishes the blog post
          * but we guard against updating a blog post page that already has a question path
          */
-        _ = await mediator.Send(new BlogPostPageUpdateCommand(page, args.WebsiteChannelID, questionPageURL));
+        _ = await mediator.Send(new BlogPostPageSetQuestionURLCommand(page, args.WebsiteChannelID, questionPageURL));
     }
 }

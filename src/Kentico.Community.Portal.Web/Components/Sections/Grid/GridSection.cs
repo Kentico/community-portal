@@ -162,28 +162,15 @@ public enum VerticalPaddings
     None,
 }
 
-public class GridSectionViewModel
+public class GridSectionViewModel(GridSectionProperties props)
 {
-    public GridSectionViewModel(GridSectionProperties props)
-    {
-        Heading = string.IsNullOrWhiteSpace(props.Heading) ? null : props.Heading;
-        HeadingAlignment = props.HeadingAlignmentParsed;
-        BodyAlignment = props.BodyAlignmentParsed;
-        IsHeadingAnchorLinkVisible = props.IsHeadingAnchorLinkVisible;
-        PaddingTop = props.PaddingTopParsed;
-        PaddingBottom = props.PaddingBottomParsed;
-        Layout = props.LayoutParsed;
-        WidgetZoneCount = props.WidgetZonesCount;
-        BackgroundColor = props.BackgroundColorParsed;
-    }
-
-    public string? Heading { get; }
-    public Alignments HeadingAlignment { get; }
-    public Alignments BodyAlignment { get; }
-    public bool IsHeadingAnchorLinkVisible { get; }
-    public VerticalPaddings PaddingTop { get; }
-    public VerticalPaddings PaddingBottom { get; }
-    public Layouts Layout { get; }
-    public int WidgetZoneCount { get; }
-    public BackgroundColors BackgroundColor { get; }
+    public string? Heading { get; } = string.IsNullOrWhiteSpace(props.Heading) ? null : props.Heading;
+    public Alignments HeadingAlignment { get; } = props.HeadingAlignmentParsed;
+    public Alignments BodyAlignment { get; } = props.BodyAlignmentParsed;
+    public bool IsHeadingAnchorLinkVisible { get; } = props.IsHeadingAnchorLinkVisible;
+    public VerticalPaddings PaddingTop { get; } = props.PaddingTopParsed;
+    public VerticalPaddings PaddingBottom { get; } = props.PaddingBottomParsed;
+    public Layouts Layout { get; } = props.LayoutParsed;
+    public int WidgetZoneCount { get; } = props.WidgetZonesCount;
+    public BackgroundColors BackgroundColor { get; } = props.BackgroundColorParsed;
 }

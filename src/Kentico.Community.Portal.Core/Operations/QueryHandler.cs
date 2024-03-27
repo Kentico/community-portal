@@ -8,15 +8,11 @@ namespace Kentico.Community.Portal.Core.Operations;
 
 public class WebPageQueryTools(
     IContentQueryExecutor executor,
-    IWebPageQueryResultMapper webPageMapper,
-    IContentQueryResultMapper contentMapper,
     IWebPageUrlRetriever urlRetriever,
     IWebsiteChannelContext websiteChannelContext,
     ILinkedItemsDependencyAsyncRetriever dependencyRetriever)
 {
     public IContentQueryExecutor Executor { get; } = executor;
-    public IWebPageQueryResultMapper WebPageMapper { get; } = webPageMapper;
-    public IContentQueryResultMapper ContentMapper { get; } = contentMapper;
     public IWebPageUrlRetriever UrlRetriever { get; } = urlRetriever;
     public IWebsiteChannelContext WebsiteChannelContext { get; } = websiteChannelContext;
     public ILinkedItemsDependencyAsyncRetriever DependencyRetriever { get; } = dependencyRetriever;
@@ -33,8 +29,6 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
     public WebPageQueryHandler(WebPageQueryTools tools)
     {
         Executor = tools.Executor;
-        WebPageMapper = tools.WebPageMapper;
-        ContentMapper = tools.ContentMapper;
         UrlRetriever = tools.UrlRetriever;
         DependencyRetriever = tools.DependencyRetriever;
         DefaultQueryOptions = new ContentQueryExecutionOptions { ForPreview = tools.WebsiteChannelContext.IsPreview };
@@ -43,8 +37,6 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
     private readonly HashSet<string> customKeys = new(StringComparer.OrdinalIgnoreCase);
 
     protected IContentQueryExecutor Executor { get; }
-    protected IWebPageQueryResultMapper WebPageMapper { get; }
-    protected IContentQueryResultMapper ContentMapper { get; }
     protected IWebPageUrlRetriever UrlRetriever { get; }
     protected ContentQueryExecutionOptions DefaultQueryOptions { get; }
     protected ILinkedItemsDependencyAsyncRetriever DependencyRetriever { get; }

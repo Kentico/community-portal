@@ -6,24 +6,16 @@ using Microsoft.Extensions.Options;
 
 namespace Kentico.Community.Portal.Web.Components.ViewComponents.PageCustomMeta;
 
-public class PageCustomMetaViewComponent : ViewComponent
+public class PageCustomMetaViewComponent(
+    IMediator mediator,
+    WebPageMetaService metaService,
+    IHttpContextAccessor contextAccessor,
+    IOptions<ReCaptchaSettings> options) : ViewComponent
 {
-    private readonly IMediator mediator;
-    private readonly WebPageMetaService metaService;
-    private readonly IHttpContextAccessor contextAccessor;
-    private readonly ReCaptchaSettings settings;
-
-    public PageCustomMetaViewComponent(
-        IMediator mediator,
-        WebPageMetaService metaService,
-        IHttpContextAccessor contextAccessor,
-        IOptions<ReCaptchaSettings> options)
-    {
-        this.mediator = mediator;
-        this.metaService = metaService;
-        this.contextAccessor = contextAccessor;
-        settings = options.Value;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly WebPageMetaService metaService = metaService;
+    private readonly IHttpContextAccessor contextAccessor = contextAccessor;
+    private readonly ReCaptchaSettings settings = options.Value;
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
@@ -31,14 +23,14 @@ public class PageCustomMetaViewComponent : ViewComponent
 
         string url = contextAccessor.HttpContext?.Request.GetEncodedUrl() ?? "";
 
-        var settingsResult = await mediator.Send(new WebsiteSettingsContentQuery());
+        var settings = await mediator.Send(new WebsiteSettingsContentQuery());
 
         var vm = new PageCustomMetaViewModel(meta)
         {
-            SiteName = settingsResult.Settings.WebsiteSettingsContentWebsiteDisplayName,
+            SiteName = settings.WebsiteSettingsContentWebsiteDisplayName,
             URL = url,
             // TODO set this based on the current page specifying to include it
-            CaptchaSiteKey = settings.SiteKey,
+            CaptchaSiteKey = this.settings.SiteKey,
             OGImageURL = meta.OGImageURL,
             MetaRobotsContent = meta.Robots
         };

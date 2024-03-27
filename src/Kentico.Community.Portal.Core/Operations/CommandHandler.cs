@@ -3,10 +3,9 @@ using MediatR;
 
 namespace Kentico.Community.Portal.Core.Operations;
 
-public class WebPageCommandTools(IContentQueryExecutor executor, IWebPageQueryResultMapper mapper, IWebPageManagerFactory webPageManagerFactory, IContentItemManagerFactory contentItemManagerFactory)
+public class WebPageCommandTools(IContentQueryExecutor executor, IWebPageManagerFactory webPageManagerFactory, IContentItemManagerFactory contentItemManagerFactory)
 {
     public IContentQueryExecutor Executor { get; } = executor;
-    public IWebPageQueryResultMapper Mapper { get; } = mapper;
     public IWebPageManagerFactory WebPageManagerFactory { get; } = webPageManagerFactory;
     public IContentItemManagerFactory ContentItemManagerFactory { get; } = contentItemManagerFactory;
 }
@@ -17,7 +16,6 @@ public abstract class WebPageCommandHandler<TCommand, TResult>(WebPageCommandToo
     where TCommand : ICommand<TResult>
 {
     public IContentQueryExecutor Executor { get; } = tools.Executor;
-    public IWebPageQueryResultMapper Mapper { get; } = tools.Mapper;
     public IWebPageManagerFactory WebPageManagerFactory { get; } = tools.WebPageManagerFactory;
     public IContentItemManagerFactory ContentItemManagerFactory { get; } = tools.ContentItemManagerFactory;
 
@@ -28,7 +26,6 @@ public abstract class ContentItemCommandHandler<TCommand, TResult>(WebPageComman
     where TCommand : ICommand<TResult>
 {
     public IContentQueryExecutor Executor { get; } = tools.Executor;
-    public IWebPageQueryResultMapper Mapper { get; } = tools.Mapper;
     public IWebPageManagerFactory WebPageManagerFactory { get; } = tools.WebPageManagerFactory;
     public IContentItemManagerFactory ContentItemManagerFactory { get; } = tools.ContentItemManagerFactory;
 

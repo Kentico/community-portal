@@ -20,6 +20,8 @@ const config = ({ env }) => ({
             // Used in blog posts and Q&A
             "blockquote",
             "figure",
+            // For custom 404 content
+            "error-hero",
           ],
           greedy: [/form-/],
         },

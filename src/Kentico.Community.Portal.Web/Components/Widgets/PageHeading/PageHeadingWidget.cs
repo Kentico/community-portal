@@ -42,14 +42,8 @@ public class PageHeadingWidgetProperties : IWidgetProperties
     public string? Message { get; set; } = null;
 }
 
-public class PageHeadingWidgetViewModel
+public class PageHeadingWidgetViewModel(PageHeadingWidgetProperties props)
 {
-    public PageHeadingWidgetViewModel(PageHeadingWidgetProperties props)
-    {
-        Title = props.Title;
-        Message = props.Message;
-    }
-
-    public string Title { get; set; }
-    public string? Message { get; set; }
+    public string Title { get; set; } = props.Title;
+    public string? Message { get; set; } = props.Message;
 }

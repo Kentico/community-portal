@@ -9,9 +9,9 @@ public class IntegrationsLandingPageQueryHandler(WebPageQueryTools tools) : WebP
 {
     public override async Task<IntegrationsLandingPage> Handle(IntegrationsLandingPageQuery request, CancellationToken cancellationToken = default)
     {
-        var b = new ContentItemQueryBuilder().ForWebPage(request.Page.WebsiteChannelName, request.Page);
+        var b = new ContentItemQueryBuilder().ForWebPage(request.Page);
 
-        var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<IntegrationsLandingPage>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetMappedWebPageResult<IntegrationsLandingPage>(b, DefaultQueryOptions, cancellationToken);
 
         return r.First();
     }

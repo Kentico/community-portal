@@ -7,23 +7,16 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Kentico.Community.Portal.Web.Features.Errors;
 
-public class CustomExceptionFilter : IAsyncExceptionFilter
+public class CustomExceptionFilter(
+    IModelMetadataProvider modelMetadataProvider,
+    IMediator mediator) : IAsyncExceptionFilter
 {
-    private readonly IModelMetadataProvider modelMetadataProvider;
-    private readonly IMediator mediator;
-
-    public CustomExceptionFilter(
-        IModelMetadataProvider modelMetadataProvider,
-        IMediator mediator)
-    {
-        this.modelMetadataProvider = modelMetadataProvider;
-        this.mediator = mediator;
-    }
+    private readonly IModelMetadataProvider modelMetadataProvider = modelMetadataProvider;
+    private readonly IMediator mediator = mediator;
 
     public async Task OnExceptionAsync(ExceptionContext context)
     {
-        var resp = await mediator.Send(new WebsiteSettingsContentQuery());
-        var settings = resp.Settings;
+        var settings = await mediator.Send(new WebsiteSettingsContentQuery());
 
         var result = new ViewResult
         {

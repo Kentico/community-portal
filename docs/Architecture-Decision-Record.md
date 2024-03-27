@@ -1,5 +1,19 @@
 # Architecture Decision Record
 
+## 2024-03-27 - Taxonomies migration
+
+`BlogPostContent` reusable content items have simulated a taxonomy since the portal was launched, using a `BlogPostContent.BlogPostContentTaxonomy` string field.
+
+With the introduction of [Taxonomies](https://docs.kentico.com/x/taxonomies_xp) in [v28.4.0](https://docs.kentico.com/changelog#refresh-march-21-2024) we can model taxonomies separate of the content, which makes future taxonomy management and content selection (for management and delivery) easier.
+
+However, to [minimize the complexity of data migration](https://community.kentico.com/blog/safely-evolving-a-content-model-with-expand-and-contract) for the initial adoption of taxonomies for blog posts, we will be supporting both old and new taxonomies until all content has been migrated, which will happen _after_ the initial content type update.
+
+`QAndABlogPostPage` web page content items will also be taking advantage of taxonomies, but since they don't have any existing taxonomy and fall into 2 very clear groups (based on title - do they start with "Blog Discussion:" or not), we can apply taxonomy during migration pretty easily.
+
+Once all content has been migrated, we can remove the old `BlogPostContent.BlogPostContentTaxonomy` field and all of its dependee code.
+
+An additional "general purpose" `DXTopic` taxonomy has been created which will be used by both `BlogPostContent` and `QAndAQuestionPage` content types (and possibly additional content types in the future - ex: `IntegrationContent`), however this taxonomy is not yet being used for any member experiences. It currently has a flat structure, but this can be modified in the future if it will benefit content management or visitor experience.
+
 ## 2024-02-22 - Auto search index rebuilding
 
 Lucene search indexes are stored on the file system and when deployments in SaaS swap Azure App Service slots. After a deployment, a search index's files might not be up-to-date or even available.

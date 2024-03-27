@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Taxonomy</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="TaxonomyID" columntype="integer" enabled="true" guid="d4527a5d-509e-4f9a-a12d-f4d5c325d184" isPK="true" system="true" />
+      <field column="TaxonomyName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="b5e13012-7c94-4a23-81fb-4015b0df111a" system="true" />
+      <field column="TaxonomyGUID" columnprecision="0" columntype="guid" enabled="true" guid="de1a13a4-40b8-470e-afa6-58b664ea8ea9" system="true" />
+      <field allowempty="true" column="TaxonomyMetadata" columnprecision="0" columntype="longtext" enabled="true" guid="9f4b0e5c-b5f4-42d6-92f8-48177784d28c" system="true" />
+      <field column="TaxonomyLastModified" columnprecision="7" columntype="datetime" enabled="true" guid="ea19bb76-107c-4096-8c85-e07136aa8760" system="true" />
+      <field column="TaxonomyTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="2cb76ced-2cfe-45da-bc0c-3001e7904929" system="true" />
+      <field allowempty="true" column="TaxonomyDescription" columnprecision="0" columntype="longtext" enabled="true" guid="c2ad1cd1-afd6-4606-b245-eaf8fcacfb1a" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>d917726c-d17d-4c1b-a314-6176c1ecd407</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.Taxonomy</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentEngine</CodeName>
+    <GUID>eb76ebd1-752f-4969-a5b6-1fb984cae224</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_Taxonomy</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

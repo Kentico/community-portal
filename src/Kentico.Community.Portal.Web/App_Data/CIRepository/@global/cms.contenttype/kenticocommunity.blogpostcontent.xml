@@ -55,7 +55,7 @@
           <MinRowsNumber>3</MinRowsNumber>
         </settings>
       </field>
-      <field column="BlogPostContentTaxonomy" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="5a0acff4-c186-4520-884a-260233139c79" visible="true">
+      <field allowempty="true" column="BlogPostContentTaxonomy" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="5a0acff4-c186-4520-884a-260233139c79" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Taxonomy</fieldcaption>
@@ -65,6 +65,7 @@
           <controlname>Kentico.Administration.DropDownSelector</controlname>
           <Options>
 <![CDATA[
+;None
 Community
 Guide
 Announcement
@@ -72,7 +73,45 @@ Media
 Article
 ]]>
           </Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
           <Placeholder>Article</Placeholder>
+        </settings>
+      </field>
+      <field allowempty="true" column="BlogPostContentBlogType" columnprecision="0" columntype="taxonomy" enabled="true" guid="56807d41-5f80-4c18-82d3-82287c1c7519" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Type</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TagSelector</controlname>
+          <MaxSelectedTagsCount>1</MaxSelectedTagsCount>
+          <MinSelectedTagsCount>1</MinSelectedTagsCount>
+          <TaxonomyGroup>
+            <![CDATA[["8419874e-3ec4-4da4-8a32-263f7ba5b864"]]]>
+          </TaxonomyGroup>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues>
+              <ErrorMessage>You must select a blog type</ErrorMessage>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field allowempty="true" column="BlogPostcontentDXTopics" columnprecision="0" columntype="taxonomy" enabled="true" guid="83cc82b6-3f0b-4e78-9f64-39e07352c281" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>DX Topics</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TagSelector</controlname>
+          <MaxSelectedTagsCount>8</MaxSelectedTagsCount>
+          <TaxonomyGroup>
+            <![CDATA[["72f39193-9dee-45df-9138-730ed4445858"]]]>
+          </TaxonomyGroup>
         </settings>
       </field>
       <field column="BlogPostContentPublishedDate" columnprecision="2" columntype="datetime" enabled="true" guid="d07d938a-8de9-4202-a823-ab2be9330aac" visible="true">

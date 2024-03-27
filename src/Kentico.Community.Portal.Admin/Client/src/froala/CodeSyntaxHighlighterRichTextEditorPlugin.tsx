@@ -26,10 +26,13 @@ export const CodeSyntaxHighlighterRichTextEditorPlugin = ({
         title: buttonName,
         icon: iconName,
         callback: () => {
-          froalaEditorRef.current.editor.format.apply('code', {
+          // Fix for eslint
+          const ref = froalaEditorRef as React.MutableRefObject<FroalaEditor>;
+
+          ref.current.editor.format.apply('code', {
             class: 'language-csharp',
           });
-          froalaEditorRef.current.editor.format.apply('pre', {
+          ref.current.editor.format.apply('pre', {
             class: 'language-csharp',
           });
         },
@@ -39,3 +42,12 @@ export const CodeSyntaxHighlighterRichTextEditorPlugin = ({
 
   return <></>;
 };
+
+interface FroalaEditor {
+  editor: {
+    format: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      apply: (...args: unknown[]) => void;
+    };
+  };
+}

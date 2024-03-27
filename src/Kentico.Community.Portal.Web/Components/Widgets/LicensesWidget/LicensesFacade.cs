@@ -6,27 +6,19 @@ using Newtonsoft.Json;
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.Licenses;
 
-public class LicensesFacade
+public class LicensesFacade(
+    IHttpClientFactory httpClientFactory,
+    IEventLogService eventLogService,
+    AssetItemService itemService,
+    IProgressiveCache cache)
 {
     private const string UserAgent = "Kentico-Agent";
     private const string UserAgentVersion = "1.0";
 
-    private readonly IHttpClientFactory httpClientFactory;
-    private readonly IEventLogService eventLogService;
-    private readonly AssetItemService itemService;
-    private readonly IProgressiveCache cache;
-
-    public LicensesFacade(
-        IHttpClientFactory httpClientFactory,
-        IEventLogService eventLogService,
-        AssetItemService itemService,
-        IProgressiveCache cache)
-    {
-        this.httpClientFactory = httpClientFactory;
-        this.eventLogService = eventLogService;
-        this.itemService = itemService;
-        this.cache = cache;
-    }
+    private readonly IHttpClientFactory httpClientFactory = httpClientFactory;
+    private readonly IEventLogService eventLogService = eventLogService;
+    private readonly AssetItemService itemService = itemService;
+    private readonly IProgressiveCache cache = cache;
 
     public async Task<LicensesViewModel> GetLicenses(AssetViewModel asset, Dictionary<string, string> licenseTypeLinks)
     {
@@ -79,7 +71,7 @@ public class LicensesFacade
         return result;
     }
 
-    private string? GetLicenseTypeLink(string name, Dictionary<string, string> dictionary)
+    private static string? GetLicenseTypeLink(string name, Dictionary<string, string> dictionary)
     {
         if (dictionary == null || dictionary.Count == 0 || string.IsNullOrWhiteSpace(name))
         {

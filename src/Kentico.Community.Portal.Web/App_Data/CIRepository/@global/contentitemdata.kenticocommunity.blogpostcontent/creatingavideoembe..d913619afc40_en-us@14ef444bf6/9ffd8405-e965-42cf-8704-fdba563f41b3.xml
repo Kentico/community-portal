@@ -3,6 +3,9 @@
   <BlogPostContentAuthor>
     <![CDATA[[{"Identifier":"058f60dc-c9ff-4416-b856-ddc6005ccb21"}]]]>
   </BlogPostContentAuthor>
+  <BlogPostContentBlogType>
+    <![CDATA[[{"Identifier":"9ec13b4e-574d-4e1c-b32e-a96b4c1119d1"}]]]>
+  </BlogPostContentBlogType>
   <BlogPostContentContentHTML>
 <![CDATA[
 <p dir="auto" id="isPasted">Since the October 2022 refresh, Xperience by Kentico has supported the use of multiple visibility conditions in the properties of page builder and form builder components. This means that the visibility of one property can be dependent on multiple other properties at the same time.</p><p dir="auto">Let's create a widget that demonstrates this functionality. A widget for embedding videos in the page could be a good opportunity for this-- Since certain features may vary depending on the video service provider, we can use visibility conditions to make use of the available features for each service, depending on the selection.</p><p dir="auto">For the purposes of this example, the widget will be added into the <strong>Dancing Goat</strong> sample site, and will use <em>DancingGoat</em> namespaces. It will also include code snippets both for older, backwards-compatible C# form components, and newer React-based form components.</p><h2 dir="auto">Setting the goal</h2><p dir="auto">The goal of our widget will be to display a video embed in a page. Most video content shared on the internet is hosted on video sharing platforms, so we should include some of these services as options, along with the ability to embed a publicly accessible video file via the HTML <strong><code>&lt;video&gt;</code></strong> tag.</p><p dir="auto">However, using multiple video sharing platforms introduces some complication-- not all platforms have the same features. For instance, Youtube and Vimeo allow for a video to be started midway, at a certain point in time, while Dailymotion does not. Conversely, Vimeo and Dailymotion can be sized dynamically (percentage-based widths in CSS), while Youtube did not play well with this in my testing.</p><p dir="auto">Based on these available features, we can use visibility conditions to show or hide different configuration options.</p><h2 dir="auto">Defining the properties</h2><h3 dir="auto"><strong>Basic properties</strong></h3><p dir="auto">In the Dancing Goat project, go to <strong>~/Components/Widgets</strong> and add a new folder called <strong>VideoEmbedWidget</strong>. Within this folder, define a properties class that inherits from <strong><code>IWidgetProperties</code></strong>.</p><pre class="language-csharp"><code>namespace DancingGoat.Widgets
@@ -700,11 +703,12 @@ using DancingGoat.FormComponents;
 <span class="pl-kos">}</span></pre></div><h2 dir="auto">Conclusion</h2><p dir="auto">Now you should have a functioning video embed widget. Feel free to modify the code and add more styles and features. You can find a repository with the code of the widget and component <a href="https://github.com/kentico-matthews/Custom.XperienceByKentico.VideoEmbedWidget">here</a>. The <strong><code>main</code></strong> branch uses react components for the widget properties, while the <strong><code>CSharpComponents</code></strong> branch uses C# components.</p>
 ]]>
   </BlogPostContentContentHTML>
+  <BlogPostContentContentMarkdown />
   <BlogPostContentPublishedDate>2023-05-09 21:00:00Z</BlogPostContentPublishedDate>
   <BlogPostContentShortDescription>
     <![CDATA[A walkthrough for adding a video embed widget to the Dancing Goat sample site, which demonstrates the use of multiple visibility conditions.]]>
   </BlogPostContentShortDescription>
-  <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
+  <BlogPostContentSourceType>richText</BlogPostContentSourceType>
   <BlogPostContentTaxonomy>Guide</BlogPostContentTaxonomy>
   <BlogPostContentTeaserMediaFileImage>
     <![CDATA[[{"Identifier":"f4d84de2-7a2a-4c05-b4f0-0dcc5680c7da","Name":"VideoEmbed-Thumbnail.jpg","Size":453704,"Dimensions":{"Width":1920,"Height":1080}}]]]>

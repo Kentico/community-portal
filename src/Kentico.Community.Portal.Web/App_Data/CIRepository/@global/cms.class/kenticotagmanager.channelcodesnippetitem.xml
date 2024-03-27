@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Channel Code Snippet Item</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ChannelCodeSnippetItemID" columntype="integer" enabled="true" guid="1f53955a-7be9-426f-8eb9-1a365d1f1a49" isPK="true" />
+      <field column="ChannelCodeSnippetItemChannelId" columntype="integer" enabled="true" guid="908d1fc9-1448-41d6-8810-7e84c357c75b" refobjtype="cms.channel" reftype="Required" />
+      <field allowempty="true" column="ChannelCodeSnippetItemConsentId" columntype="integer" enabled="true" guid="409bde18-c1c3-4a0a-8272-d631a7508377" refobjtype="cms.consent" reftype="Required" />
+      <field column="ChannelCodeSnippetItemGuid" columntype="guid" enabled="true" guid="db5905d6-af38-450b-a9e0-3f910f2198cf" />
+      <field column="ChannelCodeSnippetItemName" columntype="text" enabled="true" guid="c39fa4b8-77a7-4bb0-887c-5583b567e65e" visible="true">
+        <settings>
+          <Label>Code name</Label>
+        </settings>
+      </field>
+      <field column="ChannelCodeSnippetItemLastModified" columntype="datetime" enabled="true" guid="5b372308-2c01-44ab-b74f-e8a961bd8388" />
+      <field allowempty="true" column="ChannelCodeSnippetItemCode" columnprecision="0" columnsize="5000" columntype="longtext" enabled="true" guid="fb0c4d2c-bc56-4e34-80cb-d8230f59a51b" />
+      <field allowempty="true" column="ChannelCodeSnippetItemIdentifier" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="bdaeae6a-de15-479b-bbbb-91d9ba5a033b" />
+      <field allowempty="true" column="ChannelCodeSnippetItemType" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="720f8858-a2ac-4434-a4a9-64bedbef2ec1" />
+      <field allowempty="true" column="ChannelCodeSnippetItemLocation" columnprecision="0" columnsize="25" columntype="text" enabled="true" guid="edefff94-78db-4053-964e-79f2f72951e1" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>9e03d5f6-3136-4e4e-84ce-53a601baf17e</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>KenticoTagManager.ChannelCodeSnippetItem</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Integration.TagManager</CodeName>
+    <GUID>b44632ed-8ce7-4e51-b75a-e0d9fdbdead9</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>KenticoTagManager_ChannelCodeSnippetItem</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

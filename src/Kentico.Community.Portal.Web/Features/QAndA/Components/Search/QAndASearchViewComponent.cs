@@ -1,42 +1,46 @@
+using CMS.ContentEngine;
+using Kentico.Community.Portal.Core;
+using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Components.ViewComponents.Pagination;
-using Kentico.Community.Portal.Web.Infrastructure.Search;
+using Kentico.Community.Portal.Web.Features.Blog;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public class QAndASearchViewComponent(SearchService searchService) : ViewComponent
+public class QAndASearchViewComponent(QAndASearchService searchService, ITaxonomyRetriever taxonomyRetriever) : ViewComponent
 {
-    private readonly SearchService searchService = searchService;
+    private readonly QAndASearchService searchService = searchService;
+    private readonly ITaxonomyRetriever taxonomyRetriever = taxonomyRetriever;
 
-    public IViewComponentResult Invoke()
+    public async Task<IViewComponentResult> InvokeAsync()
     {
         var request = new QAndASearchRequest(HttpContext.Request);
 
         var searchResult = searchService.SearchQAndA(request);
+        var chosenFacets = request.Facet.ToLower().Split(";", StringSplitOptions.RemoveEmptyEntries)?.ToList() ?? [];
+        var viewModels = searchResult.Hits.Select(QAndAPostViewModel.GetModel).ToList();
 
-        var vm = new QAndASearchViewModel();
+        var taxonomy = await taxonomyRetriever.RetrieveTaxonomy(SystemTaxonomies.QAndADiscussionTypeTaxonomy.CodeName, PortalWebSiteChannel.DEFAULT_LANGUAGE);
 
-        var hits = searchResult.Hits.ToList();
-        var ids = hits.Select(x => x.ID).ToList();
-
-        var viewModels = hits.Select(QAndAPostViewModel.GetModel).ToList();
-
-        var viewModelsSorted = new List<QAndAPostViewModel>();
-
-        foreach (var post in hits)
+        var vm = new QAndASearchViewModel
         {
-            var model = viewModels.Single(x => x.ID == post.ID);
-            model.LinkPath = post.Url;
-
-            viewModelsSorted.Add(model);
-        }
-
-        vm.Questions = viewModelsSorted;
-        vm.Page = request.PageNumber;
-        vm.SortBy = request.SortBy;
-        vm.Query = request.SearchText;
-        vm.TotalPages = searchResult.TotalPages;
-        vm.OnlyAcceptedResponses = request.OnlyAcceptedResponses;
+            Questions = viewModels,
+            Page = request.PageNumber,
+            SortBy = request.SortBy,
+            Query = request.SearchText,
+            TotalPages = searchResult.TotalPages,
+            OnlyAcceptedResponses = request.OnlyAcceptedResponses,
+            Facet = request.Facet,
+            Facets = [.. taxonomy.Tags
+                .Select(x => new FacetOption()
+                {
+                    Label = x.Title,
+                    Value = searchResult?.Facets?.FirstOrDefault(y => y.Label.Equals(x.Title, StringComparison.InvariantCultureIgnoreCase))?.Value ?? 0,
+                    IsSelected = chosenFacets.Contains(x.Title, StringComparer.OrdinalIgnoreCase)
+                })
+                .Where(x => x.Value != 0)
+                .OrderBy(f => f.Label)],
+        };
 
         return View("~/Features/QAndA/Components/Search/QAndASearch.cshtml", vm);
     }
@@ -50,6 +54,10 @@ public class QAndASearchViewModel : IPagedViewModel
     [HiddenInput]
     public int Page { get; set; }
     public string SortBy { get; set; } = "";
+    [HiddenInput]
+    public string Facet { get; set; } = "";
+    public List<FacetOption> Facets { get; set; } = [];
+    public List<string> ChosenFacets { get; set; } = [];
     public bool OnlyAcceptedResponses { get; set; } = false;
     public int TotalPages { get; set; }
 

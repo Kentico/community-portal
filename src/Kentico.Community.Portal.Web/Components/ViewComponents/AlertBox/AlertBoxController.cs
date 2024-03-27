@@ -7,17 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kentico.Community.Portal.Web.Components.ViewComponents.AlertBox;
 
 [Route("[controller]/[action]")]
-public class AlertBoxController : Controller
+public class AlertBoxController(IMediator mediator, ICookieAccessor cookies) : Controller
 {
     public const string ROUTE_CONFIRM_ALERT = nameof(ROUTE_CONFIRM_ALERT);
-    private readonly IMediator mediator;
-    private readonly ICookieAccessor cookies;
-
-    public AlertBoxController(IMediator mediator, ICookieAccessor cookies)
-    {
-        this.mediator = mediator;
-        this.cookies = cookies;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly ICookieAccessor cookies = cookies;
 
     [HttpPost(Name = ROUTE_CONFIRM_ALERT)]
     public async Task<IActionResult> AlertBoxConfirm()
@@ -26,7 +20,7 @@ public class AlertBoxController : Controller
 
         cookies.Set(CookieNames.ALERTBOX_CLOSED, "true", new()
         {
-            Expires = DateTime.Now.AddDays(resp.Settings.WebsiteSettingsContentAlertBoxCookieExpirationDays),
+            Expires = DateTime.Now.AddDays(resp.WebsiteSettingsContentAlertBoxCookieExpirationDays),
             HttpOnly = false,
             Secure = true
         });

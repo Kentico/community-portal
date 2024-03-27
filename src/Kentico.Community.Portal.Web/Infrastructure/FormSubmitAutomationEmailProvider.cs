@@ -14,18 +14,12 @@ using Newtonsoft.Json;
 
 namespace Kentico.Community.Portal.Web.Infrastructure;
 
-public class FormSubmitAutomationEmailProvider : IFormSubmitAutomationEmailProvider
+public class FormSubmitAutomationEmailProvider(
+    IFormSubmitAutomationEmailProvider defaultAutomationEmailProvider,
+    IMediator mediator) : IFormSubmitAutomationEmailProvider
 {
-    private readonly IFormSubmitAutomationEmailProvider defaultAutomationEmailProvider;
-    private readonly IMediator mediator;
-
-    public FormSubmitAutomationEmailProvider(
-        IFormSubmitAutomationEmailProvider defaultAutomationEmailProvider,
-        IMediator mediator)
-    {
-        this.defaultAutomationEmailProvider = defaultAutomationEmailProvider;
-        this.mediator = mediator;
-    }
+    private readonly IFormSubmitAutomationEmailProvider defaultAutomationEmailProvider = defaultAutomationEmailProvider;
+    private readonly IMediator mediator = mediator;
 
     public async Task<AutomationEmail?> GetEmail(BizFormInfo form, BizFormItem formData, ContactInfo contact)
     {
@@ -36,8 +30,8 @@ public class FormSubmitAutomationEmailProvider : IFormSubmitAutomationEmailProvi
             return null;
         }
 
-        var resp = await mediator.Send(new WebsiteSettingsContentQuery());
-        string formsConfiguration = resp.Settings.WebsiteSettingsContentFormsConfigurationJSON;
+        var settings = await mediator.Send(new WebsiteSettingsContentQuery());
+        string formsConfiguration = settings.WebsiteSettingsContentFormsConfigurationJSON;
 
         if (string.IsNullOrWhiteSpace(formsConfiguration))
         {

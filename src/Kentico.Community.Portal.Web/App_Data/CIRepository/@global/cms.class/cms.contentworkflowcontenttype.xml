@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Content type workflow</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentWorkflowContentTypeID" columntype="integer" enabled="true" guid="89e52a4c-fa8c-4013-9b99-f20a565ee12a" isPK="true" system="true" />
+      <field column="ContentWorkflowContentTypeContentWorkflowID" columnprecision="0" columntype="integer" enabled="true" guid="d0b69708-cbc4-4222-b96c-bac0ca97df57" refobjtype="cms.contentworkflow" reftype="Required" system="true" />
+      <field column="ContentWorkflowContentTypeContentTypeID" columnprecision="0" columntype="integer" enabled="true" guid="ca196bd4-6001-453e-9dac-16e411d73f8f" refobjtype="cms.contenttype" reftype="Required" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>71e8743a-0bcf-4f89-8868-8516f35917ce</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ContentWorkflowContentType</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentWorkflowEngine</CodeName>
+    <GUID>c59d2e7e-4d32-41c9-809f-79e0b9bf8883</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ContentWorkflowContentType</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

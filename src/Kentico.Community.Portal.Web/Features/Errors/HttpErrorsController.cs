@@ -6,16 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kentico.Community.Portal.Web.Features.Errors;
 
 [Route("error")]
-public class HttpErrorsController : Controller
+public class HttpErrorsController(IMediator mediator, WebPageMetaService metaService) : Controller
 {
-    private readonly IMediator mediator;
-    private readonly WebPageMetaService metaService;
-
-    public HttpErrorsController(IMediator mediator, WebPageMetaService metaService)
-    {
-        this.mediator = mediator;
-        this.metaService = metaService;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly WebPageMetaService metaService = metaService;
 
     [HttpGet("{code:int}")]
     public async Task<ActionResult> Error(int code)
@@ -27,8 +21,7 @@ public class HttpErrorsController : Controller
             return StatusCode(code);
         }
 
-        var resp = await mediator.Send(new WebsiteSettingsContentQuery());
-        var settings = resp.Settings;
+        var settings = await mediator.Send(new WebsiteSettingsContentQuery());
 
         var model = new ErrorPageViewModel
         {

@@ -4,11 +4,9 @@ using MediatR;
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.BlogPostList;
 
-public class BlogPostTaxonomyDropDownOptionsProvider : IDropDownOptionsProvider
+public class BlogPostTaxonomyDropDownOptionsProvider(IMediator mediator) : IDropDownOptionsProvider
 {
-    private readonly IMediator mediator;
-
-    public BlogPostTaxonomyDropDownOptionsProvider(IMediator mediator) => this.mediator = mediator;
+    private readonly IMediator mediator = mediator;
 
     public async Task<IEnumerable<DropDownOptionItem>> GetOptionItems()
     {

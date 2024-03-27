@@ -11,6 +11,7 @@ using Kentico.Forms.Web.Mvc;
 using Kentico.OnlineMarketing.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Web.Mvc;
+using Kentico.Xperience.MiniProfiler;
 using Microsoft.AspNetCore.Localization.Routing;
 
 [assembly: RegisterModule(typeof(StorageInitializationModule))]
@@ -55,7 +56,7 @@ public static class ServiceCollectionXperienceExtensions
 
                 features.UseWebPageRouting();
             })
-            .AddKenticoTagManager()
+            .AddKenticoTagManager(config)
             .AddPreviewComponentOutlines()
             .Configure<EmailQueueOptions>(o =>
             {
@@ -64,7 +65,8 @@ public static class ServiceCollectionXperienceExtensions
             .IfDevelopment(env, c =>
             {
                 _ = c.Configure<SmtpOptions>(config.GetSection("SmtpOptions"))
-                    .AddXperienceSmtp();
+                    .AddXperienceSmtp()
+                    .AddKenticoMiniProfiler();
             })
             .Configure<CookieLevelOptions>(options =>
             {

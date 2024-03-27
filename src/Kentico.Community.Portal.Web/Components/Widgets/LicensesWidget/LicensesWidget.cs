@@ -16,18 +16,12 @@ using Newtonsoft.Json;
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.Licenses;
 
-public class LicensesWidgetViewComponent : ViewComponent
+public class LicensesWidgetViewComponent(LicensesFacade licensesFacade, AssetItemService itemService) : ViewComponent
 {
     public const string Identifier = "CommunityPortal.LicensesWidget";
 
-    private readonly LicensesFacade licensesFacade;
-    private readonly AssetItemService itemService;
-
-    public LicensesWidgetViewComponent(LicensesFacade licensesFacade, AssetItemService itemService)
-    {
-        this.licensesFacade = licensesFacade;
-        this.itemService = itemService;
-    }
+    private readonly LicensesFacade licensesFacade = licensesFacade;
+    private readonly AssetItemService itemService = itemService;
 
     public async Task<ViewViewComponentResult> InvokeAsync(LicensesWidgetProperties properties)
     {

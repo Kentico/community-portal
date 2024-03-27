@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Content workflow step</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentWorkflowStepID" columntype="integer" enabled="true" guid="f27be28c-5cab-4c1c-8f5c-a881161546d1" isPK="true" system="true" />
+      <field column="ContentWorkflowStepGUID" columnprecision="0" columntype="guid" enabled="true" guid="e9b42a1e-a1e3-471b-bac3-8aaf9846c445" system="true" />
+      <field column="ContentWorkflowStepWorkflowID" columnprecision="0" columntype="integer" enabled="true" guid="cc0d274f-a504-421a-a636-55b82487fc9e" refobjtype="cms.contentworkflow" reftype="Required" system="true" />
+      <field column="ContentWorkflowStepLastModified" columnprecision="7" columntype="datetime" enabled="true" guid="9fe1f107-4cdd-4332-90fe-1f56f59974a8" system="true" />
+      <field column="ContentWorkflowStepName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="b67ea7c4-73d3-45c0-95e2-fbb04be1666a" system="true" />
+      <field column="ContentWorkflowStepDisplayName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="9d796ec4-27d9-4186-a303-6eb3c455d048" system="true" />
+      <field column="ContentWorkflowStepIconClass" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="908652d2-8f3f-48d9-a89c-fcdcc4365765" system="true" />
+      <field column="ContentWorkflowStepOrder" columnprecision="0" columntype="integer" enabled="true" guid="a62ac973-3d4a-46d9-9d19-e0a8ea063fe2" system="true" />
+      <field column="ContentWorkflowStepType" columnprecision="0" columntype="integer" enabled="true" guid="79d52039-1374-46e7-8dbb-f1e624906a27" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>fe60b6f7-0032-4c4e-a25a-f9e43ddd791e</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ContentWorkflowStep</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentWorkflowEngine</CodeName>
+    <GUID>c59d2e7e-4d32-41c9-809f-79e0b9bf8883</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ContentWorkflowStep</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

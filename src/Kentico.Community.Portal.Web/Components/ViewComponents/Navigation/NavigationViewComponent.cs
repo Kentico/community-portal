@@ -4,12 +4,10 @@ using Microsoft.AspNetCore.Mvc.Localization;
 
 namespace Kentico.Community.Portal.Web.Components.ViewComponents.Navigation;
 
-public class NavigationViewComponent : ViewComponent
+public class NavigationViewComponent(
+    IHtmlLocalizer<SharedResources> localizer) : ViewComponent
 {
-    private readonly IHtmlLocalizer<SharedResources> localizer;
-
-    public NavigationViewComponent(
-        IHtmlLocalizer<SharedResources> localizer) => this.localizer = localizer;
+    private readonly IHtmlLocalizer<SharedResources> localizer = localizer;
 
     public IViewComponentResult Invoke()
     {
@@ -65,11 +63,9 @@ public class NavigationViewComponent : ViewComponent
     }
 }
 
-public class NavigationViewModel
+public class NavigationViewModel(IReadOnlyList<MenuItemViewModel> navItems)
 {
-    public NavigationViewModel(IReadOnlyList<MenuItemViewModel> navItems) => NavItems = navItems;
-
-    public IReadOnlyList<MenuItemViewModel> NavItems { get; }
+    public IReadOnlyList<MenuItemViewModel> NavItems { get; } = navItems;
 }
 
 public class MenuItemViewModel : LinkViewModel

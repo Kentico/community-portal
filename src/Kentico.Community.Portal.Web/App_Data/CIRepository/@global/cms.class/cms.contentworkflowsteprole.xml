@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Content workflow step role</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentWorkflowStepRoleID" columntype="integer" enabled="true" guid="826c5f46-473f-4477-b606-1b4213415362" isPK="true" system="true" />
+      <field column="ContentWorkflowStepRoleContentWorkflowStepID" columnprecision="0" columntype="integer" enabled="true" guid="a4fbb49a-0c4f-442c-88c5-6525e998db7e" refobjtype="cms.contentworkflowstep" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="ContentWorkflowStepRoleRoleID" columnprecision="0" columntype="integer" enabled="true" guid="dc04abe5-d75b-4064-88b6-5a9a7a2b6e3e" refobjtype="cms.role" reftype="Required" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>8a38d4fe-75b1-4960-a091-6d67c260d500</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ContentWorkflowStepRole</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentWorkflowEngine</CodeName>
+    <GUID>c59d2e7e-4d32-41c9-809f-79e0b9bf8883</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ContentWorkflowStepRole</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

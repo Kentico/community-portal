@@ -59,10 +59,27 @@ textarea.form-control {
   }
 }
 
+.c-tooltip {
+  display: inline-flex;
+  width: 1.5rem;
+  height: 1rem;
+  align-items: center;
+  cursor: pointer;
+  padding: 0 0.25rem;
+  vertical-align: text-bottom;
+
+  svg,
+  img {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
 label:has(
     + input[data-val-required],
     + textarea[data-val-required],
-    + span.c-tooltip + input[data-val-required]
+    + span.c-tooltip + input[data-val-required],
+    + select[data-val-required]
   ):after {
   content: "*";
   margin-inline-start: 0.2rem;

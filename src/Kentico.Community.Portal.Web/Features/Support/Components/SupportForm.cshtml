@@ -1,16 +1,16 @@
 @model Kentico.Community.Portal.Web.Features.Support.SupportFormViewModel
 
-<div class="c-card large secondary" style="--bs-danger-rgb: #fff;">
+<div class="c-card large bg-secondary rounded-4" style="--bs-danger-rgb: #fff;">
     <form id="supportForm" method="post" hx-post hx-controller="SupportForm" hx-action="SubmitSupportForm"
         hx-trigger="captchaReady" hx-swap="outerHTML" hx-select="#supportForm" enctype="multipart/form-data">
         <div class="row">
             <div class="col-sm">
-                <label asp-for="FirstName" class="form-label mt-3"></label>
+                <label asp-for="FirstName" class="form-label"></label>
                 <input asp-for="FirstName" class="form-control" id="FirstName" />
                 <span asp-validation-for="FirstName" class="error"></span>
             </div>
             <div class="col-sm">
-                <label asp-for="LastName" class="form-label mt-3"></label>
+                <label asp-for="LastName" class="form-label"></label>
                 <input asp-for="LastName" id="LastName" name="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="error"></span>
             </div>
@@ -73,6 +73,7 @@
                     <option value="Self-hosted public cloud">Self-hosted public cloud</option>
                     <option value="Self-hosted on-premises">Self-hosted on-premises</option>
                 </select>
+                <span asp-validation-for="DeploymentModel" class="error"></span>
             </div>
             <div class="col-sm d-flex align-items-end">
                 <div class="form-check mt-3">

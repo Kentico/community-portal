@@ -36,6 +36,10 @@ internal class GlobalEventsModule : Module
         QAndAAnswerDataInfo.TYPEINFO.Events.Insert.After += QAndAAnswerDataInfo_InsertAfter;
         ContentItemEvents.UpdateDraft.Before += ContentItem_UpdateDraftBefore;
         WebPageEvents.Publish.Execute += WebPage_PublishExecute;
+        TaxonomyInfo.TYPEINFO.Events.Update.Before += Taxonomy_ModifyBefore;
+        TaxonomyInfo.TYPEINFO.Events.Delete.Before += Taxonomy_DeleteBefore;
+        TagInfo.TYPEINFO.Events.Update.Before += Tag_ModifyBefore;
+        TagInfo.TYPEINFO.Events.Delete.Before += Tag_DeleteBefore;
 
         base.OnInit(parameters);
     }
@@ -84,7 +88,7 @@ internal class GlobalEventsModule : Module
             .GetResult();
     }
 
-    public void ContentItem_UpdateDraftBefore(object? sender, UpdateContentItemDraftEventArgs args)
+    private void ContentItem_UpdateDraftBefore(object? sender, UpdateContentItemDraftEventArgs args)
     {
         if (string.Equals(args.ContentTypeName, MediaAssetContent.CONTENT_TYPE_NAME))
         {
@@ -92,7 +96,7 @@ internal class GlobalEventsModule : Module
         }
     }
 
-    public void WebPage_PublishExecute(object? sender, PublishWebPageEventArgs args)
+    private void WebPage_PublishExecute(object? sender, PublishWebPageEventArgs args)
     {
         if (string.Equals(args.ContentTypeName, BlogPostPage.CONTENT_TYPE_NAME))
         {
@@ -105,6 +109,92 @@ internal class GlobalEventsModule : Module
             scope.ServiceProvider.GetRequiredService<BlogPostPublishCreateQAndAQuestionHandler>().Handle(args)
                 .GetAwaiter()
                 .GetResult();
+        }
+    }
+
+    /// <summary>
+    /// Ensures taxonomies required by the system are modified in specific ways
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    /// <exception cref="Exception"></exception>
+    private void Taxonomy_ModifyBefore(object? sender, ObjectEventArgs args)
+    {
+        if (args.Object is not TaxonomyInfo taxonomy)
+        {
+            return;
+        }
+
+        if (SystemTaxonomies.Includes(taxonomy) &&
+            taxonomy.ChangedColumns().Contains(nameof(TaxonomyInfo.TaxonomyName)))
+        {
+            args.Cancel();
+
+            throw new Exception($"Cannot modify the name of required taxonomy '{taxonomy.TaxonomyTitle}'");
+        }
+    }
+
+    /// <summary>
+    /// Ensures taxonomies required by the system are not deleted
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    /// <exception cref="Exception"></exception>
+    private void Taxonomy_DeleteBefore(object? sender, ObjectEventArgs args)
+    {
+        if (args.Object is not TaxonomyInfo taxonomy)
+        {
+            return;
+        }
+
+        if (SystemTaxonomies.Includes(taxonomy))
+        {
+            args.Cancel();
+
+            throw new Exception($"Cannot delete required taxonomy '{taxonomy.TaxonomyTitle}'");
+        }
+    }
+
+    /// <summary>
+    /// Ensures tags required by the system are modified in specific ways
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    /// <exception cref="Exception"></exception>
+    private void Tag_ModifyBefore(object? sender, ObjectEventArgs args)
+    {
+        if (args.Object is not TagInfo tag)
+        {
+            return;
+        }
+
+        if (SystemTaxonomies.Includes(tag) &&
+            tag.ChangedColumns().Contains(nameof(TagInfo.TagName)))
+        {
+            args.Cancel();
+
+            throw new Exception($"Cannot modify the name of required tag '{tag.TagTitle}'");
+        }
+    }
+
+    /// <summary>
+    /// Ensures tags required by the system are not deleted
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    /// <exception cref="Exception"></exception>
+    private void Tag_DeleteBefore(object? sender, ObjectEventArgs args)
+    {
+        if (args.Object is not TagInfo tag)
+        {
+            return;
+        }
+
+        if (SystemTaxonomies.Includes(tag))
+        {
+            args.Cancel();
+
+            throw new Exception($"Cannot delete required tag '{tag.TagTitle}'");
         }
     }
 }

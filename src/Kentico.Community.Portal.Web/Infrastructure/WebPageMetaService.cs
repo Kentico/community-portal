@@ -13,8 +13,7 @@ public class WebPageMetaService(
 
     public async Task<Meta> GetMeta()
     {
-        var resp = await mediator.Send(new WebsiteSettingsContentQuery());
-        var settings = resp.Settings;
+        var settings = await mediator.Send(new WebsiteSettingsContentQuery());
 
         string titlePattern = settings.WebsiteSettingsContentPageTitleFormat ?? "{0}";
         string pageTitle = meta.Title;

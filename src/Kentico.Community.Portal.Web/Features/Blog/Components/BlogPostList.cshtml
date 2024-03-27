@@ -10,15 +10,15 @@
             <h3>@Model.Heading</h3>
         }
 
-        <form method="get" id="blog-search-form">
+        <form method="get" id="blogSearchForm">
             <div class="row justify-content-center">
                 <div class="col-sm-10 col-lg-7">
                     <div class="input-group">
                         <input asp-for="@Model.Query" type="text" class="form-control search rounded-pill"
                             placeholder="Search by tag, name or phrase" aria-label="Search"
-                            aria-describedby="blogSearch">
+                            aria-describedby="submitSearch">
                         <button class="btn btn-primary focus-ring text-uppercase" type="submit"
-                            id="blogSearch">Filter</button>
+                            id="submitSearch">Filter</button>
 
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                         </h4>
                     </div>
                     <div class="c-card_footer">
-                        <span class="c-note me-1">Written on @post.Date.ToString("d", View.Culture) by</span>
+                        <small class="me-1">Written on @post.Date.ToString("d", View.Culture) by</small>
                         @if (post.Author.ID > 0)
                         {
                             <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"

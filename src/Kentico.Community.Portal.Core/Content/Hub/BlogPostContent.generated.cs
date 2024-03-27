@@ -19,6 +19,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// <summary>
 	/// Represents a content item of type <see cref="BlogPostContent"/>.
 	/// </summary>
+	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
 	public partial class BlogPostContent : IContentItemFieldsSource
 	{
 		/// <summary>
@@ -30,6 +31,7 @@ namespace Kentico.Community.Portal.Core.Content
 		/// <summary>
 		/// Represents system properties for a content item.
 		/// </summary>
+		[SystemField]
 		public ContentItemFields SystemFields { get; set; }
 
 
@@ -61,6 +63,18 @@ namespace Kentico.Community.Portal.Core.Content
 		/// BlogPostContentTaxonomy.
 		/// </summary>
 		public string BlogPostContentTaxonomy { get; set; }
+
+
+		/// <summary>
+		/// BlogPostContentBlogType.
+		/// </summary>
+		public IEnumerable<TagReference> BlogPostContentBlogType { get; set; }
+
+
+		/// <summary>
+		/// BlogPostcontentDXTopics.
+		/// </summary>
+		public IEnumerable<TagReference> BlogPostcontentDXTopics { get; set; }
 
 
 		/// <summary>

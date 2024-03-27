@@ -9,9 +9,9 @@ public class ResourceHubPageQueryHandler(WebPageQueryTools tools) : WebPageQuery
 {
     public override async Task<ResourceHubPage> Handle(ResourceHubPageQuery request, CancellationToken cancellationToken = default)
     {
-        var b = new ContentItemQueryBuilder().ForWebPage(request.Page.WebsiteChannelName, request.Page);
+        var b = new ContentItemQueryBuilder().ForWebPage(request.Page);
 
-        var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<ResourceHubPage>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetMappedResult<ResourceHubPage>(b, DefaultQueryOptions, cancellationToken);
 
         return r.First();
     }

@@ -57,16 +57,9 @@ public enum HorizontalAlignments
     Center
 }
 
-public class CTAButtonWidgetViewModel
+public class CTAButtonWidgetViewModel(CTAButtonWidgetProperties props)
 {
-    public CTAButtonWidgetViewModel(CTAButtonWidgetProperties props)
-    {
-        Text = props.Text;
-        LinkURL = props.LinkURL;
-        HorizontalAlignment = props.HorizontalAlignmentParsed;
-    }
-
-    public string Text { get; set; } = "";
-    public string LinkURL { get; set; } = "";
-    public HorizontalAlignments HorizontalAlignment { get; set; }
+    public string Text { get; set; } = props.Text;
+    public string LinkURL { get; set; } = props.LinkURL;
+    public HorizontalAlignments HorizontalAlignment { get; set; } = props.HorizontalAlignmentParsed;
 }

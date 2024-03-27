@@ -1,6 +1,7 @@
 using CMS.ContentEngine;
 using CMS.DataEngine;
 using CMS.Membership;
+using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Infrastructure;

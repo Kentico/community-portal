@@ -54,12 +54,10 @@ public class MarkdownRenderer
 /// An explicit type to represent sanitized HTML, likely produced by user input.
 /// Should be generated with <see cref="MarkdownRenderer.Render(string)"/> 
 /// </summary>
-public class HtmlSanitizedHtmlString : IHtmlContent
+public class HtmlSanitizedHtmlString(string rawStr) : IHtmlContent
 {
-    private readonly HtmlString html;
+    private readonly HtmlString html = new(rawStr);
     public static HtmlSanitizedHtmlString Empty { get; } = new("");
-
-    public HtmlSanitizedHtmlString(string rawStr) => html = new(rawStr);
 
     public void WriteTo(TextWriter writer, HtmlEncoder encoder) => html.WriteTo(writer, encoder);
 }

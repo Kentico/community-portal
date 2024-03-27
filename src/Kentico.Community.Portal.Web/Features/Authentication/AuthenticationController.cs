@@ -14,30 +14,20 @@ using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 namespace Kentico.Community.Portal.Web.Features.Authentication;
 
 [Route("[controller]/[action]")]
-public class AuthenticationController : Controller
+public class AuthenticationController(
+    SignInManager<CommunityMember> signInManager,
+    UserManager<CommunityMember> userManager,
+    WebPageMetaService metaService,
+    IStringLocalizer<SharedResources> localizer,
+    IEventLogService log,
+    MemberContactManager contactManager) : Controller
 {
-    private readonly SignInManager<CommunityMember> signInManager;
-    private readonly UserManager<CommunityMember> userManager;
-    private readonly WebPageMetaService metaService;
-    private readonly IStringLocalizer<SharedResources> localizer;
-    private readonly IEventLogService log;
-    private readonly MemberContactManager contactManager;
-
-    public AuthenticationController(
-        SignInManager<CommunityMember> signInManager,
-        UserManager<CommunityMember> userManager,
-        WebPageMetaService metaService,
-        IStringLocalizer<SharedResources> localizer,
-        IEventLogService log,
-        MemberContactManager contactManager)
-    {
-        this.localizer = localizer;
-        this.signInManager = signInManager;
-        this.userManager = userManager;
-        this.log = log;
-        this.contactManager = contactManager;
-        this.metaService = metaService;
-    }
+    private readonly SignInManager<CommunityMember> signInManager = signInManager;
+    private readonly UserManager<CommunityMember> userManager = userManager;
+    private readonly WebPageMetaService metaService = metaService;
+    private readonly IStringLocalizer<SharedResources> localizer = localizer;
+    private readonly IEventLogService log = log;
+    private readonly MemberContactManager contactManager = contactManager;
 
     [HttpGet]
     public ActionResult Login()

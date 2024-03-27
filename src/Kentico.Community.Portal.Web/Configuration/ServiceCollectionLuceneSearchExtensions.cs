@@ -1,4 +1,5 @@
 ﻿using Kentico.Community.Portal.Web.Features.Blog;
+using Kentico.Community.Portal.Web.Features.Blog.Components;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 
@@ -17,6 +18,7 @@ public static class ServiceCollectionLuceneSearchExtensions
             .AddSingleton<WebScraperHtmlSanitizer>()
             .AddHttpClient<WebCrawlerService>()
             .Services
-            .AddSingleton<SearchService>()
+            .AddSingleton<BlogSearchService>()
+            .AddSingleton<QAndASearchService>()
             .Configure<CommunityLuceneSearchOptions>(config.GetSection("Kentico.Xperience.Lucene.Custom"));
 }

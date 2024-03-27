@@ -20,12 +20,10 @@ namespace Kentico.Community.Portal.Web.Components.Widgets.CookiePreferences;
 /// <summary>
 /// Controller for form support widget.
 /// </summary>
-public class CookiePreferencesWidget : ViewComponent
+public class CookiePreferencesWidget(ICookieAccessor cookies) : ViewComponent
 {
     public const string Identifier = "CommunityPortal.CookiePreferences";
-    private readonly ICookieAccessor cookies;
-
-    public CookiePreferencesWidget(ICookieAccessor cookies) => this.cookies = cookies;
+    private readonly ICookieAccessor cookies = cookies;
 
     public ViewViewComponentResult Invoke(CookiePreferencesWidgetProperties properties)
     {

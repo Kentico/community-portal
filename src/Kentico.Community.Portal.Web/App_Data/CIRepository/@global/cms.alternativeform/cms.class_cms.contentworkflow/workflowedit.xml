@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>CMS.ContentWorkflow</CodeName>
+    <GUID>226c0c62-ddd7-4a86-84e6-310e828ed530</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="ContentWorkflowID" guid="bf9bbe52-14eb-4cbd-9a3a-3c1d8728f627" enabled="" />
+      <field column="ContentWorkflowGUID" guid="df05d76e-d4a2-4aeb-8f06-78466e8861a4" enabled="" order="1" />
+      <field column="ContentWorkflowLastModified" guid="0cc9624c-4344-43cb-8e43-ab34a26199fa" enabled="" order="2" />
+      <field column="ContentWorkflowDisplayName" enabled="true" guid="fe6aa05d-ca09-448a-8d49-04e0cd570f21" visible="true" order="3">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.workflows.workflow.displayname$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ContentWorkflowName" enabled="true" guid="16db9fe8-1ef7-4bc4-9caf-3ea46794a011" visible="true" order="4">
+        <settings>
+          <controlname>Kentico.Administration.CodeName</controlname>
+          <HasAutomaticCodeNameGenerationOption>False</HasAutomaticCodeNameGenerationOption>
+          <IsCollapsed>True</IsCollapsed>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.workflows.workflow.codename$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Workflow edit</FormDisplayName>
+  <FormGUID>0a670631-1aff-4bf8-981d-20a2a46047a9</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>WorkflowEdit</FormName>
+</cms.alternativeform>

@@ -1,30 +1,31 @@
-ol, ul{
+ol,
+ul {
   padding-left: 2.5rem;
 }
 
-.c-ul{
-  &.default{
+.licenses-list {
+  &.default {
     list-style: none;
     position: relative;
-    li{
+    li {
       position: relative;
-      &:before{
-        content: '';
-        width: .25rem;
-        height: .25rem;
+      &:before {
+        content: "";
+        width: 0.25rem;
+        height: 0.25rem;
         border-radius: 50%;
         background: $black;
 
         position: absolute;
         display: block;
         left: -1.125rem;
-        top: .625rem;
+        top: 0.625rem;
       }
 
-      &>.c-ul{
-        &.default{
-          li{
-            &:before{
+      & > .licenses-list {
+        &.default {
+          li {
+            &:before {
               background: transparent;
               border: 1px solid $black;
             }

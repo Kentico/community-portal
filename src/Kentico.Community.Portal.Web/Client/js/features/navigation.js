@@ -17,16 +17,16 @@ export default function setup() {
 
   var navbarNavDropdown = document.getElementById("navbarNavDropdown");
   navbarNavDropdown.addEventListener("hidden.bs.collapse", function (event) {
-    document.querySelector(".c-header").classList.remove("mobile-nav-open");
+    document.querySelector("#header").classList.remove("mobile-nav-open");
   });
   navbarNavDropdown.addEventListener("hide.bs.collapse", function (event) {
-    document.querySelector(".c-header").classList.remove("mobile-nav-open");
+    document.querySelector("#header").classList.remove("mobile-nav-open");
   });
   navbarNavDropdown.addEventListener("shown.bs.collapse", function (event) {
-    document.querySelector(".c-header").classList.add("mobile-nav-open");
+    document.querySelector("#header").classList.add("mobile-nav-open");
   });
   navbarNavDropdown.addEventListener("show.bs.collapse", function (event) {
-    document.querySelector(".c-header").classList.add("mobile-nav-open");
+    document.querySelector("#header").classList.add("mobile-nav-open");
   });
 }
 
@@ -49,9 +49,9 @@ const hideHeaderDropdownBg = () => {
 
 const stickyHeader = () => {
   if (window.scrollY > 20) {
-    document.getElementsByClassName("c-header")[0].classList.add("scrolled");
+    document.querySelector("#header").classList.add("scrolled");
   } else {
-    document.getElementsByClassName("c-header")[0].classList.remove("scrolled");
+    document.querySelector("#header").classList.remove("scrolled");
   }
 };
 
@@ -95,8 +95,8 @@ function getCookie(cname) {
 }
 
 function initialiseCookiePreferences() {
-  const options = document.getElementsByClassName("cookie-preferences__option");
-  const rangeInput = document.getElementById("CookieLevelSelected");
+  const options = document.querySelectorAll(".cookie-preferences__option");
+  const rangeInput = document.querySelector("#CookieLevelSelected");
 
   // Setup options
   for (let i = 0; i < options.length; i++) {
@@ -123,7 +123,7 @@ function initialiseCookiePreferences() {
 
 // Select range option based on option click
 function selectOption(option) {
-  const rangeInput = document.getElementById("CookieLevelSelected");
+  const rangeInput = document.querySelector("#CookieLevelSelected");
   const optionValue = option.getAttribute("data-value");
   rangeInput.value = optionValue;
   changeRange();
@@ -131,8 +131,8 @@ function selectOption(option) {
 
 // Fill proper space in range input
 function changeRange() {
-  const rangeInput = document.getElementById("CookieLevelSelected");
-  const rangeFill = document.getElementById("range-fill");
+  const rangeInput = document.querySelector("#CookieLevelSelected");
+  const rangeFill = document.querySelector("#range-fill");
   let percent = (parseInt(rangeInput.value) - 1) * 33;
   if (percent < 5) percent += 5;
 

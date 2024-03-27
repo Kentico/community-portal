@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>KenticoCommunity.SupportRequestProcessingEvent</CodeName>
+    <GUID>e289d712-e4c1-4e60-ba93-44bdeb10ba65</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="SupportRequestProcessingEventID" guid="58b8c70c-ed57-4dd1-9b10-500a2f033a5e" enabled="" />
+      <field column="SupportRequestProcessingEventLastModified" guid="c2f489c9-06a8-4712-a48f-bf3477a792f4" enabled="" />
+      <field column="SupportRequestProcessingEventMessageID" guid="b5a1c88d-6881-40d0-bd67-96d69933391d" enabled="" />
+      <field column="SupportRequestProcessingEventStatus" enabled="true" guid="a9548d41-2667-42cc-851d-005f2d65c0da" visible="true" order="3">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Status</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="SupportRequestProcessingEventMessage" enabled="true" guid="16db6aa5-9128-4166-a9dd-4ea793befab6" visible="true" order="4">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Message</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit</FormDisplayName>
+  <FormGUID>0e5140bb-28f8-40c7-9fc3-8d01741344c4</FormGUID>
+  <FormIsCustom>True</FormIsCustom>
+  <FormName>edit</FormName>
+</cms.alternativeform>

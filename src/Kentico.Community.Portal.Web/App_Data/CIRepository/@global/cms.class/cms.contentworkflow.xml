@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Content workflow</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentWorkflowID" columntype="integer" enabled="true" guid="bf9bbe52-14eb-4cbd-9a3a-3c1d8728f627" isPK="true" system="true" />
+      <field column="ContentWorkflowName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="16db9fe8-1ef7-4bc4-9caf-3ea46794a011" system="true" />
+      <field column="ContentWorkflowDisplayName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="fe6aa05d-ca09-448a-8d49-04e0cd570f21" system="true" />
+      <field column="ContentWorkflowGUID" columnprecision="0" columntype="guid" enabled="true" guid="df05d76e-d4a2-4aeb-8f06-78466e8861a4" system="true" />
+      <field column="ContentWorkflowLastModified" columnprecision="7" columntype="datetime" enabled="true" guid="0cc9624c-4344-43cb-8e43-ab34a26199fa" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>226c0c62-ddd7-4a86-84e6-310e828ed530</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ContentWorkflow</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentWorkflowEngine</CodeName>
+    <GUID>c59d2e7e-4d32-41c9-809f-79e0b9bf8883</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ContentWorkflow</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

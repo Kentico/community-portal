@@ -1,4 +1,5 @@
 ﻿using CMS.ContactManagement;
+using CMS.DataEngine;
 using CMS.DataProtection;
 using CMS.Helpers;
 using Kentico.Web.Mvc;
@@ -8,28 +9,20 @@ namespace Kentico.Community.Portal.Web.Features.DataCollection;
 /// <summary>
 /// Provides functionality for retrieving consents for contact.
 /// </summary>
-public class CookieConsentManager
+public class CookieConsentManager(
+    IInfoProvider<ConsentInfo> consentInfoProvider,
+    IConsentAgreementService consentAgreementService,
+    ICurrentCookieLevelProvider currentCookieLevelProvider,
+    ICookieAccessor cookies)
 {
     private const string PREFERENCE_COOKIES_CONSENT_NAME = "CookiesPreference";
     private const string ANALYTICAL_COOKIES_CONSENT_NAME = "CookiesAnalytical";
     private const string MARKETING_COOKIES_CONSENT_NAME = "CookiesMarketing";
 
-    private readonly IConsentInfoProvider consentInfoProvider;
-    private readonly IConsentAgreementService consentAgreementService;
-    private readonly ICurrentCookieLevelProvider currentCookieLevelProvider;
-    private readonly ICookieAccessor cookies;
-
-    public CookieConsentManager(
-        IConsentInfoProvider consentInfoProvider,
-        IConsentAgreementService consentAgreementService,
-        ICurrentCookieLevelProvider currentCookieLevelProvider,
-        ICookieAccessor cookies)
-    {
-        this.consentInfoProvider = consentInfoProvider;
-        this.consentAgreementService = consentAgreementService;
-        this.currentCookieLevelProvider = currentCookieLevelProvider;
-        this.cookies = cookies;
-    }
+    private readonly IInfoProvider<ConsentInfo> consentInfoProvider = consentInfoProvider;
+    private readonly IConsentAgreementService consentAgreementService = consentAgreementService;
+    private readonly ICurrentCookieLevelProvider currentCookieLevelProvider = currentCookieLevelProvider;
+    private readonly ICookieAccessor cookies = cookies;
 
     /// <summary>
     /// Sets current cookie consent level, internally sets system CookieLevel and agrees or revokes profiling consent.

@@ -63,8 +63,46 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
-          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
-          <ObjectType>CMS.Member</ObjectType>
+          <controlname>Kentico.Administration.NumberInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="QAndAQuestionPageDiscussionType" columnprecision="0" columntype="taxonomy" enabled="true" guid="22ef0471-1e20-432b-9af4-fd7004dcfbda" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Discussion Type</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TagSelector</controlname>
+          <MaxSelectedTagsCount>1</MaxSelectedTagsCount>
+          <MinSelectedTagsCount>1</MinSelectedTagsCount>
+          <TaxonomyGroup>
+            <![CDATA[["0b38791a-e864-492b-b245-a6b3f3fea46c"]]]>
+          </TaxonomyGroup>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues>
+              <ErrorMessage>
+                <![CDATA[A Q&A Discussion Type must be selected]]>
+              </ErrorMessage>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field allowempty="true" column="QAndAQuestionPageDXTopics" columnprecision="0" columntype="taxonomy" enabled="true" guid="f3cfe649-5652-46d2-8fe8-a848f39c0fbd" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>DX Topics</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TagSelector</controlname>
+          <MaxSelectedTagsCount>8</MaxSelectedTagsCount>
+          <TaxonomyGroup>
+            <![CDATA[["72f39193-9dee-45df-9138-730ed4445858"]]]>
+          </TaxonomyGroup>
         </settings>
       </field>
       <field allowempty="true" column="QAndAQuestionPageAcceptedAnswerDataGUID" columnprecision="0" columntype="guid" enabled="true" guid="d650da7d-7e2f-4103-9c9f-ed53c5413753" />

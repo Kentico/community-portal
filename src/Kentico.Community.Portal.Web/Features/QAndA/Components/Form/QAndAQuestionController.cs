@@ -1,6 +1,7 @@
 ﻿using CMS.Membership;
 using CMS.Websites.Routing;
 using Htmx;
+using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Content.Web.Mvc;
 using Kentico.Xperience.Admin.Base;
@@ -49,7 +50,8 @@ public class QAndAQuestionController(
             questionParent,
             channelContext.WebsiteChannelID,
             requestModel.Title,
-            requestModel.Content));
+            requestModel.Content,
+            SystemTaxonomies.QAndADiscussionTypeTaxonomy.QuestionTag.GUID));
 
         Response.Htmx(h => h.Redirect("/q-and-a"));
 

@@ -1,3 +1,4 @@
+using System.Text.Json;
 using CMS.ContentEngine;
 using CMS.DataEngine;
 using CMS.Membership;
@@ -13,7 +14,8 @@ public record QAndAQuestionCreateCommand(
     QAndAQuestionsRootPage QuestionParent,
     int WebsiteChannelID,
     string QuestionTitle,
-    string QuestionContent) : ICommand<int>;
+    string QuestionContent,
+    Guid DiscussionTypeTagIdentifier) : ICommand<int>;
 public class QAndAQuestionCreateCommandHandler(
     WebPageCommandTools tools,
     IInfoProvider<UserInfo> users,
@@ -43,6 +45,7 @@ public class QAndAQuestionCreateCommandHandler(
             { nameof(QAndAQuestionPage.QAndAQuestionPageContent), request.QuestionContent },
             { nameof(QAndAQuestionPage.QAndAQuestionPageAuthorMemberID), request.MemberAuthor.Id },
             { nameof(QAndAQuestionPage.QAndAQuestionPageAcceptedAnswerDataGUID), Guid.Empty },
+            { nameof(QAndAQuestionPage.QAndAQuestionPageDiscussionType), JsonSerializer.Serialize<IEnumerable<TagReference>>([new TagReference { Identifier = request.DiscussionTypeTagIdentifier }]) },
         });
         var contentItemParameters = new ContentItemParameters(QAndAQuestionPage.CONTENT_TYPE_NAME, itemData);
         var webPageParameters = new CreateWebPageParameters(codeName, displayName, PortalWebSiteChannel.DEFAULT_LANGUAGE, contentItemParameters)

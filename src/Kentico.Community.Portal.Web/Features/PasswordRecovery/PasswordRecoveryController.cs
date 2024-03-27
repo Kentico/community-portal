@@ -12,35 +12,25 @@ using Microsoft.Extensions.Options;
 namespace Kentico.Community.Portal.Web.Features.PasswordRecovery;
 
 [Route("[controller]/[action]")]
-public class PasswordRecoveryController : Controller
+public class PasswordRecoveryController(
+    UserManager<CommunityMember> userManager,
+    SignInManager<CommunityMember> signInManager,
+    IStringLocalizer<SharedResources> localizer,
+    IOptions<SystemEmailOptions> systemEmailOptions,
+    IEmailService emailService,
+    WebPageMetaService metaService) : Controller
 {
     /**
      * TODO: update View Location Expander to find this via conventions
      */
     private const string VIEW_PATH_ERROR = "~/Features/PasswordRecovery/ResetPasswordError.cshtml";
 
-    private readonly IStringLocalizer<SharedResources> localizer;
-    private readonly IEmailService emailService;
-    private readonly SystemEmailOptions systemEmailOptions;
-    private readonly UserManager<CommunityMember> userManager;
-    private readonly SignInManager<CommunityMember> signInManager;
-    private readonly WebPageMetaService metaService;
-
-    public PasswordRecoveryController(
-        UserManager<CommunityMember> userManager,
-        SignInManager<CommunityMember> signInManager,
-        IStringLocalizer<SharedResources> localizer,
-        IOptions<SystemEmailOptions> systemEmailOptions,
-        IEmailService emailService,
-        WebPageMetaService metaService)
-    {
-        this.userManager = userManager;
-        this.signInManager = signInManager;
-        this.localizer = localizer;
-        this.emailService = emailService;
-        this.systemEmailOptions = systemEmailOptions.Value;
-        this.metaService = metaService;
-    }
+    private readonly IStringLocalizer<SharedResources> localizer = localizer;
+    private readonly IEmailService emailService = emailService;
+    private readonly SystemEmailOptions systemEmailOptions = systemEmailOptions.Value;
+    private readonly UserManager<CommunityMember> userManager = userManager;
+    private readonly SignInManager<CommunityMember> signInManager = signInManager;
+    private readonly WebPageMetaService metaService = metaService;
 
     /// <summary>
     /// Step 1

@@ -32,7 +32,8 @@ namespace Kentico.Community.Portal.Core.Modules
             ContinuousIntegrationSettings =
             {
                 Enabled = true
-            }
+            },
+            SensitiveColumns = [nameof(SupportRequestConfigurationExternalEndpointURL)]
         };
 
 

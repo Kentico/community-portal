@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>CMS.Tag</CodeName>
+    <GUID>2fa0e7c3-f936-472f-86d9-566eec1206b9</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="TagID" guid="49488183-374f-4b84-bb96-791a2c0caaa5" enabled="" />
+      <field column="TagGUID" guid="b8641bf6-0eb8-4140-97b2-1986411517e2" enabled="" order="1" />
+      <field column="TagTaxonomyID" guid="c8c371ed-af18-4e61-895f-d8d8c08d221f" enabled="" order="2" />
+      <field column="TagParentID" guid="13443756-c04a-49dc-93f3-d6a4a6755eb6" enabled="" order="3" />
+      <field column="TagOrder" guid="c1a01296-d2c6-4929-a3c8-eb5cb8553d68" enabled="" order="4" />
+      <field column="TagMetadata" guid="be10f346-5fb7-41af-9774-4cbdec32872b" enabled="" order="5" />
+      <field column="TagLastModified" guid="70b41747-b62d-42e5-a965-db7a0804c0b9" enabled="" order="6" />
+      <field column="TagTitle" enabled="true" guid="7a5ae9f3-b183-4a05-9269-40566f371593" visible="true" order="7">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$contentengine.taxonomy.tag.edit.title$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="TagName" enabled="true" guid="db2cd7c0-b8df-4ae9-a3fb-cff6a6cf66b8" visible="true" order="8">
+        <settings>
+          <controlname>Kentico.Administration.CodeName</controlname>
+          <HasAutomaticCodeNameGenerationOption>False</HasAutomaticCodeNameGenerationOption>
+          <IsCollapsed>True</IsCollapsed>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$contentengine.taxonomy.tag.edit.codename$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="TagDescription" enabled="true" guid="cd5b6fd9-62c7-4c97-960a-03253488181f" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$contentengine.taxonomy.tag.edit.description$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Tag edit</FormDisplayName>
+  <FormGUID>a5d6197c-f44f-40f9-8cef-21cebd9f16d7</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>edit</FormName>
+</cms.alternativeform>

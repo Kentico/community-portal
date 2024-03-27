@@ -46,10 +46,8 @@ public record BlogPostPagesByWebPageIDQuery(int[] WebPageIDs, string ChannelName
 {
     public string CacheValueKey => string.Join(",", WebPageIDs);
 }
-public class BlogPostPagesByWebPageIDQueryHandler : ContentItemQueryHandler<BlogPostPagesByWebPageIDQuery, BlogPostPagesQueryResponse>
+public class BlogPostPagesByWebPageIDQueryHandler(ContentItemQueryTools tools) : ContentItemQueryHandler<BlogPostPagesByWebPageIDQuery, BlogPostPagesQueryResponse>(tools)
 {
-    public BlogPostPagesByWebPageIDQueryHandler(ContentItemQueryTools tools) : base(tools) { }
-
     public override async Task<BlogPostPagesQueryResponse> Handle(BlogPostPagesByWebPageIDQuery request, CancellationToken cancellationToken = default)
     {
         var b = new ContentItemQueryBuilder().ForContentType(BlogPostPage.CONTENT_TYPE_NAME, queryParameters =>

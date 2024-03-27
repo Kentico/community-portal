@@ -9,9 +9,9 @@ public class CommunityLandingPageQueryHandler(WebPageQueryTools tools) : WebPage
 {
     public override async Task<CommunityLandingPage> Handle(CommunityLandingPageQuery request, CancellationToken cancellationToken = default)
     {
-        var b = new ContentItemQueryBuilder().ForWebPage(request.Page.WebsiteChannelName, request.Page);
+        var b = new ContentItemQueryBuilder().ForWebPage(request.Page);
 
-        var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<CommunityLandingPage>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetMappedWebPageResult<CommunityLandingPage>(b, DefaultQueryOptions, cancellationToken);
 
         return r.First();
     }

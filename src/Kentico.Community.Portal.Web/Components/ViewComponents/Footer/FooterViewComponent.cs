@@ -5,11 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Components.ViewComponents.Footer;
 
-public class FooterViewComponent : ViewComponent
+public class FooterViewComponent(IMediator mediator) : ViewComponent
 {
-    private readonly IMediator mediator;
-
-    public FooterViewComponent(IMediator mediator) => this.mediator = mediator;
+    private readonly IMediator mediator = mediator;
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
@@ -22,12 +20,9 @@ public class FooterViewComponent : ViewComponent
 public record FooterViewModel(string XperienceVersion);
 
 public record SettingXperienceVersionQuery : IQuery<string>;
-public class SettingXperienceVersionQueryHandler : DataItemQueryHandler<SettingXperienceVersionQuery, string>
+public class SettingXperienceVersionQueryHandler(DataItemQueryTools tools, ISettingsKeyInfoProvider settings) : DataItemQueryHandler<SettingXperienceVersionQuery, string>(tools)
 {
-    private readonly ISettingsKeyInfoProvider settings;
-
-    public SettingXperienceVersionQueryHandler(DataItemQueryTools tools, ISettingsKeyInfoProvider settings) : base(tools) =>
-        this.settings = settings;
+    private readonly ISettingsKeyInfoProvider settings = settings;
 
     public override async Task<string> Handle(SettingXperienceVersionQuery request, CancellationToken cancellationToken)
     {

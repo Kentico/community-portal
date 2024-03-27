@@ -6,22 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kentico.Community.Portal.Web.Features.DataCollection;
 
 [Route("[controller]/[action]")]
-public class CookiesController : Controller
+public class CookiesController(
+    CookieConsentManager cookieConsentManager,
+    ICookieAccessor cookies,
+    ISystemClock clock) : Controller
 {
     public const string ROUTE_SET_PREFERENCES = nameof(ROUTE_SET_PREFERENCES);
-    private readonly CookieConsentManager cookieConsentManager;
-    private readonly ICookieAccessor cookies;
-    private readonly ISystemClock clock;
-
-    public CookiesController(
-        CookieConsentManager cookieConsentManager,
-        ICookieAccessor cookies,
-        ISystemClock clock)
-    {
-        this.cookieConsentManager = cookieConsentManager;
-        this.cookies = cookies;
-        this.clock = clock;
-    }
+    private readonly CookieConsentManager cookieConsentManager = cookieConsentManager;
+    private readonly ICookieAccessor cookies = cookies;
+    private readonly ISystemClock clock = clock;
 
     [HttpPost(Name = ROUTE_SET_PREFERENCES)]
     public IActionResult CookiePreferences(CookieBannerCompleteViewModel requestModel)

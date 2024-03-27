@@ -21,7 +21,7 @@
                         </h4>
                     </div>
                     <div class="c-card_footer">
-                        <span class="c-note me-1">Written on @post.Date.ToString("d", View.Culture) by</span>
+                        <small class="me-1">Written on @post.Date.ToString("d", View.Culture) by</small>
                         @if (post.Author.ID > 0)
                         {
                             <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
@@ -75,16 +75,23 @@
                     }
                 </div>
                 <h3 class="h3 mt-2 pt-1">@post.Title</h3>
-                <p class="c-note m-0">@post.Date.ToString("d", View.Culture)</p>
-                <p class="c-note">by
-                    @if (post.Author.ID > 0)
-                    {
-                        <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID">@post.Author.Name</a>
-                    }
-                    else
-                    {
-                        @post.Author.Name
-                    }
+                <p class="m-0">
+                    <small>
+                        @post.Date.ToString("d", View.Culture)
+                    </small>
+                </p>
+                <p>
+                    <small>
+                        by
+                        @if (post.Author.ID > 0)
+                        {
+                            <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID">@post.Author.Name</a>
+                        }
+                        else
+                        {
+                            @post.Author.Name
+                        }
+                    </small>
                 </p>
                 <p class="mt-2">@post.ShortDescription</p>
 

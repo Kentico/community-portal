@@ -71,6 +71,9 @@ public class CaptchaValidationResult
     public string? ErrorMessage { get; set; }
 }
 
+/// <summary>
+/// TODO: Switch to WebsiteCaptchaSettingsInfo
+/// </summary>
 public class ReCaptchaSettings
 {
     /// <summary>

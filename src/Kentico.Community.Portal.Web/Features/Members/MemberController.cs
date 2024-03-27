@@ -1,7 +1,7 @@
 using Kentico.Community.Portal.Web.Features.Blog;
+using Kentico.Community.Portal.Web.Features.Blog.Components;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Infrastructure;
-using Kentico.Community.Portal.Web.Infrastructure.Search;
 using Kentico.Community.Portal.Web.Membership;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +12,13 @@ namespace Kentico.Community.Portal.Web.Features.Members;
 public class MemberController(
     IMediator mediator,
     WebPageMetaService metaService,
-    SearchService search) : Controller
+    BlogSearchService blogSearchService,
+    QAndASearchService qAndASearchService) : Controller
 {
     private readonly IMediator mediator = mediator;
     private readonly WebPageMetaService metaService = metaService;
-    private readonly SearchService search = search;
+    private readonly BlogSearchService search = blogSearchService;
+    private readonly QAndASearchService qAndASearchService = qAndASearchService;
 
     [HttpGet("{memberID:int}")]
     public async Task<IActionResult> MemberDetail(int memberID)
@@ -37,7 +39,7 @@ public class MemberController(
             AuthorMemberID = member.Id
         });
 
-        var qandaResult = search.SearchQAndA(new QAndASearchRequest("date", 50)
+        var qandaResult = qAndASearchService.SearchQAndA(new QAndASearchRequest("date", 50)
         {
             AuthorMemberID = member.Id,
         });

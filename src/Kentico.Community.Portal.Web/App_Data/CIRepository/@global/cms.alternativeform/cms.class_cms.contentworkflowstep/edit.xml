@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>CMS.ContentWorkflowStep</CodeName>
+    <GUID>fe60b6f7-0032-4c4e-a25a-f9e43ddd791e</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="ContentWorkflowStepID" guid="f27be28c-5cab-4c1c-8f5c-a881161546d1" enabled="" />
+      <field column="ContentWorkflowStepGUID" guid="e9b42a1e-a1e3-471b-bac3-8aaf9846c445" enabled="" />
+      <field column="ContentWorkflowStepWorkflowID" guid="cc0d274f-a504-421a-a636-55b82487fc9e" enabled="" />
+      <field column="ContentWorkflowStepLastModified" guid="9fe1f107-4cdd-4332-90fe-1f56f59974a8" enabled="" />
+      <field column="ContentWorkflowStepOrder" guid="a62ac973-3d4a-46d9-9d19-e0a8ea063fe2" enabled="" order="4" />
+      <field column="ContentWorkflowStepType" guid="79d52039-1374-46e7-8dbb-f1e624906a27" enabled="" order="5" />
+      <field column="ContentWorkflowStepDisplayName" enabled="true" guid="9d796ec4-27d9-4186-a303-6eb3c455d048" visible="true" order="6">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$base.workflows.workflow.step.displayname.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ContentWorkflowStepName" enabled="true" guid="b67ea7c4-73d3-45c0-95e2-fbb04be1666a" visible="true" order="7">
+        <settings>
+          <controlname>Kentico.Administration.CodeName</controlname>
+          <HasAutomaticCodeNameGenerationOption>True</HasAutomaticCodeNameGenerationOption>
+          <IsCollapsed>True</IsCollapsed>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.workflows.workflow.step.name.caption$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ContentWorkflowStepIconClass" enabled="true" guid="908652d2-8f3f-48d9-a89c-fcdcc4365765" visible="true" order="8">
+        <settings>
+          <controlname>Kentico.Administration.IconSelector</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.workflows.workflow.step.icon.caption$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <category name="Security_and_behavior" order="9">
+        <properties>
+          <caption>
+            <![CDATA[{$base.workflows.workflow.step.securityandbehavior.caption$}]]>
+          </caption>
+          <visible>true</visible>
+        </properties>
+      </category>
+      <field column="ContentWorkflowStepRole" columnprecision="0" columntype="objectids" dummy="altform" enabled="true" guid="bc2c2a4a-b0b0-47b5-8582-0ec9808578c6" system="true" visible="true" order="10">
+        <properties>
+          <explanationtext>
+            <![CDATA[{$base.workflows.workflow.step.roles.explanationtext$}]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.workflows.workflow.step.roles.caption$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectIdSelector</controlname>
+          <MaximumItems>0</MaximumItems>
+          <ObjectType>cms.role</ObjectType>
+        </settings>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit</FormDisplayName>
+  <FormGUID>8da587a9-88a2-4140-8687-e7dd5be295d4</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>Edit</FormName>
+</cms.alternativeform>

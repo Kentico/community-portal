@@ -6,10 +6,13 @@
     var guid = $"{Model.GUID:N}";
     string wrapperElId = $"answer_{guid}";
     string markAnswerFormElId = $"markAsAnswerForm_{guid}";
+    string acceptedAnswerStyles = Model.IsAcceptedAnswer
+    ? "default-border success"
+    : "";
 }
 
-<div id="@wrapperElId" class="my-3 target-bg p-2 rounded" style="--bg-target: var(--bg-purple-100)">
-    <div class="c-card p-0">
+<div id="@wrapperElId" class="my-3 target-bg rounded" style="--bg-target: var(--bs-purple-100)">
+    <div class="c-card p-0 p-2 @acceptedAnswerStyles">
         <div class="c-card_inner">
 
             <div class="c-card_content">

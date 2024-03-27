@@ -3,7 +3,6 @@
   color: inherit;
   text-decoration: inherit;
   font-size: 0.875rem;
-  // background-color: $white;
   transition: 0.2s background-color ease;
   padding: 1rem;
 
@@ -135,7 +134,7 @@
         }
       }
     }
-    .c-note {
+    small {
       font-size: 0.75rem;
     }
     &.nopic {
@@ -166,7 +165,7 @@
         }
         &_footer {
           justify-content: flex-end;
-          .c-note {
+          small {
             white-space: nowrap;
           }
         }
@@ -192,68 +191,6 @@
                 "card-tags card-footer";
             }
           }
-        }
-      }
-    }
-  }
-
-  &.widget-detail {
-    padding: 1.5rem;
-    .c-group.tags {
-      flex-wrap: wrap;
-      .c-tag {
-        margin-top: 0.5rem;
-      }
-    }
-    .c-card {
-      &_inner {
-        &.grid {
-          gap: 0.5rem;
-          grid-template-columns: 100%;
-          grid-template-rows: 40px auto;
-          grid-template-areas: "card-icon" "card-content";
-        }
-      }
-      &_icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 0.75rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        img {
-          width: 40px;
-          height: 40px;
-          border-radius: 0.75rem;
-        }
-      }
-      &_content {
-        padding-top: 0.625rem;
-      }
-    }
-    .c-note {
-      font-size: 0.875rem;
-    }
-    @include media-breakpoint-up(sm) {
-      .c-card {
-        &_inner.grid {
-          gap: 0.75rem;
-          grid-template-columns: 64px auto;
-          grid-template-rows: auto;
-          grid-template-areas: "card-icon card-content";
-        }
-        &_icon {
-          width: 56px;
-          height: 56px;
-          border-radius: 1rem;
-          img {
-            width: 56px;
-            height: 56px;
-            border-radius: 1rem;
-          }
-        }
-        &_content {
-          padding-top: 0;
         }
       }
     }
@@ -326,7 +263,6 @@
     }
   }
 
-  &.leaderboard,
   &.author {
     h2,
     .h2,
@@ -342,9 +278,7 @@
         }
       }
     }
-  }
 
-  &.author {
     .c-card {
       &_inner.grid {
         gap: 1rem;
@@ -468,105 +402,14 @@
     }
   }
 
-  &.leaderboard {
-    .c-card {
-      &_inner.grid {
-        gap: 0.5rem;
-        grid-template-columns: 0.875rem 2rem auto 4rem;
-        grid-template-areas: "card-num card-icon card-content card-footer";
-      }
-      &_icon {
-        align-self: center;
-        img {
-          width: 2rem;
-          height: 2rem;
-        }
-      }
-      &_footer {
-        text-align: right;
-      }
-    }
-    @include media-breakpoint-down(sm) {
-      border: none;
-      position: relative;
-      &:before,
-      &:after {
-        content: "";
-        display: block;
-        position: absolute;
-        height: 0;
-        border-top: 1px solid $gray-200;
-        left: -50%;
-        right: -50%;
-      }
-      &:before {
-        top: 0;
-      }
-      &:after {
-        bottom: 0;
-      }
-      & + & {
-        &:before {
-          content: none;
-          display: none;
-        }
-      }
-      .c-card {
-        &_num {
-          justify-content: flex-start;
-          font-size: 0.875rem;
-        }
-        &_content {
-          h4,
-          .h4 {
-            font-size: 0.875rem;
-          }
-          p {
-            font-size: 0.75rem;
-          }
-        }
-      }
-    }
-    @include media-breakpoint-up(sm) {
-      .c-card {
-        &_inner.grid {
-          gap: 1rem;
-          grid-template-columns: 1.25rem 3.5rem auto 5rem;
-          grid-template-areas: "card-num card-icon card-content card-footer";
-        }
-        &_icon {
-          img {
-            width: 3.5rem;
-            height: 3.5rem;
-          }
-        }
-      }
-    }
-  }
-
   &.large {
-    border-radius: $border-radius-lg;
     @include media-breakpoint-up(md) {
-      padding: 2.75rem 2.5rem 3.75rem;
-    }
-
-    &.secondary {
-      background: $secondary;
-      color: $white;
+      padding: 2rem;
     }
   }
 
-  &.version {
-    aspect-ratio: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0.625rem;
-    text-align: center;
-    border-radius: $border-radius;
-    &.active {
-      border-color: $secondary;
-    }
+  &.bg-secondary {
+    background: $secondary;
+    color: $white;
   }
 }

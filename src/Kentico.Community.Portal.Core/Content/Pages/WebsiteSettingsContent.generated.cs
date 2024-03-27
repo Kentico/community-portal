@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using CMS.ContentEngine;
 using CMS.Websites;
 using CMS.MediaLibrary;
 
@@ -19,6 +20,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// <summary>
 	/// Represents a page of type <see cref="WebsiteSettingsContent"/>.
 	/// </summary>
+	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
 	public partial class WebsiteSettingsContent : IWebPageFieldsSource
 	{
 		/// <summary>
@@ -30,6 +32,7 @@ namespace Kentico.Community.Portal.Core.Content
 		/// <summary>
 		/// Represents system properties for a web page item.
 		/// </summary>
+		[SystemField]
 		public WebPageFields SystemFields { get; set; }
 
 

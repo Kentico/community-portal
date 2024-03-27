@@ -34,16 +34,18 @@
                                     <text>@item.CommunityGroupContentTitle</text>
                                 }
                             </h3>
-                            <p class="c-note mt-2">
-                                @if (!string.IsNullOrWhiteSpace(item.CommunityGroupContentAddressStateOrProvince))
-                                {
-                                    <text>@item.CommunityGroupContentAddressCity, @item.CommunityGroupContentAddressStateOrProvince,</text>
-                                }
-                                else
-                                {
-                                    <text>@item.CommunityGroupContentAddressCity,</text>
-                                }
-                                @item.CommunityGroupContentAddressCountry
+                            <p class="mt-2">
+                                <small>
+                                    @if (!string.IsNullOrWhiteSpace(item.CommunityGroupContentAddressStateOrProvince))
+                                    {
+                                        <text>@item.CommunityGroupContentAddressCity, @item.CommunityGroupContentAddressStateOrProvince,</text>
+                                    }
+                                    else
+                                    {
+                                        <text>@item.CommunityGroupContentAddressCity,</text>
+                                    }
+                                    @item.CommunityGroupContentAddressCountry
+                                </small>
                             </p>
                             <p class="mt-2">@item.CommunityGroupContentShortDescription</p>
                         </div>

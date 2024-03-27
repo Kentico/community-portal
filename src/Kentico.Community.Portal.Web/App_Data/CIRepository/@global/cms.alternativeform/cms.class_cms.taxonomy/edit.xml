@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>CMS.Taxonomy</CodeName>
+    <GUID>d917726c-d17d-4c1b-a314-6176c1ecd407</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="TaxonomyID" guid="d4527a5d-509e-4f9a-a12d-f4d5c325d184" enabled="" />
+      <field column="TaxonomyGUID" guid="de1a13a4-40b8-470e-afa6-58b664ea8ea9" enabled="" order="1" />
+      <field column="TaxonomyMetadata" guid="9f4b0e5c-b5f4-42d6-92f8-48177784d28c" enabled="" order="2" />
+      <field column="TaxonomyLastModified" guid="ea19bb76-107c-4096-8c85-e07136aa8760" enabled="" order="3" />
+      <field column="TaxonomyTitle" enabled="true" guid="2cb76ced-2cfe-45da-bc0c-3001e7904929" visible="true" order="4">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$contentengine.taxonomy.edit.title$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="TaxonomyName" enabled="true" guid="b5e13012-7c94-4a23-81fb-4015b0df111a" visible="true" order="5">
+        <settings>
+          <controlname>Kentico.Administration.CodeName</controlname>
+          <HasAutomaticCodeNameGenerationOption>False</HasAutomaticCodeNameGenerationOption>
+          <IsCollapsed>True</IsCollapsed>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$contentengine.taxonomy.edit.codename$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="TaxonomyDescription" enabled="true" guid="c2ad1cd1-afd6-4606-b245-eaf8fcacfb1a" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$contentengine.taxonomy.edit.description$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Taxonomy edit</FormDisplayName>
+  <FormGUID>45ae873d-05e2-4f63-aacf-f841a14b9d0f</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>edit</FormName>
+</cms.alternativeform>

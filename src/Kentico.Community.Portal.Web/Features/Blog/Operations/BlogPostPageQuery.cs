@@ -9,9 +9,9 @@ public class BlogPostPageQueryHandler(WebPageQueryTools tools) : WebPageQueryHan
 {
     public override async Task<BlogPostPage> Handle(BlogPostPageQuery request, CancellationToken cancellationToken = default)
     {
-        var b = new ContentItemQueryBuilder().ForWebPage(request.Page.WebsiteChannelName, request.Page, c => c.WithLinkedItems(2));
+        var b = new ContentItemQueryBuilder().ForWebPage(request.Page, c => c.WithLinkedItems(2));
 
-        var r = await Executor.GetWebPageResult(b, WebPageMapper.Map<BlogPostPage>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetMappedWebPageResult<BlogPostPage>(b, DefaultQueryOptions, cancellationToken);
 
         return r.First();
     }

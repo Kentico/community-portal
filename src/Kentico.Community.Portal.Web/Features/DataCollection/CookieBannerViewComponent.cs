@@ -7,23 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.DataCollection;
 
-public class CookieBannerViewComponent : ViewComponent
+public class CookieBannerViewComponent(IMediator mediator, IHttpContextAccessor contextAccessor, ICookieAccessor cookies) : ViewComponent
 {
-    private readonly IMediator mediator;
-    private readonly IHttpContextAccessor contextAccessor;
-    private readonly ICookieAccessor cookies;
-
-    public CookieBannerViewComponent(IMediator mediator, IHttpContextAccessor contextAccessor, ICookieAccessor cookies)
-    {
-        this.mediator = mediator;
-        this.contextAccessor = contextAccessor;
-        this.cookies = cookies;
-    }
+    private readonly IMediator mediator = mediator;
+    private readonly IHttpContextAccessor contextAccessor = contextAccessor;
+    private readonly ICookieAccessor cookies = cookies;
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var resp = await mediator.Send(new WebsiteSettingsContentQuery());
-        var settings = resp.Settings;
+        var settings = await mediator.Send(new WebsiteSettingsContentQuery());
 
         bool accepted = ValidationHelper.GetBoolean(cookies.Get(CookieNames.COOKIE_ACCEPTANCE), false);
         bool isCookiePolicyPage = contextAccessor.HttpContext?.Request.Path.ToString().Equals("/cookies-policy", StringComparison.InvariantCultureIgnoreCase) ?? false;

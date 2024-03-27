@@ -8,12 +8,9 @@ public class QAndAQuestionPageByGUIDQueryHandler(WebPageQueryTools tools) : WebP
 {
     public override async Task<QAndAQuestionPage> Handle(QAndAQuestionPageByGUIDQuery request, CancellationToken cancellationToken = default)
     {
-        var b = new ContentItemQueryBuilder().ForWebPage(request.ChannelName, QAndAQuestionPage.CONTENT_TYPE_NAME, request.WebPageGUID, queryParameters =>
-        {
-            _ = queryParameters.WithLinkedItems(1);
-        });
+        var b = new ContentItemQueryBuilder().ForWebPage(QAndAQuestionPage.CONTENT_TYPE_NAME, request.WebPageGUID, p => p.WithLinkedItems(1));
 
-        var pages = await Executor.GetWebPageResult(b, WebPageMapper.Map<QAndAQuestionPage>, DefaultQueryOptions, cancellationToken);
+        var pages = await Executor.GetMappedWebPageResult<QAndAQuestionPage>(b, DefaultQueryOptions, cancellationToken);
 
         return pages.First();
     }
