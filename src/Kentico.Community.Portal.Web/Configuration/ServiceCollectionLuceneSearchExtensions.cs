@@ -1,6 +1,5 @@
-﻿using Kentico.Community.Portal.Web.Features.Blog;
-using Kentico.Community.Portal.Web.Features.Blog.Components;
-using Kentico.Community.Portal.Web.Features.QAndA;
+﻿using Kentico.Community.Portal.Web.Features.Blog.Search;
+using Kentico.Community.Portal.Web.Features.QAndA.Search;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 
 namespace Microsoft.Extensions.DependencyInjection;

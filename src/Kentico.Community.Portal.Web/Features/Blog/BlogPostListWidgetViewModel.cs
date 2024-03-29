@@ -1,5 +1,6 @@
 ﻿using Kentico.Community.Portal.Web.Components.ViewComponents.Pagination;
 using Kentico.Community.Portal.Web.Components.Widgets.BlogPostList;
+using Kentico.Community.Portal.Web.Infrastructure.Search;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.Blog;
@@ -12,11 +13,10 @@ public class BlogPostListWidgetViewModel : IPagedViewModel
     public string? Query { get; set; } = "";
     public string SortBy { get; set; } = "";
     [HiddenInput]
-    public string Facet { get; set; } = "";
+    public string BlogType { get; set; } = "";
     [HiddenInput]
     public int Page { get; set; } = 0;
-    public List<FacetOption> Facets { get; set; } = [];
-    public List<string> ChosenFacets { get; set; } = [];
+    public List<FacetOption> BlogTypes { get; set; } = [];
     public int TotalPages { get; set; } = 0;
 
     public BlogPostListWidgetViewModel(BlogPostListWidgetProperties props, IEnumerable<BlogPostViewModel> posts)
@@ -34,13 +34,7 @@ public class BlogPostListWidgetViewModel : IPagedViewModel
             { "query", Query },
             { "page", page.ToString() },
             { "sortBy", SortBy },
-            { "facet", Facet }
+            { "blogType", BlogType }
         };
 }
 
-public class FacetOption
-{
-    public string Label { get; set; } = "";
-    public float Value { get; set; }
-    public bool IsSelected { get; set; }
-}

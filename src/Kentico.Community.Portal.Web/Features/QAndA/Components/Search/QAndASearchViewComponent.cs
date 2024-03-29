@@ -2,7 +2,8 @@ using CMS.ContentEngine;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Components.ViewComponents.Pagination;
-using Kentico.Community.Portal.Web.Features.Blog;
+using Kentico.Community.Portal.Web.Features.QAndA.Search;
+using Kentico.Community.Portal.Web.Infrastructure.Search;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
@@ -17,7 +18,7 @@ public class QAndASearchViewComponent(QAndASearchService searchService, ITaxonom
         var request = new QAndASearchRequest(HttpContext.Request);
 
         var searchResult = searchService.SearchQAndA(request);
-        var chosenFacets = request.Facet.ToLower().Split(";", StringSplitOptions.RemoveEmptyEntries)?.ToList() ?? [];
+        var chosenFacets = request.DiscussionType.ToLower().Split(";", StringSplitOptions.RemoveEmptyEntries)?.ToList() ?? [];
         var viewModels = searchResult.Hits.Select(QAndAPostViewModel.GetModel).ToList();
 
         var taxonomy = await taxonomyRetriever.RetrieveTaxonomy(SystemTaxonomies.QAndADiscussionTypeTaxonomy.CodeName, PortalWebSiteChannel.DEFAULT_LANGUAGE);
@@ -30,8 +31,8 @@ public class QAndASearchViewComponent(QAndASearchService searchService, ITaxonom
             Query = request.SearchText,
             TotalPages = searchResult.TotalPages,
             OnlyAcceptedResponses = request.OnlyAcceptedResponses,
-            Facet = request.Facet,
-            Facets = [.. taxonomy.Tags
+            DiscussionType = request.DiscussionType,
+            DiscussionTypes = [.. taxonomy.Tags
                 .Select(x => new FacetOption()
                 {
                     Label = x.Title,
@@ -55,9 +56,8 @@ public class QAndASearchViewModel : IPagedViewModel
     public int Page { get; set; }
     public string SortBy { get; set; } = "";
     [HiddenInput]
-    public string Facet { get; set; } = "";
-    public List<FacetOption> Facets { get; set; } = [];
-    public List<string> ChosenFacets { get; set; } = [];
+    public string DiscussionType { get; set; } = "";
+    public List<FacetOption> DiscussionTypes { get; set; } = [];
     public bool OnlyAcceptedResponses { get; set; } = false;
     public int TotalPages { get; set; }
 
@@ -81,7 +81,7 @@ public class QAndAPostViewModel
     public bool HasAcceptedResponse { get; set; }
     public QAndAPostAuthorViewModel Author { get; set; } = new();
 
-    public static QAndAPostViewModel GetModel(QAndASearchModel result) => new()
+    public static QAndAPostViewModel GetModel(QAndASearchIndexModel result) => new()
     {
         Title = result.Title,
         DateCreated = result.PublishedDate,
@@ -104,5 +104,17 @@ public class QAndAPostAuthorViewModel
     public int MemberID { get; set; }
     public string Username { get; set; } = "";
     public string FullName { get; set; } = "";
+    public string FormattedName => string.IsNullOrWhiteSpace(FullName)
+        ? Username
+        : $"{FullName} ({Username})";
+
+    public QAndAPostAuthorViewModel() { }
+
+    public QAndAPostAuthorViewModel(int memberID, string username, string fullName)
+    {
+        MemberID = memberID;
+        Username = username;
+        FullName = fullName;
+    }
 }
 

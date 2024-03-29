@@ -6,7 +6,7 @@
 
 Xperience by Kentico solution for the Kentico managed SaaS hosted Kentico Community website.
 
-This project is using [Xperience Version v28.4.0](https://docs.kentico.com/changelog#refresh-march-21-2024).
+This project is using [Xperience Version v28.4.2](https://docs.kentico.com/changelog#hotfix-march-28-2024).
 
 ## Screenshots
 
@@ -24,10 +24,10 @@ This project is using [Xperience Version v28.4.0](https://docs.kentico.com/chang
 
 ## Site Info
 
-| Environment | URL                                                 |
-| ----------- | --------------------------------------------------- |
+| Environment | URL                                                                                     |
+| ----------- | --------------------------------------------------------------------------------------- |
 | Local       | <https://localhost:45039> (community portal website), <https://localhost:45040> (admin) |
-| Prod        | <https://community.kentico.com>                     |
+| Prod        | <https://community.kentico.com>                                                         |
 
 ## Project Setup
 

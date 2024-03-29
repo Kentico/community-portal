@@ -15,11 +15,6 @@
     border: 1px solid var(--default-border-color);
     border-radius: $border-radius-lg;
   }
-  &_inner {
-    &.grid {
-      display: grid;
-    }
-  }
   &_num {
     grid-area: card-num;
     display: flex;
@@ -96,7 +91,7 @@
     }
     .c-card {
       &_inner {
-        &.grid {
+        &.d-grid {
           gap: 0.375rem;
           grid-template-columns: 100%;
           grid-template-rows: 40px auto auto auto auto;
@@ -140,7 +135,7 @@
     &.nopic {
       .c-card {
         &_inner {
-          &.grid {
+          &.d-grid {
             grid-template-rows: auto auto auto auto;
             grid-template-areas: "card-title" "card-footer" "card-content" "card-tags";
           }
@@ -149,7 +144,7 @@
     }
     @include media-breakpoint-up(sm) {
       .c-card {
-        &_inner.grid {
+        &_inner.d-grid {
           gap: 0.5rem;
           grid-template-columns: 64px auto auto;
           grid-template-rows: auto auto auto;
@@ -182,7 +177,7 @@
         padding: 1rem 1.5rem;
         .c-card {
           &_inner {
-            &.grid {
+            &.d-grid {
               grid-template-columns: auto auto;
               grid-template-rows: auto auto;
               grid-template-areas:
@@ -197,16 +192,15 @@
   }
 
   &.question {
-    padding: 1.125rem 1.125rem 1rem;
+    padding: 1rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "card-content"
+      "card-footer";
+    gap: 0.25rem;
+
     .c-card {
-      &_inner.grid {
-        gap: 0.5rem;
-        grid-template-columns: auto auto;
-        grid-template-rows: auto auto;
-        grid-template-areas:
-          "card-icon card-footer"
-          "card-content card-content";
-      }
       &_title {
         a {
           transition: 0.15s color ease;
@@ -216,31 +210,25 @@
           }
         }
       }
-      &_icon {
-        font-size: 1.125rem;
-        color: $primary;
-      }
+
       &_footer {
-        font-size: 0.875rem;
         display: flex;
+        justify-content: space-between;
         align-items: baseline;
-        justify-content: flex-end;
-        text-align: center;
+        font-size: 0.875rem;
+
         & > div + div {
           margin-left: 0.25rem;
         }
       }
     }
+
     @include media-breakpoint-up(sm) {
-      padding: 1.125rem 1.625rem 1.375rem;
+      grid-template-columns: 4fr 1fr;
+      grid-template-areas: "card-content card-footer";
+
       .c-card {
-        &_inner.grid {
-          grid-template-columns: 18px auto 10rem;
-          grid-template-rows: auto;
-          grid-template-areas: "card-icon card-content card-footer";
-        }
         &_footer {
-          flex-direction: column;
           justify-content: center;
           align-items: center;
           & > div + div {
@@ -280,7 +268,7 @@
     }
 
     .c-card {
-      &_inner.grid {
+      &_inner.d-grid {
         gap: 1rem;
         grid-template-columns: 3rem auto 4rem;
         grid-template-areas: "card-icon card-content card-footer";
@@ -301,7 +289,7 @@
     }
     @include media-breakpoint-down(sm) {
       .c-card {
-        &_inner.grid {
+        &_inner.d-grid {
           grid-template-columns: 3rem auto;
         }
         &_footer {
@@ -311,7 +299,7 @@
     }
     &.no-footer {
       .c-card {
-        &_inner.grid {
+        &_inner.d-grid {
           grid-template-columns: 3rem auto;
         }
       }
@@ -319,7 +307,7 @@
 
     &.list {
       .c-card {
-        &_inner.grid {
+        &_inner.d-grid {
           gap: 0.5rem;
           grid-template-columns: 0.875rem 2rem auto;
           grid-template-areas:
@@ -383,7 +371,7 @@
       }
       @include media-breakpoint-up(sm) {
         .c-card {
-          &_inner.grid {
+          &_inner.d-grid {
             gap: 1rem;
             grid-template-columns: 1.25rem 3.5rem auto 10rem;
             grid-template-areas: "card-num card-icon card-content card-footer";

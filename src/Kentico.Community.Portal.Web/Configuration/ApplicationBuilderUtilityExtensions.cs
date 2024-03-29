@@ -24,6 +24,24 @@ public static class ApplicationBuilderUtilityExtensions
         return app;
     }
 
+    /// <summary>
+    /// Adds MiniProfiler to the middleware pipeline based on environment and configuration
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="app"></param>
+    /// <param name="config"></param>
+    /// <param name="env"></param>
+    /// <returns></returns>
+    public static WebApplication UseAppMiniProfiler(this IApplicationBuilder builder, WebApplication app, IConfiguration config, IWebHostEnvironment env)
+    {
+        if (config.GetSection("Kentico.Xperience.MiniProfiler.Custom").GetValue<bool>("IsEnabled"))
+        {
+            _ = builder.IfDevelopment(env, b => b.UseMiniProfiler());
+        }
+
+        return app;
+    }
+
     public static WebApplication UseKenticoRoutes(this IApplicationBuilder _, WebApplication app)
     {
         app.Kentico().MapRoutes();

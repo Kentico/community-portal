@@ -3,7 +3,7 @@
 <section class="c-section">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-xl-10 col-xxl-9">
+            <div class="col-xl-10 col-xxl-9 d-flex flex-column gap-2">
                 <form method="get" id="qAndASearchForm">
                     <div class="row mt-4"> 
                         <div class="input-group">
@@ -17,17 +17,18 @@
                         </div>
                         <div class="c-group tags mt-3">
                             <label for="" class="me-3">Discussion Type</label>
-                            @foreach (var facet in Model.Facets)
+                            @foreach (var discussionType in Model.DiscussionTypes)
                             {
-                                string colorClass = facet.IsSelected
+                                string colorClass = discussionType.IsSelected
                                 ? "secondary"
                                 : "gray";
-                                string selectedAttr = facet.IsSelected
+                                string selectedAttr = discussionType.IsSelected
                                 ? "facet-selected"
                                 : "";
-                                <button class="c-tag btn focus-ring @colorClass" facet-value="@facet.Label.ToLower()" @selectedAttr
+                                <button class="c-tag btn focus-ring @colorClass" facet-value="@discussionType.Label.ToLower()" @selectedAttr
+                                    facet-type="discussionType"
                                     style="--bs-focus-ring-color: rgba(var(--bs-secondary-rgb), .25)">
-                                    <span>@facet.Label (@facet.Value)</span>
+                                    <span>@discussionType.Label (@discussionType.Value)</span>
                                 </button>
                             }
                         </div>
@@ -57,7 +58,7 @@
 
                         </div>
                     </div>
-                    <input asp-for="@Model.Facet" selected-facet-value />
+                    <input asp-for="@Model.DiscussionType" selected-facet-value="discussionType" />
                     <input asp-for="Page" />
                 </form>
 
@@ -90,71 +91,73 @@
 
                 @foreach (var question in Model.Questions)
                 {
-                    string formattedName = string.IsNullOrWhiteSpace(question.Author.FullName)
-                        ? question.Author.Username
-                        : $"{question.Author.FullName} ({question.Author.Username})";
-                    bool isBlogDiscussion = question.Title.StartsWith("Blog Discussion:", StringComparison.OrdinalIgnoreCase);
-
-                    <div class="c-card question default-border mt-3 @(question.HasAcceptedResponse ? "success" : "")">
-                        <div class="c-card_inner grid">
-                            <div class="c-card_content">
-                                <div class="c-card_title">
-                                    <h3 class="h3 mb-1">
-                                        <a href="@question.LinkPath" rel="nofollow">@question.Title</a>
-                                    </h3>
+                    <div class="c-card question default-border overflow-y-auto d-grid @(question.HasAcceptedResponse ? "success" : "")">
+                        <div class="c-card_content">
+                            @if (question.HasAcceptedResponse)
+                            {
+                                <div class="fs-sm-4 text-success mb-1">
+                                    <svg class="c-icon mt-1 me-2 ">
+                                        <use xlink:href="/img/icons.svg#check"></use>
+                                    </svg><small><b>Has Accepted Response</b></small>
                                 </div>
+                            }
+                            <div class="c-card_title">
+                                <h3 class="h3 mb-1">
+                                    <a href="@question.LinkPath" rel="nofollow">@question.Title</a>
+                                </h3>
+                            </div>
 
-                                <p class="mb-2">
-                                    Created: @question.DateCreated.ToString("d", View.Culture) @question.DateCreated.ToString("t")<br>
-                                    @if(question.Author.MemberID > 0)
-                                    {
-                                        <a class="text-secondary" asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@question.Author.MemberID">@formattedName</a>
-                                    }
-                                    else
-                                    {
-                                        @formattedName
-                                    }
-                                </p>
-
-                                @if (question.HasAcceptedResponse)
+                            <p class="mb-2 d-none d-sm-block">
+                                @if(question.Author.MemberID > 0)
                                 {
-                                    <div class="fs-sm-4 text-success mt-2">
-                                        <svg class="c-icon mt-1 me-2 ">
-                                            <use xlink:href="/img/icons.svg#check"></use>
-                                        </svg><small><b>Accepted Response</b></small>
+                                    <a class="text-secondary" asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@question.Author.MemberID">@question.Author.FormattedName</a>
+                                }
+                                else
+                                {
+                                    @question.Author.FormattedName
+                                }
+                                <br>
+                                <small>Discussion created<br> @question.DateCreated.ToString("d", View.Culture) @question.DateCreated.ToString("t")<br></small>
+                            </p>
+                        </div>
+                        <div class="c-card_footer">
+                            <p class="mb-2 d-sm-none">
+                                @if(question.Author.MemberID > 0)
+                                {
+                                    <a class="text-secondary" asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@question.Author.MemberID">@question.Author.FormattedName</a>
+                                }
+                                else
+                                {
+                                    @question.Author.FormattedName
+                                }
+                                <br>
+                                <small>Discussion created<br> @question.DateCreated.ToString("d", View.Culture) @question.DateCreated.ToString("t")<br></small>
+                            </p>
+                            <div class="text-end text-sm-center">
+                                <span class="fs-4 fs-sm-1 text-secondary fw-bold lh-sm">@question.ResponseCount</span>
+                                <br class="d-none d-sm-block">
+                                <span class="fs-4 fs-sm-6">
+                                    @{
+                                        string text = question.ResponseCount switch
+                                        {
+                                            0 or > 1 => "Responses",
+                                            1 => "Response",
+                                            _ => ""
+                                        };
+                                        <text>@text</text>
+                                    }
+                                </span>
+
+                                @if (question.ResponseCount > 0)
+                                {
+                                    <div>
+                                        <small>Latest response
+                                        <br> @question.LatestResponseDate.ToString("d", View.Culture) @question.LatestResponseDate.ToString("t")</small>
                                     </div>
                                 }
                             </div>
-                            <div class="c-card_footer p-1">
-                                <div class="fs-sm-1 text-secondary fw-bold lh-sm">@question.ResponseCount</div>
-                                <div class="fs-sm-4">
-                                    @if (isBlogDiscussion)
-                                    {
-                                        string text = question.ResponseCount switch
-                                        {
-                                            0 or > 1 => "Comments",
-                                            1 => "Comment",
-                                            _ => ""
-                                        };
-                                        <text>@text</text>
-                                    }
-                                    else
-                                    {
-                                        string text = question.ResponseCount switch
-                                        {
-                                            0 or > 1 => "Answers",
-                                            1 => "Answer",
-                                            _ => ""
-                                        };
-                                        <text>@text</text>
-                                    }
-                                </div>
-                                @if (question.ResponseCount > 0)
-                                {
-                                    <small>Latest response
-                                        <br> @question.LatestResponseDate.ToString("d", View.Culture) @question.LatestResponseDate.ToString("t")</small>
-                                }
-                            </div>
+                            
+                            
                         </div>
                     </div>
                 }

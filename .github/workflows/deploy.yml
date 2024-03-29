@@ -104,12 +104,6 @@ jobs:
 
       - name: Upload Deployment Package
         run: |
-          # Due to a PowerShell issue, we recommended disabling the progress bar to boost the performance significantly.
-          # See https://github.com/PowerShell/PowerShell/issues/2138 for more information.
-          # Disable the progress bar
-          $ProgressPreference = 'SilentlyContinue'
-
-          # Upload the deployment package
           $headers = @{ Authorization = "Bearer ${{ secrets.XPERIENCE_PORTAL_DEPLOYMENT_PAT }}" }
           Invoke-RestMethod `
             -Uri https://xperience-portal.com/api/deployment/upload/${{ secrets.XPERIENCE_PORTAL_PROJECT_GUID }} `
@@ -117,6 +111,3 @@ jobs:
             -InFile './DeploymentPackage.zip' `
             -ContentType "application/zip" `
             -Headers $headers
-
-          # Enable the progress bar
-          $ProgressPreference = 'Continue'

@@ -49,19 +49,28 @@ function initializeCheckboxOnForm(formEl) {
   }
 }
 
-function initializeFacetsOnForm(formEl) {
+/**
+ *
+ * @param {HTMLFormElement} formEl
+ * @param {string} facetType
+ */
+function initializeFacetsOnForm(formEl, facetType) {
   const submitButton = document.querySelector("#submitSearch");
   if (!(submitButton instanceof HTMLButtonElement)) {
     throw new Error("Missing search submit button");
   }
 
-  const facetInput = document.querySelector("[selected-facet-value]");
+  const facetInput = document.querySelector(
+    `[selected-facet-value="${facetType}"]`
+  );
   if (!(facetInput instanceof HTMLElement)) {
     throw new Error("Missing facet value form input");
   }
 
   function addFacetsToFacetInput() {
-    let tags = document.querySelectorAll("[facet-selected]");
+    let tags = document.querySelectorAll(
+      `[facet-selected][facet-type="${facetType}"]`
+    );
 
     const selectedValues = [...tags].map((tag) =>
       tag.getAttribute("facet-value")
@@ -70,7 +79,9 @@ function initializeFacetsOnForm(formEl) {
     facetInput.value = selectedValues.join(";");
   }
 
-  let facets = document.querySelectorAll("[facet-value]");
+  let facets = document.querySelectorAll(
+    `[facet-value][facet-type="${facetType}"]`
+  );
 
   const loadPanel = document.getElementById("overlay");
 
@@ -102,7 +113,7 @@ function initializeQAndASearch() {
 
   initializeSortByOnForm(form);
   initializeCheckboxOnForm(form);
-  initializeFacetsOnForm(form);
+  initializeFacetsOnForm(form, "discussionType");
 }
 
 function initializeBlogSearch() {
@@ -111,6 +122,6 @@ function initializeBlogSearch() {
     return;
   }
 
-  initializeFacetsOnForm(form);
+  initializeFacetsOnForm(form, "blogType");
   initializeSortByOnForm(form);
 }

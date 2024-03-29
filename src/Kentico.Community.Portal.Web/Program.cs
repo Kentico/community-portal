@@ -29,7 +29,7 @@ app
     .UseAuthentication()
     .UseKenticoCloud()
     .UseKentico()
-    .IfDevelopment(env, b => b.UseMiniProfiler())
+    .UseAppMiniProfiler(app, config, env)
     /**
      * By including this middleware after UseKentico() we can set the request culture/ui culture
      * based on something other than content localization and the URL.

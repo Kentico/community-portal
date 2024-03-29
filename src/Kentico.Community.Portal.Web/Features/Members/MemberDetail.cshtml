@@ -6,7 +6,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="c-card article nopic bg-white">
-                        <div class="c-card_inner grid">
+                        <div class="c-card_inner d-grid">
                             <div class="c-card_title">
                                 <h1>
                                     Member Profile
@@ -54,7 +54,7 @@
                     @foreach (var link in Model.BlogPostLinks)
                     {
                         <div class="c-card article nopic mt-3">
-                            <div class="c-card_inner grid">
+                            <div class="c-card_inner d-grid">
                                 <div class="c-card_title">
                                     <h4>
                                         <a class="slash" href="@link.Path">@link.Title</a>
@@ -85,7 +85,7 @@
                     @foreach (var link in Model.QuestionsAsked)
                     {
                         <div class="c-card article nopic mt-3">
-                            <div class="c-card_inner grid">
+                            <div class="c-card_inner d-grid">
                                 <div class="c-card_title">
                                     <h4>
                                         <a class="slash" href="@link.Path">@link.Label</a>

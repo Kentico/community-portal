@@ -1,6 +1,5 @@
-using Kentico.Community.Portal.Web.Features.Blog;
-using Kentico.Community.Portal.Web.Features.Blog.Components;
-using Kentico.Community.Portal.Web.Features.QAndA;
+using Kentico.Community.Portal.Web.Features.Blog.Search;
+using Kentico.Community.Portal.Web.Features.QAndA.Search;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using MediatR;
@@ -34,12 +33,12 @@ public class MemberController(
 
         metaService.SetMeta(new($"Member Profile - {member.UserName}", $"Learn about {member.UserName} and their contributions to the Kentico Community"));
 
-        var blogResult = search.SearchBlog(new BlogSearchRequest("date", 50)
+        var blogResult = search.SearchBlog(new BlogSearchRequest("publishdate", 50)
         {
             AuthorMemberID = member.Id
         });
 
-        var qandaResult = qAndASearchService.SearchQAndA(new QAndASearchRequest("date", 50)
+        var qandaResult = qAndASearchService.SearchQAndA(new QAndASearchRequest("publishdate", 50)
         {
             AuthorMemberID = member.Id,
         });
