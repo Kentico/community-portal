@@ -30,8 +30,8 @@ public class SupportFormController(
             return ViewComponent(typeof(SupportFormViewComponent), requestModel);
         }
 
-        var containerClient = await clientFactory.GetOrCreateContainerClient(SupportMessageProcessorHostedService.CONTAINER_PRIMARY_NAME);
-        var queueClient = await clientFactory.GetOrCreateQueue(SupportMessageProcessorHostedService.QUEUE_PRIMARY_NAME);
+        var containerClient = await clientFactory.GetOrCreateContainerClient(SupportRequestProcessorBackgroundService.CONTAINER_PRIMARY_NAME);
+        var queueClient = await clientFactory.GetOrCreateQueue(SupportRequestProcessorBackgroundService.QUEUE_PRIMARY_NAME);
         string blobName = $"{Guid.NewGuid()}.json";
         var requestMessage = await GetSupportCaseAsync(requestModel);
         string requestMessageJSON = JsonSerializer.Serialize(requestMessage);

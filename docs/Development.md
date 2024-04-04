@@ -10,20 +10,20 @@ To ensure schema and data updates to the application are synchronized with the c
 Run the CI Restore PowerShell script to populate the database with changes from the CI Repository
 
 - Use the VS Code task `Xperience: CI Restore`
-- Use the script directly (alternative)
+- (**alternative**) Use the script directly
 
-    1. `cd scripts`
-    1. `.\Restore-CI.ps1`
+  1. `cd scripts`
+  1. `.\Restore-CI.ps1`
 
 ## Start npm Dev Servers
 
 1. Install and build the client dependencies
 
    - Use the VS Code task `npm: dev (Web)`
-   - Run `npm install` and then `npm run dev` at the command line in the `.\src\Kentico.Community.Portal.Web` directory (alternative)
+   - (**alternative**) Run `npm install` and then `npm run dev` at the command line in the `.\src\Kentico.Community.Portal.Web` directory
 
    - Use the VS Code task `npm: dev (Admin)`
-   - Run `npm install` and then `npm run dev` at the command line in the `.\src\Kentico.Community.Portal.Admin\Client` directory (alternative)
+   - (**alternative**) Run `npm install` and then `npm run dev` at the command line in the `.\src\Kentico.Community.Portal.Admin\Client` directory
 
 ## Start Azurite
 
@@ -31,15 +31,16 @@ Run the CI Restore PowerShell script to populate the database with changes from 
 
    - Install the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=Azurite.azurite) (installed with recommended extensions)
    - Run Azurite from the VS Code command palette (`ctrl+shift+p`) with `Azurite: Start`
-   - Use the [Azurite documentation](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio%2Cblob-storage#install-azurite) to install or start it with your IDE of choice (alternative)
+   - (**alternative**) Use the [Azurite documentation](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio%2Cblob-storage#install-azurite) to install or start it with your IDE of choice
+   - (**alternative**) Disable Support Request Processing via your User Secrets configuration (see `SupportRequestProcessing` in `appsettings.json`). This will disable the code from executing that requires Azurite
 
 ## Start ASP.NET Core application
 
 1. Launch server. App should now be running on localhost (Currently <http://localhost:45038/> ).
 
    - Use the VS Code task `.NET: watch (Web)`
-   - Use the VS Code `.NET Debug and Hot Reload` Launch Configuration (alternative)
-   - Start in VS (alternative)
+   - (**alternative**) Use the VS Code `.NET Debug and Hot Reload` Launch Configuration
+   - (**alternative**) Start in VS
 
 ## Client Assets
 

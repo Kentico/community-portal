@@ -19,46 +19,47 @@ dotnet dev-certs https --trust
 
 - PowerShell
 
-    1. Use the `Restore-Database.ps1` script (`.bacpac` files only)
+  1. Use the `Restore-Database.ps1` script (`.bacpac` files only)
 
-        ```powershell
-        cd community-portal
+     ```powershell
+     cd community-portal
 
-        .\scripts\Restore-Database.ps1 `
-        -ServerName "<server name>" `
-        -DatabaseName "<database name>" `
-        -BacpacFile "<filename.bacpac>" `
-        -WorkspaceFolder $PWD
-        ```
+     .\scripts\Restore-Database.ps1 `
+     -ServerName "<server name>" `
+     -DatabaseName "<database name>" `
+     -BacpacFile "<filename.bacpac>" `
+     -WorkspaceFolder $PWD
+     ```
 
-- Azure Data Studio (alternative)
+- (**alternative**) Azure Data Studio
 
-    1. [Restore a .bacpac file](https://learn.microsoft.com/en-us/sql/azure-data-studio/extensions/sql-server-dacpac-extension) (data + schema)
-    1. [Restore a .bak file](https://learn.microsoft.com/en-us/sql/azure-data-studio/tutorial-backup-restore-sql-server?view=sql-server-ver16#restore-a-database-from-a-backup-file)
+  1. [Restore a .bacpac file](https://learn.microsoft.com/en-us/sql/azure-data-studio/extensions/sql-server-dacpac-extension) (data + schema)
+  1. [Restore a .bak file](https://learn.microsoft.com/en-us/sql/azure-data-studio/tutorial-backup-restore-sql-server?view=sql-server-ver16#restore-a-database-from-a-backup-file)
 
-- Add database in SQL Server Management Studio (alternative)
+- (**alternative**) Add database in SQL Server Management Studio
 
   - [Restore a .bacpac file](https://learn.microsoft.com/en-us/sql/relational-databases/data-tier-applications/import-a-bacpac-file-to-create-a-new-user-database)
 
-  - Restore a .bak file (alternative)
+  - (**alternative**) Restore a .bak file
+
     1. Launch SQL SSMS
 
     1. Extract backup file might require from .zip
 
-        - `.\database\<database-backup.zip>`
+       - `.\database\<database-backup.zip>`
 
     1. Restore database
 
-        - Right click on 'Databases'
-        - 'Restore Database'
-        - Select source 'Device' -> ...-> 'Add'
-        - Select `.bak` from `.\database\<database-backup.bak>` -> OK
+       - Right click on 'Databases'
+       - 'Restore Database'
+       - Select source 'Device' -> ...-> 'Add'
+       - Select `.bak` from `.\database\<database-backup.bak>` -> OK
 
     1. Add User mapping
 
-        - 'Security' -> 'Logins'
-        - Right click on your account
-        - 'Properties' -> 'User Mapping' -> tick `Kentico.Community` -> tick 'db owner' -> OK
+       - 'Security' -> 'Logins'
+       - Right click on your account
+       - 'Properties' -> 'User Mapping' -> tick `Kentico.Community` -> tick 'db owner' -> OK
 
 ## Configure Application
 

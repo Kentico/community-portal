@@ -1,5 +1,21 @@
 # Architecture Decision Record
 
+## 2024-04-04 - Support request processing settings
+
+The requirement for Azurite to be running when developing locally is a complexity added when async support request processing
+was added by leveraing Azure Storage. Azurite allows the Azure Storage service to be emulated locally and helps developing and testing
+integrations with it.
+
+However, it also means developers need to remember to start Azurite before starting the ASP.NET Core application. This is easy to forget
+and causes exceptions to be thrown when not running because the client services cannot contact the endpoint URLs.
+
+To help resolve this, an additional appsetting has been added to fully disable support request processing and initialization of the
+storage client services has been moved behind a check of this setting.
+
+This setting also overrides the administration configuration of this feature and the admin UI has been updated to reflect this.
+
+In the future, we could have a better developer experience through technologies like [.NET Aspire](https://learn.microsoft.com/en-us/dotnet/aspire/get-started/aspire-overview), which could manage required external services on startup.
+
 ## 2024-03-27 - Taxonomies migration
 
 `BlogPostContent` reusable content items have simulated a taxonomy since the portal was launched, using a `BlogPostContent.BlogPostContentTaxonomy` string field.
@@ -91,11 +107,11 @@ Here's an example of what the stored asset metadata looks like:
 
 ```json
 {
-    "Identifier": "84366bac-bb9a-48c1-87cc-bece7b52e68c",
-    "Name": "milwaukee-kentico-user-group-logo.webp",
-    "Extension": ".webp",
-    "Size": 89882,
-    "LastModified": "2023-12-16T18:54:59.8226954Z"
+  "Identifier": "84366bac-bb9a-48c1-87cc-bece7b52e68c",
+  "Name": "milwaukee-kentico-user-group-logo.webp",
+  "Extension": ".webp",
+  "Size": 89882,
+  "LastModified": "2023-12-16T18:54:59.8226954Z"
 }
 ```
 

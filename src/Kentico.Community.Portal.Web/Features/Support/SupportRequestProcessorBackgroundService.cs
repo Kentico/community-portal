@@ -9,26 +9,29 @@ using CMS.DataEngine;
 using CMS.Helpers;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Infrastructure.Storage;
+using Microsoft.Extensions.Options;
 
 namespace Kentico.Community.Portal.Web.Features.Support;
 
-public class SupportMessageProcessorHostedService(
-    ILogger<SupportMessageProcessorHostedService> logger,
+public class SupportRequestProcessorBackgroundService(
+    ILogger<SupportRequestProcessorBackgroundService> logger,
     IHttpClientFactory httpClientFactory,
     AzureStorageClientFactory clientFactory,
     IInfoProvider<SupportRequestConfigurationInfo> configurationProvider,
     IInfoProvider<SupportRequestProcessingEventInfo> eventProvider,
-    IProgressiveCache cache) : BackgroundService
+    IProgressiveCache cache,
+    IOptions<SupportRequestProcessingSettings> options) : BackgroundService
 {
     public const string QUEUE_PRIMARY_NAME = "support-messages";
     public const string QUEUE_DEAD_LETTER_NAME = "support-messages-dead-letter";
     public const string CONTAINER_PRIMARY_NAME = "support-messages";
     public const string CONTAINER_DEAD_LETTER_NAME = "support-messages-dead-letter";
 
-    private readonly ILogger<SupportMessageProcessorHostedService> logger = logger;
+    private readonly ILogger<SupportRequestProcessorBackgroundService> logger = logger;
     private readonly IInfoProvider<SupportRequestConfigurationInfo> configurationProvider = configurationProvider;
     private readonly IInfoProvider<SupportRequestProcessingEventInfo> eventProvider = eventProvider;
     private readonly IProgressiveCache cache = cache;
+    private readonly SupportRequestProcessingSettings settings = options.Value;
     private readonly AzureStorageClientFactory clientFactory = clientFactory;
     private QueueClient queueClientPrimary = null!;
     private QueueClient queueClientDeadLetter = null!;
@@ -38,17 +41,14 @@ public class SupportMessageProcessorHostedService(
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        queueClientPrimary = await clientFactory.GetOrCreateQueue(QUEUE_PRIMARY_NAME);
-        queueClientDeadLetter = await clientFactory.GetOrCreateQueue(QUEUE_DEAD_LETTER_NAME);
-        containerClientPrimary = await clientFactory.GetOrCreateContainerClient(CONTAINER_PRIMARY_NAME);
-        containerClientDeadLetter = await clientFactory.GetOrCreateContainerClient(CONTAINER_DEAD_LETTER_NAME);
-
         while (!stoppingToken.IsCancellationRequested)
         {
             var configuration = await GetConfiguration();
 
-            if (configuration?.SupportRequestConfigurationIsQueueProcessingEnabled ?? false)
+            if (settings.IsEnabled && (configuration?.SupportRequestConfigurationIsQueueProcessingEnabled ?? false))
             {
+                await InitializeStorageClients();
+
                 await ProcessQueueMessagesAsync(configuration, stoppingToken);
             }
 
@@ -147,7 +147,23 @@ public class SupportMessageProcessorHostedService(
                 .TopN(1)
                 .GetEnumerableTypedResultAsync())
                 .FirstOrDefault();
-        }, new CacheSettings(60, [nameof(SupportMessageProcessorHostedService), nameof(GetConfiguration)]));
+        }, new CacheSettings(60, [nameof(SupportRequestProcessorBackgroundService), nameof(GetConfiguration)]));
+
+    private async Task InitializeStorageClients()
+    {
+        queueClientPrimary ??= await clientFactory.GetOrCreateQueue(QUEUE_PRIMARY_NAME);
+        queueClientDeadLetter ??= await clientFactory.GetOrCreateQueue(QUEUE_DEAD_LETTER_NAME);
+        containerClientPrimary ??= await clientFactory.GetOrCreateContainerClient(CONTAINER_PRIMARY_NAME);
+        containerClientDeadLetter ??= await clientFactory.GetOrCreateContainerClient(CONTAINER_DEAD_LETTER_NAME);
+    }
+}
+
+public class SupportRequestProcessingSettings
+{
+    /// <summary>
+    /// If enabled, support request processing is determined by the Xperience database configuration. Defaults to true.
+    /// </summary>
+    public bool IsEnabled { get; set; } = true;
 }
 
 public class SupportRequestQueueMessage

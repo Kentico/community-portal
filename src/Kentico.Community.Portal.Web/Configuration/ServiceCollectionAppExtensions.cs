@@ -28,7 +28,7 @@ public static class ServiceCollectionAppExtensions
             .AddSEO()
             .AddOperations(config)
             .AddInfrastructure(config)
-            .AddSupport()
+            .AddSupport(config)
             .AddQAndA()
             .AddBlogs();
 
@@ -71,8 +71,10 @@ public static class ServiceCollectionAppExtensions
             .Configure<ReCaptchaSettings>(config.GetSection("ReCaptcha"));
 
 
-    private static IServiceCollection AddSupport(this IServiceCollection services) =>
-        services.AddHostedService<SupportMessageProcessorHostedService>();
+    private static IServiceCollection AddSupport(this IServiceCollection services, IConfiguration config) =>
+        services
+            .AddHostedService<SupportRequestProcessorBackgroundService>()
+            .Configure<SupportRequestProcessingSettings>(config.GetSection("SupportRequestProcessing"));
 
     private static IServiceCollection AddQAndA(this IServiceCollection services) =>
         services.AddTransient<QAndAAnswerCreateSearchIndexTaskHandler>();
