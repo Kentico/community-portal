@@ -77,6 +77,23 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
+      <field column="QAndAAnswerDataWebsiteChannelID" enabled="true" guid="09378cdb-2012-4ab9-b935-da5bbaefaaad" visible="true" refobjtype="" reftype="">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>CMS.WebsiteChannel</ObjectType>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Website</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
     </form>
   </FormDefinition>
   <FormDisplayName>Create</FormDisplayName>

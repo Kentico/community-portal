@@ -1,12 +1,10 @@
 using CMS.Base;
-using CMS.ContentEngine;
 using CMS.DataEngine;
 using CMS.Helpers;
 using CMS.Membership;
 using CMS.Websites;
 using CMS.Websites.Internal;
 using Kentico.Community.Portal.Admin.Features.QAndA;
-using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
 
@@ -35,14 +33,6 @@ public class QAndAListingPage(IInfoProvider<WebsiteChannelInfo> channelProvider)
     public override async Task ConfigurePage()
     {
         await base.ConfigurePage();
-
-        int websiteChannelID = (await channelProvider.Get()
-            .Source(s => s.Join<ChannelInfo>(nameof(WebsiteChannelInfo.WebsiteChannelChannelID), nameof(ChannelInfo.ChannelID)))
-            .WhereEquals(nameof(ChannelInfo.ChannelName), PortalWebSiteChannel.CODE_NAME)
-            .Columns(nameof(WebsiteChannelInfo.WebsiteChannelID))
-            .GetEnumerableTypedResultAsync())
-            .FirstOrDefault()?
-            .WebsiteChannelID ?? 0;
 
         PageConfiguration.HeaderActions.AddLink<QAndACreatePage>("Create Answer");
 
@@ -83,34 +73,35 @@ public class QAndAListingPage(IInfoProvider<WebsiteChannelInfo> channelProvider)
             .AddColumn(nameof(QAndAAnswerDataInfo.QAndAAnswerDataCodeName),
                 "Answer CodeName",
                 searchable: true)
+            .AddColumn(nameof(QAndAAnswerDataInfo.QAndAAnswerDataWebsiteChannelID), visible: false)
             .AddComponentColumn(nameof(WebPageItemInfo.WebPageItemName),
                 "@kentico-community/portal-web-admin/Link",
-                modelRetriever: ModelRetriever(websiteChannelID),
+                modelRetriever: AnswerLinkModelRetriever,
                 caption: "Question",
                 searchable: true,
                 minWidth: 25);
 
-        PageConfiguration.TableActions.AddDeleteAction(nameof(Delete));
+        _ = PageConfiguration.TableActions.AddDeleteAction(nameof(Delete));
     }
 
-    private static Func<object, IDataContainer, object> ModelRetriever(int websiteChannelID) =>
-        (object value, IDataContainer container) =>
+    private static TableRowLinkProps AnswerLinkModelRetriever(object value, IDataContainer container)
+    {
+        int webPageItemID = ValidationHelper.GetInteger(container[nameof(WebPageItemInfo.WebPageItemID)], 0);
+        int websiteChannelID = ValidationHelper.GetInteger(container[nameof(QAndAAnswerDataInfo.QAndAAnswerDataWebsiteChannelID)], 0);
+        string valueStr = value.ToString() ?? "";
+        string label = $"{valueStr[..Math.Min(valueStr.Length, 50)]}...";
+
+        if (webPageItemID == 0)
         {
-            int webPageItemID = ValidationHelper.GetInteger(container[nameof(WebPageItemInfo.WebPageItemID)], 0);
-            string valueStr = value.ToString() ?? "";
-            string label = $"{valueStr[..Math.Min(valueStr.Length, 50)]}...";
+            return new TableRowLinkProps() { Label = label, Path = "" };
+        }
 
-            if (webPageItemID == 0)
-            {
-                return new TableRowLinkProps() { Label = label, Path = "" };
-            }
-
-            return new TableRowLinkProps()
-            {
-                Label = label,
-                Path = $"/admin/webpages-{websiteChannelID}/en-US_{webPageItemID}/content"
-            };
+        return new TableRowLinkProps()
+        {
+            Label = label,
+            Path = $"/admin/webpages-{websiteChannelID}/en-US_{webPageItemID}/content"
         };
+    }
 
 }
 

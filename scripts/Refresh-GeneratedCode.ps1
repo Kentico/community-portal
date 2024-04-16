@@ -40,6 +40,20 @@ function GenerateResusableTypes {
     Invoke-ExpressionWithException $command
 }
 
+function GenerateResusableSchemas {
+    $command = "dotnet run " + `
+        "--project $projectPath " + `
+        "--no-restore " + `
+        "--no-build " + `
+        "-- --kxp-codegen " + `
+        "--skip-confirmation " + `
+        "--type `"ReusableFieldSchemas`" " + `
+        "--namespace `"Kentico.Community.Portal.Core.Content`"" + `
+        "--location `"../Kentico.Community.Portal.Core/Content/Hub/`""
+
+    Invoke-ExpressionWithException $command
+}
+
 function GenerateDataTypes {
     $command = "dotnet run " + `
         "--project $projectPath " + `
@@ -49,7 +63,8 @@ function GenerateDataTypes {
         "--skip-confirmation " + `
         "--type `"Classes`" " + `
         "--namespace `"Kentico.Community.Portal.Core.Modules`"" + `
-        "--location `"../Kentico.Community.Portal.Core/Modules/{name}`""
+        "--location `"../Kentico.Community.Portal.Core/Modules/{name}`"" + `
+        "--with-provider-class false"
 
     Invoke-ExpressionWithException $command
 }
@@ -76,6 +91,7 @@ if ($Types -contains 'Pages') {
 
 if ($Types -contains 'Reusable') {
     GenerateResusableTypes
+    GenerateResusableSchemas
 }
 
 if ($Types -contains 'DataTypes') {

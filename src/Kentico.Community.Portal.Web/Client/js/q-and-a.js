@@ -13,7 +13,7 @@ export function initQAndA({ editorElemID, formElemID = null, formType = "" }) {
 ---
 
 **Environment**
-- Xperience by Kentico version: [28.4.0]
+- Xperience by Kentico version: [28.4.4]
 - .NET version: [8]
 - Deployment environment: [SaaS|Azure|VM]
 - Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)`

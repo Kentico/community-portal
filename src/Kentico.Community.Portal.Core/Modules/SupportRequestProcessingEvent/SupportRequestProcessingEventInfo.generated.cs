@@ -14,7 +14,7 @@ namespace Kentico.Community.Portal.Core.Modules
     /// <summary>
     /// Data container class for <see cref="SupportRequestProcessingEventInfo"/>.
     /// </summary>
-    [Serializable]
+    [Serializable, InfoCache(InfoCacheBy.ID)]
     public partial class SupportRequestProcessingEventInfo : AbstractInfo<SupportRequestProcessingEventInfo, IInfoProvider<SupportRequestProcessingEventInfo>>, IInfoWithId
     {
         /// <summary>

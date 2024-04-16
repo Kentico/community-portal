@@ -2,7 +2,7 @@ using Kentico.Community.Portal.Web.Features.Errors;
 using Kentico.Community.Portal.Web.Resources;
 using Lucene.Net.Util;
 using Microsoft.AspNetCore.Localization;
-using Vite.AspNetCore.Extensions;
+using Vite.AspNetCore;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

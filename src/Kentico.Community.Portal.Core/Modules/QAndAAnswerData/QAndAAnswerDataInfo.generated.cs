@@ -35,6 +35,7 @@ namespace Kentico.Community.Portal.Core.Modules
             {
                 new ObjectDependency("QAndAAnswerDataAuthorMemberID", "cms.member", ObjectDependencyEnum.RequiredHasDefault),
                 new ObjectDependency("QAndAAnswerDataQuestionWebPageItemID", "cms.webpageitem", ObjectDependencyEnum.Binding),
+                new ObjectDependency("QAndAAnswerDataWebsiteChannelID", "cms.websitechannel", ObjectDependencyEnum.NotRequired),
             },
             ContinuousIntegrationSettings =
             {
@@ -128,6 +129,17 @@ namespace Kentico.Community.Portal.Core.Modules
         {
             get => ValidationHelper.GetInteger(GetValue(nameof(QAndAAnswerDataQuestionWebPageItemID)), 0);
             set => SetValue(nameof(QAndAAnswerDataQuestionWebPageItemID), value);
+        }
+
+
+        /// <summary>
+        /// Q and A answer data website channel ID.
+        /// </summary>
+        [DatabaseField]
+        public virtual int QAndAAnswerDataWebsiteChannelID
+        {
+            get => ValidationHelper.GetInteger(GetValue(nameof(QAndAAnswerDataWebsiteChannelID)), 0);
+            set => SetValue(nameof(QAndAAnswerDataWebsiteChannelID), value);
         }
 
 

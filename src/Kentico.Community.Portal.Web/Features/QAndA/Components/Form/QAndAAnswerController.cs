@@ -52,7 +52,7 @@ public class QAndAAnswerController(
             return Unauthorized();
         }
 
-        _ = await mediator.Send(new QAndAAnswerCreateCommand(member, requestModel.Content, parentQuestion));
+        _ = await mediator.Send(new QAndAAnswerCreateCommand(member, requestModel.Content, parentQuestion, channelContext));
 
         string questionPath = (await urlRetriever.Retrieve(parentQuestion)).RelativePathTrimmed();
 
