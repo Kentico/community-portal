@@ -1,14 +1,15 @@
 using CMS.ContactManagement;
+using CMS.DataEngine;
 
 namespace Kentico.Community.Portal.Web.Membership;
 
 public class MemberContactManager(
-    IContactInfoProvider contactProvider,
+    IInfoProvider<ContactInfo> contactProvider,
     ICurrentContactProvider currentContactProvider,
     IContactMergeService contactMerge,
     IContactCreator contactCreator)
 {
-    private readonly IContactInfoProvider contactProvider = contactProvider;
+    private readonly IInfoProvider<ContactInfo> contactProvider = contactProvider;
     private readonly ICurrentContactProvider currentContactProvider = currentContactProvider;
     private readonly IContactMergeService contactMerge = contactMerge;
     private readonly IContactCreator contactCreator = contactCreator;

@@ -11,7 +11,7 @@ public class IntegrationContentsQueryHandler(ContentItemQueryTools tools) : Cont
     {
         var b = new ContentItemQueryBuilder().ForContentType(IntegrationContent.CONTENT_TYPE_NAME);
 
-        var r = await Executor.GetWebPageResult(b, c => ContentItemMapper.Map<IntegrationContent>(c), DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetMappedWebPageResult<IntegrationContent>(b, DefaultQueryOptions, cancellationToken);
 
         return new(r.ToList());
     }

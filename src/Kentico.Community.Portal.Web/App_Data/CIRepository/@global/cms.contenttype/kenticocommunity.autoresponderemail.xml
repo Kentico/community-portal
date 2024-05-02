@@ -35,7 +35,17 @@
           <controlname>Kentico.Administration.TextArea</controlname>
         </settings>
       </field>
-      <field column="EmailContent" columnprecision="0" columntype="longtext" enabled="true" guid="bdb2afe2-b1f2-4b67-a055-9b2c17b7dccb" visible="true">
+      <field column="AutoresponderEmailTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="b4a8b3f2-f506-450b-b11b-4e9e9dcd93b5" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Title</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field column="AutoresponderEmailContent" columnprecision="0" columntype="longtext" enabled="true" guid="bdb2afe2-b1f2-4b67-a055-9b2c17b7dccb" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Content</fieldcaption>
@@ -48,6 +58,9 @@
           <controlname>Kentico.Administration.RichTextEditor</controlname>
         </settings>
       </field>
+      <schema guid="5d16c375-e18b-46ac-b951-cf8f11e9c9e5" name="5d16c375-e18b-46ac-b951-cf8f11e9c9e5">
+        <properties />
+      </schema>
     </form>
   </ClassFormDefinition>
   <ClassGUID>70764325-6007-438e-93fe-dc319714c7a6</ClassGUID>

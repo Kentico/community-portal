@@ -20,7 +20,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// Represents a content item of type <see cref="BlogPostContent"/>.
 	/// </summary>
 	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
-	public partial class BlogPostContent : IContentItemFieldsSource
+	public partial class BlogPostContent : IContentItemFieldsSource, IListableItem
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -72,9 +72,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// BlogPostcontentDXTopics.
+		/// BlogPostContentDXTopics.
 		/// </summary>
-		public IEnumerable<TagReference> BlogPostcontentDXTopics { get; set; }
+		public IEnumerable<TagReference> BlogPostContentDXTopics { get; set; }
 
 
 		/// <summary>
@@ -99,5 +99,23 @@ namespace Kentico.Community.Portal.Core.Content
 		/// BlogPostContentContentHTML.
 		/// </summary>
 		public string BlogPostContentContentHTML { get; set; }
+
+
+		/// <summary>
+		/// ListableItemTitle.
+		/// </summary>
+		public string ListableItemTitle { get; set; }
+
+
+		/// <summary>
+		/// ListableItemShortDescription.
+		/// </summary>
+		public string ListableItemShortDescription { get; set; }
+
+
+		/// <summary>
+		/// ListableItemFeaturedImage.
+		/// </summary>
+		public IEnumerable<MediaAssetContent> ListableItemFeaturedImage { get; set; }
 	}
 }

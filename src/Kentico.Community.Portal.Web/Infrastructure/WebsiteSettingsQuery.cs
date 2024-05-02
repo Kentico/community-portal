@@ -31,7 +31,7 @@ public class WebsiteSettingsContentQueryHandler(ContentItemQueryTools tools) : C
                 nameof(WebsiteSettingsContent.WebsiteSettingsContentWebsiteDisplayName),
             ]));
 
-        var r = await Executor.GetResult(b, ContentItemMapper.Map<WebsiteSettingsContent>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetMappedResult<WebsiteSettingsContent>(b, DefaultQueryOptions, cancellationToken);
 
         return r.First();
     }

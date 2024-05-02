@@ -81,7 +81,7 @@ public class ContactDetailsContentQueryHandler(ContentItemQueryTools tools) : Co
             _ = c.Where(w => w.WhereIn(nameof(ContentItemFields.ContentItemGUID), request.ContentItemGUIDs.ToArray()));
         });
 
-        var contents = await Executor.GetResult(b, ContentItemMapper.Map<ContactDetailsContent>, DefaultQueryOptions, cancellationToken);
+        var contents = await Executor.GetMappedResult<ContactDetailsContent>(b, DefaultQueryOptions, cancellationToken);
 
         return new(contents.ToList());
     }

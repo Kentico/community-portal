@@ -6,6 +6,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using CMS.DataEngine;
+using CMS.EmailEngine;
 using CMS.Helpers;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Infrastructure.Storage;
@@ -20,6 +21,7 @@ public class SupportRequestProcessorBackgroundService(
     IInfoProvider<SupportRequestConfigurationInfo> configurationProvider,
     IInfoProvider<SupportRequestProcessingEventInfo> eventProvider,
     IProgressiveCache cache,
+    IEmailService emailService,
     IOptions<SupportRequestProcessingSettings> options) : BackgroundService
 {
     public const string QUEUE_PRIMARY_NAME = "support-messages";
@@ -31,8 +33,10 @@ public class SupportRequestProcessorBackgroundService(
     private readonly IInfoProvider<SupportRequestConfigurationInfo> configurationProvider = configurationProvider;
     private readonly IInfoProvider<SupportRequestProcessingEventInfo> eventProvider = eventProvider;
     private readonly IProgressiveCache cache = cache;
+    private readonly IEmailService emailService = emailService;
     private readonly SupportRequestProcessingSettings settings = options.Value;
     private readonly AzureStorageClientFactory clientFactory = clientFactory;
+
     private QueueClient queueClientPrimary = null!;
     private QueueClient queueClientDeadLetter = null!;
     private BlobContainerClient containerClientPrimary = null!;
@@ -85,6 +89,8 @@ public class SupportRequestProcessorBackgroundService(
                 SupportRequestProcessingEventMessage = supportRequest.Subject,
                 SupportRequestProcessingEventMessageID = dequeueResponse.Value.MessageId
             });
+
+            await SendConfirmationEmail(supportRequest);
         }
         catch (Exception ex)
         {
@@ -138,6 +144,36 @@ public class SupportRequestProcessorBackgroundService(
         _ = await sourceBlob.DeleteIfExistsAsync();
     }
 
+    /// <summary>
+    /// TODO change this to an autoresponder send by creating an internal form submission with a configured autoresponder
+    /// </summary>
+    /// <param name="supportRequest"></param>
+    /// <returns></returns>
+    private async Task SendConfirmationEmail(SupportRequestQueueMessage supportRequest)
+    {
+        string body = @$"""
+            <p>{supportRequest.AuthorName},</p>
+            <p>We've begun to process your support request and will respond soon.</p>
+            <br>
+            <p>Thanks,<br>
+                <em>Kentio Community Portal</em>
+            </p>
+            """;
+
+        var email = new EmailMessage()
+        {
+            From = "no-reply@community.kentico.com",
+            Recipients = supportRequest.AuthorEmail,
+            Subject = $"Support request received: {supportRequest.Subject}",
+            Body = body,
+            ReplyTo = "no-reply@community.kentico.com",
+            PlainTextBody = body,
+            EmailFormat = EmailFormatEnum.Both,
+        };
+
+        await emailService.SendEmail(email);
+    }
+
     private async Task<SupportRequestConfigurationInfo?> GetConfiguration() =>
         await cache.LoadAsync(async cs =>
         {
@@ -170,6 +206,8 @@ public class SupportRequestQueueMessage
 {
     public string Subject { get; set; } = "";
     public string BlobName { get; set; } = "";
+    public string AuthorName { get; set; } = "";
+    public string AuthorEmail { get; set; } = "";
 }
 
 public class SupportRequestProcessException(SupportRequestQueueMessage queueMessage, string message) : Exception(message)

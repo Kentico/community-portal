@@ -2,7 +2,7 @@ using CMS.ContentEngine;
 using CMS.Core;
 using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core.Modules;
-using Kentico.Xperience.Lucene.Indexing;
+using Kentico.Xperience.Lucene.Core.Indexing;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA.Events;
 
@@ -51,7 +51,7 @@ public class QAndAAnswerCreateSearchIndexTaskHandler(
                     .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemID), questionWebPageID));
             });
 
-        var page = (await executor.GetWebPageResult(b, mapper.Map<QAndAQuestionPage>)).FirstOrDefault();
+        var page = (await executor.GetMappedWebPageResult<QAndAQuestionPage>(b)).FirstOrDefault();
         if (page is null)
         {
             log.LogWarning(

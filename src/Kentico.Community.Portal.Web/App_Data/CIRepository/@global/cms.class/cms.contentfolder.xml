@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Content folder</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentFolderID" columntype="integer" enabled="true" guid="d6d2ef3d-cb26-4a63-bbd8-ade2a91a397d" isPK="true" system="true" />
+      <field column="ContentFolderGUID" columnprecision="0" columntype="guid" enabled="true" guid="747fc328-22f3-4299-8924-71bf4fe5124c" system="true" />
+      <field column="ContentFolderName" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="b24925bd-3a47-4b2a-9c8e-934ecedb56e5" system="true" />
+      <field column="ContentFolderDisplayName" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="3a8bb4ac-60a4-4779-a997-173b77199a45" system="true" />
+      <field allowempty="true" column="ContentFolderTreePath" columnprecision="0" columnsize="1020" columntype="text" enabled="true" guid="1a55d56e-23e5-451b-a81b-057ab7597702" system="true" />
+      <field column="ContentFolderCreatedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="1816e15e-f2db-43e2-b227-cf3563f4f61d" system="true" />
+      <field allowempty="true" column="ContentFolderCreatedByUserID" columnprecision="0" columntype="integer" enabled="true" guid="abcbcb89-ef9b-4b97-9f13-d2feba668005" refobjtype="cms.user" reftype="NotRequired" system="true" />
+      <field column="ContentFolderModifiedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="0ff6bfab-56de-4ba9-9257-d5873f7f8d26" system="true" />
+      <field allowempty="true" column="ContentFolderModifiedByUserID" columnprecision="0" columntype="integer" enabled="true" guid="a631cd72-4145-4988-a2f1-871328430eea" refobjtype="cms.user" reftype="NotRequired" system="true" />
+      <field allowempty="true" column="ContentFolderParentFolderID" columnprecision="0" columntype="integer" enabled="true" guid="48482f75-37d6-47ae-b9c3-2c87ff7dc171" refobjtype="cms.contentfolder" reftype="Required" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>5fcf4cc3-9f30-4a4a-9838-5dbd85fbf7ea</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ContentFolder</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentEngine</CodeName>
+    <GUID>eb76ebd1-752f-4969-a5b6-1fb984cae224</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ContentFolder</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

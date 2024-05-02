@@ -2,12 +2,45 @@
 
 @model Kentico.Community.Portal.Web.Features.Integrations.IntegrationsListViewModel
 
-<div class="c-section pb-7">
+@{
+    ClientAssets.RequireAlpine();
+}
+
+<div class="c-section pb-7" x-data="{ searchTerm: '', searchType: 'all' }">
+    <div class="container">
+        <form method="get" id="integrationsSearchForm">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 col-lg-7">
+                    <div>
+                        <input type="text" class="form-control search rounded-pill"
+                            placeholder="Search by name or description" aria-label="Search"
+                            aria-describedby="submitSearch" x-model="searchTerm">
+                    </div>
+                    <div class="w-100 mt-3">
+                        <label for="integrationType">Type</label>
+                        <select id="integrationType" class="form-select form-select-sm w-auto d-inline"
+                            x-model="searchType">
+                            <option value="all">(All)</option>
+                            @foreach (var type in Model.IntegrationTypes)
+                            {
+                                <option value="@type.Name">@type.Title</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end align-items-center gap-3 mt-3">
+
+            </div>
+        </form>
+    </div>
     <div class="container">
         <div class="row gx-lg-6 gx-xxl-7 mt-sm-n2 mt-lg-n4">
             @foreach (var item in Model.Items)
             {
-                <div class="col-sm-6 col-lg-4 mt-3 mt-sm-5 mt-lg-6">
+                <div class="col-sm-6 col-lg-4 mt-3 mt-sm-5 mt-lg-6"
+                    x-data='{ title: @JSEncoder.EncodeToJson(item.Title.ToLowerInvariant()), description: @JSEncoder.EncodeToJson(item.ShortDescription.ToLowerInvariant()), type: @JSEncoder.EncodeToJson(item.Type.CodeName) }'
+                    x-show='(title.includes(searchTerm.toLowerCase()) || description.includes(searchTerm.toLowerCase())) && (searchType === "all" || searchType === type)'>
                     <div class="c-card widget default-border ">
                         <div class="c-card_inner">
                             @if (item.Logo is ImageAssetViewModel logo)
@@ -18,6 +51,11 @@
                                 </div>
                             }
                             <h3 class="h3 mt-2 pt-1">@item.Title</h3>
+                            <p>
+                                <small>
+                                    @item.Type.Title
+                                </small>
+                            </p>
                             <p class="mt-2">by
                                 <small>
                                     @if (item.AuthorURL is string authorURL)

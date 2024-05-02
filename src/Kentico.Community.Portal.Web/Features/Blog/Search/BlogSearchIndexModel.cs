@@ -2,10 +2,11 @@
 using CMS.ContentEngine;
 using CMS.Core;
 using CMS.MediaLibrary;
+using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Content.Web.Mvc;
-using Kentico.Xperience.Lucene.Indexing;
+using Kentico.Xperience.Lucene.Core.Indexing;
 using Lucene.Net.Documents;
 using Lucene.Net.Documents.Extensions;
 using Lucene.Net.Facet;
@@ -89,6 +90,7 @@ public class BlogSearchIndexingStrategy(
     ITaxonomyRetriever taxonomyRetriever,
     WebScraperHtmlSanitizer htmlSanitizer,
     WebCrawlerService webCrawler,
+    IChannelDataProvider channelDataProvider,
     IEventLogService log) : DefaultLuceneIndexingStrategy
 {
     public const string IDENTIFIER = "BLOG_SEARCH";
@@ -98,6 +100,7 @@ public class BlogSearchIndexingStrategy(
     private readonly ITaxonomyRetriever taxonomyRetriever = taxonomyRetriever;
     private readonly WebScraperHtmlSanitizer htmlSanitizer = htmlSanitizer;
     private readonly WebCrawlerService webCrawler = webCrawler;
+    private readonly IChannelDataProvider channelDataProvider = channelDataProvider;
     private readonly IEventLogService log = log;
 
     public override async Task<IEnumerable<IIndexEventItemModel>> FindItemsToReindex(IndexEventWebPageItemModel changedItem) => await Task.FromResult<List<IIndexEventItemModel>>([changedItem]);
@@ -115,7 +118,7 @@ public class BlogSearchIndexingStrategy(
             var b = new ContentItemQueryBuilder()
                 .ForContentTypes(q =>
                     q.OfContentType(BlogPostPage.CONTENT_TYPE_NAME)
-                        .ForWebsite(false)
+                        .ForWebsite(true)
                         .Linking(BlogPostPage.CONTENT_TYPE_NAME, nameof(BlogPostPage.BlogPostPageBlogPostContent), [changedItem.ItemID]));
 
             var page = (await executor.GetMappedWebPageResult<IWebPageFieldsSource>(b)).FirstOrDefault();
@@ -129,6 +132,8 @@ public class BlogSearchIndexingStrategy(
                 return reindexable;
             }
 
+            string channelName = await channelDataProvider.GetChannelNameByWebsiteChannelID(page.SystemFields.WebPageItemWebsiteChannelId) ?? "";
+
             reindexable.Add(new IndexEventWebPageItemModel(
                 page.SystemFields.WebPageItemID,
                 page.SystemFields.WebPageItemGUID,
@@ -138,11 +143,7 @@ public class BlogSearchIndexingStrategy(
                 page.SystemFields.ContentItemIsSecured,
                 page.SystemFields.ContentItemContentTypeID,
                 page.SystemFields.ContentItemCommonDataContentLanguageID,
-                /**
-                 * We set the channel name to an empty string because we can't retrieve it from the query above
-                 * and do not use it in MapToLuceneDocumentOrNull
-                 */
-                "",
+                channelName,
                 page.SystemFields.WebPageItemTreePath,
                 page.SystemFields.WebPageItemParentID,
                 page.SystemFields.WebPageItemOrder));

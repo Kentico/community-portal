@@ -1,4 +1,5 @@
-﻿using CMS.Membership;
+﻿using CMS.Core;
+using CMS.Membership;
 using CMS.Websites.Routing;
 using Htmx;
 using Kentico.Community.Portal.Core.Modules;
@@ -19,13 +20,15 @@ public class QAndAQuestionController(
     IUserInfoProvider userInfoProvider,
     IMediator mediator,
     IWebPageUrlRetriever urlRetriever,
-    IWebsiteChannelContext channelContext) : Controller
+    IWebsiteChannelContext channelContext,
+    IEventLogService log) : PortalHandlerController(log)
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly IUserInfoProvider userInfoProvider = userInfoProvider;
     private readonly IMediator mediator = mediator;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
     private readonly IWebsiteChannelContext channelContext = channelContext;
+    private readonly IEventLogService log = log;
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -45,17 +48,19 @@ public class QAndAQuestionController(
 
         var questionParent = await mediator.Send(new QAndAQuestionsRootPageQuery(channelContext.WebsiteChannelName));
 
-        _ = await mediator.Send(new QAndAQuestionCreateCommand(
+        return await mediator.Send(new QAndAQuestionCreateCommand(
             member,
             questionParent,
             channelContext.WebsiteChannelID,
             requestModel.Title,
             requestModel.Content,
-            SystemTaxonomies.QAndADiscussionTypeTaxonomy.QuestionTag.GUID));
+            SystemTaxonomies.QAndADiscussionTypeTaxonomy.QuestionTag.GUID))
+            .Match(_ =>
+            {
+                Response.Htmx(h => h.Redirect("/q-and-a"));
 
-        Response.Htmx(h => h.Redirect("/q-and-a"));
-
-        return Ok();
+                return Ok();
+            }, LogAndReturnError("CREATE_QUESTION"));
     }
 
     [HttpPost]
@@ -80,13 +85,15 @@ public class QAndAQuestionController(
             return NotFound();
         }
 
-        _ = await mediator.Send(new QAndAQuestionUpdateCommand(question, requestModel.Title, requestModel.Content, channelContext.WebsiteChannelID));
+        return await mediator.Send(new QAndAQuestionUpdateCommand(question, requestModel.Title, requestModel.Content, channelContext.WebsiteChannelID))
+            .Match<StatusCodeResult>(async () =>
+            {
+                string redirectURL = (await urlRetriever.Retrieve(question)).RelativePathTrimmed();
 
-        string redirectURL = (await urlRetriever.Retrieve(question)).RelativePathTrimmed();
+                Response.Htmx(h => h.Redirect(redirectURL));
 
-        Response.Htmx(h => h.Redirect(redirectURL));
-
-        return Ok();
+                return Ok();
+            }, LogAndReturnErrorAsync("QUESTION_UPDATE"));
     }
 
     [HttpGet]
@@ -136,8 +143,7 @@ public class QAndAQuestionController(
             return NotFound();
         }
 
-        _ = await mediator.Send(new QAndAQuestionDeleteCommand(question, channelContext.WebsiteChannelID));
-
-        return Ok();
+        return await mediator.Send(new QAndAQuestionDeleteCommand(question, channelContext.WebsiteChannelID))
+            .Match(Ok, LogAndReturnError("QUESTION_DELETE"));
     }
 }

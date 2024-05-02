@@ -2,17 +2,20 @@ using CMS.DataEngine;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
-using MediatR;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public record QAndAAnswerUpdateCommand(QAndAAnswerDataInfo Answer, string UpdatedAnswerContent) : ICommand<Unit>;
-public class QAndAAnswerUpdateCommandHandler(DataItemCommandTools tools, ISystemClock clock, IInfoProvider<QAndAAnswerDataInfo> provider) : DataItemCommandHandler<QAndAAnswerUpdateCommand, Unit>(tools)
+public record QAndAAnswerUpdateCommand(QAndAAnswerDataInfo Answer, string UpdatedAnswerContent) : ICommand<Result>;
+public class QAndAAnswerUpdateCommandHandler(
+    DataItemCommandTools tools,
+    ISystemClock clock,
+    IInfoProvider<QAndAAnswerDataInfo> provider)
+    : DataItemCommandHandler<QAndAAnswerUpdateCommand, Result>(tools)
 {
     private readonly ISystemClock clock = clock;
     private readonly IInfoProvider<QAndAAnswerDataInfo> provider = provider;
 
-    public override Task<Unit> Handle(QAndAAnswerUpdateCommand request, CancellationToken cancellationToken)
+    public override Task<Result> Handle(QAndAAnswerUpdateCommand request, CancellationToken cancellationToken)
     {
         var answer = request.Answer;
 
@@ -26,8 +29,15 @@ public class QAndAAnswerUpdateCommandHandler(DataItemCommandTools tools, ISystem
         answer.QAndAAnswerDataDateModified = now;
         answer.QAndAAnswerDataCodeName = codeName;
 
-        provider.Set(answer);
+        try
+        {
+            provider.Set(answer);
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult(Result.Failure($"Could not update answer [{request.Answer.QAndAAnswerDataGUID}]: {ex}"));
+        }
 
-        return Unit.Task;
+        return Task.FromResult(Result.Success());
     }
 }

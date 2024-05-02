@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>Card Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="0e3b7183-2aa8-446f-89af-c0b9efec8de3" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="941ec930-b867-497d-bbd3-9c7ffeeeee6c" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="05d68fc4-c76c-4a2f-9791-1a0ae298148f" isunique="true" system="true" />
+      <field column="CardContentWebpage" columnprecision="0" columntype="webpages" enabled="true" guid="6cf788d2-ad22-4df4-a36e-2236cbb49471" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Linked Webpage</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.WebPageSelector</controlname>
+          <MaximumPages>1</MaximumPages>
+          <Sortable>False</Sortable>
+        </settings>
+      </field>
+      <field allowempty="true" column="CardContentListableItem" columnprecision="0" columntype="contentitemreference" enabled="true" guid="0136b98f-11f2-4f1c-97c3-30de471c01bf" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Listable item</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedSchemaIdentifiers>
+            <![CDATA[["058caefa-c8d6-440f-8f3e-cd0fd9d7a41a"]]]>
+          </AllowedSchemaIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>0</MinimumItems>
+          <SelectionType>reusableFieldSchemas</SelectionType>
+        </settings>
+      </field>
+      <field allowempty="true" column="CardContentTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="0564c135-5187-407f-b9c2-a0a0bd4c95af" visible="true">
+        <properties>
+          <explanationtext>(optional)</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Title</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="CardContentLabel" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="3beb79de-5843-4161-88be-383fe5bec129" visible="true">
+        <properties>
+          <explanationtext>(optional)</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Label</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="CardContentUTMParameters" columnprecision="0" columntype="utmparameters" enabled="true" guid="2cc57dca-e2eb-48aa-9123-3f2f335071b7" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>UTM Parameters</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>
+            <![CDATA[Kentico.Community.Portal.Admin.FormComponent.UTMParameters]]>
+          </controlname>
+          <VisibleFields>
+            <![CDATA[["content","term"]]]>
+          </VisibleFields>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>365594a6-f443-49d8-9213-a1ad74d613dd</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-building-block</ClassIconClass>
+  <ClassName>KenticoCommunity.CardContent</ClassName>
+  <ClassShortName>KenticoCommunityCardContent</ClassShortName>
+  <ClassTableName>KenticoCommunity_CardContent</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

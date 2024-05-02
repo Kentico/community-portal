@@ -3,9 +3,10 @@
   <EmailTemplateCode>
 <![CDATA[
 <!DOCTYPE html>
+{% emailDefaults = EmailDefaults[0].Data; "" |(user)SeanW_kentico.com|(hash)c7971f7c322140293999c6a9fc041f0fd99bc15786afb9d330c04190a4ba69f2%}
 <html lang="en">
   <head>
-    <title>Kentico Community</title>
+    <title>{% AutoresponderEmailTitle %}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,424 +15,7 @@
     <meta name="supported-color-schemes" content="light dark" />
     <!-- ios -->
     <style type="text/css">
-      /* CLIENT-SPECIFIC STYLES */
-      body,
-      table,
-      td,
-      a,
-      p,
-      .paragraph {
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-        font-family: Arial, "Avenir Next", -apple-system, BlinkMacSystemFont,
-          "Segoe UI", Roboto, Helvetica, sans-serif, "Apple Color Emoji",
-          "Segoe UI Emoji", "Segoe UI Symbol" !important;
-      }
-      table,
-      td {
-        mso-table-lspace: 0pt;
-        mso-table-rspace: 0pt;
-        border-collapse: collapse;
-      }
-      img {
-        -ms-interpolation-mode: bicubic;
-      } /* RESET STYLES */
-      img {
-        border: 0;
-        height: auto;
-        line-height: 100%;
-        outline: none;
-        text-decoration: none;
-      }
-      table {
-        border-collapse: collapse !important;
-      }
-      body {
-        height: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100% !important;
-        background-color: #d3d2d2 !important;
-      }
-      h1,
-      h2,
-      h3,
-      h4 {
-        margin: 0;
-      }
-      h2 {
-        margin: 30px 0 20px 0;
-      }
-      p,
-      .paragraph {
-        font-size: 18px !important;
-        line-height: 24px !important;
-        margin: 20px 0;
-      } /* iOS blue links */
-      a[x-apple-data-detectors] {
-        color: inherit !important;
-        text-decoration: none !important;
-        font-size: inherit !important;
-        font-family: inherit !important;
-        font-weight: inherit !important;
-        line-height: inherit !important;
-      } /* Gmail blue links */
-      u + #body a {
-        color: inherit;
-        text-decoration: none;
-        font-size: inherit;
-        font-family: inherit;
-        font-weight: inherit;
-        line-height: inherit;
-      } /* Samsung */ /* Samsung full width */
-      #MessageViewBody,
-      #MessageWebViewDiv {
-        width: 100% !important;
-      } /* Samsung blue links */
-      #MessageViewBody,
-      #MessageWebViewDiv a {
-        color: inherit;
-        text-decoration: none;
-        font-size: inherit;
-        font-family: inherit;
-        font-weight: inherit;
-        line-height: inherit;
-      } /* Links */
-      a {
-        color: #000000;
-        text-decoration: underline;
-        transition: 0.35s ease-in-out;
-        font-family: Arial, "Avenir Next", -apple-system, BlinkMacSystemFont,
-          "Segoe UI", Roboto, Helvetica, sans-serif, "Apple Color Emoji",
-          "Segoe UI Emoji", "Segoe UI Symbol" !important;
-        cursor: pointer !important;
-      }
-      a:hover {
-        text-decoration: underline !important;
-      }
-      .view-online__cta:hover {
-        text-decoration: underline !important;
-      } /* Images */
-      .light-img {
-        display: block !important;
-        overflow: visible !important;
-        float: none !important;
-        max-height: inherit !important;
-        max-width: inherit !important;
-        margin-top: 0px !important;
-        visibility: inherit !important;
-      }
-      .dark-img {
-        display: none;
-        display: none !important;
-      } /* Card */
-      .card--featured .card__cta:hover {
-        color: #ffffff !important;
-      }
-      .card__cta:hover .card__cta-arrow {
-        padding-left: 8px !important;
-      } /* Media Queries */ /* Desktop first bacause of Gmail - its styles are inlined */
-      @media screen and (max-width: 620px) {
-        p,
-        a,
-        .links__list-item,
-        .paragraph {
-          font-size: 16px !important;
-        }
-        .body-bg {
-          padding: 16px !important;
-        }
-        .salutation {
-          font-size: 32px !important;
-          line-height: 40px !important;
-          margin-bottom: 24px !important;
-        }
-        .height-fix {
-          height: auto !important;
-          max-height: inherit !important;
-        }
-        .card--featured h2.card__heading {
-          font-size: 32px !important;
-          line-height: 40px !important;
-        }
-        .card__heading,
-        .card__highlight {
-          font-size: 22px !important;
-          line-height: 26px !important;
-        }
-        .card__bottom--award .card__bottom-details {
-          max-width: initial !important;
-        }
-        .card__bottom--blog .card__bottom-details-firstline {
-          font-size: 18px !important;
-          line-height: 24px !important;
-        }
-        .card__bottom--award .card__bottom-details-firstline,
-        .card__bottom--award .card__bottom-details-secondline,
-        .card__bottom--award .card__bottom-details-secondline a {
-          font-size: 14px !important;
-        }
-        .logo {
-          display: inline-block;
-          max-width: 50% !important;
-          min-width: auto !important;
-        }
-        .view-online {
-          display: inline-block;
-          max-width: 50% !important;
-          min-width: auto !important;
-        }
-        .footer {
-          max-width: 572px !important;
-        } /* in 600px width restriction */
-        .footer .footer__heading {
-          font-size: 18px !important;
-        }
-        .card--partner .card__partner-logo {
-          display: block !important;
-          width: 100% !important;
-          border-bottom: 1px solid #e3e3e3;
-        }
-        .card--partner .card__partner-details {
-          width: 190px !important;
-        }
-        .card__content,
-        .card__above-content {
-          margin-top: -44px !important;
-          padding: 30px 20px 40px 20px !important;
-        }
-        .card__no-image-wrapper .card__above-content {
-          padding: 0 !important;
-          margin-top: -36px !important;
-        }
-        .card--featured .card__content {
-          margin-top: -30px !important;
-        }
-        .card--gradient .card__content,
-        .card--no-image .card__content,
-        .card--partner .card__content,
-        .card--cta-list .card__content {
-          margin-top: 0 !important;
-        }
-        .card--gradient .card__above-content {
-          margin-top: -120px !important;
-          padding-bottom: 0 !important;
-        }
-        .card--gradient .card__heading,
-        .card--gradient .card__text {
-          max-width: 100% !important;
-        }
-        .card--featured .card__image {
-          width: calc(100% - 20px) !important;
-          height: auto !important;
-        }
-        .card--featured .card__content-table tr td {
-          padding-left: 20px !important;
-        }
-        .card__award {
-          max-width: 100%;
-          margin-right: 20px !important;
-        }
-        .card--highlight .card__content {
-          margin-top: -30px !important;
-          padding-top: 20px !important;
-        }
-        .card--highlight .card__above-content {
-          box-sizing: border-box;
-          margin-top: -48px !important;
-          padding-top: 30px !important;
-        } /* 30px top padding because of ios Outlook app */
-        .card--highlight .card__above-content .card__highlight {
-          padding-top: 20px !important;
-          padding-bottom: 10px !important;
-          margin-bottom: 0 !important;
-        }
-        .card--highlight .card__text {
-          margin-top: 0 !important;
-        }
-        .card__bottom-image {
-          margin-top: 0 !important;
-        }
-      } /* Desktop first bacause of Gmail - its styles are inlined */
-      @media screen and (max-width: 435px) {
-        .body-gap {
-          height: 0 !important;
-        }
-        .card--gradient .card__author-details {
-          margin-top: 20px !important;
-        }
-        .card--partner .card__partner-details {
-          width: 150px !important;
-        }
-      } /* Desktop first bacause of Gmail - its styles are inlined */
-      @media screen and (max-width: 374px) {
-        .logo,
-        .view-online,
-        .view-online table tr td {
-          display: block !important;
-          text-align: left !important;
-        }
-        .view-online {
-          margin-top: 10px !important;
-        }
-        .card--partner .card__partner-details,
-        .card--partner .card__partner-awards {
-          width: 100% !important;
-        }
-      } /* Dark mode styling */
-      @media (prefers-color-scheme: dark) {
-        /* Shows Dark Mode-Only image */
-        .dark-img {
-          display: block !important;
-          overflow: visible !important;
-          float: none !important;
-          max-height: inherit !important;
-          max-width: inherit !important;
-          margin-top: 0px !important;
-          visibility: inherit !important;
-        } /* Hides Light Mode-Only image */
-        .light-img {
-          display: none !important;
-        }
-        h1,
-        h2,
-        h3,
-        p,
-        span,
-        a,
-        b,
-        .paragraph,
-        .salutation {
-          color: #f6f6f6 !important;
-        }
-        body, /* ios13 needs explicit bg color to be set */         .body, /* outlook365 and yahoo body element fix */         .body-gap {
-          background-color: #363a3b !important;
-        } /* ios13 needs explicit bg color to be set */
-        .footer {
-          background-color: #231f20 !important;
-          background-image: url("https://www.kentico.com/getmedia/03091a2d-9a2d-4a99-9854-fddc55588b70/dots-footer-for-dark-bg.png") !important;
-        } /* ios13 needs explicit bg color to be set */
-        .footer__logo {
-          background-color: #231f20 !important;
-        }
-        .orange-char {
-          color: #f05a22 !important;
-        } /* Doesn't work in outlook and gmail */
-        .body-bg {
-          background-image: url("https://www.kentico.com/getmedia/10db108f-e7f2-4bec-b2dc-b69dec35ad2b/dots-header-for-dark-bg.png") !important;
-          background-color: #333333 !important;
-        } /* ios13 needs explicit bg color to be set */ /* win 10 mail doesn't care */
-        .view-online__cta {
-          color: #f6f6f6 !important;
-        } /* win 10 mail doesn't care */
-        .card__content {
-          background-color: #231f20 !important;
-          border: none !important;
-        }
-        .card__above-content,
-        .card__no-image-wrapper {
-          background-color: #231f20 !important;
-        }
-        .card__no-image-wrapper .card__above-content {
-          background: none !important;
-        }
-        .card__highlight,
-        .card__above-content--highlight {
-          background-color: #403b3c !important;
-        }
-        .tag--black {
-          background-color: #f6f6f6 !important;
-          color: #231f20 !important;
-        }
-        .links__list li {
-          color: #918f8f !important;
-        }
-        .card__bottom-details {
-          color: #f6f6f6 !important;
-        }
-        .card__cta,
-        .card__cta-arrow {
-          color: #ffffff !important;
-        }
-      } /* OUTLOOK dark mode | [data-ogsb] == background; [data-ogsc] == color */ /* Shows Dark Mode-Only Images */
-      [data-ogsb] .dark-img {
-        display: block !important;
-        overflow: visible !important;
-        float: none !important;
-        max-height: inherit !important;
-        max-width: inherit !important;
-        margin-top: 0px !important;
-        visibility: inherit !important;
-      } /* Hides Light Mode-Only Images */
-      [data-ogsb] .light-img {
-        display: none !important;
-      }
-      [data-ogsc] h1,
-      [data-ogsc] h2,
-      [data-ogsc] h3,
-      [data-ogsc] p,
-      [data-ogsc] a,
-      [data-ogsc] b,
-      [data-ogsc] .paragraph,
-      [data-ogsc] .salutation {
-        color: #ffffff !important;
-      }
-      [data-ogsb] body,
-      [data-ogsb] .body,
-      [data-ogsb] .body-gap {
-        background-color: #363a3b !important;
-      }
-      [data-ogsb] .body-bg {
-        background-image: url("https://www.kentico.com/getmedia/10db108f-e7f2-4bec-b2dc-b69dec35ad2b/dots-header-for-dark-bg.png") !important;
-      }
-      [data-ogsb] .footer {
-        background-color: #231f20 !important;
-        background-image: url("https://www.kentico.com/getmedia/10db108f-e7f2-4bec-b2dc-b69dec35ad2b/dots-header-for-dark-bg.png") !important;
-      }
-      [data-ogsb] .footer__logo {
-        background-color: #231f20 !important;
-      }
-      [data-ogsc] .orange-char {
-        color: #f05a22 !important;
-      }
-      [data-ogsc] .view-online__cta {
-        color: #ffffff !important;
-      }
-      [data-ogsb] .card__content {
-        background-color: #231f20 !important;
-        border: none !important;
-      }
-      [data-ogsb] .card__above-content,
-      [data-ogsb] .card__no-image-wrapper {
-        background-color: #231f20 !important;
-      }
-      [data-ogsb] .card__no-image-wrapper .card__above-content {
-        background: none !important;
-      }
-      [data-ogsb] .card__highlight,
-      [data-ogsb] .card__above-content--highlight {
-        background-color: #403b3c !important;
-      }
-      [data-ogsc] .card__cta-arrow {
-        color: #ffffff !important;
-      }
-      [data-ogsb] .card__highlight {
-        background-color: #403b3c !important;
-      }
-      [data-ogsc] .card__bottom-details {
-        color: #f6f6f6 !important;
-      }
-      [data-ogsb] .tag--black {
-        background-color: #f6f6f6 !important;
-        color: #231f20 !important;
-      }
-      [data-ogsc] .links__list li {
-        color: #918f8f !important;
-      }
-      [data-ogsc] .card__cta,
-      [data-ogsc] .card__cta-arrow {
-        color: #ffffff !important;
-      }
+      {% emailDefaults.EmailDefaultsContentHTMLStyles |(user)SeanW_kentico.com|(hash)6e02adf858cdd7a58661d874b2f2f2b950e33f6b743960f9aaad23dd23938ae6%}
     </style>
   </head>
   <body style="margin: 0; padding: 0; height: 100%; width: 100%">
@@ -477,16 +61,19 @@
             class="logo"
           >
             <a
-              href="https://www.kentico.com?utm_source=newsletter&utm_medium=email"
-              style="width: 210px; height: 41px; display: inline-block"
+              href="{% emailDefaults.EmailDefaultsContentHeaderLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters) |(user)SeanW_kentico.com|(hash)d0c6a8edd963233dc1ade993e8030551f3e6b67e264804fe9ba07e141c1a278f%}"
+              title="{% HTMLEncode(emailDefaults.EmailDefaultsContentHeaderLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters)) |(user)SeanW_kentico.com|(hash)e726be06056f9e542b96512e00d38ad3da4e69028bc2a75194717794ca8c5191%}"
+              style="width: 174px; height: 40px; display: inline-block"
+              target="_blank"
             >
+              {% headerLogo = emailDefaults.EmailDefaultsContentHeaderLogo[0].Data; "" |(user)SeanW_kentico.com|(hash)d6ef8c2d74f72e836eb010c02a23fa1a0e5ed862194efb944ea8fff4e60e5f0d%}
               <img
                 class="light-img"
-                src="https://www.kentico.com/getmedia/61981da6-3e79-4160-891f-fd7c96d1b5b9/kentico-logo.png"
-                alt="Kentico logo"
-                width="121"
-                height="41"
-                style="width: 121px; height: 41px"
+                src="{% headerLogo.MediaAssetContentAssetLight.Url |(user)SeanW_kentico.com|(hash)d415a7eb968ae9534a14fe949fa838d0aafcfe4703256a69521fa7899925effe%}"
+                alt="{% HTMLEncode(headerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)b3c16b786f3176d5d7e6c4bd4bb2c2b536bfaa1a05573a35a5c25b6de670d859%}"
+                width="{% headerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)5775e00665ccab5921f240ec0b8c4d2ec7d3b421a7140d2dd4272f31194d1731%}"
+                height="{% headerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)0ef741ae3ea4f6b695739c28b463db7632918a04cea2be374f78c3962159a75d%}"
+                style="width: 174px;"
               />
               <div
                 class="dark-img"
@@ -502,17 +89,17 @@
                 "
               >
                 <img
-                  src="https://www.kentico.com/getmedia/275f7ce6-b68d-4a86-9bc1-579ceeb89bc1/kentico-logo-for-dark-bg.png"
-                  alt="Kentico logo"
-                  width="121"
-                  height="41"
-                  style="width: 121px; height: 41px"
+                  src="{% headerLogo.MediaAssetContentAssetDark.Url |(user)SeanW_kentico.com|(hash)0c9f020f8a0a81a03f93e39a2bf6c17543224bb3c52f79f0c9e02740236e0b32%}"
+                  alt="{% HTMLEncode(headerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)b3c16b786f3176d5d7e6c4bd4bb2c2b536bfaa1a05573a35a5c25b6de670d859%}"
+                  width="{% headerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)5775e00665ccab5921f240ec0b8c4d2ec7d3b421a7140d2dd4272f31194d1731%}"
+                  height="{% headerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)0ef741ae3ea4f6b695739c28b463db7632918a04cea2be374f78c3962159a75d%}"
+                  style="width: 174px;"
                 />
               </div>
             </a>
           </div>
         </header>
-        {%EmailContent%}
+        {% AutoresponderEmailContent %}
       </div>
       <div
         class="footer"
@@ -564,6 +151,7 @@
             >
               <tbody>
                 <tr>
+                  {% foreach (link in emailDefaults.EmailDefaultsContentSocialLinks) { %}
                   <td
                     style="
                       text-align: left;
@@ -573,18 +161,20 @@
                     "
                   >
                     <a
-                      href="https://www.facebook.com/KenticoSoftware"
+                      href="{% link.Data.SocialLinkContentURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters) %}"
+                      title="{% HTMLEncode(link.Data.SocialLinkContentURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters)) %}"
+                      target="_blank"
                       style="
                         display: inline-block;
                         border: 0px none;
                         margin: 0px;
                         padding: 8px;
                       "
-                      title="Join us on Facebook"
+                      title="Join us on {% HTMLEncode(link.Data.SocialLinkContentTitle) %}"
                     >
                       <img
-                        alt="Facebook"
-                        src="https://www.kentico.com/getmedia/2294875a-3f00-4918-8f8d-34401c3601c1/social-icon-fb.png"
+                        alt="{% HTMLEncode(link.Data.SocialLinkContentTitle) %}"
+                        src="{% link.Data.SocialLinkContentLogoLightImage.Url %}"
                         width="32"
                         height="32"
                         style="
@@ -611,179 +201,15 @@
                         "
                       >
                         <img
-                          alt="Facebook"
-                          src="https://www.kentico.com/getmedia/16ab7393-9657-415d-a37c-a19845b5fdd7/social-icon-fb-for-dark-bg.png"
+                          alt="{% HTMLEncode(link.Data.SocialLinkContentTitle) %}"
+                          src="{% link.Data.SocialLinkContentLogoDarkImage.Url %}"
                           width="32"
                           height="32"
                         />
                       </div>
                     </a>
                   </td>
-                  <td
-                    style="
-                      text-align: left;
-                      padding: 0px;
-                      width: 40px;
-                      height: 40px;
-                    "
-                  >
-                    <a
-                      href="https://twitter.com/Kentico"
-                      style="
-                        display: inline-block;
-                        border: 0px none;
-                        margin: 0px;
-                        padding: 8px;
-                      "
-                      title="Join us on Twitter"
-                    >
-                      <img
-                        alt="Twitter"
-                        src="https://www.kentico.com/getmedia/b060ccd5-a881-444d-a41a-70f7c8fa90bd/social-icon-tw.png"
-                        width="32"
-                        height="32"
-                        style="
-                          width: 32px;
-                          height: 32px;
-                          border: 0px none;
-                          margin: 0px;
-                          padding: 0px;
-                          display: block;
-                        "
-                        class="light-img"
-                      />
-                      <div
-                        class="dark-img"
-                        style="
-                          display: none;
-                          overflow: hidden;
-                          float: left;
-                          width: 0px;
-                          max-height: 0px;
-                          max-width: 0px;
-                          line-height: 0px;
-                          visibility: hidden;
-                        "
-                      >
-                        <img
-                          alt="Twitter"
-                          src="https://www.kentico.com/getmedia/faa833b9-f0d6-4998-88af-236b9864caec/social-icon-tw-for-dark-bg.png"
-                          width="32"
-                          height="32"
-                        />
-                      </div>
-                    </a>
-                  </td>
-                  <td
-                    style="
-                      text-align: left;
-                      padding: 0px;
-                      width: 40px;
-                      height: 40px;
-                    "
-                  >
-                    <a
-                      href="https://www.linkedin.com/company/kenticosoftware"
-                      style="
-                        display: inline-block;
-                        border: 0px none;
-                        margin: 0px;
-                        padding: 8px;
-                      "
-                      title="Join us on LinkedIn"
-                    >
-                      <img
-                        alt="LinkedIn"
-                        src="https://www.kentico.com/getmedia/86e7193a-4794-429b-95ec-abe85b220edd/social-icon-li.png"
-                        width="32"
-                        height="32"
-                        style="
-                          width: 32px;
-                          height: 32px;
-                          border: 0px none;
-                          margin: 0px;
-                          padding: 0px;
-                          display: block;
-                        "
-                        class="light-img"
-                      />
-                      <div
-                        class="dark-img"
-                        style="
-                          display: none;
-                          overflow: hidden;
-                          float: left;
-                          width: 0px;
-                          max-height: 0px;
-                          max-width: 0px;
-                          line-height: 0px;
-                          visibility: hidden;
-                        "
-                      >
-                        <img
-                          alt="LinkedIn"
-                          src="https://www.kentico.com/getmedia/f9a60f9d-7f5c-4c36-9fa8-845c5a574961/social-icon-li-for-dark-bg.png"
-                          width="32"
-                          height="32"
-                        />
-                      </div>
-                    </a>
-                  </td>
-                  <td
-                    style="
-                      text-align: left;
-                      padding: 0px;
-                      width: 40px;
-                      height: 40px;
-                    "
-                  >
-                    <a
-                      href="https://www.youtube.com/c/kentico"
-                      style="
-                        display: inline-block;
-                        border: 0px none;
-                        margin: 0px;
-                        padding: 8px;
-                      "
-                      title="Join us on YouTube"
-                    >
-                      <img
-                        alt="YouTube"
-                        src="https://www.kentico.com/getmedia/2d00e404-a262-48bc-b0b8-2e9ea945fbce/social-icon-yt.png"
-                        width="32"
-                        height="32"
-                        style="
-                          width: 32px;
-                          height: 32px;
-                          border: 0px none;
-                          margin: 0px;
-                          padding: 0px;
-                          display: block;
-                        "
-                        class="light-img"
-                      />
-                      <div
-                        class="dark-img"
-                        style="
-                          display: none;
-                          overflow: hidden;
-                          float: left;
-                          width: 0px;
-                          max-height: 0px;
-                          max-width: 0px;
-                          line-height: 0px;
-                          visibility: hidden;
-                        "
-                      >
-                        <img
-                          alt="YouTube"
-                          src="https://www.kentico.com/getmedia/bc517f03-e6f0-4e1c-bf0c-a2f7e63fc24a/social-icon-yt-for-dark-bg.png"
-                          width="32"
-                          height="32"
-                        />
-                      </div>
-                    </a>
-                  </td>
+                 {% } |(user)SeanW_kentico.com|(hash)63968a2fe706911904ff85457a1914eacd90824d05a5be055ed5f7f465ef81a9%}
                 </tr>
               </tbody>
             </table>
@@ -806,42 +232,58 @@
             "
           >
             <a
-              href="https://www.kentico.com/about/contact?utm_source=newsletter&utm_medium=email"
+              href="{% emailDefaults.EmailDefaultsContentDefaultURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters) |(user)SeanW_kentico.com|(hash)f9065682e3d1c8817aec0be1aa689d36bd257ee49a65cbbfca4addb6005bf581%}"
+              title="{% HTMLEncode(emailDefaults.EmailDefaultsContentDefaultURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters)) |(user)SeanW_kentico.com|(hash)f1a928ab8708e04b5a3ba5ebfe0aa55a23c35384e6041fbef08a16fcdcc2497d%}"
               style="color: #4f4c4d; text-decoration: none"
               >Kentico software s.r.o.</a
             >, Nove sady 25, 602 00 Brno, Czech Republic.
           </p>
           <div
-            style="padding: 0 40px 40px 40px; text-align: left; display: block"
+            style="
+              padding: 0 40px 40px 40px;
+              text-align: left;
+              display: block;
+              background-color: #f4f4f4;
+            "
             class="footer__logo"
           >
-            <img
-              class="light-img"
-              src="https://www.kentico.com/getmedia/61981da6-3e79-4160-891f-fd7c96d1b5b9/kentico-logo.png"
-              alt="Kentico logo"
-              width="128"
-              height="43"
-            />
-            <div
-              class="dark-img"
-              style="
-                display: none;
-                overflow: hidden;
-                float: left;
-                width: 0px;
-                max-height: 0px;
-                max-width: 0px;
-                line-height: 0px;
-                visibility: hidden;
-              "
+            <a
+              href="{% emailDefaults.EmailDefaultsContentFooterLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters) |(user)SeanW_kentico.com|(hash)30d4ee1db2e9b16d49c745057f91869caf5b88fba767d1afa6338afc9280d293%}"
+              title="{% HTMLEncode(emailDefaults.EmailDefaultsContentFooterLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters)) |(user)SeanW_kentico.com|(hash)81106b565755bdc4b537c388e1daab8bd4cc3126ef329307d274e34e7031a67a%}"
+              style="width: 174px; height: 40px; display: inline-block"
+              target="_blank"
             >
+              {% footerLogo = emailDefaults.EmailDefaultsContentFooterLogo[0].Data; "" |(user)SeanW_kentico.com|(hash)4c7fb785ba14739b3deffe8969a5005c672a4238ac3f96c7f2ed6754e663071b%}
               <img
-                src="https://www.kentico.com/getmedia/275f7ce6-b68d-4a86-9bc1-579ceeb89bc1/kentico-logo-for-dark-bg.png"
-                alt="Kentico logo"
-                width="128"
-                height="43"
+                class="light-img"
+                src="{% footerLogo.MediaAssetContentAssetLight.Url |(user)SeanW_kentico.com|(hash)b6a011bc4355a577638faf34dc89020f285c80f89df43310fab807ab968a30a1%}"
+                alt="{% HTMLEncode(footerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)16889b7012312de1a6767df9f4295a2d4aef5a7b3dc48b07da98ab3ae15db3a0%}"
+                width="{% footerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)28a93708317961f496aa163efddd860a684b37f8dd3fe7eed4f637d83c8807f1%}"
+                height="{% footerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)4f0d2db44228a776f5008eb78c357389b9fd6acd981106a1d56076ffd9b4d90a%}"
+                style="width: 174px;"
               />
-            </div>
+              <div
+                class="dark-img"
+                style="
+                  display: none;
+                  overflow: hidden;
+                  float: left;
+                  width: 0px;
+                  max-height: 0px;
+                  max-width: 0px;
+                  line-height: 0px;
+                  visibility: hidden;
+                "
+              >
+                <img
+                  src="{% footerLogo.MediaAssetContentAssetDark.Url |(user)SeanW_kentico.com|(hash)27288edb032beb133ec63c3f2e492b8c70643b0784c13f02d68dbae1c42f8ce6%}"
+                  alt="{% HTMLEncode(footerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)16889b7012312de1a6767df9f4295a2d4aef5a7b3dc48b07da98ab3ae15db3a0%}"
+                  width="{% footerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)28a93708317961f496aa163efddd860a684b37f8dd3fe7eed4f637d83c8807f1%}"
+                  height="{% footerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)4f0d2db44228a776f5008eb78c357389b9fd6acd981106a1d56076ffd9b4d90a%}"
+                  style="width: 174px;"
+                />
+              </div>
+            </a>
           </div>
         </footer>
       </div>

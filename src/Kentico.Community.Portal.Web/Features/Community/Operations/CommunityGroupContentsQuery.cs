@@ -16,7 +16,7 @@ public class CommunityGroupContentsQueryHandler(ContentItemQueryTools tools) : C
                     .OrderBy(new OrderByColumn(nameof(CommunityGroupContent.CommunityGroupContentTitle), OrderDirection.Ascending))
                     .WithLinkedItems(1));
 
-        var r = await Executor.GetResult(b, ContentItemMapper.Map<CommunityGroupContent>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetMappedResult<CommunityGroupContent>(b, DefaultQueryOptions, cancellationToken);
 
         return new(r.ToList());
     }

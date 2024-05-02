@@ -67,6 +67,27 @@
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
       </field>
+      <field allowempty="true" column="IntegrationContentIntegrationType" columnprecision="0" columntype="taxonomy" enabled="true" guid="816e33dc-36b5-473c-a8d3-127a487e6e92" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Integration Type</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TagSelector</controlname>
+          <MaxSelectedTagsCount>1</MaxSelectedTagsCount>
+          <MinSelectedTagsCount>1</MinSelectedTagsCount>
+          <TaxonomyGroup>
+            <![CDATA[["97cd2b53-499b-435c-a083-30a7dd510167"]]]>
+          </TaxonomyGroup>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
       <field column="IntegrationContentType" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="918f7336-ea4c-4fef-bbaf-19675bcc11f9" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>

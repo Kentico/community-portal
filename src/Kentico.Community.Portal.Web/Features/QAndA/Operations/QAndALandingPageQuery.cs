@@ -15,7 +15,7 @@ public class QAndALandingPageQueryHandler(ContentItemQueryTools tools) : Content
                 .TopN(1);
         });
 
-        var pages = await Executor.GetWebPageResult(b, WebPageMapper.Map<QAndALandingPage>, DefaultQueryOptions, cancellationToken);
+        var pages = await Executor.GetMappedWebPageResult<QAndALandingPage>(b, DefaultQueryOptions, cancellationToken);
 
         return pages.First();
     }

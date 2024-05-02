@@ -15,16 +15,16 @@ public record QAndAQuestionCreateCommand(
     int WebsiteChannelID,
     string QuestionTitle,
     string QuestionContent,
-    Guid DiscussionTypeTagIdentifier) : ICommand<int>;
+    Guid DiscussionTypeTagIdentifier) : ICommand<Result<int>>;
 public class QAndAQuestionCreateCommandHandler(
     WebPageCommandTools tools,
     IInfoProvider<UserInfo> users,
-    ISystemClock clock) : WebPageCommandHandler<QAndAQuestionCreateCommand, int>(tools)
+    ISystemClock clock) : WebPageCommandHandler<QAndAQuestionCreateCommand, Result<int>>(tools)
 {
     private readonly IInfoProvider<UserInfo> users = users;
     private readonly ISystemClock clock = clock;
 
-    public override async Task<int> Handle(QAndAQuestionCreateCommand request, CancellationToken cancellationToken)
+    public override async Task<Result<int>> Handle(QAndAQuestionCreateCommand request, CancellationToken cancellationToken)
     {
         var user = await users.GetPublicMemberContentAuthor();
 
@@ -33,7 +33,6 @@ public class QAndAQuestionCreateCommandHandler(
         string filteredTitle = QandAContentParser.Alphanumeric(request.QuestionTitle);
         string uniqueID = Guid.NewGuid().ToString("N");
         string displayName = $"{filteredTitle[..Math.Min(91, filteredTitle.Length)]}-{uniqueID[..8]}";
-        string codeName = $"{filteredTitle[..Math.Min(41, filteredTitle.Length)]}-{uniqueID[..8]}";
         var now = clock.UtcNow;
 
         var itemData = new ContentItemData(new Dictionary<string, object>
@@ -48,12 +47,20 @@ public class QAndAQuestionCreateCommandHandler(
             { nameof(QAndAQuestionPage.QAndAQuestionPageDiscussionType), JsonSerializer.Serialize<IEnumerable<TagReference>>([new TagReference { Identifier = request.DiscussionTypeTagIdentifier }]) },
         });
         var contentItemParameters = new ContentItemParameters(QAndAQuestionPage.CONTENT_TYPE_NAME, itemData);
-        var webPageParameters = new CreateWebPageParameters(codeName, displayName, PortalWebSiteChannel.DEFAULT_LANGUAGE, contentItemParameters)
+        var webPageParameters = new CreateWebPageParameters(displayName, PortalWebSiteChannel.DEFAULT_LANGUAGE, contentItemParameters)
         {
             ParentWebPageItemID = request.QuestionParent.SystemFields.WebPageItemID,
             RequiresAuthentication = false,
             VersionStatus = VersionStatus.Published
         };
-        return await webPageManager.Create(webPageParameters, cancellationToken);
+
+        try
+        {
+            return await webPageManager.Create(webPageParameters, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            return Result.Failure<int>($"Could not create new question: {ex}");
+        }
     }
 }

@@ -20,6 +20,12 @@ namespace Kentico.Community.Portal.Core.Content
 	public interface IWebPageMeta
 	{
 		/// <summary>
+		/// Code name of the reusable field schema.
+		/// </summary>
+		public const string REUSABLE_FIELD_SCHEMA_NAME = "WebPageMeta";
+
+
+		/// <summary>
 		/// WebPageMetaTitle.
 		/// </summary>
 		public string WebPageMetaTitle { get; set; }

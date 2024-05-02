@@ -1,5 +1,5 @@
 ﻿using CMS;
-using CMS.Automation.Internal;
+using CMS.Automation;
 using CMS.ContactManagement;
 using CMS.Core;
 using CMS.OnlineForms;

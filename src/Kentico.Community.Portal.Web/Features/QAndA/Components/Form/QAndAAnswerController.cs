@@ -1,3 +1,4 @@
+using CMS.Core;
 using CMS.Membership;
 using CMS.Websites.Routing;
 using Htmx;
@@ -17,8 +18,8 @@ public class QAndAAnswerController(
     IWebPageUrlRetriever urlRetriever,
     IUserInfoProvider userInfoProvider,
     IMediator mediator,
-    IWebsiteChannelContext channelContext
-    ) : Controller
+    IWebsiteChannelContext channelContext,
+    IEventLogService log) : PortalHandlerController(log)
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
@@ -52,13 +53,18 @@ public class QAndAAnswerController(
             return Unauthorized();
         }
 
-        _ = await mediator.Send(new QAndAAnswerCreateCommand(member, requestModel.Content, parentQuestion, channelContext));
+        return await mediator.Send(new QAndAAnswerCreateCommand(member, requestModel.Content, parentQuestion, channelContext))
+            .Match(async id =>
+            {
+                string questionPath = (await urlRetriever.Retrieve(parentQuestion)).RelativePathTrimmed();
 
-        string questionPath = (await urlRetriever.Retrieve(parentQuestion)).RelativePathTrimmed();
+                Response.Htmx(h => h.Redirect(questionPath));
 
-        Response.Htmx(h => h.Redirect(questionPath));
+                return Ok().AsStatusCodeResult();
 
-        return Ok();
+            }, LogAndReturnErrorAsync("ANSWER_CREATE"));
+
+
     }
 
     [HttpPost]

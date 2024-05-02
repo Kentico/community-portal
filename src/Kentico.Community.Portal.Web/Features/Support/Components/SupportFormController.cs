@@ -47,7 +47,9 @@ public class SupportFormController(
         _ = await queueClient.SendMessageAsync(JsonSerializer.Serialize(new SupportRequestQueueMessage
         {
             BlobName = blobName,
-            Subject = requestModel.Issue
+            Subject = requestModel.Issue,
+            AuthorName = requestMessage.FirstName,
+            AuthorEmail = requestMessage.Email
         }), cancellationToken);
 
         return ViewComponent(typeof(SupportFormViewComponent), new SupportFormViewModel() { IsSuccess = true });

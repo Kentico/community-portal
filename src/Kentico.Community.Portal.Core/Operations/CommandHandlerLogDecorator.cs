@@ -17,7 +17,7 @@ public class CommandHandlerLogDecorator<TCommand, TResult>(IEventLogService log,
         }
         catch (Exception ex)
         {
-            log.LogException(request.GetType().Name, "FAILURE", ex);
+            log.LogException(request.GetType().Name, "COMMAND_FAILURE", ex);
 
             throw;
         }

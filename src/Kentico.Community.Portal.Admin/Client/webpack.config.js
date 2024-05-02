@@ -61,7 +61,7 @@ function buildConfig(baseConfig, opts, argv) {
       clean: true,
     },
     devServer: {
-      port: 3009,
+      port: 3019,
       server: {
         type: 'https',
         options: {

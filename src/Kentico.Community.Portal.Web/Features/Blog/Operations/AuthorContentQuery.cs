@@ -18,7 +18,7 @@ public class AuthorContentQueryHandler(ContentItemQueryTools tools) : ContentIte
             _ = queryParams.Where(w => w.WhereEquals(nameof(AuthorContent.AuthorContentCodeName), request.AuthorCodeName));
         });
 
-        var r = await Executor.GetResult(b, ContentItemMapper.Map<AuthorContent>, DefaultQueryOptions, cancellationToken);
+        var r = await Executor.GetMappedResult<AuthorContent>(b, DefaultQueryOptions, cancellationToken);
 
         return new(r.FirstOrDefault());
     }

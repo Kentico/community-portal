@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>Email Defaults Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="5fd8c46a-eab2-4c9b-8e9f-3452086fc85f" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="90ff3b0b-a5db-4e95-b3f4-cc6ccb839293" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="d2d384f0-8cd6-427f-9770-8299ef654e2f" isunique="true" system="true" />
+      <field column="EmailDefaultsContentDefaultURL" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="055b8029-06ea-420a-b5c4-c5111b80c116" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Default URL</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Community.Portal.ValidationRule.URL</ValidationRuleIdentifier>
+            <RuleValues>
+              <RequireHTTPS>true</RequireHTTPS>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field allowempty="true" column="EmailDefaultsContentHeaderLogo" columnprecision="0" columntype="contentitemreference" enabled="true" guid="92055e51-de95-4e15-880e-079a7e0cb70b" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Header Logo</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["0722a045-5aff-4c3b-a356-1a1fd3be8a61"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>1</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+      </field>
+      <field column="EmailDefaultsContentHeaderLinkURL" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="fc52620f-78bf-40df-a6f7-c68dbfaad4e7" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Header Link URL</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Community.Portal.ValidationRule.URL</ValidationRuleIdentifier>
+            <RuleValues>
+              <RequireHTTPS>true</RequireHTTPS>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field allowempty="true" column="EmailDefaultsContentSocialLinks" columnprecision="0" columntype="contentitemreference" enabled="true" guid="9489a143-bbb6-44c8-80dd-78c655d8c2ea" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Social Links</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["4624dcfa-f4a7-4a27-8bc9-9afc9e4c3701"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+      </field>
+      <field allowempty="true" column="EmailDefaultsContentFooterLogo" columnprecision="0" columntype="contentitemreference" enabled="true" guid="4e9d7d77-df78-48eb-8c82-ecdb9ca0962b" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Footer Logo</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["0722a045-5aff-4c3b-a356-1a1fd3be8a61"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>1</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+      </field>
+      <field column="EmailDefaultsContentFooterLinkURL" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="ed9401ad-8066-47ad-9d77-47cdfab3dcd5" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Footer Link URL</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Community.Portal.ValidationRule.URL</ValidationRuleIdentifier>
+            <RuleValues>
+              <RequireHTTPS>true</RequireHTTPS>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field column="EmailDefaultsContentHTMLStyles" columnprecision="0" columntype="longtext" enabled="true" guid="f8aff6cb-27ee-480b-917c-5f542a9141e9" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>HTML Styles</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>20</MaxRowsNumber>
+          <MinRowsNumber>10</MinRowsNumber>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>42167fe7-53ac-496b-b565-7cb05db3f13c</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-messages</ClassIconClass>
+  <ClassName>KenticoCommunity.EmailDefaultsContent</ClassName>
+  <ClassShortName>KenticoCommunityEmailDefaultsContent</ClassShortName>
+  <ClassTableName>KenticoCommunity_EmailDefaultsContent</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

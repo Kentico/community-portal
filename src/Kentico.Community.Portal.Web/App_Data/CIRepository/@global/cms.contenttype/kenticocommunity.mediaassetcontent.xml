@@ -48,10 +48,10 @@
           </ValidationRuleConfiguration>
         </validationrulesdata>
       </field>
-      <field allowempty="true" column="MediaAssetContentAsset" columnprecision="0" columntype="contentitemasset" enabled="true" guid="62da2f74-2484-4f51-9c27-93fdd8db50f9" visible="true">
+      <field allowempty="true" column="MediaAssetContentAssetLight" columnprecision="0" columntype="contentitemasset" enabled="true" guid="62da2f74-2484-4f51-9c27-93fdd8db50f9" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Media Asset</fieldcaption>
+          <fieldcaption>Media Asset (Light)</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
@@ -59,7 +59,18 @@
           <controlname>Kentico.Administration.ContentItemAssetUploader</controlname>
         </settings>
       </field>
-      <field column="MediaAssetContentImageWidth" columnprecision="0" columntype="integer" enabled="true" guid="f9330b06-ab5e-49f6-91b6-e7763e7ba4b5" visible="true">
+      <field allowempty="true" column="MediaAssetContentAssetDark" columnprecision="0" columntype="contentitemasset" enabled="true" guid="05df1e4d-01be-445b-b583-60c5870128f6" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Media Asset (Dark)</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedExtensions>_INHERITED_</AllowedExtensions>
+          <controlname>Kentico.Administration.ContentItemAssetUploader</controlname>
+        </settings>
+      </field>
+      <field column="MediaAssetContentImageLightWidth" columnprecision="0" columntype="integer" enabled="true" guid="f9330b06-ab5e-49f6-91b6-e7763e7ba4b5" visible="true">
         <properties>
           <defaultvalue>0</defaultvalue>
           <explanationtextashtml>False</explanationtextashtml>
@@ -70,7 +81,7 @@
           <controlname>Kentico.Administration.NumberInput</controlname>
         </settings>
       </field>
-      <field column="MediaAssetContentImageHeight" columnprecision="0" columntype="integer" enabled="true" guid="31471742-23b3-416d-b3ce-d0559f0f7ffb" visible="true">
+      <field column="MediaAssetContentImageLightHeight" columnprecision="0" columntype="integer" enabled="true" guid="31471742-23b3-416d-b3ce-d0559f0f7ffb" visible="true">
         <properties>
           <defaultvalue>0</defaultvalue>
           <explanationtextashtml>False</explanationtextashtml>

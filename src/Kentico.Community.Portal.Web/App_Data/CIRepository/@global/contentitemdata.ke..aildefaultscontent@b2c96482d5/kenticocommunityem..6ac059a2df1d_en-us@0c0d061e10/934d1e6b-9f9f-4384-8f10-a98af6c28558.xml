@@ -1,0 +1,490 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.emaildefaultscontent>
+  <ContentItemDataCommonDataID>
+    <GUID>510660f8-5fc4-4998-81d7-6ac059a2df1d</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>KenticoCommunityEmailDefaults-1do1ulq8</CodeName>
+      <GUID>a0222552-0368-4784-9661-fd5660bfe492</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>934d1e6b-9f9f-4384-8f10-a98af6c28558</ContentItemDataGUID>
+  <EmailDefaultsContentDefaultURL>https://localhost:45039</EmailDefaultsContentDefaultURL>
+  <EmailDefaultsContentFooterLinkURL>https://www.kentico.com</EmailDefaultsContentFooterLinkURL>
+  <EmailDefaultsContentFooterLogo>
+    <![CDATA[[{"Identifier":"6ca32049-ba79-4418-b1a5-1181ea006e14"}]]]>
+  </EmailDefaultsContentFooterLogo>
+  <EmailDefaultsContentHeaderLinkURL>https://www.kentico.com</EmailDefaultsContentHeaderLinkURL>
+  <EmailDefaultsContentHeaderLogo>
+    <![CDATA[[{"Identifier":"6ca32049-ba79-4418-b1a5-1181ea006e14"}]]]>
+  </EmailDefaultsContentHeaderLogo>
+  <EmailDefaultsContentHTMLStyles>
+<![CDATA[
+
+      /* CLIENT-SPECIFIC STYLES */
+      body,
+      table,
+      td,
+      a,
+      p,
+      .paragraph {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        font-family: Arial, "Avenir Next", -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, Helvetica, sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol" !important;
+      }
+      table,
+      td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        border-collapse: collapse;
+      }
+      img {
+        -ms-interpolation-mode: bicubic;
+      }
+
+      /* RESET STYLES */
+      img {
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+      }
+      table {
+        border-collapse: collapse !important;
+      }
+      body {
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        background-color: #d3d2d2 !important;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin: 0;
+      }
+      h2 {
+        margin: 30px 0 20px 0;
+      }
+      p,
+      .paragraph {
+        font-size: 18px !important;
+        line-height: 24px !important;
+        margin: 20px 0;
+      }
+
+      /* iOS blue links */
+      a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+      }
+
+      /* Gmail blue links */
+      u + #body a {
+        color: inherit;
+        text-decoration: none;
+        font-size: inherit;
+        font-family: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+      }
+
+      /* Samsung */
+      /* Samsung full width */
+      #MessageViewBody,
+      #MessageWebViewDiv {
+        width: 100% !important;
+      }
+      /* Samsung blue links */
+      #MessageViewBody,
+      #MessageWebViewDiv a {
+        color: inherit;
+        text-decoration: none;
+        font-size: inherit;
+        font-family: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+      }
+
+      /* Links */
+      a {
+        color: #000000;
+        text-decoration: underline;
+        transition: 0.35s ease-in-out;
+        font-family: Arial, "Avenir Next", -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, Helvetica, sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        cursor: pointer !important;
+      }
+      a:hover {
+        text-decoration: underline !important;
+      }
+
+      .view-online__cta:hover {
+        text-decoration: underline !important;
+      }
+
+      /* Images */
+      .light-img {
+        display: block !important;
+        overflow: visible !important;
+        float: none !important;
+        max-height: inherit !important;
+        max-width: inherit !important;
+        margin-top: 0px !important;
+        visibility: inherit !important;
+      }
+
+      .dark-img {
+        display: none;
+        display: none !important;
+      }
+
+      /* Card */
+      .card--featured .card__cta:hover {
+        color: #ffffff !important;
+      }
+      .card__cta:hover .card__cta-arrow {
+        padding-left: 8px !important;
+      }
+
+      /* Media Queries */
+      /* Desktop first bacause of Gmail - its styles are inlined */
+      @media screen and (max-width: 620px) {
+      }
+      /* Media Queries */
+      /* Desktop first bacause of Gmail - its styles are inlined */
+      @media screen and (max-width: 620px) {
+        .paragraph,
+        p,
+        a,
+        .links__list-item {
+          font-size: 16px !important;
+        }
+        .body-bg {
+          padding: 16px !important;
+        }
+        .salutation {
+          font-size: 32px !important;
+          line-height: 40px !important;
+          margin-bottom: 24px !important;
+        }
+        .height-fix {
+          height: auto !important;
+          max-height: inherit !important;
+        }
+        .card--featured h2.card__heading {
+          font-size: 32px !important;
+          line-height: 40px !important;
+        }
+        .card__heading,
+        .card__highlight {
+          font-size: 22px !important;
+          line-height: 26px !important;
+        }
+        .card__bottom--award .card__bottom-details {
+          max-width: initial !important;
+        }
+        .card__bottom--blog .card__bottom-details-firstline {
+          font-size: 18px !important;
+          line-height: 24px !important;
+        }
+        .card__bottom--award .card__bottom-details-firstline,
+        .card__bottom--award .card__bottom-details-secondline,
+        .card__bottom--award .card__bottom-details-secondline a {
+          font-size: 14px !important;
+        }
+        .logo {
+          display: inline-block;
+          max-width: 50% !important;
+          min-width: auto !important;
+        }
+        .view-online {
+          display: inline-block;
+          max-width: 50% !important;
+          min-width: auto !important;
+        }
+        .footer {
+          max-width: 572px !important;
+        } /* in 600px width restriction */
+        .footer .footer__heading {
+          font-size: 18px !important;
+        }
+        .card--partner .card__partner-logo {
+          display: block !important;
+          width: 100% !important;
+          border-bottom: 1px solid #e3e3e3;
+        }
+        .card--partner .card__partner-details {
+          width: 190px !important;
+        }
+        .card__content,
+        .card__above-content {
+          margin-top: -44px !important;
+          padding: 30px 20px 40px 20px !important;
+        }
+        .card__no-image-wrapper .card__above-content {
+          padding: 0 !important;
+          margin-top: -36px !important;
+        }
+        .card--featured .card__content {
+          margin-top: -30px !important;
+        }
+        .card--gradient .card__content,
+        .card--no-image .card__content,
+        .card--partner .card__content,
+        .card--cta-list .card__content {
+          margin-top: 0 !important;
+        }
+        .card--gradient .card__above-content {
+          margin-top: -120px !important;
+          padding-bottom: 0 !important;
+        }
+        .card--gradient .card__heading,
+        .card--gradient .card__text {
+          max-width: 100% !important;
+        }
+        .card--featured .card__image {
+          width: calc(100% - 20px) !important;
+          height: auto !important;
+        }
+        .card--featured .card__content-table tr td {
+          padding-left: 20px !important;
+        }
+        .card__award {
+          max-width: 100%;
+          margin-right: 20px !important;
+        }
+        .card--highlight .card__content {
+          margin-top: -30px !important;
+          padding-top: 20px !important;
+        }
+        .card--highlight .card__above-content {
+          box-sizing: border-box;
+          margin-top: -48px !important;
+          padding-top: 30px !important;
+        } /* 30px top padding because of ios Outlook app */
+        .card--highlight .card__above-content .card__highlight {
+          padding-top: 20px !important;
+          padding-bottom: 10px !important;
+          margin-bottom: 0 !important;
+        }
+        .card--highlight .card__text {
+          margin-top: 0 !important;
+        }
+        .card__bottom-image {
+          margin-top: 0 !important;
+        }
+      }
+
+      /* Desktop first bacause of Gmail - its styles are inlined */
+      @media screen and (max-width: 435px) {
+        .body-gap {
+          height: 0 !important;
+        }
+        .card--gradient .card__bottom-details {
+          margin-top: 20px !important;
+        }
+        .card--partner .card__partner-details {
+          width: 150px !important;
+        }
+      }
+
+      /* Desktop first bacause of Gmail - its styles are inlined */
+      @media screen and (max-width: 374px) {
+        .logo,
+        .view-online,
+        .view-online table tr td {
+          display: block !important;
+          text-align: left !important;
+        }
+        .view-online {
+          margin-top: 10px !important;
+        }
+        .card--partner .card__partner-details,
+        .card--partner .card__partner-awards {
+          width: 100% !important;
+        }
+      }
+
+      /* Dark mode styling */
+      @media (prefers-color-scheme: dark) {
+        /* Shows Dark Mode-Only image */
+        .dark-img {
+          display: block !important;
+          overflow: visible !important;
+          float: none !important;
+          max-height: inherit !important;
+          max-width: inherit !important;
+          margin-top: 0px !important;
+          visibility: inherit !important;
+        }
+
+        /* Hides Light Mode-Only image */
+        .light-img {
+          display: none !important;
+        }
+
+        h1,
+        h2,
+        h3,
+        p,
+        span,
+        a,
+        b,
+        .paragraph,
+        .salutation {
+          color: #f6f6f6 !important;
+        }
+        body, /* ios13 needs explicit bg color to be set */
+          .body, /* outlook365 and yahoo body element fix */
+          .body-gap {
+          background-color: #363a3b !important;
+        } /* ios13 needs explicit bg color to be set */
+        .footer {
+          background-color: #231f20 !important;
+          background-image: url("https://www.kentico.com:8888/getmedia/e7c63ff3-ca63-4723-8c29-ec1aabe46d2b/grey-circle-footer-dark") !important;
+        } /* ios13 needs explicit bg color to be set */
+        .footer__logo {
+          background-color: #231f20 !important;
+        }
+        .orange-char {
+          color: #f05a22 !important;
+        }
+        /* Doesn't work in outlook and gmail */
+        .body-bg {
+          background-image: url("https://www.kentico.com:8888/getmedia/e64f8cb7-7049-40fe-a73f-65de910ca0f0/grey-circle-dark") !important;
+          background-color: #333333 !important;
+        } /* ios13 needs explicit bg color to be set */
+        /* win 10 mail doesn't care */
+        .view-online__cta {
+          color: #f6f6f6 !important;
+        }
+        /* win 10 mail doesn't care */
+        .card__content {
+          background-color: #231f20 !important;
+          border: none !important;
+        }
+        .card__above-content,
+        .card__no-image-wrapper {
+          background-color: #231f20 !important;
+        }
+        .card__no-image-wrapper .card__above-content {
+          background: none !important;
+        }
+        .card__highlight,
+        .card__above-content--highlight {
+          background-color: #403b3c !important;
+        }
+        .tag--black {
+          background-color: #f6f6f6 !important;
+          color: #231f20 !important;
+        }
+        .links__list li {
+          color: #918f8f !important;
+        }
+        .card__bottom-details {
+          color: #f6f6f6 !important;
+        }
+        .card__cta,
+        .card__cta-arrow {
+          color: #ffffff !important;
+        }
+      }
+
+      /* OUTLOOK dark mode | [data-ogsb] == background; [data-ogsc] == color */
+      /* Shows Dark Mode-Only Images */
+      [data-ogsb] .dark-img {
+        display: block !important;
+        overflow: visible !important;
+        float: none !important;
+        max-height: inherit !important;
+        max-width: inherit !important;
+        margin-top: 0px !important;
+        visibility: inherit !important;
+      }
+
+      /* Hides Light Mode-Only Images */
+      [data-ogsb] .light-img {
+        display: none !important;
+      }
+
+      [data-ogsc] h1,
+      [data-ogsc] h2,
+      [data-ogsc] h3,
+      [data-ogsc] p,
+      [data-ogsc] a,
+      [data-ogsc] b,
+      [data-ogsc] .paragraph,
+      [data-ogsc] .salutation {
+        color: #ffffff !important;
+      }
+      [data-ogsb] body,
+      [data-ogsb] .body,
+      [data-ogsb] .body-gap {
+        background-color: #363a3b !important;
+      }
+      [data-ogsb] .body-bg {
+        background-image: url("https://www.kentico.com:8888/getmedia/e64f8cb7-7049-40fe-a73f-65de910ca0f0/grey-circle-dark") !important;
+      }
+      [data-ogsb] .footer {
+        background-color: #231f20 !important;
+        background-image: url("https://www.kentico.com:8888/getmedia/e7c63ff3-ca63-4723-8c29-ec1aabe46d2b/grey-circle-footer-dark") !important;
+      }
+      [data-ogsb] .footer__logo {
+        background-color: #231f20 !important;
+      }
+      [data-ogsc] .orange-char {
+        color: #f05a22 !important;
+      }
+      [data-ogsc] .view-online__cta {
+        color: #ffffff !important;
+      }
+      [data-ogsb] .card__content {
+        background-color: #231f20 !important;
+        border: none !important;
+      }
+      [data-ogsb] .card__above-content,
+      [data-ogsb] .card__no-image-wrapper {
+        background-color: #231f20 !important;
+      }
+      [data-ogsb] .card__no-image-wrapper .card__above-content {
+        background: none !important;
+      }
+      [data-ogsb] .card__highlight,
+      [data-ogsb] .card__above-content--highlight {
+        background-color: #403b3c !important;
+      }
+      [data-ogsb] .card__highlight {
+        background-color: #403b3c !important;
+      }
+      [data-ogsb] .tag--black {
+        background-color: #f6f6f6 !important;
+        color: #231f20 !important;
+      }
+      [data-ogsc] .links__list li {
+        color: #918f8f !important;
+      }
+      [data-ogsc] .card__bottom-details {
+        color: #f6f6f6 !important;
+      }
+      [data-ogsc] .card__cta,
+      [data-ogsc] .card__cta-arrow {
+        color: #ffffff !important;
+      }
+]]>
+  </EmailDefaultsContentHTMLStyles>
+  <EmailDefaultsContentSocialLinks>
+    <![CDATA[[{"Identifier":"be336b31-d522-40c8-912a-10eec4639023"},{"Identifier":"1e765fd7-171a-4d14-8316-b350426c2120"},{"Identifier":"15934594-09d0-4de8-b981-015b7cf675d4"},{"Identifier":"8dd9f901-10ef-463b-82dc-1f5b0bc3f29e"}]]]>
+  </EmailDefaultsContentSocialLinks>
+</contentitemdata.kenticocommunity.emaildefaultscontent>

@@ -20,8 +20,8 @@
                         <div class="c-card_inner">
                             @if (item.CommunityGroupContentPrimaryImageMediaAssets.FirstOrDefault() is MediaAssetContent logo)
                             {
-                                    <img src="@logo.MediaAssetContentAsset.Url" class="card-img-top"
-                                        alt="@logo.MediaAssetContentTitle" width="@logo.MediaAssetContentImageWidth" height="@logo.MediaAssetContentImageHeight" />
+                                    <img src="@logo.MediaAssetContentAssetLight.Url" class="card-img-top"
+                                        alt="@logo.MediaAssetContentTitle" width="@logo.MediaAssetContentImageLightWidth" height="@logo.MediaAssetContentImageLightHeight" />
                              
                             }
                             <h3 class="h3 mt-2 pt-1">

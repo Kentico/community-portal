@@ -15,7 +15,7 @@ public class QAndAQuestionsRootPageQueryHandler(ContentItemQueryTools tools) : C
                 .TopN(1);
         });
 
-        var pages = await Executor.GetWebPageResult(b, WebPageMapper.Map<QAndAQuestionsRootPage>, DefaultQueryOptions, cancellationToken);
+        var pages = await Executor.GetMappedWebPageResult<QAndAQuestionsRootPage>(b, DefaultQueryOptions, cancellationToken);
 
         return pages.First();
     }

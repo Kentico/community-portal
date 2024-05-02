@@ -1,5 +1,21 @@
 # Architecture Decision Record
 
+## 2024-05-01 - Alpine.js
+
+Instead of authoring difficult to test, edit, and maintain jQuery for filtering on the Integrations page, we've added a dependency on [Alpine.js](https://alpinejs.dev/).
+
+This enables us to author simple interactive UIs without custom JavaScript and co-locate all custom behavior with the markup that behavior operates on. See `IntegrationsList.cshtml` for an example.
+
+In the future we can convert the Blog and Q&A search experiences to use either Alpine.js, HTMX, or both and remove most of the custom JavaScript for these basic UIs.
+
+## 2024-05-01 - Taxonomies migration part 2
+
+Similar to [2024-03-27 - Taxonomies migration](#2024-03-27---taxonomies-migration), `IntegrationContent` content items use simulated taxonomy, created before Taxonomy support existed in Xperience by Kentico.
+
+To support migrating towards true taxonomies and a new filtering UI for the Integrations page, we have introduced a new Taxonomy - "Integration Type" - and updated the `IntegrationContent` content type with a taxonomy field.
+
+Both the old and new taxonomy approaches will be supported simultaneously until all content has been updated to have assigned taxonomy tags.
+
 ## 2024-04-04 - Support request processing settings
 
 The requirement for Azurite to be running when developing locally is a complexity added when async support request processing

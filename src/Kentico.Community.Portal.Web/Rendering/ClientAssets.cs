@@ -30,6 +30,16 @@ public class ClientAssets(IWebHostEnvironment env, IViteManifest manifest, IOpti
     public void RequirePrism() => PrismRequired = true;
 
     /// <summary>
+    /// Returns true if Alpine.js is required on the current page
+    /// </summary>
+    /// <value></value>
+    public bool AlpineRequired { get; internal set; } = false;
+    /// <summary>
+    /// Call to ensure Alpine.js is configured for the current page
+    /// </summary>
+    public void RequireAlpine() => AlpineRequired = true;
+
+    /// <summary>
     /// Returns the normalized path to the asset for the Vite.js build system.
     /// </summary>
     /// <param name="assetPath"></param>

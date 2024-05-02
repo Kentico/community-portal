@@ -79,6 +79,81 @@
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
       </field>
+      <schema guid="5d16c375-e18b-46ac-b951-cf8f11e9c9e5" name="EmailDefaults">
+        <properties>
+          <description>
+            <![CDATA[Default settings (content and presentation) for a given email]]>
+          </description>
+          <fieldcaption>Email Defaults</fieldcaption>
+        </properties>
+      </schema>
+      <field allowempty="true" column="EmailDefaults" columnprecision="0" columntype="contentitemreference" enabled="true" guid="f8e8d7f5-688a-46d3-9d98-ae157e3e32fd" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Default Settings</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>5d16c375-e18b-46ac-b951-cf8f11e9c9e5</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["42167fe7-53ac-496b-b565-7cb05db3f13c"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>1</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+      </field>
+      <schema guid="058caefa-c8d6-440f-8f3e-cd0fd9d7a41a" name="ListableItem">
+        <properties>
+          <description>
+            <![CDATA[Item that can be displayed in a list with other items of different content types]]>
+          </description>
+          <fieldcaption>Listable Item</fieldcaption>
+        </properties>
+      </schema>
+      <field allowempty="true" column="ListableItemTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="6fa2da82-35eb-4c80-9c6f-d45f556f210f" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Title</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>058caefa-c8d6-440f-8f3e-cd0fd9d7a41a</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="ListableItemShortDescription" columnprecision="0" columntype="longtext" enabled="true" guid="db58954e-4487-46cc-baa5-371c6fa559cb" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Short Description</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>058caefa-c8d6-440f-8f3e-cd0fd9d7a41a</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+      </field>
+      <field allowempty="true" column="ListableItemFeaturedImage" columnprecision="0" columntype="contentitemreference" enabled="true" guid="c912089f-b715-481b-8bb8-03ce3ef791ec" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Featured Image</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>058caefa-c8d6-440f-8f3e-cd0fd9d7a41a</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["0722a045-5aff-4c3b-a356-1a1fd3be8a61"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>0</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+      </field>
     </form>
   </ClassFormDefinition>
   <ClassGUID>a6581fb3-892a-45b4-981a-012ce4b50b43</ClassGUID>

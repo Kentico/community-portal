@@ -1,3 +1,4 @@
+using CMS.ContentEngine;
 using CMS.ContentEngine.Internal;
 using CSharpFunctionalExtensions;
 using Kentico.Community.Portal.Admin.UIPages;
@@ -41,6 +42,16 @@ public class ContentHubListExtender : PageExtender<ContentHubList>
                         },
                     });
                 });
+        }
+
+        if (configs.FirstOrDefault(c => string.Equals(c.Name, nameof(ContentFolderInfo.ContentFolderTreePath), StringComparison.OrdinalIgnoreCase)) is { } pathConfig &&
+            configs.FirstOrDefault(c => string.Equals(c.Name, nameof(ContentItemInfo.ContentItemIsSecured), StringComparison.OrdinalIgnoreCase)) is { } securedConfig)
+        {
+            int pathIndex = configs.IndexOf(pathConfig);
+            int securedIndex = configs.IndexOf(securedConfig);
+
+            configs[pathIndex] = securedConfig;
+            configs[securedIndex] = pathConfig;
         }
 
         return Task.CompletedTask;

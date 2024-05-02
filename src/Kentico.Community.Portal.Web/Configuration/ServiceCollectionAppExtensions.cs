@@ -33,7 +33,8 @@ public static class ServiceCollectionAppExtensions
             .AddBlogs();
 
     private static IServiceCollection AddOperations(this IServiceCollection services, IConfiguration config) =>
-        services.AddScoped<ICacheDependencyKeysBuilder, CacheDependencyKeysBuilder>()
+        services
+            .AddSingleton<ICacheDependencyKeysBuilder, CacheDependencyKeysBuilder>()
             .Configure<DefaultQueryCacheSettings>(config.GetSection("Cache:Query"))
             .AddMediatR(c => c.RegisterServicesFromAssembly(typeof(HomePageQuery).Assembly))
             .AddClosedGenericTypes(typeof(HomePageQuery).Assembly, typeof(IQueryHandler<,>), ServiceLifetime.Scoped)
@@ -47,14 +48,16 @@ public static class ServiceCollectionAppExtensions
             .AddTransient<WebPageQueryTools>()
             .AddTransient<ContentItemQueryTools>()
             .AddTransient<DataItemCommandTools>()
-            .AddTransient<DataItemQueryTools>();
+            .AddTransient<DataItemQueryTools>()
+            .AddSingleton<IChannelDataProvider, ChannelDataProvider>();
 
     private static IServiceCollection AddRendering(this IServiceCollection services) =>
         services
             .AddSingleton(s => new MarkdownRenderer())
             .AddSingleton<ISlugHelper>(_ => new SlugHelper(new SlugHelperConfiguration()))
             .AddScoped<ViewService>()
-            .AddScoped<ClientAssets>();
+            .AddScoped<ClientAssets>()
+            .AddScoped<IJSEncoder, JSEncoder>();
 
     private static IServiceCollection AddSEO(this IServiceCollection services) =>
         services

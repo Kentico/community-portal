@@ -2,7 +2,7 @@ import setupBootstrap from "./features/bootstrap-customization";
 import setupSearch from "./features/search";
 import setupNavigation from "./features/navigation";
 
-document.addEventListener("DOMContentLoaded", function () {
+window.asyncReady(() => {
   setupBootstrap();
   setupSearch();
   setupNavigation();

@@ -66,6 +66,12 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
+		/// IntegrationContentIntegrationType.
+		/// </summary>
+		public IEnumerable<TagReference> IntegrationContentIntegrationType { get; set; }
+
+
+		/// <summary>
 		/// IntegrationContentType.
 		/// </summary>
 		public string IntegrationContentType { get; set; }

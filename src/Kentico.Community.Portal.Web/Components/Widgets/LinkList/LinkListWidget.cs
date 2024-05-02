@@ -115,7 +115,7 @@ public class LinkContentQueryHandler(ContentItemQueryTools tools) : ContentItemQ
                 .OrderBy(new[] { new OrderByColumn(nameof(LinkContent.LinkContentLabel), OrderDirection.Ascending) });
         });
 
-        var contents = await Executor.GetResult(b, ContentItemMapper.Map<LinkContent>, DefaultQueryOptions, cancellationToken);
+        var contents = await Executor.GetMappedResult<LinkContent>(b, DefaultQueryOptions, cancellationToken);
 
         return new(contents.ToList());
     }

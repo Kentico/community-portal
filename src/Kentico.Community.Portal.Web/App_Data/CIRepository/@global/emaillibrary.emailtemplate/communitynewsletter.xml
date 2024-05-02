@@ -3,296 +3,49 @@
   <EmailTemplateCode>
 <![CDATA[
 <!DOCTYPE html>
+{% emailDefaults = EmailDefaults[0].Data; "" |(user)SeanW_kentico.com|(hash)c7971f7c322140293999c6a9fc041f0fd99bc15786afb9d330c04190a4ba69f2%}
+{% emailTitle = NewsletterEmailTitle + " #" + NewsletterEmailIssueNumber; "" %}
 <html lang="en">
   <head>
-    <title>Kentico Community Newsletter</title>
+    <title>{% emailTitle %}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- Never disable zoom behavior! Fine to set the initial width and scale, but allow users to set their own zoom preferences. -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="color-scheme" content="light" />
-    <meta name="supported-color-schemes" content="light" />
+    <meta name="color-scheme" content="light dark" />
+    <!-- ios -->
+    <meta name="supported-color-schemes" content="light dark" />
+    <!-- ios -->
     <style type="text/css">
-      body,
-      table,
-      td,
-      a,
-      p,
-      .paragraph {
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-        font-family: Arial, "Avenir Next", -apple-system, BlinkMacSystemFont,
-          "Segoe UI", Roboto, Helvetica, sans-serif, "Apple Color Emoji",
-          "Segoe UI Emoji", "Segoe UI Symbol" !important;
-      }
-      table,
-      td {
-        mso-table-lspace: 0pt;
-        mso-table-rspace: 0pt;
-        border-collapse: collapse;
-      }
-      img {
-        -ms-interpolation-mode: bicubic;
-      } /* RESET STYLES */
-      img {
-        border: 0;
-        height: auto;
-        line-height: 100%;
-        outline: none;
-        text-decoration: none;
-      }
-      table {
-        border-collapse: collapse !important;
-      }
-      body {
-        height: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100% !important;
-        background-color: #d3d2d2 !important;
-      }
-      h1,
-      h2,
-      h3,
-      h4 {
-        margin: 0;
-      }
-      h2 {
-        margin: 30px 0 20px 0;
-      }
-      p,
-      .paragraph {
-        font-size: 18px !important;
-        line-height: 24px !important;
-        margin: 20px 0;
-      } /* iOS blue links */
-      a[x-apple-data-detectors] {
-        color: inherit !important;
-        text-decoration: none !important;
-        font-size: inherit !important;
-        font-family: inherit !important;
-        font-weight: inherit !important;
-        line-height: inherit !important;
-      } /* Gmail blue links */
-      u + #body a {
-        color: inherit;
-        text-decoration: none;
-        font-size: inherit;
-        font-family: inherit;
-        font-weight: inherit;
-        line-height: inherit;
-      } /* Samsung */ /* Samsung full width */
-      #MessageViewBody,
-      #MessageWebViewDiv {
-        width: 100% !important;
-      } /* Samsung blue links */
-      #MessageViewBody,
-      #MessageWebViewDiv a {
-        color: inherit;
-        text-decoration: none;
-        font-size: inherit;
-        font-family: inherit;
-        font-weight: inherit;
-        line-height: inherit;
-      } /* Links */
-      a {
-        color: #000000;
-        text-decoration: underline;
-        transition: 0.35s ease-in-out;
-        font-family: Arial, "Avenir Next", -apple-system, BlinkMacSystemFont,
-          "Segoe UI", Roboto, Helvetica, sans-serif, "Apple Color Emoji",
-          "Segoe UI Emoji", "Segoe UI Symbol" !important;
-        cursor: pointer !important;
-      }
-      a:hover {
-        text-decoration: underline !important;
-      }
-      .view-online__cta:hover {
-        text-decoration: underline !important;
-      } /* Images */
-      .light-img {
-        display: block !important;
-        overflow: visible !important;
-        float: none !important;
-        max-height: inherit !important;
-        max-width: inherit !important;
-        margin-top: 0px !important;
-        visibility: inherit !important;
-      }
-      .dark-img {
-        display: none;
-        display: none !important;
-      } /* Card */
-      .card--featured .card__cta:hover {
-        color: #ffffff !important;
-      }
-      .card__cta:hover .card__cta-arrow {
-        padding-left: 8px !important;
-      } /* Media Queries */ /* Desktop first bacause of Gmail - its styles are inlined */
-      @media screen and (max-width: 620px) {
-        p,
-        a,
-        .links__list-item,
-        .paragraph {
-          font-size: 16px !important;
-        }
-        .body-bg {
-          padding: 16px !important;
-        }
-        .salutation {
-          font-size: 32px !important;
-          line-height: 40px !important;
-          margin-bottom: 24px !important;
-        }
-        .height-fix {
-          height: auto !important;
-          max-height: inherit !important;
-        }
-        .card--featured h2.card__heading {
-          font-size: 32px !important;
-          line-height: 40px !important;
-        }
-        .card__heading,
-        .card__highlight {
-          font-size: 22px !important;
-          line-height: 26px !important;
-        }
-        .card__bottom--award .card__bottom-details {
-          max-width: initial !important;
-        }
-        .card__bottom--blog .card__bottom-details-firstline {
-          font-size: 18px !important;
-          line-height: 24px !important;
-        }
-        .card__bottom--award .card__bottom-details-firstline,
-        .card__bottom--award .card__bottom-details-secondline,
-        .card__bottom--award .card__bottom-details-secondline a {
-          font-size: 14px !important;
-        }
-        .logo {
-          display: inline-block;
-          max-width: 50% !important;
-          min-width: auto !important;
-        }
-        .view-online {
-          display: inline-block;
-          max-width: 50% !important;
-          min-width: auto !important;
-        }
-        .footer {
-          max-width: 572px !important;
-        } /* in 600px width restriction */
-        .footer .footer__heading {
-          font-size: 18px !important;
-        }
-        .card--partner .card__partner-logo {
-          display: block !important;
-          width: 100% !important;
-          border-bottom: 1px solid #e3e3e3;
-        }
-        .card--partner .card__partner-details {
-          width: 190px !important;
-        }
-        .card__content,
-        .card__above-content {
-          margin-top: -44px !important;
-          padding: 30px 20px 40px 20px !important;
-        }
-        .card__no-image-wrapper .card__above-content {
-          padding: 0 !important;
-          margin-top: -36px !important;
-        }
-        .card--featured .card__content {
-          margin-top: -30px !important;
-        }
-        .card--gradient .card__content,
-        .card--no-image .card__content,
-        .card--partner .card__content,
-        .card--cta-list .card__content {
-          margin-top: 0 !important;
-        }
-        .card--gradient .card__above-content {
-          margin-top: -120px !important;
-          padding-bottom: 0 !important;
-        }
-        .card--gradient .card__heading,
-        .card--gradient .card__text {
-          max-width: 100% !important;
-        }
-        .card--featured .card__image {
-          width: calc(100% - 20px) !important;
-          height: auto !important;
-        }
-        .card--featured .card__content-table tr td {
-          padding-left: 20px !important;
-        }
-        .card__award {
-          max-width: 100%;
-          margin-right: 20px !important;
-        }
-        .card--highlight .card__content {
-          margin-top: -30px !important;
-          padding-top: 20px !important;
-        }
-        .card--highlight .card__above-content {
-          box-sizing: border-box;
-          margin-top: -48px !important;
-          padding-top: 30px !important;
-        } /* 30px top padding because of ios Outlook app */
-        .card--highlight .card__above-content .card__highlight {
-          padding-top: 20px !important;
-          padding-bottom: 10px !important;
-          margin-bottom: 0 !important;
-        }
-        .card--highlight .card__text {
-          margin-top: 0 !important;
-        }
-        .card__bottom-image {
-          margin-top: 0 !important;
-        }
-      } /* Desktop first bacause of Gmail - its styles are inlined */
-      @media screen and (max-width: 435px) {
-        .body-gap {
-          height: 0 !important;
-        }
-        .card--gradient .card__author-details {
-          margin-top: 20px !important;
-        }
-        .card--partner .card__partner-details {
-          width: 150px !important;
-        }
-      } /* Desktop first bacause of Gmail - its styles are inlined */
-      @media screen and (max-width: 374px) {
-        .logo,
-        .view-online,
-        .view-online table tr td {
-          display: block !important;
-          text-align: left !important;
-        }
-        .view-online {
-          margin-top: 10px !important;
-        }
-        .card--partner .card__partner-details,
-        .card--partner .card__partner-awards {
-          width: 100% !important;
-        }
-      } 
+      {% emailDefaults.EmailDefaultsContentHTMLStyles |(user)SeanW_kentico.com|(hash)6e02adf858cdd7a58661d874b2f2f2b950e33f6b743960f9aaad23dd23938ae6%}
     </style>
   </head>
   <body style="margin: 0; padding: 0; height: 100%; width: 100%">
-    <div class="body" style="background-color: #fafafa">
+    <!-- Outlook365 dark mode body wrapper to override its body styling -->
+    <div class="body" style="background-color: #d3d2d2">
       <span
         class="preheader"
         style="font-size: 1px; color: #ffffff; display: none"
+        >{% EmailPreviewText %}</span
       >
-        {% previewtext %}
-      </span>
+      <!-- Outlook main content wrapper. The role attribute is set to presentation to prevent it from being read by screenreaders. -->
+      <!--[if (gte mso 9)|(IE)]>
+    <table cellspacing="0" cellpadding="0" border="0" width="100%" height="100%" align="center" role="presentation" bgcolor="#D3D2D2"><tr><td>
+    <![endif]-->
+      <!-- Outlook main content -->
+      <!--[if (gte mso 9)|(IE)]>
+    <table cellspacing="0" cellpadding="0" border="0" width="600" align="center" role="presentation" bgcolor="#ffffff"><tr><td style="padding-bottom:30px;">
+    <![endif]-->
+      <!-- **** The role and aria-label attributes are added to wrap the email content as an article for screen readers. Some of them will read out the aria-label as the title of the document. -->
+      <!-- Main content top indent - not needed in Outlook - therefore no table here -->
       <div
-        style="background-color: #fafafa; height: 66px"
+        style="background-color: #d3d2d2; height: 66px"
         class="body-gap"
       ></div>
+
       <div
         role="article"
-        aria-label="Kentico newsletter"
+        aria-label="{% emailTitle %}"
         class="body-bg"
         lang="en"
         style="
@@ -314,55 +67,452 @@
         "
       >
         <header>
+          <table
+            role="presentation"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            width="100%"
+            style="margin: auto"
+          >
+            <!-- Email Header -->
+            <tbody>
+              <tr>
+                <td align="left" valign="top" style="font-size: 0; padding: 0">
+                  <!--[if (gte mso 9)|(IE)]>
+	                        <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="600">
+	                        <tr>
+	                        <td valign="top" width="300" style="padding-left:30px;padding-top:30px;">
+	                        <![endif]-->
+                  <div
+                    style="
+                      display: inline-block;
+                      margin: 0;
+                      width: 100%;
+                      min-width: 200px;
+                      max-width: 270px;
+                      vertical-align: bottom;
+                    "
+                    class="logo"
+                  >
+                    <a
+                      href="{% emailDefaults.EmailDefaultsContentHeaderLinkURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) |(user)SeanW_kentico.com|(hash)4d850afc9b0cf2209954bda4e8dd59f0ff9f5464fb2a56ed7aa091f568d7004b%}"
+                      title="{% emailDefaults.EmailDefaultsContentHeaderLinkURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) |(user)SeanW_kentico.com|(hash)4d850afc9b0cf2209954bda4e8dd59f0ff9f5464fb2a56ed7aa091f568d7004b%}"
+                      style="width: 174px; height: 40px; display: inline-block"
+                      target="_blank"
+                    >
+                      {% headerLogo = emailDefaults.EmailDefaultsContentHeaderLogo[0].Data; "" |(user)SeanW_kentico.com|(hash)d6ef8c2d74f72e836eb010c02a23fa1a0e5ed862194efb944ea8fff4e60e5f0d%}
+                      <img
+                        class="light-img"
+                        src="{% headerLogo.MediaAssetContentAssetLight.Url |(user)SeanW_kentico.com|(hash)d415a7eb968ae9534a14fe949fa838d0aafcfe4703256a69521fa7899925effe%}"
+                        alt="{% HTMLEncode(headerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)b3c16b786f3176d5d7e6c4bd4bb2c2b536bfaa1a05573a35a5c25b6de670d859%}"
+                        width="{% headerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)5775e00665ccab5921f240ec0b8c4d2ec7d3b421a7140d2dd4272f31194d1731%}"
+                        height="{% headerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)0ef741ae3ea4f6b695739c28b463db7632918a04cea2be374f78c3962159a75d%}"
+                        style="width: 174px;"
+                      />
+                      <div
+                        class="dark-img"
+                        style="
+                          display: none;
+                          overflow: hidden;
+                          float: left;
+                          width: 0px;
+                          max-height: 0px;
+                          max-width: 0px;
+                          line-height: 0px;
+                          visibility: hidden;
+                        "
+                      >
+                        <img
+                          src="{% headerLogo.MediaAssetContentAssetDark.Url |(user)SeanW_kentico.com|(hash)0c9f020f8a0a81a03f93e39a2bf6c17543224bb3c52f79f0c9e02740236e0b32%}"
+                          alt="{% HTMLEncode(headerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)b3c16b786f3176d5d7e6c4bd4bb2c2b536bfaa1a05573a35a5c25b6de670d859%}"
+                          width="{% headerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)5775e00665ccab5921f240ec0b8c4d2ec7d3b421a7140d2dd4272f31194d1731%}"
+                          height="{% headerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)0ef741ae3ea4f6b695739c28b463db7632918a04cea2be374f78c3962159a75d%}"
+                          style="width: 174px;"
+                        />
+                      </div>
+                    </a>
+                  </div>
+                  <!--[if (gte mso 9)|(IE)]>
+	                        </td>
+	                        <td valign="top" align="right" width="300" style="text-align:right;padding-right:30px;padding-top:30px;">
+	                        <![endif]-->
+                  <div
+                    style="
+                      display: inline-block;
+                      margin: 0;
+                      width: 100%;
+                      min-width: 200px;
+                      max-width: 270px;
+                      vertical-align: top;
+                      text-align: left;
+                    "
+                    class="view-online"
+                  >
+                    <table
+                      role="presentation"
+                      cellspacing="0"
+                      cellpadding="0"
+                      border="0"
+                      width="100%"
+                    >
+                      <tbody>
+                        <tr>
+                          <td style="padding-top: 10px; text-align: right">
+                            <span
+                              style="
+                                font-size: 14px;
+                                color: #bfbdbe;
+                                display: inline-block;
+                                font-weight: normal;
+                                text-decoration: none;
+                              "
+                              >{% NewsletterEmailPublishedDate %}</a
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!--[if (gte mso 9)|(IE)]>
+	                        </td></tr></table>
+	                        <![endif]-->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </header>
+
+        <main>
+          <!--[if (gte mso 9)|(IE)]>
+            <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="540">
+            <tr>
+            <td valign="top" width="600" style="padding-left:30px;padding-right:30px;padding-bottom:30px;">
+            <![endif]-->
           <div
             style="
-              display: inline-block;
-              margin: 0;
-              width: 100%;
-              min-width: 200px;
-              max-width: 270px;
-              vertical-align: bottom;
+              font-family: Arial, 'Avenir Next', -apple-system,
+                BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif,
+                'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+              font-size: 56px;
+              font-weight: 800;
+              line-height: 56px;
+              margin: 48px 0;
+              text-align: left;
+              color: #4f4c4d;
             "
-            class="logo"
+            class="salutation"
           >
-            <a
-              href="https://www.kentico.com?utm_source=newsletter&utm_medium=email"
-              style="width: 210px; height: 41px; display: inline-block"
-            >
-              <img
-                class="light-img"
-                src="https://www.kentico.com/getmedia/61981da6-3e79-4160-891f-fd7c96d1b5b9/kentico-logo.png"
-                alt="Kentico logo"
-                width="121"
-                height="41"
-                style="width: 121px; height: 41px"
-              />
-              <div
-                class="dark-img"
-                style="
-                  display: none;
-                  overflow: hidden;
-                  float: left;
-                  width: 0px;
-                  max-height: 0px;
-                  max-width: 0px;
-                  line-height: 0px;
-                  visibility: hidden;
-                "
-              >
-                <img
-                  src="https://www.kentico.com/getmedia/275f7ce6-b68d-4a86-9bc1-579ceeb89bc1/kentico-logo-for-dark-bg.png"
-                  alt="Kentico logo"
-                  width="121"
-                  height="41"
-                  style="width: 121px; height: 41px"
-                />
-              </div>
-            </a>
+            {% emailTitle %}
           </div>
-        </header>
-        {% EmailContent %}
+          <div class="paragraph" style="color: #4f4c4d">
+            {% NewsletterEmailIntroContent %}
+          </div>
+          <!--[if mso]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+          {% foreach (card in NewsletterEmailCardContents) { %}
+          <div class="card card--no-image" style="padding-top: 60px;">
+            {% cardContent = card.Data.CardContentListableItem[0]; "" %}
+            {% cardTitle = ""; cardDescription = ""; cardImage = null; "" %}
+            {% blogContent = null; blogAuthor = null; blogAuthorName = ""; "" %}
+            {% if (cardContent.Type == "KenticoCommunity.BlogPostContent") { %}
+              {% blogContent = card.Data.CardContentListableItem[0].Data; "" %}
+              {% blogAuthor = blogContent.BlogPostContentAuthor[0].Data; "" %}
+              {% blogAuthorName = blogAuthor.AuthorContentFirstName + " " + blogAuthor.AuthorContentSurname; "" %}
+              {% cardTitle = blogContent.ListableItemTitle ?? blogContent.BlogPostContentTitle; "" %}
+              {% cardDescription = blogContent.ListableItemShortDescription ?? blogContent.BlogPostContentShortDescription; "" %}
+            {% } %}
+            <!-- Outlook above-content wrapper -->
+            <!--[if (gte mso 9)|(IE)]>
+    <table cellspacing="0" cellpadding="0" border="0" role="presentation"><tr><td>
+    <![endif]-->
+            <!-- Outlook above-content -->
+            <!--[if (gte mso 9)|(IE)]>
+    <table cellspacing="0" cellpadding="0" border="0" width="540" align="center" role="presentation"><tr><td style="padding-left:30px;">
+    <![endif]-->
+            <!-- Shifting content up because of tag; text color must be repeated because of Gmail -->
+            <div
+              class="card__no-image-wrapper"
+              style="
+                padding: 20px 30px 0 30px;
+                border-radius: 26px 8px 0 0;
+                background-color: #f6f6f6;
+              "
+            >
+              <div class="card__above-content" style="margin-top: -36px">
+                <!--[if (gte mso 9)|(IE)]>
+          <table cellspacing="0" cellpadding="0" border="0" width="540" role="presentation"><tr><td style="background-color:#231f20;color:#f6f6f6;padding:30px;">
+          <![endif]-->
+
+                <!-- Outlook tag wrapper -->
+                <!--[if (gte mso 9)|(IE)]>
+          <table cellspacing="0" cellpadding="0" border="0" width="480" align="left" role="presentation"><tr><td style="padding-bottom:20px;">
+          <![endif]-->
+                <!-- Outlook tag -->
+                <!--[if (gte mso 9)|(IE)]>
+          <table cellspacing="0" cellpadding="0" border="0" role="presentation"><tr><td style="background-color:#3553B8;color:#ffffff;padding:8px 18px;">
+          <![endif]-->
+                <div
+                  class="card__tag tag tag--blue"
+                  style="
+                    color: #ffffff;
+                    border-radius: 14px 4px;
+                    display: inline-block;
+                    padding: 10px 22px;
+                    font-size: 14px;
+                    line-height: 16px;
+                    background-color: #3553b8;
+                  "
+                >
+                  {% HTMLEncode(blogContent.BlogPostContentBlogType.Tags[0].Title) %}
+                </div>
+                <!-- Outlook tag and wrapper end -->
+                <!--[if (gte mso 9)|(IE)]>
+          </td></tr></table>
+          </td></tr></table>
+          <![endif]-->
+
+                <!--[if (gte mso 9)|(IE)]>
+          </td></tr></table>
+          <![endif]-->
+              </div>
+              <!-- Outlook above-content wrapper and above-content end -->
+              <!--[if (gte mso 9)|(IE)]>
+      </td></tr></table>
+      </td></tr></table>
+      <![endif]-->
+            </div>
+
+            <!-- Outlook content wrapper -->
+            <!--[if (gte mso 9)|(IE)]>
+    <table cellspacing="0" cellpadding="0" border="0" role="presentation"><tr><td>
+    <![endif]-->
+            <!-- Outlook content -->
+            <!--[if (gte mso 9)|(IE)]>
+    <table cellspacing="0" cellpadding="0" border="0" width="540" align="center" role="presentation"><tr><td style="padding-left:30px;">
+    <![endif]-->
+            <div
+              class="card__content"
+              style="
+                background-color: #f6f6f6;
+                border-radius: 0 0 36px 8px;
+                padding: 20px 30px;
+                color: #231f20;
+                max-width: 540px;
+                box-sizing: border-box;
+              "
+            >
+              <!--[if (gte mso 9)|(IE)]>
+        <table cellspacing="0" cellpadding="0" border="0" width="540" role="presentation"><tr><td style="background-color:#F6F6F6;color:#231F20;padding:30px;">
+        <![endif]-->
+
+              <h2
+                class="card__heading"
+                style="font-size: 32px; line-height: 40px; margin: 0 0 20px 0"
+              >
+                {% HTMLEncode(cardTitle) %}<span class="orange-char" style="color: #f05a22">.</span>
+              </h2>
+              <p class="card__text" style="margin: 20px 0 20px 0">
+                {% HTMLEncode(cardDescription) %}
+              </p>
+
+              <div class="card__bottom card__bottom--blog">
+                <!--[if (gte mso 9)|(IE)]>
+            <table role="presentation" align="left" border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
+            <td style="text-align:left;">
+            <![endif]-->
+                <div
+                  class="card__bottom-details"
+                  style="display: inline-block; vertical-align: top"
+                >
+                  <div
+                    class="card__bottom-details-firstline"
+                    style="
+                      font-weight: bold;
+                      font-size: 14px;
+                      line-height: 24px;
+                    "
+                  > <span>Topics: </span>
+                    {% i = 0; "" %}
+                    {% foreach (topic in blogContent.BlogPostContentDXTopics.Tags) { %}
+                      <span>
+                        {% if (i < blogContent.BlogPostContentDXTopics.Tags[i+1]) {topic.Title + ","} else {topic.Title} %}
+                      </span>
+                      {% i = i + 1; "" %}
+                    {% } %}
+                  </div>
+                  <div
+                    class="card__bottom-details-secondline"
+                    style="font-size: 14px; line-height: 24px; margin-bottom: 0"
+                  >
+                    by
+                    {% if (blogAuthor.AuthorContentMemberID > 0) { %}
+                    <a
+                      href="{% emailDefaults.EmailDefaultsContentDefaultURL %}/members/{% blogAuthor.AuthorContentMemberID %}"
+                      title="{% emailDefaults.EmailDefaultsContentDefaultURL %}/members/{% blogAuthor.AuthorContentMemberID %}"
+                      style="color: #272223"
+                      target="_blank"
+                      >{% blogAuthorName %}</a
+                    >
+                    {% } else { %}
+                      <span>{% blogAuthorName %}</span>
+                    {% } %}
+                  </div>
+                </div>
+                <!--[if (gte mso 9)|(IE)]>
+            </td></tr></table>
+            <![endif]-->
+              </div>
+              {% cardUrl = card.Data.CardContentWebPage[0].Url.ReplaceUtmParameters(NewsletterEmailUTMParameters, card.Data.CardContentUTMParameters); "" %}
+              
+              <a
+                class="card__cta"
+                href="{% cardUrl %}"
+                title="{% HTMLEncode(cardUrl) %}"
+                target="_blank"
+                style="
+                  color: #3d5dc0;
+                  font-size: 16px;
+                  line-height: 18px;
+                  font-weight: bold;
+                  text-decoration: none;
+                  padding-top: 2rem;
+                  display: inline-block;
+                "
+                >{% HTMLEncode(card.Data.CardContentLabel ?? "Read more") %}<span
+                  class="card__cta-arrow"
+                  style="
+                    font-size: 22px;
+                    font-weight: normal;
+                    line-height: 16px;
+                    vertical-align: text-top;
+                    display: inline-block;
+                    padding-left: 6px;
+                    color: #3d5dc0;
+                    transition: all 0.35s ease-in-out;
+                  "
+                >
+                  ›</span
+                ></a
+              >
+              <!--[if (gte mso 9)|(IE)]>
+        </td></tr></table>
+        <![endif]-->
+            </div>
+            <!-- Outlook wrapper and content table end -->
+            <!--[if (gte mso 9)|(IE)]>
+    </td></tr></table>
+    </td></tr></table>
+    <![endif]-->
+          {% } |(user)SeanW_kentico.com|(hash)eb0e9102d9c092804f21138571ec1fc288eb5eb37f3eeb4ef9290a4aff97b7c1%}
+          </div>
+
+          <div class="links" style="padding-top: 40px">
+            <!-- Outlook indent -->
+            <!--[if (gte mso 9)|(IE)]>
+                <table cellspacing="0" cellpadding="0" border="0" role="presentation"><tr><td style="padding-top:40px;">
+                <table cellspacing="0" cellpadding="0" border="0" width="540" align="center" role="presentation"><tr><td style="padding-left:30px;">
+    			<![endif]-->
+            <h2
+              class="links__heading"
+              style="font-size: 32px; line-height: 40px; margin: 30px 0 20px 0"
+            >
+              Community links<span class="orange-char" style="color: #f05a22">.</span>
+            </h2>
+            <div class="links__list">
+              <!-- Outlook list -->
+              <!--[if (gte mso 9)|(IE)]>
+                    <table cellspacing="0" cellpadding="0" border="0" role="presentation">
+                    <![endif]-->
+              <ul
+                style="
+                  margin: 0;
+                  margin-left: 30px;
+                  padding: 0;
+                  font-size: 16px;
+                  line-height: 22px;
+                "
+                align="left"
+                type="disc"
+              >
+                {% foreach (emailLink in NewsletterEmailLinkContents) { %}
+                <!-- list item-->
+                <!--[if (gte mso 9)|(IE)]>
+                        <tr><td>
+                        <![endif]-->
+                <li style="color: #3d5dc0; font-size: 22px; line-height: 22px; margin-bottom: 0.5rem">
+                  <a
+                    href='{% emailLink.Data.LinkContentPathOrURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) %}'
+                    title='{% HTMLEncode(emailLink.Data.LinkContentPathOrURL.ReplaceUtmParameters(NewsletterEmailUTMParameters)) %}'
+                    target="_blank"
+                    style="color: #231f20"
+                  >
+                    <span
+                      style="color: #231f20; font-size: 18px; line-height: 24px"
+                      class="links__list-item"
+                    >
+                      {% HTMLEncode(emailLink.Data.LinkContentLabel) %}
+                    </span>
+                  </a>
+                  <div style="color: #231f20; font-size: 16px; line-height: 24px">
+                    <span>{% HTMLEncode(emailLink.Data.LinkContentShortDescription) %}</span>
+                  </div>
+                </li>
+                <!-- list item-->
+                <!--[if (gte mso 9)|(IE)]>
+                        </td></tr><tr><td>
+                        <![endif]-->
+                {% } |(user)SeanW_kentico.com|(hash)54ddd015ab7120e2a80e778f4f5d853c589c953722a0a8fa6653cea63ee223eb%}
+                <!-- List item end -->
+                <!--[if (gte mso 9)|(IE)]>
+                        </td></tr>
+                        <![endif]-->
+              </ul>
+              <!-- Outlook list end -->
+              <!--[if (gte mso 9)|(IE)]>
+                    </table>
+                    <![endif]-->
+            </div>
+            <!-- Outlook indent end -->
+            <!--[if (gte mso 9)|(IE)]>
+                </td></tr></table>
+                </td></tr></table>
+                <![endif]-->
+          </div>
+
+          <!--[if (gte mso 9)|(IE)]>
+            <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="600">
+            <tr>
+            <td valign="top" width="600" style="padding-left:30px;padding-right:30px;padding-bottom:60px">
+            <![endif]-->
+          <p
+            style="
+              color: #000000;
+              font-size: 16px;
+              font-weight: 400;
+              line-height: 24px;
+              margin-top: 48px;
+            "
+          >
+            {% NewsletterEmailOutroContent %}
+          </p>
+          <!--[if (gte mso 9)|(IE)]>
+            </td></tr></table>
+            <![endif]-->
+        </main>
       </div>
+      <!-- Outlook main content end -->
+      <!--[if (gte mso 9)|(IE)]>
+    </td></tr></table>
+    <![endif]-->
+
+      <!-- Footer wrapper -->
+      <!--[if (gte mso 9)|(IE)]>
+    <table cellspacing="0" cellpadding="0" border="0" width="600" align="center" role="presentation" bgcolor="#F4F4F4"><tr><td style="background-color:#F4F4F4">
+    <![endif]-->
       <div
         class="footer"
         style="
@@ -379,6 +529,11 @@
         "
       >
         <footer style="margin: 0; padding: 0">
+          <!-- Footer -->
+          <!--[if (gte mso 9)|(IE)]>
+        <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="600">
+        <tr><td valign="top" width="600" style="background-color:#F4F4F4;padding: 56px 40px 20px 40px;">
+        <![endif]-->
           <h2
             style="
               color: #000000;
@@ -392,9 +547,16 @@
             "
             class="footer__heading"
           >
-            Meet Kentico on social networks
-            <span class="orange-char" style="color: #f05a22">.</span>
+            Meet Kentico on social networks<span
+              class="orange-char"
+              style="color: #f05a22"
+              >.</span
+            >
           </h2>
+          <!--[if (gte mso 9)|(IE)]>
+            <table role="presentation" border="0" cellspacing="0" cellpadding="0">
+            <tr><td valign="top" style="text-align:left;padding-top:20px;padding-bottom:30px;color:#333333;">
+            <![endif]-->
           <div
             style="
               padding-left: 30px;
@@ -413,6 +575,7 @@
             >
               <tbody>
                 <tr>
+                  {% foreach (link in emailDefaults.EmailDefaultsContentSocialLinks) { %}
                   <td
                     style="
                       text-align: left;
@@ -422,18 +585,20 @@
                     "
                   >
                     <a
-                      href="https://www.facebook.com/KenticoSoftware"
+                      href="{% link.Data.SocialLinkContentURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) %}"
+                      title="{% HTMLEncode(link.Data.SocialLinkContentURL.ReplaceUtmParameters(NewsletterEmailUTMParameters)) %}"
+                      target="_blank"
                       style="
                         display: inline-block;
                         border: 0px none;
                         margin: 0px;
                         padding: 8px;
                       "
-                      title="Join us on Facebook"
+                      title="Join us on {% HTMLEncode(link.Data.SocialLinkContentTitle) %}"
                     >
                       <img
-                        alt="Facebook"
-                        src="https://www.kentico.com/getmedia/2294875a-3f00-4918-8f8d-34401c3601c1/social-icon-fb.png"
+                        alt="{% HTMLEncode(link.Data.SocialLinkContentTitle) %}"
+                        src="{% link.Data.SocialLinkContentLogoLightImage.Url %}"
                         width="32"
                         height="32"
                         style="
@@ -460,188 +625,49 @@
                         "
                       >
                         <img
-                          alt="Facebook"
-                          src="https://www.kentico.com/getmedia/16ab7393-9657-415d-a37c-a19845b5fdd7/social-icon-fb-for-dark-bg.png"
+                          alt="{% HTMLEncode(link.Data.SocialLinkContentTitle) %}"
+                          src="{% link.Data.SocialLinkContentLogoDarkImage.Url %}"
                           width="32"
                           height="32"
                         />
                       </div>
                     </a>
                   </td>
-                  <td
-                    style="
-                      text-align: left;
-                      padding: 0px;
-                      width: 40px;
-                      height: 40px;
-                    "
-                  >
-                    <a
-                      href="https://twitter.com/Kentico"
-                      style="
-                        display: inline-block;
-                        border: 0px none;
-                        margin: 0px;
-                        padding: 8px;
-                      "
-                      title="Join us on Twitter"
-                    >
-                      <img
-                        alt="Twitter"
-                        src="https://www.kentico.com/getmedia/b060ccd5-a881-444d-a41a-70f7c8fa90bd/social-icon-tw.png"
-                        width="32"
-                        height="32"
-                        style="
-                          width: 32px;
-                          height: 32px;
-                          border: 0px none;
-                          margin: 0px;
-                          padding: 0px;
-                          display: block;
-                        "
-                        class="light-img"
-                      />
-                      <div
-                        class="dark-img"
-                        style="
-                          display: none;
-                          overflow: hidden;
-                          float: left;
-                          width: 0px;
-                          max-height: 0px;
-                          max-width: 0px;
-                          line-height: 0px;
-                          visibility: hidden;
-                        "
-                      >
-                        <img
-                          alt="Twitter"
-                          src="https://www.kentico.com/getmedia/faa833b9-f0d6-4998-88af-236b9864caec/social-icon-tw-for-dark-bg.png"
-                          width="32"
-                          height="32"
-                        />
-                      </div>
-                    </a>
-                  </td>
-                  <td
-                    style="
-                      text-align: left;
-                      padding: 0px;
-                      width: 40px;
-                      height: 40px;
-                    "
-                  >
-                    <a
-                      href="https://www.linkedin.com/company/kenticosoftware"
-                      style="
-                        display: inline-block;
-                        border: 0px none;
-                        margin: 0px;
-                        padding: 8px;
-                      "
-                      title="Join us on LinkedIn"
-                    >
-                      <img
-                        alt="LinkedIn"
-                        src="https://www.kentico.com/getmedia/86e7193a-4794-429b-95ec-abe85b220edd/social-icon-li.png"
-                        width="32"
-                        height="32"
-                        style="
-                          width: 32px;
-                          height: 32px;
-                          border: 0px none;
-                          margin: 0px;
-                          padding: 0px;
-                          display: block;
-                        "
-                        class="light-img"
-                      />
-                      <div
-                        class="dark-img"
-                        style="
-                          display: none;
-                          overflow: hidden;
-                          float: left;
-                          width: 0px;
-                          max-height: 0px;
-                          max-width: 0px;
-                          line-height: 0px;
-                          visibility: hidden;
-                        "
-                      >
-                        <img
-                          alt="LinkedIn"
-                          src="https://www.kentico.com/getmedia/f9a60f9d-7f5c-4c36-9fa8-845c5a574961/social-icon-li-for-dark-bg.png"
-                          width="32"
-                          height="32"
-                        />
-                      </div>
-                    </a>
-                  </td>
-                  <td
-                    style="
-                      text-align: left;
-                      padding: 0px;
-                      width: 40px;
-                      height: 40px;
-                    "
-                  >
-                    <a
-                      href="https://www.youtube.com/c/kentico"
-                      style="
-                        display: inline-block;
-                        border: 0px none;
-                        margin: 0px;
-                        padding: 8px;
-                      "
-                      title="Join us on YouTube"
-                    >
-                      <img
-                        alt="YouTube"
-                        src="https://www.kentico.com/getmedia/2d00e404-a262-48bc-b0b8-2e9ea945fbce/social-icon-yt.png"
-                        width="32"
-                        height="32"
-                        style="
-                          width: 32px;
-                          height: 32px;
-                          border: 0px none;
-                          margin: 0px;
-                          padding: 0px;
-                          display: block;
-                        "
-                        class="light-img"
-                      />
-                      <div
-                        class="dark-img"
-                        style="
-                          display: none;
-                          overflow: hidden;
-                          float: left;
-                          width: 0px;
-                          max-height: 0px;
-                          max-width: 0px;
-                          line-height: 0px;
-                          visibility: hidden;
-                        "
-                      >
-                        <img
-                          alt="YouTube"
-                          src="https://www.kentico.com/getmedia/bc517f03-e6f0-4e1c-bf0c-a2f7e63fc24a/social-icon-yt-for-dark-bg.png"
-                          width="32"
-                          height="32"
-                        />
-                      </div>
-                    </a>
-                  </td>
+                 {% } |(user)SeanW_kentico.com|(hash)a9d7a00d6b77c5583865a759c2ad2062635fc89ff33c3895d4b4162a924a8805%}
                 </tr>
               </tbody>
             </table>
           </div>
+          <!--[if (gte mso 9)|(IE)]>
+            </td></tr></table>
+            <![endif]-->
+          <!-- Footer line -->
+          <!--[if (gte mso 9)|(IE)]>
+            <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="100%" height="1px" bgcolor="#B2B2B2">
+            <tr><td style="background-color:#B2B2B2;height:1px;">
+            <![endif]-->
           <div style="padding: 0 40px">
             <div
               style="background-color: #b2b2b2; height: 1px; padding: 0"
             ></div>
           </div>
+          <!--[if (gte mso 9)|(IE)]>
+            </td></tr></table>
+            <![endif]-->
+          <!-- Gap below the line -->
+          <!--[if (gte mso 9)|(IE)]>
+            <table
+              role="presentation"
+              border="0"
+              cellspacing="0"
+              cellpadding="0"
+              width="100%"
+            >
+              <tr>
+                <td style="padding-bottom: 20px"></td>
+              </tr>
+            </table>
+          <![endif]-->
           <p
             style="
               color: #4f4c4d;
@@ -654,57 +680,84 @@
               display: inline-block;
             "
           >
-            If you no longer wish to receive this newsletter, you can simply
+            If you no longer wish to receive this newsletter, you can 
+            <a href="{% unsubscribeurl %}" title="{% unsubscribeurl %}" target="_blank">unsubscribe</a>.
+            <br />
+            Kentico software s.r.o., Nove sady 25, 602 00 Brno, Czech Republic.
+            <br />
             <a
-              href="{%unsubscribeurl%}"
-              style="color: #4f4c4d; text-decoration: underline"
-              title="Unsubscribe from Kentico Community Newsletter"
-            >
-              unsubscribe </a
-            >.
-            <a
-              href="https://www.kentico.com/about/contact?utm_source=newsletter&utm_medium=email"
+              href="{% emailDefaults.EmailDefaultsContentDefaultURL |(user)SeanW_kentico.com|(hash)90a5a22af6fb4f9a7b6a7c674b3a44ea45feecebdd6d51f90b63338c3a8ebd3b%}"
+              title="{% emailDefaults.EmailDefaultsContentDefaultURL |(user)SeanW_kentico.com|(hash)90a5a22af6fb4f9a7b6a7c674b3a44ea45feecebdd6d51f90b63338c3a8ebd3b%}"
               style="color: #4f4c4d; text-decoration: none"
-              >Kentico software s.r.o.</a
-            >, Nove sady 25, 602 00 Brno, Czech Republic.
+              target="_blank"
+              >{% emailDefaults.EmailDefaultsContentDefaultURL |(user)SeanW_kentico.com|(hash)90a5a22af6fb4f9a7b6a7c674b3a44ea45feecebdd6d51f90b63338c3a8ebd3b%}</a
+            >
           </p>
           <div
-            style="padding: 0 40px 40px 40px; text-align: left; display: block"
+            style="
+              padding: 0 40px 40px 40px;
+              text-align: left;
+              display: block;
+              background-color: #f4f4f4;
+            "
             class="footer__logo"
           >
-            <img
-              class="light-img"
-              src="https://www.kentico.com/getmedia/61981da6-3e79-4160-891f-fd7c96d1b5b9/kentico-logo.png"
-              alt="Kentico logo"
-              width="128"
-              height="43"
-            />
-            <div
-              class="dark-img"
-              style="
-                display: none;
-                overflow: hidden;
-                float: left;
-                width: 0px;
-                max-height: 0px;
-                max-width: 0px;
-                line-height: 0px;
-                visibility: hidden;
-              "
+            <a
+              href="{% emailDefaults.EmailDefaultsContentFooterLinkURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) |(user)SeanW_kentico.com|(hash)2251c2136577adbbf48917f36e5648c6f4bc311dddb27607aa07deb9e0f595d9%}"
+              title="{% HTMLEncode(emailDefaults.EmailDefaultsContentFooterLinkURL.ReplaceUtmParameters(NewsletterEmailUTMParameters)) |(user)SeanW_kentico.com|(hash)15c0fc7a00af134589853b8757cedfffefe4954c6d39d45f106c731fc05b936c%}"
+              style="width: 174px; height: 40px; display: inline-block"
+              target="_blank"
             >
+              {% footerLogo = emailDefaults.EmailDefaultsContentFooterLogo[0].Data; "" |(user)SeanW_kentico.com|(hash)4c7fb785ba14739b3deffe8969a5005c672a4238ac3f96c7f2ed6754e663071b%}
               <img
-                src="https://www.kentico.com/getmedia/275f7ce6-b68d-4a86-9bc1-579ceeb89bc1/kentico-logo-for-dark-bg.png"
-                alt="Kentico logo"
-                width="128"
-                height="43"
+                class="light-img"
+                src="{% footerLogo.MediaAssetContentAssetLight.Url |(user)SeanW_kentico.com|(hash)b6a011bc4355a577638faf34dc89020f285c80f89df43310fab807ab968a30a1%}"
+                alt="{% HTMLEncode(footerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)16889b7012312de1a6767df9f4295a2d4aef5a7b3dc48b07da98ab3ae15db3a0%}"
+                width="{% footerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)28a93708317961f496aa163efddd860a684b37f8dd3fe7eed4f637d83c8807f1%}"
+                height="{% footerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)4f0d2db44228a776f5008eb78c357389b9fd6acd981106a1d56076ffd9b4d90a%}"
+                style="width: 174px;"
               />
-            </div>
+              <div
+                class="dark-img"
+                style="
+                  display: none;
+                  overflow: hidden;
+                  float: left;
+                  width: 0px;
+                  max-height: 0px;
+                  max-width: 0px;
+                  line-height: 0px;
+                  visibility: hidden;
+                "
+              >
+                <img
+                  src="{% footerLogo.MediaAssetContentAssetDark.Url |(user)SeanW_kentico.com|(hash)27288edb032beb133ec63c3f2e492b8c70643b0784c13f02d68dbae1c42f8ce6%}"
+                  alt="{% HTMLEncode(footerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)16889b7012312de1a6767df9f4295a2d4aef5a7b3dc48b07da98ab3ae15db3a0%}"
+                  width="{% footerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)28a93708317961f496aa163efddd860a684b37f8dd3fe7eed4f637d83c8807f1%}"
+                  height="{% footerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)4f0d2db44228a776f5008eb78c357389b9fd6acd981106a1d56076ffd9b4d90a%}"
+                  style="width: 174px;"
+                />
+              </div>
+            </a>
           </div>
+          <!-- Footer end -->
+          <!--[if (gte mso 9)|(IE)]>
+        </td></tr></table>
+        <![endif]-->
         </footer>
       </div>
+      <!-- Footer wrapper end -->
+      <!--[if (gte mso 9)|(IE)]>
+    </td></tr></table>
+    <![endif]-->
+      <!-- Outlook main content wrapper end -->
+      <!--[if (gte mso 9)|(IE)]>
+    </td></tr></table>
+    <![endif]-->
     </div>
+    <!-- Main content bottom indent -->
     <div
-      style="background-color: #fafafa; height: 30px; border: none"
+      style="background-color: #d3d2d2; height: 30px; border: none"
       class="body-gap"
     ></div>
   </body>

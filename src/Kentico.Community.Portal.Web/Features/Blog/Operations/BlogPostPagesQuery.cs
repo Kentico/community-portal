@@ -20,7 +20,7 @@ public class BlogPostPagesByWebPageGUIDQueryHandler(ContentItemQueryTools tools)
                 .WithLinkedItems(2);
         });
 
-        var pages = await Executor.GetWebPageResult(b, WebPageMapper.Map<BlogPostPage>, DefaultQueryOptions, cancellationToken);
+        var pages = await Executor.GetMappedWebPageResult<BlogPostPage>(b, DefaultQueryOptions, cancellationToken);
 
         return new([.. pages.OrderBy(p => Array.IndexOf(request.WebPageGUIDs, p.SystemFields.WebPageItemGUID))]);
     }
@@ -58,7 +58,7 @@ public class BlogPostPagesByWebPageIDQueryHandler(ContentItemQueryTools tools) :
                 .WithLinkedItems(2);
         });
 
-        var pages = await Executor.GetWebPageResult(b, WebPageMapper.Map<BlogPostPage>, DefaultQueryOptions, cancellationToken);
+        var pages = await Executor.GetMappedWebPageResult<BlogPostPage>(b, DefaultQueryOptions, cancellationToken);
 
         return new(pages.ToList());
     }

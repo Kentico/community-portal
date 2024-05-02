@@ -31,7 +31,7 @@ public class MediaAssetContentMetadataHandler(
             return;
         }
 
-        if (!args.ContentItemData.TryGetValue(nameof(MediaAssetContent.MediaAssetContentAsset), out ContentItemAssetMetadataWithSource metadata))
+        if (!args.ContentItemData.TryGetValue(nameof(MediaAssetContent.MediaAssetContentAssetLight), out ContentItemAssetMetadataWithSource metadata) || metadata is null)
         {
             return;
         }
@@ -43,8 +43,8 @@ public class MediaAssetContentMetadataHandler(
 
         var (width, height) = GetDimensions(metadata);
 
-        args.ContentItemData.SetValue(nameof(MediaAssetContent.MediaAssetContentImageWidth), width);
-        args.ContentItemData.SetValue(nameof(MediaAssetContent.MediaAssetContentImageHeight), height);
+        args.ContentItemData.SetValue(nameof(MediaAssetContent.MediaAssetContentImageLightWidth), width);
+        args.ContentItemData.SetValue(nameof(MediaAssetContent.MediaAssetContentImageLightHeight), height);
     }
 
     private (int width, int height) GetDimensions(ContentItemAssetMetadataWithSource metadata)
@@ -53,7 +53,17 @@ public class MediaAssetContentMetadataHandler(
         int height = 0;
 
         string path = pathProvider.GetTempFileLocation(metadata);
-        using var stream = StorageHelper.GetFileInfo(path).OpenRead();
+        var file = StorageHelper.GetFileInfo(path);
+
+        /*
+         * Temporary files might have moved and the metadata might not have been refreshed
+         */
+        if (file is null || !file.Exists)
+        {
+            return (width, height);
+        }
+
+        using var stream = file.OpenRead();
 
         var directories = ImageMetadataReader.ReadMetadata(stream);
 

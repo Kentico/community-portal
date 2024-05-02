@@ -1,8 +1,6 @@
 using CMS.Base;
-using CMS.DataEngine;
 using CMS.Helpers;
 using CMS.Membership;
-using CMS.Websites;
 using CMS.Websites.Internal;
 using Kentico.Community.Portal.Admin.Features.QAndA;
 using Kentico.Community.Portal.Core.Modules;
@@ -18,10 +16,8 @@ using Kentico.Xperience.Admin.Base;
 
 namespace Kentico.Community.Portal.Admin.Features.QAndA;
 
-public class QAndAListingPage(IInfoProvider<WebsiteChannelInfo> channelProvider) : ListingPage
+public class QAndAListingPage : ListingPage
 {
-    private readonly IInfoProvider<WebsiteChannelInfo> channelProvider = channelProvider;
-
     protected override string ObjectType => QAndAAnswerDataInfo.OBJECT_TYPE;
 
     /// <summary>

@@ -7,13 +7,22 @@ using Kentico.Community.Portal.Web.Membership;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public record QAndAAnswerCreateCommand(CommunityMember MemberAuthor, string AnswerContent, QAndAQuestionPage ParentQuestion, IWebsiteChannelContext WebsiteChannelContext) : ICommand<int>;
-public class QAndAAnswerCreateCommandHandler(DataItemCommandTools tools, ISystemClock clock, IInfoProvider<QAndAAnswerDataInfo> provider) : DataItemCommandHandler<QAndAAnswerCreateCommand, int>(tools)
+public record QAndAAnswerCreateCommand(
+    CommunityMember MemberAuthor,
+    string AnswerContent,
+    QAndAQuestionPage ParentQuestion,
+    IWebsiteChannelContext WebsiteChannelContext)
+    : ICommand<Result<int>>;
+public class QAndAAnswerCreateCommandHandler(
+    DataItemCommandTools tools,
+    ISystemClock clock,
+    IInfoProvider<QAndAAnswerDataInfo> provider)
+    : DataItemCommandHandler<QAndAAnswerCreateCommand, Result<int>>(tools)
 {
     private readonly ISystemClock clock = clock;
     private readonly IInfoProvider<QAndAAnswerDataInfo> provider = provider;
 
-    public override Task<int> Handle(QAndAAnswerCreateCommand request, CancellationToken cancellationToken)
+    public override Task<Result<int>> Handle(QAndAAnswerCreateCommand request, CancellationToken cancellationToken)
     {
         string filteredContent = QandAContentParser.Alphanumeric(request.AnswerContent);
         string uniqueID = Guid.NewGuid().ToString("N");
@@ -32,8 +41,15 @@ public class QAndAAnswerCreateCommandHandler(DataItemCommandTools tools, ISystem
             QAndAAnswerDataWebsiteChannelID = request.WebsiteChannelContext.WebsiteChannelID
         };
 
-        provider.Set(answer);
+        try
+        {
+            provider.Set(answer);
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult(Result.Failure<int>($"Could not save answer for question [{request.ParentQuestion.SystemFields.WebPageItemTreePath}]: {ex}"));
+        }
 
-        return Task.FromResult(answer.QAndAAnswerDataID);
+        return Task.FromResult(Result.Success(answer.QAndAAnswerDataID));
     }
 }

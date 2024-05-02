@@ -15,7 +15,7 @@ public class QAndANewQuestionPageQueryHandler(ContentItemQueryTools tools) : Con
                 .TopN(1);
         });
 
-        var pages = await Executor.GetWebPageResult(b, WebPageMapper.Map<QAndANewQuestionPage>, DefaultQueryOptions, cancellationToken);
+        var pages = await Executor.GetMappedWebPageResult<QAndANewQuestionPage>(b, DefaultQueryOptions, cancellationToken);
 
         return pages.First();
     }

@@ -105,14 +105,10 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
 
 public class ContentItemQueryTools(
     IContentQueryExecutor executor,
-    IContentQueryResultMapper contentItemMapper,
-    IWebPageQueryResultMapper webPageMapper,
     IWebsiteChannelContext websiteChannelContext,
     ILinkedItemsDependencyAsyncRetriever dependencyRetriever)
 {
     public IContentQueryExecutor Executor { get; } = executor;
-    public IContentQueryResultMapper ContentItemMapper { get; } = contentItemMapper;
-    public IWebPageQueryResultMapper WebPageMapper { get; } = webPageMapper;
     public IWebsiteChannelContext WebsiteChannelContext { get; } = websiteChannelContext;
     public ILinkedItemsDependencyAsyncRetriever DependencyRetriever { get; } = dependencyRetriever;
 }
@@ -126,8 +122,6 @@ public abstract class ContentItemQueryHandler<TQuery, TResult> :
     public ContentItemQueryHandler(ContentItemQueryTools tools)
     {
         Executor = tools.Executor;
-        ContentItemMapper = tools.ContentItemMapper;
-        WebPageMapper = tools.WebPageMapper;
         DependencyRetriever = tools.DependencyRetriever;
         DefaultQueryOptions = new ContentQueryExecutionOptions { ForPreview = tools.WebsiteChannelContext.IsPreview };
     }
@@ -135,8 +129,6 @@ public abstract class ContentItemQueryHandler<TQuery, TResult> :
     private readonly HashSet<string> customKeys = new(StringComparer.OrdinalIgnoreCase);
 
     protected IContentQueryExecutor Executor { get; }
-    protected IContentQueryResultMapper ContentItemMapper { get; }
-    protected IWebPageQueryResultMapper WebPageMapper { get; }
     protected ContentQueryExecutionOptions DefaultQueryOptions { get; }
     protected ILinkedItemsDependencyAsyncRetriever DependencyRetriever { get; }
 

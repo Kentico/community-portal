@@ -1,3 +1,4 @@
+using CMS.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Membership;
@@ -13,11 +14,13 @@ namespace Kentico.Community.Portal.Web.Features.Blog.Events;
 public class BlogPostPublishCreateQAndAQuestionHandler(
     IHttpContextAccessor accessor,
     IMediator mediator,
-    IWebPageUrlRetriever pageUrlRetriever)
+    IWebPageUrlRetriever pageUrlRetriever,
+    IEventLogService log)
 {
     private readonly IHttpContextAccessor accessor = accessor;
     private readonly IMediator mediator = mediator;
     private readonly IWebPageUrlRetriever pageUrlRetriever = pageUrlRetriever;
+    private readonly IEventLogService log = log;
 
     public async Task Handle(PublishWebPageEventArgs args)
     {
@@ -56,14 +59,27 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
         {
             Id = 0 // Only the Id is required and an Id of 0 will result in the author being the Kentico Community author
         };
-        var command = new QAndAQuestionCreateCommand(member, rootQuestionPage, args.WebsiteChannelID, questionTitle, questionContent, SystemTaxonomies.QAndADiscussionTypeTaxonomy.BlogTag.GUID);
-        int questionWebPageID = await mediator.Send(command, default);
-        var questionPageURL = await pageUrlRetriever.Retrieve(questionWebPageID, args.ContentLanguageName);
+        var command = new QAndAQuestionCreateCommand(
+            member,
+            rootQuestionPage,
+            args.WebsiteChannelID,
+            questionTitle,
+            questionContent,
+            SystemTaxonomies.QAndADiscussionTypeTaxonomy.BlogTag.GUID);
 
-        /*
-         * This will recurse on this handler because it publishes the blog post
-         * but we guard against updating a blog post page that already has a question path
-         */
-        _ = await mediator.Send(new BlogPostPageSetQuestionURLCommand(page, args.WebsiteChannelID, questionPageURL));
+        await mediator.Send(command, default)
+            .Map(async questionWebPageID =>
+            {
+                var questionPageURL = await pageUrlRetriever.Retrieve(questionWebPageID, args.ContentLanguageName);
+
+                /*
+                * This will recurse on this handler because it publishes the blog post
+                * but we guard against updating a blog post page that already has a question path
+                */
+                return await mediator.Send(new BlogPostPageSetQuestionURLCommand(page, args.WebsiteChannelID, questionPageURL));
+            })
+            .Match(
+                MonadUtilities.Noop,
+                err => log.LogError(nameof(BlogPostPublishCreateQAndAQuestionHandler), "UPDATE_BLOG_QUESTION_URL", err));
     }
 }

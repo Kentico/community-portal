@@ -25,6 +25,13 @@
     <ProjectReference Include="..\Kentico.Community.Portal.Core\Kentico.Community.Portal.Core.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <!-- Required to prevent type conflicts with CSharpFunctionalExtensions types -->
+    <!-- Will be resolved in v14.0.0 https://github.com/ChilliCream/graphql-platform/releases/tag/14.0.0-p.75 -->
+    <!-- https://www.nuget.org/packages/Kentico.Xperience.WebApp/#dependencies-body-tab -->
+    <HotChocolateImplicitUsings>disable</HotChocolateImplicitUsings>
+  </PropertyGroup>
+
   <Target Name="NpmInstall" BeforeTargets="NpmBuildClient" Condition=" '$(Configuration)|$(Platform)' != 'Debug|AnyCPU' ">
     <Exec Command="npm ci --no-audit --no-fund" WorkingDirectory="$(MSBuildProjectDirectory)\Client" />
   </Target>
@@ -37,5 +44,13 @@
       </AdminClientPath>
     </ItemGroup>
   </Target>
+
+  <ItemGroup>
+    <EmbeddedResource Update="**\*.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>$([System.String]::Copy('%(FileName)')).Designer.cs</LastGenOutput>
+      <ExcludeFromManifest>true</ExcludeFromManifest>
+    </EmbeddedResource>
+  </ItemGroup>
 
 </Project>

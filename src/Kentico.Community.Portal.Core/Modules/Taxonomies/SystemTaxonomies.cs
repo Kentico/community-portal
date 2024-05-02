@@ -7,11 +7,13 @@ public static class SystemTaxonomies
 {
     public static BlogTypeTaxonomy BlogType { get; } = new();
     public static QAndADiscussionTypeTaxonomy QAndADiscussionType { get; } = new();
+    public static IntegrationTypeTaxonomy IntegrationType { get; } = new();
 
     public static readonly IReadOnlyList<ISystemTaxonomy> ProtectedTaxonomies =
     [
         BlogType,
-        QAndADiscussionType
+        QAndADiscussionType,
+        IntegrationType
     ];
 
     public static bool Includes(TaxonomyInfo taxonomy) =>
@@ -24,6 +26,16 @@ public static class SystemTaxonomies
     {
         public static Guid GUID { get; } = new("8419874e-3ec4-4da4-8a32-263f7ba5b864");
         public const string CodeName = "BlogType";
+
+        public Guid TaxonomyGUID => GUID;
+        public string TaxonomyName => CodeName;
+
+        public IReadOnlyList<ISystemTag> ProtectedTags { get; } = [];
+    }
+    public record IntegrationTypeTaxonomy : ISystemTaxonomy
+    {
+        public static Guid GUID { get; } = new("97cd2b53-499b-435c-a083-30a7dd510167");
+        public const string CodeName = "IntegrationType";
 
         public Guid TaxonomyGUID => GUID;
         public string TaxonomyName => CodeName;

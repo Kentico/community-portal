@@ -28,6 +28,9 @@
             <![CDATA[["8033c6de-9e47-4618-ac1a-25fd361c6ac8"]]]>
           </AllowedContentItemTypeIdentifiers>
           <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>1</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
         </settings>
       </field>
       <field column="BlogPostContentTeaserMediaFileImage" columnprecision="0" columntype="assets" enabled="true" guid="9c5b4e23-b208-488e-b009-03d70f48058e" visible="true">
@@ -100,7 +103,7 @@ Article
           </ValidationRuleConfiguration>
         </validationrulesdata>
       </field>
-      <field allowempty="true" column="BlogPostcontentDXTopics" columnprecision="0" columntype="taxonomy" enabled="true" guid="83cc82b6-3f0b-4e78-9f64-39e07352c281" visible="true">
+      <field allowempty="true" column="BlogPostContentDXTopics" columnprecision="0" columntype="taxonomy" enabled="true" guid="83cc82b6-3f0b-4e78-9f64-39e07352c281" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>DX Topics</fieldcaption>
@@ -171,6 +174,9 @@ richText;Rich Text
           <controlname>Kentico.Administration.RichTextEditor</controlname>
         </settings>
       </field>
+      <schema guid="058caefa-c8d6-440f-8f3e-cd0fd9d7a41a" name="058caefa-c8d6-440f-8f3e-cd0fd9d7a41a">
+        <properties />
+      </schema>
     </form>
   </ClassFormDefinition>
   <ClassGUID>2e7c68a6-f9c7-450a-9acb-a71db270ff71</ClassGUID>

@@ -4,7 +4,7 @@ using CMS.Membership;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 using Kentico.Community.Portal.Web.Membership;
-using Kentico.Xperience.Lucene.Indexing;
+using Kentico.Xperience.Lucene.Core.Indexing;
 using Lucene.Net.Documents;
 using Lucene.Net.Facet;
 

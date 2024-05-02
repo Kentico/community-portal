@@ -47,20 +47,26 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// MediaAssetContentAsset.
+		/// MediaAssetContentAssetLight.
 		/// </summary>
-		public ContentItemAsset MediaAssetContentAsset { get; set; }
+		public ContentItemAsset MediaAssetContentAssetLight { get; set; }
 
 
 		/// <summary>
-		/// MediaAssetContentImageWidth.
+		/// MediaAssetContentAssetDark.
 		/// </summary>
-		public int MediaAssetContentImageWidth { get; set; }
+		public ContentItemAsset MediaAssetContentAssetDark { get; set; }
 
 
 		/// <summary>
-		/// MediaAssetContentImageHeight.
+		/// MediaAssetContentImageLightWidth.
 		/// </summary>
-		public int MediaAssetContentImageHeight { get; set; }
+		public int MediaAssetContentImageLightWidth { get; set; }
+
+
+		/// <summary>
+		/// MediaAssetContentImageLightHeight.
+		/// </summary>
+		public int MediaAssetContentImageLightHeight { get; set; }
 	}
 }

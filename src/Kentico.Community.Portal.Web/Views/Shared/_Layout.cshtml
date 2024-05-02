@@ -81,6 +81,11 @@
         <script src="/vendor/js/prism.min.js" asp-append-version="true"></script>
     }
 
+    @if (ClientAssets.AlpineRequired)
+    {
+        <script defer src="/vendor/js/alpine.3.13.10.cdn.min.js"></script>
+    }
+
     <page-builder-scripts />
 </body>
 

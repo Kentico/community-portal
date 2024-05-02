@@ -21,3 +21,17 @@ code {
 small {
   color: $gray-500;
 }
+
+/* For paragraphs inside blockquotes. The blockquote already has padding. */
+blockquote {
+  border-left: 4px solid var(--bs-gray-600);
+  padding: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  background-color: initial;
+  font-size: 1rem;
+
+  > :first-child {
+    margin-block-start: 0;
+  }
+}
