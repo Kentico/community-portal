@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+
 namespace Kentico.Community.Portal.Core.Modules;
 
 /// <summary>
@@ -9,7 +11,7 @@ public static class SystemTaxonomies
     public static QAndADiscussionTypeTaxonomy QAndADiscussionType { get; } = new();
     public static IntegrationTypeTaxonomy IntegrationType { get; } = new();
 
-    public static readonly IReadOnlyList<ISystemTaxonomy> ProtectedTaxonomies =
+    public static readonly ImmutableList<ISystemTaxonomy> ProtectedTaxonomies =
     [
         BlogType,
         QAndADiscussionType,
@@ -30,7 +32,7 @@ public static class SystemTaxonomies
         public Guid TaxonomyGUID => GUID;
         public string TaxonomyName => CodeName;
 
-        public IReadOnlyList<ISystemTag> ProtectedTags { get; } = [];
+        public ImmutableList<ISystemTag> ProtectedTags { get; } = [];
     }
     public record IntegrationTypeTaxonomy : ISystemTaxonomy
     {
@@ -40,7 +42,7 @@ public static class SystemTaxonomies
         public Guid TaxonomyGUID => GUID;
         public string TaxonomyName => CodeName;
 
-        public IReadOnlyList<ISystemTag> ProtectedTags { get; } = [];
+        public ImmutableList<ISystemTag> ProtectedTags { get; } = [];
     }
     public record QAndADiscussionTypeTaxonomy : ISystemTaxonomy
     {
@@ -53,7 +55,7 @@ public static class SystemTaxonomies
         public Guid TaxonomyGUID => GUID;
         public string TaxonomyName => CodeName;
 
-        public IReadOnlyList<ISystemTag> ProtectedTags { get; } =
+        public ImmutableList<ISystemTag> ProtectedTags { get; } =
         [
             Question,
             Blog
@@ -87,7 +89,7 @@ public static class SystemTaxonomies
         public Guid TaxonomyGUID => GUID;
         public string TaxonomyName => CodeName;
 
-        public IReadOnlyList<ISystemTag> ProtectedTags { get; } = [];
+        public ImmutableList<ISystemTag> ProtectedTags { get; } = [];
     }
 }
 
@@ -96,7 +98,7 @@ public interface ISystemTaxonomy
     Guid TaxonomyGUID { get; }
     string TaxonomyName { get; }
 
-    IReadOnlyList<ISystemTag> ProtectedTags { get; }
+    ImmutableList<ISystemTag> ProtectedTags { get; }
 }
 public interface ISystemTag
 {

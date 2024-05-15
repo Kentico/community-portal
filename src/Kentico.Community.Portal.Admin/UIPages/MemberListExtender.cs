@@ -10,9 +10,9 @@ namespace Kentico.Community.Portal.Admin.UIPages;
 
 public class MemberListExtender : PageExtender<MemberList>
 {
-    public override Task ConfigurePage()
+    public override async Task ConfigurePage()
     {
-        _ = base.ConfigurePage();
+        await base.ConfigurePage();
 
         var configs = Page.PageConfiguration.ColumnConfigurations
                 .AddColumn("MemberFirstName", caption: "First name")
@@ -36,8 +36,6 @@ public class MemberListExtender : PageExtender<MemberList>
         configs
             .TryFirst(c => string.Equals(c.Name, nameof(MemberInfo.MemberCreated)))
             .Execute(c => c.Sorting.DefaultDirection = SortTypeEnum.Desc);
-
-        return Task.CompletedTask;
     }
 }
 

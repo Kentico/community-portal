@@ -11,9 +11,9 @@ namespace Kentico.Community.Portal.Admin.UIPages;
 
 public class ContentHubListExtender : PageExtender<ContentHubList>
 {
-    public override Task ConfigurePage()
+    public override async Task ConfigurePage()
     {
-        _ = base.ConfigurePage();
+        await base.ConfigurePage();
 
         var configs = Page.PageConfiguration.ColumnConfigurations;
 
@@ -53,8 +53,6 @@ public class ContentHubListExtender : PageExtender<ContentHubList>
             configs[pathIndex] = securedConfig;
             configs[securedIndex] = pathConfig;
         }
-
-        return Task.CompletedTask;
     }
 }
 

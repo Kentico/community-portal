@@ -7,8 +7,17 @@ using Kentico.Community.Portal.Web.Membership;
 using Kentico.Xperience.Lucene.Core.Indexing;
 using Lucene.Net.Documents;
 using Lucene.Net.Facet;
+using Newtonsoft.Json;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA.Search;
+
+public class DiscussionAuthorAttributes()
+{
+    public bool IsMVP { get; set; }
+
+    public static DiscussionAuthorAttributes Default { get; } = new();
+};
+
 
 public class QAndASearchIndexModel
 {
@@ -23,6 +32,7 @@ public class QAndASearchIndexModel
     public int AuthorMemberID { get; set; }
     public string AuthorUsername { get; set; } = "";
     public string AuthorFullName { get; set; } = "";
+    public DiscussionAuthorAttributes AuthorAttributes { get; set; } = DiscussionAuthorAttributes.Default;
     public bool HasAcceptedResponse { get; set; }
     public string DiscussionType { get; set; } = "";
     public IEnumerable<string> Topics { get; set; } = [];
@@ -37,6 +47,7 @@ public class QAndASearchIndexModel
             new TextField(nameof(Content), Content, Field.Store.NO),
             new Int64Field(nameof(PublishedDate), DateTools.TicksToUnixTimeMilliseconds(PublishedDate.Ticks), Field.Store.YES),
             new Int64Field(nameof(LatestResponseDate), DateTools.TicksToUnixTimeMilliseconds(LatestResponseDate.Ticks), Field.Store.YES),
+            new TextField(nameof(AuthorAttributes), JsonConvert.SerializeObject(AuthorAttributes), Field.Store.YES),
             new Int32Field(nameof(AuthorMemberID), AuthorMemberID, Field.Store.YES),
             new TextField(nameof(AuthorUsername), AuthorUsername, Field.Store.YES),
             new TextField(nameof(AuthorFullName), AuthorFullName, Field.Store.YES),
@@ -70,6 +81,7 @@ public class QAndASearchIndexModel
             AuthorMemberID = int.TryParse(doc.Get(nameof(AuthorMemberID)), out int authorMemberID)
                 ? authorMemberID
                 : 0,
+            AuthorAttributes = JsonConvert.DeserializeObject<DiscussionAuthorAttributes>(doc.Get(nameof(AuthorAttributes) ?? "{ }")) ?? DiscussionAuthorAttributes.Default,
             HasAcceptedResponse = doc.Get(nameof(HasAcceptedResponse)) switch
             {
                 "1" => true,
@@ -134,6 +146,7 @@ public class QAndASearchIndexingStrategy(
         indexModel.AuthorUsername = author.Username;
         indexModel.AuthorFullName = author.FullName;
         indexModel.AuthorMemberID = author.MemberID;
+        indexModel.AuthorAttributes = author.AuthorAttributes;
 
         indexModel.Content = htmlSanitizer.SanitizeHtmlDocument(page.QAndAQuestionPageContent);
         indexModel.PublishedDate = page.QAndAQuestionPageDateCreated != default
@@ -169,7 +182,7 @@ public class QAndASearchIndexingStrategy(
         return facetConfig;
     }
 
-    private record QAndAAuthor(int MemberID, string Username, string FullName);
+    private record QAndAAuthor(int MemberID, string Username, string FullName, DiscussionAuthorAttributes AuthorAttributes);
 
     private static async Task<QAndAAuthor> GetAuthor(
         IContentQueryExecutor executor,
@@ -184,7 +197,7 @@ public class QAndASearchIndexingStrategy(
         if (member is not null)
         {
             var cm = CommunityMember.FromMemberInfo(member);
-            return new(cm.Id, cm.UserName!, cm.FullName);
+            return new(cm.Id, cm.UserName!, cm.FullName, new() { IsMVP = cm.IsMVP });
         }
 
         var b = new ContentItemQueryBuilder()
@@ -195,7 +208,7 @@ public class QAndASearchIndexingStrategy(
         var authors = await executor.GetMappedResult<AuthorContent>(b);
         var author = authors.First();
 
-        return new(0, author.AuthorContentCodeName, author.FullName);
+        return new(0, author.AuthorContentCodeName, author.FullName, DiscussionAuthorAttributes.Default);
     }
 
     private async Task<string> GetDiscussionType(QAndAQuestionPage page, IIndexEventItemModel item)

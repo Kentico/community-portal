@@ -6,7 +6,6 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using CMS.DataEngine;
-using CMS.EmailEngine;
 using CMS.Helpers;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Infrastructure.Storage;
@@ -14,38 +13,52 @@ using Microsoft.Extensions.Options;
 
 namespace Kentico.Community.Portal.Web.Features.Support;
 
-public class SupportRequestProcessorBackgroundService(
-    ILogger<SupportRequestProcessorBackgroundService> logger,
-    IHttpClientFactory httpClientFactory,
-    AzureStorageClientFactory clientFactory,
-    IInfoProvider<SupportRequestConfigurationInfo> configurationProvider,
-    IInfoProvider<SupportRequestProcessingEventInfo> eventProvider,
-    IProgressiveCache cache,
-    IEmailService emailService,
-    IOptions<SupportRequestProcessingSettings> options) : BackgroundService
+public class SupportRequestProcessorBackgroundService : ApplicationBackgroundService
 {
     public const string QUEUE_PRIMARY_NAME = "support-messages";
     public const string QUEUE_DEAD_LETTER_NAME = "support-messages-dead-letter";
     public const string CONTAINER_PRIMARY_NAME = "support-messages";
     public const string CONTAINER_DEAD_LETTER_NAME = "support-messages-dead-letter";
 
-    private readonly ILogger<SupportRequestProcessorBackgroundService> logger = logger;
-    private readonly IInfoProvider<SupportRequestConfigurationInfo> configurationProvider = configurationProvider;
-    private readonly IInfoProvider<SupportRequestProcessingEventInfo> eventProvider = eventProvider;
-    private readonly IProgressiveCache cache = cache;
-    private readonly IEmailService emailService = emailService;
-    private readonly SupportRequestProcessingSettings settings = options.Value;
-    private readonly AzureStorageClientFactory clientFactory = clientFactory;
+    private readonly ILogger<SupportRequestProcessorBackgroundService> logger;
+    private readonly IInfoProvider<SupportRequestConfigurationInfo> configurationProvider;
+    private readonly IInfoProvider<SupportRequestProcessingEventInfo> eventProvider;
+    private readonly IProgressiveCache cache;
+    private readonly SupportRequestProcessingSettings settings;
+    private readonly AzureStorageClientFactory clientFactory;
 
     private QueueClient queueClientPrimary = null!;
     private QueueClient queueClientDeadLetter = null!;
     private BlobContainerClient containerClientPrimary = null!;
     private BlobContainerClient containerClientDeadLetter = null!;
-    private readonly HttpClient httpClient = httpClientFactory.CreateClient();
+    private readonly HttpClient httpClient;
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    public SupportRequestProcessorBackgroundService(
+        ILogger<SupportRequestProcessorBackgroundService> logger,
+        IHttpClientFactory httpClientFactory,
+        AzureStorageClientFactory clientFactory,
+        IInfoProvider<SupportRequestConfigurationInfo> configurationProvider,
+        IInfoProvider<SupportRequestProcessingEventInfo> eventProvider,
+        IProgressiveCache cache,
+        IOptions<SupportRequestProcessingSettings> options)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        this.logger = logger;
+        this.configurationProvider = configurationProvider;
+        this.eventProvider = eventProvider;
+        this.cache = cache;
+        settings = options.Value;
+        this.clientFactory = clientFactory;
+        httpClient = httpClientFactory.CreateClient();
+
+        ShouldRestart = true;
+        RestartDelay = TimeSpan.FromMinutes(10).Milliseconds;
+    }
+
+    protected override async Task ExecuteInternal(CancellationToken cancellationToken)
+    {
+        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(60));
+
+        while (!cancellationToken.IsCancellationRequested && await timer.WaitForNextTickAsync(cancellationToken))
         {
             var configuration = await GetConfiguration();
 
@@ -53,16 +66,14 @@ public class SupportRequestProcessorBackgroundService(
             {
                 await InitializeStorageClients();
 
-                await ProcessQueueMessagesAsync(configuration, stoppingToken);
+                await ProcessQueueMessagesAsync(configuration, cancellationToken);
             }
-
-            await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
         }
     }
 
-    private async Task ProcessQueueMessagesAsync(SupportRequestConfigurationInfo configuration, CancellationToken stoppingToken)
+    private async Task ProcessQueueMessagesAsync(SupportRequestConfigurationInfo configuration, CancellationToken cancellationToken)
     {
-        var dequeueResponse = await queueClientPrimary.ReceiveMessageAsync(cancellationToken: stoppingToken);
+        var dequeueResponse = await queueClientPrimary.ReceiveMessageAsync(cancellationToken: cancellationToken);
         if (dequeueResponse.Value is not QueueMessage message)
         {
             logger.LogInformation("No messages in Azure queue {queueName}", QUEUE_PRIMARY_NAME);
@@ -74,23 +85,21 @@ public class SupportRequestProcessorBackgroundService(
             var supportRequest = JsonSerializer.Deserialize<SupportRequestQueueMessage>(message.Body.ToString())
                 ?? throw new InvalidOperationException($"Could not deserialize queue message: {message.MessageId}");
 
-            var response = await SendToAzureFunctionAsync(configuration, supportRequest, stoppingToken);
+            var response = await SendToAzureFunctionAsync(configuration, supportRequest, cancellationToken);
 
             if (!response.IsSuccessStatusCode)
             {
                 throw new SupportRequestProcessException(supportRequest, $"Failed to send to Azure Function. Status: {response.StatusCode}");
             }
 
-            _ = await queueClientPrimary.DeleteMessageAsync(dequeueResponse.Value.MessageId, dequeueResponse.Value.PopReceipt, stoppingToken);
-            _ = await containerClientPrimary.DeleteBlobAsync(supportRequest.BlobName, cancellationToken: stoppingToken);
+            _ = await queueClientPrimary.DeleteMessageAsync(dequeueResponse.Value.MessageId, dequeueResponse.Value.PopReceipt, cancellationToken);
+            _ = await containerClientPrimary.DeleteBlobAsync(supportRequest.BlobName, cancellationToken: cancellationToken);
             eventProvider.Set(new SupportRequestProcessingEventInfo
             {
                 SupportRequestProcessingEventStatus = SupportRequestProcessingEventInfo.Statuses.SUCCESS.ToString(),
                 SupportRequestProcessingEventMessage = supportRequest.Subject,
                 SupportRequestProcessingEventMessageID = dequeueResponse.Value.MessageId
             });
-
-            await SendConfirmationEmail(supportRequest);
         }
         catch (Exception ex)
         {
@@ -101,8 +110,8 @@ public class SupportRequestProcessorBackgroundService(
                 return;
             }
 
-            var receipt = await queueClientDeadLetter.SendMessageAsync(queueMessage.Body, cancellationToken: stoppingToken);
-            _ = await queueClientPrimary.DeleteMessageAsync(queueMessage.MessageId, queueMessage.PopReceipt, stoppingToken);
+            var receipt = await queueClientDeadLetter.SendMessageAsync(queueMessage.Body, cancellationToken: cancellationToken);
+            _ = await queueClientPrimary.DeleteMessageAsync(queueMessage.MessageId, queueMessage.PopReceipt, cancellationToken);
 
             if (ex is SupportRequestProcessException processEx)
             {
@@ -118,13 +127,13 @@ public class SupportRequestProcessorBackgroundService(
         }
     }
 
-    private async Task<HttpResponseMessage> SendToAzureFunctionAsync(SupportRequestConfigurationInfo configuration, SupportRequestQueueMessage message, CancellationToken stoppingToken)
+    private async Task<HttpResponseMessage> SendToAzureFunctionAsync(SupportRequestConfigurationInfo configuration, SupportRequestQueueMessage message, CancellationToken cancellationToken)
     {
         var blobClient = containerClientPrimary.GetBlobClient(message.BlobName);
-        var stream = await blobClient.OpenReadAsync(position: 0, cancellationToken: stoppingToken);
+        var stream = await blobClient.OpenReadAsync(position: 0, cancellationToken: cancellationToken);
         var content = new StreamContent(stream);
         content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        var res = await httpClient.PostAsync(configuration.SupportRequestConfigurationExternalEndpointURL, content, stoppingToken);
+        var res = await httpClient.PostAsync(configuration.SupportRequestConfigurationExternalEndpointURL, content, cancellationToken);
 
         return res;
     }
@@ -144,45 +153,14 @@ public class SupportRequestProcessorBackgroundService(
         _ = await sourceBlob.DeleteIfExistsAsync();
     }
 
-    /// <summary>
-    /// TODO change this to an autoresponder send by creating an internal form submission with a configured autoresponder
-    /// </summary>
-    /// <param name="supportRequest"></param>
-    /// <returns></returns>
-    private async Task SendConfirmationEmail(SupportRequestQueueMessage supportRequest)
-    {
-        string body = @$"""
-            <p>{supportRequest.AuthorName},</p>
-            <p>We've begun to process your support request and will respond soon.</p>
-            <br>
-            <p>Thanks,<br>
-                <em>Kentio Community Portal</em>
-            </p>
-            """;
-
-        var email = new EmailMessage()
-        {
-            From = "no-reply@community.kentico.com",
-            Recipients = supportRequest.AuthorEmail,
-            Subject = $"Support request received: {supportRequest.Subject}",
-            Body = body,
-            ReplyTo = "no-reply@community.kentico.com",
-            PlainTextBody = body,
-            EmailFormat = EmailFormatEnum.Both,
-        };
-
-        await emailService.SendEmail(email);
-    }
-
     private async Task<SupportRequestConfigurationInfo?> GetConfiguration() =>
         await cache.LoadAsync(async cs =>
         {
             cs.CacheDependency = CacheHelper.GetCacheDependency([$"{SupportRequestConfigurationInfo.OBJECT_TYPE}|all"]);
 
-            return (await configurationProvider.Get()
+            return await configurationProvider.Get()
                 .TopN(1)
-                .GetEnumerableTypedResultAsync())
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }, new CacheSettings(60, [nameof(SupportRequestProcessorBackgroundService), nameof(GetConfiguration)]));
 
     private async Task InitializeStorageClients()

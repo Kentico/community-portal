@@ -17,6 +17,7 @@ public class CommunityMember : ApplicationUser
             (null, null) or _ => "",
         };
     public string LinkedInIdentifier { get; set; } = "";
+    public bool IsMVP { get; set; } = false;
     public DateTime Created { get; set; }
 
     public override void MapToMemberInfo(MemberInfo target)
@@ -43,6 +44,7 @@ public class CommunityMember : ApplicationUser
         _ = target.SetValue("MemberFirstName", FirstName);
         _ = target.SetValue("MemberLastName", LastName);
         _ = target.SetValue("MemberLinkedInIdentifier", LinkedInIdentifier);
+        _ = target.SetValue("MemberIsMVP", IsMVP);
     }
 
     public override void MapFromMemberInfo(MemberInfo source)
@@ -52,6 +54,7 @@ public class CommunityMember : ApplicationUser
         FirstName = source.GetValue("MemberFirstName", "");
         LastName = source.GetValue("MemberLastName", "");
         LinkedInIdentifier = source.GetValue("MemberLinkedInIdentifier", "");
+        IsMVP = source.GetBooleanValue("MemberIsMVP", false);
         Created = source.MemberCreated;
     }
 

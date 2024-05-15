@@ -58,6 +58,24 @@
           <controlname>Kentico.Administration.RichTextEditor</controlname>
         </settings>
       </field>
+      <field column="AutoresponderEmailUTMParameters" columnprecision="0" columntype="utmparameters" enabled="true" guid="077f0b86-5e35-4149-91d8-3958381e4ccc" visible="true">
+        <properties>
+          <defaultvalue>
+            <![CDATA[{"ID":"8150a798-fd1a-4fd2-aca9-c86737d86b05","Source":"community","Medium":"email","Campaign":"autoresponder","Content":"","Term":""}]]>
+          </defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>UTM Parameters</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>
+            <![CDATA[Kentico.Community.Portal.Admin.FormComponent.UTMParameters]]>
+          </controlname>
+          <VisibleFields>
+            <![CDATA[["source","medium","campaign"]]]>
+          </VisibleFields>
+        </settings>
+      </field>
       <schema guid="5d16c375-e18b-46ac-b951-cf8f11e9c9e5" name="5d16c375-e18b-46ac-b951-cf8f11e9c9e5">
         <properties />
       </schema>

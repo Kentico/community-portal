@@ -77,6 +77,7 @@ function initializeFacetsOnForm(formEl, facetType) {
     );
 
     facetInput.value = selectedValues.join(";");
+    // TODO - reset page number
   }
 
   let facets = document.querySelectorAll(

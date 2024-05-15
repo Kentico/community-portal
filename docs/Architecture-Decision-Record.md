@@ -1,5 +1,21 @@
 # Architecture Decision Record
 
+## 2024-05-14 - Sending emails from email channel sending domains
+
+Xperience does not currently have the concept of a "system" or "transactional" email/email channel. Instead, [emails have purposes](https://docs.kentico.com/business-users/digital-marketing/emails).
+
+Autoresponder is the closest to "transactional" until future dedicated support for transactional emails is available.
+
+To send an email programmatically through an email channel's sending domain in SaaS, we must use a marketer authored email's configuration.
+
+All of this is related to confirmation emails for support requests, which are sent when an [a support request](https://community.kentico.com/support) is submitted and the request is processed from the queue.
+
+In order to send the emails from the email channel sender domain (`community.kentico.com`), we have a placeholder email that will be used to configure the email when it's sent by the system.
+
+> Note: This placeholder email is defined in the `SystemEmails` class.
+
+If we are willing to use the SaaS environment service domain, we can simply send the email from a service domain email address, but this _can_ have issues with deliverability and is going to be unexpected by website visitors.
+
 ## 2024-05-01 - Alpine.js
 
 Instead of authoring difficult to test, edit, and maintain jQuery for filtering on the Integrations page, we've added a dependency on [Alpine.js](https://alpinejs.dev/).

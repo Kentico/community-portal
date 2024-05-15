@@ -6,7 +6,6 @@ using Kentico.Xperience.Admin.Base;
 using Kentico.Xperience.Admin.Base.UIPages;
 
 [assembly: PageExtender(typeof(ReusableFieldSchemaListExtender))]
-[assembly: PageExtender(typeof(ReusableFieldSchemaEditExtender))]
 
 namespace Kentico.Community.Portal.Admin.UIPages;
 
@@ -15,9 +14,9 @@ public class ReusableFieldSchemaListExtender(IReusableFieldSchemaManager schemaM
 {
     private readonly IReusableFieldSchemaManager schemaManager = schemaManager;
 
-    public override Task ConfigurePage()
+    public override async Task ConfigurePage()
     {
-        _ = base.ConfigurePage();
+        await base.ConfigurePage();
 
         var configs = Page.PageConfiguration.ColumnConfigurations;
 
@@ -35,7 +34,5 @@ public class ReusableFieldSchemaListExtender(IReusableFieldSchemaManager schemaM
 
             return string.Join(", ", contentTypes);
         });
-
-        return Task.CompletedTask;
     }
 }

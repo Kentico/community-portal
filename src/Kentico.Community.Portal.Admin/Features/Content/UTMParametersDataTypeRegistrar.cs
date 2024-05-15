@@ -38,6 +38,7 @@ public static class UTMParametersDataTypeRegistrar
                 DefaultValueCode = JsonConvert.SerializeObject(new UTMParametersDataType()),
                 DefaultValue = new(),
                 HasConfigurableDefaultValue = true,
+                IsAvailableForDataClass = (c) => true
             },
             new(UTMParametersDataType.FIELD_TYPE,
                 () => new DataTypeCodeGenerator(

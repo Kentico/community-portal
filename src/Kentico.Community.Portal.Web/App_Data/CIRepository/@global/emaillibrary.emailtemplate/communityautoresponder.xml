@@ -19,15 +19,30 @@
     </style>
   </head>
   <body style="margin: 0; padding: 0; height: 100%; width: 100%">
-    <div style="display:none;">{%EmailPreviewText%}</div>
-    <div class="body" style="background-color: #fafafa">
+    <div class="body" style="background-color: #d3d2d2">
+      <span
+        class="preheader"
+        style="font-size: 1px; color: #ffffff; display: none"
+        >{% EmailPreviewText %}</span
+      >
+      <!-- Outlook main content wrapper. The role attribute is set to presentation to prevent it from being read by screenreaders. -->
+      <!--[if (gte mso 9)|(IE)]>
+    <table cellspacing="0" cellpadding="0" border="0" width="100%" height="100%" align="center" role="presentation" bgcolor="#D3D2D2"><tr><td>
+    <![endif]-->
+      <!-- Outlook main content -->
+      <!--[if (gte mso 9)|(IE)]>
+    <table cellspacing="0" cellpadding="0" border="0" width="600" align="center" role="presentation" bgcolor="#ffffff"><tr><td style="padding-bottom:30px;">
+    <![endif]-->
+      <!-- **** The role and aria-label attributes are added to wrap the email content as an article for screen readers. Some of them will read out the aria-label as the title of the document. -->
+      <!-- Main content top indent - not needed in Outlook - therefore no table here -->
       <div
-        style="background-color: #fafafa; height: 66px"
+        style="background-color: #d3d2d2; height: 66px"
         class="body-gap"
       ></div>
+
       <div
         role="article"
-        aria-label="Kentico newsletter"
+        aria-label="{% emailTitle %}"
         class="body-bg"
         lang="en"
         style="
@@ -49,57 +64,98 @@
         "
       >
         <header>
-          <div
-            style="
-              display: inline-block;
-              margin: 0;
-              width: 100%;
-              min-width: 200px;
-              max-width: 270px;
-              vertical-align: bottom;
-            "
-            class="logo"
+          <table
+            role="presentation"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            width="100%"
+            style="margin: auto"
           >
-            <a
-              href="{% emailDefaults.EmailDefaultsContentHeaderLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters) |(user)SeanW_kentico.com|(hash)d0c6a8edd963233dc1ade993e8030551f3e6b67e264804fe9ba07e141c1a278f%}"
-              title="{% HTMLEncode(emailDefaults.EmailDefaultsContentHeaderLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters)) |(user)SeanW_kentico.com|(hash)e726be06056f9e542b96512e00d38ad3da4e69028bc2a75194717794ca8c5191%}"
-              style="width: 174px; height: 40px; display: inline-block"
-              target="_blank"
-            >
-              {% headerLogo = emailDefaults.EmailDefaultsContentHeaderLogo[0].Data; "" |(user)SeanW_kentico.com|(hash)d6ef8c2d74f72e836eb010c02a23fa1a0e5ed862194efb944ea8fff4e60e5f0d%}
-              <img
-                class="light-img"
-                src="{% headerLogo.MediaAssetContentAssetLight.Url |(user)SeanW_kentico.com|(hash)d415a7eb968ae9534a14fe949fa838d0aafcfe4703256a69521fa7899925effe%}"
-                alt="{% HTMLEncode(headerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)b3c16b786f3176d5d7e6c4bd4bb2c2b536bfaa1a05573a35a5c25b6de670d859%}"
-                width="{% headerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)5775e00665ccab5921f240ec0b8c4d2ec7d3b421a7140d2dd4272f31194d1731%}"
-                height="{% headerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)0ef741ae3ea4f6b695739c28b463db7632918a04cea2be374f78c3962159a75d%}"
-                style="width: 174px;"
-              />
-              <div
-                class="dark-img"
-                style="
-                  display: none;
-                  overflow: hidden;
-                  float: left;
-                  width: 0px;
-                  max-height: 0px;
-                  max-width: 0px;
-                  line-height: 0px;
-                  visibility: hidden;
-                "
-              >
-                <img
-                  src="{% headerLogo.MediaAssetContentAssetDark.Url |(user)SeanW_kentico.com|(hash)0c9f020f8a0a81a03f93e39a2bf6c17543224bb3c52f79f0c9e02740236e0b32%}"
-                  alt="{% HTMLEncode(headerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)b3c16b786f3176d5d7e6c4bd4bb2c2b536bfaa1a05573a35a5c25b6de670d859%}"
-                  width="{% headerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)5775e00665ccab5921f240ec0b8c4d2ec7d3b421a7140d2dd4272f31194d1731%}"
-                  height="{% headerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)0ef741ae3ea4f6b695739c28b463db7632918a04cea2be374f78c3962159a75d%}"
-                  style="width: 174px;"
-                />
-              </div>
-            </a>
-          </div>
+            <!-- Email Header -->
+            <tbody>
+              <tr>
+                <td align="left" valign="top" style="font-size: 0; padding: 0">
+                  <!--[if (gte mso 9)|(IE)]>
+	                        <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="600">
+	                        <tr>
+	                        <td valign="top" width="300" style="padding-left:30px;padding-top:30px;">
+	                        <![endif]-->
+                  <div
+                    style="
+                      display: inline-block;
+                      margin: 0;
+                      width: 100%;
+                      min-width: 200px;
+                      max-width: 270px;
+                      vertical-align: bottom;
+                    "
+                    class="logo"
+                  >
+                    <a
+                      href="{% emailDefaults.EmailDefaultsContentHeaderLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters) |(user)SeanW_kentico.com|(hash)d0c6a8edd963233dc1ade993e8030551f3e6b67e264804fe9ba07e141c1a278f%}"
+                      title="{% emailDefaults.EmailDefaultsContentHeaderLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters) |(user)SeanW_kentico.com|(hash)d0c6a8edd963233dc1ade993e8030551f3e6b67e264804fe9ba07e141c1a278f%}"
+                      style="width: 50px; height: 40px; display: inline-block"
+                      target="_blank"
+                    >
+                      {% headerLogo =
+                      emailDefaults.EmailDefaultsContentHeaderLogo[0].Data; ""
+                      |(user)SeanW_kentico.com|(hash)969fff5344696ce40b297529c7a17f4e2968042be010bd0cd6e23250d7268d61%}
+                      <img
+                        class="light-img"
+                        src="{% headerLogo.MediaAssetContentAssetLight.Url |(user)SeanW_kentico.com|(hash)d415a7eb968ae9534a14fe949fa838d0aafcfe4703256a69521fa7899925effe%}"
+                        alt="{% HTMLEncode(headerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)b3c16b786f3176d5d7e6c4bd4bb2c2b536bfaa1a05573a35a5c25b6de670d859%}"
+                        width="{% headerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)5775e00665ccab5921f240ec0b8c4d2ec7d3b421a7140d2dd4272f31194d1731%}"
+                        height="{% headerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)0ef741ae3ea4f6b695739c28b463db7632918a04cea2be374f78c3962159a75d%}"
+                        style="width: 50px"
+                      />
+                      <div
+                        class="dark-img"
+                        style="
+                          display: none;
+                          overflow: hidden;
+                          float: left;
+                          width: 0px;
+                          max-height: 0px;
+                          max-width: 0px;
+                          line-height: 0px;
+                          visibility: hidden;
+                        "
+                      >
+                        <img
+                          src="{% headerLogo.MediaAssetContentAssetDark.Url |(user)SeanW_kentico.com|(hash)0c9f020f8a0a81a03f93e39a2bf6c17543224bb3c52f79f0c9e02740236e0b32%}"
+                          alt="{% HTMLEncode(headerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)b3c16b786f3176d5d7e6c4bd4bb2c2b536bfaa1a05573a35a5c25b6de670d859%}"
+                          width="{% headerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)5775e00665ccab5921f240ec0b8c4d2ec7d3b421a7140d2dd4272f31194d1731%}"
+                          height="{% headerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)0ef741ae3ea4f6b695739c28b463db7632918a04cea2be374f78c3962159a75d%}"
+                          style="width: 50px"
+                        />
+                      </div>
+                    </a>
+                  </div>
+                  <!--[if (gte mso 9)|(IE)]>
+	                        </td></tr></table>
+	                        <![endif]-->
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </header>
-        {% AutoresponderEmailContent %}
+
+        <main>
+          <!--[if (gte mso 9)|(IE)]>
+            <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="540">
+            <tr>
+            <td valign="top" width="600" style="padding-left:30px;padding-right:30px;padding-bottom:30px;">
+            <![endif]-->
+          <div class="paragraph" style="color: #4f4c4d">
+            {% AutoresponderEmailContent %}
+          </div>
+          <!--[if mso]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+        </main>
       </div>
       <div
         class="footer"
@@ -117,6 +173,11 @@
         "
       >
         <footer style="margin: 0; padding: 0">
+          <!-- Footer -->
+          <!--[if (gte mso 9)|(IE)]>
+        <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="600">
+        <tr><td valign="top" width="600" style="background-color:#F4F4F4;padding: 56px 40px 20px 40px;">
+        <![endif]-->
           <h2
             style="
               color: #000000;
@@ -130,9 +191,16 @@
             "
             class="footer__heading"
           >
-            Meet Kentico on social networks
-            <span class="orange-char" style="color: #f05a22">.</span>
+            Meet Kentico on social networks<span
+              class="orange-char"
+              style="color: #f05a22"
+              >.</span
+            >
           </h2>
+          <!--[if (gte mso 9)|(IE)]>
+            <table role="presentation" border="0" cellspacing="0" cellpadding="0">
+            <tr><td valign="top" style="text-align:left;padding-top:20px;padding-bottom:30px;color:#333333;">
+            <![endif]-->
           <div
             style="
               padding-left: 30px;
@@ -209,16 +277,41 @@
                       </div>
                     </a>
                   </td>
-                 {% } |(user)SeanW_kentico.com|(hash)63968a2fe706911904ff85457a1914eacd90824d05a5be055ed5f7f465ef81a9%}
+                  {% } |(user)SeanW_kentico.com|(hash)d95352e507ff042a7a7bfbb8348ffcae50228887ba9c2c7473bbc87bda3747b9%}
                 </tr>
               </tbody>
             </table>
           </div>
+          <!--[if (gte mso 9)|(IE)]>
+            </td></tr></table>
+            <![endif]-->
+          <!-- Footer line -->
+          <!--[if (gte mso 9)|(IE)]>
+            <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="100%" height="1px" bgcolor="#B2B2B2">
+            <tr><td style="background-color:#B2B2B2;height:1px;">
+            <![endif]-->
           <div style="padding: 0 40px">
             <div
               style="background-color: #b2b2b2; height: 1px; padding: 0"
             ></div>
           </div>
+          <!--[if (gte mso 9)|(IE)]>
+            </td></tr></table>
+            <![endif]-->
+          <!-- Gap below the line -->
+          <!--[if (gte mso 9)|(IE)]>
+            <table
+              role="presentation"
+              border="0"
+              cellspacing="0"
+              cellpadding="0"
+              width="100%"
+            >
+              <tr>
+                <td style="padding-bottom: 20px"></td>
+              </tr>
+            </table>
+          <![endif]-->
           <p
             style="
               color: #4f4c4d;
@@ -250,17 +343,18 @@
             <a
               href="{% emailDefaults.EmailDefaultsContentFooterLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters) |(user)SeanW_kentico.com|(hash)30d4ee1db2e9b16d49c745057f91869caf5b88fba767d1afa6338afc9280d293%}"
               title="{% HTMLEncode(emailDefaults.EmailDefaultsContentFooterLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters)) |(user)SeanW_kentico.com|(hash)81106b565755bdc4b537c388e1daab8bd4cc3126ef329307d274e34e7031a67a%}"
-              style="width: 174px; height: 40px; display: inline-block"
+              style="width: 50px; height: 40px; display: inline-block"
               target="_blank"
             >
-              {% footerLogo = emailDefaults.EmailDefaultsContentFooterLogo[0].Data; "" |(user)SeanW_kentico.com|(hash)4c7fb785ba14739b3deffe8969a5005c672a4238ac3f96c7f2ed6754e663071b%}
+              {% footerLogo =
+              emailDefaults.EmailDefaultsContentFooterLogo[0].Data; "" |(user)SeanW_kentico.com|(hash)402e61a3e952107888f6cb19877a14d0b8f50377858a4cf02ef39568b89fcff3%}
               <img
                 class="light-img"
                 src="{% footerLogo.MediaAssetContentAssetLight.Url |(user)SeanW_kentico.com|(hash)b6a011bc4355a577638faf34dc89020f285c80f89df43310fab807ab968a30a1%}"
                 alt="{% HTMLEncode(footerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)16889b7012312de1a6767df9f4295a2d4aef5a7b3dc48b07da98ab3ae15db3a0%}"
                 width="{% footerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)28a93708317961f496aa163efddd860a684b37f8dd3fe7eed4f637d83c8807f1%}"
                 height="{% footerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)4f0d2db44228a776f5008eb78c357389b9fd6acd981106a1d56076ffd9b4d90a%}"
-                style="width: 174px;"
+                style="width: 50px"
               />
               <div
                 class="dark-img"
@@ -280,16 +374,29 @@
                   alt="{% HTMLEncode(footerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)16889b7012312de1a6767df9f4295a2d4aef5a7b3dc48b07da98ab3ae15db3a0%}"
                   width="{% footerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)28a93708317961f496aa163efddd860a684b37f8dd3fe7eed4f637d83c8807f1%}"
                   height="{% footerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)4f0d2db44228a776f5008eb78c357389b9fd6acd981106a1d56076ffd9b4d90a%}"
-                  style="width: 174px;"
+                  style="width: 50px"
                 />
               </div>
             </a>
           </div>
+          <!-- Footer end -->
+          <!--[if (gte mso 9)|(IE)]>
+        </td></tr></table>
+        <![endif]-->
         </footer>
       </div>
+      <!-- Footer wrapper end -->
+      <!--[if (gte mso 9)|(IE)]>
+    </td></tr></table>
+    <![endif]-->
+      <!-- Outlook main content wrapper end -->
+      <!--[if (gte mso 9)|(IE)]>
+    </td></tr></table>
+    <![endif]-->
     </div>
+    <!-- Main content bottom indent -->
     <div
-      style="background-color: #fafafa; height: 30px; border: none"
+      style="background-color: #d3d2d2; height: 30px; border: none"
       class="body-gap"
     ></div>
   </body>

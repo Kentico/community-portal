@@ -79,7 +79,7 @@ public class QAndAPostViewModel
     public int ResponseCount { get; set; }
     public DateTime LatestResponseDate { get; set; }
     public bool HasAcceptedResponse { get; set; }
-    public QAndAPostAuthorViewModel Author { get; set; } = new();
+    public QAndAAuthorViewModel Author { get; set; } = new();
 
     public static QAndAPostViewModel GetModel(QAndASearchIndexModel result) => new()
     {
@@ -88,33 +88,9 @@ public class QAndAPostViewModel
         ResponseCount = result.ResponseCount,
         LatestResponseDate = result.LatestResponseDate,
         HasAcceptedResponse = result.HasAcceptedResponse,
-        Author = new()
-        {
-            FullName = result.AuthorFullName,
-            MemberID = result.AuthorMemberID,
-            Username = result.AuthorUsername
-        },
+        Author = new(result.AuthorMemberID, result.AuthorFullName, result.AuthorUsername, result.AuthorAttributes),
         LinkPath = result.Url,
         ID = result.ID
     };
-}
-
-public class QAndAPostAuthorViewModel
-{
-    public int MemberID { get; set; }
-    public string Username { get; set; } = "";
-    public string FullName { get; set; } = "";
-    public string FormattedName => string.IsNullOrWhiteSpace(FullName)
-        ? Username
-        : $"{FullName} ({Username})";
-
-    public QAndAPostAuthorViewModel() { }
-
-    public QAndAPostAuthorViewModel(int memberID, string username, string fullName)
-    {
-        MemberID = memberID;
-        Username = username;
-        FullName = fullName;
-    }
 }
 

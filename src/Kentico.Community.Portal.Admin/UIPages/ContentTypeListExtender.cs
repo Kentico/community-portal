@@ -17,9 +17,9 @@ public class ContentTypeListExtender(IEventLogService log) : PageExtender<Conten
 {
     private readonly IEventLogService log = log;
 
-    public override Task ConfigurePage()
+    public override async Task ConfigurePage()
     {
-        _ = base.ConfigurePage();
+        await base.ConfigurePage();
 
         var pageConfig = Page.PageConfiguration;
 
@@ -64,8 +64,6 @@ public class ContentTypeListExtender(IEventLogService log) : PageExtender<Conten
                     });
                 });
         }
-
-        return Task.CompletedTask;
     }
 }
 

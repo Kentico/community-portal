@@ -37,6 +37,17 @@
                                             href="https://www.linkedin.com/in/@member.LinkedInIdentifier">@member.LinkedInIdentifier</a>
                                     </p>
                                 }
+                                <p>Badges:</p>
+                                <div>
+                                    @if (member.IsMVP)
+                                    {
+                                        <span title="This member is a Kentico MVP">
+                                            <a href="https://www.kentico.com/partners/mvp-program">
+                                                <span class="badge rounded-pill text-bg-primary">MVP</span>
+                                            </a>
+                                        </span>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>

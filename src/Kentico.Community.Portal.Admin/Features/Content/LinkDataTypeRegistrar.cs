@@ -35,6 +35,7 @@ public static class LinkDataTypeRegistrar
                 DefaultValueCode = "[]",
                 DefaultValue = [],
                 HasConfigurableDefaultValue = false,
+                IsAvailableForDataClass = (c) => true,
             },
             new(LinkDataType.FIELD_TYPE_LIST,
                 () => new DataTypeCodeGenerator(

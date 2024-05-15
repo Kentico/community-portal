@@ -1,5 +1,6 @@
 using System.Reflection;
 using Kentico.Community.Portal.Core;
+using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
 using Kentico.Community.Portal.Web.Features.Blog.Events;
@@ -66,6 +67,7 @@ public static class ServiceCollectionAppExtensions
 
     private static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config) =>
         services
+            .AddSingleton(s => new ApplicationAssemblyInformation())
             .AddSingleton<AzureStorageClientFactory>()
             .AddSingleton<ISystemClock, SystemClock>()
             .AddSingleton<AssetItemService>()
@@ -77,6 +79,7 @@ public static class ServiceCollectionAppExtensions
     private static IServiceCollection AddSupport(this IServiceCollection services, IConfiguration config) =>
         services
             .AddHostedService<SupportRequestProcessorBackgroundService>()
+            .AddSingleton<ISupportEmailSender, SupportEmailSender>()
             .Configure<SupportRequestProcessingSettings>(config.GetSection("SupportRequestProcessing"));
 
     private static IServiceCollection AddQAndA(this IServiceCollection services) =>

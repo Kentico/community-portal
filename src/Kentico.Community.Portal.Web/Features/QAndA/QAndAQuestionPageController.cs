@@ -3,6 +3,7 @@ using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.QAndA;
+using Kentico.Community.Portal.Web.Features.QAndA.Search;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Community.Portal.Web.Rendering;
@@ -228,11 +229,17 @@ public class QAndAAuthorViewModel
             ? Username
             : $"{FullName} ({Username})";
 
+    public DiscussionAuthorAttributes AuthorAttributes { get; set; } = DiscussionAuthorAttributes.Default;
+
     public QAndAAuthorViewModel(CommunityMember member)
     {
         ID = member.Id;
         Username = member.UserName!;
         FullName = member.FullName;
+        AuthorAttributes = new()
+        {
+            IsMVP = member.IsMVP
+        };
     }
 
     public QAndAAuthorViewModel(AuthorContent author)
@@ -242,6 +249,13 @@ public class QAndAAuthorViewModel
         Username = author.AuthorContentCodeName;
     }
 
+    public QAndAAuthorViewModel(int memberID, string fullName, string username, DiscussionAuthorAttributes? authorAttributes)
+    {
+        ID = memberID;
+        FullName = fullName;
+        Username = username;
+        AuthorAttributes = authorAttributes ?? DiscussionAuthorAttributes.Default;
+    }
     public QAndAAuthorViewModel() { }
 }
 

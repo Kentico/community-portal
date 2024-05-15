@@ -1,0 +1,26 @@
+@using Kentico.Community.Portal.Web.Features.QAndA
+
+@model QAndAAuthorViewModel
+
+@if (Model.ID == 0)
+{
+    <div class="mb-2">
+        <span>@Model.FormattedName</span>
+    </div>
+
+    return;
+}
+
+<div class="mb-2">
+    <a class="text-secondary" asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@Model.ID">
+        @Model.FormattedName
+    </a>
+    <div>
+        @if (Model.AuthorAttributes.IsMVP)
+        {
+            <span title="This member is a Kentico MVP">
+                <span class="badge rounded-pill text-bg-primary">MVP</span>
+            </span>
+        }
+    </div>
+</div>

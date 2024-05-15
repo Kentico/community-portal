@@ -10,7 +10,7 @@ using Kentico.Xperience.Admin.Base;
     parentType: typeof(QAndAApplicationPage),
     slug: "list",
     uiPageType: typeof(QAndAListingPage),
-    name: "Answers",
+    name: "Answers List",
     templateName: TemplateNames.LISTING,
     order: 0)]
 

@@ -2,6 +2,7 @@ using CMS;
 using CMS.ContentEngine;
 using CMS.Core;
 using CMS.DataEngine;
+using CMS.EmailLibrary;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Configuration;
 using Kentico.Community.Portal.Web.Features.Blog.Events;
@@ -36,6 +37,10 @@ internal class GlobalEventsModule : Module
         QAndAAnswerDataInfo.TYPEINFO.Events.Insert.After += QAndAAnswerDataInfo_InsertAfter;
         ContentItemEvents.UpdateDraft.Before += ContentItem_UpdateDraftBefore;
         WebPageEvents.Publish.Execute += WebPage_PublishExecute;
+        ChannelInfo.TYPEINFO.Events.Update.Before += Channel_ModifyBefore;
+        ChannelInfo.TYPEINFO.Events.Delete.Before += Channel_DeleteBefore;
+        EmailConfigurationInfo.TYPEINFO.Events.Update.Before += EmailConfiguration_ModifyBefore;
+        EmailConfigurationInfo.TYPEINFO.Events.Delete.Before += EmailConfiguration_DeleteBefore;
         TaxonomyInfo.TYPEINFO.Events.Update.Before += Taxonomy_ModifyBefore;
         TaxonomyInfo.TYPEINFO.Events.Delete.Before += Taxonomy_DeleteBefore;
         TagInfo.TYPEINFO.Events.Update.Before += Tag_ModifyBefore;
@@ -109,6 +114,92 @@ internal class GlobalEventsModule : Module
             scope.ServiceProvider.GetRequiredService<BlogPostPublishCreateQAndAQuestionHandler>().Handle(args)
                 .GetAwaiter()
                 .GetResult();
+        }
+    }
+
+    /// <summary>
+    /// Ensures channels required by the system are not deleted
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    /// <exception cref="Exception"></exception>
+    private void Channel_DeleteBefore(object? sender, ObjectEventArgs args)
+    {
+        if (args.Object is not ChannelInfo channel)
+        {
+            return;
+        }
+
+        if (SystemChannels.Includes(channel))
+        {
+            args.Cancel();
+
+            throw new Exception($"Cannot delete required channel '{channel.ChannelName}'");
+        }
+    }
+
+    /// <summary>
+    /// Ensures channels required by the system are modified in specific ways
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    /// <exception cref="Exception"></exception>
+    private void Channel_ModifyBefore(object? sender, ObjectEventArgs args)
+    {
+        if (args.Object is not ChannelInfo channel)
+        {
+            return;
+        }
+
+        if (SystemChannels.Includes(channel) &&
+            channel.ChangedColumns().Contains(nameof(ChannelInfo.ChannelName)))
+        {
+            args.Cancel();
+
+            throw new Exception($"Cannot modify the name of required channel '{channel.ChannelDisplayName}'");
+        }
+    }
+
+    /// <summary>
+    /// Ensures emails required by the system are not deleted
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    /// <exception cref="Exception"></exception>
+    private void EmailConfiguration_DeleteBefore(object? sender, ObjectEventArgs args)
+    {
+        if (args.Object is not EmailConfigurationInfo config)
+        {
+            return;
+        }
+
+        if (SystemEmails.Includes(config))
+        {
+            args.Cancel();
+
+            throw new Exception($"Cannot delete required email '{config.EmailConfigurationName}'");
+        }
+    }
+
+    /// <summary>
+    /// Ensures emails required by the system are modified in specific ways
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    /// <exception cref="Exception"></exception>
+    private void EmailConfiguration_ModifyBefore(object? sender, ObjectEventArgs args)
+    {
+        if (args.Object is not EmailConfigurationInfo config)
+        {
+            return;
+        }
+
+        if (SystemEmails.Includes(config) &&
+            config.ChangedColumns().Contains(nameof(EmailConfigurationInfo.EmailConfigurationName)))
+        {
+            args.Cancel();
+
+            throw new Exception($"Cannot modify the name of required email '{config.GetOriginalValue(nameof(EmailConfigurationInfo.EmailConfigurationName))}'");
         }
     }
 

@@ -107,32 +107,16 @@
                                 </h3>
                             </div>
 
-                            <p class="mb-2 d-none d-sm-block">
-                                @if(question.Author.MemberID > 0)
-                                {
-                                    <a class="text-secondary" asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@question.Author.MemberID">@question.Author.FormattedName</a>
-                                }
-                                else
-                                {
-                                    @question.Author.FormattedName
-                                }
-                                <br>
+                            <div class="mb-2 d-none d-sm-block">
+                                <vc:author author="question.Author" />
                                 <small>Discussion created<br> @question.DateCreated.ToString("d", View.Culture) @question.DateCreated.ToString("t")<br></small>
-                            </p>
+                            </div>
                         </div>
                         <div class="c-card_footer">
-                            <p class="mb-2 d-sm-none">
-                                @if(question.Author.MemberID > 0)
-                                {
-                                    <a class="text-secondary" asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@question.Author.MemberID">@question.Author.FormattedName</a>
-                                }
-                                else
-                                {
-                                    @question.Author.FormattedName
-                                }
-                                <br>
+                            <div class="mb-2 d-sm-none">
+                                <vc:author author="question.Author" />
                                 <small>Discussion created<br> @question.DateCreated.ToString("d", View.Culture) @question.DateCreated.ToString("t")<br></small>
-                            </p>
+                            </div>
                             <div class="text-end text-sm-center">
                                 <span class="fs-4 fs-sm-1 text-secondary fw-bold lh-sm">@question.ResponseCount</span>
                                 <br class="d-none d-sm-block">

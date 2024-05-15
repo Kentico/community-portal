@@ -9,16 +9,14 @@ namespace Kentico.Community.Portal.Admin.UIPages;
 
 public class FormSubmissionsTabExtender : PageExtender<FormSubmissionsTab>
 {
-    public override Task ConfigurePage()
+    public override async Task ConfigurePage()
     {
-        _ = base.ConfigurePage();
+        await base.ConfigurePage();
 
         var configs = Page.PageConfiguration.ColumnConfigurations;
 
         configs
             .TryFirst(c => string.Equals(c.Name, "FormInserted", StringComparison.OrdinalIgnoreCase))
             .Execute(c => c.Sorting.DefaultDirection = SortTypeEnum.Desc);
-
-        return Task.CompletedTask;
     }
 }

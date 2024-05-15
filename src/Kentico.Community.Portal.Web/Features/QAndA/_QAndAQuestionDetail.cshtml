@@ -12,17 +12,7 @@
             <div class="c-card_inner">
                 <div class="c-card_content">
                     <div class="mb-3 d-flex justify-content-between">
-                        <span>
-                            @if (Model.Author.ID > 0)
-                            {
-                                <a asp-controller="Member" asp-action="MemberDetail" class="text-secondary"
-                                    asp-route-memberID="@Model.Author.ID">@Model.Author.FormattedName</a>
-                            }
-                            else
-                            {
-                                @Model.Author.FormattedName
-                            }
-                        </span>
+                        <vc:author author="Model.Author" />
                         <span>@Model.DateCreated.ToString("MMMM d, yyyy") @Model.DateCreated.ToString("t")</span>
                     </div>
 
