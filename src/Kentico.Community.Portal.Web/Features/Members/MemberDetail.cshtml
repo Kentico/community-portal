@@ -28,7 +28,7 @@
                                     </p>
                                 }
                                 <p>
-                                    Joined: @member.Created.ToShortDateString()
+                                    Joined: @member.Created.ToString("d", View.Culture)
                                 </p>
                                 @if (!string.IsNullOrWhiteSpace(member.LinkedInIdentifier))
                                 {
