@@ -28,9 +28,9 @@ namespace Kentico.Community.Portal.Web.Components.FormComponents.ReCaptcha;
 /// Initializes a new instance of <see cref="RecaptchaComponent"/>
 /// </remarks>
 public class CommunityReCaptchaFormComponent(
-    IAppSettingsService appSettingsService,
     IHttpContextAccessor httpContextAccessor,
     ILocalizationService localizationService,
+    CaptchaValidator validator,
     IOptions<ReCaptchaSettings> captchaOptions) : FormComponent<CommunityReCaptchaFormComponentProperties, string>
 {
     /// <summary>
@@ -47,9 +47,9 @@ public class CommunityReCaptchaFormComponent(
         return new HashSet<string>(codes, StringComparer.OrdinalIgnoreCase);
     });
 
-    private readonly IAppSettingsService appSettingsService = appSettingsService;
     private readonly IHttpContextAccessor httpContextAccessor = httpContextAccessor;
     private readonly ILocalizationService localizationService = localizationService;
+    private readonly CaptchaValidator validator = validator;
     private readonly ReCaptchaSettings captchaOptions = captchaOptions.Value;
     private string mLanguage = "";
     private bool? mSkipRecaptcha;
@@ -102,7 +102,7 @@ public class CommunityReCaptchaFormComponent(
         {
             if (!mSkipRecaptcha.HasValue)
             {
-                mSkipRecaptcha = ValidationHelper.GetBoolean(appSettingsService["RecaptchaSkipValidation"], false);
+                mSkipRecaptcha = captchaOptions.IsValidationDisabled;
             }
 
             return mSkipRecaptcha.Value;
@@ -113,13 +113,17 @@ public class CommunityReCaptchaFormComponent(
     /// <summary>
     /// Indicates whether both required keys are configured in the Settings application.
     /// </summary>
-    private bool AreKeysConfigured => !string.IsNullOrEmpty(captchaOptions.SiteKey) && !string.IsNullOrEmpty(captchaOptions.SecretKey);
+    public bool AreKeysConfigured => !string.IsNullOrEmpty(captchaOptions.SiteKey) && !string.IsNullOrEmpty(captchaOptions.SecretKey);
 
 
     /// <summary>
     /// Label "for" cannot be used for this component. 
     /// </summary>
-    public override string LabelForPropertyName => null!;
+    /// <remarks>
+    /// This type MUST be string? otherwise the field is validated as invalid upon form submission
+    /// when nullable reference types is enabled
+    /// </remarks>
+    public override string? LabelForPropertyName => null!;
 
 
     /// <inheritdoc/>

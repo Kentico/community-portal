@@ -4,66 +4,80 @@
 #>
 
 param (
-    [string]$WorkspaceFolder = "..",
     [string[]]$Types = ''
 )
 
-Import-Module (Join-Path $WorkspaceFolder "scripts/Utilities.psm1")
+Import-Module (Resolve-Path Utilities) `
+    -Function `
+    Get-WebProjectPath, `
+    Get-CoreProjectPath, `
+    Invoke-ExpressionWithException, `
+    Write-Status `
+    -Force
 
-$projectPath = Get-WebProjectPath $WorkspaceFolder
+$webProjectPath = Get-WebProjectPath
+$coreProjectPath = Get-CoreProjectPath
+
+function Get-AppendedCorePath {
+    param(
+        [string]$relativePath
+    )
+
+    return Join-Path $coreProjectPath $relativePath
+}
 
 function GeneratePageTypes {
     $command = "dotnet run " + `
-        "--project $projectPath " + `
+        "--project $webProjectPath " + `
         "--no-restore " + `
         "--no-build " + `
         "-- --kxp-codegen " + `
         "--skip-confirmation " + `
         "--type `"PageContentTypes`" " + `
         "--namespace `"Kentico.Community.Portal.Core.Content`"" + `
-        "--location `"../Kentico.Community.Portal.Core/Content/Pages/`""
+        "--location `"$(Get-AppendedCorePath "Content/Pages/")`""
 
     Invoke-ExpressionWithException $command
 }
 
 function GenerateResusableTypes {
     $command = "dotnet run " + `
-        "--project $projectPath " + `
+        "--project $webProjectPath " + `
         "--no-restore " + `
         "--no-build " + `
         "-- --kxp-codegen " + `
         "--skip-confirmation " + `
         "--type `"ReusableContentTypes`" " + `
         "--namespace `"Kentico.Community.Portal.Core.Content`"" + `
-        "--location `"../Kentico.Community.Portal.Core/Content/Hub/`""
+        "--location `"$(Get-AppendedCorePath "Content/Hub/")`""
 
     Invoke-ExpressionWithException $command
 }
 
 function GenerateResusableSchemas {
     $command = "dotnet run " + `
-        "--project $projectPath " + `
+        "--project $webProjectPath " + `
         "--no-restore " + `
         "--no-build " + `
         "-- --kxp-codegen " + `
         "--skip-confirmation " + `
         "--type `"ReusableFieldSchemas`" " + `
         "--namespace `"Kentico.Community.Portal.Core.Content`"" + `
-        "--location `"../Kentico.Community.Portal.Core/Content/Hub/`""
+        "--location `"$(Get-AppendedCorePath "Content/Hub/")`""
 
     Invoke-ExpressionWithException $command
 }
 
 function GenerateDataTypes {
     $command = "dotnet run " + `
-        "--project $projectPath " + `
+        "--project $webProjectPath " + `
         "--no-restore " + `
         "--no-build " + `
         "-- --kxp-codegen " + `
         "--skip-confirmation " + `
         "--type `"Classes`" " + `
         "--namespace `"Kentico.Community.Portal.Core.Modules`"" + `
-        "--location `"../Kentico.Community.Portal.Core/Modules/{name}`"" + `
+        "--location `"$(Get-AppendedCorePath "Modules/{name}")`"" + `
         "--with-provider-class false"
 
     Invoke-ExpressionWithException $command
@@ -71,19 +85,20 @@ function GenerateDataTypes {
 
 function GenerateForms {
     $command = "dotnet run " + `
-        "--project $projectPath " + `
+        "--project $webProjectPath " + `
         "--no-restore " + `
         "--no-build " + `
         "-- --kxp-codegen " + `
         "--skip-confirmation " + `
         "--type `"Forms`" " + `
         "--namespace `"Kentico.Community.Portal.Core.Forms`"" + `
-        "--location `"../Kentico.Community.Portal.Core/Forms/{name}`""
+        "--location `"$(Get-AppendedCorePath "Forms/{name}")`""
 
     Invoke-ExpressionWithException $command
 }
 
-Write-Host "Re-generating code for Project: $projectPath"
+Write-Status "Re-generating code for Project: $webProjectPath"
+Write-Host "`n"
 
 if ($Types -contains 'Pages') {
     GeneratePageTypes
@@ -102,5 +117,6 @@ if ($Types -contains 'Forms') {
     GenerateForms
 }
 
-Write-Host "Code generation complete"
+Write-Host "`n"
+Write-Status "Code generation complete"
 

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>KenticoCommunity.BizFormSettings</CodeName>
+    <GUID>a0133e19-36bc-4e4d-8e58-3ae50c866699</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="BizFormSettingsID" guid="8a02084c-51a6-4e29-8112-21259bc75216" enabled="" />
+      <field column="BizFormSettingsGUID" guid="fe8c68ce-835a-4b78-8ec5-aa5ad7a274d8" enabled="" />
+      <field column="BizFormSettingsDateCreated" guid="fc3bc5dc-33e6-435b-8915-f67de2c8f012" enabled="" />
+      <field column="BizFormSettingsDateModified" guid="0ac729f0-cebe-4c61-93c9-0e82e28b89d3" enabled="" />
+      <field column="BizFormSettingsBizFormID" enabled="true" guid="c2b876b1-b9ab-4605-9f64-5b4f07e07594" visible="true" refobjtype="" reftype="">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>CMS.Form</ObjectType>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Biz Form</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="BizFormSettingsInternalAutoresponderIsEnabled" enabled="true" guid="4e4a7062-d944-408c-bbe0-e25d3295192b" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Is Internal Autoresponder enabled?</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="BizFormSettingsInternalAutoresponderRecipientUserID" guid="c9622f0c-7e31-4408-816a-78459294e764" enabled="" />
+      <field column="BizFormSettingsInternalAutoresponderRecipientUser" enabled="true" guid="93642023-ad13-422f-ae8d-8fd1eecacd11" visible="true" order="7">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Recipient User</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>CMS.User</ObjectType>
+          <Placeholder>0</Placeholder>
+        </settings>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Create</FormDisplayName>
+  <FormGUID>e2dd1120-077e-4908-9d63-002b0ac87c47</FormGUID>
+  <FormIsCustom>True</FormIsCustom>
+  <FormName>Create</FormName>
+</cms.alternativeform>

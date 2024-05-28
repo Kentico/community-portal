@@ -5,6 +5,7 @@ using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
 using Kentico.Community.Portal.Web.Features.Blog.Events;
 using Kentico.Community.Portal.Web.Features.DataCollection;
+using Kentico.Community.Portal.Web.Features.Forms;
 using Kentico.Community.Portal.Web.Features.Home;
 using Kentico.Community.Portal.Web.Features.QAndA.Events;
 using Kentico.Community.Portal.Web.Features.SEO;
@@ -27,6 +28,7 @@ public static class ServiceCollectionAppExtensions
             .AddScoped<ConsentManager>()
             .AddRendering()
             .AddSEO()
+            .AddForms(config)
             .AddOperations(config)
             .AddInfrastructure(config)
             .AddSupport(config)
@@ -64,6 +66,11 @@ public static class ServiceCollectionAppExtensions
         services
             .AddScoped<WebPageMetaService>()
             .AddTransient<Sitemap>();
+
+    private static IServiceCollection AddForms(this IServiceCollection services, IConfiguration config) =>
+        services
+            .AddSingleton<FormInternalAutoresponderEmailSender>()
+            .Configure<SystemDomainOptions>(config.GetSection("SystemDomains"));
 
     private static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config) =>
         services

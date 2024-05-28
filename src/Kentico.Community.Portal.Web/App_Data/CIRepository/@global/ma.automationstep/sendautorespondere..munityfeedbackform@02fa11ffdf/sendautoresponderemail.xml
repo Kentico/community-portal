@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ma.automationstep>
+  <StepActionID>
+    <CodeName>Send_e-mail</CodeName>
+    <GUID>a578a254-b251-4f1e-abb7-533e5898f012</GUID>
+    <ObjectType>ma.automationaction</ObjectType>
+  </StepActionID>
+  <StepActionParameters>
+    <Parameters>
+      <BasedOn>3</BasedOn>
+      <EmailGuid>3e0a6601-9b80-41e9-86f2-3964d80e5506</EmailGuid>
+    </Parameters>
+  </StepActionParameters>
+  <StepAllowReject>False</StepAllowReject>
+  <StepDefinition>
+    <Step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <TimeoutEnabled>false</TimeoutEnabled>
+      <TimeoutTarget>00000000-0000-0000-0000-000000000000</TimeoutTarget>
+      <SourcePoints>
+        <SourcePoint Guid="251d8433-172d-44c8-96d7-11c4a28b63a5">
+          <Label>Default</Label>
+          <Type>0</Type>
+          <StepRolesSecurity>0</StepRolesSecurity>
+          <StepUsersSecurity>0</StepUsersSecurity>
+        </SourcePoint>
+      </SourcePoints>
+      <Position>
+        <X>3000</X>
+        <Y>220</Y>
+      </Position>
+    </Step>
+  </StepDefinition>
+  <StepDisplayName>Send autoresponder email</StepDisplayName>
+  <StepGUID>6ef4ff7a-d51d-412d-aad3-85f75caee2b9</StepGUID>
+  <StepName>SendAutoresponderEmail</StepName>
+  <StepRolesSecurity>0</StepRolesSecurity>
+  <StepSendApproveEmails>False</StepSendApproveEmails>
+  <StepSendEmails>False</StepSendEmails>
+  <StepSendReadyForApprovalEmails>False</StepSendReadyForApprovalEmails>
+  <StepSendRejectEmails>False</StepSendRejectEmails>
+  <StepType>11</StepType>
+  <StepUsersSecurity>0</StepUsersSecurity>
+  <StepWorkflowID>
+    <CodeName>SendAutoresponderEmail.CommunityFeedbackForm</CodeName>
+    <GUID>49493447-2604-4276-b548-330481418600</GUID>
+    <ObjectType>ma.automationprocess</ObjectType>
+  </StepWorkflowID>
+  <StepWorkflowType>3</StepWorkflowType>
+</ma.automationstep>

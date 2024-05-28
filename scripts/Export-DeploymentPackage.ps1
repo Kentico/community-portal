@@ -4,15 +4,9 @@
 #>
 [CmdletBinding()]
 param (
-    [string]$WorkspaceFolder = "..",
-
-    # Output path for exported deployment package.
+    # Output path for exported deployment package. Default is repository root.
     [Parameter(Mandatory = $false)]
-    [string]$OutputPackagePath = "./DeploymentPackage.zip",
-
-    # The name of the main web application assembly used as the starting point by the Xperience Cloud.
-    #[Parameter(Mandatory = $true)]
-    [string]$AssemblyName = "Kentico.Community.Portal.Web",
+    [string]$OutputPackagePath = "../DeploymentPackage.zip",
 
     # If present, the custom build number won't be used as a "Product version" suffix in the format yyyyMMddHHmm.
     [switch]$KeepProductVersion,
@@ -25,11 +19,19 @@ param (
 )
 $ErrorActionPreference = "Stop"
 
-Import-Module (Join-Path $WorkspaceFolder "scripts/Utilities.psm1")
+Import-Module (Resolve-Path Utilities) `
+    -Function `
+    Get-SolutionPath, `
+    Invoke-ExpressionWithException, `
+    Get-WebProjectPath, `
+    Get-ScriptConfig, `
+    Write-Status `
+    -Force
 
-$projectPath = Get-WebProjectPath $WorkspaceFolder
+$projectPath = Get-WebProjectPath
 $configuration = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Release" : "Debug"
 $launchProfile = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Portal.WebCI" : "Portal.Web"
+$AssemblyName = $(Get-ScriptConfig).AssemblyName
 
 $OutputFolderPath = "./bin/CloudDeployment/"
 $MetadataFilePath = Join-Path $OutputFolderPath "cloud-metadata.json"
@@ -46,7 +48,7 @@ $OutputCDRepositoryPath = Join-Path $OutputFolderPath $CDRepositoryFolderFolder
 
 $BuildNumber = (Get-Date).ToUniversalTime().ToString("yyyyMMddHHmm")
 
-Write-Host "Storing CD files for project: $projectPath"
+Write-Status "Storing CD files for project: $projectPath"
 
 if (Test-Path -Path $CDRepositoryFolderPath -PathType Container) {
     Remove-Item -Path $CDRepositoryFolderPath -Recurse -Force
@@ -82,7 +84,7 @@ $cdStoreCommand = "dotnet run " + `
 
 Invoke-ExpressionWithException $cdStoreCommand
 
-Write-Host "CD Repository generated"
+Write-Status "CD Repository generated"
 
 # Remove previously published website
 Remove-Item -Recurse -Force $OutputFolderPath -ErrorAction SilentlyContinue
@@ -113,7 +115,6 @@ Copy-Item -Force -Recurse "$ProjectCDRepositoryPath/*" -Destination $OutputCDRep
 $LocalStorageAssetsPath = Join-Path $projectPath $StorageAssetsFolderName
 $OutputStorageAssetsPath = Join-Path $OutputFolderPath $StorageAssetsFolderName
 
-# NOTE: Disabled for initial v27 release
 if (Test-Path $LocalStorageAssetsPath) {
     # Check if storage asset top-level directories have valid names
     Get-ChildItem -Path $LocalStorageAssetsPath | ForEach-Object {
@@ -142,7 +143,6 @@ $PackageMetadata = @{
     Version      = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($AssemblyPath).ProductVersion
 }
 
-# NOTE: Disabled for initial v27 release
 # Add necessary metadata if storage assets folder has been exported as well
 if (Test-Path $OutputStorageAssetsPath) {
     $PackageMetadata.Add("StorageAssetsDirectory", $StorageAssetsFolderName)
@@ -157,12 +157,12 @@ if (Test-Path -Path $OutputPackagePath -PathType Container) {
     $OutputPackagePath = Join-Path -Path $OutputPackagePath -ChildPath "./DeploymentPackage.zip"
 }
 
-Write-Host "CD Repository generated: $ProjectCDRepositoryPath" -ForegroundColor Green -BackgroundColor Black
+Write-Status "CD Repository generated: $ProjectCDRepositoryPath"
 
 if ($CompressPackage) {
     Compress-Archive -Force -Path "$OutputFolderPath/*" -DestinationPath $OutputPackagePath
 
-    Write-Host "Deployment package created: $OutputPackagePath" -ForegroundColor Green -BackgroundColor Black
+    Write-Status "Deployment package created: $OutputPackagePath"
 }
 else {
     Write-Host "Deployment package generation skipped" -ForegroundColor Yellow -BackgroundColor Black

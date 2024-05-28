@@ -1,27 +1,49 @@
 # Utilities
 
+$scriptConfig = @{}
+$scriptConfig.WorkspaceFolder = ".."
+$scriptConfig.SolutionFileName = "Kentico.Community.Portal.sln"
+$scriptConfig.AssemblyName = "Kentico.Community.Portal.Web"
+
+<#
+    .DESCRIPTION
+        Returns shared configuration for PowerShell scripts
+#>
+function Get-ScriptConfig {
+    return $scriptConfig
+}
+
+<#
+    .DESCRIPTION
+        Returns the main solution file path
+#>
+function Get-SolutionPath {
+    return Resolve-Path(Join-Path $($scriptConfig.WorkspaceFolder) $($scriptConfig.SolutionFileName))
+}
+
 <#
     .DESCRIPTION
         Returns the web application folder path from the workspace root
 #>
 function Get-WebProjectPath {
-    param(
-        [string] $WorkspaceFolder = ".."
-    )
-
-    return Join-Path $WorkspaceFolder "src/Kentico.Community.Portal.Web"
+    return Resolve-Path(Join-Path $($scriptConfig.WorkspaceFolder) "src/Kentico.Community.Portal.Web")
 }
 
 <#
-.DESCRIPTION
-   Gets the database connection string from the user secrets or appsettings.json file
+    .DESCRIPTION
+        Returns the Core project folder path from the workspace root
+#>
+function Get-CoreProjectPath {
+    return Resolve-Path(Join-Path $($scriptConfig.WorkspaceFolder) "src/Kentico.Community.Portal.Core")
+}
+
+
+<#
+    .DESCRIPTION
+        Gets the database connection string from the user secrets or appsettings.json file
 #>
 function Get-ConnectionString {
-    param(
-        [string] $WorkspaceFolder = ".."
-    )
-
-    $projectPath = Get-WebProjectPath ($WorkspaceFolder)
+    $projectPath = Get-WebProjectPath
 
     # Try to get the connection string from user secrets first
     Write-Host "Checking for a connection string user secrets for project: $projectPath"
@@ -75,4 +97,27 @@ function Invoke-ExpressionWithException {
 
         throw $errorMessage
     }
+}
+function Write-Status {
+    param(
+        [string]$message
+    )
+
+    Write-Host $message -ForegroundColor Blue
+}
+
+function Write-Notification {
+    param(
+        [string]$message
+    )
+
+    Write-Host $message -ForegroundColor Magenta
+}
+
+function Write-Error {
+    param(
+        [string]$message
+    )
+
+    Write-Host $message -ForegroundColor Red
 }

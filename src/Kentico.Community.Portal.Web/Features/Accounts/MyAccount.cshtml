@@ -25,6 +25,10 @@
                                 <p>
                                     Joined: @Model.DateCreated.ToShortDateString()
                                 </p>
+                                <p>
+                                    View <a asp-controller="Member" asp-action="MemberDetail"
+                                        asp-route-memberID="@Model.MemberID">your public profile</a>
+                                </p>
                             </div>
                         </div>
                     </div>

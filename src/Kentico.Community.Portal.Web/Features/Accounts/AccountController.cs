@@ -35,6 +35,7 @@ public class AccountController(
 
         var vm = new MyAccountViewModel
         {
+            MemberID = member.Id,
             Username = member.UserName ?? "",
             Email = member.Email ?? "",
             Profile = new()
@@ -125,6 +126,7 @@ public class AccountController(
 
 public class MyAccountViewModel : IPortalPage
 {
+    public int MemberID { get; set; }
     public string Username { get; set; } = "";
     public string Email { get; set; } = "";
     public ProfileViewModel Profile { get; set; } = new();

@@ -20,7 +20,7 @@
 }
 else
 {
-    @if (Model.IsConfigured)
+    @if (Model.AreKeysConfigured)
     {
         var actionName = Model.GetBizFormComponentContext().FormInfo.FormName.Replace("-", "_") + "_submit";
         var parentFormVarName = "recaptchaParentForm" + safeComponentId;

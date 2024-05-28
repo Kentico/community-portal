@@ -3,20 +3,18 @@
     Updates the CI repository will all valid objects from the local database
 #>
 
-param (
-    [string] $WorkspaceFolder = ".."
-)
+Import-Module (Resolve-Path Utilities) `
+    -Function Get-WebProjectPath, Invoke-ExpressionWithException, Write-Status `
+    -Force
 
-Import-Module (Join-Path $WorkspaceFolder "scripts/Utilities.psm1")
-
-$projectPath = Get-WebProjectPath $WorkspaceFolder
-
-Write-Host "Storing CI files for Project: $projectPath"
+Write-Status "Storing CI files"
+Write-Host "`n"
 
 $command = "dotnet run " + `
-    "--project $projectPath " + `
+    "--project $(Get-WebProjectPath) " + `
     "--kxp-ci-store"
 
 Invoke-ExpressionWithException $command
 
-Write-Host 'CI files stored'
+Write-Host "`n"
+Write-Status 'CI files stored'

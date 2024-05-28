@@ -4,14 +4,14 @@ There are multiple test settings files (`*.runsettings`) in the `\test` folder.
 Each of these is used for a different type of test.
 You test the entire .NET solution but specify which types of tests you want to run by selecting the settings:
 
-   ```powershell
-   dotnet test -s .\test\basic.runsettings
-   ```
+```powershell
+dotnet test -s .\test\basic.runsettings
+```
 
-| Settings File        | Purpose                                             |
-|----------------------|-----------------------------------------------------|
-| `basic.runsettings`  | Runs only unit and integration tests, not E2E tests |
-| `e2e.runsettings`    | Runs all tests, including E2E tests                 |
+| Settings File       | Purpose                                             |
+| ------------------- | --------------------------------------------------- |
+| `basic.runsettings` | Runs only unit and integration tests, not E2E tests |
+| `e2e.runsettings`   | Runs all tests, including E2E tests                 |
 
 ## Integration
 
@@ -25,5 +25,10 @@ This project uses [Playwright](https://playwright.dev/dotnet/) for end-to-end (E
 
 You can use the VS Code task `.NET Test - Install Playwright Dependencies` or the PowerShell script `.\scripts\Download-PlaywrightBrowsers.ps1`
 to install the Playwright browsers used to run the E2E tests.
+
+```powershell
+cd .\scripts
+.\Download-PlaywrightBrowsers.ps1
+```
 
 The `Kentico.Community.Portal.Web` project needs to be running locally if you want to run the E2E tests. In the CI environment, the GitHub Action takes care of orchestration.

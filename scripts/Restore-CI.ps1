@@ -3,13 +3,15 @@
     Updates the local database with all the objects in the CI repository
 #>
 
-param (
-    [string] $WorkspaceFolder = ".."
-)
+Import-Module (Resolve-Path Utilities) `
+    -Function `
+    Get-WebProjectPath, `
+    Invoke-ExpressionWithException, `
+    Get-ConnectionString, `
+    Write-Status `
+    -Force
 
-Import-Module (Join-Path $WorkspaceFolder "scripts/Utilities.psm1")
-
-$projectPath = Get-WebProjectPath $WorkspaceFolder
+$projectPath = Get-WebProjectPath
 $repositoryPath = Join-Path $projectPath "App_Data/CIRepository"
 $launchProfile = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Portal.WebCI" : "Portal.Web"
 $configuration = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Release" : "Debug"
@@ -166,15 +168,12 @@ function Invoke-MigrationList {
 #>
 function Invoke-Migrations {
     param(
-        [string] $WorkspaceFolder,
         [string] $RepositoryPath,
         [string] $ListFileName
     )
 
-    $connectionString = Get-ConnectionString $WorkspaceFolder
-
     # Executes migration scripts before the restore
-    if (!(Invoke-MigrationList $connectionString $ListFileName $RepositoryPath)) {
+    if (!(Invoke-MigrationList $(Get-ConnectionString) $ListFileName $RepositoryPath)) {
         Write-Error "$ListFileName Database migrations failed."
         exit 1
     }
@@ -182,14 +181,16 @@ function Invoke-Migrations {
     Write-Host "$ListFileName migrations complete for Project: $projectPath"
 }
 
-Write-Host "Processing migrations for Project: $projectPath"
+Write-Status "Processing migrations for Project: $projectPath"
+Write-Host "`n"
 
 Invoke-Migrations `
-    -WorkspaceFolder $WorkspaceFolder `
     -RepositoryPath $repositoryPath `
     -ListFileName "Before.txt"
 
-Write-Host "Processing CI files for Project: $projectPath"
+Write-Host "`n"
+Write-Status "Processing CI files for Project: $projectPath"
+Write-Host "`n"
 
 $command = "dotnet run " + `
     "--launch-profile $launchProfile " + `
@@ -201,11 +202,13 @@ $command = "dotnet run " + `
 
 Invoke-ExpressionWithException $command
 
-Write-Host 'CI files processed'
+Write-Host "`n"
+Write-Status 'CI files processed'
+Write-Host "`n"
 
 Invoke-Migrations `
-    -WorkspaceFolder $WorkspaceFolder `
     -RepositoryPath $repositoryPath `
     -ListFileName "After.txt"
 
-Write-Host 'Migrations processed'
+Write-Host "`n"
+Write-Status 'Migrations processed'

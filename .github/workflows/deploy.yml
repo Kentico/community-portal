@@ -95,12 +95,14 @@ jobs:
         if: endsWith(env.DATABASE_BACKUP_FILENAME, '.bacpac')
 
       - name: Restore CI Repository
+        working-directory: "./scripts"
         run: |
-          ./scripts/Restore-CI.ps1 -WorkspaceFolder $PWD
+          ./Restore-CI.ps1
 
       - name: Generate Deployment Package
+        working-directory: "./scripts"
         run: |
-          ./scripts/Export-DeploymentPackage.ps1 -WorkspaceFolder $PWD
+          ./Export-DeploymentPackage.ps1
 
       - name: Upload Deployment Package
         run: |

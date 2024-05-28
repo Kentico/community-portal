@@ -3,9 +3,14 @@
     Updates local database data and schema to the version of the project's referenced Xperience NuGet package
 #>
 
-param (
-    [string] $WorkspaceFolder = ".."
-)
+Import-Module (Resolve-Path Utilities) `
+    -Function Get-WebProjectPath, `
+    Invoke-ExpressionWithException, `
+    Get-ConnectionString, `
+    Write-Status, `
+    Write-Notification, `
+    Write-Error `
+    -Force
 
 <#
 .DESCRIPTION
@@ -25,25 +30,24 @@ function Write-CMSEnableCI {
         $result = $updateCommand.ExecuteNonQuery()
         if ($result -eq 0) {
             throw "CMS_SettingsKey update did not affect any rows."
-        } elseif ($result -eq 1) {
-            Write-Host "CMSEnableCI set to $Value"
+        }
+        elseif ($result -eq 1) {
+            Write-Notification "CMSEnableCI set to $Value"
         }
     }
     catch {
-        Write-Host "Can't update Settings Key CMSEnableCI: $_.Exception.Message"
+        Write-Error "Can't update Settings Key CMSEnableCI: $_.Exception.Message"
     }
 }
 
-Import-Module (Join-Path $WorkspaceFolder "scripts/Utilities.psm1")
-
-$projectPath = Get-WebProjectPath $WorkspaceFolder
+$projectPath = Get-WebProjectPath
 $launchProfile = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Portal.WebCI" : "Portal.Web"
 $configuration = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Release" : "Debug"
 
-Write-Host "Begin Project Update: $projectPath"
+Write-Status "Begin Xperience Update"
+Write-Host "`n"
 
-$connectionString = Get-ConnectionString $WorkspaceFolder
-$connection = New-Object system.data.SqlClient.SQLConnection($ConnectionString)
+$connection = New-Object system.data.SqlClient.SQLConnection(Get-ConnectionString)
 $connection.Open()
 
 Write-CMSEnableCI $connection 'False'
@@ -62,6 +66,7 @@ Write-CMSEnableCI $connection 'True'
 
 $connection.Close()
 
-Write-Host "Update Complete"
+Write-Host "`n"
+Write-Status "Update Complete"
 
-& (Join-Path $WorkspaceFolder "scripts/Store-CI.ps1") -WorkspaceFolder $WorkspaceFolder
+& (Resolve-Path "./Store-CI.ps1")

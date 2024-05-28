@@ -3,14 +3,20 @@
   "tasks": [
     {
       "label": ".NET: build (Solution)",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "build",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
-      ],
-      "problemMatcher": "$msCompile"
+      "type": "shell",
+      "command": "./Build-Solution.ps1",
+      "problemMatcher": "$msCompile",
+      "options": {
+        "cwd": "${workspaceFolder}/scripts"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
     },
     {
       "label": ".NET: rebuild (Solution)",
@@ -80,7 +86,9 @@
       "label": ".NET: test (Install Playwright Dependencies)",
       "type": "shell",
       "command": "${workspaceFolder}/scripts/Download-PlaywrightBrowsers.ps1",
-      "args": ["-WorkspaceFolder", "${workspaceFolder}"],
+      "options": {
+        "cwd": "${workspaceFolder}/scripts"
+      },
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": true,
@@ -173,8 +181,10 @@
       "label": "Xperience: CI Store",
       "detail": "Updates the CI repository with all valid objects from the local database",
       "type": "shell",
-      "command": "${workspaceFolder}/scripts/Store-CI.ps1",
-      "args": ["-WorkspaceFolder", "${workspaceFolder}"],
+      "command": "./Store-CI.ps1",
+      "options": {
+        "cwd": "${workspaceFolder}/scripts"
+      },
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": true,
@@ -189,8 +199,10 @@
       "label": "Xperience: CI Restore",
       "detail": "Updates the local database with all the objects in the CI repository",
       "type": "shell",
-      "command": "${workspaceFolder}/scripts/Restore-CI.ps1",
-      "args": ["-WorkspaceFolder", "${workspaceFolder}"],
+      "command": "./Restore-CI.ps1",
+      "options": {
+        "cwd": "${workspaceFolder}/scripts"
+      },
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": true,
@@ -205,8 +217,10 @@
       "label": "Xperience: Application Update",
       "detail": "Updates local database data and schema to the version of the project's referenced Xperience NuGet package",
       "type": "shell",
-      "command": "${workspaceFolder}/scripts/Update-Xperience.ps1",
-      "args": ["-WorkspaceFolder", "${workspaceFolder}"],
+      "command": "./Update-Xperience.ps1",
+      "options": {
+        "cwd": "${workspaceFolder}/scripts"
+      },
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": true,
@@ -222,12 +236,10 @@
       "detail": "Updates generated code files in the repository for Content Types only",
       "type": "shell",
       "command": "${workspaceFolder}/scripts/Refresh-GeneratedCode.ps1",
-      "args": [
-        "-WorkspaceFolder",
-        "${workspaceFolder}",
-        "-Types",
-        "'Reusable', 'Pages'"
-      ],
+      "args": ["-Types", "'Reusable', 'Pages'"],
+      "options": {
+        "cwd": "${workspaceFolder}/scripts"
+      },
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": true,
@@ -243,12 +255,10 @@
       "detail": "Updates generated code files in the repository for custom Form, Content, and Data Types",
       "type": "shell",
       "command": "${workspaceFolder}/scripts/Refresh-GeneratedCode.ps1",
-      "args": [
-        "-WorkspaceFolder",
-        "${workspaceFolder}",
-        "-Types",
-        "'Reusable', 'Pages', 'DataTypes', 'Forms'"
-      ],
+      "args": ["-Types", "'Reusable', 'Pages', 'DataTypes', 'Forms'"],
+      "options": {
+        "cwd": "${workspaceFolder}/scripts"
+      },
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": true,
@@ -264,7 +274,9 @@
       "detail": "Generates a deployment package of the project for the Xperience SaaS environment",
       "type": "shell",
       "command": "${workspaceFolder}/scripts/Export-DeploymentPackage.ps1",
-      "args": ["-WorkspaceFolder", "${workspaceFolder}"],
+      "options": {
+        "cwd": "${workspaceFolder}/scripts"
+      },
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": true,
@@ -280,12 +292,10 @@
       "detail": "Generates a deployment package of the project for the Xperience SaaS environment",
       "type": "shell",
       "command": "${workspaceFolder}/scripts/Export-DeploymentPackage.ps1",
-      "args": [
-        "-WorkspaceFolder",
-        "${workspaceFolder}",
-        "-CompressPackage",
-        "$False"
-      ],
+      "args": ["-CompressPackage", "$False"],
+      "options": {
+        "cwd": "${workspaceFolder}/scripts"
+      },
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": true,

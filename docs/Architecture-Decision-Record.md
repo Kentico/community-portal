@@ -1,5 +1,19 @@
 # Architecture Decision Record
 
+## 2024-05-23 - Sending internal form submission autoresponders
+
+Although Xperience has [autoresponders for form submissions](https://docs.kentico.com/business-users/digital-marketing/emails#assign-emails-to-form-autoresponders), those are sent to the submitter of the form.
+
+If an administrator wants to receive an email notification that a form has been submitted, the autoresponder itself does not help here.
+
+To more easily associate administration users with form submission notifications, a new `BizFormSettingsInfo` custom object type has been created, which can store additional custom configuration for a form - in this case, the "internal" autoresponder status (enabled/disabled) and the User assigned to receive those emails.
+
+These settings could be customized and expanded in the future to support non-User email addresses, or multiple email addresses per form (however it is possible that future marketing automation features will make this customization unnecessary).
+
+These custom form settings do not have their own administration UI application, but instead are managed through the forms they are associated with through a new custom slide-out tray in the form configuration UI.
+
+The default setting for a new form is not to send internal autoresponders.
+
 ## 2024-05-14 - Sending emails from email channel sending domains
 
 Xperience does not currently have the concept of a "system" or "transactional" email/email channel. Instead, [emails have purposes](https://docs.kentico.com/business-users/digital-marketing/emails).
