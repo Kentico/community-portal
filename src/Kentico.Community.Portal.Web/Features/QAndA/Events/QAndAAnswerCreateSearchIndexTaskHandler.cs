@@ -1,6 +1,7 @@
 using CMS.ContentEngine;
 using CMS.Core;
 using CMS.Websites.Routing;
+using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Lucene.Core.Indexing;
 
@@ -13,14 +14,12 @@ namespace Kentico.Community.Portal.Web.Features.QAndA.Events;
 /// </summary>
 public class QAndAAnswerCreateSearchIndexTaskHandler(
     IHttpContextAccessor accessor,
-    IWebPageQueryResultMapper mapper,
     IWebsiteChannelContext channelContext,
     IContentQueryExecutor executor,
     IEventLogService log,
     ILuceneTaskLogger taskLogger)
 {
     private readonly IHttpContextAccessor accessor = accessor;
-    private readonly IWebPageQueryResultMapper mapper = mapper;
     private readonly IWebsiteChannelContext channelContext = channelContext;
     private readonly IContentQueryExecutor executor = executor;
     private readonly IEventLogService log = log;
@@ -44,12 +43,9 @@ public class QAndAAnswerCreateSearchIndexTaskHandler(
         int questionWebPageID = answer.QAndAAnswerDataQuestionWebPageItemID;
 
         var b = new ContentItemQueryBuilder()
-            .ForContentType(QAndAQuestionPage.CONTENT_TYPE_NAME, queryParameters =>
-            {
-                _ = queryParameters
-                    .ForWebsite(channelContext.WebsiteChannelName)
-                    .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemID), questionWebPageID));
-            });
+            .ForContentTypes(q => q
+                .OfContentType(QAndAQuestionPage.CONTENT_TYPE_NAME)
+                .ForWebsite([questionWebPageID]));
 
         var page = (await executor.GetMappedWebPageResult<QAndAQuestionPage>(b)).FirstOrDefault();
         if (page is null)
@@ -57,7 +53,7 @@ public class QAndAAnswerCreateSearchIndexTaskHandler(
             log.LogWarning(
                 source: nameof(QAndAAnswerCreateSearchIndexTaskHandler),
                 eventCode: "MISSING_QUESTION",
-                eventDescription: $"Could not find question web site page [{questionWebPageID}] for answer [{answer.QAndAAnswerDataGUID}].{Environment.NewLine}Skipping search indexing.");
+                eventDescription: $"Could not find question web site page [{questionWebPageID}] for answer [{answer.QAndAAnswerDataGUID}].{Environment.NewLine}Skipping search index update.");
 
             return;
         }
@@ -65,7 +61,7 @@ public class QAndAAnswerCreateSearchIndexTaskHandler(
         var model = new IndexEventWebPageItemModel(
             page.SystemFields.WebPageItemID,
             page.SystemFields.WebPageItemGUID,
-            "en-US",
+            PortalWebSiteChannel.DEFAULT_LANGUAGE,
             QAndAQuestionPage.CONTENT_TYPE_NAME,
             page.SystemFields.WebPageItemName,
             page.SystemFields.ContentItemIsSecured,
@@ -74,8 +70,7 @@ public class QAndAAnswerCreateSearchIndexTaskHandler(
             channelContext.WebsiteChannelName,
             page.SystemFields.WebPageItemTreePath,
             page.SystemFields.WebPageItemParentID,
-            page.SystemFields.WebPageItemOrder)
-        { };
+            page.SystemFields.WebPageItemOrder);
 
         await taskLogger.HandleEvent(model, WebPageEvents.Publish.Name);
     }

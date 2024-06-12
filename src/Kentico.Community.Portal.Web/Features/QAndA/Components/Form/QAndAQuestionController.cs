@@ -28,7 +28,6 @@ public class QAndAQuestionController(
     private readonly IMediator mediator = mediator;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
     private readonly IWebsiteChannelContext channelContext = channelContext;
-    private readonly IEventLogService log = log;
 
     [HttpPost]
     [ValidateAntiForgeryToken]

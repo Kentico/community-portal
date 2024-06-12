@@ -4,12 +4,13 @@ using CMS.IO;
 using Kentico.Xperience.AzureStorage;
 using Kentico.Xperience.Cloud;
 
+using Path = CMS.IO.Path;
+
 namespace Kentico.Community.Portal.Web.Infrastructure.Storage;
 
 public class StorageInitializationModule : Module
 {
-    private const string LocalStorageAssetsDirectoryName = "$StorageAssets";
-    private const string ContainerName = "default";
+    private IWebHostEnvironment environment = null!;
 
     public StorageInitializationModule() : base(nameof(StorageInitializationModule)) { }
 
@@ -17,39 +18,63 @@ public class StorageInitializationModule : Module
     {
         base.OnInit();
 
-        var environment = parameters.Services.GetRequiredService<IWebHostEnvironment>();
+        environment = parameters.Services.GetRequiredService<IWebHostEnvironment>();
+        var storagePathService = parameters.Services.GetRequiredService<StoragePathService>();
+
+        string xperienceAssetsContainer = storagePathService.GetXperienceAssetsContainerPath();
+        string memberAssetsContainer = storagePathService.GetXperienceAssetsContainerPath();
 
         if (environment.IsQa() || environment.IsUat() || environment.IsProduction())
         {
-            // Maps the assets directory (e.g. media files) to the Azure storage provider
-            MapAzureStoragePath($"~/assets/");
+            MapAzureStoragePath($"~/assets/", xperienceAssetsContainer);
+            MapAzureStoragePath($"~/member-assets/", memberAssetsContainer);
         }
         else
         {
-            // Maps the assets directory (e.g. media files) to the dedicated local folder
-            MapLocalStoragePath($"~/assets/");
+            MapLocalStoragePath($"~/assets/", xperienceAssetsContainer);
+            MapLocalStoragePath($"~/member-assets/", memberAssetsContainer);
         }
     }
 
-    private static void MapAzureStoragePath(string path)
+    private static void MapAzureStoragePath(string path, string containerName)
     {
-        // Creates a new StorageProvider instance for Azure
         var provider = AzureStorageProvider.Create();
 
-        // Specifies the target container
-        provider.CustomRootPath = ContainerName;
+        provider.CustomRootPath = containerName;
         provider.PublicExternalFolderObject = false;
 
         StorageHelper.MapStoragePath(path, provider);
     }
 
-    private static void MapLocalStoragePath(string path)
+    private static void MapLocalStoragePath(string path, string rootPath)
     {
-        // Creates a new StorageProvider instance for local storage
         var provider = StorageProvider.CreateFileSystemStorageProvider();
 
-        provider.CustomRootPath = $"{LocalStorageAssetsDirectoryName}/{ContainerName}";
+        provider.CustomRootPath = rootPath;
 
         StorageHelper.MapStoragePath(path, provider);
     }
+}
+
+public class StoragePathService(IWebHostEnvironment environment)
+{
+    public const string ContainerNameDefault = "default";
+
+    private const string LocalStorageAssetsDirectoryName = "$StorageAssets";
+    private const string LocalStorageMemberAssetsDirectoryName = "$StorageMemberAssets";
+
+    private readonly IWebHostEnvironment environment = environment;
+
+    public string GetMemberAssetsStorageFilePath(string filePath) =>
+        Path.Combine(GetMemberAssetsContainerPath(), filePath);
+
+    public string GetXperienceAssetsContainerPath() =>
+        environment.IsQa() || environment.IsUat() || environment.IsProduction()
+            ? ContainerNameDefault
+            : Path.Combine(LocalStorageAssetsDirectoryName, ContainerNameDefault);
+
+    public string GetMemberAssetsContainerPath() =>
+        environment.IsQa() || environment.IsUat() || environment.IsProduction()
+            ? ContainerNameDefault
+            : Path.Combine(LocalStorageMemberAssetsDirectoryName, ContainerNameDefault);
 }

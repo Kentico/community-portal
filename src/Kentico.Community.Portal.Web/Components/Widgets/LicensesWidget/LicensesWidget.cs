@@ -4,7 +4,6 @@ using Kentico.Community.Portal.Web.Rendering;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Newtonsoft.Json;
 
 [assembly: RegisterWidget(
@@ -23,7 +22,7 @@ public class LicensesWidgetViewComponent(LicensesFacade licensesFacade, AssetIte
     private readonly LicensesFacade licensesFacade = licensesFacade;
     private readonly AssetItemService itemService = itemService;
 
-    public async Task<ViewViewComponentResult> InvokeAsync(LicensesWidgetProperties properties)
+    public async Task<IViewComponentResult> InvokeAsync(LicensesWidgetProperties properties)
     {
         var relatedAsset = properties.LicenseFiles.FirstOrDefault();
 

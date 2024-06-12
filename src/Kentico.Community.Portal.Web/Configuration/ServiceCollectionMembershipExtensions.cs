@@ -36,6 +36,7 @@ public static class ServiceCollectionMembershipExtensions
             {
                 options.ExpireTimeSpan = TimeSpan.FromDays(1);
                 options.SlidingExpiration = true;
+                options.LoginPath = new PathString("/authentication/login");
                 options.AccessDeniedPath = new PathString("/authentication/login");
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.Lax;

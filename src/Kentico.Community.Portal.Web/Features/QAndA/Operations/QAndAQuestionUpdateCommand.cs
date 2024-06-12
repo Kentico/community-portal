@@ -28,19 +28,29 @@ public class QAndAQuestionUpdateCommandHandler(
         string displayName = $"{filteredTitle[..Math.Min(91, filteredTitle.Length)]}-{uniqueID[..8]}";
 
         var user = await users.GetPublicMemberContentAuthor();
-
-        var contentItemManager = ContentItemManagerFactory.Create(user.UserID);
         var webPageManager = WebPageManagerFactory.Create(request.ChannelID, user.UserID);
 
         bool create = await webPageManager.TryCreateDraft(question.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
         if (!create)
         {
-            return Result.Failure($"Could not create a new draft for the question [{question.SystemFields.WebPageItemTreePath}]");
+            // Creation of a draft could fail because a draft already exists, so let's discard and try again
+            bool discard = await webPageManager.TryDiscardDraft(question.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
+            if (!discard)
+            {
+                return Result.Failure($"Could not discard the draft for the question [{question.SystemFields.WebPageItemTreePath}]");
+            }
+
+            // If we still couldn't create a draft then something is wrong we can't recover from
+            create = await webPageManager.TryCreateDraft(question.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
+            if (!create)
+            {
+                return Result.Failure($"Could not create a new draft for the question [{question.SystemFields.WebPageItemTreePath}]");
+            }
         }
 
-        var metadata = await contentItemManager.GetContentItemLanguageMetadata(question.SystemFields.ContentItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
+        var metadata = await webPageManager.GetContentItemLanguageMetadata(question.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
         metadata.DisplayName = displayName;
-        await contentItemManager.UpdateLanguageMetadata(metadata, cancellationToken);
+        await webPageManager.UpdateLanguageMetadata(metadata, cancellationToken);
 
         var itemData = new ContentItemData(new Dictionary<string, object>
         {

@@ -1,10 +1,15 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Kentico.Community.Portal.Web.Rendering;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using CMS.Core;
 
 namespace Kentico.Community.Portal.Web.Features.Accounts;
 
@@ -14,12 +19,16 @@ public class AccountController(
     WebPageMetaService metaService,
     UserManager<CommunityMember> userManager,
     SignInManager<CommunityMember> signInManager,
-    MemberContactManager contactManager) : Controller
+    MemberContactManager contactManager,
+    AvatarImageService avatarImageService,
+    IEventLogService log) : Controller
 {
     private readonly WebPageMetaService metaService = metaService;
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly SignInManager<CommunityMember> signInManager = signInManager;
     private readonly MemberContactManager contactManager = contactManager;
+    private readonly AvatarImageService avatarImageService = avatarImageService;
+    private readonly IEventLogService log = log;
 
     [HttpGet]
     public async Task<ActionResult> MyAccount()
@@ -44,7 +53,12 @@ public class AccountController(
                 LastName = member.LastName,
                 LinkedInIdentifier = member.LinkedInIdentifier,
             },
-            DateCreated = member.Created
+            DateCreated = member.Created,
+            AvatarForm = new()
+            {
+                MemberID = member.Id,
+                ShowForm = false
+            }
         };
 
         return View("~/Features/Accounts/MyAccount.cshtml", vm);
@@ -122,6 +136,47 @@ public class AccountController(
             State = UpdateState.Updated
         });
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult> UpdateAvatarImage(AvatarFormViewModel model)
+    {
+        var member = await userManager.GetUserAsync(User);
+
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        model.ShowForm = true;
+        model.MemberID = member.Id;
+
+        if (!ModelState.IsValid)
+        {
+            return PartialView("~/Features/Accounts/_AvatarForm.cshtml", model);
+        }
+
+        var attachment = model.AvatarImageFileAttachment!;
+
+        try
+        {
+            await avatarImageService.UpdateAvatarImage(attachment, member.Id);
+
+            member.AvatarFileExtension = Path.GetExtension(attachment.FileName);
+            _ = await userManager.UpdateAsync(member);
+        }
+        catch (Exception ex)
+        {
+            log.LogException(nameof(UpdateAvatarImage), "UPDATE_AVATAR", ex);
+
+            ModelState.AddModelError(nameof(AvatarFormViewModel.AvatarImageFileAttachment), "There was a problem with the application and we could not update your avatar.");
+
+            return PartialView("~/Features/Accounts/_AvatarForm.cshtml", model);
+        }
+
+        model.ShowForm = false;
+        return PartialView("~/Features/Accounts/_AvatarForm.cshtml", model);
+    }
 }
 
 public class MyAccountViewModel : IPortalPage
@@ -132,9 +187,10 @@ public class MyAccountViewModel : IPortalPage
     public ProfileViewModel Profile { get; set; } = new();
     public DateTime DateCreated { get; set; }
     public UpdatePasswordViewModel PasswordInfo { get; set; } = new();
-
     public string Title => "My Account";
     public string ShortDescription => "Manage your account profile, password, and member settings.";
+
+    public AvatarFormViewModel AvatarForm { get; set; } = new();
 }
 
 public class ProfileViewModel
@@ -185,4 +241,20 @@ public class UpdatePasswordViewModel
     [MaxLength(100, ErrorMessage = "The password confirmation cannot be longer than 100 characters.")]
     [Compare(nameof(NewPassword), ErrorMessage = "The entered passwords do not match.")]
     public string PasswordConfirmation { get; set; } = "";
+}
+
+public class AvatarFormViewModel
+{
+    [BindNever]
+    public int MemberID { get; set; }
+
+    [BindNever]
+    public bool ShowForm { get; set; }
+
+    [Required]
+    [DisplayName("Avatar Image")]
+    [AllowedExtensions(extensions: [".jpg", ".jpeg", ".png", ".webp"])]
+    // 100 kb
+    [MaxFileSize(102_400)]
+    public IFormFile? AvatarImageFileAttachment { get; set; }
 }

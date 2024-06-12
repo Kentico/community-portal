@@ -45,7 +45,9 @@ public class SupportRequestProcessingEventListingPage : ListingPage
                 nameof(SupportRequestProcessingEventInfo.SupportRequestProcessingEventLastModified),
                 "Last Modified",
                 searchable: true,
-                maxWidth: 5);
+                maxWidth: 5,
+                sortable: true,
+                defaultSortDirection: SortTypeEnum.Desc);
     }
 
     [PageCommand]

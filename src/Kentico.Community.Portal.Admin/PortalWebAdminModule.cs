@@ -19,12 +19,19 @@ using Kentico.Xperience.Admin.Base;
    icon: Icons.File,
    order: 100)]
 
+[assembly: UICategory(
+   codeName: PortalWebAdminModule.STATS_CATEGORY,
+   name: "Stats",
+   icon: Icons.Graph,
+   order: 100)]
+
 namespace Kentico.Community.Portal.Admin;
 
 internal class PortalWebAdminModule : AdminModule, IDataTypeRegister
 {
     public const string QANDA_CATEGORY = "kentico-community.portal-web-admin.q-and-a";
     public const string SUPPORT_REQUESTS_CATEGORY = "kentico-community.portal-web-admin.support-requests";
+    public const string STATS_CATEGORY = "kentico-community.portal-web-admin.stats";
 
     public PortalWebAdminModule() : base(nameof(PortalWebAdminModule)) { }
 

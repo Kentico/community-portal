@@ -1,0 +1,46 @@
+@model Kentico.Community.Portal.Web.Features.Accounts.AvatarFormViewModel
+
+@{
+    ClientAssets.RequireAlpine();
+}
+
+<div id="avatarForm" x-data='{ showAvatarForm: @(Model.ShowForm ? "true" : "false") }'>
+    <div class="page-myaccount__avatar">
+        <div class="page-myaccount__avatar-inner">
+            <div class="page-member__avatar-container">
+                <div class="page-member__avatar">
+                    <div class="page-member__avatar-image-div">
+                        <img src="" class="page-member__avatar-image img-fluid" xpc-member-avatar="@Model.MemberID" alt="Avatar Image" />
+                    </div>
+                </div>
+            </div>
+
+            <button id="updateAvatarSubmit" class="btn page-myaccount__avatar-button"
+                    @@click="showAvatarForm = !showAvatarForm">
+                <svg class="c-icon" aria-hidden="true" tabindex="0">
+                    <use xlink:href="/img/icons.svg#camera" asp-append-version></use>
+                </svg>
+                <span class="sr-only">Toggle upload form</span>
+            </button>
+        </div>
+    </div>
+    <div class="row justify-content-center" x-show="showAvatarForm" x-transition>
+        <form id="avatarImageUpdateForm" method="post" hx-post hx-controller="Account" hx-action="UpdateAvatarImage"
+              hx-target="#avatarForm" class="page-myaccount__avatar-change-image-form" enctype="multipart/form-data">
+            <div class="form-horizontal page-myaccount__avatar-change-image-form-inner">
+                <div asp-validation-summary="All" class="text-danger field-validation-error"></div>
+
+                <div class="form-group">
+                    <label asp-for="AvatarImageFileAttachment" class="form-label mt-3"></label>
+                    <div class="d-flex">
+                        <label asp-for="AvatarImageFileAttachment"
+                               class="btn btn-outline-secondary">ATTACH&nbsp;FILE</label>
+                        <input class="form-control" asp-for="AvatarImageFileAttachment" />
+                    </div>
+                </div>
+
+                <button id="updateImage" type="submit" class="btn btn-primary mt-3">@HtmlLocalizer["Update Image"]</button>
+            </div>
+        </form>
+    </div>
+</div>

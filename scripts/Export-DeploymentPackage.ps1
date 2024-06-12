@@ -25,7 +25,8 @@ Import-Module (Resolve-Path Utilities) `
     Invoke-ExpressionWithException, `
     Get-WebProjectPath, `
     Get-ScriptConfig, `
-    Write-Status `
+    Write-Status, `
+    Write-Notification `
     -Force
 
 $projectPath = Get-WebProjectPath
@@ -33,7 +34,7 @@ $configuration = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Release" : "Debug"
 $launchProfile = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Portal.WebCI" : "Portal.Web"
 $AssemblyName = $(Get-ScriptConfig).AssemblyName
 
-$OutputFolderPath = "./bin/CloudDeployment/"
+$OutputFolderPath = "../bin/CloudDeployment/"
 $MetadataFilePath = Join-Path $OutputFolderPath "cloud-metadata.json"
 
 $CDRepositoryFolderFolder = "`$CDRepository"
@@ -48,7 +49,7 @@ $OutputCDRepositoryPath = Join-Path $OutputFolderPath $CDRepositoryFolderFolder
 
 $BuildNumber = (Get-Date).ToUniversalTime().ToString("yyyyMMddHHmm")
 
-Write-Status "Storing CD files for project: $projectPath"
+Write-Status "Generating `$CDRepository files for project: $projectPath"
 
 if (Test-Path -Path $CDRepositoryFolderPath -PathType Container) {
     Remove-Item -Path $CDRepositoryFolderPath -Recurse -Force
@@ -84,7 +85,7 @@ $cdStoreCommand = "dotnet run " + `
 
 Invoke-ExpressionWithException $cdStoreCommand
 
-Write-Status "CD Repository generated"
+Write-Status "`$CDRepository generated"
 
 # Remove previously published website
 Remove-Item -Recurse -Force $OutputFolderPath -ErrorAction SilentlyContinue
@@ -157,7 +158,7 @@ if (Test-Path -Path $OutputPackagePath -PathType Container) {
     $OutputPackagePath = Join-Path -Path $OutputPackagePath -ChildPath "./DeploymentPackage.zip"
 }
 
-Write-Status "CD Repository generated: $ProjectCDRepositoryPath"
+Write-Status "$OutputFolderPath folder fully populated"
 
 if ($CompressPackage) {
     Compress-Archive -Force -Path "$OutputFolderPath/*" -DestinationPath $OutputPackagePath
@@ -165,5 +166,5 @@ if ($CompressPackage) {
     Write-Status "Deployment package created: $OutputPackagePath"
 }
 else {
-    Write-Host "Deployment package generation skipped" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Notification "Deployment package generation skipped"
 }

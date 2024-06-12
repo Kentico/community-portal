@@ -1,5 +1,33 @@
 # Architecture Decision Record
 
+## 2024-06-11 - Member Avatars and Administration Reporting
+
+### Member Avatars
+
+To enhance the sense of community and allow members to personalize their own experience in the Kentico Community Portal, we wanted to enable members to upload their own custom avatars for their accounts.
+
+These avatars will appear on their member profile pages and in Q&A in any questions/discussions or answers they create.
+
+To simplify caching, asset management, file system access, and align with SaaS' use of Azure Storage, we are using the Xperience's integration with Azure Blob Storage using the `StorageInitializationModule` by mapping a new storage path for member assets.
+
+We had considered persisting these avatars as content items within the Content hub. While this is entirely possible (we store member generated Q&A questions as web page items), it's not designed for it.
+
+Marketers would never reuse this content, it doesn't benefit from any of Xperience's content management features (multi-channel, scheduled publishing, workflow, ect...), and these avatar items would pollute the marketer-authored content in the Content hub.
+
+We instead decided to keep the content management minimal and associate the images directly with member IDs, which are a stable and unique identifier in the production environment. Members can upload their avatar and replace it whenever they want. If an administrator needs to "remove" an image, they can update one of the member's fields and the fallback image will be used instead.
+
+This architecture should lay the groundwork for future support for member uploads of images for Q&A, if that feature becomes a priority.
+
+### Administration Reporting
+
+As the Kentico Community Portal has grown since launching in October 2023, a need for more data insights has appeared. Qualitative KPIs have evolved into quantitative ones.
+
+To provide those insights both for point in time and overall trends, we are adding a Reporting application to the Xperience administration which can maintain a growing number of custom reports. Currently, these reports focus on membership numbers and activities. They are static but can be enhanced to provide dynamic reporting.
+
+Xperience already has a license for and uses [amcharts](https://www.amcharts.com/), which easily integrates into the React-based administration UI, so report data is visualized using this library.
+
+More reports and report enhancements can be added gradually overtime until Xperience is able to natively provide some of this functionality.
+
 ## 2024-05-23 - Sending internal form submission autoresponders
 
 Although Xperience has [autoresponders for form submissions](https://docs.kentico.com/business-users/digital-marketing/emails#assign-emails-to-form-autoresponders), those are sent to the submitter of the form.

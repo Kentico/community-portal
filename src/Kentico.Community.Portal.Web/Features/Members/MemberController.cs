@@ -1,9 +1,12 @@
+using CMS.Helpers;
 using Kentico.Community.Portal.Web.Features.Blog.Search;
 using Kentico.Community.Portal.Web.Features.QAndA.Search;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
+using Kentico.Community.Portal.Web.Rendering;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 
 namespace Kentico.Community.Portal.Web.Features.Members;
 
@@ -12,9 +15,11 @@ public class MemberController(
     IMediator mediator,
     WebPageMetaService metaService,
     BlogSearchService blogSearchService,
-    QAndASearchService qAndASearchService) : Controller
+    QAndASearchService qAndASearchService,
+    AvatarImageService avatarImageService) : Controller
 {
     private readonly IMediator mediator = mediator;
+    private readonly AvatarImageService avatarImageService = avatarImageService;
     private readonly WebPageMetaService metaService = metaService;
     private readonly BlogSearchService search = blogSearchService;
     private readonly QAndASearchService qAndASearchService = qAndASearchService;
@@ -46,10 +51,42 @@ public class MemberController(
         var model = new MemberDetailViewModel(member)
         {
             BlogPostLinks = blogResult.Hits.Select(h => new BlogPostLink(h.Url, h.Title, h.PublishedDate, h.Taxonomy)).ToList(),
-            QuestionsAsked = qandaResult.Hits.Select(h => new Link(h.Url, h.Title, h.PublishedDate)).ToList()
+            QuestionsAsked = qandaResult.Hits.Select(h => new Link(h.Url, h.Title, h.PublishedDate)).ToList(),
         };
 
         return View("~/Features/Members/MemberDetail.cshtml", model);
+    }
+
+    [HttpGet]
+    [Route("avatar/{memberID:int}")]
+    public async Task<ActionResult> GetAvatarImage(int memberID)
+    {
+        var file = await avatarImageService.GetAvatarImage(memberID);
+
+        long lastModified = file.LastWriteTime.Ticks;
+        long length = file.Length;
+        string eTagNew = $"\"{lastModified}-{length}\"";
+
+        Response.Headers.CacheControl = "public";
+
+        /*
+         * There's an issue where Xperience middleware clears the cache control header
+         * sent from this response, preventing the etag/last modified from being used
+         */
+        if (Request.Headers.TryGetValue("If-None-Match", out var value))
+        {
+            string? eTagOld = value.First();
+            if (string.Equals(eTagOld, eTagNew))
+            {
+                return new StatusCodeResult(304);
+            }
+        }
+
+        return File(
+            file.OpenRead(),
+            MimeTypeHelper.GetMimetype(file.Extension),
+            file.LastWriteTime,
+            entityTag: new EntityTagHeaderValue(eTagNew));
     }
 }
 

@@ -1,5 +1,6 @@
 using CMS.ContactManagement;
 using CMS.EmailMarketing;
+using CSharpFunctionalExtensions;
 using Kentico.Community.Portal.Admin.UIPages;
 using Kentico.Xperience.Admin.Base;
 using Kentico.Xperience.Admin.DigitalMarketing.UIPages;
@@ -26,6 +27,10 @@ public class RecipientListSubscriberListExtender : PageExtender<RecipientListSub
 
         _ = config.ColumnConfigurations.AddColumn(
             nameof(EmailSubscriptionConfirmationInfo.EmailSubscriptionConfirmationDate),
-            caption: "Confirmed On");
+            caption: "Confirmed On", defaultSortDirection: SortTypeEnum.Desc);
+
+        config.ColumnConfigurations
+            .TryFirst(c => string.Equals(c.Name, nameof(ContactInfo.ContactLastName), StringComparison.OrdinalIgnoreCase))
+            .Execute(c => c.Sorting = new() { Sortable = c.Sorting.Sortable });
     }
 }

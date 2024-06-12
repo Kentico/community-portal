@@ -27,14 +27,18 @@ public class ContentHubListExtender : PageExtender<ContentHubList>
                 .TryFirst(c => string.Equals(c.Name, nameof(ContentItemLanguageMetadataInfo.ContentItemLanguageMetadataModifiedWhen), StringComparison.OrdinalIgnoreCase))
                 .Execute(c =>
                 {
+                    c.Caption = "Modified";
+                    c.MinWidth = 15;
+                    c.MaxWidth = 20;
+
                     int index = configs.IndexOf(c);
 
                     configs.Insert(index, new ColumnConfiguration
                     {
                         Name = nameof(ContentItemLanguageMetadataInfo.ContentItemLanguageMetadataCreatedWhen),
                         Caption = "Created",
-                        MinWidth = 19,
-                        MaxWidth = 50,
+                        MinWidth = 15,
+                        MaxWidth = 20,
                         Sorting = new SortingConfiguration
                         {
                             Sortable = true,
@@ -43,6 +47,16 @@ public class ContentHubListExtender : PageExtender<ContentHubList>
                     });
                 });
         }
+
+        configs.TryFirst(c => string.Equals(c.Name, nameof(ContentItemLanguageMetadataInfo.ContentItemLanguageMetadataDisplayName), StringComparison.OrdinalIgnoreCase))
+            .Execute(c => c.MinWidth = 40);
+        configs.TryFirst(c => string.Equals(c.Name, nameof(ContentItemInfo.ContentItemIsSecured), StringComparison.OrdinalIgnoreCase))
+            .Execute(c =>
+            {
+                c.Caption = "Secured";
+                c.MinWidth = 5;
+                c.MaxWidth = 5;
+            });
 
         if (configs.FirstOrDefault(c => string.Equals(c.Name, nameof(ContentFolderInfo.ContentFolderTreePath), StringComparison.OrdinalIgnoreCase)) is { } pathConfig &&
             configs.FirstOrDefault(c => string.Equals(c.Name, nameof(ContentItemInfo.ContentItemIsSecured), StringComparison.OrdinalIgnoreCase)) is { } securedConfig)

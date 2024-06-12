@@ -64,16 +64,14 @@ export function validateCaptcha(action) {
     }
 
     grecaptcha.ready(function () {
-      grecaptcha
-        .execute(captchaSiteKey, { action })
-        .then((token) => {
-          if (token && token !== "") {
-            resolve(token);
-          }
+      grecaptcha.execute(captchaSiteKey, { action }).then((token) => {
+        if (token && token !== "") {
+          resolve(token);
+          return;
+        }
 
-          reject(token);
-        })
-        .catch(reject);
+        reject("Invalid recaptcha response");
+      });
     });
   });
 }

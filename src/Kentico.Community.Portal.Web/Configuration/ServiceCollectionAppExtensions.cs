@@ -59,6 +59,7 @@ public static class ServiceCollectionAppExtensions
             .AddSingleton(s => new MarkdownRenderer())
             .AddSingleton<ISlugHelper>(_ => new SlugHelper(new SlugHelperConfiguration()))
             .AddScoped<ViewService>()
+            .AddScoped<AvatarImageService>()
             .AddScoped<ClientAssets>()
             .AddScoped<IJSEncoder, JSEncoder>();
 
@@ -78,6 +79,7 @@ public static class ServiceCollectionAppExtensions
             .AddSingleton<AzureStorageClientFactory>()
             .AddSingleton<ISystemClock, SystemClock>()
             .AddSingleton<AssetItemService>()
+            .AddSingleton<StoragePathService>()
             .AddTransient<MediaAssetContentMetadataHandler>()
             .AddScoped<CaptchaValidator>()
             .Configure<ReCaptchaSettings>(config.GetSection("ReCaptcha"));

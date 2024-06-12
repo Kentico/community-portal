@@ -19,13 +19,11 @@ public class CommunityMember : ApplicationUser
     public string LinkedInIdentifier { get; set; } = "";
     public bool IsMVP { get; set; } = false;
     public DateTime Created { get; set; }
+    public string AvatarFileExtension { get; set; } = "";
 
     public override void MapToMemberInfo(MemberInfo target)
     {
-        if (target is null)
-        {
-            throw new ArgumentNullException(nameof(target));
-        }
+        ArgumentNullException.ThrowIfNull(target, nameof(target));
 
         /*
          * base.MapToMemberInfo will set target.MemberPassword everytime
@@ -45,6 +43,7 @@ public class CommunityMember : ApplicationUser
         _ = target.SetValue("MemberLastName", LastName);
         _ = target.SetValue("MemberLinkedInIdentifier", LinkedInIdentifier);
         _ = target.SetValue("MemberIsMVP", IsMVP);
+        _ = target.SetValue("MemberAvatarFileExtension", AvatarFileExtension);
     }
 
     public override void MapFromMemberInfo(MemberInfo source)
@@ -56,6 +55,7 @@ public class CommunityMember : ApplicationUser
         LinkedInIdentifier = source.GetValue("MemberLinkedInIdentifier", "");
         IsMVP = source.GetBooleanValue("MemberIsMVP", false);
         Created = source.MemberCreated;
+        AvatarFileExtension = source.GetValue("MemberAvatarFileExtension", "");
     }
 
     public static CommunityMember FromMemberInfo(MemberInfo memberInfo)

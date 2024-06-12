@@ -13,7 +13,6 @@ public class Sitemap(
     IWebPageUrlRetriever urlRetriever,
     IWebsiteChannelContext website,
     IContentQueryExecutor executor,
-    IWebPageQueryResultMapper mapper,
     IConversionService conversion,
     ISystemClock clock)
 {
@@ -21,7 +20,6 @@ public class Sitemap(
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
     private readonly IWebsiteChannelContext website = website;
     private readonly IContentQueryExecutor executor = executor;
-    private readonly IWebPageQueryResultMapper mapper = mapper;
     private readonly IConversionService conversion = conversion;
     private readonly ISystemClock clock = clock;
 

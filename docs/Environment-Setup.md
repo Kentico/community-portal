@@ -82,6 +82,28 @@ These are the commands that are automatically executed for you if no local certs
        - Right click on your account
        - 'Properties' -> 'User Mapping' -> tick `Kentico.Community` -> tick 'db owner' -> OK
 
+- (**alternative**) Using MacOS/Linux
+
+   1. Use [Docker Desktop](https://docs.docker.com/desktop/install/mac-install/) to setup a MS SQL Server docker container [to run the Xperience by Kentico database](https://community.kentico.com/blog/developing-with-xperience-by-kentico-on-macos)
+
+      ```powershell
+      docker run --name mssql2022 --hostname=localhost --user=mssql --env=ACCEPT_EULA=Y --env=MSSQL_SA_PASSWORD=Pass@12345 -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
+      ```
+
+   1. Unzip the `.bak.zip` in `./database`
+
+      ```powershell
+      Expand-Archive -Path ./database/Kentico.Community-29.0.3-2024-05-14.bak.zip -DestinationPath ./database
+      ```
+
+   1. Copy the unzip'd `.bak` file into your docker container (using the correct file path)
+
+      ```powershell
+      docker cp ./database/Kentico.Community-29.0.3-2024-05-14.bak mssql2022:/var/opt/mssql/data
+      ```
+
+   1. Use [Azure Data Studio](https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio) to restore the `.bak` -> command click "Databases" node under SQL Server -> Restore
+
 ## Configure Application
 
 1. Open `.\Kentico.Community.Portal.sln` OR open folder directly from VS Code.
