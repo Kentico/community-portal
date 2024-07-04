@@ -14,8 +14,8 @@ This project is using [Xperience Version v29.2.0](https://docs.kentico.com/chang
   <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-home.png" width="600" alt="Portal home page">
 </a>
 
-<a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-dashboard.png">
-  <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-dashboard.png" width="600" alt="Portal Admin dashboard">
+<a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-dashboard.jpg">
+  <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-dashboard.jpg" width="600" alt="Portal Admin dashboard">
 </a>
 
 <a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-website-channel-home.png">
