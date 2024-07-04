@@ -7,7 +7,7 @@
     <![CDATA[{$macrorule.cmscontactfieldcontainsvalue.description$}]]>
   </MacroRuleDescription>
   <MacroRuleDisplayName>Contact has value in field</MacroRuleDisplayName>
-  <MacroRuleEnabled>False</MacroRuleEnabled>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
   <MacroRuleGUID>fdf51cf1-0b21-4aac-b98b-71125944377f</MacroRuleGUID>
   <MacroRuleIsCustom>False</MacroRuleIsCustom>
   <MacroRuleName>CMSContactFieldContainsValue</MacroRuleName>
@@ -21,11 +21,10 @@
           </fielddescription>
         </properties>
         <settings>
-          <AllowNone>False</AllowNone>
-          <ClassName>om.contact</ClassName>
-          <controlname>Kentico.Administration.TextInput</controlname>
-          <FieldDataType>text</FieldDataType>
-          <WatermarkText>select field</WatermarkText>
+          <configuratorfulltype>Kentico.Administration.ContactFieldConfigurator</configuratorfulltype>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Placeholder>select field</Placeholder>
+          <RepeatDirection>vertical</RepeatDirection>
         </settings>
       </field>
       <field column="op" columnsize="100" columntype="text" guid="3e3cdc8f-79bf-433d-8988-eca902c26e09" visible="true">

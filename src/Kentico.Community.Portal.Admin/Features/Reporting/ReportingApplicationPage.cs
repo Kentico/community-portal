@@ -8,7 +8,7 @@ using Kentico.Xperience.Admin.Base;
     type: typeof(ReportingApplicationPage),
     slug: "reporting",
     name: "Reporting",
-    category: PortalWebAdminModule.STATS_CATEGORY,
+    category: PortalWebAdminModule.COMMUNITY_CATEGORY,
     icon: Icons.Graph,
     templateName: TemplateNames.SECTION_LAYOUT)]
 

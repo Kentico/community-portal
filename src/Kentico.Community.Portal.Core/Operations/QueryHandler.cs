@@ -9,12 +9,12 @@ namespace Kentico.Community.Portal.Core.Operations;
 public class WebPageQueryTools(
     IContentQueryExecutor executor,
     IWebPageUrlRetriever urlRetriever,
-    IWebsiteChannelContext websiteChannelContext,
+    IContentQueryExecutionOptionsCreator queryOptionsCreator,
     ILinkedItemsDependencyAsyncRetriever dependencyRetriever)
 {
     public IContentQueryExecutor Executor { get; } = executor;
     public IWebPageUrlRetriever UrlRetriever { get; } = urlRetriever;
-    public IWebsiteChannelContext WebsiteChannelContext { get; } = websiteChannelContext;
+    public IContentQueryExecutionOptionsCreator QueryOptionsCreator { get; } = queryOptionsCreator;
     public ILinkedItemsDependencyAsyncRetriever DependencyRetriever { get; } = dependencyRetriever;
 }
 
@@ -31,14 +31,15 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
         Executor = tools.Executor;
         UrlRetriever = tools.UrlRetriever;
         DependencyRetriever = tools.DependencyRetriever;
-        DefaultQueryOptions = new ContentQueryExecutionOptions { ForPreview = tools.WebsiteChannelContext.IsPreview };
+        this.tools = tools;
     }
 
     private readonly HashSet<string> customKeys = new(StringComparer.OrdinalIgnoreCase);
+    private readonly WebPageQueryTools tools;
 
     protected IContentQueryExecutor Executor { get; }
     protected IWebPageUrlRetriever UrlRetriever { get; }
-    protected ContentQueryExecutionOptions DefaultQueryOptions { get; }
+    protected ContentQueryExecutionOptions DefaultQueryOptions => tools.QueryOptionsCreator.Create();
     protected ILinkedItemsDependencyAsyncRetriever DependencyRetriever { get; }
 
 
@@ -106,11 +107,13 @@ public abstract class WebPageQueryHandler<TQuery, TResult> :
 public class ContentItemQueryTools(
     IContentQueryExecutor executor,
     IWebsiteChannelContext websiteChannelContext,
-    ILinkedItemsDependencyAsyncRetriever dependencyRetriever)
+    ILinkedItemsDependencyAsyncRetriever dependencyRetriever,
+    IContentQueryExecutionOptionsCreator queryOptionsCreator)
 {
     public IContentQueryExecutor Executor { get; } = executor;
     public IWebsiteChannelContext WebsiteChannelContext { get; } = websiteChannelContext;
     public ILinkedItemsDependencyAsyncRetriever DependencyRetriever { get; } = dependencyRetriever;
+    public IContentQueryExecutionOptionsCreator QueryOptionsCreator { get; } = queryOptionsCreator;
 }
 
 public abstract class ContentItemQueryHandler<TQuery, TResult> :
@@ -123,13 +126,14 @@ public abstract class ContentItemQueryHandler<TQuery, TResult> :
     {
         Executor = tools.Executor;
         DependencyRetriever = tools.DependencyRetriever;
-        DefaultQueryOptions = new ContentQueryExecutionOptions { ForPreview = tools.WebsiteChannelContext.IsPreview };
+        this.tools = tools;
     }
 
     private readonly HashSet<string> customKeys = new(StringComparer.OrdinalIgnoreCase);
+    private readonly ContentItemQueryTools tools;
 
     protected IContentQueryExecutor Executor { get; }
-    protected ContentQueryExecutionOptions DefaultQueryOptions { get; }
+    protected ContentQueryExecutionOptions DefaultQueryOptions => tools.QueryOptionsCreator.Create();
     protected ILinkedItemsDependencyAsyncRetriever DependencyRetriever { get; }
 
 
@@ -186,21 +190,18 @@ public abstract class ContentItemQueryHandler<TQuery, TResult> :
     }
 }
 
-public class DataItemQueryTools
-{
+public class DataItemQueryTools;
 
-}
-
-public abstract class DataItemQueryHandler<TQuery, TResult> :
+public abstract class DataItemQueryHandler<TQuery, TResult>(DataItemQueryTools tools) :
     IQueryHandler<TQuery, TResult>,
     IQueryCacheKeysCreator<TQuery, TResult>,
     IQueryCacheSettingsCustomizer<TQuery, TResult>
     where TQuery : IQuery<TResult>
 {
 #pragma warning disable IDE0052
-    private readonly DataItemQueryTools tools;
+    private readonly DataItemQueryTools tools = tools;
+
 #pragma warning restore IDE0052
-    public DataItemQueryHandler(DataItemQueryTools tools) => this.tools = tools;
 
     private readonly HashSet<string> customKeys = new(StringComparer.OrdinalIgnoreCase);
 

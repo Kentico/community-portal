@@ -23,7 +23,6 @@ public class WebsiteSettingsContentQueryHandler(ContentItemQueryTools tools) : C
                 nameof(WebsiteSettingsContent.WebsiteSettingsContentCookieBannerHeading),
                 nameof(WebsiteSettingsContent.WebsiteSettingsContentExceptionContentHTML),
                 nameof(WebsiteSettingsContent.WebsiteSettingsContentFallbackOGMediaFileImage),
-                nameof(WebsiteSettingsContent.WebsiteSettingsContentFormsConfigurationJSON),
                 nameof(WebsiteSettingsContent.WebsiteSettingsContentIsAlertBoxEnabled),
                 nameof(WebsiteSettingsContent.WebsiteSettingsContentNotFoundContentHTML),
                 nameof(WebsiteSettingsContent.WebsiteSettingsContentPageTitleFormat),

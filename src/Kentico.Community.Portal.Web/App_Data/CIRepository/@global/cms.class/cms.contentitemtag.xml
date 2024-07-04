@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Content item tag</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemTagID" columntype="integer" enabled="true" guid="075b94da-5cfc-4a33-8d58-845d56f6ef8f" isPK="true" system="true" />
+      <field column="ContentItemTagContentItemLanguageMetadataID" columnprecision="0" columntype="integer" enabled="true" guid="094a6ede-1c8b-4b09-8dfa-7552f12d82f8" refobjtype="cms.contentitemlanguagemetadata" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="ContentItemTagFieldGUID" columnprecision="0" columntype="guid" enabled="true" guid="83899000-c861-48d7-9115-0441dab5c644" system="true" />
+      <field column="ContentItemTagTagGUID" columnprecision="0" columntype="guid" enabled="true" guid="d323ef6f-0479-46c6-b8fe-8c75fcdf08f4" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>1294fd49-c7de-47b0-bae9-e5c68baab56d</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ContentItemTag</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentEngine</CodeName>
+    <GUID>eb76ebd1-752f-4969-a5b6-1fb984cae224</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ContentItemTag</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

@@ -69,14 +69,13 @@ public class BlogPostListWidget(
 
     private async Task<IReadOnlyList<BlogPostViewModel>> GetBlogPostsByTaxonomy(BlogPostListWidgetProperties props)
     {
-        string taxnomyName = props.Taxonomy;
         var tagReferences = props.TagReferences;
-        if (string.IsNullOrWhiteSpace(taxnomyName) && !tagReferences.Any())
+        if (!tagReferences.Any())
         {
             return [];
         }
 
-        var resp = await mediator.Send(new BlogPostsByTaxonomyQuery([.. tagReferences.Select(t => t.Identifier)], props.Taxonomy, props.PostLimit, channelContext.WebsiteChannelName));
+        var resp = await mediator.Send(new BlogPostsByTaxonomyQuery([.. tagReferences.Select(t => t.Identifier)], props.PostLimit, channelContext.WebsiteChannelName));
         var posts = resp.Items;
         return await BuildPostPageViewModels(posts, props);
     }
@@ -114,7 +113,7 @@ public class BlogPostListWidget(
             var teaserImage = await itemService.RetrieveMediaFileImage(post.BlogPostContentTeaserMediaFileImage.FirstOrDefault());
             var author = await GetAuthor(post);
             var authorImage = await itemService.RetrieveMediaFileImage(author.AuthorContentPhotoMediaFileImage.FirstOrDefault());
-            string? taxonomy = await GetTaxonomyName(props, post);
+            string? taxonomy = await GetTaxonomyName(props);
 
             vms.Add(new BlogPostViewModel(new(author, authorImage))
             {
@@ -168,16 +167,11 @@ public class BlogPostListWidget(
         }
     }
 
-    private async Task<string?> GetTaxonomyName(BlogPostListWidgetProperties props, BlogPostContent post)
+    private async Task<string?> GetTaxonomyName(BlogPostListWidgetProperties props)
     {
         if (props.BlogPostSourceParsed == BlogPostSources.Post_Taxonomy)
         {
             return null;
-        }
-
-        if (!string.IsNullOrWhiteSpace(post.BlogPostContentTaxonomy))
-        {
-            return post.BlogPostContentTaxonomy;
         }
 
         if (props.TagReferences.FirstOrDefault() is { } tagReference)
@@ -209,29 +203,21 @@ public class BlogPostListWidgetProperties : IWidgetProperties
     public string BlogPostSource { get; set; } = nameof(BlogPostSources.Individual_Selection);
     public BlogPostSources BlogPostSourceParsed => EnumDropDownOptionsProvider<BlogPostSources>.Parse(BlogPostSource, BlogPostSources.Individual_Selection);
 
-    [DropDownComponent(
-        Label = "Taxonomy",
-        ExplanationText = """
-        <p>The taxonomy assigned to the posts that are displayed. This value should match the tag selected in the Blog Type field.</p>
-        """,
+    [TagSelectorComponent(
+        SystemTaxonomies.BlogTypeTaxonomy.CodeName,
+        Label = "Blog Type",
+        MaxSelectedTagsCount = 1,
+        MinSelectedTagsCount = 1,
         ExplanationTextAsHtml = true,
-        DataProviderType = typeof(BlogPostTaxonomyDropDownOptionsProvider),
-        Order = 3
-    )]
+        ExplanationText = """
+        <p>The taxonomy tag assigned to the posts that are displayed.</p>
+        """,
+        Order = 3)]
     [VisibleIfEqualTo(
         nameof(BlogPostSource),
         nameof(BlogPostSources.Post_Taxonomy),
         StringComparison.OrdinalIgnoreCase
     )]
-    public string Taxonomy { get; set; } = "";
-
-    [TagSelectorComponent(
-        SystemTaxonomies.BlogTypeTaxonomy.CodeName,
-        Label = "Blog Type",
-        ExplanationText = """
-        <p>The taxonomy tag assigned to the posts that are displayed. This value should match the taxonomy selected in the Taxonomy field.</p>
-        """,
-        Order = 3)]
     public IEnumerable<TagReference> TagReferences { get; set; } = [];
 
     [NumberInputComponent(

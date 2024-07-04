@@ -1,8 +1,10 @@
 ﻿using System.Collections.Specialized;
 using CMS.ContentEngine;
 using CMS.Core;
+using CMS.Helpers;
 using CMS.MediaLibrary;
 using Kentico.Community.Portal.Core;
+using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Content.Web.Mvc;
@@ -22,8 +24,8 @@ public class BlogSearchIndexModel
     public string Title { get; set; } = "";
     public string Content { get; set; } = "";
     public DateTime PublishedDate { get; set; }
-    public const string TaxonomyFacetField = $"{nameof(Taxonomy)}_Facet";
-    public string Taxonomy { get; set; } = "";
+    public const string DXTopicsFacetField = $"{nameof(DXTopics)}_Facet";
+    public string DXTopics { get; set; } = "";
     public const string BlogTypeFacetField = $"{nameof(BlogType)}_Facet";
     public string BlogType { get; set; } = "";
     public string ShortDescription { get; set; } = "";
@@ -40,7 +42,7 @@ public class BlogSearchIndexModel
             new TextField(nameof(Title), Title, Field.Store.YES),
             new TextField(nameof(Content), Content, Field.Store.NO),
             new Int64Field(nameof(PublishedDate), DateTools.TicksToUnixTimeMilliseconds(PublishedDate.Ticks), Field.Store.YES),
-            new TextField(nameof(Taxonomy), (string.IsNullOrWhiteSpace(Taxonomy) ? "untaxonomized" : Taxonomy).ToLowerInvariant(), Field.Store.YES),
+            new TextField(nameof(DXTopics), (string.IsNullOrWhiteSpace(DXTopics) ? "untaxonomized" : DXTopics).ToLowerInvariant(), Field.Store.YES),
             new TextField(nameof(BlogType), (string.IsNullOrWhiteSpace(BlogType) ? "untaxonomized" : BlogType).ToLowerInvariant(), Field.Store.YES),
             new TextField(nameof(ShortDescription), ShortDescription, Field.Store.YES),
             new TextField(nameof(TeaserImage), JsonConvert.SerializeObject(TeaserImage), Field.Store.YES),
@@ -50,7 +52,7 @@ public class BlogSearchIndexModel
             new TextField(nameof(AuthorProfileLinkPath), AuthorProfileLinkPath, Field.Store.YES),
         };
 
-        _ = indexDocument.AddFacetField(nameof(TaxonomyFacetField), indexDocument.Get(nameof(Taxonomy)));
+        _ = indexDocument.AddFacetField(nameof(DXTopicsFacetField), indexDocument.Get(nameof(DXTopics)));
         _ = indexDocument.AddFacetField(nameof(BlogTypeFacetField), indexDocument.Get(nameof(BlogType)));
 
         return indexDocument;
@@ -66,7 +68,7 @@ public class BlogSearchIndexModel
             Url = doc.Get(nameof(Url)),
             Title = doc.Get(nameof(Title)),
             ShortDescription = doc.Get(nameof(ShortDescription)),
-            Taxonomy = doc.Get(nameof(Taxonomy)),
+            DXTopics = doc.Get(nameof(DXTopics)),
             BlogType = doc.Get(nameof(BlogType)),
             TeaserImage = teaserImage,
             AuthorMemberID = int.TryParse(doc.Get(nameof(AuthorMemberID)), out int authorMemberID)
@@ -91,6 +93,7 @@ public class BlogSearchIndexingStrategy(
     WebScraperHtmlSanitizer htmlSanitizer,
     WebCrawlerService webCrawler,
     IChannelDataProvider channelDataProvider,
+    IProgressiveCache cache,
     IEventLogService log) : DefaultLuceneIndexingStrategy
 {
     public const string IDENTIFIER = "BLOG_SEARCH";
@@ -101,6 +104,7 @@ public class BlogSearchIndexingStrategy(
     private readonly WebScraperHtmlSanitizer htmlSanitizer = htmlSanitizer;
     private readonly WebCrawlerService webCrawler = webCrawler;
     private readonly IChannelDataProvider channelDataProvider = channelDataProvider;
+    private readonly IProgressiveCache cache = cache;
     private readonly IEventLogService log = log;
 
     public override async Task<IEnumerable<IIndexEventItemModel>> FindItemsToReindex(IndexEventWebPageItemModel changedItem) => await Task.FromResult<List<IIndexEventItemModel>>([changedItem]);
@@ -197,16 +201,17 @@ public class BlogSearchIndexingStrategy(
             indexModel.TeaserImage = new ImageAssetViewModelSerializable(blogImg);
         }
 
-        var tag = (await taxonomyRetriever.RetrieveTags(blogPost.BlogPostContentBlogType.Select(t => t.Identifier), item.LanguageName)).FirstOrDefault();
+        var taxonomy = await GetBlogPostTaxonomy();
+
+        blogPost.BlogPostContentBlogType
+            .TryFirst()
+            .Map(t => t.Identifier)
+            .Bind(id => taxonomy.Tags.TryFirst(t => t.Identifier == id))
+            .Execute(tag => indexModel.BlogType = tag.Title);
 
         string content = await webCrawler.CrawlWebPage(page);
         indexModel.Content = htmlSanitizer.SanitizeHtmlDocument(content);
         indexModel.Title = blogPost.BlogPostContentTitle;
-        indexModel.Taxonomy = blogPost.BlogPostContentTaxonomy;
-        if (tag?.Title is string tagTitle)
-        {
-            indexModel.BlogType = tagTitle;
-        }
         indexModel.ShortDescription = blogPost.BlogPostContentShortDescription;
         indexModel.PublishedDate = blogPost.BlogPostContentPublishedDate != default
             ? blogPost.BlogPostContentPublishedDate
@@ -219,11 +224,18 @@ public class BlogSearchIndexingStrategy(
     {
         var facetConfig = new FacetsConfig();
 
-        facetConfig.SetMultiValued(nameof(BlogSearchIndexModel.TaxonomyFacetField), false);
+        facetConfig.SetMultiValued(nameof(BlogSearchIndexModel.DXTopicsFacetField), false);
         facetConfig.SetMultiValued(nameof(BlogSearchIndexModel.BlogTypeFacetField), false);
 
         return facetConfig;
     }
+
+    private Task<TaxonomyData> GetBlogPostTaxonomy() =>
+        cache.LoadAsync(cs =>
+        {
+            cs.CacheDependency = CacheHelper.GetCacheDependency($"{TaxonomyInfo.OBJECT_TYPE}|byname|{SystemTaxonomies.BlogTypeTaxonomy.CodeName}");
+            return taxonomyRetriever.RetrieveTaxonomy(SystemTaxonomies.BlogTypeTaxonomy.CodeName, PortalWebSiteChannel.DEFAULT_LANGUAGE);
+        }, new CacheSettings(5, [nameof(BlogSearchIndexModel), nameof(GetBlogPostTaxonomy)]));
 }
 
 

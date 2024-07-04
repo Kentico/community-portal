@@ -8,6 +8,7 @@
     var rootElId = $"answerFormRoot_{id}";
     var editormdId = $"editormd_{id}";
     string action = Model.EditedObjectID is null ? "CreateAnswer" : "UpdateAnswer";
+    string qAndAAssetPath = ClientAssets.ViteAssetPath("js/q-and-a.js");
 }
 
 <div id="@rootElId">
@@ -52,7 +53,8 @@
 
         <script type="module">
             asyncReady(async () => {
-                const qanda = await import('@ClientAssets.ViteAssetPath("js/q-and-a.js")');
+                const path = @JSEncoder.EncodeToJson(qAndAAssetPath);
+                const qanda = await import(path);
 
                 qanda.initQAndA({
                     formElemID: '@formId',

@@ -2,7 +2,6 @@
 <cms.scheduledtask>
   <TaskAssemblyName>CMS.Scheduler</TaskAssemblyName>
   <TaskClass>CMS.Scheduler.Internal.TemporaryUploadsCleaner</TaskClass>
-  <TaskCondition />
   <TaskData />
   <TaskDeleteAfterLastRun>False</TaskDeleteAfterLastRun>
   <TaskDisplayName>Delete old temporary upload files</TaskDisplayName>
@@ -12,6 +11,5 @@
     <![CDATA[hour;8/16/2011 12:00:30 PM;1;00:00:00;23:59:00;Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday]]>
   </TaskInterval>
   <TaskName>Content.DeleteOldTemporaryUploadFiles</TaskName>
-  <TaskRunInSeparateThread>False</TaskRunInSeparateThread>
   <TaskServerName />
 </cms.scheduledtask>

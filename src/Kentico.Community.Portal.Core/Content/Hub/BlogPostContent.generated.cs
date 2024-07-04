@@ -60,12 +60,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// BlogPostContentTaxonomy.
-		/// </summary>
-		public string BlogPostContentTaxonomy { get; set; }
-
-
-		/// <summary>
 		/// BlogPostContentBlogType.
 		/// </summary>
 		public IEnumerable<TagReference> BlogPostContentBlogType { get; set; }

@@ -86,7 +86,7 @@ public class BlogSearchService(
 
             foreach (string subFacet in subFacets)
             {
-                drillDownQuery.Add(nameof(BlogSearchIndexModel.TaxonomyFacetField), subFacet);
+                drillDownQuery.Add(nameof(BlogSearchIndexModel.BlogTypeFacetField), subFacet);
             }
 
             combinedQuery.Add(drillDownQuery, Occur.MUST);
@@ -130,7 +130,7 @@ public class BlogSearchService(
                             .Select(d => BlogSearchIndexModel.FromDocument(searcher.Doc(d.Doc)))
                             .ToList(),
                         Facet = request.BlogType,
-                        Facets = facets?.GetTopChildren(10, nameof(BlogSearchIndexModel.TaxonomyFacetField), [.. chosenSubFacets])?.LabelValues.ToArray(),
+                        Facets = facets?.GetTopChildren(10, nameof(BlogSearchIndexModel.BlogTypeFacetField), [.. chosenSubFacets])?.LabelValues.ToArray(),
                         SortBy = request.SortBy
                     };
                 }

@@ -1,5 +1,6 @@
 using System.Reflection;
 using Kentico.Community.Portal.Core;
+using Kentico.Community.Portal.Core.Infrastructure;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
@@ -48,6 +49,7 @@ public static class ServiceCollectionAppExtensions
             .AddScoped<ICacheDependenciesStore>(s => s.GetRequiredService<CacheDependenciesStore>())
             .AddScoped<ICacheDependenciesScope>(s => s.GetRequiredService<CacheDependenciesStore>())
             .AddTransient<WebPageCommandTools>()
+            .AddTransient<IContentQueryExecutionOptionsCreator, DefaultContentQueryExecutionOptionsCreator>()
             .AddTransient<WebPageQueryTools>()
             .AddTransient<ContentItemQueryTools>()
             .AddTransient<DataItemCommandTools>()
@@ -79,7 +81,7 @@ public static class ServiceCollectionAppExtensions
             .AddSingleton<AzureStorageClientFactory>()
             .AddSingleton<ISystemClock, SystemClock>()
             .AddSingleton<AssetItemService>()
-            .AddSingleton<StoragePathService>()
+            .AddSingleton<IStoragePathService, StoragePathService>()
             .AddTransient<MediaAssetContentMetadataHandler>()
             .AddScoped<CaptchaValidator>()
             .Configure<ReCaptchaSettings>(config.GetSection("ReCaptcha"));
@@ -92,7 +94,9 @@ public static class ServiceCollectionAppExtensions
             .Configure<SupportRequestProcessingSettings>(config.GetSection("SupportRequestProcessing"));
 
     private static IServiceCollection AddQAndA(this IServiceCollection services) =>
-        services.AddTransient<QAndAAnswerCreateSearchIndexTaskHandler>();
+        services
+            .AddTransient<QAndAAnswerCreateSearchIndexTaskHandler>()
+            .AddTransient<QAndAAnswerDeleteSearchIndexTaskHandler>();
     private static IServiceCollection AddBlogs(this IServiceCollection services) =>
         services.AddTransient<BlogPostPublishCreateQAndAQuestionHandler>();
 

@@ -31,7 +31,7 @@ public class BlogSearchViewComponent(IMediator mediator, BlogSearchService searc
                 .Select(x => new FacetOption()
                 {
                     Label = x.DisplayName,
-                    Value = searchResult?.Facets?.FirstOrDefault(y => y.Label.Equals(x.DisplayName, StringComparison.InvariantCultureIgnoreCase))?.Value ?? 0,
+                    Value = searchResult?.Facets?.FirstOrDefault(y => y.Label.Equals(x.Value, StringComparison.InvariantCultureIgnoreCase))?.Value ?? 0,
                     IsSelected = chosenFacets.Contains(x.DisplayName, StringComparer.OrdinalIgnoreCase)
                 })
                 .Where(x => x.Value != 0)
@@ -65,7 +65,7 @@ public class BlogSearchViewComponent(IMediator mediator, BlogSearchService searc
                 LinkPath = result.Url,
                 ShortDescription = result.ShortDescription,
                 TeaserImage = result.TeaserImage?.ToImageAsset(),
-                Taxonomy = result.Taxonomy
+                Taxonomy = result.BlogType
             });
         }
 

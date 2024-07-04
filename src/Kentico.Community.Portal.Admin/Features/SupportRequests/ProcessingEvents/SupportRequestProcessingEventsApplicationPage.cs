@@ -6,8 +6,8 @@ using Kentico.Xperience.Admin.Base;
     identifier: SupportRequestProcessingEventsApplicationPage.IDENTIFIER,
     type: typeof(SupportRequestProcessingEventsApplicationPage),
     slug: "support-request-processing-events",
-    name: "Processing Events",
-    category: PortalWebAdminModule.SUPPORT_REQUESTS_CATEGORY,
+    name: "Support Requests",
+    category: PortalWebAdminModule.COMMUNITY_CATEGORY,
     icon: Icons.List,
     templateName: TemplateNames.SECTION_LAYOUT)]
 

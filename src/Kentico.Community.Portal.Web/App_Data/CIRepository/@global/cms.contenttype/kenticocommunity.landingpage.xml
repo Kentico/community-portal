@@ -31,22 +31,13 @@
           <MinRowsNumber>3</MinRowsNumber>
         </settings>
       </field>
-      <field column="LandingPageIncludeInSitemap" columnprecision="0" columntype="boolean" enabled="true" guid="16ebec7e-3ac1-4f88-b909-9af8b1039867" visible="true">
-        <properties>
-          <defaultvalue>True</defaultvalue>
-          <explanationtext>[Deprecated] Use Web page meta below instead</explanationtext>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Include in Sitemap?</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.Checkbox</controlname>
-        </settings>
-      </field>
       <schema guid="19eeca92-ebc9-4489-ad27-3d51bd2d2622" name="19eeca92-ebc9-4489-ad27-3d51bd2d2622">
         <properties>
           <kxp.code.name>WebPageMeta</kxp.code.name>
         </properties>
+      </schema>
+      <schema guid="b31febaf-3b91-41a2-bb69-b8b80642b4ba" name="b31febaf-3b91-41a2-bb69-b8b80642b4ba">
+        <properties />
       </schema>
     </form>
   </ClassFormDefinition>

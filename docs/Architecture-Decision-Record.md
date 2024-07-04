@@ -1,5 +1,37 @@
 # Architecture Decision Record
 
+## 2024-06-24 - Restricted pages
+
+Although Xperience supports content authorization for content delivery, it's limited to a single [secure](https://docs.kentico.com/x/8oouCw) property
+which does not automatically translate to channel access restrictions - this requires additional development.
+
+There are several approaches which could be adopted for securing content based on some authenticated member state:
+
+### Custom role and permission system
+
+We could create a custom module which would manage roles and permission relationships to Members. This would enable completely dynamic and administrator-driven content authorization for members, but would still require a way to associate roles to content.
+
+### Simple content field
+
+Another approach would be to add a specific custom field to content items that need some business-rule driven content authorization. The field could be a field populated by a preset list of options, either single or multiple choice. These options could be the value that business logic would check against or a reference to some other data (like a role or permission) in Xperience that would be checked.
+
+### Solution
+
+For now, the primary use-case is to restrict content and web pages to a small set of groups of members - internal Kentico employees and Kentico MVPs, with the option of expanding to tiers of community members in the future.
+
+We also need some of both approaches above - a way to check if accessing a piece of content requires a member status and a way to check which status a given member has when trying to access a restricted piece of content.
+
+To keep the solution as simple as possible but allow content (specifically web pages) to be restricted dynamically, we've added several pieces of infrastructure:
+
+1. A `ContentAuthorization` taxonomy with several tags.
+1. A `ContentAuthorization` reusable field schema which has a single taxonomy field. The tags in this field define the statuses of a member that allow access to the web page.
+1. Assignment of the RFS to `LandingPage` web page content items (the RFS _can_ be added to other web page content types).
+1. An ASP.NET Core MVC `IAsyncAuthorizationFilter` named `ContentAuthorizationFilter` which authorizes access to web pages if they have any of the `ContentAuthorization` tags assigned to them.
+
+The filter only performs extra work for a request when the member is authenticated and the request is not a Page Builder request. Only 1 "status" check (is MVP) is performed since we do not yet have other member data to check against at this time.
+
+We decided not to use ASP.NET Core's policy authorization since the complexity of the requirements do not yet justify it. A full role and permission system driven by taxonomy tags can be developed in the future if needed.
+
 ## 2024-06-11 - Member Avatars and Administration Reporting
 
 ### Member Avatars

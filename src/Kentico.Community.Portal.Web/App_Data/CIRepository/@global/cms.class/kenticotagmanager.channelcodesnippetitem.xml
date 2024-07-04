@@ -3,23 +3,24 @@
   <ClassDisplayName>Channel Code Snippet Item</ClassDisplayName>
   <ClassFormDefinition>
     <form>
-      <field column="ChannelCodeSnippetItemID" columntype="integer" enabled="true" guid="1f53955a-7be9-426f-8eb9-1a365d1f1a49" isPK="true" />
-      <field column="ChannelCodeSnippetItemChannelId" columntype="integer" enabled="true" guid="908d1fc9-1448-41d6-8810-7e84c357c75b" refobjtype="cms.channel" reftype="Required" />
-      <field allowempty="true" column="ChannelCodeSnippetItemConsentId" columntype="integer" enabled="true" guid="409bde18-c1c3-4a0a-8272-d631a7508377" refobjtype="cms.consent" reftype="Required" />
-      <field column="ChannelCodeSnippetItemGuid" columntype="guid" enabled="true" guid="db5905d6-af38-450b-a9e0-3f910f2198cf" />
-      <field column="ChannelCodeSnippetItemName" columntype="text" enabled="true" guid="c39fa4b8-77a7-4bb0-887c-5583b567e65e" visible="true">
+      <field column="ChannelCodeSnippetItemID" columntype="integer" enabled="true" guid="fd54e4d6-06d3-40e1-9bcd-dc541e89a647" isPK="true" />
+      <field column="ChannelCodeSnippetItemChannelId" columntype="integer" enabled="true" guid="228c5c80-8dab-488b-8c1d-8d233c111e8b" refobjtype="cms.channel" reftype="Required" />
+      <field allowempty="true" column="ChannelCodeSnippetItemConsentId" columntype="integer" enabled="true" guid="8f8a995e-1ed0-413c-bfab-003250959371" refobjtype="cms.consent" reftype="Required" />
+      <field column="ChannelCodeSnippetItemGuid" columntype="guid" enabled="true" guid="5c4b1c9c-dc81-431f-b392-6d07a42a2419" />
+      <field column="ChannelCodeSnippetItemName" columntype="text" enabled="true" guid="5a467874-916c-4e6b-9299-d8508ab81f0d" visible="true">
         <settings>
           <Label>Code name</Label>
         </settings>
       </field>
-      <field column="ChannelCodeSnippetItemLastModified" columntype="datetime" enabled="true" guid="5b372308-2c01-44ab-b74f-e8a961bd8388" />
-      <field allowempty="true" column="ChannelCodeSnippetItemCode" columnprecision="0" columnsize="5000" columntype="longtext" enabled="true" guid="fb0c4d2c-bc56-4e34-80cb-d8230f59a51b" />
-      <field allowempty="true" column="ChannelCodeSnippetItemIdentifier" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="bdaeae6a-de15-479b-bbbb-91d9ba5a033b" />
-      <field allowempty="true" column="ChannelCodeSnippetItemType" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="720f8858-a2ac-4434-a4a9-64bedbef2ec1" />
-      <field allowempty="true" column="ChannelCodeSnippetItemLocation" columnprecision="0" columnsize="25" columntype="text" enabled="true" guid="edefff94-78db-4053-964e-79f2f72951e1" />
+      <field column="ChannelCodeSnippetItemLastModified" columntype="datetime" enabled="true" guid="6242ec2b-d4d6-454b-93b3-77d48e287832" />
+      <field allowempty="true" column="ChannelCodeSnippetItemCode" columnprecision="0" columnsize="5000" columntype="longtext" enabled="true" guid="2d495381-79ad-4373-9f4c-ec43661f3a03" />
+      <field allowempty="true" column="ChannelCodeSnippetItemIdentifier" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="3455216c-7d95-4eb3-9a67-801ea35b1e5e" />
+      <field allowempty="true" column="ChannelCodeSnippetItemType" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="a58b6f57-22a0-4f29-a7a4-37cde5f51af9" />
+      <field allowempty="true" column="ChannelCodeSnippetItemLocation" columnprecision="0" columnsize="25" columntype="text" enabled="true" guid="83729c49-7d03-44c6-8b7b-a29f6620fd62" />
+      <field allowempty="true" column="ChannelCodeSnippetAdministrationDisplayMode" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="37688ae9-d2a6-4382-bd1a-275451128a81" />
     </form>
   </ClassFormDefinition>
-  <ClassGUID>9e03d5f6-3136-4e4e-84ce-53a601baf17e</ClassGUID>
+  <ClassGUID>7a2cc4f5-9460-402c-b8ea-6308c0c4a54b</ClassGUID>
   <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
   <ClassName>KenticoTagManager.ChannelCodeSnippetItem</ClassName>
   <ClassResourceID>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.scheduledtask>
+  <TaskAssemblyName>CMS.ContentEngine</TaskAssemblyName>
+  <TaskClass>
+    <![CDATA[CMS.ContentEngine.Internal.ContentItemScheduledPublishAndUnpublishTask]]>
+  </TaskClass>
+  <TaskData />
+  <TaskDeleteAfterLastRun>False</TaskDeleteAfterLastRun>
+  <TaskDisplayName>Publish and unpublish scheduled content items</TaskDisplayName>
+  <TaskEnabled>True</TaskEnabled>
+  <TaskGUID>99c68980-6627-4e05-8008-fd4a4377e56a</TaskGUID>
+  <TaskInterval>
+    <![CDATA[minute;3/11/2024 9:00:17 PM;1;00:00:00;00:00:00;Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday]]>
+  </TaskInterval>
+  <TaskName>Content.PublishAndUnpublishScheduledContentItems</TaskName>
+</cms.scheduledtask>

@@ -1,16 +1,65 @@
+import {
+  Colors,
+  Headline,
+  HeadlineSize,
+  Paper,
+  TextWithLabel,
+} from '@kentico/xperience-admin-components';
 import React from 'react';
 import { BarChart, TimeSeriesEntry } from './BarChart';
+
+type StatsTotals = {
+  enabledMembers: number;
+  newsletterSubscribers: number;
+  qAndAQuestions: number;
+  qAndAAnswers: number;
+};
 
 interface StatsClientProperties {
   members: TimeSeriesEntry[];
   subscribers: TimeSeriesEntry[];
   questions: TimeSeriesEntry[];
   answers: TimeSeriesEntry[];
+  totals: StatsTotals;
 }
 
 export const StatsLayoutTemplate = (props: StatsClientProperties) => {
   return (
     <div style={{ padding: '3rem' }}>
+      <Paper>
+        <div style={{ padding: '1rem' }}>
+          <h1>
+            <Headline
+              size={HeadlineSize.M}
+              labelColor={Colors.TextDefaultOnLight}
+            >
+              Totals
+            </Headline>
+          </h1>
+
+          <div
+            style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+          >
+            <TextWithLabel
+              label="Enabled Members"
+              value={props.totals.enabledMembers}
+            />
+            <TextWithLabel
+              label="Newsletter Subscribers"
+              value={props.totals.newsletterSubscribers}
+            />
+            <TextWithLabel
+              label="Q&A Questions"
+              value={props.totals.qAndAQuestions}
+            />
+            <TextWithLabel
+              label="Q&A Answers"
+              value={props.totals.qAndAAnswers}
+            />
+          </div>
+        </div>
+      </Paper>
+
       <BarChart id="members" data={props.members} chartName="Members Joined" />
 
       <BarChart

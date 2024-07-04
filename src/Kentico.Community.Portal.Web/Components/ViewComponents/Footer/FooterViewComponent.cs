@@ -20,9 +20,9 @@ public class FooterViewComponent(IMediator mediator) : ViewComponent
 public record FooterViewModel(string XperienceVersion);
 
 public record SettingXperienceVersionQuery : IQuery<string>;
-public class SettingXperienceVersionQueryHandler(DataItemQueryTools tools, ISettingsKeyInfoProvider settings) : DataItemQueryHandler<SettingXperienceVersionQuery, string>(tools)
+public class SettingXperienceVersionQueryHandler(DataItemQueryTools tools, IInfoProvider<SettingsKeyInfo> settings) : DataItemQueryHandler<SettingXperienceVersionQuery, string>(tools)
 {
-    private readonly ISettingsKeyInfoProvider settings = settings;
+    private readonly IInfoProvider<SettingsKeyInfo> settings = settings;
 
     public override async Task<string> Handle(SettingXperienceVersionQuery request, CancellationToken cancellationToken)
     {

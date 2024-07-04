@@ -8,8 +8,8 @@ using Kentico.Xperience.Admin.Base;
     identifier: SupportRequestConfigurationApplicationPage.IDENTIFIER,
     type: typeof(SupportRequestConfigurationApplicationPage),
     slug: "support-request-configuration",
-    name: "Configuration",
-    category: PortalWebAdminModule.SUPPORT_REQUESTS_CATEGORY,
+    name: "Support Config",
+    category: PortalWebAdminModule.COMMUNITY_CATEGORY,
     icon: Icons.Cogwheels,
     templateName: TemplateNames.SIDE_NAVIGATION_LAYOUT)]
 

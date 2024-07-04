@@ -68,7 +68,7 @@
       <field allowempty="true" column="WebPageMetaRobots" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="621d6b47-0558-46e7-b3e1-6556c8871d86" visible="true">
         <properties>
           <explanationtext>
-            <![CDATA[Adds the <a href="https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag#robotsmeta">robots meta tag</a> to the current page with the given value]]>
+            <![CDATA[Adds the <a href="https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag#robotsmeta">robots meta tag</a> to the current page, populating its <code>content</code> field with the given value.]]>
           </explanationtext>
           <explanationtextashtml>True</explanationtextashtml>
           <fieldcaption>Robots meta value</fieldcaption>
@@ -152,6 +152,33 @@
           <MaximumItems>1</MaximumItems>
           <MinimumItems>0</MinimumItems>
           <SelectionType>contentTypes</SelectionType>
+        </settings>
+      </field>
+      <schema guid="b31febaf-3b91-41a2-bb69-b8b80642b4ba" name="ContentAuthorization">
+        <properties>
+          <description>
+            <![CDATA[Used to definite custom access authorization rules for a piece of content]]>
+          </description>
+          <fieldcaption>Content Authorization</fieldcaption>
+        </properties>
+      </schema>
+      <field allowempty="true" column="ContentAuthorizationAllowedTags" columnprecision="0" columntype="taxonomy" enabled="true" guid="c299d4b0-a981-4c63-89ea-b2453562d707" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[The selected tags define which members are allowed access to this content. Multiple tags are "OR"d together.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Authorization Allowed List</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>b31febaf-3b91-41a2-bb69-b8b80642b4ba</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TagSelector</controlname>
+          <MaxSelectedTagsCount>4</MaxSelectedTagsCount>
+          <MinSelectedTagsCount>0</MinSelectedTagsCount>
+          <TaxonomyGroup>
+            <![CDATA[["ca9aa59d-d3fd-4f4c-bb67-5a1b3c0f5ad5"]]]>
+          </TaxonomyGroup>
         </settings>
       </field>
     </form>

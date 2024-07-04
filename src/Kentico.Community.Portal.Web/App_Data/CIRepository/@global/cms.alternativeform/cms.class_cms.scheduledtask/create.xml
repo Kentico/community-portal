@@ -17,20 +17,16 @@
       <field column="TaskGUID" guid="6db955f1-124a-4a2b-ad66-596dd53936ea" order="6" />
       <field column="TaskLastModified" guid="5a02bac7-ee29-497a-a42d-22f1201e1b1c" order="7" />
       <field column="TaskExecutions" guid="5f1cbc53-2a56-415b-b194-fdf91a48a8ad" order="8" />
-      <field column="TaskResourceID" guid="6f837b40-1492-4558-b16f-85622aa7d1ce" order="9" />
-      <field column="TaskRunInSeparateThread" guid="56747e3e-3b17-459a-a828-353093ae98fb" order="10" />
-      <field column="TaskLastExecutionReset" guid="36a365cb-fd5a-40a7-84a3-3dc124f073da" order="11" />
-      <field column="TaskCondition" guid="191cdffc-6798-49c7-8b6b-50ce1932a042" order="12" />
-      <field column="TaskUserID" guid="c362f5fa-bc6d-47c9-b238-cf91083809b6" order="13" />
-      <field column="TaskType" guid="e714ac81-c2d4-4256-b11e-ab5bedad4f27" order="14" />
-      <field column="TaskObjectType" guid="c0144c6b-2105-4543-9e41-6f017fb58a69" order="15" />
-      <field column="TaskObjectID" guid="944b2dbf-fd97-41e3-8788-fc47d5158a30" order="16" />
-      <field column="TaskExecutingServerName" guid="21247dd8-8c7a-47c9-b925-fc9ba485f9ba" order="17" />
-      <field column="TaskName" enabled="true" guid="e9eabd43-9133-4cd9-8012-aefa513e87b2" visible="true" order="18">
+      <field column="TaskUserID" guid="c362f5fa-bc6d-47c9-b238-cf91083809b6" order="9" />
+      <field column="TaskType" guid="e714ac81-c2d4-4256-b11e-ab5bedad4f27" order="10" />
+      <field column="TaskObjectType" guid="c0144c6b-2105-4543-9e41-6f017fb58a69" order="11" />
+      <field column="TaskObjectID" guid="944b2dbf-fd97-41e3-8788-fc47d5158a30" order="12" />
+      <field column="TaskExecutingServerName" guid="21247dd8-8c7a-47c9-b925-fc9ba485f9ba" order="13" />
+      <field column="TaskName" enabled="true" guid="e9eabd43-9133-4cd9-8012-aefa513e87b2" visible="true" order="14">
         <settings>
           <controlname>Kentico.Administration.CodeName</controlname>
           <HasAutomaticCodeNameGenerationOption>True</HasAutomaticCodeNameGenerationOption>
-          <IsCollapsed>False</IsCollapsed>
+          <IsCollapsed>True</IsCollapsed>
         </settings>
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
@@ -38,7 +34,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="TaskDisplayName" enabled="true" guid="a3f95b42-bd02-4db6-b1aa-0d340952a27e" visible="true" order="19">
+      <field column="TaskDisplayName" enabled="true" guid="a3f95b42-bd02-4db6-b1aa-0d340952a27e" visible="true" order="15">
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
@@ -48,7 +44,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="TaskAssemblyName" enabled="true" guid="4c567e00-bf7a-42e8-878b-a5befde1faed" visible="true" order="20">
+      <field column="TaskAssemblyName" enabled="true" guid="4c567e00-bf7a-42e8-878b-a5befde1faed" visible="true" order="16">
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
@@ -58,7 +54,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="TaskClass" enabled="true" guid="c7a260a0-d909-4e9e-b1d3-bcbda7eb9076" visible="true" allowempty="" order="21">
+      <field column="TaskClass" enabled="true" guid="c7a260a0-d909-4e9e-b1d3-bcbda7eb9076" visible="true" allowempty="" order="17">
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
@@ -68,7 +64,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="TaskInterval" columnsize="200" enabled="true" guid="02900d9c-c032-4081-9532-a48c339dbbce" visible="true" order="22">
+      <field column="TaskInterval" columnsize="200" enabled="true" guid="02900d9c-c032-4081-9532-a48c339dbbce" visible="true" order="18">
         <settings>
           <controlname>Kentico.Administration.TextArea</controlname>
           <CopyButtonVisible>False</CopyButtonVisible>
@@ -81,7 +77,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="TaskData" columnprecision="0" enabled="true" guid="a8fd0828-3456-483d-9845-f93c6d9fc9fd" visible="true" order="23">
+      <field column="TaskData" columnprecision="0" enabled="true" guid="a8fd0828-3456-483d-9845-f93c6d9fc9fd" visible="true" order="19">
         <settings>
           <controlname>Kentico.Administration.TextArea</controlname>
           <CopyButtonVisible>False</CopyButtonVisible>
@@ -97,7 +93,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="TaskEnabled" columnprecision="0" enabled="true" guid="dbd5d77f-f7f4-4da4-87f8-9027cbcca5e1" visible="true" order="24">
+      <field column="TaskEnabled" columnprecision="0" enabled="true" guid="dbd5d77f-f7f4-4da4-87f8-9027cbcca5e1" visible="true" order="20">
         <settings>
           <controlname>Kentico.Administration.Checkbox</controlname>
         </settings>
@@ -108,7 +104,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="TaskID" guid="4419f729-75ac-4eb7-a4d4-bdcdb8d03884" order="25" />
+      <field column="TaskID" guid="4419f729-75ac-4eb7-a4d4-bdcdb8d03884" order="21" />
     </form>
   </FormDefinition>
   <FormDisplayName>create</FormDisplayName>

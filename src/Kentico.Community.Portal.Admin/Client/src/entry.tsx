@@ -5,3 +5,4 @@ export * from './components/LinkDataTypeFormComponent';
 export * from './components/LinkListDataTypeFormComponent';
 export * from './components/UTMParametersDataTypeFormComponent';
 export * from './layouts/StatsLayoutTemplate';
+export * from './layouts/MemberManagementLayoutTemplate';

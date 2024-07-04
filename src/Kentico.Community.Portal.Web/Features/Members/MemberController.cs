@@ -50,7 +50,7 @@ public class MemberController(
 
         var model = new MemberDetailViewModel(member)
         {
-            BlogPostLinks = blogResult.Hits.Select(h => new BlogPostLink(h.Url, h.Title, h.PublishedDate, h.Taxonomy)).ToList(),
+            BlogPostLinks = blogResult.Hits.Select(h => new BlogPostLink(h.Url, h.Title, h.PublishedDate, h.BlogType)).ToList(),
             QuestionsAsked = qandaResult.Hits.Select(h => new Link(h.Url, h.Title, h.PublishedDate)).ToList(),
         };
 

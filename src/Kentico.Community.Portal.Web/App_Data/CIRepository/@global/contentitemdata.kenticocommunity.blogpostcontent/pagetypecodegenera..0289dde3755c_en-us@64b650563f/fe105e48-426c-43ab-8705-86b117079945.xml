@@ -3,15 +3,20 @@
   <BlogPostContentAuthor>
     <![CDATA[[{"Identifier":"43caca6e-94ba-4f97-9693-450530c4bd9a"}]]]>
   </BlogPostContentAuthor>
+  <BlogPostContentBlogType>
+    <![CDATA[[{"Identifier":"0cb21dda-384b-4792-8e1b-41034f113d28"}]]]>
+  </BlogPostContentBlogType>
   <BlogPostContentContentHTML>
     <![CDATA[<p id="isPasted">Working with strongly typed objects for page types has always been a preference for Kentico Xperience developers. &nbsp;Nobody wants to work with a TreeNode directly, right? &nbsp;You want a class that inherits from TreeNode, contains all the page type fields, and uses the correct data types throughout.</p><p>In previous versions of Kentico Xperience, we were provided with a few different ways of generating strongly typed classes. &nbsp;In all scenarios, you had to authenticate with the administration portal and navigate to the Page Types module. &nbsp;From there you could either copy and paste the individual generated classes or click a button to save them to a folder within the project.</p><p>Xperience by Kentico, being the next generation of Kentico Xperience, wanted to improve and build upon this key piece of developer functionality. &nbsp;Since Xperience by Kentico is entirely rewritten in .NET Core, it is more appropriate that the new code generation tool sits outside of the administration portal and is access through a <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/" target="_blank">.NET CLI</a> command.</p><p>The new .NET CLI command is so simple to use and was extremely useful when migrating my <a href="https://www.goldfinch.me/" target="_blank">blog website</a> to Xperience by Kentico. &nbsp;If I created or edited a page type, I just opened PowerShell and reran the same command:</p><p>dotnet run --no-build -- --kxp-codegen --type "All" --location "../Goldfinch.Core/{type}/{dataClassNamespace}/{name}/"</p><p>The example above would generate all page type classes, without rebuilding the project first. &nbsp; The last parameter for location allowed me to customize where the generated class files were placed in my project. &nbsp;The CLI command comes with other options for including or excluding objects based on patterns, skipping the confirmation warning message, and customizing the namespaces of the files being generated.</p><p>If you need any further help getting started with the code generation tool, then I would highly recommend checking the documentation page. &nbsp;It covers all aspects of the code generation tool and provides explanations and examples for each of the parameters available.</p><p><br><img src="~/getmedia/17414ca5-ef34-44ee-8aad-6569d43d4081/PowerShell.jpg" alt="PowerShell.jpg" title="PowerShell.jpg" class="fr-fic fr-dib"></p>]]>
   </BlogPostContentContentHTML>
+  <BlogPostContentDXTopics>
+    <![CDATA[[{"Identifier":"44c7bf83-77d7-49e6-bdee-70fa06f06c2f"},{"Identifier":"e3623da6-d90c-4089-9fd0-25df6c30bee8"},{"Identifier":"803ca767-e932-4db9-a6bb-cb1393bfd255"}]]]>
+  </BlogPostContentDXTopics>
   <BlogPostContentPublishedDate>2022-03-15 15:12:00Z</BlogPostContentPublishedDate>
   <BlogPostContentShortDescription>
     <![CDATA[How does code generation work for generating classes for your page types?]]>
   </BlogPostContentShortDescription>
   <BlogPostContentSourceType>richText</BlogPostContentSourceType>
-  <BlogPostContentTaxonomy>Article</BlogPostContentTaxonomy>
   <BlogPostContentTeaserMediaFileImage>
     <![CDATA[[{"Identifier":"1441c1a7-37b5-45ac-a7d5-be3dc6f9a8c9","Name":"kentico-background.webp","Size":99376,"Dimensions":{"Width":5000,"Height":2960}}]]]>
   </BlogPostContentTeaserMediaFileImage>

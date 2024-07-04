@@ -1,12 +1,13 @@
+using CMS.DataEngine;
 using CMS.Helpers;
 using CMS.MediaLibrary;
 using Kentico.Content.Web.Mvc;
 
 namespace Kentico.Community.Portal.Web.Rendering;
 
-public class AssetItemService(IMediaFileInfoProvider mediaFileInfoProvider, IMediaFileUrlRetriever mediaFileUrlRetriever, IHttpContextAccessor contextAccessor, IProgressiveCache cache)
+public class AssetItemService(IInfoProvider<MediaFileInfo> mediaFileInfoProvider, IMediaFileUrlRetriever mediaFileUrlRetriever, IHttpContextAccessor contextAccessor, IProgressiveCache cache)
 {
-    private readonly IMediaFileInfoProvider mediaFileInfoProvider = mediaFileInfoProvider;
+    private readonly IInfoProvider<MediaFileInfo> mediaFileInfoProvider = mediaFileInfoProvider;
     private readonly IMediaFileUrlRetriever mediaFileUrlRetriever = mediaFileUrlRetriever;
     private readonly IHttpContextAccessor contextAccessor = contextAccessor;
     private readonly IProgressiveCache cache = cache;

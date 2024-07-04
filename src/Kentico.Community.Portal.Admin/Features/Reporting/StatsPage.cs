@@ -29,6 +29,7 @@ public class StatsPage(ISystemClock clock) : Page<StatsPageClientProperties>
         properties.Subscribers = await GetSubscribers();
         properties.Answers = await GetAnswers();
         properties.Questions = await GetQuestions();
+        properties.Totals = await GetTotals();
 
         return properties;
     }
@@ -120,6 +121,50 @@ public class StatsPage(ISystemClock clock) : Page<StatsPageClientProperties>
         return await ExecuteTimeSeriesQuery(query);
     }
 
+    private async Task<StatsTotals> GetTotals()
+    {
+        string query = $"""
+        SELECT
+            (
+                SELECT COUNT(*) 
+                FROM KenticoCommunity_QAndAAnswerData
+            ) AS AnswersCount,
+            (
+                SELECT COUNT(*) 
+                FROM KenticoCommunity_QAndAQuestionPage
+            ) AS QuestionsCount,
+            (
+                SELECT COUNT(*)
+                FROM OM_ContactGroupMember CGM
+                INNER JOIN EmailLibrary_EmailSubscriptionConfirmation ESC
+                    ON CGM.ContactGroupMemberRelatedID = ESC.EmailSubscriptionConfirmationContactID
+                WHERE ESC.EmailSubscriptionConfirmationIsApproved = 1
+            ) AS SubscribersCount,
+            (
+                SELECT COUNT(*) 
+                FROM CMS_Member
+                WHERE MemberEnabled = 1
+            ) AS MembersCount
+        """;
+
+        var reader = await ConnectionHelper.ExecuteReaderAsync(query, [], QueryTypeEnum.SQLQuery, CommandBehavior.Default, default);
+        var stats = StatsTotals.DEFAULT;
+
+        while (reader.Read())
+        {
+            int membersCount = reader.GetInt32("MembersCount");
+            int subscribersCount = reader.GetInt32("SubscribersCount");
+            int questionsCount = reader.GetInt32("QuestionsCount");
+            int answersCount = reader.GetInt32("AnswersCount");
+
+            stats = new(membersCount, subscribersCount, questionsCount, answersCount);
+        }
+
+        await reader.CloseAsync();
+
+        return stats;
+    }
+
     public async Task<ImmutableList<TimeSeriesEntry>> ExecuteTimeSeriesQuery(string queryText)
     {
         var reader = await ConnectionHelper.ExecuteReaderAsync(queryText, [], QueryTypeEnum.SQLQuery, CommandBehavior.Default, default);
@@ -149,10 +194,15 @@ public class StatsPage(ISystemClock clock) : Page<StatsPageClientProperties>
 
 public class StatsPageClientProperties : TemplateClientProperties
 {
+    public StatsTotals Totals { get; set; } = StatsTotals.DEFAULT;
     public ImmutableList<TimeSeriesEntry> Members { get; set; } = [];
     public ImmutableList<TimeSeriesEntry> Subscribers { get; set; } = [];
     public ImmutableList<TimeSeriesEntry> Questions { get; set; } = [];
     public ImmutableList<TimeSeriesEntry> Answers { get; set; } = [];
 }
 
+public record StatsTotals(int EnabledMembers, int NewsletterSubscribers, int QAndAQuestions, int QAndAAnswers)
+{
+    public static StatsTotals DEFAULT { get; } = new(0, 0, 0, 0);
+}
 public record TimeSeriesEntry(string Label, int Value);

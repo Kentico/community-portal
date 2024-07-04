@@ -4,9 +4,9 @@ using Kentico.Community.Portal.Core.Operations;
 
 namespace Kentico.Community.Portal.Web.Features.Blog;
 
-public record BlogPostsByTaxonomyQuery(Guid[] TagIdentifiers, string TaxonomyName, int Limit, string ChannelName) : IQuery<BlogPostsByTaxonomyQueryResponse>, ICacheByValueQuery, IChannelContentQuery
+public record BlogPostsByTaxonomyQuery(Guid[] TagIdentifiers, int Limit, string ChannelName) : IQuery<BlogPostsByTaxonomyQueryResponse>, ICacheByValueQuery, IChannelContentQuery
 {
-    public string CacheValueKey => $"{TaxonomyName}|{Limit}";
+    public string CacheValueKey => $"{string.Join("|", TagIdentifiers)}|{Limit}";
 }
 
 public record BlogPostsByTaxonomyQueryResponse(IReadOnlyList<BlogPostPage> Items);
@@ -18,10 +18,7 @@ public class BlogPostsByTaxonomyQueryHandler(WebPageQueryTools tools) : WebPageQ
         var contentsQuery = new ContentItemQueryBuilder().ForContentType(BlogPostContent.CONTENT_TYPE_NAME, queryParams =>
         {
             _ = queryParams
-                .Where(w => w
-                    .WhereContainsTags(nameof(BlogPostContent.BlogPostContentBlogType), request.TagIdentifiers)
-                    .Or()
-                    .WhereEquals(nameof(BlogPostContent.BlogPostContentTaxonomy), request.TaxonomyName))
+                .Where(w => w.WhereContainsTags(nameof(BlogPostContent.BlogPostContentBlogType), request.TagIdentifiers))
                 .OrderBy(new[] { new OrderByColumn(nameof(BlogPostContent.BlogPostContentPublishedDate), OrderDirection.Descending) })
                 .TopN(request.Limit)
                 .Columns(nameof(BlogPostContent.SystemFields.ContentItemID));

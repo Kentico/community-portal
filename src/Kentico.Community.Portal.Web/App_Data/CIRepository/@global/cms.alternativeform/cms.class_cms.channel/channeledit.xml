@@ -49,6 +49,24 @@ Headless;{$base.channels.channel.headless.caption$}
         </properties>
       </field>
       <field column="ChannelGUID" guid="1e802beb-f06d-4575-b5d0-f66c365fa1e1" enabled="" />
+      <field column="ChannelSize" guid="cd7665d1-05f5-40e9-a140-da05df9abd83" visible="true" enabled="">
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+Standard;{$base.channels.channel.size.standard$}
+Micro;{$base.channels.channel.size.micro$}
+]]>
+          </Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.channels.channel.size.label$}</fieldcaption>
+          <fielddescription>{$base.channels.channel.size.tooltip$}</fielddescription>
+          <fielddescriptionashtml>True</fielddescriptionashtml>
+        </properties>
+      </field>
     </form>
   </FormDefinition>
   <FormDisplayName>Edit channel</FormDisplayName>

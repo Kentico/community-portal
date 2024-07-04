@@ -13,32 +13,32 @@
   <MacroRuleName>CMSCurrentDayTimeIsInRange</MacroRuleName>
   <MacroRuleParameters>
     <form>
-      <field column="time1" columnsize="100" columntype="text" guid="1e9637b3-353e-4221-bca4-c32d2beeecb1" visible="true">
+      <field column="time1" columntype="time" guid="1e9637b3-353e-4221-bca4-c32d2beeecb1" visible="true">
         <properties>
-          <fieldcaption>enter time</fieldcaption>
+          <fieldcaption>Time from</fieldcaption>
         </properties>
         <settings>
           <AutoCompleteEnableCaching>False</AutoCompleteEnableCaching>
           <AutoCompleteFirstRowSelected>False</AutoCompleteFirstRowSelected>
           <AutoCompleteShowOnlyCurrentWordInCompletionListItem>False</AutoCompleteShowOnlyCurrentWordInCompletionListItem>
-          <controlname>Kentico.Administration.TextInput</controlname>
+          <controlname>Kentico.Administration.TimeInput</controlname>
           <FilterMode>False</FilterMode>
           <Trim>False</Trim>
-          <WatermarkText>enter time</WatermarkText>
+          <WatermarkText>{$base.forms.timeinput.watermarktext$}</WatermarkText>
         </settings>
       </field>
-      <field column="time2" columnsize="100" columntype="text" guid="e9fa6979-2879-4fad-9d47-ec9ce609e49d" visible="true">
+      <field column="time2" columntype="time" guid="e9fa6979-2879-4fad-9d47-ec9ce609e49d" visible="true">
         <properties>
-          <fieldcaption>enter time</fieldcaption>
+          <fieldcaption>Time to</fieldcaption>
         </properties>
         <settings>
           <AutoCompleteEnableCaching>False</AutoCompleteEnableCaching>
           <AutoCompleteFirstRowSelected>False</AutoCompleteFirstRowSelected>
           <AutoCompleteShowOnlyCurrentWordInCompletionListItem>False</AutoCompleteShowOnlyCurrentWordInCompletionListItem>
-          <controlname>Kentico.Administration.TextInput</controlname>
+          <controlname>Kentico.Administration.TimeInput</controlname>
           <FilterMode>False</FilterMode>
           <Trim>False</Trim>
-          <WatermarkText>enter time</WatermarkText>
+          <WatermarkText>{$base.forms.timeinput.watermarktext$}</WatermarkText>
         </settings>
       </field>
       <field column="_is" columnsize="100" columntype="text" guid="fc627809-7588-4de7-9798-d34a3eb6d851" visible="true">

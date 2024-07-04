@@ -3,7 +3,6 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using CMS.Helpers;
-using CMS.MediaLibrary;
 using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Operations;
@@ -67,7 +66,8 @@ public class RSSFeedController(
                 return CacheHelper.GetCacheDependency(keys);
             }
         };
-        var feed = await cache.LoadAsync(cs => RSSFeedInternal(feedPage), cacheSettings);
+        var tags = await mediator.Send(new BlogPostTaxonomiesQuery());
+        var feed = await cache.LoadAsync(cs => RSSFeedInternal(feedPage, tags), cacheSettings);
 
         var settings = new XmlWriterSettings
         {
@@ -88,7 +88,7 @@ public class RSSFeedController(
         return File(stream.ToArray(), "application/rss+xml; charset=utf-8");
     }
 
-    private async Task<SyndicationFeed> RSSFeedInternal(RSSFeedPage feedPage)
+    private async Task<SyndicationFeed> RSSFeedInternal(RSSFeedPage feedPage, BlogPostTaxonomiesQueryResponse blogTags)
     {
         var feedURL = await webPageUrlRetriever.Retrieve(feedPage);
 
@@ -127,23 +127,29 @@ public class RSSFeedController(
                 PublishDate = post.BlogPostContentPublishedDate
             };
 
-            post.BlogPostContentAuthor.TryFirst()
+            post.BlogPostContentAuthor
+                .TryFirst()
                 .Execute(author =>
                 {
                     item.Authors.Add(new SyndicationPerson() { Name = author.FullName });
                 });
 
-            item.Categories.Add(new SyndicationCategory(post.BlogPostContentTaxonomy));
+            post.BlogPostContentBlogType
+                .TryFirst()
+                .Bind(tr => blogTags.Items.TryFirst(i => i.Guid == tr.Identifier))
+                .Execute(tag => item.Categories.Add(new SyndicationCategory(tag.DisplayName)));
 
-            if (post.BlogPostContentTeaserMediaFileImage.FirstOrDefault() is AssetRelatedItem asset)
-            {
-                var image = await assetService.RetrieveMediaFileImage(asset);
-
-                if (image is not null)
+            await post.BlogPostContentTeaserMediaFileImage
+                .TryFirst()
+                .Execute(async asset =>
                 {
-                    item.ElementExtensions.Add(new XElement("image", image.URLData.AbsoluteURL(Request)));
-                }
-            }
+                    var image = await assetService.RetrieveMediaFileImage(asset);
+
+                    if (image is not null)
+                    {
+                        item.ElementExtensions.Add(new XElement("image", image.URLData.AbsoluteURL(Request)));
+                    }
+                });
 
             items.Add(item);
         }

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.settingskey>
+  <KeyCategoryID>
+    <CodeName>CMS.System.Licenses.Group</CodeName>
+    <ObjectType>cms.settingscategory</ObjectType>
+  </KeyCategoryID>
+  <KeyDescription>
+    <![CDATA[{$base.settings.settingskey.friendlyname.description$}]]>
+  </KeyDescription>
+  <KeyDisplayName>{$base.settings.settingskey.friendlyname$}</KeyDisplayName>
+  <KeyExplanationText />
+  <KeyGUID>2d726537-c606-4fe4-961a-228d87cdfe74</KeyGUID>
+  <KeyIsCustom>False</KeyIsCustom>
+  <KeyIsHidden>False</KeyIsHidden>
+  <KeyName>CMSInstanceFriendlyName</KeyName>
+  <KeyOrder>1</KeyOrder>
+  <KeyType>string</KeyType>
+  <KeyValidation>
+    <![CDATA[^[\w\\.,?!|'\/\- ]+$]]>
+  </KeyValidation>
+</cms.settingskey>

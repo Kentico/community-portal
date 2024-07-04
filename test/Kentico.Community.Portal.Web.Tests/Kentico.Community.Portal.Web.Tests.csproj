@@ -9,8 +9,10 @@
 
 	<ItemGroup>
 		<PackageReference Include="coverlet.collector" />
+		<PackageReference Include="FluentAssertions" />
 		<PackageReference Include="Kentico.Xperience.Core.Tests" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="NSubstitute" />
 		<PackageReference Include="NUnit" />
 		<PackageReference Include="NUnit3TestAdapter" />
 		<PackageReference Include="NUnit.Analyzers" />
@@ -22,20 +24,8 @@
 
 	<ItemGroup>
 		<Using Include="NUnit.Framework" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<AssemblyAttribute Include="CMS.AssemblyDiscoverableAttribute">
-		</AssemblyAttribute>
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Update="Tests.config">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="Tests.Local.config">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
+		<Using Include="NSubstitute" />
+		<Using Include="FluentAssertions" />
 	</ItemGroup>
 
 </Project>

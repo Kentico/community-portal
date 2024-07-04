@@ -3,19 +3,18 @@
 @model PageCustomMetaViewModel
 
 <title>@Model.Title</title>
-<meta content="@Model.Description" name="description">
-
-<link rel="canonical" href="@Model.URL">
 
 @if (Model.OGImageURL is string ogImageURL)
 {
-    <meta name="og:image" content="@ogImageURL">
+    <meta name="image" property="og:image" content="@ogImageURL">
 }
-<meta name="og:title" content="@Model.Title">
-<meta name="og:description" content="@Model.Description">
-<meta name="og:url" content="@Model.URL">
-<meta name="og:type" content="website">
-<meta name="og:site_name" content="@Model.SiteName">
+
+<meta name="title" property="og:title" content="@Model.Title" />
+<meta name="description" property="og:description" content="@Model.Description" />
+<meta name="type" property="og:type" content="website" />
+<meta name="url" property="og:url" content="@Model.URL" />
+<meta name="site_name" property="og:site_name" content="@Model.SiteName">
+
 <meta name="apple-mobile-web-app-title" content="@Model.Title">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="author" content="Kentico software s.r.o.">
@@ -35,7 +34,7 @@
 
 @if (Model.CanonicalURL.TryGetValue(out var url))
 {
-    <link rel="canonical" href="@url">
+    <link name="canonical" rel="canonical" href="@url">
 }
 
 @if (!string.IsNullOrWhiteSpace(Model.CaptchaSiteKey))

@@ -4,23 +4,23 @@ using CMS.DataEngine;
 using CMS.Helpers;
 using CMS.IO;
 using CMS.Membership;
-using Kentico.Community.Portal.Web.Infrastructure.Storage;
-using SkiaSharp;
 using Path = CMS.IO.Path;
 using FileInfo = CMS.IO.FileInfo;
+using Kentico.Community.Portal.Core.Infrastructure;
+using static Kentico.Community.Portal.Core.Infrastructure.IStoragePathService;
 
 namespace Kentico.Community.Portal.Web.Rendering;
 
 public class AvatarImageService(
     IWebHostEnvironment webHostEnvironment,
-    StoragePathService storagePathService,
+    IStoragePathService storagePathService,
     IInfoProvider<MemberInfo> memberProvider,
     IProgressiveCache cache)
 {
     private const string STORAGE_FOLDER_NAME = "avatars";
 
     private readonly IWebHostEnvironment webHostEnvironment = webHostEnvironment;
-    private readonly StoragePathService storagePathService = storagePathService;
+    private readonly IStoragePathService storagePathService = storagePathService;
     private readonly IInfoProvider<MemberInfo> memberProvider = memberProvider;
     private readonly IProgressiveCache cache = cache;
 
@@ -46,29 +46,23 @@ public class AvatarImageService(
             file.Delete();
         }
 
-        string filePath = storagePathService.GetMemberAssetsStorageFilePath(Path.Combine(STORAGE_FOLDER_NAME, $"{memberID}{Path.GetExtension(avatarImageFile.FileName)}"));
+        string avatarRelativePath = Path.Combine(STORAGE_FOLDER_NAME, $"{memberID}{Path.GetExtension(avatarImageFile.FileName)}");
+        string fullFilePath = storagePathService.GetStorageFilePath(avatarRelativePath, StorageAssetType.Member);
         using var stream = avatarImageFile.OpenReadStream();
 
-        DirectoryHelper.EnsureDiskPath(filePath, "");
-        StorageHelper.SaveFileToDisk(filePath, stream, false);
+        DirectoryHelper.EnsureDiskPath(fullFilePath, "");
+        StorageHelper.SaveFileToDisk(fullFilePath, stream, false);
     }
 
     private async Task<string?> GetAvatarFilePath(int memberID)
     {
         var map = await GetMemberAvatarFileExtensionsInternal();
 
-        return map.TryGetValue(memberID, out string? name)
-            ? storagePathService.GetMemberAssetsStorageFilePath(Path.Combine(STORAGE_FOLDER_NAME, $"{memberID}{name}"))
+        string? path = map.TryGetValue(memberID, out string? name)
+            ? storagePathService.GetStorageFilePath(Path.Combine(STORAGE_FOLDER_NAME, $"{memberID}{name}"), StorageAssetType.Member)
             : null;
-    }
 
-    private static Stream GetPngImageStream(string filePath)
-    {
-        var image = SKImage.FromEncodedData(filePath);
-        var imageStream = image.Encode().AsStream();
-        imageStream.Position = 0;
-
-        return imageStream;
+        return path;
     }
 
     private async Task<Dictionary<int, string>> GetMemberAvatarFileExtensionsInternal()

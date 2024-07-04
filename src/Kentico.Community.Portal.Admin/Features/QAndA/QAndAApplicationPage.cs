@@ -6,8 +6,8 @@ using Kentico.Xperience.Admin.Base;
     identifier: QAndAApplicationPage.IDENTIFIER,
     type: typeof(QAndAApplicationPage),
     slug: "questions-answers",
-    name: "Answers",
-    category: PortalWebAdminModule.QANDA_CATEGORY,
+    name: "Q&A",
+    category: PortalWebAdminModule.COMMUNITY_CATEGORY,
     icon: Icons.RectangleParagraph,
     templateName: TemplateNames.SECTION_LAYOUT)]
 

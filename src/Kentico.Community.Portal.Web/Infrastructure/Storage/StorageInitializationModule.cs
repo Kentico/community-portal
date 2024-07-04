@@ -1,8 +1,10 @@
 ﻿using CMS.Core;
 using CMS.DataEngine;
 using CMS.IO;
+using Kentico.Community.Portal.Core.Infrastructure;
 using Kentico.Xperience.AzureStorage;
 using Kentico.Xperience.Cloud;
+using static Kentico.Community.Portal.Core.Infrastructure.IStoragePathService;
 
 using Path = CMS.IO.Path;
 
@@ -10,29 +12,29 @@ namespace Kentico.Community.Portal.Web.Infrastructure.Storage;
 
 public class StorageInitializationModule : Module
 {
-    private IWebHostEnvironment environment = null!;
-
     public StorageInitializationModule() : base(nameof(StorageInitializationModule)) { }
 
     protected override void OnInit(ModuleInitParameters parameters)
     {
         base.OnInit();
 
-        environment = parameters.Services.GetRequiredService<IWebHostEnvironment>();
-        var storagePathService = parameters.Services.GetRequiredService<StoragePathService>();
+        var storagePathService = parameters.Services.GetRequiredService<IStoragePathService>();
 
-        string xperienceAssetsContainer = storagePathService.GetXperienceAssetsContainerPath();
-        string memberAssetsContainer = storagePathService.GetXperienceAssetsContainerPath();
+        string xperiencePrefix = storagePathService.GetStoragePathPrefix(StorageAssetType.Xperience);
+        string xperienceContainer = storagePathService.GetContainerPath(StorageAssetType.Xperience);
 
-        if (environment.IsQa() || environment.IsUat() || environment.IsProduction())
+        string memberPrefix = storagePathService.GetStoragePathPrefix(StorageAssetType.Member);
+        string memberContainer = storagePathService.GetContainerPath(StorageAssetType.Member);
+
+        if (storagePathService.ShouldMapAzureStorage)
         {
-            MapAzureStoragePath($"~/assets/", xperienceAssetsContainer);
-            MapAzureStoragePath($"~/member-assets/", memberAssetsContainer);
+            MapAzureStoragePath(xperiencePrefix, xperienceContainer);
+            MapAzureStoragePath(memberPrefix, memberContainer);
         }
         else
         {
-            MapLocalStoragePath($"~/assets/", xperienceAssetsContainer);
-            MapLocalStoragePath($"~/member-assets/", memberAssetsContainer);
+            MapLocalStoragePath(xperiencePrefix, xperienceContainer);
+            MapLocalStoragePath(memberPrefix, memberContainer);
         }
     }
 
@@ -56,25 +58,59 @@ public class StorageInitializationModule : Module
     }
 }
 
-public class StoragePathService(IWebHostEnvironment environment)
+public class StoragePathService(IWebHostEnvironment environment) : IStoragePathService
 {
-    public const string ContainerNameDefault = "default";
+    private const string ContainerNameDefault = "default";
 
-    private const string LocalStorageAssetsDirectoryName = "$StorageAssets";
+    private const string AzureStorageXperienceAssetsPathPrefix = "assets";
+    private const string AzureStorageMemberAssetsPathPrefix = "member-assets";
+
+    private const string LocalStorageXperienceAssetsDirectoryName = "$StorageAssets";
     private const string LocalStorageMemberAssetsDirectoryName = "$StorageMemberAssets";
 
     private readonly IWebHostEnvironment environment = environment;
 
-    public string GetMemberAssetsStorageFilePath(string filePath) =>
-        Path.Combine(GetMemberAssetsContainerPath(), filePath);
+    public bool ShouldMapAzureStorage =>
+        environment.IsQa() ||
+        environment.IsUat() ||
+        environment.IsProduction();
 
-    public string GetXperienceAssetsContainerPath() =>
-        environment.IsQa() || environment.IsUat() || environment.IsProduction()
-            ? ContainerNameDefault
-            : Path.Combine(LocalStorageAssetsDirectoryName, ContainerNameDefault);
+    public string GetStoragePathPrefix(StorageAssetType assetType)
+    {
+        string path = assetType switch
+        {
+            StorageAssetType.Xperience => AzureStorageXperienceAssetsPathPrefix,
+            StorageAssetType.Member => AzureStorageMemberAssetsPathPrefix,
+            _ => throw new ArgumentOutOfRangeException(nameof(assetType))
+        };
 
-    public string GetMemberAssetsContainerPath() =>
-        environment.IsQa() || environment.IsUat() || environment.IsProduction()
-            ? ContainerNameDefault
-            : Path.Combine(LocalStorageMemberAssetsDirectoryName, ContainerNameDefault);
+        return $"~/{path}/";
+    }
+
+    public string GetStorageFilePath(string filePath, StorageAssetType assetType)
+    {
+        string rootPath = assetType switch
+        {
+            StorageAssetType.Member => AzureStorageMemberAssetsPathPrefix,
+            StorageAssetType.Xperience or _ => throw new ArgumentOutOfRangeException(nameof(assetType))
+        };
+
+        return Path.Combine(rootPath, filePath);
+    }
+
+    public string GetContainerPath(StorageAssetType assetType)
+    {
+        string path = assetType switch
+        {
+            StorageAssetType.Xperience => ShouldMapAzureStorage
+                ? ContainerNameDefault
+                : Path.Combine(LocalStorageXperienceAssetsDirectoryName, ContainerNameDefault),
+            StorageAssetType.Member => ShouldMapAzureStorage
+                ? ContainerNameDefault
+                : Path.Combine(LocalStorageMemberAssetsDirectoryName, ContainerNameDefault),
+            _ => throw new ArgumentOutOfRangeException(nameof(assetType))
+        };
+
+        return path;
+    }
 }

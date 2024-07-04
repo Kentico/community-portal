@@ -100,11 +100,5 @@ namespace Kentico.Community.Portal.Core.Content
 		/// WebsiteSettingsContentAlertBoxContentHTML.
 		/// </summary>
 		public string WebsiteSettingsContentAlertBoxContentHTML { get; set; }
-
-
-		/// <summary>
-		/// WebsiteSettingsContentFormsConfigurationJSON.
-		/// </summary>
-		public string WebsiteSettingsContentFormsConfigurationJSON { get; set; }
 	}
 }
