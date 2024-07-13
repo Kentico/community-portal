@@ -105,7 +105,26 @@
           </TaxonomyGroup>
         </settings>
       </field>
+      <field allowempty="true" column="QAndAQuestionPageBlogPostPage" columnprecision="0" columntype="webpages" enabled="true" guid="067930f9-1c5f-4c47-b22c-31d634f99713" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Linked blog post</fieldcaption>
+          <fielddescription>
+            <![CDATA[If this Q&A discussion was created for a blog post, that blog post page is identified here]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.WebPageSelector</controlname>
+          <MaximumPages>1</MaximumPages>
+          <Sortable>False</Sortable>
+          <TreePath>/Blog</TreePath>
+        </settings>
+      </field>
       <field allowempty="true" column="QAndAQuestionPageAcceptedAnswerDataGUID" columnprecision="0" columntype="guid" enabled="true" guid="d650da7d-7e2f-4103-9c9f-ed53c5413753" />
+      <schema guid="19eeca92-ebc9-4489-ad27-3d51bd2d2622" name="19eeca92-ebc9-4489-ad27-3d51bd2d2622">
+        <properties />
+      </schema>
     </form>
   </ClassFormDefinition>
   <ClassGUID>c014abca-c95e-4f1e-8bea-9821bee891fc</ClassGUID>

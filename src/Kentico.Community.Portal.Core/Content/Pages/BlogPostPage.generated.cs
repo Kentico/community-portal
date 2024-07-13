@@ -48,9 +48,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// BlogPostPageCanonicalURL.
+		/// BlogPostPageQAndADiscussionPage.
 		/// </summary>
-		public string BlogPostPageCanonicalURL { get; set; }
+		public IEnumerable<WebPageRelatedItem> BlogPostPageQAndADiscussionPage { get; set; }
 
 
 		/// <summary>
@@ -75,5 +75,11 @@ namespace Kentico.Community.Portal.Core.Content
 		/// WebPageMetaRobots.
 		/// </summary>
 		public string WebPageMetaRobots { get; set; }
+
+
+		/// <summary>
+		/// WebPageCanonicalURL.
+		/// </summary>
+		public string WebPageCanonicalURL { get; set; }
 	}
 }

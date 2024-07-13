@@ -9,9 +9,9 @@ public class WebPageMetaService(
 {
     private readonly IMediator mediator = mediator;
     private readonly AssetItemService assetItemService = assetItemService;
-    private Meta meta = new("", "");
+    private WebpageMeta meta = new("", "");
 
-    public async Task<Meta> GetMeta()
+    public async Task<WebpageMeta> GetMeta()
     {
         var settings = await mediator.Send(new WebsiteSettingsContentQuery());
 
@@ -36,14 +36,5 @@ public class WebPageMetaService(
         return meta;
     }
 
-    public void SetMeta(Meta meta) => this.meta = meta;
+    public void SetMeta(WebpageMeta meta) => this.meta = meta;
 }
-
-public record Meta(string Title, string Description)
-{
-    public Meta(IWebPageMeta meta) : this(meta.WebPageMetaTitle, meta.WebPageMetaDescription) => Robots = meta.WebPageMetaRobots;
-
-    public string? CanonicalURL { get; init; }
-    public string? OGImageURL { get; init; }
-    public string? Robots { get; set; } = null;
-};

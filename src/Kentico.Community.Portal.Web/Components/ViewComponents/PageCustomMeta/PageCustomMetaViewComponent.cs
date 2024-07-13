@@ -43,7 +43,7 @@ public class PageCustomMetaViewModel
 {
     public static PageCustomMetaViewModel Empty { get; } = new PageCustomMetaViewModel();
 
-    public PageCustomMetaViewModel(Meta meta)
+    public PageCustomMetaViewModel(WebpageMeta meta)
     {
         Title = meta.Title;
         Description = meta.Description;

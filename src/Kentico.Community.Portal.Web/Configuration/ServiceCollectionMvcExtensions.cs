@@ -1,5 +1,4 @@
 using Kentico.Community.Portal.Web.Features.Errors;
-using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Resources;
 using Lucene.Net.Util;
 using Microsoft.AspNetCore.Localization;
@@ -86,8 +85,6 @@ public static class ServiceCollectionMvcExtensions
                 {
                     _ = config.Filters.Add<CustomExceptionFilter>();
                 }
-
-                _ = config.Filters.Add<ContentAuthorizationFilter>();
             })
             .AddViewLocalization()
             .AddDataAnnotationsLocalization(options =>

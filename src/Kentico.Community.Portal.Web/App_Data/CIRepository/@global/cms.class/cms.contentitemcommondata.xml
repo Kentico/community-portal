@@ -79,6 +79,25 @@
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
       </field>
+      <field allowempty="true" column="WebPageCanonicalURL" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="7a88c06b-37b9-4a98-8085-629d7b00c5ee" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Canonical URL</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>19eeca92-ebc9-4489-ad27-3d51bd2d2622</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Community.Portal.ValidationRule.URL</ValidationRuleIdentifier>
+            <RuleValues>
+              <RequireHTTPS>true</RequireHTTPS>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
       <schema guid="5d16c375-e18b-46ac-b951-cf8f11e9c9e5" name="EmailDefaults">
         <properties>
           <description>

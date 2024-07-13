@@ -72,6 +72,12 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
+		/// WebPageCanonicalURL.
+		/// </summary>
+		public string WebPageCanonicalURL { get; set; }
+
+
+		/// <summary>
 		/// ContentAuthorizationAllowedTags.
 		/// </summary>
 		public IEnumerable<TagReference> ContentAuthorizationAllowedTags { get; set; }

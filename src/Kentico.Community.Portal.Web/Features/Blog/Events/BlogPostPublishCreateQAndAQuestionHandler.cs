@@ -1,4 +1,5 @@
 using CMS.Core;
+using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Membership;
@@ -15,11 +16,13 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
     IHttpContextAccessor accessor,
     IMediator mediator,
     IWebPageUrlRetriever pageUrlRetriever,
+    ISystemClock clock,
     IEventLogService log)
 {
     private readonly IHttpContextAccessor accessor = accessor;
     private readonly IMediator mediator = mediator;
     private readonly IWebPageUrlRetriever pageUrlRetriever = pageUrlRetriever;
+    private readonly ISystemClock clock = clock;
     private readonly IEventLogService log = log;
 
     public async Task Handle(PublishWebPageEventArgs args)
@@ -40,12 +43,15 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
             WebsiteChannelName = args.WebsiteChannelName
         }));
 
-        if (!string.IsNullOrEmpty(page.BlogPostPageQAndADiscussionLinkPath))
+        // Do not re-process pages that already have a linked Q&A Discussion Page
+        if (!string.IsNullOrEmpty(page.BlogPostPageQAndADiscussionLinkPath) || page.BlogPostPageQAndADiscussionPage.Any())
         {
             return;
         }
 
         var rootQuestionPage = await mediator.Send(new QAndAQuestionsRootPageQuery(args.WebsiteChannelName));
+        var now = clock.Now;
+        var questionMonthFolder = await mediator.Send(new QAndAMonthFolderQuery(rootQuestionPage, args.WebsiteChannelName, now.Year, now.Month, args.WebsiteChannelID));
 
         var url = await pageUrlRetriever.Retrieve(page);
         string postTitle = page.BlogPostPageBlogPostContent.FirstOrDefault()?.BlogPostContentTitle ?? "";
@@ -61,22 +67,21 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
         };
         var command = new QAndAQuestionCreateCommand(
             member,
-            rootQuestionPage,
+            questionMonthFolder,
             args.WebsiteChannelID,
             questionTitle,
             questionContent,
-            SystemTaxonomies.QAndADiscussionTypeTaxonomy.BlogTag.GUID);
+            SystemTaxonomies.QAndADiscussionTypeTaxonomy.BlogTag.GUID,
+            page);
 
         await mediator.Send(command, default)
             .Map(async questionWebPageID =>
             {
-                var questionPageURL = await pageUrlRetriever.Retrieve(questionWebPageID, args.ContentLanguageName);
-
                 /*
                 * This will recurse on this handler because it publishes the blog post
                 * but we guard against updating a blog post page that already has a question path
                 */
-                return await mediator.Send(new BlogPostPageSetQuestionURLCommand(page, args.WebsiteChannelID, questionPageURL));
+                return await mediator.Send(new BlogPostPageSetQuestionURLCommand(page, args.WebsiteChannelID, questionWebPageID));
             })
             .Match(
                 MonadUtilities.Noop,

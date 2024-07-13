@@ -47,5 +47,11 @@ namespace Kentico.Community.Portal.Core.Content
 		/// WebPageMetaRobots.
 		/// </summary>
 		public string WebPageMetaRobots { get; set; }
+
+
+		/// <summary>
+		/// WebPageCanonicalURL.
+		/// </summary>
+		public string WebPageCanonicalURL { get; set; }
 	}
 }

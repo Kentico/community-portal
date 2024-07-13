@@ -2,6 +2,7 @@
 using CMS.Membership;
 using CMS.Websites.Routing;
 using Htmx;
+using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Content.Web.Mvc;
@@ -21,6 +22,7 @@ public class QAndAQuestionController(
     IMediator mediator,
     IWebPageUrlRetriever urlRetriever,
     IWebsiteChannelContext channelContext,
+    ISystemClock clock,
     IEventLogService log) : PortalHandlerController(log)
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
@@ -28,6 +30,7 @@ public class QAndAQuestionController(
     private readonly IMediator mediator = mediator;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
     private readonly IWebsiteChannelContext channelContext = channelContext;
+    private readonly ISystemClock clock = clock;
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -45,15 +48,18 @@ public class QAndAQuestionController(
             return Unauthorized();
         }
 
-        var questionParent = await mediator.Send(new QAndAQuestionsRootPageQuery(channelContext.WebsiteChannelName));
+        var now = clock.Now;
+        var questionsParent = await mediator.Send(new QAndAQuestionsRootPageQuery(channelContext.WebsiteChannelName));
+        var questionMonthFolder = await mediator.Send(new QAndAMonthFolderQuery(questionsParent, channelContext.WebsiteChannelName, now.Year, now.Month, channelContext.WebsiteChannelID));
 
         return await mediator.Send(new QAndAQuestionCreateCommand(
             member,
-            questionParent,
+            questionMonthFolder,
             channelContext.WebsiteChannelID,
             requestModel.Title,
             requestModel.Content,
-            SystemTaxonomies.QAndADiscussionTypeTaxonomy.QuestionTag.GUID))
+            SystemTaxonomies.QAndADiscussionTypeTaxonomy.QuestionTag.GUID,
+            Maybe<BlogPostPage>.None))
             .Match(_ =>
             {
                 Response.Htmx(h => h.Redirect("/q-and-a"));

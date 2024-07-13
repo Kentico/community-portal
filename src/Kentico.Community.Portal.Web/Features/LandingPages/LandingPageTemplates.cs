@@ -46,6 +46,15 @@ public class LandingPageTemplateController(
     private readonly WebPageMetaService metaService = metaService;
     private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <remarks>
+    /// This authorization filter must be applied at the Controller level because it interfers
+    /// with the Page Builder if registered globally
+    /// </remarks>
+    [TypeFilter(typeof(ContentAuthorizationFilter))]
     public async Task<ActionResult> Index()
     {
         if (!contextRetriever.TryRetrieve(out var data))
@@ -55,7 +64,10 @@ public class LandingPageTemplateController(
 
         var landingPage = await mediator.Send(new LandingPageQuery(data.WebPage));
 
-        metaService.SetMeta(new(landingPage));
+        metaService.SetMeta(new(landingPage)
+        {
+            CanonicalURL = landingPage.WebPageCanonicalURL
+        });
 
         return new TemplateResult(landingPage);
     }

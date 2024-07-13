@@ -78,6 +78,12 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
+		/// QAndAQuestionPageBlogPostPage.
+		/// </summary>
+		public IEnumerable<WebPageRelatedItem> QAndAQuestionPageBlogPostPage { get; set; }
+
+
+		/// <summary>
 		/// QAndAQuestionPageAcceptedAnswerDataGUID.
 		/// </summary>
 		public Guid QAndAQuestionPageAcceptedAnswerDataGUID { get; set; }

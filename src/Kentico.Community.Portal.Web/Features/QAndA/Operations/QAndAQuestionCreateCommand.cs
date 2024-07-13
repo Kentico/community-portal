@@ -11,11 +11,12 @@ namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 public record QAndAQuestionCreateCommand(
     CommunityMember MemberAuthor,
-    QAndAQuestionsRootPage QuestionParent,
+    WebPageFolder QuestionParent,
     int WebsiteChannelID,
     string QuestionTitle,
     string QuestionContent,
-    Guid DiscussionTypeTagIdentifier) : ICommand<Result<int>>;
+    Guid DiscussionTypeTagIdentifier,
+    Maybe<BlogPostPage> LinkedBlogPost) : ICommand<Result<int>>;
 public class QAndAQuestionCreateCommandHandler(
     WebPageCommandTools tools,
     IInfoProvider<UserInfo> users,
@@ -44,19 +45,31 @@ public class QAndAQuestionCreateCommandHandler(
             { nameof(QAndAQuestionPage.QAndAQuestionPageContent), request.QuestionContent },
             { nameof(QAndAQuestionPage.QAndAQuestionPageAuthorMemberID), request.MemberAuthor.Id },
             { nameof(QAndAQuestionPage.QAndAQuestionPageAcceptedAnswerDataGUID), Guid.Empty },
-            { nameof(QAndAQuestionPage.QAndAQuestionPageDiscussionType), JsonSerializer.Serialize<IEnumerable<TagReference>>([new TagReference { Identifier = request.DiscussionTypeTagIdentifier }]) },
+            {
+                nameof(QAndAQuestionPage.QAndAQuestionPageDiscussionType),
+                JsonSerializer.Serialize<IEnumerable<TagReference>>([new() { Identifier = request.DiscussionTypeTagIdentifier }])
+            },
         });
+        request.LinkedBlogPost
+            .Execute(post =>
+            {
+                itemData.SetValue(
+                    nameof(QAndAQuestionPage.QAndAQuestionPageBlogPostPage),
+                    JsonSerializer.Serialize<IEnumerable<WebPageRelatedItem>>([new() { WebPageGuid = post.SystemFields.WebPageItemGUID }]));
+            });
+
         var contentItemParameters = new ContentItemParameters(QAndAQuestionPage.CONTENT_TYPE_NAME, itemData);
         var webPageParameters = new CreateWebPageParameters(displayName, PortalWebSiteChannel.DEFAULT_LANGUAGE, contentItemParameters)
         {
-            ParentWebPageItemID = request.QuestionParent.SystemFields.WebPageItemID,
+            ParentWebPageItemID = request.QuestionParent.WebPageItemID,
             RequiresAuthentication = false,
             VersionStatus = VersionStatus.Published
         };
 
         try
         {
-            return await webPageManager.Create(webPageParameters, cancellationToken);
+            return await webPageManager.Create(webPageParameters);
+
         }
         catch (Exception ex)
         {

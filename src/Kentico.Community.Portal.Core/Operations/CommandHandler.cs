@@ -3,11 +3,16 @@ using MediatR;
 
 namespace Kentico.Community.Portal.Core.Operations;
 
-public class WebPageCommandTools(IContentQueryExecutor executor, IWebPageManagerFactory webPageManagerFactory, IContentItemManagerFactory contentItemManagerFactory)
+public class WebPageCommandTools(
+    IContentQueryExecutor executor,
+    IWebPageManagerFactory webPageManagerFactory,
+    IContentItemManagerFactory contentItemManagerFactory,
+    IWebPageFolderRetriever webPageFolderRetriever)
 {
     public IContentQueryExecutor Executor { get; } = executor;
     public IWebPageManagerFactory WebPageManagerFactory { get; } = webPageManagerFactory;
     public IContentItemManagerFactory ContentItemManagerFactory { get; } = contentItemManagerFactory;
+    public IWebPageFolderRetriever WebPageFolderRetriever { get; } = webPageFolderRetriever;
 }
 
 public interface ICommandHandler<in TCommand, TResult> : IRequestHandler<TCommand, TResult> where TCommand : ICommand<TResult> { }
@@ -18,6 +23,7 @@ public abstract class WebPageCommandHandler<TCommand, TResult>(WebPageCommandToo
     public IContentQueryExecutor Executor { get; } = tools.Executor;
     public IWebPageManagerFactory WebPageManagerFactory { get; } = tools.WebPageManagerFactory;
     public IContentItemManagerFactory ContentItemManagerFactory { get; } = tools.ContentItemManagerFactory;
+    public IWebPageFolderRetriever WebPageFolderRetriever { get; } = tools.WebPageFolderRetriever;
 
     public abstract Task<TResult> Handle(TCommand request, CancellationToken cancellationToken);
 }

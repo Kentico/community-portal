@@ -1,5 +1,6 @@
 using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.Members;
+using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Content.Web.Mvc;
@@ -33,13 +34,15 @@ public class BlogPostPageTemplateController(
     WebPageMetaService metaService,
     IMediator mediator,
     MarkdownRenderer renderer,
-    IWebPageDataContextRetriever contextRetriever) : Controller
+    IWebPageDataContextRetriever contextRetriever,
+    IWebPageUrlRetriever urlRetriever) : Controller
 {
     private readonly AssetItemService assetService = assetService;
     private readonly WebPageMetaService metaService = metaService;
     private readonly IMediator mediator = mediator;
     private readonly MarkdownRenderer renderer = renderer;
     private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
+    private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
 
     public async Task<ActionResult> Index()
     {
@@ -72,22 +75,10 @@ public class BlogPostPageTemplateController(
             Date = post.BlogPostContentPublishedDate,
             UnsanitizedContentHTML = contentHTML,
             AbsoluteURL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}{Request.Path}",
-            DiscussionLinkPath = string.IsNullOrWhiteSpace(blogPage.BlogPostPageQAndADiscussionLinkPath)
-                ? null
-                : blogPage.BlogPostPageQAndADiscussionLinkPath
+            DiscussionLinkPath = await GetDiscussionLinkPath(blogPage, data.WebPage.WebsiteChannelName)
         };
 
-        string metaTitle = string.IsNullOrWhiteSpace(blogPage.WebPageMetaTitle)
-            ? post.BlogPostContentTitle
-            : blogPage.WebPageMetaTitle;
-        string metaDescription = string.IsNullOrWhiteSpace(blogPage.WebPageMetaDescription)
-            ? post.BlogPostContentShortDescription
-            : blogPage.WebPageMetaDescription;
-
-        metaService.SetMeta(new(metaTitle, metaDescription)
-        {
-            CanonicalURL = blogPage.BlogPostPageCanonicalURL
-        });
+        metaService.SetMeta(blogPage.GetWebpageMeta());
 
         return new TemplateResult(vm);
     }
@@ -123,6 +114,25 @@ public class BlogPostPageTemplateController(
         return string.IsNullOrWhiteSpace(path)
             ? Maybe<string>.None
             : path;
+    }
+
+    private async Task<string?> GetDiscussionLinkPath(BlogPostPage blogPostPage, string channelName)
+    {
+        if (!string.IsNullOrWhiteSpace(blogPostPage.BlogPostPageQAndADiscussionLinkPath))
+        {
+            return blogPostPage.BlogPostPageQAndADiscussionLinkPath;
+        }
+
+        if (blogPostPage.BlogPostPageQAndADiscussionPage.FirstOrDefault() is not WebPageRelatedItem relatedItem)
+        {
+            return null;
+        }
+
+        var questionPage = await mediator.Send(new QAndAQuestionPageByGUIDQuery(relatedItem.WebPageGuid, channelName));
+
+        var pageUrl = await urlRetriever.Retrieve(questionPage);
+
+        return pageUrl.RelativePath;
     }
 }
 

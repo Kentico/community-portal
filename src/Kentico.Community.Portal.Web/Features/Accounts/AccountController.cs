@@ -33,7 +33,7 @@ public class AccountController(
     [HttpGet]
     public async Task<ActionResult> MyAccount()
     {
-        metaService.SetMeta(new Meta("My Account", "Manage your Community Portal account."));
+        metaService.SetMeta(new("My Account", "Manage your Community Portal account."));
 
         var member = await userManager.GetUserAsync(User);
 

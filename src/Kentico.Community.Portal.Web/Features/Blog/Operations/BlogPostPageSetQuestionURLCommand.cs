@@ -1,17 +1,17 @@
+using System.Text.Json;
 using CMS.ContentEngine;
 using CMS.DataEngine;
 using CMS.Membership;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Infrastructure;
-using Kentico.Content.Web.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.Blog;
 
 public record BlogPostPageSetQuestionURLCommand(
     BlogPostPage BlogPost,
     int WebsiteChannelID,
-    WebPageUrl QuestionPageURL) : ICommand<Result>;
+    int QuestionWebPageID) : ICommand<Result>;
 public class BlogPostPageSetQuestionURLCommandHandler(
     WebPageCommandTools tools,
     IInfoProvider<UserInfo> users) : WebPageCommandHandler<BlogPostPageSetQuestionURLCommand, Result>(tools)
@@ -22,6 +22,17 @@ public class BlogPostPageSetQuestionURLCommandHandler(
     {
         var blogPost = request.BlogPost;
         var user = await users.GetPublicMemberContentAuthor();
+
+        var query = new ContentItemQueryBuilder()
+            .ForContentTypes(q => q.ForWebsite([request.QuestionWebPageID]))
+            .Parameters(q => q.Columns(nameof(WebPageFields.WebPageItemGUID)));
+        var questionPages = await Executor.GetMappedWebPageResult<QAndAQuestionPage>(query, cancellationToken: cancellationToken);
+
+        if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
+        {
+            return Result.Failure($"Could not retrieve a {QAndAQuestionPage.CONTENT_TYPE_NAME} with {nameof(WebPageFields.WebPageItemID)} [{request.QuestionWebPageID}]");
+        }
+
         var webPageManager = WebPageManagerFactory.Create(request.WebsiteChannelID, user.UserID);
 
         bool create = await webPageManager.TryCreateDraft(blogPost.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
@@ -32,7 +43,10 @@ public class BlogPostPageSetQuestionURLCommandHandler(
 
         var itemData = new ContentItemData(new Dictionary<string, object>
         {
-            { nameof(BlogPostPage.BlogPostPageQAndADiscussionLinkPath), request.QuestionPageURL.RelativePathTrimmed() },
+            {
+                nameof(BlogPostPage.BlogPostPageQAndADiscussionPage),
+                JsonSerializer.Serialize<IEnumerable<WebPageRelatedItem>>([new() { WebPageGuid = questionPage.SystemFields.WebPageItemGUID }])
+            }
         });
         var draftData = new UpdateDraftData(itemData);
         bool update = await webPageManager.TryUpdateDraft(blogPost.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, draftData, cancellationToken);
