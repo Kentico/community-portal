@@ -20,7 +20,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// Represents a content item of type <see cref="IntegrationContent"/>.
 	/// </summary>
 	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
-	public partial class IntegrationContent : IContentItemFieldsSource
+	public partial class IntegrationContent : IContentItemFieldsSource, IListableItem
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -36,21 +36,27 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
+		/// IntegrationContentPublishedDate.
+		/// </summary>
+		public DateTime IntegrationContentPublishedDate { get; set; }
+
+
+		/// <summary>
 		/// IntegrationContentTitle.
 		/// </summary>
 		public string IntegrationContentTitle { get; set; }
 
 
 		/// <summary>
-		/// IntegrationContentLogoMediaFile.
-		/// </summary>
-		public IEnumerable<AssetRelatedItem> IntegrationContentLogoMediaFile { get; set; }
-
-
-		/// <summary>
 		/// IntegrationContentShortDescription.
 		/// </summary>
 		public string IntegrationContentShortDescription { get; set; }
+
+
+		/// <summary>
+		/// IntegrationContentLogoMediaFile.
+		/// </summary>
+		public IEnumerable<AssetRelatedItem> IntegrationContentLogoMediaFile { get; set; }
 
 
 		/// <summary>
@@ -72,9 +78,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// IntegrationContentType.
+		/// IntegrationContentAuthorMemberID.
 		/// </summary>
-		public string IntegrationContentType { get; set; }
+		public int IntegrationContentAuthorMemberID { get; set; }
 
 
 		/// <summary>
@@ -87,5 +93,23 @@ namespace Kentico.Community.Portal.Core.Content
 		/// IntegrationContentAuthorLinkURL.
 		/// </summary>
 		public string IntegrationContentAuthorLinkURL { get; set; }
+
+
+		/// <summary>
+		/// ListableItemTitle.
+		/// </summary>
+		public string ListableItemTitle { get; set; }
+
+
+		/// <summary>
+		/// ListableItemShortDescription.
+		/// </summary>
+		public string ListableItemShortDescription { get; set; }
+
+
+		/// <summary>
+		/// ListableItemFeaturedImage.
+		/// </summary>
+		public IEnumerable<MediaAssetContent> ListableItemFeaturedImage { get; set; }
 	}
 }

@@ -1,15 +1,15 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-
+using CMS.Core;
+using Kentico.Community.Portal.Web.Features.Members;
+using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
-
+using Kentico.Community.Portal.Web.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Kentico.Community.Portal.Web.Rendering;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using CMS.Core;
 
 namespace Kentico.Community.Portal.Web.Features.Accounts;
 
@@ -20,6 +20,7 @@ public class AccountController(
     UserManager<CommunityMember> userManager,
     SignInManager<CommunityMember> signInManager,
     MemberContactManager contactManager,
+    MemberBadgeService memberBadgeService,
     AvatarImageService avatarImageService,
     IEventLogService log) : Controller
 {
@@ -27,6 +28,7 @@ public class AccountController(
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly SignInManager<CommunityMember> signInManager = signInManager;
     private readonly MemberContactManager contactManager = contactManager;
+    private readonly MemberBadgeService memberBadgeService = memberBadgeService;
     private readonly AvatarImageService avatarImageService = avatarImageService;
     private readonly IEventLogService log = log;
 
@@ -58,7 +60,8 @@ public class AccountController(
             {
                 MemberID = member.Id,
                 ShowForm = false
-            }
+            },
+            EarnedBadges = await memberBadgeService.GetAllBadgesFor(member.Id)
         };
 
         return View("~/Features/Accounts/MyAccount.cshtml", vm);
@@ -177,6 +180,33 @@ public class AccountController(
         model.ShowForm = false;
         return PartialView("~/Features/Accounts/_AvatarForm.cshtml", model);
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult> UpdateSelectedBadges(List<SelectedBadgeViewModel> badges)
+    {
+        var user = await userManager.GetUserAsync(User);
+
+        if (user is null)
+        {
+            return Unauthorized();
+        }
+
+        if (badges.Count(x => x.IsSelected) > 3)
+        {
+            return ValidationProblem();
+        }
+
+        _ = await memberBadgeService.UpdateSelectedBadgesFor(badges, user.Id);
+
+        return RedirectToAction(nameof(MyAccount));
+    }
+}
+
+public class SelectedBadgeViewModel
+{
+    public int BadgeId { get; set; }
+    public bool IsSelected { get; set; }
 }
 
 public class MyAccountViewModel : IPortalPage
@@ -185,6 +215,7 @@ public class MyAccountViewModel : IPortalPage
     public string Username { get; set; } = "";
     public string Email { get; set; } = "";
     public ProfileViewModel Profile { get; set; } = new();
+    public IReadOnlyList<MemberBadgeViewModel> EarnedBadges { get; set; } = [];
     public DateTime DateCreated { get; set; }
     public UpdatePasswordViewModel PasswordInfo { get; set; } = new();
     public string Title => "My Account";

@@ -8,7 +8,8 @@
                     <div class="page-member__avatar-container">
                         <div class="page-member__avatar">
                             <div class="page-member__avatar-image-div">
-                                <img src="" class="page-member__avatar-image img-fluid" xpc-member-avatar="@Model.Member.Id" alt="Avatar Image" />
+                                <img src="" class="page-member__avatar-image img-fluid"
+                                    xpc-member-avatar="@Model.Member.Id" alt="Avatar Image" />
                             </div>
                         </div>
                     </div>
@@ -46,23 +47,17 @@
                                             href="https://www.linkedin.com/in/@member.LinkedInIdentifier">@member.LinkedInIdentifier</a>
                                     </p>
                                 }
-                                <p>Badges:</p>
                                 <div>
-                                    @if (member.IsMVP)
-                                    {
-                                        <span title="This member is a Kentico MVP">
-                                            <a href="https://www.kentico.com/partners/mvp-program">
-                                                <span class="badge rounded-pill text-bg-primary">MVP</span>
-                                            </a>
-                                        </span>
-                                    }
+                                    <div class="d-flex">
+                                        <p><span class="me-1">Badges:</span> <vc:member-badges
+                                                badges="@Model.MemberBadges" /></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-6">
                     <h3>Blog Posts</h3>

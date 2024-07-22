@@ -4,10 +4,10 @@ using CMS.DataEngine;
 using CMS.Helpers;
 using CMS.IO;
 using CMS.Membership;
-using Path = CMS.IO.Path;
-using FileInfo = CMS.IO.FileInfo;
 using Kentico.Community.Portal.Core.Infrastructure;
 using static Kentico.Community.Portal.Core.Infrastructure.IStoragePathService;
+using FileInfo = CMS.IO.FileInfo;
+using Path = CMS.IO.Path;
 
 namespace Kentico.Community.Portal.Web.Rendering;
 

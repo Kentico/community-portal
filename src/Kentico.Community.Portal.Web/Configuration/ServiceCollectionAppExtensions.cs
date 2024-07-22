@@ -8,6 +8,7 @@ using Kentico.Community.Portal.Web.Features.Blog.Events;
 using Kentico.Community.Portal.Web.Features.DataCollection;
 using Kentico.Community.Portal.Web.Features.Forms;
 using Kentico.Community.Portal.Web.Features.Home;
+using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Features.QAndA.Events;
 using Kentico.Community.Portal.Web.Features.SEO;
 using Kentico.Community.Portal.Web.Features.Support;
@@ -34,7 +35,8 @@ public static class ServiceCollectionAppExtensions
             .AddInfrastructure(config)
             .AddSupport(config)
             .AddQAndA()
-            .AddBlogs();
+            .AddBlogs()
+            .AddMemberBadges();
 
     private static IServiceCollection AddOperations(this IServiceCollection services, IConfiguration config) =>
         services
@@ -99,6 +101,21 @@ public static class ServiceCollectionAppExtensions
             .AddTransient<QAndAAnswerDeleteSearchIndexTaskHandler>();
     private static IServiceCollection AddBlogs(this IServiceCollection services) =>
         services.AddTransient<BlogPostPublishCreateQAndAQuestionHandler>();
+
+    private static IServiceCollection AddMemberBadges(this IServiceCollection services) =>
+        services
+            .AddSingleton<IMemberBadgeInfoProvider, MemberBadgeInfoProvider>()
+            .AddSingleton<IMemberBadgeMemberInfoProvider, MemberBadgeMemberInfoProvider>()
+            .AddTransient<MemberBadgeService>()
+            .AddTransient<IMemberBadgeAssignmentRule, BlogPostAuthorMemberBadgeAssignmentRule>()
+            // This rule is disabled because it has already run and no new members can qualify for it. It is left here as an example.
+            //.AddTransient<IMemberBadgeAssignmentRule, EarlyAdopterMemberBadgeAssignmentRule>()
+            .AddTransient<IMemberBadgeAssignmentRule, DiscussionAuthorMemberBadgeAssignmentRule>()
+            .AddTransient<IMemberBadgeAssignmentRule, DiscussionParticipantMemberBadgeAssignmentRule>()
+            .AddTransient<IMemberBadgeAssignmentRule, DiscussionAcceptedAnswerAuthorMemberBadgeAssignmentRule>()
+            .AddTransient<IMemberBadgeAssignmentRule, KenticoEmployeeMemberBadgeAssignmentRule>()
+            .AddTransient<IMemberBadgeAssignmentRule, IntegrationAuthorMemberBadgeAssignmentRule>()
+            .AddHostedService<MemberBadgeAssignmentApplicationBackgroundService>();
 
     private static IServiceCollection AddClosedGenericTypes(
         this IServiceCollection services,

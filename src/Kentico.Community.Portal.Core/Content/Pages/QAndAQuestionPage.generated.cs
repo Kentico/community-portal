@@ -20,7 +20,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// Represents a page of type <see cref="QAndAQuestionPage"/>.
 	/// </summary>
 	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
-	public partial class QAndAQuestionPage : IWebPageFieldsSource
+	public partial class QAndAQuestionPage : IWebPageFieldsSource, IWebPageMeta
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -87,5 +87,35 @@ namespace Kentico.Community.Portal.Core.Content
 		/// QAndAQuestionPageAcceptedAnswerDataGUID.
 		/// </summary>
 		public Guid QAndAQuestionPageAcceptedAnswerDataGUID { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaTitle.
+		/// </summary>
+		public string WebPageMetaTitle { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaDescription.
+		/// </summary>
+		public string WebPageMetaDescription { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaExcludeFromSitemap.
+		/// </summary>
+		public bool WebPageMetaExcludeFromSitemap { get; set; }
+
+
+		/// <summary>
+		/// WebPageMetaRobots.
+		/// </summary>
+		public string WebPageMetaRobots { get; set; }
+
+
+		/// <summary>
+		/// WebPageCanonicalURL.
+		/// </summary>
+		public string WebPageCanonicalURL { get; set; }
 	}
 }

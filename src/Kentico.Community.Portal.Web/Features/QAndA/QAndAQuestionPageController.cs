@@ -2,6 +2,8 @@ using CMS.Membership;
 using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.Blog;
+using Kentico.Community.Portal.Web.Features.Members;
+using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Features.QAndA.Search;
 using Kentico.Community.Portal.Web.Infrastructure;
@@ -28,6 +30,7 @@ public class QAndAQuestionPageController(
     IUserInfoProvider userInfoProvider,
     WebPageMetaService metaService,
     IMediator mediator,
+    MemberBadgeService memberBadgeService,
     MarkdownRenderer markdownRenderer,
     IWebsiteChannelContext channelContext) : Controller
 {
@@ -38,6 +41,7 @@ public class QAndAQuestionPageController(
     private readonly IMediator mediator = mediator;
     private readonly MarkdownRenderer markdownRenderer = markdownRenderer;
     private readonly IWebsiteChannelContext channelContext = channelContext;
+    private readonly MemberBadgeService memberBadgeService = memberBadgeService;
 
     [HttpGet]
     public async Task<ActionResult> Index()
@@ -176,8 +180,12 @@ public class QAndAQuestionPageController(
         var member = await userManager.FindByIdAsync(memberID.ToString());
         if (member is not null)
         {
-            return new(member);
+            return new(member)
+            {
+                SelectedBadges = await memberBadgeService.GetSelectedBadgesFor(memberID)
+            };
         }
+
 
         var resp = await mediator.Send(new AuthorContentQuery(AuthorContent.KENTICO_AUTHOR_CODE_NAME));
         if (resp.Author is null)
@@ -185,7 +193,12 @@ public class QAndAQuestionPageController(
             throw new Exception($"Missing Author [{AuthorContent.KENTICO_AUTHOR_CODE_NAME}] which is required to display Q&A");
         }
 
-        return new(resp.Author);
+        var model = new QAndAAuthorViewModel(resp.Author)
+        {
+            SelectedBadges = await memberBadgeService.GetSelectedBadgesFor(memberID)
+        };
+
+        return model;
     }
 }
 
@@ -228,6 +241,8 @@ public class QAndAAuthorViewModel
         string.IsNullOrWhiteSpace(FullName)
             ? Username
             : $"{FullName} ({Username})";
+
+    public IReadOnlyList<MemberBadgeViewModel> SelectedBadges { get; set; } = [];
 
     public DiscussionAuthorAttributes AuthorAttributes { get; set; } = DiscussionAuthorAttributes.Default;
 

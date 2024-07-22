@@ -78,6 +78,7 @@ function GenerateDataTypes {
         "--type `"Classes`" " + `
         "--namespace `"Kentico.Community.Portal.Core.Modules`"" + `
         "--location `"$(Get-AppendedCorePath "Modules/{name}")`"" + `
+        # "--include `"KenticoCommunity.MemberBadge`"" + ` # helpful to only regenerate a single type
         "--with-provider-class false"
 
     Invoke-ExpressionWithException $command

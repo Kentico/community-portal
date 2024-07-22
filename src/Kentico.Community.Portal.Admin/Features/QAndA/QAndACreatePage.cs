@@ -14,7 +14,8 @@ using Kentico.Xperience.Admin.Base.Forms;
 
 namespace Kentico.Community.Portal.Admin.Features.QAndA;
 
-public class QAndACreatePage(IFormComponentMapper formComponentMapper, IFormDataBinder formDataBinder, IPageUrlGenerator pageUrlGenerator, ISystemClock clock) : CreatePage<QAndAAnswerDataInfo, QAndAEditPage>(formComponentMapper, formDataBinder, pageUrlGenerator)
+public class QAndACreatePage(IFormComponentMapper formComponentMapper, IFormDataBinder formDataBinder, IPageUrlGenerator pageUrlGenerator, ISystemClock clock)
+    : CreatePage<QAndAAnswerDataInfo, QAndAEditPage>(formComponentMapper, formDataBinder, pageUrlGenerator)
 {
     private readonly ISystemClock clock = clock;
 

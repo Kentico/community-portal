@@ -29,7 +29,59 @@ public class AssetItemService(IInfoProvider<MediaFileInfo> mediaFileInfoProvider
         var url = mediaFileUrlRetriever.Retrieve(mediaInfo);
 
         return new(mediaInfo.FileGUID, mediaInfo.FileTitle, url, mediaInfo.FileDescription, mediaInfo.FileExtension);
+    }
 
+    public async Task<AssetViewModel?> RetrieveMediaFile(int? mediaFileInfoId)
+    {
+        if (mediaFileInfoId is null)
+        {
+            return null;
+        }
+
+        return await cache.LoadAsync(async cs =>
+        {
+            var mediaInfo = await mediaFileInfoProvider.GetAsync(mediaFileInfoId.Value);
+
+            if (mediaInfo is null)
+            {
+                return null;
+            }
+
+            cs.GetCacheDependency = () => CacheHelper.GetCacheDependency($"mediafile|{mediaInfo.FileGUID}");
+
+            var url = mediaFileUrlRetriever.Retrieve(mediaInfo);
+
+            if (!url.IsImage)
+            {
+                return null;
+            }
+
+            return new AssetViewModel(mediaInfo.FileGUID, mediaInfo.FileTitle, url, mediaInfo.FileDescription, mediaInfo.FileExtension);
+        }, new CacheSettings(3, $"{nameof(AssetViewModel)}|{mediaFileInfoId}"));
+    }
+
+    public string? RetrieveMediaFileUrl(int? mediaFileInfoId)
+    {
+        if (mediaFileInfoId is null)
+        {
+            return null;
+        }
+
+        return cache.Load(cs =>
+        {
+            var mediaInfo = mediaFileInfoProvider.Get(mediaFileInfoId.Value);
+
+            if (mediaInfo is null)
+            {
+                return null;
+            }
+
+            cs.GetCacheDependency = () => CacheHelper.GetCacheDependency($"mediafile|{mediaInfo.FileGUID}");
+
+            var url = mediaFileUrlRetriever.Retrieve(mediaInfo);
+
+            return url.RelativePath;
+        }, new CacheSettings(3, $"{nameof(AssetItemService)}|url|{mediaFileInfoId}"));
     }
 
     public async Task<IReadOnlyList<ImageAssetViewModel?>> RetrieveMediaFileImages(IEnumerable<AssetRelatedItem> items)

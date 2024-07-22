@@ -1,0 +1,67 @@
+.page-myaccount__avatar {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.page-myaccount__avatar-inner {
+    width: 20rem;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.page-myaccount__avatar-image-div {
+    width: 20rem;
+    height: 20rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid #7f09b7;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+}
+
+.page-myaccount__avatar-image img {
+    width: 20rem;
+    height: 20rem;
+    border-radius: 50%;
+    display: block;
+}
+
+.page-myaccount__avatar-change-image-form {
+    max-width: 300px;
+}
+
+.page-myaccount__avatar-change-image-form-inner {
+    max-width: 300px;
+}
+
+.page-myaccount__avatar-button {
+    z-index: 10;
+    position: absolute;
+    top: 80%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    background-color: gray;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-myaccount__avatar-button .c-icon {
+    width: 70%;
+    height: 70%;
+}
+.page-myaccount__badges-clickable {
+    &:hover {
+        cursor: pointer;
+    }
+}

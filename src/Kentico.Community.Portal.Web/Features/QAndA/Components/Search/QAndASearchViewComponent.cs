@@ -2,16 +2,21 @@ using CMS.ContentEngine;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Components.ViewComponents.Pagination;
+using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Features.QAndA.Search;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public class QAndASearchViewComponent(QAndASearchService searchService, ITaxonomyRetriever taxonomyRetriever) : ViewComponent
+public class QAndASearchViewComponent(
+    QAndASearchService searchService,
+    ITaxonomyRetriever taxonomyRetriever,
+    MemberBadgeService memberBadgeService) : ViewComponent
 {
     private readonly QAndASearchService searchService = searchService;
     private readonly ITaxonomyRetriever taxonomyRetriever = taxonomyRetriever;
+    private readonly MemberBadgeService memberBadgeService = memberBadgeService;
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
@@ -20,6 +25,8 @@ public class QAndASearchViewComponent(QAndASearchService searchService, ITaxonom
         var searchResult = searchService.SearchQAndA(request);
         var chosenFacets = request.DiscussionType.ToLower().Split(";", StringSplitOptions.RemoveEmptyEntries)?.ToList() ?? [];
         var viewModels = searchResult.Hits.Select(QAndAPostViewModel.GetModel).ToList();
+
+        viewModels = await memberBadgeService.AddSelectedBadgesToQAndA(viewModels);
 
         var taxonomy = await taxonomyRetriever.RetrieveTaxonomy(SystemTaxonomies.QAndADiscussionTypeTaxonomy.CodeName, PortalWebSiteChannel.DEFAULT_LANGUAGE);
 

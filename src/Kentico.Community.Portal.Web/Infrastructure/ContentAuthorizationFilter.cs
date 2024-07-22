@@ -3,6 +3,7 @@ using System.Net;
 using System.Security.Claims;
 using CMS.ContentEngine;
 using CMS.Helpers;
+using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Content.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
@@ -10,13 +11,12 @@ using Kentico.Web.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using static Kentico.Community.Portal.Core.Modules.SystemTaxonomies.ContentAuthorizationTaxonomy;
 
 namespace Kentico.Community.Portal.Web.Infrastructure;
 
 /// <summary>
 /// Globally applied authorization filter which checks if the current request
-/// meets the requirements of the current web page, if it has any assigned <see cref="Core.Modules.SystemTaxonomies.ContentAuthorization"/> tags.
+/// meets the requirements of the current web page, if it has any assigned <see cref="Modules.SystemTaxonomies.ContentAuthorization"/> tags.
 /// </summary>
 /// <remarks>
 /// Content authorization requirements are defined to satisfy the check if at least 1 tag requirement is satisfied
@@ -91,7 +91,7 @@ public class ContentAuthorizationFilter(
          *
          * We'll implement other tags (e.g. internal employee, community leader) in the future when member data represents the statuses
          */
-        if (tags.Any(t => t.Identifier.Equals(MVPTag.GUID)) && member.IsMVP)
+        if (tags.Any(t => t.Identifier.Equals(SystemTaxonomies.ContentAuthorizationTaxonomy.MVPTag.GUID)) && member.IsMVP)
         {
             return;
         }

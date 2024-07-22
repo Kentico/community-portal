@@ -22,6 +22,12 @@ const config = ({ env }) => ({
             "figure",
             // For custom 404 content
             "error-hero",
+            // Member badges tag helper
+            "c-tag_badge",
+            "rounded-circle",
+            "border",
+            "align-text-top",
+            "border-1",
           ],
           greedy: [/form-/],
         },

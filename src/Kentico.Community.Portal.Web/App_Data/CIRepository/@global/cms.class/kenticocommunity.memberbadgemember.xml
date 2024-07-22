@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassCodeGenerationSettings>
+    <Data>
+      <GUIDColumn>MemberBadgeMemberGUID</GUIDColumn>
+      <LastModifiedColumn>MemberBadgeMemberLastModified</LastModifiedColumn>
+      <ObjectType>KenticoCommunity.MemberBadgeMember</ObjectType>
+      <UseGuidHashtable>False</UseGuidHashtable>
+      <UseIdHashtable>True</UseIdHashtable>
+      <UseNameHashtable>False</UseNameHashtable>
+    </Data>
+  </ClassCodeGenerationSettings>
+  <ClassDisplayName>Member Badge Member</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="MemberBadgeMemberID" columntype="integer" enabled="true" guid="4ff9c393-6802-4d13-ba59-ced72b983c69" isPK="true" />
+      <field column="MemberBadgeMemberGUID" columnprecision="0" columntype="guid" enabled="true" guid="501c67d7-b6c7-4791-a69c-90fb74120827" visible="true" />
+      <field column="MemberBadgeMemberMemberId" columnprecision="0" columntype="integer" enabled="true" guid="dd0cef88-60fe-4133-95b9-d6a7a4d8becb" refobjtype="cms.member" reftype="Required">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="MemberBadgeMemberCreatedDate" columnprecision="2" columntype="datetime" enabled="true" guid="c7624305-4f3c-4035-8d66-5371ac2a31e1" />
+      <field column="MemberBadgeMemberLastModified" columnprecision="2" columnsize="4" columntype="datetime" enabled="true" guid="82240711-b338-4e76-8d70-dd1c83f5cb05" visible="true" />
+      <field column="MemberBadgeMemberMemberBadgeId" columnprecision="0" columntype="integer" enabled="true" guid="75a6bf68-ee71-47c5-9c05-34bb78c640b4" refobjtype="kenticocommunity.memberbadge" reftype="Required">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="MemberBadgeMemberIsSelected" columntype="boolean" enabled="true" guid="b8e048b7-3d1f-4af1-8ded-6dc75c92ecaa" visible="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>32fd5bb3-606b-4daf-8b81-b5217d30446b</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>KenticoCommunity.MemberBadgeMember</ClassName>
+  <ClassResourceID>
+    <CodeName>KenticoCommunity</CodeName>
+    <GUID>5e10e4ec-a038-4b97-a9f6-c17724896c89</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>KenticoCommunity_MemberBadgeMember</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

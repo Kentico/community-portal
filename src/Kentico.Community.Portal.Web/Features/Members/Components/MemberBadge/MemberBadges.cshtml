@@ -1,0 +1,17 @@
+@using Kentico.Community.Portal.Web.Features.Members
+
+@model List<MemberBadgeViewModel>
+
+@if (Model.Count == 0)
+{
+    return;
+}
+
+<span class="d-inline-flex gap-1 mt-1">
+    @foreach (var badge in Model)
+    {
+        <span title="@badge.MemberBadgeDescription">
+            <badge-image badge="@badge" />
+        </span>
+    }
+</span>

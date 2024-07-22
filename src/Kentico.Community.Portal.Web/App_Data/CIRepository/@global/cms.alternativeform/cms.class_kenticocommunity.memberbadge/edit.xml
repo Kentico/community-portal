@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>KenticoCommunity.MemberBadge</CodeName>
+    <GUID>d8fbe80f-c6b9-4cf9-b2b8-0cc113792153</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="MemberBadgeID" guid="d237ca03-feab-481f-a881-c1accf09598f" enabled="" />
+      <field column="MemberBadgeGUID" guid="e2956ab2-0e02-4be7-8127-6817f7e26f7d" enabled="" visible="" />
+      <field column="MemberBadgeDisplayName" enabled="true" guid="fe4e860c-8624-46f7-bf53-6e19125b82fe" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Display Name</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeCodeName" enabled="true" guid="6ede3a61-2bb4-414a-afb6-143cffb6ec12" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.CodeName</controlname>
+          <HasAutomaticCodeNameGenerationOption>False</HasAutomaticCodeNameGenerationOption>
+          <IsCollapsed>True</IsCollapsed>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Code name</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeMediaAssetContentItem" enabled="true" guid="256dbe9d-3473-4998-b97f-4bd5e0e472de" visible="true" order="4">
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["0722a045-5aff-4c3b-a356-1a1fd3be8a61"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>1</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Media asset</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeShortDescription" enabled="true" guid="118c6657-98ac-421a-8128-c392b0f7dec1" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Short Description</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeDateCreated" guid="bcc1f757-e378-46e3-9cfe-010863eff8f1" visible="true" enabled="">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY hh:mm AM/PM</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Date Created</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeDateModified" guid="763f7dd4-f24a-4852-a5a9-956d492757e6" visible="true" enabled="">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY hh:mm AM/PM</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Date Modified</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeIsRuleAssigned" guid="28230b01-5df4-47e5-b241-d45a4cff4a76" enabled="" order="8" />
+      <field column="MemberBadgeIsEnabledForRuleAssignment" enabled="true" guid="b97d0986-fa55-49f3-a484-3b2c084a541e" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <explanationtext>
+            <![CDATA[If false, then an assignment rule for this badge will not execute.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Is enabled for rule assignment?</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit</FormDisplayName>
+  <FormGUID>1c2458ba-6850-41e3-9498-0310fe4e3084</FormGUID>
+  <FormIsCustom>True</FormIsCustom>
+  <FormName>Edit</FormName>
+</cms.alternativeform>

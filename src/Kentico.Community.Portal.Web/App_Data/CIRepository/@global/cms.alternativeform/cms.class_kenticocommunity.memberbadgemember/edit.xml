@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>KenticoCommunity.MemberBadgeMember</CodeName>
+    <GUID>32fd5bb3-606b-4daf-8b81-b5217d30446b</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="MemberBadgeMemberID" guid="4ff9c393-6802-4d13-ba59-ced72b983c69" enabled="" />
+      <field column="MemberBadgeMemberGUID" guid="501c67d7-b6c7-4791-a69c-90fb74120827" enabled="" visible="" />
+      <field column="MemberBadgeMemberMemberId" guid="dd0cef88-60fe-4133-95b9-d6a7a4d8becb" visible="true" enabled="" refobjtype="" reftype="">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>CMS.Member</ObjectType>
+          <Placeholder>0</Placeholder>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Member</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeMemberMemberBadgeId" guid="75a6bf68-ee71-47c5-9c05-34bb78c640b4" visible="true" enabled="" refobjtype="" reftype="" order="3">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>KenticoCommunity.MemberBadge</ObjectType>
+          <Placeholder>0</Placeholder>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Badge</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeMemberIsSelected" columnprecision="0" enabled="true" guid="b8e048b7-3d1f-4af1-8ded-6dc75c92ecaa" visible="true" order="4">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <defaultvalue>False</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Is Selected</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeMemberCreatedDate" guid="c7624305-4f3c-4035-8d66-5371ac2a31e1" visible="true" enabled="" order="5">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY hh:mm AM/PM</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Created</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeMemberLastModified" guid="d5bfe035-da0d-4acf-afc5-6c951c4b19a8" visible="true" columnsize="" enabled="" order="6">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Modified</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit</FormDisplayName>
+  <FormGUID>387a524e-040c-4a0d-a9b2-34c59787527c</FormGUID>
+  <FormIsCustom>True</FormIsCustom>
+  <FormName>Edit</FormName>
+</cms.alternativeform>

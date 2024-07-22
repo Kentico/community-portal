@@ -1,5 +1,6 @@
 using CMS.Helpers;
 using Kentico.Community.Portal.Web.Features.Blog.Search;
+using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Features.QAndA.Search;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
@@ -16,13 +17,15 @@ public class MemberController(
     WebPageMetaService metaService,
     BlogSearchService blogSearchService,
     QAndASearchService qAndASearchService,
-    AvatarImageService avatarImageService) : Controller
+    AvatarImageService avatarImageService,
+    MemberBadgeService memberBadgeService) : Controller
 {
     private readonly IMediator mediator = mediator;
     private readonly AvatarImageService avatarImageService = avatarImageService;
     private readonly WebPageMetaService metaService = metaService;
     private readonly BlogSearchService search = blogSearchService;
     private readonly QAndASearchService qAndASearchService = qAndASearchService;
+    private readonly MemberBadgeService memberBadgeService = memberBadgeService;
 
     [HttpGet("{memberID:int}")]
     public async Task<IActionResult> MemberDetail(int memberID)
@@ -48,10 +51,13 @@ public class MemberController(
             AuthorMemberID = member.Id,
         });
 
+        var badges = await memberBadgeService.GetAllBadgesFor(member.Id);
+
         var model = new MemberDetailViewModel(member)
         {
             BlogPostLinks = blogResult.Hits.Select(h => new BlogPostLink(h.Url, h.Title, h.PublishedDate, h.BlogType)).ToList(),
             QuestionsAsked = qandaResult.Hits.Select(h => new Link(h.Url, h.Title, h.PublishedDate)).ToList(),
+            MemberBadges = badges
         };
 
         return View("~/Features/Members/MemberDetail.cshtml", model);
@@ -95,6 +101,28 @@ public class MemberDetailViewModel(CommunityMember member)
     public CommunityMember Member { get; init; } = member;
     public IReadOnlyList<Link> QuestionsAsked { get; init; } = [];
     public IReadOnlyList<BlogPostLink> BlogPostLinks { get; init; } = [];
+    public MemberAvatarViewModel MemberAvatar { get; set; } = new(member);
+    public IReadOnlyList<MemberBadgeViewModel> MemberBadges = [];
+}
+
+public class MemberAvatarViewModel
+{
+    public int ID { get; }
+    public string Username { get; } = "";
+    public string FullName { get; } = "";
+    public string FormattedName =>
+        string.IsNullOrWhiteSpace(FullName)
+            ? Username
+            : $"{FullName} ({Username})";
+
+    public MemberAvatarViewModel(CommunityMember member)
+    {
+        ID = member.Id;
+        Username = member.UserName!;
+        FullName = member.FullName;
+    }
+
+    public MemberAvatarViewModel() { }
 }
 
 public record BlogPostLink(

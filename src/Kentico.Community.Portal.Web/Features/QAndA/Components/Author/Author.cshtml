@@ -27,12 +27,5 @@
             <span class="ms-1">@Model.FormattedName</span>
         </a>
     </div>
-    <div>
-        @if (Model.AuthorAttributes.IsMVP)
-        {
-            <span title="This member is a Kentico MVP">
-                <span class="badge rounded-pill text-bg-primary">MVP</span>
-            </span>
-        }
-    </div>
+    <vc:member-badges badges=@Model.SelectedBadges />
 </div>

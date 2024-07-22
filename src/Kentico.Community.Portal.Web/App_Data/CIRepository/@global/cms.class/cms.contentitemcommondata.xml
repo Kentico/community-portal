@@ -141,6 +141,14 @@
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues>
+              <ErrorMessage>A title is required</ErrorMessage>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
       </field>
       <field allowempty="true" column="ListableItemShortDescription" columnprecision="0" columntype="longtext" enabled="true" guid="db58954e-4487-46cc-baa5-371c6fa559cb" visible="true">
         <properties>

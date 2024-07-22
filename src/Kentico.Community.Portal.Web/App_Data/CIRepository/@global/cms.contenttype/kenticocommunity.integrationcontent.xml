@@ -8,39 +8,55 @@
       <field column="ContentItemDataID" columntype="integer" enabled="true" guid="3fc2f29d-ef4c-4813-aa07-47a48777276f" isPK="true" />
       <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="76616d6f-ead8-4f84-b97e-11937c1bac99" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
       <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="e0c7de4a-8b37-4c5f-b735-6c745cc2d33b" isunique="true" system="true" />
-      <field column="IntegrationContentTitle" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="1e0f27f5-f59a-4fa1-871f-5c2d946453ca" visible="true">
+      <schema guid="058caefa-c8d6-440f-8f3e-cd0fd9d7a41a" name="058caefa-c8d6-440f-8f3e-cd0fd9d7a41a">
+        <properties />
+      </schema>
+      <field column="IntegrationContentPublishedDate" columnprecision="0" columntype="date" enabled="true" guid="4901b940-e481-4984-bf40-2b572ad71f40" visible="true">
         <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY</explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Title</fieldcaption>
+          <fieldcaption>Published</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
-          <controlname>Kentico.Administration.TextInput</controlname>
+          <controlname>Kentico.Administration.DateInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="IntegrationContentTitle" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="1e0f27f5-f59a-4fa1-871f-5c2d946453ca" visible="true">
+        <properties>
+          <explanationtext>This field will be removed in a future update.</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Title (deprecated)</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="IntegrationContentShortDescription" columnprecision="0" columntype="longtext" enabled="true" guid="3b755ca1-d187-47cf-bbb0-6fdf01685b3b" visible="true">
+        <properties>
+          <explanationtext>This field will be removed in a future update.</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Short Description</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
         </settings>
       </field>
       <field allowempty="true" column="IntegrationContentLogoMediaFile" columnprecision="0" columntype="assets" enabled="true" guid="433f618f-e29a-4fa1-8d5d-bc3a2533c19c" visible="true">
         <properties>
+          <explanationtext>
+            <![CDATA[This field will be removed in a future update. Use the Featured Image field above.]]>
+          </explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Logo</fieldcaption>
+          <fieldcaption>Logo (deprecated)</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
           <AllowedExtensions>jpg;jpeg;png;webp</AllowedExtensions>
           <controlname>Kentico.Administration.AssetSelector</controlname>
           <MaximumAssets>1</MaximumAssets>
-        </settings>
-      </field>
-      <field column="IntegrationContentShortDescription" columnprecision="0" columntype="longtext" enabled="true" guid="3b755ca1-d187-47cf-bbb0-6fdf01685b3b" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Short Description</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.TextArea</controlname>
-          <CopyButtonVisible>False</CopyButtonVisible>
-          <MaxRowsNumber>5</MaxRowsNumber>
-          <MinRowsNumber>3</MinRowsNumber>
         </settings>
       </field>
       <field allowempty="true" column="IntegrationContentRepositoryLinkURL" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="3849b15f-1849-40dc-9df2-aee061e2ad38" visible="true">
@@ -88,23 +104,19 @@
           </ValidationRuleConfiguration>
         </validationrulesdata>
       </field>
-      <field column="IntegrationContentType" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="918f7336-ea4c-4fef-bbaf-19675bcc11f9" visible="true">
+      <field allowempty="true" column="IntegrationContentAuthorMemberID" columnprecision="0" columntype="integer" enabled="true" guid="6ec51ee5-f658-455f-9c60-1db00f0548df" visible="true">
         <properties>
+          <explanationtext>
+            <![CDATA[If a community member is selected, the member's name and member profile page will be used instead of the author fields below.]]>
+          </explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Type</fieldcaption>
+          <fieldcaption>Author community member (optional)</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
-          <controlname>Kentico.Administration.DropDownSelector</controlname>
-          <Options>
-<![CDATA[
-ProductFeature;Product Feature
-KenticoIntegrationSevenDay;Kentico Integration (7-Day Bugfix Support Policy)
-KenticoIntegrationLabs;Kentico Integration (Labs)
-PartnerIntegration;Partner Integration
-IndividualContribution;Individual Contribution
-]]>
-          </Options>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>CMS.Member</ObjectType>
+          <Placeholder>0</Placeholder>
         </settings>
       </field>
       <field allowempty="true" column="IntegrationContentAuthorName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="3aad3ef4-7bc8-40f5-b670-5a4579811e71" visible="true">
@@ -112,7 +124,7 @@ IndividualContribution;Individual Contribution
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Author Name</fieldcaption>
           <fielddescription>
-            <![CDATA[Only required if the Type is Partner Integration or Individual Contribution]]>
+            <![CDATA[Only required if an author community member is not selected]]>
           </fielddescription>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
@@ -125,7 +137,7 @@ IndividualContribution;Individual Contribution
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Author URL</fieldcaption>
           <fielddescription>
-            <![CDATA[Used to link to an author (ex: partner site or kentico.com)]]>
+            <![CDATA[Only required if an author community member is not selected. Used to link to an author (ex: partner site or kentico.com)]]>
           </fielddescription>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>

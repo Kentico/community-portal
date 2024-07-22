@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>KenticoCommunity.MemberBadge</CodeName>
+    <GUID>d8fbe80f-c6b9-4cf9-b2b8-0cc113792153</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="MemberBadgeID" guid="d237ca03-feab-481f-a881-c1accf09598f" enabled="" />
+      <field column="MemberBadgeGUID" guid="e2956ab2-0e02-4be7-8127-6817f7e26f7d" enabled="" visible="" />
+      <field column="MemberBadgeDateModified" guid="763f7dd4-f24a-4852-a5a9-956d492757e6" enabled="" order="2" />
+      <field column="MemberBadgeDisplayName" enabled="true" guid="fe4e860c-8624-46f7-bf53-6e19125b82fe" visible="true" order="3">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Display Name</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeCodeName" enabled="true" guid="6ede3a61-2bb4-414a-afb6-143cffb6ec12" visible="true" order="4">
+        <settings>
+          <controlname>Kentico.Administration.CodeName</controlname>
+          <HasAutomaticCodeNameGenerationOption>True</HasAutomaticCodeNameGenerationOption>
+          <IsCollapsed>True</IsCollapsed>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Code name</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeMediaAssetContentItem" enabled="true" guid="256dbe9d-3473-4998-b97f-4bd5e0e472de" visible="true" order="5">
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["0722a045-5aff-4c3b-a356-1a1fd3be8a61"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>1</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Media Asset</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeShortDescription" enabled="true" guid="118c6657-98ac-421a-8128-c392b0f7dec1" visible="true" order="6">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Short Description</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeDateCreated" guid="bcc1f757-e378-46e3-9cfe-010863eff8f1" enabled="" order="7" />
+      <field column="MemberBadgeIsRuleAssigned" enabled="true" guid="28230b01-5df4-47e5-b241-d45a4cff4a76" visible="true" order="8">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <defaultvalue>False</defaultvalue>
+          <explanationtext>
+            <![CDATA[If true, these badges can only be assigned by an <code>IMemberBadgeAssignmentRule</code> implementation and will <em>not</em> be available for assignment in the administration UI]]>
+          </explanationtext>
+          <explanationtextashtml>True</explanationtextashtml>
+          <fieldcaption>Is Rule Assigned?</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeIsEnabledForRuleAssignment" enabled="true" guid="66ed6bbf-3d1f-4924-8836-8c11ce817411" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <explanationtext>
+            <![CDATA[If false, then an assignment rule for this badge will not execute.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Is enabled for rule assignment</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Create</FormDisplayName>
+  <FormGUID>e1c653bb-fff3-42e7-b005-f3c75fd30928</FormGUID>
+  <FormIsCustom>True</FormIsCustom>
+  <FormName>Create</FormName>
+</cms.alternativeform>

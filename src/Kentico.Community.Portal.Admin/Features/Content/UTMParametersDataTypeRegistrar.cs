@@ -68,7 +68,7 @@ public class UTMParametersFormComponent : FormComponent<
 
     public override string ClientComponentName => "@kentico-community/portal-web-admin/UTMParametersDataType";
 
-    protected async override Task ConfigureClientProperties(UTMParametersFormComponentClientProperties clientProperties)
+    protected override async Task ConfigureClientProperties(UTMParametersFormComponentClientProperties clientProperties)
     {
         await base.ConfigureClientProperties(clientProperties);
 

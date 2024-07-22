@@ -1,5 +1,29 @@
 # Architecture Decision Record
 
+## 2024-07-18 - Member badges
+
+To reward Kentico community members for participating on the Kentico Community Portal and engaging with Kentico in other ways,
+we've added Member Badges.
+
+Member Badges are awards that are assigned to community member accounts. They appear in the member account management page and can be selected for display by members outside of their member profile.
+By default new badges are not selected for display outside of a member's profile, but all awarded badges appear within their public profile page.
+
+Badges can be assigned manually by administrators or automatically by rules which execute in the background and assign badges based on programmatic rules. For example, if a member asks a question in the Q&A, they are awarded a badge.
+
+Member Badges could have been designed with various implementations and features. The solution selected was a middleground of simplicity in data access and management (for administrators) and presentational experience (for members).
+
+Although the badges could have been modeled purely as reusable content in the Content hub, Xperience's custom modules and object types made it extremely easy to use code name and ID values to do look ups and model relationships between badges and members.
+
+It's possible that we will move to a purely content-focused approach for the badge data (title, image, description), but they work well enough when managed from a custom module. Had the number of badges been in the hundreds, with localized content, and delivered across all channels, then using a reusable content type to manage their content would have had many benefits.
+
+We did decide to use media assets in the Content hub for the badge images instead of the Media library, primarily because of the features of the Content hub and future deprecation of the Media library.
+
+To perform automatic badge assignment with rules we leveraged Xperience's `ApplicationBackgroundService` which is a more feature rich wrapper over ASP.NET Core's [BackgroundService class](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-8.0&tabs=visual-studio#backgroundservice-base-class). For background operations that do not need custom scheduling and on-demand execution, the `ApplicationBackgroundService` is an ideal replacement for Kentico's older Scheduled Tasks, which are not available in Xperience by Kentico.
+
+To ensure rule processing with faulty logic doesn't negatively impact the solution, rules can be individually disabled until data can be changed or a code fix can be deployed.
+
+In the future, we plan to create a page for the community that shows all the badges available and all the members who have been awarded those badges.
+
 ## 2024-06-24 - Restricted pages
 
 Although Xperience supports content authorization for content delivery, it's limited to a single [secure](https://docs.kentico.com/x/8oouCw) property

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassCodeGenerationSettings>
+    <Data>
+      <CodeNameColumn>MemberBadgeCodeName</CodeNameColumn>
+      <DisplayNameColumn>MemberBadgeDisplayName</DisplayNameColumn>
+      <GUIDColumn>MemberBadgeGUID</GUIDColumn>
+      <LastModifiedColumn>MemberBadgeLastModified</LastModifiedColumn>
+      <ObjectType>KenticoCommunity.MemberBadge</ObjectType>
+      <UseGuidHashtable>False</UseGuidHashtable>
+      <UseIdHashtable>True</UseIdHashtable>
+      <UseNameHashtable>False</UseNameHashtable>
+    </Data>
+  </ClassCodeGenerationSettings>
+  <ClassDisplayName>Member Badge</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="MemberBadgeID" columntype="integer" enabled="true" guid="d237ca03-feab-481f-a881-c1accf09598f" isPK="true" />
+      <field column="MemberBadgeGUID" columnprecision="0" columntype="guid" enabled="true" guid="e2956ab2-0e02-4be7-8127-6817f7e26f7d" visible="true" />
+      <field column="MemberBadgeDisplayName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="fe4e860c-8624-46f7-bf53-6e19125b82fe" visible="true" />
+      <field column="MemberBadgeCodeName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="6ede3a61-2bb4-414a-afb6-143cffb6ec12" />
+      <field column="MemberBadgeIsRuleAssigned" columnprecision="0" columntype="boolean" enabled="true" guid="28230b01-5df4-47e5-b241-d45a4cff4a76" />
+      <field column="MemberBadgeShortDescription" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="118c6657-98ac-421a-8128-c392b0f7dec1" />
+      <field column="MemberBadgeDateCreated" columnprecision="2" columntype="datetime" enabled="true" guid="bcc1f757-e378-46e3-9cfe-010863eff8f1" />
+      <field column="MemberBadgeDateModified" columnprecision="2" columntype="datetime" enabled="true" guid="763f7dd4-f24a-4852-a5a9-956d492757e6" />
+      <field allowempty="true" column="MemberBadgeMediaAssetContentItem" columnprecision="0" columntype="contentitemreference" enabled="true" guid="256dbe9d-3473-4998-b97f-4bd5e0e472de" />
+      <field column="MemberBadgeIsEnabledForRuleAssignment" columnprecision="0" columntype="boolean" enabled="true" guid="67eab2de-01ce-4cc0-b758-042271000e91">
+        <properties>
+          <defaultvalue>True</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>d8fbe80f-c6b9-4cf9-b2b8-0cc113792153</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>KenticoCommunity.MemberBadge</ClassName>
+  <ClassResourceID>
+    <CodeName>KenticoCommunity</CodeName>
+    <GUID>5e10e4ec-a038-4b97-a9f6-c17724896c89</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>KenticoCommunity_MemberBadge</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

@@ -1,0 +1,48 @@
+@using Kentico.Community.Portal.Web.Features.Members
+@using Kentico.Community.Portal.Web.Features.Accounts
+@using Newtonsoft.Json
+
+@model List<MemberBadgeViewModel>
+
+@{
+    ClientAssets.RequireAlpine();
+}
+
+<div class="d-flex justify-content-center mb-3">
+    <span class="flex-item">Select up to 3 badges which will be shown next to your name in the portal</span>
+</div>
+
+<form id="badgesUpdateForm" method="post" asp-controller="Account" enctype="multipart/form-data"
+      asp-action="UpdateSelectedBadges" test-id="badgesUpdate" 
+      class="mb-3"
+      x-data="{ count: @JSEncoder.EncodeToJson(Model.Count(x => x.IsSelected))}">
+    <div class="form-horizontal">
+       
+        <span class="d-flex flex-wrap gap-3 justify-content-center">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <span class="@(i != Model.Count - 1 ? "me-3 d-flex" : "d-flex") page-myaccount__badges-clickable">
+                    <span x-data="{ selected: @JSEncoder.EncodeToJson(Model[i].IsSelected)}"
+                        :class="selected ? 'badge rounded-pill text-bg-secondary' : 'badge rounded-pill text-bg-purple-300'"
+                        :title="selected ? 'This badge is selected' : 'This badge is not selected'"
+                        @@click="selected = ! selected; count += selected ? 1 : -1">
+                        
+                        <input type="hidden" value="@Model[i].BadgeId" asp-for="@Model[i].BadgeId"/>
+                        <input type="hidden" x-model="selected" asp-for="@Model[i].IsSelected"/>
+                        @if (Model[i].BadgeImageUrl != null)
+                        {
+                            <img src="@Model[i].BadgeImageUrl" class="c-tag_icon" />
+                        }
+                        @Model[i].MemberBadgeDisplayName
+                    </span>
+                </span>
+            }
+        </span>
+
+        <div class="text-center">
+            <div class="text-danger" x-show="count > 3">Too many badges selected</div>
+            <button id="updateBadges" type="submit" :class="count > 3 ? 'btn btn-sm btn-primary mt-3 disabled' : 'btn btn-sm btn-primary mt-3'">@HtmlLocalizer["Update Badges"]</button>
+        </div>
+       
+    </div>
+</form>

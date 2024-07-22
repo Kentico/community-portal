@@ -19,12 +19,12 @@
       },
       "Microsoft.AspNetCore.Mvc.Testing": {
         "type": "Direct",
-        "requested": "[8.0.6, )",
-        "resolved": "8.0.6",
-        "contentHash": "IAB6a7YpGdoKeNrrJ7/G4CGOWeJOTlMibwInfXqMuttmj1JPuwdXrN1tEVGY86LsPJU9Hz0+un8bU+PUs2kngw==",
+        "requested": "[8.0.7, )",
+        "resolved": "8.0.7",
+        "contentHash": "dh7J7O5ZbNix3tpRi5CTAD89yFD8jl374B42/tD5sp3MFXA0KSaDMm+3XU0EqE2l8sVJlV2//FnDkK1LCcXuCA==",
         "dependencies": {
-          "Microsoft.AspNetCore.TestHost": "8.0.6",
-          "Microsoft.Extensions.DependencyModel": "8.0.0",
+          "Microsoft.AspNetCore.TestHost": "8.0.7",
+          "Microsoft.Extensions.DependencyModel": "8.0.1",
           "Microsoft.Extensions.Hosting": "8.0.0"
         }
       },
@@ -56,13 +56,13 @@
       },
       "Microsoft.Playwright.NUnit": {
         "type": "Direct",
-        "requested": "[1.44.0, )",
-        "resolved": "1.44.0",
-        "contentHash": "pl0jS/dV6eeuApAKb3SxIyCkYUVMb/Ll7aWDOHtzs78Yg3cny52sL2il96WUUBtimUaOVg6Mx0i5Y9MJyZS1cQ==",
+        "requested": "[1.45.0, )",
+        "resolved": "1.45.0",
+        "contentHash": "2mH+/+YirBOqJXq4LnEDfm6ZdYic4rLq9z3fYWc08DQ9ZyChZzU19PdfboZcBCr4dO+Zfk8EYG8M0Deu/O7FkA==",
         "dependencies": {
           "Microsoft.NET.Test.Sdk": "16.11.0",
-          "Microsoft.Playwright": "1.44.0",
-          "Microsoft.Playwright.TestAdapter": "1.44.0",
+          "Microsoft.Playwright": "1.45.0",
+          "Microsoft.Playwright.TestAdapter": "1.45.0",
           "NUnit": "3.13.2",
           "NUnit3TestAdapter": "4.0.0"
         }
@@ -126,8 +126,8 @@
       },
       "Microsoft.AspNetCore.TestHost": {
         "type": "Transitive",
-        "resolved": "8.0.6",
-        "contentHash": "4SEGEED0TB2Q1IiQGkhMEL4wgNIbZeuDpXEQazddt3MprdSHLZEW0esjrICuuSI+zLT80tEm4xp04UrmS0c16g==",
+        "resolved": "8.0.7",
+        "contentHash": "Q+LAum9DPXAMRzZXQ8QcT1B3DiEopw1Agc8yb7wOOgNQvyoCEG2kaA3kiHWCPR+GMcvzPQ79n/em8eYaLbCcAw==",
         "dependencies": {
           "System.IO.Pipelines": "8.0.0"
         }
@@ -245,11 +245,11 @@
       },
       "Microsoft.Extensions.DependencyModel": {
         "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "NSmDw3K0ozNDgShSIpsZcbFIzBX4w28nDag+TfaQujkXGazBm+lid5onlWoCBy4VsLxqnnKjEBbGSJVWJMf43g==",
+        "resolved": "8.0.1",
+        "contentHash": "5Ou6varcxLBzQ+Agfm0k0pnH7vrEITYlXMDuE6s7ZHlZHz6/G8XJ3iISZDr5rfwfge6RnXJ1+Wc479mMn52vjA==",
         "dependencies": {
           "System.Text.Encodings.Web": "8.0.0",
-          "System.Text.Json": "8.0.0"
+          "System.Text.Json": "8.0.4"
         }
       },
       "Microsoft.Extensions.Diagnostics": {
@@ -525,8 +525,8 @@
       },
       "Microsoft.Playwright": {
         "type": "Transitive",
-        "resolved": "1.44.0",
-        "contentHash": "stag3Jv/FtjqR5/8UcVfyYyktPt9AHxBnNazyytu4cq5W8/J5DQDQEednk/cK2iGy2Y/dC0hUcCdxp9cFDckmA==",
+        "resolved": "1.45.0",
+        "contentHash": "+PJ5NM2KHQJhWiMlyBUpWYbJ5EkXcUwCmm5N91tPwXcwm29GHIO5CTPDsy9TRGwlBpQChvsMCLAWjn4IVd2w8w==",
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
           "System.ComponentModel.Annotations": "5.0.0",
@@ -535,10 +535,10 @@
       },
       "Microsoft.Playwright.TestAdapter": {
         "type": "Transitive",
-        "resolved": "1.44.0",
-        "contentHash": "4SS5oYSivAqCXdj16d1hyGesk2eRwwP9DAPNwojRxLsU30DLW1GIVA5T/AVeD1ETENrIBN01Hjz6XaWyr9SgHA==",
+        "resolved": "1.45.0",
+        "contentHash": "PDyqkd/tyb5+46ldAkM68UBRnJT6rtBSECiTuCAvebM2ImBUYxvNK1pQuLGxgzjpLlfHbBisI3TeEdD5Skvj3g==",
         "dependencies": {
-          "Microsoft.Playwright": "1.44.0",
+          "Microsoft.Playwright": "1.45.0",
           "Microsoft.TestPlatform.ObjectModel": "17.3.0"
         }
       },
@@ -680,8 +680,8 @@
       },
       "System.Text.Json": {
         "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "OdrZO2WjkiEG6ajEFRABTRCi/wuXQPxeV6g8xvUJqdxMvvuCCEk86zPla8UiIQJz3durtUEbNyY/3lIhS0yZvQ==",
+        "resolved": "8.0.4",
+        "contentHash": "bAkhgDJ88XTsqczoxEMliSrpijKZHhbJQldhAmObj/RbrN3sU5dcokuXmWJWsdQAhiMJ9bTayWsL1C9fbbCRhw==",
         "dependencies": {
           "System.Text.Encodings.Web": "8.0.0"
         }
