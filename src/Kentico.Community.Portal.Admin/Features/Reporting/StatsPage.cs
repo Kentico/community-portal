@@ -27,6 +27,7 @@ public class StatsPage(ISystemClock clock) : Page<StatsPageClientProperties>
     {
         properties.Members = await GetMembers();
         properties.Subscribers = await GetSubscribers();
+        properties.BlogPosts = await GetBlogPosts();
         properties.Answers = await GetAnswers();
         properties.Questions = await GetQuestions();
         properties.Totals = await GetTotals();
@@ -66,11 +67,34 @@ public class StatsPage(ISystemClock clock) : Page<StatsPageClientProperties>
         FROM OM_ContactGroupMember CGM
         INNER JOIN EmailLibrary_EmailSubscriptionConfirmation ESC
             ON CGM.ContactGroupMemberRelatedID = ESC.EmailSubscriptionConfirmationContactID
+        INNER JOIN OM_ContactGroup CG
+            ON CGM.ContactGroupMemberContactGroupID = CG.ContactGroupID
         WHERE 
-            [EmailSubscriptionConfirmationDate] >= DATEADD(MONTH, -12, GETDATE()) AND esc.EmailSubscriptionConfirmationIsApproved = 1
+            [EmailSubscriptionConfirmationDate] >= DATEADD(MONTH, -12, GETDATE()) AND esc.EmailSubscriptionConfirmationIsApproved = 1 AND CG.ContactGroupIsRecipientList = 1
         GROUP BY 
             FORMAT([EmailSubscriptionConfirmationDate], 'yyyy'),
             FORMAT([EmailSubscriptionConfirmationDate], 'MM')
+        ORDER BY 
+            Year ASC,
+            Month ASC;
+        """;
+
+        return await ExecuteTimeSeriesQuery(query);
+    }
+
+    private async Task<ImmutableList<TimeSeriesEntry>> GetBlogPosts()
+    {
+        string query = $"""
+        SELECT 
+            FORMAT([BlogPostContentPublishedDate], 'yyyy') AS Year,
+            FORMAT([BlogPostContentPublishedDate], 'MM') AS Month,
+            COUNT(*) AS Count
+        FROM KenticoCommunity_BlogPostContent
+        WHERE 
+            [BlogPostContentPublishedDate] >= DATEADD(MONTH, -12, GETDATE())
+        GROUP BY 
+            FORMAT([BlogPostContentPublishedDate], 'yyyy'),
+            FORMAT([BlogPostContentPublishedDate], 'MM')
         ORDER BY 
             Year ASC,
             Month ASC;
@@ -138,13 +162,20 @@ public class StatsPage(ISystemClock clock) : Page<StatsPageClientProperties>
                 FROM OM_ContactGroupMember CGM
                 INNER JOIN EmailLibrary_EmailSubscriptionConfirmation ESC
                     ON CGM.ContactGroupMemberRelatedID = ESC.EmailSubscriptionConfirmationContactID
-                WHERE ESC.EmailSubscriptionConfirmationIsApproved = 1
+                INNER JOIN OM_ContactGroup CG
+                    ON CGM.ContactGroupMemberContactGroupID = CG.ContactGroupID
+                WHERE ESC.EmailSubscriptionConfirmationIsApproved = 1 AND CG.ContactGroupIsRecipientList = 1
             ) AS SubscribersCount,
             (
                 SELECT COUNT(*) 
                 FROM CMS_Member
                 WHERE MemberEnabled = 1
-            ) AS MembersCount
+            ) AS MembersCount,
+            (
+                SELECT COUNT(*) 
+                FROM CMS_Member
+                WHERE MemberEnabled = 1
+            ) AS BlogPostsCount
         """;
 
         var reader = await ConnectionHelper.ExecuteReaderAsync(query, [], QueryTypeEnum.SQLQuery, CommandBehavior.Default, default);
@@ -156,8 +187,9 @@ public class StatsPage(ISystemClock clock) : Page<StatsPageClientProperties>
             int subscribersCount = reader.GetInt32("SubscribersCount");
             int questionsCount = reader.GetInt32("QuestionsCount");
             int answersCount = reader.GetInt32("AnswersCount");
+            int blogPostsCount = reader.GetInt32("BlogPostsCount");
 
-            stats = new(membersCount, subscribersCount, questionsCount, answersCount);
+            stats = new(membersCount, subscribersCount, questionsCount, answersCount, blogPostsCount);
         }
 
         await reader.CloseAsync();
@@ -197,12 +229,13 @@ public class StatsPageClientProperties : TemplateClientProperties
     public StatsTotals Totals { get; set; } = StatsTotals.DEFAULT;
     public ImmutableList<TimeSeriesEntry> Members { get; set; } = [];
     public ImmutableList<TimeSeriesEntry> Subscribers { get; set; } = [];
+    public ImmutableList<TimeSeriesEntry> BlogPosts { get; set; } = [];
     public ImmutableList<TimeSeriesEntry> Questions { get; set; } = [];
     public ImmutableList<TimeSeriesEntry> Answers { get; set; } = [];
 }
 
-public record StatsTotals(int EnabledMembers, int NewsletterSubscribers, int QAndAQuestions, int QAndAAnswers)
+public record StatsTotals(int EnabledMembers, int NewsletterSubscribers, int QAndAQuestions, int QAndAAnswers, int BlogPosts)
 {
-    public static StatsTotals DEFAULT { get; } = new(0, 0, 0, 0);
+    public static StatsTotals DEFAULT { get; } = new(0, 0, 0, 0, 0);
 }
 public record TimeSeriesEntry(string Label, int Value);

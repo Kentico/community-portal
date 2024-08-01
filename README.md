@@ -6,21 +6,35 @@
 
 Xperience by Kentico solution for the Kentico managed SaaS hosted Kentico Community website.
 
-This project is using [Xperience Version v29.2.0](https://docs.kentico.com/changelog#refresh-june-27-2024).
+This project is using [Xperience Version v29.3.0](https://docs.kentico.com/changelog#refresh-july-25-2024).
 
 ## Screenshots
 
-<a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-home.png">
-  <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-home.png" width="600" alt="Portal home page">
-</a>
+<div style="display: flex; gap: 1rem; flex-wrap: wrap">
+  <a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-home.png">
+    <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-home.png" width="400" alt="Portal home page">
+  </a>
 
-<a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-dashboard.jpg">
-  <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-dashboard.jpg" width="600" alt="Portal Admin dashboard">
-</a>
+  <a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-dashboard.jpg">
+    <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-dashboard.jpg" width="400" alt="Portal Admin dashboard">
+  </a>
 
-<a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-website-channel-home.png">
-  <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-website-channel-home.png" width="600" alt="Portal Admin website channel">
-</a>
+  <a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-website-channel-home.png">
+    <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-website-channel-home.png" width="400" alt="Portal Admin website channel">
+  </a>
+
+  <a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-reusable-field-schema-page-extender.jpg">
+    <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-reusable-field-schema-page-extender.jpg" width="400" alt="Portal Admin reusable field schema page extender">
+  </a>
+
+  <a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-reporting-dashboard.jpg">
+    <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-reporting-dashboard.jpg" width="400" alt="Portal Admin reporting dashboard">
+  </a>
+
+  <a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-badge-assignment-management.jpg">
+    <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-badge-assignment-management.jpg" width="400" alt="Portal Admin member badge assignment">
+  </a>
+</div>
 
 ## Site Info
 

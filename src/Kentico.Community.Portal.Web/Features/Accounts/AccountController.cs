@@ -197,7 +197,7 @@ public class AccountController(
             return ValidationProblem();
         }
 
-        _ = await memberBadgeService.UpdateSelectedBadgesFor(badges, user.Id);
+        await memberBadgeService.UpdateSelectedBadgesFor(badges, user.Id);
 
         return RedirectToAction(nameof(MyAccount));
     }

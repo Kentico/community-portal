@@ -3,7 +3,7 @@ using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
 
 [assembly: UIPage(
-    parentType: typeof(SupportRequestProcessingEventsApplicationPage),
+    parentType: typeof(SupportRequestsApplicationPage),
     slug: "list",
     uiPageType: typeof(SupportRequestProcessingEventListingPage),
     name: "List",

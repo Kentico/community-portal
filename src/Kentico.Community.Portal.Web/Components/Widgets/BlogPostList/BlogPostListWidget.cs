@@ -112,10 +112,9 @@ public class BlogPostListWidget(
             var url = await urlRetriever.Retrieve(page);
             var teaserImage = await itemService.RetrieveMediaFileImage(post.BlogPostContentTeaserMediaFileImage.FirstOrDefault());
             var author = await GetAuthor(post);
-            var authorImage = await itemService.RetrieveMediaFileImage(author.AuthorContentPhotoMediaFileImage.FirstOrDefault());
             string? taxonomy = await GetTaxonomyName(props);
 
-            vms.Add(new BlogPostViewModel(new(author, authorImage))
+            vms.Add(new BlogPostViewModel(new(author, author.AuthorContentPhoto.FirstOrDefault()))
             {
                 Title = post.BlogPostContentTitle,
                 Date = post.BlogPostContentPublishedDate,

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Content workflow role</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentWorkflowRoleID" columntype="integer" enabled="true" guid="0083efe8-cb1f-438c-a287-d564518ca259" isPK="true" system="true" />
+      <field column="ContentWorkflowRoleContentWorkflowID" columnprecision="0" columntype="integer" enabled="true" guid="1a9a167b-b2bb-4843-8b31-d68f9b167ef2" refobjtype="cms.contentworkflow" reftype="Binding" system="true" />
+      <field column="ContentWorkflowRoleRoleID" columnprecision="0" columntype="integer" enabled="true" guid="0faf3fb0-0cb9-489d-b7f1-026ed0a6549c" refobjtype="cms.role" reftype="Binding" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>f4c1b545-b100-406e-be46-0ab0494d4007</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ContentWorkflowRole</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentWorkflowEngine</CodeName>
+    <GUID>c59d2e7e-4d32-41c9-809f-79e0b9bf8883</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ContentWorkflowRole</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

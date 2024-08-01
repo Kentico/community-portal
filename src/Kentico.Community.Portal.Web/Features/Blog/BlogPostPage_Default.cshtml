@@ -31,9 +31,12 @@
                                     <div class="template-banner__author">
                                         <div class="template-banner__author-name">
                                             <div class="template-banner__author-image">
-                                                @if (post.Author.Avatar is ImageAssetViewModel avatar)
+                                                @if (post.Author.Avatar is MediaAssetContent avatar)
                                                 {
-                                                    <img src="@avatar.URLData.RelativePath" alt="@post.Author.Name"
+                                                    <img src="@avatar.MediaAssetContentAssetLight.Url"
+                                                        width="@avatar.MediaAssetContentImageLightWidth"
+                                                        height="@avatar.MediaAssetContentImageLightHeight"
+                                                        title="@avatar.MediaAssetContentTitle" alt="@post.Author.Name"
                                                         class="c-tag_icon" />
                                                 }
                                             </div>
@@ -94,14 +97,16 @@
                                             target="_blank" rel="noopener noreferrer" title="Facebook"
                                             class="btn btn-secondary btn-social border-0" style="--bs-btn-bg: #1877f2;">
                                             <svg class="c-icon ">
-                                                <use xlink:href="/img/icons.svg#brand-facebook" asp-append-version></use>
+                                                <use xlink:href="/img/icons.svg#brand-facebook" asp-append-version>
+                                                </use>
                                             </svg>
                                         </a>
                                         <a href="https://www.linkedin.com/shareArticle?url=@post.AbsoluteURL"
                                             target="_blank" rel="noopener noreferrer" title="LinkedIn"
                                             class="btn btn-secondary btn-social border-0" style="--bs-btn-bg: #0a66c2;">
                                             <svg class="c-icon ">
-                                                <use xlink:href="/img/icons.svg#brand-linkedin" asp-append-version></use>
+                                                <use xlink:href="/img/icons.svg#brand-linkedin" asp-append-version>
+                                                </use>
                                             </svg>
                                         </a>
                                     </div>
@@ -111,13 +116,16 @@
                             <div class="c-card default-border author mt-5">
                                 <div class="c-card_inner d-grid">
                                     <div class="c-card_icon">
-                                        @if (post.Author.Avatar is ImageAssetViewModel avt)
+                                        @if (post.Author.Avatar is MediaAssetContent avt)
                                         {
-                                            <img src="@avt.URLData.RelativePath" alt="@post.Author.Name" />
+                                            <img src="@avt.MediaAssetContentAssetLight.Url" alt="@post.Author.Name"
+                                                width="@avt.MediaAssetContentImageLightWidth"
+                                                height="@avt.MediaAssetContentImageLightHeight"
+                                                title="@avt.MediaAssetContentTitle" />
                                         }
                                         else
                                         {
-                                            <img src="/img/avatars/john-doe.png" alt="" />
+                                            <img src="/img/profile-photo-default.png" alt="@post.Author.Name" />
                                         }
                                     </div>
                                     <div class="c-card_content">

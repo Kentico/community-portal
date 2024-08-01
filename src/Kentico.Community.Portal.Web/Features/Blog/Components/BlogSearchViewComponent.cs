@@ -57,7 +57,7 @@ public class BlogSearchViewComponent(IMediator mediator, BlogSearchService searc
             {
                 ID = result.AuthorMemberID,
                 Name = result.AuthorName,
-                Avatar = result.AuthorAvatarImage?.ToImageAsset(),
+                Avatar = result.AuthorAvatarImage?.ToMediaAssetContent(),
             })
             {
                 Title = result.Title,

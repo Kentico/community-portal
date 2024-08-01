@@ -3,7 +3,6 @@ using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Membership;
-using Kentico.Community.Portal.Web.Rendering;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,12 +10,10 @@ namespace Kentico.Community.Portal.Web.Features.Integrations;
 
 public class IntegrationsListViewComponent(
     IMediator mediator,
-    AssetItemService itemService,
     ITaxonomyRetriever taxonomyRetriever,
     LinkGenerator linkGenerator) : ViewComponent
 {
     private readonly IMediator mediator = mediator;
-    private readonly AssetItemService itemService = itemService;
     private readonly ITaxonomyRetriever taxonomyRetriever = taxonomyRetriever;
     private readonly LinkGenerator linkGenerator = linkGenerator;
 
@@ -26,16 +23,13 @@ public class IntegrationsListViewComponent(
         var tagIdentifiers = resp.Items.Select(i => i.Content.IntegrationContentIntegrationType.Select(t => t.Identifier).FirstOrDefault());
         var taxonomy = await taxonomyRetriever.RetrieveTaxonomy(SystemTaxonomies.IntegrationType.TaxonomyName, PortalWebSiteChannel.DEFAULT_LANGUAGE);
 
-        var items = await resp.Items
-            .ToAsyncEnumerable()
-            .SelectAwaitWithCancellation(async (i, ct) =>
+        var items = resp.Items
+            .Select(i =>
             {
                 var (content, author) = i;
-                // In a future release we will remove this because the image asset will be retrieved as a content item
-                var logo = await itemService.RetrieveMediaFileImage(content.IntegrationContentLogoMediaFile.FirstOrDefault());
-                return new IntegrationItemViewModel(content, logo, taxonomy, author, linkGenerator);
+                return new IntegrationItemViewModel(content, taxonomy, author, linkGenerator);
             })
-            .ToListAsync();
+            .ToList();
 
         return View("~/Features/Integrations/Components/IntegrationsList.cshtml", new IntegrationsListViewModel(items, taxonomy.Tags));
     }
@@ -46,7 +40,7 @@ public record IntegrationsListViewModel(IReadOnlyList<IntegrationItemViewModel> 
 public class IntegrationItemViewModel
 {
     public string Title { get; }
-    public ImageAssetViewModel? Logo { get; }
+    public MediaAssetContent? Logo { get; }
     public string ShortDescription { get; }
     public string? RepositoryURL { get; }
     public string? LibraryURL { get; }
@@ -54,11 +48,11 @@ public class IntegrationItemViewModel
     public string AuthorName { get; }
     public string? AuthorURL { get; }
 
-    public IntegrationItemViewModel(IntegrationContent content, ImageAssetViewModel? imageAsset, TaxonomyData taxonomy, Maybe<CommunityMember> author, LinkGenerator linkGenerator)
+    public IntegrationItemViewModel(IntegrationContent content, TaxonomyData taxonomy, Maybe<CommunityMember> author, LinkGenerator linkGenerator)
     {
-        Title = content.IntegrationContentTitle;
-        Logo = imageAsset;
-        ShortDescription = content.IntegrationContentShortDescription;
+        Title = content.ListableItemTitle;
+        Logo = content.ListableItemFeaturedImage.FirstOrDefault();
+        ShortDescription = content.ListableItemShortDescription;
         RepositoryURL = string.IsNullOrWhiteSpace(content.IntegrationContentRepositoryLinkURL) ? null : content.IntegrationContentRepositoryLinkURL;
         LibraryURL = string.IsNullOrWhiteSpace(content.IntegrationContentLibraryLinkURL) ? null : content.IntegrationContentLibraryLinkURL;
 

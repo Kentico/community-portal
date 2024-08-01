@@ -12,7 +12,6 @@
 using System;
 using System.Collections.Generic;
 using CMS.ContentEngine;
-using CMS.MediaLibrary;
 
 namespace Kentico.Community.Portal.Core.Content
 {
@@ -36,12 +35,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// AuthorContentPhotoMediaFileImage.
-		/// </summary>
-		public IEnumerable<AssetRelatedItem> AuthorContentPhotoMediaFileImage { get; set; }
-
-
-		/// <summary>
 		/// AuthorContentFirstName.
 		/// </summary>
 		public string AuthorContentFirstName { get; set; }
@@ -51,6 +44,12 @@ namespace Kentico.Community.Portal.Core.Content
 		/// AuthorContentSurname.
 		/// </summary>
 		public string AuthorContentSurname { get; set; }
+
+
+		/// <summary>
+		/// AuthorContentPhoto.
+		/// </summary>
+		public IEnumerable<MediaAssetContent> AuthorContentPhoto { get; set; }
 
 
 		/// <summary>

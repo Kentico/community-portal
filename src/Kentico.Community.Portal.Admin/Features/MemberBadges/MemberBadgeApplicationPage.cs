@@ -6,7 +6,7 @@ using Kentico.Xperience.Admin.Base;
 [assembly: UIApplication(
     identifier: MemberBadgeApplicationPage.IDENTIFIER,
     type: typeof(MemberBadgeApplicationPage),
-    slug: "memberbadges",
+    slug: "member-badges",
     name: "Member Badges",
     category: PortalWebAdminModule.COMMUNITY_CATEGORY,
     icon: Icons.Badge,

@@ -15,7 +15,7 @@
       <field column="ConsentGuid" guid="ef9baeba-8aca-4407-97b2-0ccd273138e3" />
       <field column="ConsentLastModified" guid="86874899-0c72-47e7-8f47-cf920e909951" />
       <field column="ConsentHash" guid="94daa148-b0f2-4a5d-8e0a-f2d7c06699e6" />
-      <field column="ShortText" columnprecision="0" columntype="longtext" dummy="altform" enabled="true" guid="2bb95a94-feb0-443e-b753-e3f8d5bb0f18" system="true" visible="true" order="7">
+      <field column="ShortText" columnprecision="0" columntype="richtexthtml" dummy="altform" enabled="true" guid="2bb95a94-feb0-443e-b753-e3f8d5bb0f18" system="true" visible="true" order="7">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$digitalmarketing.consentedit.shorttext.caption$}</fieldcaption>
@@ -29,7 +29,7 @@
           <controlname>Kentico.Administration.RichTextEditor</controlname>
         </settings>
       </field>
-      <field column="FullText" columnprecision="0" columntype="longtext" dummy="altform" enabled="true" guid="70054528-d75f-4a17-adf9-65da61d61900" system="true" visible="true" order="8">
+      <field column="FullText" columnprecision="0" columntype="richtexthtml" dummy="altform" enabled="true" guid="70054528-d75f-4a17-adf9-65da61d61900" system="true" visible="true" order="8">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$digitalmarketing.consentedit.fulltext.caption$}</fieldcaption>

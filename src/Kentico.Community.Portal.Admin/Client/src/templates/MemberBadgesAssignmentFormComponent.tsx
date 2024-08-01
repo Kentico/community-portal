@@ -1,4 +1,9 @@
 ﻿import { type FormComponentProps } from '@kentico/xperience-admin-base';
+import {
+  Colors,
+  Headline,
+  HeadlineSize,
+} from '@kentico/xperience-admin-components';
 import React, { useEffect, useState } from 'react';
 import { IoCheckmarkSharp } from 'react-icons/io5';
 import { MdOutlineCancel } from 'react-icons/md';
@@ -14,14 +19,7 @@ import Select, {
   components,
 } from 'react-select';
 import { Tooltip } from 'react-tooltip';
-
-export interface MemberBadgeAssigmentModel {
-  memberBadgeID: number;
-  memberBadgeDescription: string;
-  memberBadgeDisplayName: string;
-  badgeImageRelativePath: string | null;
-  isAssigned: boolean;
-}
+import { MemberBadgeAssigmentModel } from './MemberBadgeAssignmentModel';
 
 export interface MemberBadgesAssignmentComponentClientProperties
   extends FormComponentProps {
@@ -273,22 +271,29 @@ export const MemberBadgesAssignmentFormComponent = (
   };
 
   return (
-    <Select
-      isMulti
-      closeMenuOnSelect={false}
-      value={assignedBadges}
-      options={options}
-      onChange={selectBadges}
-      placeholder="Assign Badges"
-      styles={customStyle}
-      hideSelectedOptions={false}
-      components={{ MultiValueRemove, ClearIndicator, Option }}
-      theme={(theme) => ({
-        ...theme,
-        height: 40,
-        borderRadius: 0,
-        borderColor: 'gray',
-      })}
-    />
+    <div>
+      <h1>
+        <Headline size={HeadlineSize.L} labelColor={Colors.TextDefaultOnLight}>
+          Manually assigned badges
+        </Headline>
+      </h1>
+      <Select
+        isMulti
+        closeMenuOnSelect={false}
+        value={assignedBadges}
+        options={options}
+        onChange={selectBadges}
+        placeholder="Assign Badges"
+        styles={customStyle}
+        hideSelectedOptions={false}
+        components={{ MultiValueRemove, ClearIndicator, Option }}
+        theme={(theme) => ({
+          ...theme,
+          height: 40,
+          borderRadius: 0,
+          borderColor: 'gray',
+        })}
+      />
+    </div>
   );
 };

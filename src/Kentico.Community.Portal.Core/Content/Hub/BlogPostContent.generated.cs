@@ -42,6 +42,12 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
+		/// BlogPostContentShortDescription.
+		/// </summary>
+		public string BlogPostContentShortDescription { get; set; }
+
+
+		/// <summary>
 		/// BlogPostContentAuthor.
 		/// </summary>
 		public IEnumerable<AuthorContent> BlogPostContentAuthor { get; set; }
@@ -51,12 +57,6 @@ namespace Kentico.Community.Portal.Core.Content
 		/// BlogPostContentTeaserMediaFileImage.
 		/// </summary>
 		public IEnumerable<AssetRelatedItem> BlogPostContentTeaserMediaFileImage { get; set; }
-
-
-		/// <summary>
-		/// BlogPostContentShortDescription.
-		/// </summary>
-		public string BlogPostContentShortDescription { get; set; }
 
 
 		/// <summary>

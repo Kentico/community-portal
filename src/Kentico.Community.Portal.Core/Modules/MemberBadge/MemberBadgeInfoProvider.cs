@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using CMS.DataEngine;
 using CMS.Helpers;
 
@@ -6,7 +5,7 @@ namespace Kentico.Community.Portal.Core.Modules;
 
 public interface IMemberBadgeInfoProvider : IInfoProvider<MemberBadgeInfo>
 {
-    Task<ImmutableList<MemberBadgeInfo>> GetAllMemberBadgesCached();
+    Task<IReadOnlyList<MemberBadgeInfo>> GetAllMemberBadgesCached();
 }
 
 public class MemberBadgeInfoProvider(IProgressiveCache cache, IInfoProvider<MemberBadgeInfo> infoProvider) : IMemberBadgeInfoProvider
@@ -18,15 +17,17 @@ public class MemberBadgeInfoProvider(IProgressiveCache cache, IInfoProvider<Memb
     public void Delete(MemberBadgeInfo info) => infoProvider.Delete(info);
     public void Set(MemberBadgeInfo info) => infoProvider.Set(info);
 
-    public async Task<ImmutableList<MemberBadgeInfo>> GetAllMemberBadgesCached()
+    public async Task<IReadOnlyList<MemberBadgeInfo>> GetAllMemberBadgesCached()
     {
-        var badges = await cache.LoadAsync(cs =>
+        var badges = await cache.LoadAsync(async cs =>
         {
             cs.CacheDependency = CacheHelper.GetCacheDependency($"{MemberBadgeInfo.OBJECT_TYPE}|all");
 
-            return infoProvider.Get().GetEnumerableTypedResultAsync();
+            var infos = await infoProvider.Get().GetEnumerableTypedResultAsync();
+
+            return infos.ToList().AsReadOnly();
         }, new CacheSettings(120, [nameof(MemberBadgeInfo), "all"]));
 
-        return badges.ToImmutableList();
+        return badges;
     }
 }

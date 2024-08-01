@@ -43,11 +43,12 @@
                     x-show='(title.includes(searchTerm.toLowerCase()) || description.includes(searchTerm.toLowerCase())) && (searchType === "all" || searchType === type)'>
                     <div class="c-card widget default-border ">
                         <div class="c-card_inner">
-                            @if (item.Logo is ImageAssetViewModel logo)
+                            @if (item.Logo is MediaAssetContent logo)
                             {
                                 <div class="c-card_icon">
-                                    <img src="@logo.URLData.WithSizeConstraint(SizeConstraint.MaxWidthOrHeight(100)).RelativePath"
-                                        alt="@item.AuthorName" />
+                                    <img src="@logo.MediaAssetContentAssetLight.Url" alt="@item.AuthorName"
+                                        width="@logo.MediaAssetContentImageLightWidth"
+                                        height="@logo.MediaAssetContentImageLightHeight" />
                                 </div>
                             }
                             <h3 class="h3 mt-2 pt-1">@item.Title</h3>

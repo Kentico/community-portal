@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>KenticoCommunity.MemberBadgeConfiguration</CodeName>
+    <GUID>c42bc46f-8ee6-4868-9e9e-c58979cb5c5d</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="MemberBadgeConfigurationID" guid="3e101c1c-f475-4c8d-be93-456d36c03964" enabled="" />
+      <field column="MemberBadgeConfigurationGUID" guid="21dc61f5-a9d0-43d4-a682-061fdc700f9e" enabled="" />
+      <field column="MemberBadgeConfigurationIsLoggingVerbose" enabled="true" guid="5f6a4ff5-707e-4359-b7d1-9686abf212d8" visible="true" order="2">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <defaultvalue>False</defaultvalue>
+          <explanationtext>
+            <![CDATA[If true, more verbose and frequent logging will occur in the Event Log]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Is logging verbose?</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeConfigurationNextRuleProcessDelaySeconds" enabled="true" guid="18cf4b40-9af3-44b2-b7d2-d937d8fdb915" visible="true" order="3">
+        <settings>
+          <controlname>Kentico.Administration.NumberInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.MinimumIntegerValue</ValidationRuleIdentifier>
+            <RuleValues>
+              <MinValue>1</MinValue>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.MaximumIntegerValue</ValidationRuleIdentifier>
+            <RuleValues>
+              <MaxValue>120</MaxValue>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+        <properties>
+          <explanationtext>
+            <![CDATA[The delay between processing badge assignment rules. Must be between 1 second and 2 minutes.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Next rule process delay (seconds)</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeConfigurationReExecuteLoopDelayMinutes" enabled="true" guid="fd2fbbe6-58f4-4a20-9b63-9c79e7a0cccf" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.NumberInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.MinimumIntegerValue</ValidationRuleIdentifier>
+            <RuleValues>
+              <MinValue>30</MinValue>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.MaximumIntegerValue</ValidationRuleIdentifier>
+            <RuleValues>
+              <MaxValue>120</MaxValue>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+        <properties>
+          <explanationtext>The delay between re-running all rule assignments</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Re-execute loop delay (minutes)</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeConfigurationLastModified" guid="3ab7044a-0939-4a69-8eee-39a4aea7860b" visible="true" enabled="" order="5">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY hh:mm AM/PM</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Last modifieid</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit</FormDisplayName>
+  <FormGUID>4751a7bc-2bb5-436d-bbe9-b6017d636811</FormGUID>
+  <FormIsCustom>True</FormIsCustom>
+  <FormName>Edit</FormName>
+</cms.alternativeform>

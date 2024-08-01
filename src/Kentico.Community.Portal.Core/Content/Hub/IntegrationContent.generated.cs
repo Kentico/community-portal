@@ -12,7 +12,6 @@
 using System;
 using System.Collections.Generic;
 using CMS.ContentEngine;
-using CMS.MediaLibrary;
 
 namespace Kentico.Community.Portal.Core.Content
 {
@@ -39,24 +38,6 @@ namespace Kentico.Community.Portal.Core.Content
 		/// IntegrationContentPublishedDate.
 		/// </summary>
 		public DateTime IntegrationContentPublishedDate { get; set; }
-
-
-		/// <summary>
-		/// IntegrationContentTitle.
-		/// </summary>
-		public string IntegrationContentTitle { get; set; }
-
-
-		/// <summary>
-		/// IntegrationContentShortDescription.
-		/// </summary>
-		public string IntegrationContentShortDescription { get; set; }
-
-
-		/// <summary>
-		/// IntegrationContentLogoMediaFile.
-		/// </summary>
-		public IEnumerable<AssetRelatedItem> IntegrationContentLogoMediaFile { get; set; }
 
 
 		/// <summary>

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassCodeGenerationSettings>
+    <Data>
+      <GUIDColumn>MemberBadgeConfigurationGUID</GUIDColumn>
+      <LastModifiedColumn>MemberBadgeConfigurationLastModified</LastModifiedColumn>
+      <ObjectType>KenticoCommunity.MemberBadgeConfiguration</ObjectType>
+      <UseGuidHashtable>False</UseGuidHashtable>
+      <UseIdHashtable>False</UseIdHashtable>
+      <UseNameHashtable>False</UseNameHashtable>
+    </Data>
+  </ClassCodeGenerationSettings>
+  <ClassDisplayName>Member Badge Configuration</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="MemberBadgeConfigurationID" columntype="integer" enabled="true" guid="3e101c1c-f475-4c8d-be93-456d36c03964" isPK="true" />
+      <field column="MemberBadgeConfigurationGUID" columnprecision="0" columntype="guid" enabled="true" guid="21dc61f5-a9d0-43d4-a682-061fdc700f9e" />
+      <field column="MemberBadgeConfigurationLastModified" columnprecision="2" columntype="datetime" enabled="true" guid="3ab7044a-0939-4a69-8eee-39a4aea7860b" />
+      <field column="MemberBadgeConfigurationIsLoggingVerbose" columnprecision="0" columntype="boolean" enabled="true" guid="5f6a4ff5-707e-4359-b7d1-9686abf212d8" />
+      <field column="MemberBadgeConfigurationReExecuteLoopDelayMinutes" columnprecision="0" columntype="integer" enabled="true" guid="fd2fbbe6-58f4-4a20-9b63-9c79e7a0cccf">
+        <properties>
+          <defaultvalue>60</defaultvalue>
+        </properties>
+      </field>
+      <field column="MemberBadgeConfigurationNextRuleProcessDelaySeconds" columnprecision="0" columntype="integer" enabled="true" guid="18cf4b40-9af3-44b2-b7d2-d937d8fdb915">
+        <properties>
+          <defaultvalue>60</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>c42bc46f-8ee6-4868-9e9e-c58979cb5c5d</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>KenticoCommunity.MemberBadgeConfiguration</ClassName>
+  <ClassResourceID>
+    <CodeName>KenticoCommunity</CodeName>
+    <GUID>5e10e4ec-a038-4b97-a9f6-c17724896c89</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>KenticoCommunity_MemberBadgeConfiguration</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

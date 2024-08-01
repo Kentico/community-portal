@@ -55,7 +55,6 @@ public class BlogPostPageTemplateController(
         var post = blogPage.BlogPostPageBlogPostContent.First();
 
         var author = await GetAuthor(post);
-        var authorImage = await assetService.RetrieveMediaFileImage(author.AuthorContentPhotoMediaFileImage.FirstOrDefault());
 
         var teaser = await assetService.RetrieveMediaFileImage(post.BlogPostContentTeaserMediaFileImage.FirstOrDefault());
         var contentHTML = post.IsContentTypeMarkdown()
@@ -64,7 +63,7 @@ public class BlogPostPageTemplateController(
 
         var vm = new BlogPostDetailViewModel(teaser, new()
         {
-            Avatar = authorImage,
+            Avatar = author.AuthorContentPhoto.FirstOrDefault(),
             BiographyHTML = new(author.AuthorContentBiographyHTML),
             LinkProfilePath = GetAuthorMemberProfilePath(author),
             Name = author.FullName,
@@ -151,7 +150,7 @@ public class AuthorViewModel
 {
     public string Name { get; init; } = "";
     public string? Title { get; init; }
-    public ImageAssetViewModel? Avatar { get; init; }
+    public MediaAssetContent? Avatar { get; init; }
     public Maybe<string> LinkProfilePath { get; init; }
     public HtmlString BiographyHTML { get; init; } = HtmlString.Empty;
 }

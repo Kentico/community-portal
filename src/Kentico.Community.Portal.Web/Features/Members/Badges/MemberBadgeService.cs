@@ -71,7 +71,7 @@ public class MemberBadgeService(
         return models;
     }
 
-    public async Task<bool> UpdateSelectedBadgesFor(List<SelectedBadgeViewModel> badges, int memberId)
+    public async Task UpdateSelectedBadgesFor(List<SelectedBadgeViewModel> badges, int memberId)
     {
         var badgesInDb = await memberBadgeMemberInfoProvider.Get()
             .WhereEquals(nameof(MemberBadgeMemberInfo.MemberBadgeMemberMemberId), memberId)
@@ -79,12 +79,14 @@ public class MemberBadgeService(
 
         foreach (var badge in badges)
         {
-            var badgeToUpdate = badgesInDb.Single(x => x.MemberBadgeMemberMemberBadgeId == badge.BadgeId);
-            badgeToUpdate.MemberBadgeMemberIsSelected = badge.IsSelected;
-            badgeToUpdate.Update();
+            badgesInDb
+                .TryFirst(x => x.MemberBadgeMemberMemberBadgeId == badge.BadgeId)
+                .Execute(b =>
+                {
+                    b.MemberBadgeMemberIsSelected = badge.IsSelected;
+                    b.Update();
+                });
         }
-
-        return true;
     }
 
     private async Task<IReadOnlyList<MemberBadgeAggregate>> GetAllBadgesForMember(int memberID, FrozenDictionary<int, MemberBadgetWithMediaAsset> badgeInfos, bool returnOnlySelected)

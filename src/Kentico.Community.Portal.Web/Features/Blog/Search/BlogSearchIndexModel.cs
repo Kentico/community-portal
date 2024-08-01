@@ -33,7 +33,6 @@ public class BlogSearchIndexModel
     public int AuthorMemberID { get; set; }
     public string AuthorName { get; set; } = "";
     public ImageAssetViewModelSerializable? AuthorAvatarImage { get; set; } = null;
-    public string AuthorProfileLinkPath { get; set; } = "";
 
     public Document ToDocument()
     {
@@ -49,7 +48,6 @@ public class BlogSearchIndexModel
             new Int32Field(nameof(AuthorMemberID), AuthorMemberID, Field.Store.YES),
             new TextField(nameof(AuthorName), AuthorName, Field.Store.YES),
             new TextField(nameof(AuthorAvatarImage), JsonConvert.SerializeObject(AuthorAvatarImage), Field.Store.YES),
-            new TextField(nameof(AuthorProfileLinkPath), AuthorProfileLinkPath, Field.Store.YES),
         };
 
         _ = indexDocument.AddFacetField(nameof(DXTopicsFacetField), indexDocument.Get(nameof(DXTopics)));
@@ -166,7 +164,7 @@ public class BlogSearchIndexingStrategy(
         }
 
         var b = new ContentItemQueryBuilder()
-            .ForWebPage(BlogPostPage.CONTENT_TYPE_NAME, webpageItem.ItemGuid, queryParameters => queryParameters.WithLinkedItems(2));
+            .ForWebPage(BlogPostPage.CONTENT_TYPE_NAME, webpageItem.ItemGuid, queryParameters => queryParameters.WithLinkedItems(3));
 
         var page = (await executor.GetMappedWebPageResult<BlogPostPage>(b)).FirstOrDefault();
         if (page is null)
@@ -180,18 +178,16 @@ public class BlogSearchIndexingStrategy(
 
         var indexModel = new BlogSearchIndexModel();
 
-        await blogPost
+        blogPost
             .BlogPostContentAuthor
             .TryFirst()
-            .Execute(async author =>
+            .Execute(author =>
             {
                 indexModel.AuthorMemberID = author.AuthorContentMemberID;
                 indexModel.AuthorName = author.FullName;
-                indexModel.AuthorProfileLinkPath = "";
-                var authorImg = await assetService.RetrieveMediaFileImage(author.AuthorContentPhotoMediaFileImage.FirstOrDefault());
-                if (authorImg is not null)
+                if (author.AuthorContentPhoto?.FirstOrDefault() is MediaAssetContent photo)
                 {
-                    indexModel.AuthorAvatarImage = new ImageAssetViewModelSerializable(authorImg);
+                    indexModel.AuthorAvatarImage = new ImageAssetViewModelSerializable(photo);
                 }
             });
 
@@ -201,18 +197,27 @@ public class BlogSearchIndexingStrategy(
             indexModel.TeaserImage = new ImageAssetViewModelSerializable(blogImg);
         }
 
-        var taxonomy = await GetBlogPostTaxonomy();
+        var blogPostTaxonomy = await GetBlogPostTaxonomy();
+        var dxTopicsTaxonomy = await GetDXTopicsTaxonomy();
 
         blogPost.BlogPostContentBlogType
             .TryFirst()
             .Map(t => t.Identifier)
-            .Bind(id => taxonomy.Tags.TryFirst(t => t.Identifier == id))
+            .Bind(id => blogPostTaxonomy.Tags.TryFirst(t => t.Identifier == id))
             .Execute(tag => indexModel.BlogType = tag.Title);
+        indexModel.DXTopics = string.Join(",", blogPost
+            .BlogPostContentDXTopics
+            .Select(t => dxTopicsTaxonomy.Tags.FirstOrDefault(t => t.Identifier == t.Identifier)?.Title ?? "")
+            .Where(t => !string.IsNullOrWhiteSpace(t)));
 
         string content = await webCrawler.CrawlWebPage(page);
         indexModel.Content = htmlSanitizer.SanitizeHtmlDocument(content);
-        indexModel.Title = blogPost.BlogPostContentTitle;
-        indexModel.ShortDescription = blogPost.BlogPostContentShortDescription;
+        indexModel.Title = string.IsNullOrWhiteSpace(blogPost.ListableItemTitle)
+            ? blogPost.BlogPostContentTitle
+            : blogPost.ListableItemTitle;
+        indexModel.ShortDescription = string.IsNullOrWhiteSpace(blogPost.ListableItemShortDescription)
+            ? blogPost.BlogPostContentShortDescription
+            : blogPost.ListableItemShortDescription;
         indexModel.PublishedDate = blogPost.BlogPostContentPublishedDate != default
             ? blogPost.BlogPostContentPublishedDate
             : DateTime.MinValue;
@@ -236,6 +241,12 @@ public class BlogSearchIndexingStrategy(
             cs.CacheDependency = CacheHelper.GetCacheDependency($"{TaxonomyInfo.OBJECT_TYPE}|byname|{SystemTaxonomies.BlogTypeTaxonomy.CodeName}");
             return taxonomyRetriever.RetrieveTaxonomy(SystemTaxonomies.BlogTypeTaxonomy.CodeName, PortalWebSiteChannel.DEFAULT_LANGUAGE);
         }, new CacheSettings(5, [nameof(BlogSearchIndexModel), nameof(GetBlogPostTaxonomy)]));
+    private Task<TaxonomyData> GetDXTopicsTaxonomy() =>
+        cache.LoadAsync(cs =>
+        {
+            cs.CacheDependency = CacheHelper.GetCacheDependency($"{TaxonomyInfo.OBJECT_TYPE}|byname|{SystemTaxonomies.DXTopicTaxonomy.CodeName}");
+            return taxonomyRetriever.RetrieveTaxonomy(SystemTaxonomies.DXTopicTaxonomy.CodeName, PortalWebSiteChannel.DEFAULT_LANGUAGE);
+        }, new CacheSettings(5, [nameof(BlogSearchIndexModel), nameof(GetDXTopicsTaxonomy)]));
 }
 
 
@@ -252,6 +263,16 @@ public class ImageAssetViewModelSerializable
         Extension = imageAsset.Extension;
     }
 
+    public ImageAssetViewModelSerializable(MediaAssetContent mediaAsset)
+    {
+        ID = mediaAsset.SystemFields.ContentItemGUID;
+        Title = mediaAsset.MediaAssetContentTitle;
+        URLData = new SerializableMediaFileUrl { RelativePath = mediaAsset.MediaAssetContentAssetLight.Url, DirectPath = mediaAsset.MediaAssetContentAssetLight.Url, IsImage = true };
+        AltText = mediaAsset.MediaAssetContentShortDescription;
+        Dimensions = new AssetDimensions { Width = mediaAsset.MediaAssetContentImageLightWidth, Height = mediaAsset.MediaAssetContentImageLightHeight };
+        Extension = mediaAsset.MediaAssetContentAssetLight.Metadata.Extension;
+    }
+
     public ImageAssetViewModelSerializable() { }
 
     public Guid ID { get; set; }
@@ -263,6 +284,25 @@ public class ImageAssetViewModelSerializable
 
     public ImageAssetViewModel ToImageAsset() =>
         new(ID, Title, URLData.ToMediaFileUrl(), AltText, Dimensions, Extension);
+
+    public MediaAssetContent ToMediaAssetContent() =>
+        new()
+        {
+            MediaAssetContentAssetLight = new()
+            {
+                Url = URLData.ToMediaFileUrl().RelativePath,
+                Metadata = new()
+                {
+                    Extension = Extension,
+                    Identifier = Guid.NewGuid(),
+                    Name = Title,
+                }
+            },
+            MediaAssetContentImageLightWidth = Dimensions.Width,
+            MediaAssetContentImageLightHeight = Dimensions.Height,
+            MediaAssetContentShortDescription = AltText,
+            MediaAssetContentTitle = Title
+        };
 }
 
 public class SerializableMediaFileUrl

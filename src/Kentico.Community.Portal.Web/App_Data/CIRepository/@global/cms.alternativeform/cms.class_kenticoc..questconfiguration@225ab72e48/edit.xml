@@ -9,8 +9,7 @@
     <form>
       <field column="SupportRequestConfigurationID" guid="7ac465f1-107a-45b4-ab57-9651c7f7fe00" enabled="" />
       <field column="SupportRequestConfigurationGUID" guid="05a6a22f-2d3d-4dca-81af-0e284529a620" enabled="" />
-      <field column="SupportRequestConfigurationLastModified" guid="bd549b68-b7e4-4464-ad01-54c2ac281db6" enabled="" order="2" />
-      <field column="SupportRequestConfigurationIsQueueProcessingEnabled" enabled="true" guid="5a41b9ed-92c7-462a-8120-85595a2d3438" visible="true" order="3">
+      <field column="SupportRequestConfigurationIsQueueProcessingEnabled" enabled="true" guid="5a41b9ed-92c7-462a-8120-85595a2d3438" visible="true">
         <settings>
           <controlname>Kentico.Administration.Checkbox</controlname>
         </settings>
@@ -23,7 +22,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="SupportRequestConfigurationExternalEndpointURL" enabled="true" guid="9095688a-0274-4470-a904-d8b1a9dd7fb5" visible="true" order="4">
+      <field column="SupportRequestConfigurationExternalEndpointURL" enabled="true" guid="9095688a-0274-4470-a904-d8b1a9dd7fb5" visible="true">
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
@@ -33,6 +32,17 @@
           </explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>External Endpoint URL</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="SupportRequestConfigurationLastModified" guid="ee0d7158-23f7-43b7-9fde-4f60726589c1" visible="true" enabled="">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY hh:mm AM/PM</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Last modifieid</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>

@@ -72,24 +72,25 @@
                         {
                             <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
                                 class="c-tag secondary invert user">
-                                @if (post.Author.Avatar is ImageAssetViewModel image)
+                                @if (post.Author.Avatar is MediaAssetContent image1)
                                 {
-                                    <img src="@image.URLData.WithSizeConstraint(SizeConstraint.MaxWidthOrHeight(24)).RelativePath"
-                                        alt="@image.AltText" width="@image.Dimensions.Width" height="@image.Dimensions.Height"
-                                        title="@image.Title" class="c-tag_icon me-1" />
+                                    <img src="@image1.MediaAssetContentAssetLight.Url"
+                                        alt="@image1.MediaAssetContentShortDescription"
+                                        width="@image1.MediaAssetContentImageLightWidth"
+                                        height="@image1.MediaAssetContentImageLightHeight" title="@image1.MediaAssetContentTitle"
+                                        style="max-width: 24px" class="c-tag_icon me-1" />
                                 }
                                 <span>@post.Author.Name</span>
                             </a>
                         }
                         else
                         {
-                            var image = post.Author.Avatar;
-
-                            if (image is not null)
+                            if (post.Author.Avatar is MediaAssetContent image2)
                             {
-                                <img src="@image.URLData.WithSizeConstraint(SizeConstraint.MaxWidthOrHeight(24)).RelativePath"
-                                    alt="@image.AltText" width="@image.Dimensions.Width" height="@image.Dimensions.Height"
-                                    title="@image.Title" class="c-tag_icon me-1" />
+                                <img src="@image2.MediaAssetContentAssetLight.Url" alt="@image2.MediaAssetContentShortDescription"
+                                    width="@image2.MediaAssetContentImageLightWidth"
+                                    height="@image2.MediaAssetContentImageLightHeight" title="@image2.MediaAssetContentTitle"
+                                    style="max-width: 24px" class="c-tag_icon me-1" />
                             }
 
                             <span>@post.Author.Name</span>

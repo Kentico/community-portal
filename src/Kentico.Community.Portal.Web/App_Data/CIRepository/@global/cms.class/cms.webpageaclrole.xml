@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Web page acl role</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="WebPageAclRoleID" columntype="integer" enabled="true" guid="2b1588e6-1c2a-4e94-9b7a-27817f14d4a8" isPK="true" system="true" />
+      <field column="WebPageAclRoleWebPageAclID" columnprecision="0" columntype="integer" enabled="true" guid="323fa360-3a52-4162-9d33-fb7a3c390b84" refobjtype="cms.webpageacl" reftype="Binding" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="WebPageAclRoleRoleID" columnprecision="0" columntype="integer" enabled="true" guid="6d3cc3c3-7f10-4edf-b470-6a5b4596ce07" refobjtype="cms.role" reftype="Binding" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>fb936ccd-715e-4fa9-95b1-8d1b6f0ad6e0</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.WebPageAclRole</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Websites</CodeName>
+    <GUID>87975c89-f788-4e6c-a91f-08f38097cc32</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_WebPageAclRole</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

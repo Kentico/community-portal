@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Web page acl</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="WebPageAclID" columntype="integer" enabled="true" guid="471d019c-cb21-4b69-b2d5-de3bb07285dc" isPK="true" system="true" />
+      <field column="WebPageAclGUID" columnprecision="0" columntype="guid" enabled="true" guid="c3bbd1fe-095c-4a1b-bacd-4f7b78d65046" system="true" />
+      <field allowempty="true" column="WebPageAclWebPageItemID" columnprecision="0" columntype="integer" enabled="true" guid="f4b7883a-a8b5-4ef0-9ee6-a3b0e1a44cf0" refobjtype="cms.webpageitem" reftype="NotRequired" system="true" />
+      <field column="WebPageAclWebsiteChannelID" columnprecision="0" columntype="integer" enabled="true" guid="43d3a889-5062-40b3-9700-33acd2f0e1f9" refobjtype="cms.websitechannel" reftype="Required" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>612ee8eb-7806-4ae4-bcc4-3d838b3c609b</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.WebPageAcl</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Websites</CodeName>
+    <GUID>87975c89-f788-4e6c-a91f-08f38097cc32</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_WebPageAcl</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

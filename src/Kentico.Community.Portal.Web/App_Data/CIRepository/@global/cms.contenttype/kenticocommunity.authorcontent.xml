@@ -8,18 +8,6 @@
       <field column="ContentItemDataID" columntype="integer" enabled="true" guid="bc9ecc04-8829-49bb-82e4-fe3cf141f6aa" isPK="true" />
       <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="7a6da816-c141-4042-a03b-6c45b47498e5" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
       <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="9223df6c-70b9-4ae2-ba83-2c1a604b4b98" isunique="true" system="true" />
-      <field allowempty="true" column="AuthorContentPhotoMediaFileImage" columnprecision="0" columntype="assets" enabled="true" guid="b7c62736-e101-4410-8315-f203dacaafa4" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Photo</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <AllowedExtensions>jpg;jpeg;png;webp</AllowedExtensions>
-          <controlname>Kentico.Administration.AssetSelector</controlname>
-          <MaximumAssets>1</MaximumAssets>
-        </settings>
-      </field>
       <field column="AuthorContentFirstName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="ff556cf5-53ad-459d-b73e-648e179d9494" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
@@ -40,6 +28,28 @@
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
       </field>
+      <field allowempty="true" column="AuthorContentPhoto" columnprecision="0" columntype="contentitemreference" enabled="true" guid="b430be5a-8ea3-443b-bde3-66a37ccd2163" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Photo</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["0722a045-5aff-4c3b-a356-1a1fd3be8a61"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>1</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
       <field column="AuthorContentCodeName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="3bf0575b-e3ed-4567-a022-ab84f9b04cf0" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
@@ -53,20 +63,22 @@
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
       </field>
-      <field column="AuthorContentMemberID" columnprecision="0" columntype="integer" enabled="true" guid="d28276ba-8f40-44e7-92c4-77f023ec6519" visible="true">
+      <field allowempty="true" column="AuthorContentMemberID" columnprecision="0" columntype="integer" enabled="true" guid="d28276ba-8f40-44e7-92c4-77f023ec6519" visible="true">
         <properties>
+          <defaultvalue>0</defaultvalue>
+          <explanationtext>
+            <![CDATA[If the author is also a Community Portal member, that relationship is defined here]]>
+          </explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Member</fieldcaption>
-          <fielddescription>
-            <![CDATA[The author's live site Member ID]]>
-          </fielddescription>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
-          <controlname>Kentico.Administration.NumberInput</controlname>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>CMS.Member</ObjectType>
         </settings>
       </field>
-      <field column="AuthorContentBiographyHTML" columnprecision="0" columntype="longtext" enabled="true" guid="85729337-9483-4cbb-a7e8-024aaca18439" visible="true">
+      <field column="AuthorContentBiographyHTML" columnprecision="0" columntype="richtexthtml" enabled="true" guid="85729337-9483-4cbb-a7e8-024aaca18439" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Biography</fieldcaption>

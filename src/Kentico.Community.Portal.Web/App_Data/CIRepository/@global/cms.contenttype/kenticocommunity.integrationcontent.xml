@@ -22,43 +22,6 @@
           <controlname>Kentico.Administration.DateInput</controlname>
         </settings>
       </field>
-      <field allowempty="true" column="IntegrationContentTitle" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="1e0f27f5-f59a-4fa1-871f-5c2d946453ca" visible="true">
-        <properties>
-          <explanationtext>This field will be removed in a future update.</explanationtext>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Title (deprecated)</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.TextWithLabel</controlname>
-        </settings>
-      </field>
-      <field allowempty="true" column="IntegrationContentShortDescription" columnprecision="0" columntype="longtext" enabled="true" guid="3b755ca1-d187-47cf-bbb0-6fdf01685b3b" visible="true">
-        <properties>
-          <explanationtext>This field will be removed in a future update.</explanationtext>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Short Description</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.TextWithLabel</controlname>
-        </settings>
-      </field>
-      <field allowempty="true" column="IntegrationContentLogoMediaFile" columnprecision="0" columntype="assets" enabled="true" guid="433f618f-e29a-4fa1-8d5d-bc3a2533c19c" visible="true">
-        <properties>
-          <explanationtext>
-            <![CDATA[This field will be removed in a future update. Use the Featured Image field above.]]>
-          </explanationtext>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Logo (deprecated)</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <AllowedExtensions>jpg;jpeg;png;webp</AllowedExtensions>
-          <controlname>Kentico.Administration.AssetSelector</controlname>
-          <MaximumAssets>1</MaximumAssets>
-        </settings>
-      </field>
       <field allowempty="true" column="IntegrationContentRepositoryLinkURL" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="3849b15f-1849-40dc-9df2-aee061e2ad38" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
@@ -116,7 +79,6 @@
         <settings>
           <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
           <ObjectType>CMS.Member</ObjectType>
-          <Placeholder>0</Placeholder>
         </settings>
       </field>
       <field allowempty="true" column="IntegrationContentAuthorName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="3aad3ef4-7bc8-40f5-b670-5a4579811e71" visible="true">

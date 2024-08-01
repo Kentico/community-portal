@@ -11,6 +11,7 @@ import { BarChart, TimeSeriesEntry } from './BarChart';
 type StatsTotals = {
   enabledMembers: number;
   newsletterSubscribers: number;
+  blogPosts: number;
   qAndAQuestions: number;
   qAndAAnswers: number;
 };
@@ -18,6 +19,7 @@ type StatsTotals = {
 interface StatsClientProperties {
   members: TimeSeriesEntry[];
   subscribers: TimeSeriesEntry[];
+  blogPosts: TimeSeriesEntry[];
   questions: TimeSeriesEntry[];
   answers: TimeSeriesEntry[];
   totals: StatsTotals;
@@ -49,6 +51,10 @@ export const StatsLayoutTemplate = (props: StatsClientProperties) => {
               value={props.totals.newsletterSubscribers}
             />
             <TextWithLabel
+              label="Blog Posts"
+              value={props.totals.blogPosts}
+            />
+            <TextWithLabel
               label="Q&A Questions"
               value={props.totals.qAndAQuestions}
             />
@@ -66,6 +72,12 @@ export const StatsLayoutTemplate = (props: StatsClientProperties) => {
         id="subscribers"
         data={props.subscribers}
         chartName="Newsletter Subscribers"
+      />
+
+      <BarChart
+        id="blogPosts"
+        data={props.blogPosts}
+        chartName="Blog Posts"
       />
 
       <BarChart

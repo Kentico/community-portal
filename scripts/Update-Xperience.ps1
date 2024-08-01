@@ -55,8 +55,6 @@ Write-CMSEnableCI $connection 'False'
 $command = "dotnet run " + `
     "--project $projectPath " + `
     "--launch-profile $launchProfile " + `
-    "--no-build " + `
-    "--no-restore " + `
     "-c $configuration " + `
     "--kxp-update"
 

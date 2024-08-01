@@ -8,7 +8,7 @@ using Kentico.Xperience.Admin.Base;
 
 [assembly: UIPage(
     parentType: typeof(QAndAApplicationPage),
-    slug: "list",
+    slug: "answers",
     uiPageType: typeof(QAndAListingPage),
     name: "Answers List",
     templateName: TemplateNames.LISTING,
@@ -61,11 +61,14 @@ public class QAndAListingPage : ListingPage
             .AddColumn(
                 nameof(QAndAAnswerDataInfo.QAndAAnswerDataDateCreated),
                 "Created",
-                searchable: true)
+                searchable: true,
+                sortable: true,
+                defaultSortDirection: SortTypeEnum.Desc)
             .AddColumn(
                 nameof(QAndAAnswerDataInfo.QAndAAnswerDataDateModified),
                 "Modified",
-                searchable: true)
+                searchable: true,
+                sortable: true)
             .AddColumn(nameof(QAndAAnswerDataInfo.QAndAAnswerDataCodeName),
                 "Answer CodeName",
                 searchable: true)

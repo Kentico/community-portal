@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Web page acl role permission</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="WebPageAclRolePermissionID" columntype="integer" enabled="true" guid="98e622c2-76dc-4d6b-a3be-e7ee9f6a5683" isPK="true" system="true" />
+      <field column="WebPageAclRolePermissionGUID" columnprecision="0" columntype="guid" enabled="true" guid="16d67645-80fc-4efe-9ffc-1a609b914fbe" system="true" />
+      <field column="WebPageAclRolePermissionWebPageAclRoleID" columnprecision="0" columntype="integer" enabled="true" guid="e17c9444-5ef2-4e4d-a07d-7c0e827e13e1" refobjtype="cms.webpageaclrole" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="WebPageAclRolePermissionPermissionName" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="81b16b5f-8c17-4da7-969e-79f3c8f4529e" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>6ec7da04-19aa-4581-a5b9-754cb1d2593a</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.WebPageAclRolePermission</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Websites</CodeName>
+    <GUID>87975c89-f788-4e6c-a91f-08f38097cc32</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_WebPageAclRolePermission</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

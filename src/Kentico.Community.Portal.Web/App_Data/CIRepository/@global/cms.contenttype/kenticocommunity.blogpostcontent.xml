@@ -7,14 +7,32 @@
       <field column="ContentItemDataID" columntype="integer" enabled="true" guid="0fe478b9-245e-45df-ac10-1ca97f319d18" isPK="true" />
       <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="9a4ee5c1-201f-4acc-9c3c-07a6d7c35696" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
       <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="88d462cd-3922-43c4-bc9b-bcccf6565f69" isunique="true" system="true" />
+      <schema guid="058caefa-c8d6-440f-8f3e-cd0fd9d7a41a" name="058caefa-c8d6-440f-8f3e-cd0fd9d7a41a">
+        <properties />
+      </schema>
       <field column="BlogPostContentTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="3d113f37-6c8f-45a2-b578-c68e63ad11ea" visible="true">
         <properties>
+          <explanationtext>Deprecated</explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Title</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field column="BlogPostContentShortDescription" columnprecision="0" columntype="longtext" enabled="true" guid="0e4f608e-b17f-4d9e-aabd-89a2cff246fb" visible="true">
+        <properties>
+          <explanationtext>Deprecated</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Short Description</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>True</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
         </settings>
       </field>
       <field allowempty="true" column="BlogPostContentAuthor" columnprecision="0" columntype="contentitemreference" enabled="true" guid="c8b8d314-3c85-4049-a090-10e7056b7903" visible="true">
@@ -35,6 +53,7 @@
       </field>
       <field column="BlogPostContentTeaserMediaFileImage" columnprecision="0" columntype="assets" enabled="true" guid="9c5b4e23-b208-488e-b009-03d70f48058e" visible="true">
         <properties>
+          <explanationtext>Deprecated</explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Teaser Image</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
@@ -43,19 +62,6 @@
           <AllowedExtensions>jpg;jpeg;png;webp;</AllowedExtensions>
           <controlname>Kentico.Administration.AssetSelector</controlname>
           <MaximumAssets>1</MaximumAssets>
-        </settings>
-      </field>
-      <field column="BlogPostContentShortDescription" columnprecision="0" columntype="longtext" enabled="true" guid="0e4f608e-b17f-4d9e-aabd-89a2cff246fb" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Short Description</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.TextArea</controlname>
-          <CopyButtonVisible>True</CopyButtonVisible>
-          <MaxRowsNumber>5</MaxRowsNumber>
-          <MinRowsNumber>3</MinRowsNumber>
         </settings>
       </field>
       <field allowempty="true" column="BlogPostContentBlogType" columnprecision="0" columntype="taxonomy" enabled="true" guid="56807d41-5f80-4c18-82d3-82287c1c7519" visible="true">
@@ -141,7 +147,7 @@ richText;Rich Text
           <MinRowsNumber>5</MinRowsNumber>
         </settings>
       </field>
-      <field allowempty="true" column="BlogPostContentContentHTML" columnprecision="0" columntype="longtext" enabled="true" guid="9dad16e1-55a9-48b0-9429-8a832406fc61" visible="true">
+      <field allowempty="true" column="BlogPostContentContentHTML" columnprecision="0" columntype="richtexthtml" enabled="true" guid="9dad16e1-55a9-48b0-9429-8a832406fc61" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Rich Text Content</fieldcaption>
@@ -152,9 +158,6 @@ richText;Rich Text
           <controlname>Kentico.Administration.RichTextEditor</controlname>
         </settings>
       </field>
-      <schema guid="058caefa-c8d6-440f-8f3e-cd0fd9d7a41a" name="058caefa-c8d6-440f-8f3e-cd0fd9d7a41a">
-        <properties />
-      </schema>
     </form>
   </ClassFormDefinition>
   <ClassGUID>2e7c68a6-f9c7-450a-9acb-a71db270ff71</ClassGUID>

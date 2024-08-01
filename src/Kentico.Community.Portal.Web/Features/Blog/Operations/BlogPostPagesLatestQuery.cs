@@ -35,7 +35,7 @@ public class BlogPostPagesLatestQueryHandler(WebPageQueryTools tools) : WebPageQ
             _ = queryParams
                 .ForWebsite(request.ChannelName)
                 .Linking(nameof(BlogPostPage.BlogPostPageBlogPostContent), contentItemIDs)
-                .WithLinkedItems(2);
+                .WithLinkedItems(3);
         });
 
         var pages = await Executor.GetMappedWebPageResult<BlogPostPage>(postsQuery, DefaultQueryOptions, cancellationToken);
@@ -58,6 +58,6 @@ public class BlogPostPagesLatestQueryHandler(WebPageQueryTools tools) : WebPageQ
                         (author, builder) => builder
                             .ContentItem(author)
                             .Collection(
-                                author.AuthorContentPhotoMediaFileImage,
-                                (image, builder) => builder.Media(image))));
+                                author.AuthorContentPhoto,
+                                (image, builder) => builder.ContentItem(image))));
 }

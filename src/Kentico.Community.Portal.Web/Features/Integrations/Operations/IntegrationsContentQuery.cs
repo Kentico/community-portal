@@ -17,10 +17,11 @@ public class IntegrationContentsQueryHandler(ContentItemQueryTools tools, IInfoP
     {
         var b = new ContentItemQueryBuilder().ForContentType(
             IntegrationContent.CONTENT_TYPE_NAME,
-            q => q.OrderBy(new OrderByColumn(nameof(IntegrationContent.IntegrationContentPublishedDate), OrderDirection.Descending)));
+            q => q
+                .OrderBy(new OrderByColumn(nameof(IntegrationContent.IntegrationContentPublishedDate), OrderDirection.Descending))
+                .WithLinkedItems(1));
 
         var contents = await Executor.GetMappedWebPageResult<IntegrationContent>(b, DefaultQueryOptions, cancellationToken);
-
         var members = await GetIntegrationAuthors(contents);
 
         var items = contents
@@ -32,7 +33,7 @@ public class IntegrationContentsQueryHandler(ContentItemQueryTools tools, IInfoP
 
     private async Task<Dictionary<int, CommunityMember>> GetIntegrationAuthors(IEnumerable<IntegrationContent> contents)
     {
-        var memberAuthorIDs = contents.Select(c => c.IntegrationContentAuthorMemberID).Distinct().ToList();
+        var memberAuthorIDs = contents.Select(c => c.IntegrationContentAuthorMemberID).Distinct();
 
         var members = await memberProvider
                         .Get()

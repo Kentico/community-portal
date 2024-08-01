@@ -19,7 +19,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// Represents a content item of type <see cref="CommunityGroupContent"/>.
 	/// </summary>
 	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
-	public partial class CommunityGroupContent : IContentItemFieldsSource
+	public partial class CommunityGroupContent : IContentItemFieldsSource, IListableItem
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -47,15 +47,15 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// CommunityGroupContentWebsiteURL.
-		/// </summary>
-		public string CommunityGroupContentWebsiteURL { get; set; }
-
-
-		/// <summary>
 		/// CommunityGroupContentShortDescription.
 		/// </summary>
 		public string CommunityGroupContentShortDescription { get; set; }
+
+
+		/// <summary>
+		/// CommunityGroupContentWebsiteURL.
+		/// </summary>
+		public string CommunityGroupContentWebsiteURL { get; set; }
 
 
 		/// <summary>
@@ -80,5 +80,23 @@ namespace Kentico.Community.Portal.Core.Content
 		/// CommunityGroupContentAddressCountry.
 		/// </summary>
 		public string CommunityGroupContentAddressCountry { get; set; }
+
+
+		/// <summary>
+		/// ListableItemTitle.
+		/// </summary>
+		public string ListableItemTitle { get; set; }
+
+
+		/// <summary>
+		/// ListableItemShortDescription.
+		/// </summary>
+		public string ListableItemShortDescription { get; set; }
+
+
+		/// <summary>
+		/// ListableItemFeaturedImage.
+		/// </summary>
+		public IEnumerable<MediaAssetContent> ListableItemFeaturedImage { get; set; }
 	}
 }

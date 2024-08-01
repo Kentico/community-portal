@@ -33,6 +33,21 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
+      <field allowempty="true" column="FullControlRoles" columnprecision="0" columntype="objectids" dummy="altform" enabled="true" guid="fec56a78-e618-497b-bf55-95c6400056f5" system="true" visible="true" order="5">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.workflows.workflow.fullcontrolroles.label$}</fieldcaption>
+          <fielddescription>
+            <![CDATA[{$base.workflows.workflow.fullcontrolroles.tooltip$}]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectIdSelector</controlname>
+          <MaximumItems>0</MaximumItems>
+          <ObjectType>cms.role</ObjectType>
+        </settings>
+      </field>
     </form>
   </FormDefinition>
   <FormDisplayName>Workflow edit</FormDisplayName>
