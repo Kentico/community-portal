@@ -1,3 +1,4 @@
+using CMS.Membership;
 using Kentico.Community.Portal.Admin.Features.SupportRequests;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
@@ -13,6 +14,7 @@ using Kentico.Xperience.Admin.Base.Forms;
 
 namespace Kentico.Community.Portal.Admin.Features.SupportRequests;
 
+[UIEvaluatePermission(SystemPermissions.UPDATE)]
 public class SupportRequestProcessingEventEditPage(IFormComponentMapper formComponentMapper, IFormDataBinder formDataBinder) : InfoEditPage<SupportRequestProcessingEventInfo>(formComponentMapper, formDataBinder)
 {
     [PageParameter(typeof(IntPageModelBinder))]

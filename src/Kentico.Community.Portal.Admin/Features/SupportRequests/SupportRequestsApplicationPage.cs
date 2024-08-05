@@ -1,3 +1,4 @@
+using CMS.Membership;
 using Kentico.Community.Portal.Admin;
 using Kentico.Community.Portal.Admin.Features.SupportRequests;
 using Kentico.Xperience.Admin.Base;
@@ -13,6 +14,9 @@ using Kentico.Xperience.Admin.Base;
 
 namespace Kentico.Community.Portal.Admin.Features.SupportRequests;
 
+[UIPermission(SystemPermissions.VIEW)]
+[UIPermission(SystemPermissions.UPDATE)]
+[UIPermission(SystemPermissions.DELETE)]
 public class SupportRequestsApplicationPage : ApplicationPage
 {
     public const string IDENTIFIER = "support-requests-app";

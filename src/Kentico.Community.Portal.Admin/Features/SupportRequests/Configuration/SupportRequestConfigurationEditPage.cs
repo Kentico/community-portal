@@ -1,4 +1,5 @@
 using CMS.DataEngine;
+using CMS.Membership;
 using Kentico.Community.Portal.Admin.Features.SupportRequests;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
@@ -14,6 +15,7 @@ using Kentico.Xperience.Admin.Base.Forms;
 
 namespace Kentico.Community.Portal.Admin.Features.SupportRequests;
 
+[UIEvaluatePermission(SystemPermissions.UPDATE)]
 public class SupportRequestConfigurationEditPage(IInfoProvider<SupportRequestConfigurationInfo> configProvider, IFormComponentMapper formComponentMapper, IFormDataBinder formDataBinder)
     : InfoEditPage<SupportRequestConfigurationInfo>(formComponentMapper, formDataBinder)
 {

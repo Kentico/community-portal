@@ -1,3 +1,4 @@
+using CMS.Membership;
 using Kentico.Community.Portal.Admin;
 using Kentico.Community.Portal.Admin.Features.QAndA;
 using Kentico.Xperience.Admin.Base;
@@ -13,6 +14,10 @@ using Kentico.Xperience.Admin.Base;
 
 namespace Kentico.Community.Portal.Admin.Features.QAndA;
 
+[UIPermission(SystemPermissions.VIEW)]
+[UIPermission(SystemPermissions.CREATE)]
+[UIPermission(SystemPermissions.UPDATE)]
+[UIPermission(SystemPermissions.DELETE)]
 public class QAndAApplicationPage : ApplicationPage
 {
     public const string IDENTIFIER = "q-and-a-app";
