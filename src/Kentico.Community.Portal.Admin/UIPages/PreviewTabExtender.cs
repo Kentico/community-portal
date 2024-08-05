@@ -1,5 +1,4 @@
 using CMS.ContentEngine;
-using CMS.DataEngine;
 using CMS.Websites;
 using CMS.Websites.Internal;
 using Kentico.Community.Portal.Admin.UIPages;
@@ -19,11 +18,11 @@ namespace Kentico.Community.Portal.Admin.UIPages;
 /// <param name="infoProvider"></param>
 /// <param name="contextAccessor"></param>
 /// <param name="queryExecutor"></param>
-public class PreviewTabExtender(IWebPageUrlRetriever urlRetriever, IInfoProvider<WebsiteChannelInfo> infoProvider, IHttpContextAccessor contextAccessor, IContentQueryExecutor queryExecutor)
+public class PreviewTabExtender(IWebPageUrlRetriever urlRetriever, IWebsiteChannelDomainProvider domainProvider, IHttpContextAccessor contextAccessor, IContentQueryExecutor queryExecutor)
     : PageExtender<PreviewTab>
 {
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
-    private readonly IInfoProvider<WebsiteChannelInfo> infoProvider = infoProvider;
+    private readonly IWebsiteChannelDomainProvider domainProvider = domainProvider;
     private readonly IHttpContextAccessor contextAccessor = contextAccessor;
     private readonly IContentQueryExecutor queryExecutor = queryExecutor;
 
@@ -58,19 +57,22 @@ public class PreviewTabExtender(IWebPageUrlRetriever urlRetriever, IInfoProvider
             ? relativeUrl[1..]
             : relativeUrl;
 
-        var channel = await infoProvider.GetAsync(Page.ApplicationIdentifier.WebsiteChannelID);
+        string domain = await domainProvider.GetDomain(Page.ApplicationIdentifier.WebsiteChannelID);
         string fullUrl = UriHelper.BuildAbsolute(
             scheme: contextAccessor.HttpContext!.Request.Scheme,
-            host: new HostString(channel.WebsiteChannelDomain),
+            host: new HostString(domain),
             pathBase: "",
             path: relativeUrl);
 
         mutableActions.Add(new ContentItemAction
         {
             Name = "OpenPublishedPage",
-            Label = "Open Published Page",
+            Label = "↗️ Open Published Page",
+            Tooltip = "Opens the current page in a new tab",
             Permission = WebPageAclPermissions.DISPLAY,
-            Url = fullUrl
+            Url = fullUrl,
+            Icon = Icons.ArrowRightTopSquare,
+            ButtonColor = ButtonColor.Primary,
         });
 
         return props;

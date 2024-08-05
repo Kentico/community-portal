@@ -2,7 +2,7 @@
 using CMS.DataEngine;
 using CMS.Membership;
 using Kentico.Community.Portal.Admin.Features.MemberBadges;
-using Kentico.Community.Portal.Admin.UIPages;
+using Kentico.Community.Portal.Admin.Features.Members;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
 
@@ -31,6 +31,8 @@ internal class MemberBadgeAssignmentListingPage : ListingPage
         PageConfiguration.QueryModifiers
             .AddModifier((q, settings) =>
             {
+                MemberListFilter.ModifyQueryForBadgeFilter(q);
+
                 var ruleAssigned =
                     new ObjectQuery(MemberBadgeMemberInfo.OBJECT_TYPE)
                         .Source(s => s.Join<MemberBadgeInfo>(nameof(MemberBadgeMemberInfo.MemberBadgeMemberMemberBadgeId), nameof(MemberBadgeInfo.MemberBadgeID)))

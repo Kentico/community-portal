@@ -1,21 +1,21 @@
-using CMS.DataEngine;
 using CMS.Membership;
 using CSharpFunctionalExtensions;
-using Kentico.Community.Portal.Admin.UIPages;
+using Kentico.Community.Portal.Admin.Features.Members;
 using Kentico.Xperience.Admin.Base;
-using Kentico.Xperience.Admin.Base.Filters;
-using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Kentico.Xperience.Admin.Base.UIPages;
 
 [assembly: PageExtender(typeof(MemberListExtender))]
 
-namespace Kentico.Community.Portal.Admin.UIPages;
+namespace Kentico.Community.Portal.Admin.Features.Members;
 
 public class MemberListExtender : PageExtender<MemberList>
 {
     public override async Task ConfigurePage()
     {
         await base.ConfigurePage();
+
+        Page.PageConfiguration.QueryModifiers.AddModifier((q, settings) =>
+            MemberListFilter.ModifyQueryForBadgeFilter(q));
 
         var configs = Page.PageConfiguration.ColumnConfigurations
                 .AddColumn("MemberFirstName", caption: "First name")
@@ -44,45 +44,5 @@ public class MemberListExtender : PageExtender<MemberList>
         {
             Page.PageConfiguration.FilterFormModel = new MemberListFilter();
         }
-    }
-}
-
-public class MemberListFilter
-{
-    [DropDownComponent(
-        Label = "Status",
-        Options = "Enabled\r\nDisabled")]
-    [FilterCondition(
-        BuilderType = typeof(MemberStatusWhereConditionBuilder),
-        ColumnName = nameof(MemberInfo.MemberEnabled)
-    )]
-    public string Status { get; set; } = "";
-}
-
-public class MemberStatusWhereConditionBuilder : IWhereConditionBuilder
-{
-    public Task<IWhereCondition> Build(string columnName, object value)
-    {
-        if (string.IsNullOrEmpty(columnName))
-        {
-            throw new ArgumentException(
-                $"{nameof(columnName)} cannot be a null or an empty string.");
-        }
-
-        var whereCondition = new WhereCondition();
-
-        if (value is null || value is not string status)
-        {
-            return Task.FromResult<IWhereCondition>(whereCondition);
-        }
-
-        whereCondition = status switch
-        {
-            "Disabled" => new WhereCondition().WhereEquals(nameof(MemberInfo.MemberEnabled), 0),
-            "Enabled" => new WhereCondition().WhereEquals(nameof(MemberInfo.MemberEnabled), 1),
-            "" or _ => new WhereCondition("1 = 1"),
-        };
-
-        return Task.FromResult<IWhereCondition>(whereCondition);
     }
 }

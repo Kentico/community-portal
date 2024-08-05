@@ -27,12 +27,12 @@ public class ReusableFieldSchemaListExtender(IReusableFieldSchemaManager schemaM
             .TryFirst(c => string.Equals(c.Name, nameof(ReusableFieldSchema.Name), StringComparison.OrdinalIgnoreCase))
             .Execute(c => c.MaxWidth = 35);
 
-        _ = configs.AddColumn("usedByContentTypes", "Used by", minWidth: 50, maxWidth: 100, formatter: (data, dc) =>
+        _ = configs.AddColumn("usedByContentTypes", "Used by (Content Types)", minWidth: 50, maxWidth: 100, formatter: (data, dc) =>
         {
             var schemaGUID = ValidationHelper.GetGuid(dc[nameof(ReusableFieldSchema.Guid)], default);
             var contentTypes = schemaManager.GetContentTypesWithSchema(schemaGUID) ?? [];
 
-            return string.Join(", ", contentTypes);
+            return contentTypes.Count().ToString();
         });
     }
 }
