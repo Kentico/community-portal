@@ -35,8 +35,8 @@ This project is using [Xperience Version v29.3.0](https://docs.kentico.com/chang
     <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-badge-assignment-management.jpg" width="400" alt="Portal Admin member badge assignment">
   </a>
 
-  <a href="https://raw.githubusercontent.com/Kentico/community-portal-internal/main/images/portal-admin-website-page-search.jpg">
-    <img src="https://raw.githubusercontent.com/Kentico/community-portal-internal/main/images/portal-admin-website-page-search.jpg" width="400" alt="Portal Admin website channel page search">
+  <a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-website-page-search.jpg">
+    <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-website-page-search.jpg" width="400" alt="Portal Admin website channel page search">
   </a>
 </div>
 
