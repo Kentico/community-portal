@@ -3,8 +3,10 @@ using CMS.Helpers;
 using CMS.Membership;
 using CMS.Websites.Internal;
 using Kentico.Community.Portal.Admin.Features.QAndA;
+using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
+using Kentico.Xperience.Admin.Websites.UIPages;
 
 [assembly: UIPage(
     parentType: typeof(QAndAApplicationPage),
@@ -16,8 +18,10 @@ using Kentico.Xperience.Admin.Base;
 
 namespace Kentico.Community.Portal.Admin.Features.QAndA;
 
-public class QAndAListingPage : ListingPage
+public class QAndAListingPage(IPageUrlGenerator pageUrlGenerator) : ListingPage
 {
+    private readonly IPageUrlGenerator pageUrlGenerator = pageUrlGenerator;
+
     protected override string ObjectType => QAndAAnswerDataInfo.OBJECT_TYPE;
 
     /// <summary>
@@ -83,7 +87,7 @@ public class QAndAListingPage : ListingPage
         _ = PageConfiguration.TableActions.AddDeleteAction(nameof(Delete));
     }
 
-    private static TableRowLinkProps AnswerLinkModelRetriever(object value, IDataContainer container)
+    private TableRowLinkProps AnswerLinkModelRetriever(object value, IDataContainer container)
     {
         int webPageItemID = ValidationHelper.GetInteger(container[nameof(WebPageItemInfo.WebPageItemID)], 0);
         int websiteChannelID = ValidationHelper.GetInteger(container[nameof(QAndAAnswerDataInfo.QAndAAnswerDataWebsiteChannelID)], 0);
@@ -95,10 +99,14 @@ public class QAndAListingPage : ListingPage
             return new TableRowLinkProps() { Label = label, Path = "" };
         }
 
+        string pageUrl = pageUrlGenerator.GenerateUrl<ContentTab>($"webpages-{websiteChannelID}", $"{PortalWebSiteChannel.DEFAULT_LANGUAGE}_{webPageItemID}");
+
         return new TableRowLinkProps()
         {
             Label = label,
-            Path = $"/admin/webpages-{websiteChannelID}/en-US_{webPageItemID}/content"
+            Path = pageUrl.StartsWith('/')
+                ? pageUrl[1..]
+                : pageUrl
         };
     }
 

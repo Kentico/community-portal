@@ -130,7 +130,7 @@ public class ContentTypeTypeGeneralSelectorDataProvider
     }
 
     public Task<IEnumerable<ObjectSelectorListItem<string>>> GetSelectedItemsAsync(IEnumerable<string> selectedValues, CancellationToken cancellationToken) =>
-        Task.FromResult(selectedValues?.Select(v => GetSelectedItemByValue(v)) ?? []);
+        Task.FromResult((selectedValues ?? []).Select(GetSelectedItemByValue));
 
     private ObjectSelectorListItem<string> GetSelectedItemByValue(string contentTypeTypeValue) =>
         contentTypeTypeValue switch
