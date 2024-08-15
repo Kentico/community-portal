@@ -9,7 +9,7 @@
 
 ## Node.js Runtime
 
-- [Node.js](https://nodejs.org/en/download) 18.16.1 or newer
+- [Node.js](https://nodejs.org/en/download) 20.11.0 or newer
 - [NVM for Windows](https://github.com/coreybutler/nvm-windows) to manage multiple installed versions of Node.js
 - See `engines` in the solution's `package.json` files for specific version requirements
 
