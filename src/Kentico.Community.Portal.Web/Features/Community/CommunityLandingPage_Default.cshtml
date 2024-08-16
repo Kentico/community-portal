@@ -18,27 +18,29 @@
                 <div class="col-sm-6 col-lg-4 mt-3 mt-sm-5 mt-lg-6">
                     <div class="c-card widget default-border ">
                         <div class="c-card_inner">
-                            @if (item.CommunityGroupContentPrimaryImageMediaAssets.FirstOrDefault() is MediaAssetContent logo)
+                            @if (item.ListableItemFeaturedImage.FirstOrDefault() is MediaAssetContent logo)
                             {
-                                    <img src="@logo.MediaAssetContentAssetLight.Url" class="card-img-top"
-                                        alt="@logo.MediaAssetContentTitle" width="@logo.MediaAssetContentImageLightWidth" height="@logo.MediaAssetContentImageLightHeight" />
-                             
+                                <img src="@logo.MediaAssetContentAssetLight.Url" class="card-img-top"
+                                    alt="@logo.MediaAssetContentTitle" width="@logo.MediaAssetContentImageLightWidth"
+                                    height="@logo.MediaAssetContentImageLightHeight" />
+
                             }
                             <h3 class="h3 mt-2 pt-1">
                                 @if (!string.IsNullOrWhiteSpace(item.CommunityGroupContentWebsiteURL))
                                 {
-                                    <a href="@item.CommunityGroupContentWebsiteURL">@item.CommunityGroupContentTitle</a>
+                                    <a href="@item.CommunityGroupContentWebsiteURL">@item.ListableItemTitle</a>
                                 }
                                 else
                                 {
-                                    <text>@item.CommunityGroupContentTitle</text>
+                                    <text>@item.ListableItemTitle</text>
                                 }
                             </h3>
                             <p class="mt-2">
                                 <small>
                                     @if (!string.IsNullOrWhiteSpace(item.CommunityGroupContentAddressStateOrProvince))
                                     {
-                                        <text>@item.CommunityGroupContentAddressCity, @item.CommunityGroupContentAddressStateOrProvince,</text>
+                                        <text>@item.CommunityGroupContentAddressCity,
+                                            @item.CommunityGroupContentAddressStateOrProvince,</text>
                                     }
                                     else
                                     {
@@ -47,7 +49,7 @@
                                     @item.CommunityGroupContentAddressCountry
                                 </small>
                             </p>
-                            <p class="mt-2">@item.CommunityGroupContentShortDescription</p>
+                            <p class="mt-2">@item.ListableItemShortDescription</p>
                         </div>
                     </div>
                 </div>

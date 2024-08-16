@@ -10,54 +10,6 @@
       <schema guid="058caefa-c8d6-440f-8f3e-cd0fd9d7a41a" name="058caefa-c8d6-440f-8f3e-cd0fd9d7a41a">
         <properties />
       </schema>
-      <field column="CommunityGroupContentTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="3fb2d2bb-a09e-419d-bc23-95f85ea3e74a" visible="true">
-        <properties>
-          <explanationtext>Deprecated</explanationtext>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Title</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.TextInput</controlname>
-        </settings>
-        <validationrulesdata>
-          <ValidationRuleConfiguration>
-            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
-            <RuleValues>
-              <ErrorMessage>This field is required</ErrorMessage>
-            </RuleValues>
-          </ValidationRuleConfiguration>
-        </validationrulesdata>
-      </field>
-      <field allowempty="true" column="CommunityGroupContentPrimaryImageMediaAssets" columnprecision="0" columntype="contentitemreference" enabled="true" guid="20df50fc-a3b2-494e-82e1-6d536990d06f" visible="true">
-        <properties>
-          <explanationtext>Deprecated</explanationtext>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Primary Image</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <AllowedContentItemTypeIdentifiers>
-            <![CDATA[["0722a045-5aff-4c3b-a356-1a1fd3be8a61"]]]>
-          </AllowedContentItemTypeIdentifiers>
-          <controlname>Kentico.Administration.ContentItemSelector</controlname>
-          <SelectionType>contentTypes</SelectionType>
-        </settings>
-      </field>
-      <field column="CommunityGroupContentShortDescription" columnprecision="0" columntype="longtext" enabled="true" guid="6085038a-1973-4fa9-849f-1fab60b63a72" visible="true">
-        <properties>
-          <explanationtext>Deprecated</explanationtext>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Short Description</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.TextArea</controlname>
-          <CopyButtonVisible>False</CopyButtonVisible>
-          <MaxRowsNumber>5</MaxRowsNumber>
-          <MinRowsNumber>3</MinRowsNumber>
-        </settings>
-      </field>
       <field column="CommunityGroupContentWebsiteURL" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="48b3a493-d692-41b0-a2ae-65e81ff975d4" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>

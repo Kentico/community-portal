@@ -1,17 +1,13 @@
 import { type RichTextEditorPluginProps } from '@kentico/xperience-admin-components';
 import React, { useEffect } from 'react';
 
-// Any required properties must extend 'RichTextEditorPluginProps'
-export interface CodeSyntaxHighlighterRichTextEditorPluginProps
-  extends RichTextEditorPluginProps {}
-
 // The component must be named 'PluginName' + 'RichTextEditorPlugin'
 // Xperience uses this convention when loading requested plugins
 export const CodeSyntaxHighlighterRichTextEditorPlugin = ({
   froalaEditorConfigurator,
   froalaEditorRef,
   _inputRef,
-}: CodeSyntaxHighlighterRichTextEditorPluginProps): React.JSX.Element => {
+}: RichTextEditorPluginProps): React.JSX.Element => {
   useEffect(() => {
     (function highlightCode() {
       const iconName = 'syntaxhHighlightIcon';

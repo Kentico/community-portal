@@ -5,7 +5,7 @@ using CMS.Websites;
 namespace Kentico.Community.Portal.Core.Operations;
 
 /// <summary>
-/// Generates and stores cache dependency key strings according to https://docs.xperience.io/configuring-xperience/configuring-caching/setting-cache-dependencies
+/// Generates and stores cache dependency key strings according to https://docs.kentico.com/x/XA_RBg
 /// If any provided values are null, whitespace, empty, default, or invalid (negative int identifiers), no cache key will be generated for that value
 /// </summary>
 public interface ICacheDependencyKeysBuilder

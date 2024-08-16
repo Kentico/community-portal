@@ -229,7 +229,7 @@ If there are any big problems in the future, we might delete these Razor views a
 
 Xperience by Kentico's media library analyzes uploaded media and extracts metadata for specific file types - specifically image width/height values (`Media_File.FileImageWidth` and `Media_File.FileImageHeight`). This is a feature that comes from previous versions of Kentico.
 
-However, current guidance is to [model media as a reusable content type](https://docs.xperience.io/x/Do3WCQ#Generalcontentmodelingrecommendations-Digitalmarketingfeatures) which means using the `ContentItemAsset` type to contain the media file.
+However, current guidance is to [model media as a reusable content type](https://docs.kentico.com/x/Do3WCQ#Generalcontentmodelingrecommendations-Digitalmarketingfeatures) which means using the `ContentItemAsset` type to contain the media file.
 
 Unfortunately, this approach to media management is still immature - Xperience doesn't perform this same metadata extraction and doesn't expose obvious APIs to enable a developer to perfor it themselves.
 

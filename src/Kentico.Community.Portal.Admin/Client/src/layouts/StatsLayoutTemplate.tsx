@@ -1,92 +1,126 @@
+import { usePageCommand } from '@kentico/xperience-admin-base';
 import {
+  Box,
   Colors,
   Headline,
   HeadlineSize,
-  Paper,
+  LabelWithTooltip,
+  MenuItem,
+  Select,
+  Spacing,
+  Stack,
   TextWithLabel,
 } from '@kentico/xperience-admin-components';
-import React from 'react';
+import React, { useState } from 'react';
 import { BarChart, TimeSeriesEntry } from './BarChart';
 
-type StatsTotals = {
-  enabledMembers: number;
-  newsletterSubscribers: number;
-  blogPosts: number;
-  qAndAQuestions: number;
-  qAndAAnswers: number;
+type StatsTotal = {
+  label: string;
+  value: number;
+};
+
+type StatsDatum = {
+  label: string;
+  dataEntries: TimeSeriesEntry[];
+};
+
+type StatsData = {
+  data: StatsDatum[];
+  totals: StatsTotal[];
+  totalsStartDate?: string;
 };
 
 interface StatsClientProperties {
-  members: TimeSeriesEntry[];
-  subscribers: TimeSeriesEntry[];
-  blogPosts: TimeSeriesEntry[];
-  questions: TimeSeriesEntry[];
-  answers: TimeSeriesEntry[];
-  totals: StatsTotals;
+  stats: StatsData;
+  totalsTitle: string;
+  allowedSelectRange: number[];
+  defaultSelectedRange: number;
 }
 
 export const StatsLayoutTemplate = (props: StatsClientProperties) => {
+  const [statsData, setStatsData] = useState({
+    ...(props.stats ?? { data: [], totals: [], totalsStartDate: undefined }),
+  });
+  const [selectedRange, setSelectedRange] = useState(
+    props.defaultSelectedRange,
+  );
+
+  const totalsDate = props.stats.totalsStartDate
+    ? new Date(props.stats.totalsStartDate).toLocaleDateString()
+    : '';
+
+  const { execute: loadData } = usePageCommand<StatsData, number>('LOADDATA', {
+    after(commandResult) {
+      if (commandResult) {
+        setStatsData(commandResult);
+      }
+    },
+  });
+
+  async function onSelect(e: string | undefined) {
+    if (!e) {
+      return;
+    }
+
+    setSelectedRange(e);
+
+    await loadData(parseInt(e, 10));
+  }
+
   return (
-    <div style={{ padding: '3rem' }}>
-      <Paper>
-        <div style={{ padding: '1rem' }}>
-          <h1>
-            <Headline
-              size={HeadlineSize.M}
-              labelColor={Colors.TextDefaultOnLight}
-            >
-              Totals
-            </Headline>
-          </h1>
-
-          <div
-            style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+    <Stack spacing={Spacing.L}>
+      <Box spacingY={Spacing.XS}>
+        <LabelWithTooltip
+          label="Time range (months)"
+          tooltipText="The totals and charts below will update to reflect the selected time range"
+        />
+      </Box>
+      <Box spacingY={Spacing.S}>
+        <Select placeholder="Select a time frame" onChange={(e) => onSelect(e)}>
+          {props.allowedSelectRange.map((i) => (
+            <MenuItem
+              key={i}
+              primaryLabel={`${i} months`}
+              value={i}
+              selected={i === selectedRange}
+            />
+          ))}
+        </Select>
+      </Box>
+      <Box spacingY={Spacing.L}>
+        <h1 style={{ margin: '0 0 1rem 0' }}>
+          <Headline
+            size={HeadlineSize.M}
+            labelColor={Colors.TextDefaultOnLight}
           >
-            <TextWithLabel
-              label="Enabled Members"
-              value={props.totals.enabledMembers}
-            />
-            <TextWithLabel
-              label="Newsletter Subscribers"
-              value={props.totals.newsletterSubscribers}
-            />
-            <TextWithLabel
-              label="Blog Posts"
-              value={props.totals.blogPosts}
-            />
-            <TextWithLabel
-              label="Q&A Questions"
-              value={props.totals.qAndAQuestions}
-            />
-            <TextWithLabel
-              label="Q&A Answers"
-              value={props.totals.qAndAAnswers}
-            />
-          </div>
+            {props.totalsTitle}{' '}
+            {totalsDate ? `(since ${totalsDate})` : '(all time)'}
+          </Headline>
+        </h1>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          {statsData.totals.map((t) => (
+            <TextWithLabel key={t.label} label={t.label} value={t.value} />
+          ))}
         </div>
-      </Paper>
+      </Box>
 
-      <BarChart id="members" data={props.members} chartName="Members Joined" />
-
-      <BarChart
-        id="subscribers"
-        data={props.subscribers}
-        chartName="Newsletter Subscribers"
-      />
-
-      <BarChart
-        id="blogPosts"
-        data={props.blogPosts}
-        chartName="Blog Posts"
-      />
-
-      <BarChart
-        id="questions"
-        data={props.questions}
-        chartName="Q&A Questions"
-      />
-
-      <BarChart id="answers" data={props.answers} chartName="Q&A Answers" />
-    </div>
+      {statsData.data.map((d) => {
+        const id = toDashCase(d.label);
+        return (
+          <Box key={id}>
+            <BarChart id={id} data={d.dataEntries} chartName={d.label} />
+          </Box>
+        );
+      })}
+    </Stack>
   );
 };
+
+function toDashCase(str: string) {
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1-$2') // Add a dash between lowercase and uppercase letters
+    .replace(/\s+/g, '-') // Replace spaces with dashes
+    .replace(/_/g, '-') // Replace underscores with dashes
+    .toLowerCase(); // Convert the entire string to lowercase
+}

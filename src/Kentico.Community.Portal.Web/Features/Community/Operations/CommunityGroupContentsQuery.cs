@@ -13,8 +13,8 @@ public class CommunityGroupContentsQueryHandler(ContentItemQueryTools tools) : C
         var b = new ContentItemQueryBuilder()
             .ForContentType(CommunityGroupContent.CONTENT_TYPE_NAME, queryParameters =>
                 queryParameters
-                    .OrderBy(new OrderByColumn(nameof(CommunityGroupContent.CommunityGroupContentTitle), OrderDirection.Ascending))
-                    .WithLinkedItems(1));
+                    .OrderBy(new OrderByColumn(nameof(CommunityGroupContent.ListableItemTitle), OrderDirection.Ascending))
+                    .WithLinkedItems(2));
 
         var r = await Executor.GetMappedResult<CommunityGroupContent>(b, DefaultQueryOptions, cancellationToken);
 
@@ -24,5 +24,5 @@ public class CommunityGroupContentsQueryHandler(ContentItemQueryTools tools) : C
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(CommunityGroupContentsQuery query, CommunityGroupContentsQueryResponse result, ICacheDependencyKeysBuilder builder) =>
         builder
             .AllContentItems(CommunityGroupContent.CONTENT_TYPE_NAME)
-            .Collection(result.Items, (i, b) => b.ContentItem(i.CommunityGroupContentPrimaryImageMediaAssets.FirstOrDefault()));
+            .Collection(result.Items, (i, b) => b.ContentItem(i.ListableItemFeaturedImage.FirstOrDefault()));
 }

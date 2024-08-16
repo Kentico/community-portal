@@ -79,7 +79,7 @@ export const BarChart = (props: {
     return () => {
       root.dispose();
     };
-  }, []);
+  }, [props.data, props.chartName]);
 
   return (
     <>

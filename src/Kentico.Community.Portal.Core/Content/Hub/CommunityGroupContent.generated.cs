@@ -35,24 +35,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// CommunityGroupContentTitle.
-		/// </summary>
-		public string CommunityGroupContentTitle { get; set; }
-
-
-		/// <summary>
-		/// CommunityGroupContentPrimaryImageMediaAssets.
-		/// </summary>
-		public IEnumerable<MediaAssetContent> CommunityGroupContentPrimaryImageMediaAssets { get; set; }
-
-
-		/// <summary>
-		/// CommunityGroupContentShortDescription.
-		/// </summary>
-		public string CommunityGroupContentShortDescription { get; set; }
-
-
-		/// <summary>
 		/// CommunityGroupContentWebsiteURL.
 		/// </summary>
 		public string CommunityGroupContentWebsiteURL { get; set; }

@@ -1,14 +1,14 @@
 using CMS.Membership;
-using Kentico.Community.Portal.Admin;
 using Kentico.Community.Portal.Admin.Features.WebsiteChannels;
 using Kentico.Xperience.Admin.Base;
+using Kentico.Xperience.Admin.Base.UIPages;
 
 [assembly: UIApplication(
     identifier: WebsiteChannelsApplicationPage.IDENTIFIER,
     type: typeof(WebsiteChannelsApplicationPage),
     slug: "website-channels",
     name: "Website channels",
-    category: PortalWebAdminModule.COMMUNITY_CATEGORY,
+    category: BaseApplicationCategories.CONTENT_MANAGEMENT,
     icon: Icons.Earth,
     templateName: TemplateNames.SECTION_LAYOUT)]
 

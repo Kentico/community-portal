@@ -1,6 +1,6 @@
 # Development
 
-To ensure schema and data updates to the application are synchronized with the code, follow the guidance in the Xperience docs for [Continuous Integration](https://docs.xperience.io/x/YAaiCQ).
+To ensure schema and data updates to the application are synchronized with the code, follow the guidance in the Xperience docs for [Continuous Integration](https://docs.kentico.com/x/YAaiCQ).
 
 > If you are planning to make changes and contribute updates to the application, create a branch.
 > See: [Contributing](./Contributing.md) for more details.
@@ -21,9 +21,11 @@ Run the CI Restore PowerShell script to populate the database with changes from 
 
    - Use the VS Code task `npm: dev (Web)`
    - (**alternative**) Run `npm install` and then `npm run dev` at the command line in the `.\src\Kentico.Community.Portal.Web` directory
+   - (**alternative**) Run `Run-Web-Client.ps1` from the command line in the `.\scripts` directory
 
    - Use the VS Code task `npm: dev (Admin)`
    - (**alternative**) Run `npm install` and then `npm run dev` at the command line in the `.\src\Kentico.Community.Portal.Admin\Client` directory
+   - (**alternative**) Run `Run-Admin-Client.ps1` from the command line in the `.\scripts` directory
 
 ## Start Azurite
 
@@ -36,7 +38,7 @@ Run the CI Restore PowerShell script to populate the database with changes from 
 
 ## Start ASP.NET Core application
 
-1. Launch server. App should now be running on localhost (Currently <http://localhost:45038/> ).
+1. Launch server. App should now be running on localhost (see: `README.md` for ports)
 
    - Use the VS Code task `.NET: watch (Web)`
    - (**alternative**) Use the VS Code `.NET Debug and Hot Reload` Launch Configuration
@@ -44,7 +46,7 @@ Run the CI Restore PowerShell script to populate the database with changes from 
 
 ## Client Assets
 
-This project uses Webpack for [Xperience Admin customizations](https://docs.xperience.io/x/zgSiCQ) in the `Kentico.Community.Portal.Admin` project.
+This project uses Webpack for [Xperience Admin customizations](https://docs.kentico.com/x/zgSiCQ) in the `Kentico.Community.Portal.Admin` project.
 
 It uses [Vite.js](https://vitejs.dev/) to serve and bundle client assets for the Xperience application `Kentico.Community.Portal.Web`. The ASP.NET Core application proxies requests for static assets to the Vite dev server using the [Vite.AspNetCore](https://github.com/Eptagone/Vite.AspNetCore) integration.
 
@@ -54,7 +56,9 @@ You will need to start the following servers to fully develop the application
 
 - ASP.NET Core application - `.NET: watch (Web)` VS Code task
 - Vite dev server - `npm: dev (Web)` VS Code task
+  - (**alternative**) Run `Run-Web-Client.ps1` from the command line in the `.\scripts` directory
 - Webpack dev server - `npm: dev (Admin)` VS Code task
+  - (**alternative**) Run `Run-Admin-Client.ps1` from the command line in the `.\scripts` directory
 
 The Vite build process compiles the SCSS and JS in the `~/Client` folder into the `~/wwwroot/dist` folder during production builds. The generated CSS is trimmed using PurgeCSS to match what is being used in the `.cshtml` templates.
 

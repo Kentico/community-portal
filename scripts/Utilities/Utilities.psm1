@@ -31,6 +31,22 @@ function Get-WebProjectPath {
 
 <#
     .DESCRIPTION
+        Returns the admin application folder path from the workspace root
+#>
+function Get-AdminProjectPath {
+    return Resolve-Path(Join-Path $($scriptConfig.WorkspaceFolder) "src/Kentico.Community.Portal.Admin")
+}
+
+<#
+    .DESCRIPTION
+        Returns the admin client application folder path from the workspace root
+#>
+function Get-AdminClientProjectPath {
+    return Resolve-Path(Join-Path $($scriptConfig.WorkspaceFolder) "src/Kentico.Community.Portal.Admin/Client")
+}
+
+<#
+    .DESCRIPTION
         Returns the Core project folder path from the workspace root
 #>
 function Get-CoreProjectPath {

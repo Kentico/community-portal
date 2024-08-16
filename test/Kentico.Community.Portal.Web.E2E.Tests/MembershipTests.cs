@@ -17,18 +17,18 @@ public class MembershipTests : CommunityPageTests
     [Test]
     public async Task User_Can_Perform_Registration_And_Login()
     {
-        TestContext.WriteLine("Navigate from home to login");
+        TestContext.Out.WriteLine("Navigate from home to login");
 
         _ = await Page.GotoAsync("/");
         await Page.Locator("nav [test-id=signIn]").ClickAsync();
         await Page.WaitForURLAsync("**/authentication/login?returnURL=%2F");
 
-        TestContext.WriteLine("Navigate to register");
+        TestContext.Out.WriteLine("Navigate to register");
 
         await Page.Locator("[test-id=register]").ClickAsync();
         await Page.WaitForURLAsync("**/registration/register");
 
-        TestContext.WriteLine("Submit the registration form");
+        TestContext.Out.WriteLine("Submit the registration form");
 
         await Page.Locator("[test-id=userName]").FillAsync(UserName);
         await Page.Locator("[test-id=email]").FillAsync(Email);
@@ -38,7 +38,7 @@ public class MembershipTests : CommunityPageTests
         await Page.Locator("form[test-id=register] button[type=submit]").ClickAsync();
         _ = await Page.WaitForResponseAsync("**/registration/register");
 
-        TestContext.WriteLine("Confirm email address");
+        TestContext.Out.WriteLine("Confirm email address");
 
         string confirmationEmailURL = await GetConfirmationEmailURL();
 
@@ -48,25 +48,25 @@ public class MembershipTests : CommunityPageTests
         await Page.Locator("[test-id=confirmationSignIn]").ClickAsync();
         await Page.WaitForURLAsync("**/authentication/login");
 
-        TestContext.WriteLine("Submit login form");
+        TestContext.Out.WriteLine("Submit login form");
 
         await Page.Locator("[test-id=userNameOrEmail]").FillAsync(UserName);
         await Page.Locator("[test-id=password]").FillAsync(Password);
         await Page.Locator("form[test-id=signIn] button[type=submit]").ClickAsync();
         await Page.WaitForURLAsync("**/");
 
-        TestContext.WriteLine("Validate session is authenticated");
+        TestContext.Out.WriteLine("Validate session is authenticated");
 
         await Expect(Page.Locator("nav [test-id=signIn]")).Not.ToBeVisibleAsync();
         await Expect(Page.Locator("nav [test-id=username]")).ToHaveTextAsync(UserName);
 
-        TestContext.WriteLine("Logout");
+        TestContext.Out.WriteLine("Logout");
 
         await Page.Locator("[test-id=username]").HoverAsync();
         await Page.Locator("[test-id=logout]").ClickAsync();
         await Page.WaitForURLAsync("**/");
 
-        TestContext.WriteLine("Validate session is not authenticated");
+        TestContext.Out.WriteLine("Validate session is not authenticated");
 
         await Expect(Page.Locator("nav [test-id=signIn]")).ToBeVisibleAsync();
         await Expect(Page.Locator("nav [test-id=username]")).Not.ToBeVisibleAsync();
