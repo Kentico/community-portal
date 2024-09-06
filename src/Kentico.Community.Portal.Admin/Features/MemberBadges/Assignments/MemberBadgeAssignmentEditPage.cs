@@ -104,12 +104,7 @@ internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formIte
 
         foreach (var badge in allBadges)
         {
-            if (badge.MemberBadgeMediaAssetContentItem.FirstOrDefault() is not ContentItemReference reference)
-            {
-                continue;
-            }
-
-            string? badgeImageUrl = await RetrieveMediaAssetUrl(reference.Identifier);
+            string? badgeImageUrl = await RetrieveMediaAssetUrl(badge);
             bool isAssigned = assignedBadges.Any(x => x.MemberBadgeMemberMemberBadgeId == badge.MemberBadgeID);
 
             var assignmentModel = new MemberBadgeAssignmentModel(badge, isAssigned, badgeImageUrl);
@@ -127,8 +122,24 @@ internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formIte
         return new MemberBadgesAssignmentConfigurationModel(MemberID, manuallyAssignedBadges, ruleAssignedBadges);
     }
 
-    public async Task<string?> RetrieveMediaAssetUrl(Guid contentItemGUID)
+    public async Task<string?> RetrieveMediaAssetUrl(MemberBadgeInfo badge)
     {
+        Guid contentItemGUID = default;
+
+        if (badge.MemberBadgeImageContent.FirstOrDefault() is ContentItemReference imageRef)
+        {
+            contentItemGUID = imageRef.Identifier;
+        }
+        else if (badge.MemberBadgeMediaAssetContentItem.FirstOrDefault() is ContentItemReference mediaRef)
+        {
+            contentItemGUID = mediaRef.Identifier;
+        }
+
+        if (contentItemGUID == default)
+        {
+            return null;
+        }
+
         string? url = await cache.Load(async cs =>
         {
             var b = new ContentItemQueryBuilder()

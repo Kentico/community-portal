@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 
 [assembly: RegisterWidget(
-    identifier: CookiePreferencesWidget.Identifier,
+    identifier: CookiePreferencesWidget.IDENTIFIER,
     viewComponentType: typeof(CookiePreferencesWidget),
     name: "Cookie preferences",
     propertiesType: typeof(CookiePreferencesWidgetProperties),
@@ -22,7 +22,7 @@ namespace Kentico.Community.Portal.Web.Components.Widgets.CookiePreferences;
 /// </summary>
 public class CookiePreferencesWidget(ICookieAccessor cookies) : ViewComponent
 {
-    public const string Identifier = "CommunityPortal.CookiePreferences";
+    public const string IDENTIFIER = "CommunityPortal.CookiePreferences";
     private readonly ICookieAccessor cookies = cookies;
 
     public ViewViewComponentResult Invoke(CookiePreferencesWidgetProperties properties)
@@ -45,7 +45,7 @@ public class CookiePreferencesWidget(ICookieAccessor cookies) : ViewComponent
     }
 }
 
-public class CookiePreferencesWidgetProperties : IWidgetProperties
+public class CookiePreferencesWidgetProperties : BaseWidgetProperties
 {
     [TextInputComponent(Label = "Necessary cookie header", Order = 1)]
     public string NecessaryHeader { get; set; } = "";

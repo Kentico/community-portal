@@ -7,52 +7,48 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 [assembly: RegisterWidget(
-    identifier: LicensesWidgetViewComponent.Identifier,
-    viewComponentType: typeof(LicensesWidgetViewComponent),
+    identifier: LicensesWidget.IDENTIFIER,
+    viewComponentType: typeof(LicensesWidget),
     name: "3rd party licenses",
     propertiesType: typeof(LicensesWidgetProperties),
     IconClass = "icon-kentico")]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.Licenses;
 
-public class LicensesWidgetViewComponent(LicensesFacade licensesFacade, AssetItemService itemService) : ViewComponent
+public class LicensesWidget(LicensesFacade licensesFacade, AssetItemService itemService) : ViewComponent
 {
-    public const string Identifier = "CommunityPortal.LicensesWidget";
+    public const string IDENTIFIER = "CommunityPortal.LicensesWidget";
+    public const string NAME = "3rd Party Licenses";
 
     private readonly LicensesFacade licensesFacade = licensesFacade;
     private readonly AssetItemService itemService = itemService;
 
-    public async Task<IViewComponentResult> InvokeAsync(LicensesWidgetProperties properties)
+    public async Task<IViewComponentResult> InvokeAsync(LicensesWidgetProperties properties) =>
+        await Validate(properties)
+            .Match(
+                vm => View("~/Components/Widgets/LicensesWidget/LicensesWidget.cshtml", vm),
+                vm => View("~/Components/ComponentError.cshtml", vm)
+            );
+
+    private async Task<Result<LicensesWidgetViewModel, ComponentErrorViewModel>> Validate(LicensesWidgetProperties props)
     {
-        var relatedAsset = properties.LicenseFiles.FirstOrDefault();
+        var relatedAsset = props.LicenseFiles.FirstOrDefault();
 
         if (relatedAsset is null)
         {
-            ModelState.AddModelError("missingLicense", $"No License File has been selected.");
-
-            return View("~/Components/ComponentError.cshtml");
+            return Result.Failure<LicensesWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "No License File has been selected."));
         }
 
-        var asset = await itemService.RetrieveMediaFile(properties.LicenseFiles.FirstOrDefault());
+        var asset = await itemService.RetrieveMediaFile(props.LicenseFiles.FirstOrDefault());
 
         if (asset is null)
         {
-            ModelState.AddModelError("missingLicense", $"Could not find the License File {relatedAsset.Name}: {relatedAsset.Identifier}");
-
-            return View("~/Components/ComponentError.cshtml");
+            return Result.Failure<LicensesWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, $"Could not find the License File {relatedAsset.Name}: {relatedAsset.Identifier}"));
         }
 
-        var model = new LicensesWidgetViewModel()
-        {
-            Title = properties.Title,
-            NoLicensesText = properties.NoLicensesText
-        };
-
-        var licenseTypeLinks = GetDictionary(properties.LicensesTypeDescriptionLinks);
-
-        model.Licenses = await licensesFacade.GetLicenses(asset, licenseTypeLinks);
-
-        return View("~/Components/Widgets/LicensesWidget/LicensesWidget.cshtml", model);
+        var licenseTypeLinks = GetDictionary(props.LicensesTypeDescriptionLinks);
+        var licenses = await licensesFacade.GetLicenses(asset, licenseTypeLinks);
+        return new LicensesWidgetViewModel(props, licenses);
     }
 
     private static Dictionary<string, string> GetDictionary(string value)
@@ -73,7 +69,7 @@ public class LicensesWidgetViewComponent(LicensesFacade licensesFacade, AssetIte
     }
 }
 
-public class LicensesWidgetProperties : IWidgetProperties
+public class LicensesWidgetProperties : BaseWidgetProperties
 {
     [TextInputComponent(Label = "Title", Order = 1)]
     public string Title { get; set; } = "";
@@ -86,7 +82,7 @@ public class LicensesWidgetProperties : IWidgetProperties
         MaximumAssets = 1,
         AllowedExtensions = "json",
         ExplanationText = "Should be a JSON file containing a dictionary of license identifiers, each with an array of libraries using that license.")]
-    public IEnumerable<AssetRelatedItem> LicenseFiles { get; set; } = Enumerable.Empty<AssetRelatedItem>();
+    public IEnumerable<AssetRelatedItem> LicenseFiles { get; set; } = [];
 
     [TextAreaComponent(Label = "Licenses type description links", Order = 4)]
     public string LicensesTypeDescriptionLinks { get; set; } = "";
@@ -94,7 +90,14 @@ public class LicensesWidgetProperties : IWidgetProperties
 
 public class LicensesWidgetViewModel
 {
-    public string Title { get; set; } = "";
-    public string NoLicensesText { get; set; } = "";
-    public LicensesViewModel Licenses { get; set; } = new();
+    public string Title { get; }
+    public string NoLicensesText { get; }
+    public LicensesViewModel Licenses { get; }
+
+    public LicensesWidgetViewModel(LicensesWidgetProperties props, LicensesViewModel licenses)
+    {
+        Title = props.Title;
+        NoLicensesText = props.NoLicensesText;
+        Licenses = licenses;
+    }
 }

@@ -26,6 +26,7 @@ public class AuthorContentQueryHandler(ContentItemQueryTools tools) : ContentIte
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(AuthorContentQuery query, AuthorContentQueryResponse result, ICacheDependencyKeysBuilder builder) =>
         builder.ContentItem(result.Author)
             .Collection(
-                result.Author?.AuthorContentPhoto,
-                (image, builder) => builder.ContentItem(image));
+                result.Author?.AuthorContentPhotoImageContent,
+                (image, builder) => builder.ContentItem(image)
+            );
 }

@@ -12,12 +12,11 @@
         <div class="content-wrapper">
             <section class="c-section hero-article">
                 <section class="template-banner blog greyscale">
-                    @if (post.Teaser is ImageAssetViewModel teaser)
+                    @if (post.Teaser.TryGetValue(out var teaser))
                     {
                         <div class="template-banner__bg">
-                            <img class="t-article_hero-picture img-fluid" src="@teaser.URLData.RelativePath"
-                                alt="@teaser.AltText" title="teaser.Title" width="@teaser.Dimensions.Width"
-                                height="@teaser.Dimensions.Height" />
+                            <img class="t-article_hero-picture img-fluid" src="@teaser.URL" alt="@teaser.AltText"
+                                title="@teaser.Title" width="@teaser.Width" height="@teaser.Height" />
                         </div>
                     }
                     <div class="site-wide grid-container grid-container--full">
@@ -31,14 +30,7 @@
                                     <div class="template-banner__author">
                                         <div class="template-banner__author-name">
                                             <div class="template-banner__author-image">
-                                                @if (post.Author.Avatar is MediaAssetContent avatar)
-                                                {
-                                                    <img src="@avatar.MediaAssetContentAssetLight.Url"
-                                                        width="@avatar.MediaAssetContentImageLightWidth"
-                                                        height="@avatar.MediaAssetContentImageLightHeight"
-                                                        title="@avatar.MediaAssetContentTitle" alt="@post.Author.Name"
-                                                        class="c-tag_icon" />
-                                                }
+                                                <img xpc-image="post.Author.Photo" class="c-tag_icon" />
                                             </div>
                                             @if (post.Author.LinkProfilePath.TryGetValue(out string? p1))
                                             {
@@ -49,7 +41,7 @@
                                                 @post.Author.Name
                                             }
                                         </div>
-                                        @if (post.Author.Title is string title)
+                                        @if (post.Author.Title.TryGetValue(out string? title))
                                         {
                                             <div class="template-banner__author-role">
                                                 @title
@@ -116,12 +108,9 @@
                             <div class="c-card default-border author mt-5">
                                 <div class="c-card_inner d-grid">
                                     <div class="c-card_icon">
-                                        @if (post.Author.Avatar is MediaAssetContent avt)
+                                        @if (post.Author.Photo.TryGetValue(out var photo))
                                         {
-                                            <img src="@avt.MediaAssetContentAssetLight.Url" alt="@post.Author.Name"
-                                                width="@avt.MediaAssetContentImageLightWidth"
-                                                height="@avt.MediaAssetContentImageLightHeight"
-                                                title="@avt.MediaAssetContentTitle" />
+                                            <img xpc-image="photo" />
                                         }
                                         else
                                         {

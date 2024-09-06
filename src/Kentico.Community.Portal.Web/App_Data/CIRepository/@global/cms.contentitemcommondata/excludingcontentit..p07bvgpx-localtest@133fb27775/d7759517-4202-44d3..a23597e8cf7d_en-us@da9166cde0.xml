@@ -13,8 +13,18 @@
   </ContentItemCommonDataContentLanguageID>
   <ContentItemCommonDataGUID>d7759517-4202-44d3-aa17-a23597e8cf7d</ContentItemCommonDataGUID>
   <ContentItemCommonDataIsLatest>True</ContentItemCommonDataIsLatest>
-  <ContentItemCommonDataLastPublishedWhen>2024-06-21 12:32:44Z</ContentItemCommonDataLastPublishedWhen>
+  <ContentItemCommonDataLastPublishedWhen>2024-09-05 13:15:46Z</ContentItemCommonDataLastPublishedWhen>
   <ContentItemCommonDataVersionStatus>2</ContentItemCommonDataVersionStatus>
+  <ListableItemFeaturedImage>[]</ListableItemFeaturedImage>
+  <ListableItemFeaturedImageContent>
+    <![CDATA[[{"Identifier":"2edeb362-0e4e-4da7-b6e8-50bddbea52ae"}]]]>
+  </ListableItemFeaturedImageContent>
+  <ListableItemShortDescription>
+    <![CDATA[Trying to keep your local test content from being deployed to other environments? Not sure how to leverage Xperince by Kentico's CI/CD object exclusions for Content items and Web Pages? Read on to learn a simple solution.]]>
+  </ListableItemShortDescription>
+  <ListableItemTitle>
+    <![CDATA[Excluding Content Items from Continuous Deployment using Global Events]]>
+  </ListableItemTitle>
   <ContentItemReferences>
     <cms.contentitemreference>
       <ContentItemReferenceGroupGUID>c8b8d314-3c85-4049-a090-10e7056b7903</ContentItemReferenceGroupGUID>
@@ -26,6 +36,19 @@
       <ContentItemReferenceTargetItemID>
         <CodeName>SeanG.Wright-age8tkbp</CodeName>
         <GUID>f9ac36a5-e1a6-4d21-9cb7-beb385d0fea0</GUID>
+        <ObjectType>cms.contentitem</ObjectType>
+      </ContentItemReferenceTargetItemID>
+    </cms.contentitemreference>
+    <cms.contentitemreference>
+      <ContentItemReferenceGroupGUID>7969b057-8ea0-4c9d-abf2-363915d724a8</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>63670a78-3ad2-45c9-b316-21dc0ad4c4e0</ContentItemReferenceGUID>
+      <ContentItemReferenceSourceCommonDataID>
+        <GUID>d7759517-4202-44d3-aa17-a23597e8cf7d</GUID>
+        <ObjectType>cms.contentitemcommondata</ObjectType>
+      </ContentItemReferenceSourceCommonDataID>
+      <ContentItemReferenceTargetItemID>
+        <CodeName>KenticoBackgroundBanner_Shapes-300cmtad</CodeName>
+        <GUID>2edeb362-0e4e-4da7-b6e8-50bddbea52ae</GUID>
         <ObjectType>cms.contentitem</ObjectType>
       </ContentItemReferenceTargetItemID>
     </cms.contentitemreference>

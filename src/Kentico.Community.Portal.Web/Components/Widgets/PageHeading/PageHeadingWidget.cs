@@ -27,7 +27,7 @@ public class PageHeadingWidget : ViewComponent
     }
 }
 
-public class PageHeadingWidgetProperties : IWidgetProperties
+public class PageHeadingWidgetProperties : BaseWidgetProperties
 {
     [TextInputComponent(
         Label = "Title",

@@ -18,38 +18,31 @@
                 <div class="col-sm-6 col-lg-4 mt-3 mt-sm-5 mt-lg-6">
                     <div class="c-card widget default-border ">
                         <div class="c-card_inner">
-                            @if (item.ListableItemFeaturedImage.FirstOrDefault() is MediaAssetContent logo)
-                            {
-                                <img src="@logo.MediaAssetContentAssetLight.Url" class="card-img-top"
-                                    alt="@logo.MediaAssetContentTitle" width="@logo.MediaAssetContentImageLightWidth"
-                                    height="@logo.MediaAssetContentImageLightHeight" />
-
-                            }
+                            <img xpc-image="item.Banner" class="card-img-top" />
                             <h3 class="h3 mt-2 pt-1">
-                                @if (!string.IsNullOrWhiteSpace(item.CommunityGroupContentWebsiteURL))
+                                @if (item.URL.TryGetValue(out string? url))
                                 {
-                                    <a href="@item.CommunityGroupContentWebsiteURL">@item.ListableItemTitle</a>
+                                    <a href="@url">@item.Title</a>
                                 }
                                 else
                                 {
-                                    <text>@item.ListableItemTitle</text>
+                                    <text>@item.Title</text>
                                 }
                             </h3>
                             <p class="mt-2">
                                 <small>
-                                    @if (!string.IsNullOrWhiteSpace(item.CommunityGroupContentAddressStateOrProvince))
+                                    @if (item.Address.StateOrProvince.TryGetValue(out string? stateOrProvince))
                                     {
-                                        <text>@item.CommunityGroupContentAddressCity,
-                                            @item.CommunityGroupContentAddressStateOrProvince,</text>
+                                        <text>@item.Address.City, @stateOrProvince,</text>
                                     }
                                     else
                                     {
-                                        <text>@item.CommunityGroupContentAddressCity,</text>
+                                        <text>@item.Address.City,</text>
                                     }
-                                    @item.CommunityGroupContentAddressCountry
+                                    @item.Address.Country
                                 </small>
                             </p>
-                            <p class="mt-2">@item.ListableItemShortDescription</p>
+                            <p class="mt-2">@item.Description</p>
                         </div>
                     </div>
                 </div>

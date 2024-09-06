@@ -9,18 +9,18 @@ using Microsoft.AspNetCore.Mvc;
 
 [assembly: RegisterWidget(
     identifier: ContactDetailsCardWidget.IDENTIFIER,
-    name: "Contact Details Card",
+    name: ContactDetailsCardWidget.NAME,
     viewComponentType: typeof(ContactDetailsCardWidget),
     propertiesType: typeof(ContactDetailsCardWidgetProperties),
-    Description = "Card sourcing contact details from the Content Hub.",
-    IconClass = "icon-rectangle-a",
-    AllowCache = true)]
+    Description = "Card sourcing contact details from the Content hub",
+    IconClass = "icon-rectangle-a")]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.ContactDetailsCard;
 
 public class ContactDetailsCardWidget(IMediator mediator) : ViewComponent
 {
     public const string IDENTIFIER = "CommunityPortal.Widget.ContactDetailsCard";
+    public const string NAME = "Contact Details Card";
 
     private readonly IMediator mediator = mediator;
 
@@ -28,23 +28,27 @@ public class ContactDetailsCardWidget(IMediator mediator) : ViewComponent
     {
         var contentItemGUIDs = vm.Properties.ContactDetails.Select(r => r.Identifier).ToArray();
 
-        var res = await mediator.Send(new ContactDetailsContentsQuery(contentItemGUIDs));
+        var resp = await mediator.Send(new ContactDetailsContentsQuery(contentItemGUIDs));
 
-        if (res.Items is not [var item])
+        return Validate(resp)
+            .Match(
+                vm => View("~/Components/Widgets/ContactDetailsCard/ContactDetailsCard.cshtml", vm),
+                vm => View("~/Components/ComponentError.cshtml", vm)
+            );
+    }
+
+    private static Result<ContactDetailsCardWidgetViewModel, ComponentErrorViewModel> Validate(ContactDetailsContentsQueryResponse resp)
+    {
+        if (resp.Items is not [var item])
         {
-            ModelState.AddModelError("", "Please select a valid number of Contact Details.");
-
-            return View("~/Components/ComponentError.cshtml");
+            return Result.Failure<ContactDetailsCardWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "Please select a valid number of Contact Details."));
         }
 
-
-        var model = new ContactDetailsCardWidgetViewModel(item);
-
-        return View("~/Components/Widgets/ContactDetailsCard/ContactDetailsCard.cshtml", model);
+        return new ContactDetailsCardWidgetViewModel(item);
     }
 }
 
-public class ContactDetailsCardWidgetProperties : IWidgetProperties
+public class ContactDetailsCardWidgetProperties : BaseWidgetProperties
 {
     /// <summary>
     /// Button text.
@@ -56,11 +60,13 @@ public class ContactDetailsCardWidgetProperties : IWidgetProperties
         DefaultViewMode = ContentItemSelectorViewMode.List,
         ExplanationText = "Only the first selected item will be used.",
         Order = 1)]
-    public IEnumerable<ContentItemReference> ContactDetails { get; set; } = Enumerable.Empty<ContentItemReference>();
+    public IEnumerable<ContentItemReference> ContactDetails { get; set; } = [];
 }
 
-public class ContactDetailsCardWidgetViewModel(ContactDetailsContent item)
+public class ContactDetailsCardWidgetViewModel(ContactDetailsContent item) : BaseWidgetViewModel
 {
+    protected override string WidgetName { get; } = ContactDetailsCardWidget.NAME;
+
     public string Title { get; set; } = item.ContactDetailsContentTitle;
     public string? PhoneNumber { get; set; } = item.ContactDetailsContentPhoneNumber;
     public string? EmailAddress { get; set; } = item.ContactDetailsContentEmailAddress;

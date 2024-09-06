@@ -60,6 +60,7 @@ public class BlogPostsByTaxonomyQueryHandler(WebPageQueryTools tools) : WebPageQ
                         (author, builder) => builder
                             .ContentItem(author)
                             .Collection(
-                                author.AuthorContentPhoto,
-                                (image, builder) => builder.ContentItem(image))));
+                                author.AuthorContentPhotoImageContent,
+                                (image, builder) => builder.ContentItem(image)
+                            )));
 }

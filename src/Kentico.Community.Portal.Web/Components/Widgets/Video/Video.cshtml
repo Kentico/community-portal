@@ -1,0 +1,20 @@
+@using CMS.Helpers
+@using Kentico.Community.Portal.Web.Components.Widgets.Video
+
+@model VideoWidgetViewModel
+
+@{
+    string alignmentClass = Model.Alignment switch
+    {
+        Alignments.Center => "text-center",
+        Alignments.Left or _ => ""
+    };
+}
+
+<div class="@alignmentClass" xpc-preview-outline="@Model.ComponentName">
+    <video class="w-100" controls>
+        <source src="@Model.Video.VideoContentAsset.Url"
+            type="@MimeTypeHelper.GetMimetype(Model.Video.VideoContentAsset.Metadata.Extension)">
+        Your browser does not support the video tag.
+    </video>
+</div>

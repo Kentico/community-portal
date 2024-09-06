@@ -1,0 +1,161 @@
+@using Kentico.Community.Portal.Web.Components.Sections.SingleColumn
+@using Kentico.Community.Portal.Web.Features.Blog
+
+@model TemplateViewModel<BlogPostPageTemplateProperties>
+
+@{
+    ClientAssets.RequirePrism();
+    var post = Model.GetTemplateModel<BlogPostDetailViewModel>();
+}
+
+<main>
+    <div class="t-article">
+        <div class="content-wrapper">
+            <section class="c-section hero-article">
+                <section class="template-banner blog greyscale">
+                    @if (post.Teaser.TryGetValue(out var teaser))
+                    {
+                        <div class="template-banner__bg">
+                            <img class="t-article_hero-picture img-fluid" src="@teaser.URL"
+                                alt="@teaser.AltText" title="@teaser.Title"
+                                width="@teaser.Width"
+                                height="@teaser.Height" />
+                        </div>
+                    }
+                    <div class="site-wide grid-container grid-container--full">
+                        <div class="grid-column">
+                            <div class="template-banner__content-wrapper">
+                                <h1 class="template-banner__title h3-styling">@post.Title</h1>
+                                <div class="template-banner__meta">
+                                    @post.Date.ToString("MMM d, yyyy")
+                                </div>
+                                <div class="template-banner__content blog__content">
+                                    <div class="template-banner__author">
+                                        <div class="template-banner__author-name">
+                                            <div class="template-banner__author-image">
+                                                <img xpc-image="post.Author.Photo" class="c-tag_icon" />
+                                            </div>
+                                            @if (post.Author.LinkProfilePath.TryGetValue(out string? p1))
+                                            {
+                                                <a href="@p1">@post.Author.Name</a>
+                                            }
+                                            else
+                                            {
+                                                @post.Author.Name
+                                            }
+                                        </div>
+                                        @if (post.Author.Title.TryGetValue(out string? title))
+                                        {
+                                            <div class="template-banner__author-role">
+                                                @title
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <section class="c-section default">
+                <div role="main" class="t-article_body">
+                    <editable-area area-identifier="main"
+                        area-options-default-section-identifier="@SingleColumnSection.IDENTIFIER"
+                        area-options-allowed-sections="
+                        [
+                            SI.Grid,
+                            SI.SingleColumn
+                        ]" area-options-allowed-widgets="
+                        [ 
+                            WI.BlogPostList,
+                            WI.CTAButton,
+                            WI.Heading,
+                            WI.Image,
+                            WI.LinkList,
+                            WI.Markdown,
+                            WI.Video
+                        ]"
+                        allow-widget-output-cache="View.CacheEnabled"
+                        widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
+                </div>
+
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10 col-lg-9 col-xl-8">
+                            <div class="t-article_footer mt-6">
+                                @if (post.DiscussionLinkPath is string discussionPath)
+                                {
+                                    <div>
+                                        <a class="btn btn-outline-primary" href="@discussionPath">Discuss this post in the
+                                            Q&A</a>
+                                    </div>
+                                }
+                                <div class="t-article_footer_share">
+                                    <h5 class="h6">Share on:</h5>
+                                    <div class="text-center mt-3 mt-sm-0">
+                                        <a href="https://twitter.com/intent/tweet?url=@post.AbsoluteURL" target="_blank"
+                                            rel="noopener noreferrer" title="Twitter"
+                                            class="btn btn-secondary btn-social border-0" style="--bs-btn-bg: #55acee;">
+                                            <svg class="c-icon ">
+                                                <use xlink:href="/img/icons.svg#brand-twitter" asp-append-version></use>
+                                            </svg>
+                                        </a>
+                                        <a href="https://www.facebook.com/sharer/sharer.php?u=@post.AbsoluteURL"
+                                            target="_blank" rel="noopener noreferrer" title="Facebook"
+                                            class="btn btn-secondary btn-social border-0" style="--bs-btn-bg: #1877f2;">
+                                            <svg class="c-icon ">
+                                                <use xlink:href="/img/icons.svg#brand-facebook" asp-append-version>
+                                                </use>
+                                            </svg>
+                                        </a>
+                                        <a href="https://www.linkedin.com/shareArticle?url=@post.AbsoluteURL"
+                                            target="_blank" rel="noopener noreferrer" title="LinkedIn"
+                                            class="btn btn-secondary btn-social border-0" style="--bs-btn-bg: #0a66c2;">
+                                            <svg class="c-icon ">
+                                                <use xlink:href="/img/icons.svg#brand-linkedin" asp-append-version>
+                                                </use>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="c-card default-border author mt-5">
+                                <div class="c-card_inner d-grid">
+                                    <div class="c-card_icon">
+                                        @if (post.Author.Photo.TryGetValue(out var photo))
+                                        {
+                                            <img xpc-image="photo" />
+                                        }
+                                        else
+                                        {
+                                            <img src="/img/profile-photo-default.png" alt="@post.Author.Name" />
+                                        }
+                                    </div>
+                                    <div class="c-card_content">
+                                        <h4 class="h4 mb-0 mt-1">
+                                            @if (post.Author.LinkProfilePath.TryGetValue(out string? p2))
+                                            {
+                                                <a class="text-primary" href="@p2">@post.Author.Name</a>
+                                            }
+                                            else
+                                            {
+                                                @post.Author.Name
+                                            }
+                                        </h4>
+                                        <div class="my-0">@post.Author.BiographyHTML</div>
+                                    </div>
+                                    <div class="c-card_footer">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>

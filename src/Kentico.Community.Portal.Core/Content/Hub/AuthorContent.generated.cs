@@ -47,9 +47,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// AuthorContentPhoto.
+		/// AuthorContentPhotoImageContent.
 		/// </summary>
-		public IEnumerable<MediaAssetContent> AuthorContentPhoto { get; set; }
+		public IEnumerable<ImageContent> AuthorContentPhotoImageContent { get; set; }
 
 
 		/// <summary>

@@ -12,49 +12,51 @@ using Microsoft.AspNetCore.Mvc;
 [assembly: RegisterWidget(
     identifier: LinkListWidget.IDENTIFIER,
     viewComponentType: typeof(LinkListWidget),
-    name: "Link List",
+    name: LinkListWidget.NAME,
     propertiesType: typeof(LinkListWidgetProperties),
-    Description = "A Link List Widget.",
-    IconClass = "icon-dialog-window-cogwheel",
-    AllowCache = true)]
+    Description = "A list of labeled URL links",
+    IconClass = "icon-dialog-window-cogwheel")]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.LinkList;
 
-public class LinkListWidget(IMediator mediator, ICacheDependenciesScope scope) : ViewComponent
+public class LinkListWidget(IMediator mediator) : ViewComponent
 {
     public const string IDENTIFIER = "CommunityPortal.Components.Widgets.LinkList";
+    public const string NAME = "Link List";
+
     private readonly IMediator mediator = mediator;
-    private readonly ICacheDependenciesScope scope = scope;
 
     public async Task<IViewComponentResult> InvokeAsync(ComponentViewModel<LinkListWidgetProperties> cvm)
     {
-        var linkIDs = cvm.Properties.Links?.Select(l => l.Identifier).ToArray() ?? Array.Empty<Guid>();
-
-        scope.Begin();
+        var props = cvm.Properties;
+        var linkIDs = (cvm.Properties.Links ?? []).Select(l => l.Identifier).ToArray();
 
         var resp = await mediator.Send(new LinkContentsQuery(linkIDs));
 
-        cvm.CacheDependencies.CacheKeys = scope.End().ToList();
+        return Validate(resp, props)
+            .Match(
+                vm => props.DesignParsed switch
+                {
+                    LinkListDesign.Call_To_Actions => View("~/Components/Widgets/LinkList/CallToActions.cshtml", vm),
+                    LinkListDesign.List_In_Card => View("~/Components/Widgets/LinkList/ListInCard.cshtml", vm),
+                    LinkListDesign.Link_List or _ => View("~/Components/Widgets/LinkList/LinkList.cshtml", vm)
+                },
+                vm => View("~/Components/ComponentError.cshtml", vm)
+            );
+    }
 
+    private Result<LinkListWidgetViewModel, ComponentErrorViewModel> Validate(LinkContentsQueryResponse resp, LinkListWidgetProperties props)
+    {
         if (resp.Items.Count == 0)
         {
-            ModelState.AddModelError("", "Select at least 1 Link Content item.");
-
-            return View("~/Components/ComponentError.cshtml");
+            return Result.Failure<LinkListWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "Select at least 1 Link Content item."));
         }
 
-        var vm = new LinkListWidgetViewModel(cvm.Properties, resp.Items);
-
-        return cvm.Properties.DesignParsed switch
-        {
-            LinkListDesign.Call_To_Actions => View("~/Components/Widgets/LinkList/CallToActions.cshtml", vm),
-            LinkListDesign.List_In_Card => View("~/Components/Widgets/LinkList/ListInCard.cshtml", vm),
-            LinkListDesign.Link_List or _ => View("~/Components/Widgets/LinkList/LinkList.cshtml", vm)
-        };
+        return new LinkListWidgetViewModel(props, resp.Items);
     }
 }
 
-public class LinkListWidgetProperties : IWidgetProperties
+public class LinkListWidgetProperties : BaseWidgetProperties
 {
     [TextInputComponent(
         Label = "Label",
@@ -70,7 +72,7 @@ public class LinkListWidgetProperties : IWidgetProperties
         DefaultViewMode = ContentItemSelectorViewMode.List,
         Order = 2
     )]
-    public IEnumerable<ContentItemReference> Links { get; set; } = Enumerable.Empty<ContentItemReference>();
+    public IEnumerable<ContentItemReference> Links { get; set; } = [];
 
     [DropDownComponent(
         Label = "Design",

@@ -164,7 +164,10 @@ public class BlogSearchIndexingStrategy(
         }
 
         var b = new ContentItemQueryBuilder()
-            .ForWebPage(BlogPostPage.CONTENT_TYPE_NAME, webpageItem.ItemGuid, queryParameters => queryParameters.WithLinkedItems(3));
+            .ForWebPage(
+                BlogPostPage.CONTENT_TYPE_NAME,
+                webpageItem.ItemGuid,
+                q => q.WithLinkedItems(BlogPostPage.FullQueryDepth));
 
         var page = (await executor.GetMappedWebPageResult<BlogPostPage>(b)).FirstOrDefault();
         if (page is null)
@@ -185,17 +188,19 @@ public class BlogSearchIndexingStrategy(
             {
                 indexModel.AuthorMemberID = author.AuthorContentMemberID;
                 indexModel.AuthorName = author.FullName;
-                if (author.AuthorContentPhoto?.FirstOrDefault() is MediaAssetContent photo)
-                {
-                    indexModel.AuthorAvatarImage = new ImageAssetViewModelSerializable(photo);
-                }
+                author.AuthorContentPhotoImageContent
+                    .TryFirst()
+                    .Map(i => new ImageAssetViewModelSerializable(i))
+                    .Execute(i => indexModel.AuthorAvatarImage = i);
             });
 
-        var blogImg = await assetService.RetrieveMediaFileImage(blogPost.BlogPostContentTeaserMediaFileImage.FirstOrDefault());
-        if (blogImg is not null)
-        {
-            indexModel.TeaserImage = new ImageAssetViewModelSerializable(blogImg);
-        }
+        blogPost.ListableItemFeaturedImageContent
+            .TryFirst()
+            .Map(i => new ImageAssetViewModelSerializable(i))
+            .IfNoValue(blogPost.ListableItemFeaturedImage
+                .TryFirst()
+                .Map(i => new ImageAssetViewModelSerializable(i)))
+            .Execute(i => indexModel.TeaserImage = i);
 
         var blogPostTaxonomy = await GetBlogPostTaxonomy();
         var dxTopicsTaxonomy = await GetDXTopicsTaxonomy();
@@ -213,10 +218,10 @@ public class BlogSearchIndexingStrategy(
         string content = await webCrawler.CrawlWebPage(page);
         indexModel.Content = htmlSanitizer.SanitizeHtmlDocument(content);
         indexModel.Title = string.IsNullOrWhiteSpace(blogPost.ListableItemTitle)
-            ? blogPost.BlogPostContentTitle
+            ? blogPost.ListableItemTitle
             : blogPost.ListableItemTitle;
         indexModel.ShortDescription = string.IsNullOrWhiteSpace(blogPost.ListableItemShortDescription)
-            ? blogPost.BlogPostContentShortDescription
+            ? blogPost.ListableItemShortDescription
             : blogPost.ListableItemShortDescription;
         indexModel.PublishedDate = blogPost.BlogPostContentPublishedDate != default
             ? blogPost.BlogPostContentPublishedDate
@@ -253,56 +258,33 @@ public class BlogSearchIndexingStrategy(
 
 public class ImageAssetViewModelSerializable
 {
-    public ImageAssetViewModelSerializable(ImageAssetViewModel imageAsset)
+    public ImageAssetViewModelSerializable(ImageContent image)
     {
-        ID = imageAsset.ID;
-        Title = imageAsset.Title;
-        URLData = new SerializableMediaFileUrl(imageAsset.URLData);
-        AltText = imageAsset.AltText;
-        Dimensions = imageAsset.Dimensions;
-        Extension = imageAsset.Extension;
+        ID = image.SystemFields.ContentItemGUID;
+        Title = image.MediaItemTitle;
+        URL = image.ImageContentAsset.Url;
+        AltText = image.MediaItemShortDescription;
+        Dimensions = new() { Width = image.MediaItemAssetWidth, Height = image.MediaItemAssetHeight };
     }
 
-    public ImageAssetViewModelSerializable(MediaAssetContent mediaAsset)
+    public ImageAssetViewModelSerializable(MediaAssetContent image)
     {
-        ID = mediaAsset.SystemFields.ContentItemGUID;
-        Title = mediaAsset.MediaAssetContentTitle;
-        URLData = new SerializableMediaFileUrl { RelativePath = mediaAsset.MediaAssetContentAssetLight.Url, DirectPath = mediaAsset.MediaAssetContentAssetLight.Url, IsImage = true };
-        AltText = mediaAsset.MediaAssetContentShortDescription;
-        Dimensions = new AssetDimensions { Width = mediaAsset.MediaAssetContentImageLightWidth, Height = mediaAsset.MediaAssetContentImageLightHeight };
-        Extension = mediaAsset.MediaAssetContentAssetLight.Metadata.Extension;
+        ID = image.SystemFields.ContentItemGUID;
+        Title = image.MediaAssetContentTitle;
+        URL = image.MediaAssetContentAssetLight.Url;
+        AltText = image.MediaAssetContentShortDescription;
+        Dimensions = new() { Width = image.MediaAssetContentImageLightWidth, Height = image.MediaAssetContentImageLightHeight };
     }
 
     public ImageAssetViewModelSerializable() { }
 
     public Guid ID { get; set; }
     public string Title { get; set; } = "";
-    public SerializableMediaFileUrl URLData { get; set; } = new();
+    public string URL { get; set; } = "";
     public string AltText { get; set; } = "";
     public AssetDimensions Dimensions { get; set; } = new();
-    public string Extension { get; set; } = "";
 
-    public ImageAssetViewModel ToImageAsset() =>
-        new(ID, Title, URLData.ToMediaFileUrl(), AltText, Dimensions, Extension);
-
-    public MediaAssetContent ToMediaAssetContent() =>
-        new()
-        {
-            MediaAssetContentAssetLight = new()
-            {
-                Url = URLData.ToMediaFileUrl().RelativePath,
-                Metadata = new()
-                {
-                    Extension = Extension,
-                    Identifier = Guid.NewGuid(),
-                    Name = Title,
-                }
-            },
-            MediaAssetContentImageLightWidth = Dimensions.Width,
-            MediaAssetContentImageLightHeight = Dimensions.Height,
-            MediaAssetContentShortDescription = AltText,
-            MediaAssetContentTitle = Title
-        };
+    public ImageViewModel ToImageViewModel() => new(Title, AltText, Dimensions.Width, Dimensions.Height, URL) { ID = ID };
 }
 
 public class SerializableMediaFileUrl

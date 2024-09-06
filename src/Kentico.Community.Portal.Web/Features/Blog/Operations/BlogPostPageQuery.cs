@@ -9,7 +9,10 @@ public class BlogPostPageQueryHandler(WebPageQueryTools tools) : WebPageQueryHan
 {
     public override async Task<BlogPostPage> Handle(BlogPostPageQuery request, CancellationToken cancellationToken = default)
     {
-        var b = new ContentItemQueryBuilder().ForWebPage(request.Page, c => c.WithLinkedItems(3));
+        var b = new ContentItemQueryBuilder()
+            .ForWebPage(
+                request.Page,
+                c => c.WithLinkedItems(BlogPostPage.FullQueryDepth));
 
         var r = await Executor.GetMappedWebPageResult<BlogPostPage>(b, DefaultQueryOptions, cancellationToken);
 
@@ -27,6 +30,7 @@ public class BlogPostPageQueryHandler(WebPageQueryTools tools) : WebPageQueryHan
                         (author, builder) => builder
                             .ContentItem(author)
                             .Collection(
-                                author.AuthorContentPhoto,
-                                (image, builder) => builder.ContentItem(image))));
+                                author.AuthorContentPhotoImageContent,
+                                (image, builder) => builder.ContentItem(image)
+                            )));
 }

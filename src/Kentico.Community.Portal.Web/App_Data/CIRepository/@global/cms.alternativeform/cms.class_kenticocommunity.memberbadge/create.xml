@@ -32,10 +32,10 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberBadgeMediaAssetContentItem" enabled="true" guid="256dbe9d-3473-4998-b97f-4bd5e0e472de" visible="true" order="5">
+      <field column="MemberBadgeImageContent" enabled="true" guid="80d4ca59-c4e4-4f83-8483-b372b315a66f" visible="true" order="5">
         <settings>
           <AllowedContentItemTypeIdentifiers>
-            <![CDATA[["0722a045-5aff-4c3b-a356-1a1fd3be8a61"]]]>
+            <![CDATA[["40334c2a-0969-4e68-96eb-e0fb8d89b37e"]]]>
           </AllowedContentItemTypeIdentifiers>
           <controlname>Kentico.Administration.ContentItemSelector</controlname>
           <MaximumItems>1</MaximumItems>
@@ -50,11 +50,28 @@
         </validationrulesdata>
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Image</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBadgeMediaAssetContentItem" enabled="true" guid="256dbe9d-3473-4998-b97f-4bd5e0e472de" visible="true" order="6">
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["0722a045-5aff-4c3b-a356-1a1fd3be8a61"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>0</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+        <properties>
+          <explanationtext>[deprecated]</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Media Asset</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberBadgeShortDescription" enabled="true" guid="118c6657-98ac-421a-8128-c392b0f7dec1" visible="true" order="6">
+      <field column="MemberBadgeShortDescription" enabled="true" guid="118c6657-98ac-421a-8128-c392b0f7dec1" visible="true" order="7">
         <settings>
           <controlname>Kentico.Administration.TextArea</controlname>
           <CopyButtonVisible>False</CopyButtonVisible>
@@ -67,8 +84,8 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberBadgeDateCreated" guid="bcc1f757-e378-46e3-9cfe-010863eff8f1" enabled="" order="7" />
-      <field column="MemberBadgeIsRuleAssigned" enabled="true" guid="28230b01-5df4-47e5-b241-d45a4cff4a76" visible="true" order="8">
+      <field column="MemberBadgeDateCreated" guid="bcc1f757-e378-46e3-9cfe-010863eff8f1" enabled="" order="8" />
+      <field column="MemberBadgeIsRuleAssigned" enabled="true" guid="28230b01-5df4-47e5-b241-d45a4cff4a76" visible="true" order="9">
         <settings>
           <controlname>Kentico.Administration.Checkbox</controlname>
         </settings>
@@ -82,7 +99,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberBadgeIsEnabledForRuleAssignment" enabled="true" guid="66ed6bbf-3d1f-4924-8836-8c11ce817411" visible="true">
+      <field column="MemberBadgeIsEnabledForRuleAssignment" enabled="true" guid="67eab2de-01ce-4cc0-b758-042271000e91" visible="true">
         <settings>
           <controlname>Kentico.Administration.Checkbox</controlname>
         </settings>

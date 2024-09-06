@@ -17,7 +17,7 @@ public class BlogPostPagesByWebPageGUIDQueryHandler(ContentItemQueryTools tools)
             _ = queryParameters
                 .ForWebsite(request.ChannelName)
                 .Where(w => w.WhereIn(nameof(WebPageFields.WebPageItemGUID), request.WebPageGUIDs))
-                .WithLinkedItems(3);
+                .WithLinkedItems(BlogPostPage.FullQueryDepth);
         });
 
         var pages = await Executor.GetMappedWebPageResult<BlogPostPage>(b, DefaultQueryOptions, cancellationToken);
@@ -38,8 +38,9 @@ public class BlogPostPagesByWebPageGUIDQueryHandler(ContentItemQueryTools tools)
                             content.BlogPostContentAuthor,
                             (author, builder) => builder.ContentItem(author)
                                 .Collection(
-                                    author.AuthorContentPhoto,
-                                    (image, builder) => builder.ContentItem(image)))));
+                                    author.AuthorContentPhotoImageContent,
+                                    (image, builder) => builder.ContentItem(image)
+                                ))));
 }
 
 public record BlogPostPagesByWebPageIDQuery(int[] WebPageIDs, string ChannelName) : IQuery<BlogPostPagesQueryResponse>, ICacheByValueQuery, IChannelContentQuery
@@ -76,6 +77,7 @@ public class BlogPostPagesByWebPageIDQueryHandler(ContentItemQueryTools tools) :
                             content.BlogPostContentAuthor,
                             (author, builder) => builder.ContentItem(author)
                                 .Collection(
-                                    author.AuthorContentPhoto,
-                                    (image, builder) => builder.ContentItem(image)))));
+                                    author.AuthorContentPhotoImageContent,
+                                    (image, builder) => builder.ContentItem(image)
+                                ))));
 }

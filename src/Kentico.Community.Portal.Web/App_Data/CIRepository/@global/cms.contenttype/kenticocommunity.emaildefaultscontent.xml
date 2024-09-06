@@ -25,7 +25,7 @@
           </ValidationRuleConfiguration>
         </validationrulesdata>
       </field>
-      <field allowempty="true" column="EmailDefaultsContentHeaderLogo" columnprecision="0" columntype="contentitemreference" enabled="true" guid="92055e51-de95-4e15-880e-079a7e0cb70b" visible="true">
+      <field allowempty="true" column="EmailDefaultsContentHeaderLogoImageContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="717a2f0e-3af2-4af6-9966-654b8b0fcc0a" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Header Logo</fieldcaption>
@@ -33,13 +33,19 @@
         </properties>
         <settings>
           <AllowedContentItemTypeIdentifiers>
-            <![CDATA[["0722a045-5aff-4c3b-a356-1a1fd3be8a61"]]]>
+            <![CDATA[["40334c2a-0969-4e68-96eb-e0fb8d89b37e"]]]>
           </AllowedContentItemTypeIdentifiers>
           <controlname>Kentico.Administration.ContentItemSelector</controlname>
           <MaximumItems>1</MaximumItems>
           <MinimumItems>1</MinimumItems>
           <SelectionType>contentTypes</SelectionType>
         </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
       </field>
       <field column="EmailDefaultsContentHeaderLinkURL" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="fc52620f-78bf-40df-a6f7-c68dbfaad4e7" visible="true">
         <properties>
@@ -73,7 +79,7 @@
           <SelectionType>contentTypes</SelectionType>
         </settings>
       </field>
-      <field allowempty="true" column="EmailDefaultsContentFooterLogo" columnprecision="0" columntype="contentitemreference" enabled="true" guid="4e9d7d77-df78-48eb-8c82-ecdb9ca0962b" visible="true">
+      <field allowempty="true" column="EmailDefaultsFooterLogoImageContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="e7653e96-1222-445e-8ae6-4919676ccb24" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Footer Logo</fieldcaption>
@@ -81,13 +87,19 @@
         </properties>
         <settings>
           <AllowedContentItemTypeIdentifiers>
-            <![CDATA[["0722a045-5aff-4c3b-a356-1a1fd3be8a61"]]]>
+            <![CDATA[["40334c2a-0969-4e68-96eb-e0fb8d89b37e"]]]>
           </AllowedContentItemTypeIdentifiers>
           <controlname>Kentico.Administration.ContentItemSelector</controlname>
           <MaximumItems>1</MaximumItems>
           <MinimumItems>1</MinimumItems>
           <SelectionType>contentTypes</SelectionType>
         </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
       </field>
       <field column="EmailDefaultsContentFooterLinkURL" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="ed9401ad-8066-47ad-9d77-47cdfab3dcd5" visible="true">
         <properties>

@@ -98,16 +98,14 @@
                       style="width: 50px; height: 40px; display: inline-block"
                       target="_blank"
                     >
-                      {% headerLogo =
-                      emailDefaults.EmailDefaultsContentHeaderLogo[0].Data; ""
-                      |(user)SeanW_kentico.com|(hash)969fff5344696ce40b297529c7a17f4e2968042be010bd0cd6e23250d7268d61%}
+                      {% headerLogo = emailDefaults.EmailDefaultsHeaderLogoImageContent[0].Data; "" |(user)SeanW_kentico.com|(hash)d4f7d7480630925aecb19042bc85e7aa09cf3a59da0fd6093942a9075c118c73%}
                       <img
                         class="light-img"
-                        src="{% headerLogo.MediaAssetContentAssetLight.Url |(user)SeanW_kentico.com|(hash)d415a7eb968ae9534a14fe949fa838d0aafcfe4703256a69521fa7899925effe%}"
-                        alt="{% HTMLEncode(headerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)b3c16b786f3176d5d7e6c4bd4bb2c2b536bfaa1a05573a35a5c25b6de670d859%}"
-                        width="{% headerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)5775e00665ccab5921f240ec0b8c4d2ec7d3b421a7140d2dd4272f31194d1731%}"
-                        height="{% headerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)0ef741ae3ea4f6b695739c28b463db7632918a04cea2be374f78c3962159a75d%}"
-                        style="width: 50px"
+                        src="{% headerLogo.ImageContentAsset.Url |(user)SeanW_kentico.com|(hash)fa99ae94c3d5a24f3d063d1ba82552292ec9dd867f4273978a7d91ccd2a3551d%}"
+                        alt="{% HTMLEncode(headerLogo.MediaItemTitle) |(user)SeanW_kentico.com|(hash)4df8dccf614c88b4ed22609cb5d7f3ff806b40ca3a00eda6c7269424f7b1c872%}"
+                        width="{% headerLogo.MediaItemAssetWidth |(user)SeanW_kentico.com|(hash)ebe13f4468b04cfb5170658f90bb6324bfeaeedb18b612f80ff73b5f51d7a09b%}"
+                        height="{% headerLogo.MediaItemAssetHeight |(user)SeanW_kentico.com|(hash)ea628f669af1a77366f5b9d9efd4d050a79f11f5c7c90be5c41b63984ccb3feb%}"
+                        style="width: 101px;"
                       />
                       <div
                         class="dark-img"
@@ -122,13 +120,14 @@
                           visibility: hidden;
                         "
                       >
-                        <img
-                          src="{% headerLogo.MediaAssetContentAssetDark.Url |(user)SeanW_kentico.com|(hash)0c9f020f8a0a81a03f93e39a2bf6c17543224bb3c52f79f0c9e02740236e0b32%}"
-                          alt="{% HTMLEncode(headerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)b3c16b786f3176d5d7e6c4bd4bb2c2b536bfaa1a05573a35a5c25b6de670d859%}"
-                          width="{% headerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)5775e00665ccab5921f240ec0b8c4d2ec7d3b421a7140d2dd4272f31194d1731%}"
-                          height="{% headerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)0ef741ae3ea4f6b695739c28b463db7632918a04cea2be374f78c3962159a75d%}"
-                          style="width: 50px"
-                        />
+                         <img
+                            class="light-img"
+                            src="{% headerLogo.ImageContentAsset.Url |(user)SeanW_kentico.com|(hash)fa99ae94c3d5a24f3d063d1ba82552292ec9dd867f4273978a7d91ccd2a3551d%}"
+                            alt="{% HTMLEncode(headerLogo.MediaItemTitle) |(user)SeanW_kentico.com|(hash)4df8dccf614c88b4ed22609cb5d7f3ff806b40ca3a00eda6c7269424f7b1c872%}"
+                            width="{% headerLogo.MediaItemAssetWidth |(user)SeanW_kentico.com|(hash)ebe13f4468b04cfb5170658f90bb6324bfeaeedb18b612f80ff73b5f51d7a09b%}"
+                            height="{% headerLogo.MediaItemAssetHeight |(user)SeanW_kentico.com|(hash)ea628f669af1a77366f5b9d9efd4d050a79f11f5c7c90be5c41b63984ccb3feb%}"
+                            style="width: 101px;"
+                          />
                       </div>
                     </a>
                   </div>
@@ -346,15 +345,14 @@
               style="width: 50px; height: 40px; display: inline-block"
               target="_blank"
             >
-              {% footerLogo =
-              emailDefaults.EmailDefaultsContentFooterLogo[0].Data; "" |(user)SeanW_kentico.com|(hash)402e61a3e952107888f6cb19877a14d0b8f50377858a4cf02ef39568b89fcff3%}
+              {% footerLogo = emailDefaults.EmailDefaultsFooterLogoImageContent[0].Data; "" |(user)SeanW_kentico.com|(hash)55be5df3894df3cde45ae4db7f70f8a983d986f4789422ead8d8994a708f4ee4%}
               <img
                 class="light-img"
-                src="{% footerLogo.MediaAssetContentAssetLight.Url |(user)SeanW_kentico.com|(hash)b6a011bc4355a577638faf34dc89020f285c80f89df43310fab807ab968a30a1%}"
-                alt="{% HTMLEncode(footerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)16889b7012312de1a6767df9f4295a2d4aef5a7b3dc48b07da98ab3ae15db3a0%}"
-                width="{% footerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)28a93708317961f496aa163efddd860a684b37f8dd3fe7eed4f637d83c8807f1%}"
-                height="{% footerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)4f0d2db44228a776f5008eb78c357389b9fd6acd981106a1d56076ffd9b4d90a%}"
-                style="width: 50px"
+                src="{% footerLogo.ImageContentAsset.Url |(user)SeanW_kentico.com|(hash)ae22a167f5b21a1c41c30462fdd24ae4fa9bd9667ba7ec0f97811add2e214b79%}"
+                alt="{% HTMLEncode(footerLogo.MediaItemTitle) |(user)SeanW_kentico.com|(hash)6d70eba614ef7ae7d4c3760073645ede48b04ab64b831f56ecbd37f1822de508%}"
+                width="{% footerLogo.MediaItemAssetWidth |(user)SeanW_kentico.com|(hash)96ff27a0a5161a0884c07d85590c86ca213f74398d4921a60ac82511cea73e62%}"
+                height="{% footerLogo.MediaItemAssetHeight |(user)SeanW_kentico.com|(hash)d933bd79f24e92353b2c6b67de5195b8c5a18fcb76b87c6130fba4981fe69159%}"
+                style="width: 101px;"
               />
               <div
                 class="dark-img"
@@ -370,11 +368,12 @@
                 "
               >
                 <img
-                  src="{% footerLogo.MediaAssetContentAssetDark.Url |(user)SeanW_kentico.com|(hash)27288edb032beb133ec63c3f2e492b8c70643b0784c13f02d68dbae1c42f8ce6%}"
-                  alt="{% HTMLEncode(footerLogo.MediaAssetContentTitle) |(user)SeanW_kentico.com|(hash)16889b7012312de1a6767df9f4295a2d4aef5a7b3dc48b07da98ab3ae15db3a0%}"
-                  width="{% footerLogo.MediaAssetContentImageLightWidth |(user)SeanW_kentico.com|(hash)28a93708317961f496aa163efddd860a684b37f8dd3fe7eed4f637d83c8807f1%}"
-                  height="{% footerLogo.MediaAssetContentImageLightHeight |(user)SeanW_kentico.com|(hash)4f0d2db44228a776f5008eb78c357389b9fd6acd981106a1d56076ffd9b4d90a%}"
-                  style="width: 50px"
+                  class="light-img"
+                  src="{% footerLogo.ImageContentAsset.Url |(user)SeanW_kentico.com|(hash)ae22a167f5b21a1c41c30462fdd24ae4fa9bd9667ba7ec0f97811add2e214b79%}"
+                  alt="{% HTMLEncode(footerLogo.MediaItemTitle) |(user)SeanW_kentico.com|(hash)6d70eba614ef7ae7d4c3760073645ede48b04ab64b831f56ecbd37f1822de508%}"
+                  width="{% footerLogo.MediaItemAssetWidth |(user)SeanW_kentico.com|(hash)96ff27a0a5161a0884c07d85590c86ca213f74398d4921a60ac82511cea73e62%}"
+                  height="{% footerLogo.MediaItemAssetHeight |(user)SeanW_kentico.com|(hash)d933bd79f24e92353b2c6b67de5195b8c5a18fcb76b87c6130fba4981fe69159%}"
+                  style="width: 101px;"
                 />
               </div>
             </a>

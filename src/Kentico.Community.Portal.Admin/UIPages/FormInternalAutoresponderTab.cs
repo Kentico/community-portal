@@ -51,6 +51,11 @@ public sealed class FormInternalAutoresponderTab(
     {
         get
         {
+            if (mModel is not null)
+            {
+                return mModel;
+            }
+
             mModel ??= new FormInternalAutoresponderPropertiesModel
             {
                 IsInternalAutoresponderEnabled = false

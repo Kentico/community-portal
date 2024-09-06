@@ -26,7 +26,7 @@ public class MemberBadgeService(
                 BadgeId = a.MemberBadge.MemberBadgeID,
                 MemberBadgeDisplayName = a.MemberBadge.MemberBadgeDisplayName,
                 MemberBadgeDescription = a.MemberBadge.MemberBadgeShortDescription,
-                BadgeImageUrl = a.MediaAsset?.MediaAssetContentAssetLight.Url,
+                BadgeImageUrl = a.Image?.URL,
                 IsSelected = true,
             })
             .ToList();
@@ -42,7 +42,7 @@ public class MemberBadgeService(
                 BadgeId = a.MemberBadge.MemberBadgeID,
                 MemberBadgeDisplayName = a.MemberBadge.MemberBadgeDisplayName,
                 MemberBadgeDescription = a.MemberBadge.MemberBadgeShortDescription,
-                BadgeImageUrl = a.MediaAsset?.MediaAssetContentAssetLight.Url,
+                BadgeImageUrl = a.Image?.URL,
                 IsSelected = a.IsSelected,
             })
             .ToList();
@@ -62,7 +62,7 @@ public class MemberBadgeService(
                     BadgeId = a.MemberBadge.MemberBadgeID,
                     MemberBadgeDisplayName = a.MemberBadge.MemberBadgeDisplayName,
                     MemberBadgeDescription = a.MemberBadge.MemberBadgeShortDescription,
-                    BadgeImageUrl = a.MediaAsset?.MediaAssetContentAssetLight.Url,
+                    BadgeImageUrl = a.Image?.URL,
                     IsSelected = true,
                 })
                 .ToList();
@@ -107,7 +107,7 @@ public class MemberBadgeService(
                 continue;
             }
 
-            results.Add(new MemberBadgeAggregate(b.MemberBadge, b.MediaAsset, item.IsSelected));
+            results.Add(new MemberBadgeAggregate(b.MemberBadge, b.Image, item.IsSelected));
         }
 
         return results;
@@ -116,39 +116,47 @@ public class MemberBadgeService(
     private async Task<FrozenDictionary<int, MemberBadgetWithMediaAsset>> GetMemberBadgesWithMediaAssets()
     {
         var badges = await memberBadgeInfoProvider.GetAllMemberBadgesCached();
-        var mediaAssets = new Dictionary<Guid, MediaAssetContent>();
+        var images = new Dictionary<Guid, ImageViewModel>();
 
-        foreach (var mediaAssetGUID in badges.SelectMany(b => b.MemberBadgeMediaAssetContentItem.Select(i => i.Identifier)))
+        foreach (var mediaAssetGUID in badges.SelectMany(b => b.MemberBadgeMediaAssetContentItem.Select(i => i.Identifier).Where(id => id != default)))
         {
             // We have very few badges, so an N+1 query is better for cache busting and not a huge performance hit
             var mediaAsset = await mediator.Send(new MediaAssetContentByGUIDQuery(mediaAssetGUID));
-            mediaAssets.Add(mediaAssetGUID, mediaAsset);
+            if (mediaAsset is not null)
+            {
+                images.Add(mediaAssetGUID, ImageViewModel.Create(mediaAsset));
+            }
+        }
+        foreach (var imageGUID in badges.SelectMany(b => b.MemberBadgeImageContent.Select(i => i.Identifier).Where(id => id != default)))
+        {
+            // We have very few badges, so an N+1 query is better for cache busting and not a huge performance hit
+            await mediator.Send(new ImageContentByGUIDQuery(imageGUID))
+                .Execute(image => images.Add(imageGUID, ImageViewModel.Create(image)));
         }
 
         var resultsDictionary = new Dictionary<int, MemberBadgetWithMediaAsset>();
 
         foreach (var badge in badges)
         {
-            var contentItemGUID = badge.MemberBadgeMediaAssetContentItem.Select(i => i.Identifier).FirstOrDefault();
-
-            if (!mediaAssets.TryGetValue(contentItemGUID, out var mediaAsset))
+            var imageGUID = badge.MemberBadgeImageContent.Select(i => i.Identifier).FirstOrDefault();
+            if (images.TryGetValue(imageGUID, out var image))
             {
+                resultsDictionary.Add(badge.MemberBadgeID, new MemberBadgetWithMediaAsset(badge, image));
                 continue;
             }
 
-            resultsDictionary.Add(badge.MemberBadgeID, new MemberBadgetWithMediaAsset(badge, mediaAsset));
+            var assetGUID = badge.MemberBadgeMediaAssetContentItem.Select(i => i.Identifier).FirstOrDefault();
+            if (images.TryGetValue(assetGUID, out var asset))
+            {
+                resultsDictionary.Add(badge.MemberBadgeID, new MemberBadgetWithMediaAsset(badge, asset));
+                continue;
+            }
         }
 
         return resultsDictionary.ToFrozenDictionary();
     }
 
-    public class MemberBadgeAggregate(MemberBadgeInfo memberBadgeInfo, MediaAssetContent mediaAsset, bool isSelected)
-    {
-        public MemberBadgeInfo MemberBadge { get; set; } = memberBadgeInfo;
-        public MediaAssetContent? MediaAsset { get; set; } = mediaAsset;
-        public bool IsSelected { get; set; } = isSelected;
-    }
-
-    private record MemberBadgetWithMediaAsset(MemberBadgeInfo MemberBadge, MediaAssetContent MediaAsset);
+    public record MemberBadgeAggregate(MemberBadgeInfo MemberBadge, ImageViewModel? Image, bool IsSelected);
+    private record MemberBadgetWithMediaAsset(MemberBadgeInfo MemberBadge, ImageViewModel Image);
 }
 

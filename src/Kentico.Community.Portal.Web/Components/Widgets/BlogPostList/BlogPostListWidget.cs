@@ -4,7 +4,6 @@ using System.Globalization;
 using CMS.ContentEngine;
 using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core.Modules;
-using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components.Widgets.BlogPostList;
 using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Rendering;
@@ -18,53 +17,41 @@ using Microsoft.AspNetCore.Mvc;
 [assembly: RegisterWidget(
     identifier: BlogPostListWidget.IDENTIFIER,
     viewComponentType: typeof(BlogPostListWidget),
-    name: "Blog Post List",
+    name: BlogPostListWidget.NAME,
     propertiesType: typeof(BlogPostListWidgetProperties),
     Description = "Displays a list of blog posts based on the widget properties.",
-    IconClass = "icon-paragraph",
-    AllowCache = true)]
+    IconClass = "icon-paragraph")]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.BlogPostList;
 
 public class BlogPostListWidget(
     IMediator mediator,
     IWebPageUrlRetriever urlRetriever,
-    AssetItemService itemService,
-    ICacheDependenciesScope scope,
     IWebsiteChannelContext channelContext,
     ITaxonomyRetriever taxonomyRetriever) : ViewComponent
 {
     public const string IDENTIFIER = "CommunityPortal.Components.BlogPost-List-Widget";
+    public const string NAME = "Blog Post List";
 
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
     private readonly IMediator mediator = mediator;
-    private readonly AssetItemService itemService = itemService;
-    private readonly ICacheDependenciesScope scope = scope;
     private readonly IWebsiteChannelContext channelContext = channelContext;
     private readonly ITaxonomyRetriever taxonomyRetriever = taxonomyRetriever;
 
     public async Task<IViewComponentResult> InvokeAsync(ComponentViewModel<BlogPostListWidgetProperties> cvm)
     {
-        scope.Begin();
-
-        var posts = cvm.Properties.BlogPostSourceParsed switch
+        var props = cvm.Properties;
+        var posts = props.BlogPostSourceParsed switch
         {
-            BlogPostSources.Individual_Selection => await GetBlogPostsBySelection(cvm.Properties),
-            BlogPostSources.Post_Taxonomy => await GetBlogPostsByTaxonomy(cvm.Properties),
-            BlogPostSources.Latest_Published or _ => await GetLatestBlogPosts(cvm.Properties)
+            BlogPostSources.Individual_Selection => await GetBlogPostsBySelection(props),
+            BlogPostSources.Post_Taxonomy => await GetBlogPostsByTaxonomy(props),
+            BlogPostSources.Latest_Published or _ => await GetLatestBlogPosts(props)
         };
 
-        cvm.CacheDependencies.CacheKeys = scope.End().ToList();
-
-        SetValidationErrors(cvm.Properties, posts);
-
-        if (ModelState.ErrorCount > 0)
-        {
-            return View("~/Components/ComponentError.cshtml");
-        }
-
-        var vm = new BlogPostListWidgetViewModel(cvm.Properties, posts);
-        return View("~/Components/Widgets/BlogPostList/BlogPostList.cshtml", vm);
+        return Validate(props, posts)
+            .Match(
+                vm => View("~/Components/Widgets/BlogPostList/BlogPostList.cshtml", vm),
+                vm => View("~/Components/ComponentError.cshtml", vm));
     }
 
     private async Task<IReadOnlyList<BlogPostViewModel>> GetBlogPostsByTaxonomy(BlogPostListWidgetProperties props)
@@ -110,17 +97,18 @@ public class BlogPostListWidget(
             }
 
             var url = await urlRetriever.Retrieve(page);
-            var teaserImage = await itemService.RetrieveMediaFileImage(post.BlogPostContentTeaserMediaFileImage.FirstOrDefault());
             var author = await GetAuthor(post);
             string? taxonomy = await GetTaxonomyName(props);
 
-            vms.Add(new BlogPostViewModel(new(author, author.AuthorContentPhoto.FirstOrDefault()))
+            var authorViewModel = new BlogPostAuthorViewModel(author);
+
+            vms.Add(new BlogPostViewModel(authorViewModel)
             {
-                Title = post.BlogPostContentTitle,
+                Title = post.ListableItemTitle,
                 Date = post.BlogPostContentPublishedDate,
                 LinkPath = url.RelativePath,
-                ShortDescription = post.BlogPostContentShortDescription,
-                TeaserImage = teaserImage,
+                ShortDescription = post.ListableItemShortDescription,
+                TeaserImage = post.ToImageViewModel(),
                 Taxonomy = taxonomy
             });
         }
@@ -147,7 +135,7 @@ public class BlogPostListWidget(
         return resp.Author;
     }
 
-    private void SetValidationErrors(BlogPostListWidgetProperties props, IReadOnlyList<BlogPostViewModel> posts)
+    private static Result<BlogPostListWidgetViewModel, ComponentErrorViewModel> Validate(BlogPostListWidgetProperties props, IReadOnlyList<BlogPostViewModel> posts)
     {
         if (posts.Count == 0)
         {
@@ -157,13 +145,10 @@ public class BlogPostListWidget(
                 BlogPostSources.Post_Taxonomy => "Select a Taxonomy with associated Posts",
                 BlogPostSources.Latest_Published or _ => "There are no posts available to display"
             };
-            ModelState.AddModelError("", error);
+            return Result.Failure<BlogPostListWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, error));
         }
 
-        if (ModelState.ErrorCount > 0 && string.IsNullOrWhiteSpace(props.Heading))
-        {
-            ModelState.AddModelError("", "(optional) Add a Heading");
-        }
+        return new BlogPostListWidgetViewModel(props, posts);
     }
 
     private async Task<string?> GetTaxonomyName(BlogPostListWidgetProperties props)

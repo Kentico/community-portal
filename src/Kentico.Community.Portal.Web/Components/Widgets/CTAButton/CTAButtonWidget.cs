@@ -6,9 +6,9 @@ using Kentico.Xperience.Admin.Websites.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
 [assembly: RegisterWidget(
-    identifier: "CommunityPortal.CtaButtonWidget",
+    identifier: CTAButtonWidget.IDENTIFIER,
     name: "CTA button",
-    viewComponentType: typeof(CTAButtonWidgetViewComponent),
+    viewComponentType: typeof(CTAButtonWidget),
     propertiesType: typeof(CTAButtonWidgetProperties),
     Description = "Call to action button with configurable target page.",
     IconClass = "icon-rectangle-a",
@@ -16,8 +16,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.CTAButton;
 
-public class CTAButtonWidgetViewComponent : ViewComponent
+public class CTAButtonWidget : ViewComponent
 {
+    public const string IDENTIFIER = "CommunityPortal.CtaButtonWidget";
     public IViewComponentResult Invoke(ComponentViewModel<CTAButtonWidgetProperties> vm)
     {
         var model = new CTAButtonWidgetViewModel(vm.Properties);
@@ -26,7 +27,7 @@ public class CTAButtonWidgetViewComponent : ViewComponent
     }
 }
 
-public class CTAButtonWidgetProperties : IWidgetProperties
+public class CTAButtonWidgetProperties : BaseWidgetProperties
 {
     [TextInputComponent(
         Label = "Link Text",

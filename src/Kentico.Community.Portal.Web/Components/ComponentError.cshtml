@@ -1,9 +1,19 @@
+@model Kentico.Community.Portal.Web.Components.ComponentErrorViewModel
+
 <xpc-page-builder-content>
-  <strong>
-    This component needs to be setup or is misconfigured. Please resolve the
-    errors below:
-  </strong>
+  <div xpc-preview-outline="@Model.ComponentLabel">
+    <strong>
+      This component needs to be setup or is misconfigured. Please resolve the
+      errors below:
+    </strong>
 
-  <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="text-danger validation-summary-errors" data-valmsg-summary="true">
+      <ul>
+        @foreach (string err in Model.Errors)
+        {
+          <li>@err</li>
+        }
+      </ul>
+    </div>
+  </div>
 </xpc-page-builder-content>
-

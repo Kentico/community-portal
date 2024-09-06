@@ -41,9 +41,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// EmailDefaultsContentHeaderLogo.
+		/// EmailDefaultsContentHeaderLogoImageContent.
 		/// </summary>
-		public IEnumerable<MediaAssetContent> EmailDefaultsContentHeaderLogo { get; set; }
+		public IEnumerable<ImageContent> EmailDefaultsContentHeaderLogoImageContent { get; set; }
 
 
 		/// <summary>
@@ -59,9 +59,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// EmailDefaultsContentFooterLogo.
+		/// EmailDefaultsFooterLogoImageContent.
 		/// </summary>
-		public IEnumerable<MediaAssetContent> EmailDefaultsContentFooterLogo { get; set; }
+		public IEnumerable<ImageContent> EmailDefaultsFooterLogoImageContent { get; set; }
 
 
 		/// <summary>

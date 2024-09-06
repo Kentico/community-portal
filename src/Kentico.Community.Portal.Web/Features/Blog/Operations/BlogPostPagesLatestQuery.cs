@@ -14,13 +14,13 @@ public class BlogPostPagesLatestQueryHandler(WebPageQueryTools tools) : WebPageQ
     public override async Task<BlogPostPagesLatestQueryResponse> Handle(BlogPostPagesLatestQuery request, CancellationToken cancellationToken = default)
     {
         // Optimized query to find content item identifiers
-        var idsQuery = new ContentItemQueryBuilder().ForContentType(BlogPostContent.CONTENT_TYPE_NAME, queryParameters =>
-        {
-            _ = queryParameters
+        var idsQuery = new ContentItemQueryBuilder()
+            .ForContentType(
+                BlogPostContent.CONTENT_TYPE_NAME,
+                q => q
                 .OrderBy(new[] { new OrderByColumn(nameof(BlogPostContent.BlogPostContentPublishedDate), OrderDirection.Descending) })
                 .TopN(request.Count)
-                .Columns(nameof(BlogPostContent.SystemFields.ContentItemID));
-        });
+                .Columns(nameof(BlogPostContent.SystemFields.ContentItemID)));
 
         var contentItemIDs = (await Executor.GetResult(idsQuery, c => c.ContentItemID, DefaultQueryOptions, cancellationToken)).ToList();
 
@@ -58,6 +58,7 @@ public class BlogPostPagesLatestQueryHandler(WebPageQueryTools tools) : WebPageQ
                         (author, builder) => builder
                             .ContentItem(author)
                             .Collection(
-                                author.AuthorContentPhoto,
-                                (image, builder) => builder.ContentItem(image))));
+                                author.AuthorContentPhotoImageContent,
+                                (image, builder) => builder.ContentItem(image)
+                            )));
 }

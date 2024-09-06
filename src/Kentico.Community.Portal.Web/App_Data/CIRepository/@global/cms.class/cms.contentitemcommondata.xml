@@ -164,8 +164,26 @@
           <MinRowsNumber>3</MinRowsNumber>
         </settings>
       </field>
+      <field allowempty="true" column="ListableItemFeaturedImageContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="7969b057-8ea0-4c9d-abf2-363915d724a8" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Image</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>058caefa-c8d6-440f-8f3e-cd0fd9d7a41a</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["40334c2a-0969-4e68-96eb-e0fb8d89b37e"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>0</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+      </field>
       <field allowempty="true" column="ListableItemFeaturedImage" columnprecision="0" columntype="contentitemreference" enabled="true" guid="c912089f-b715-481b-8bb8-03ce3ef791ec" visible="true">
         <properties>
+          <explanationtext>[deprecated]</explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Featured Image</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
@@ -206,6 +224,96 @@
           <TaxonomyGroup>
             <![CDATA[["ca9aa59d-d3fd-4f4c-bb67-5a1b3c0f5ad5"]]]>
           </TaxonomyGroup>
+        </settings>
+      </field>
+      <schema guid="6fb07931-f628-4227-82c0-1038378360a1" name="MediaItem">
+        <properties>
+          <fieldcaption>Media Item</fieldcaption>
+        </properties>
+      </schema>
+      <field allowempty="true" column="MediaItemTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="4b9d2098-1f89-42ed-a1be-f4282b45a2d2" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Title</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>6fb07931-f628-4227-82c0-1038378360a1</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field allowempty="true" column="MediaItemShortDescription" columnprecision="0" columntype="longtext" enabled="true" guid="10ccb5d8-3e24-4bc5-91c3-419043ae5ea7" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Short Description</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>6fb07931-f628-4227-82c0-1038378360a1</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues>
+              <ErrorMessage>A short description is required</ErrorMessage>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field allowempty="true" column="MediaItemTaxonomy" columnprecision="0" columntype="taxonomy" enabled="true" guid="e31ec741-6d7b-4529-a08d-56522b15702d" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Taxonomy</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>6fb07931-f628-4227-82c0-1038378360a1</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TagSelector</controlname>
+          <MaxSelectedTagsCount>4</MaxSelectedTagsCount>
+          <MinSelectedTagsCount>1</MinSelectedTagsCount>
+          <TaxonomyGroup>
+            <![CDATA[["72f39193-9dee-45df-9138-730ed4445858"]]]>
+          </TaxonomyGroup>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues>
+              <ErrorMessage>You must select at least 1 tag</ErrorMessage>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field allowempty="true" column="MediaItemAssetWidth" columnprecision="0" columntype="integer" enabled="true" guid="6d7a14ed-84d6-4916-926e-9a3c5d940110" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Asset width</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>6fb07931-f628-4227-82c0-1038378360a1</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.NumberInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="MediaItemAssetHeight" columnprecision="0" columntype="integer" enabled="true" guid="d7246947-f821-4474-b0d7-26b8142dbe12" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Asset height</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <kxp_schema_identifier>6fb07931-f628-4227-82c0-1038378360a1</kxp_schema_identifier>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.NumberInput</controlname>
         </settings>
       </field>
     </form>

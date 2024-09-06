@@ -38,17 +38,14 @@
         <div class="row gx-lg-6 gx-xxl-7 mt-sm-n2 mt-lg-n4">
             @foreach (var item in Model.Items)
             {
-                <div class="col-sm-6 col-lg-4 mt-3 mt-sm-5 mt-lg-6"
-                    x-data='{ title: @JSEncoder.EncodeToJson(item.Title.ToLowerInvariant()), description: @JSEncoder.EncodeToJson(item.ShortDescription.ToLowerInvariant()), type: @JSEncoder.EncodeToJson(item.Type.CodeName) }'
+                <div class="col-sm-6 col-lg-4 mt-3 mt-sm-5 mt-lg-6" x-data='@item.MetadataJSON'
                     x-show='(title.includes(searchTerm.toLowerCase()) || description.includes(searchTerm.toLowerCase())) && (searchType === "all" || searchType === type)'>
                     <div class="c-card widget default-border ">
                         <div class="c-card_inner">
-                            @if (item.Logo is MediaAssetContent logo)
+                            @if (item.Logo.TryGetValue(out var logo))
                             {
                                 <div class="c-card_icon">
-                                    <img src="@logo.MediaAssetContentAssetLight.Url" alt="@item.AuthorName"
-                                        width="@logo.MediaAssetContentImageLightWidth"
-                                        height="@logo.MediaAssetContentImageLightHeight" />
+                                    <img xpc-image="logo" />
                                 </div>
                             }
                             <h3 class="h3 mt-2 pt-1">@item.Title</h3>
@@ -59,7 +56,7 @@
                             </p>
                             <p class="mt-2">by
                                 <small>
-                                    @if (item.AuthorURL is string authorURL)
+                                    @if (item.AuthorURL.TryGetValue(out string? authorURL))
                                     {
                                         <a href="@authorURL">@item.AuthorName</a>
                                     }
@@ -72,7 +69,7 @@
                             <p class="mt-2">@item.ShortDescription</p>
 
                             <div class="d-flex justify-content-around mt-3">
-                                @if (item.RepositoryURL is string repositoryURL)
+                                @if (item.RepositoryURL.TryGetValue(out string? repositoryURL))
                                 {
                                     <a class="c-link text-primary" href="@repositoryURL">
                                         Repository
@@ -81,7 +78,7 @@
                                         </svg>
                                     </a>
                                 }
-                                @if (item.LibraryURL is string libraryURL)
+                                @if (item.LibraryURL.TryGetValue(out string? libraryURL))
                                 {
                                     <a class="c-link text-primary" href="@libraryURL">
                                         Library

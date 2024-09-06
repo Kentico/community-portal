@@ -1,3 +1,4 @@
+using Kentico.Community.Portal.Web.Components.Widgets.BlogPostList;
 using Kentico.Community.Portal.Web.Features.Blog.Search;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 using MediatR;
@@ -22,7 +23,20 @@ public class BlogSearchViewComponent(IMediator mediator, BlogSearchService searc
 
         var model = new BlogPostListWidgetViewModel()
         {
-            BlogPosts = BuildPostPageViewModels(searchResult?.Hits),
+            BlogPosts = (searchResult?.Hits ?? []).Select(result => new BlogPostViewModel(new()
+            {
+                ID = result.AuthorMemberID,
+                Name = result.AuthorName,
+                Photo = Maybe.From(result.AuthorAvatarImage!).Map(i => i.ToImageViewModel()),
+            })
+            {
+                Title = result.Title,
+                Date = result.PublishedDate,
+                LinkPath = result.Url,
+                ShortDescription = result.ShortDescription,
+                TeaserImage = Maybe.From(result.TeaserImage!).Map(i => i.ToImageViewModel()),
+                Taxonomy = result.BlogType
+            }).ToList(),
             Page = request.PageNumber,
             Query = request.SearchText,
             SortBy = request.SortBy,
@@ -40,36 +54,6 @@ public class BlogSearchViewComponent(IMediator mediator, BlogSearchService searc
         };
 
         return View("~/Features/Blog/Components/BlogSearch.cshtml", model);
-    }
-
-    private static List<BlogPostViewModel> BuildPostPageViewModels(IEnumerable<BlogSearchIndexModel>? results)
-    {
-        if (results is null)
-        {
-            return [];
-        }
-
-        var vms = new List<BlogPostViewModel>();
-
-        foreach (var result in results)
-        {
-            vms.Add(new BlogPostViewModel(new()
-            {
-                ID = result.AuthorMemberID,
-                Name = result.AuthorName,
-                Avatar = result.AuthorAvatarImage?.ToMediaAssetContent(),
-            })
-            {
-                Title = result.Title,
-                Date = result.PublishedDate,
-                LinkPath = result.Url,
-                ShortDescription = result.ShortDescription,
-                TeaserImage = result.TeaserImage?.ToImageAsset(),
-                Taxonomy = result.BlogType
-            });
-        }
-
-        return vms;
     }
 }
 
