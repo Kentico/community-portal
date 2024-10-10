@@ -19,9 +19,9 @@ namespace Kentico.Community.Portal.Admin.Features.MemberBadges;
 public class MemberBadgeCreatePage(
     IFormComponentMapper formComponentMapper,
     IFormDataBinder formDataBinder,
-    IPageUrlGenerator pageUrlGenerator,
+    IPageLinkGenerator pageLinkGenerator,
     ISystemClock clock)
-    : CreatePage<MemberBadgeInfo, MemberBadgeSectionPage>(formComponentMapper, formDataBinder, pageUrlGenerator)
+    : CreatePage<MemberBadgeInfo, MemberBadgeSectionPage>(formComponentMapper, formDataBinder, pageLinkGenerator)
 {
     private readonly ISystemClock clock = clock;
 

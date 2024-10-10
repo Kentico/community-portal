@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>{_is}Contact.IsMember()</MacroRuleCondition>
+  <MacroRuleDisplayName>Contact is member</MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>55fcbe6d-de67-42ff-8e7e-f0cb385d6e01</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactIsMember</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="_is" columnsize="100" columntype="text" guid="d50e7ae4-c205-47a8-8c98-3398634fa7a5" visible="true">
+        <properties>
+          <defaultvalue>__is</defaultvalue>
+          <fieldcaption>select operation</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <IsPerfectum>True</IsPerfectum>
+          <Options>
+<![CDATA[
+__is;is
+__isnot;is not
+]]>
+          </Options>
+          <RepeatDirection>horizontal</RepeatDirection>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>Contact {_is} an active member.</MacroRuleText>
+  <MacroRuleUsageLocation>2</MacroRuleUsageLocation>
+</cms.macrorule>

@@ -52,23 +52,17 @@ public class QAndAQuestionController(
         var questionsParent = await mediator.Send(new QAndAQuestionsRootPageQuery(channelContext.WebsiteChannelName));
         var questionMonthFolder = await mediator.Send(new QAndAMonthFolderQuery(questionsParent, channelContext.WebsiteChannelName, now.Year, now.Month, channelContext.WebsiteChannelID));
 
-        var result = await mediator.Send(new QAndAQuestionCreateCommand(
+        return await mediator.Send(new QAndAQuestionCreateCommand(
             member,
             questionMonthFolder,
             channelContext.WebsiteChannelID,
             requestModel.Title,
             requestModel.Content,
             SystemTaxonomies.QAndADiscussionTypeTaxonomy.QuestionTag.GUID,
-            Maybe<BlogPostPage>.None));
-
-        if (result.IsSuccess)
-        {
-            return PartialView("~/Features/QAndA/Components/Form/QAndAQuestionFormConfirmation.cshtml");
-        }
-        else
-        {
-            return LogAndReturnError("CREATE_QUESTION")(result.Error);
-        }
+            Maybe<BlogPostPage>.None))
+            .Match(
+                _ => PartialView("~/Features/QAndA/Components/Form/QAndAQuestionFormConfirmation.cshtml") as IActionResult,
+                LogAndReturnError("CREATE_QUESTION"));
     }
 
     [HttpPost]

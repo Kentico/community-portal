@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Automation step statistics</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="AutomationStepStatisticsID" columntype="integer" enabled="true" guid="43d2f8ce-d406-4733-9dc4-209140703a33" isPK="true" system="true" />
+      <field column="AutomationStepStatisticsStepID" columnprecision="0" columntype="integer" enabled="true" guid="570131ad-e224-43a3-80d9-d79d45358fe1" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="AutomationStepStatisticsExitCount" columnprecision="0" columntype="integer" enabled="true" guid="3f35e386-974e-4db2-ae7e-9790c8918777" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="AutomationStepStatisticsEntryCount" columnprecision="0" columntype="integer" enabled="true" guid="dd339f64-80fa-4be5-a794-f9b2d6697582" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>a5f1dd0a-b8d5-4171-8aa4-c123434e9d7d</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.AutomationStepStatistics</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.WorkflowEngine</CodeName>
+    <GUID>2b67f370-3df4-4a4d-8734-1974639c5b69</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_AutomationStepStatistics</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

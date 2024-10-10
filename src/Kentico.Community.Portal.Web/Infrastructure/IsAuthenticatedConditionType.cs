@@ -1,5 +1,4 @@
 using Kentico.PageBuilder.Web.Mvc.Personalization;
-using Kentico.Xperience.Admin.Base.FormAnnotations;
 
 [assembly: RegisterPersonalizationConditionType(
     identifier: IsAuthenticatedConditionType.IDENTIFIER,
@@ -17,12 +16,6 @@ public class IsAuthenticatedConditionType(IHttpContextAccessor contextAccessor) 
 
     private readonly IHttpContextAccessor contextAccessor = contextAccessor;
 
-    /// <summary>
-    /// Unused property to resolve bug where the ConditionType does not work if it has no custom properties
-    /// </summary>
-    [TextWithLabelComponent]
-    public string Placeholder { get; set; } = "";
-
     public override bool Evaluate()
     {
         var context = contextAccessor.HttpContext;
@@ -31,7 +24,7 @@ public class IsAuthenticatedConditionType(IHttpContextAccessor contextAccessor) 
             return false;
         }
 
-        var identity = context.User.Identities.FirstOrDefault();
+        var identity = context.User.Identity;
 
         return identity is not null && identity.IsAuthenticated;
     }

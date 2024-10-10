@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.workflowtransition>
+  <Parent>
+    <CodeName>IsConfirmed</CodeName>
+    <GUID>e86225e4-6d4f-4abc-9d15-e36e289810a1</GUID>
+    <ObjectType>ma.automationstep</ObjectType>
+    <Parent>
+      <CodeName>NewsletterSubscriptionReminder</CodeName>
+      <GUID>848178d9-79f6-4b3b-b275-1b76840694a1</GUID>
+      <ObjectType>ma.automationprocess</ObjectType>
+    </Parent>
+  </Parent>
+  <Bindings>
+    <Binding id="ma.automationstep_Confirmation_ma.automationprocess_NewsletterSubscriptionReminder-ma.automationstep_Confirmation_ma.automationprocess_NewsletterSubscriptionReminder">
+      <TransitionEndStepID>
+        <CodeName>Confirmation</CodeName>
+        <GUID>9919f0ed-f472-4171-a04d-a7594633d592</GUID>
+        <ObjectType>ma.automationstep</ObjectType>
+        <Parent>
+          <CodeName>NewsletterSubscriptionReminder</CodeName>
+          <GUID>848178d9-79f6-4b3b-b275-1b76840694a1</GUID>
+          <ObjectType>ma.automationprocess</ObjectType>
+        </Parent>
+      </TransitionEndStepID>
+      <TransitionSourcePointGUID>cef4c429-e8ca-4faa-b262-72574c6aca2f</TransitionSourcePointGUID>
+      <TransitionType>1</TransitionType>
+      <TransitionWorkflowID>
+        <CodeName>NewsletterSubscriptionReminder</CodeName>
+        <GUID>848178d9-79f6-4b3b-b275-1b76840694a1</GUID>
+        <ObjectType>ma.automationprocess</ObjectType>
+      </TransitionWorkflowID>
+    </Binding>
+    <Binding id="ma.automationstep_Confirmed_ma.automationprocess_NewsletterSubscriptionReminder-ma.automationstep_Confirmed_ma.automationprocess_NewsletterSubscriptionReminder">
+      <TransitionEndStepID>
+        <CodeName>Confirmed</CodeName>
+        <GUID>745c7b35-43c7-41e5-90fa-970a21860351</GUID>
+        <ObjectType>ma.automationstep</ObjectType>
+        <Parent>
+          <CodeName>NewsletterSubscriptionReminder</CodeName>
+          <GUID>848178d9-79f6-4b3b-b275-1b76840694a1</GUID>
+          <ObjectType>ma.automationprocess</ObjectType>
+        </Parent>
+      </TransitionEndStepID>
+      <TransitionSourcePointGUID>a229d5f2-c909-4c91-b765-16c036287434</TransitionSourcePointGUID>
+      <TransitionType>1</TransitionType>
+      <TransitionWorkflowID>
+        <CodeName>NewsletterSubscriptionReminder</CodeName>
+        <GUID>848178d9-79f6-4b3b-b275-1b76840694a1</GUID>
+        <ObjectType>ma.automationprocess</ObjectType>
+      </TransitionWorkflowID>
+    </Binding>
+  </Bindings>
+</cms.workflowtransition>

@@ -22,6 +22,11 @@
       <field allowempty="true" column="HistoryRejected" columntype="boolean" guid="96d4e5ef-b781-4c43-bcc7-e2ef9dc97ef9" system="true" />
       <field column="HistoryWasRejected" columntype="boolean" guid="503545c0-fa3e-4bf8-b436-0be6cbb233ee" system="true" />
       <field column="HistoryStateID" columntype="integer" guid="d1ed2c7f-6f2e-42f3-9054-ddf9c9525e61" system="true" />
+      <field column="HistoryIncludedInStatistics" columnprecision="0" columntype="boolean" enabled="true" guid="3b53b692-5a25-47c3-8276-906954ab714f" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
     </form>
   </ClassFormDefinition>
   <ClassGUID>2c6c5ab8-2a0e-41b1-b4b4-416f1e9106ec</ClassGUID>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[{_is}Contact.IsInRecipientList("{list}")]]>
+  </MacroRuleCondition>
+  <MacroRuleDisplayName>Contact is in recipient list</MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>5539d2b6-6ea7-4d2f-94a0-c9d235e70e2b</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactIsInRecipientList</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="list" columnprecision="0" columntype="objectcodenames" guid="34e9fd96-87dc-43c2-84f2-03d995eeaf01" visible="true">
+        <properties>
+          <fieldcaption>contact group</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectCodeNameSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <ObjectType>om.recipientlist</ObjectType>
+          <Placeholder>select recipient list</Placeholder>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field column="_is" columnsize="100" columntype="text" guid="9637d48a-c4ad-4221-89dc-96c0965ecf34" visible="true">
+        <properties>
+          <defaultvalue>__is</defaultvalue>
+          <fieldcaption>select operation</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <IsPerfectum>True</IsPerfectum>
+          <Options>
+<![CDATA[
+__is;is
+__isnot;is not
+]]>
+          </Options>
+          <RepeatDirection>horizontal</RepeatDirection>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>
+    <![CDATA[Contact {_is} receiving in the {list} recipient list.]]>
+  </MacroRuleText>
+  <MacroRuleUsageLocation>2</MacroRuleUsageLocation>
+</cms.macrorule>

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using static Kentico.Community.Portal.Web.Features.Members.Badges.MemberBadgeService;
 
 namespace Kentico.Community.Portal.Web.Features.Members;
 
@@ -10,9 +11,27 @@ public class MemberBadgesViewComponent : ViewComponent
 
 public class MemberBadgeViewModel
 {
-    public string? BadgeImageUrl { get; set; }
-    public string MemberBadgeDisplayName { get; set; } = string.Empty;
-    public string MemberBadgeDescription { get; set; } = string.Empty;
-    public bool IsSelected { get; set; }
-    public int BadgeId { get; set; }
+    public Maybe<string> BadgeImageUrl { get; }
+    public string MemberBadgeDisplayName { get; } = string.Empty;
+    public string MemberBadgeCodeName { get; } = string.Empty;
+    public string MemberBadgeDescription { get; } = string.Empty;
+    public bool IsSelected { get; init; }
+    public int BadgeId { get; }
+
+    public static MemberBadgeViewModel Create(MemberBadgeAggregate aggregate, bool isSelected) =>
+        new(aggregate)
+        {
+            IsSelected = isSelected
+        };
+    public static MemberBadgeViewModel Create(MemberBadgeAggregate aggregate) =>
+        new(aggregate);
+    private MemberBadgeViewModel(MemberBadgeAggregate aggregate)
+    {
+        BadgeId = aggregate.MemberBadge.MemberBadgeID;
+        MemberBadgeDisplayName = aggregate.MemberBadge.MemberBadgeDisplayName;
+        MemberBadgeCodeName = aggregate.MemberBadge.MemberBadgeCodeName;
+        MemberBadgeDescription = aggregate.MemberBadge.MemberBadgeShortDescription;
+        BadgeImageUrl = Maybe.From(aggregate.Image).Map(i => i?.URL!).MapNullOrWhiteSpaceAsNone();
+        IsSelected = aggregate.IsSelected;
+    }
 }

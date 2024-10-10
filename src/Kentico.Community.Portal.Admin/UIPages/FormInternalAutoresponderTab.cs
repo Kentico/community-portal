@@ -18,7 +18,7 @@ using IFormItemCollectionProvider = Kentico.Xperience.Admin.Base.Forms.Internal.
     name: "Internal Autoresponder",
     templateName: TemplateNames.EDIT,
     order: 201, // After Autoresponder tab
-    icon: Icons.Messages)]
+    Icon = Icons.Messages)]
 
 namespace Kentico.Community.Portal.Admin.UIPages;
 

@@ -4,7 +4,6 @@ using CSharpFunctionalExtensions;
 using Kentico.Community.Portal.Admin.UIPages;
 using Kentico.Xperience.Admin.Base;
 using Kentico.Xperience.Admin.Base.UIPages;
-using Microsoft.AspNetCore.Http;
 
 [assembly: PageExtender(typeof(ReusableFieldSchemaEditExtender))]
 
@@ -12,18 +11,14 @@ namespace Kentico.Community.Portal.Admin.UIPages;
 
 public class ReusableFieldSchemaEditExtender(
     IReusableFieldSchemaManager schemaManager,
-    IHttpContextAccessor contextAccessor,
-    IPageUrlGenerator urlGenerator) : PageExtender<ReusableFieldSchemaEdit>
+    IPageLinkGenerator pageLinkGenerator) : PageExtender<ReusableFieldSchemaEdit>
 {
     private readonly IReusableFieldSchemaManager schemaManager = schemaManager;
-    private readonly IHttpContextAccessor contextAccessor = contextAccessor;
-    private readonly IPageUrlGenerator urlGenerator = urlGenerator;
+    private readonly IPageLinkGenerator pageLinkGenerator = pageLinkGenerator;
 
     public override async Task ConfigurePage()
     {
         await base.ConfigurePage();
-
-        var context = contextAccessor.HttpContext!;
 
         var contentTypes = schemaManager.GetContentTypesWithSchema(Page.SchemaGuid);
 
@@ -33,8 +28,11 @@ public class ReusableFieldSchemaEditExtender(
             Content = string.Join("<br >", contentTypes.Select(c =>
             {
                 var dc = DataClassInfoProvider.GetDataClassInfo(c);
-                string url = urlGenerator.GenerateUrl(typeof(ContentTypeGeneral), dc.ClassID.ToString());
-                return $"""<a href="/admin{url}">{c}</a>""";
+                string url = pageLinkGenerator.GetPath<ContentTypeGeneral>(new()
+                {
+                    { typeof(ContentTypeEditSection), dc.ClassID },
+                });
+                return $"""<a href="/admin{url}">{dc.ClassDisplayName}</a>""";
             })),
             ContentAsHtml = true,
             Type = CalloutType.QuickTip,

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ma.automationstep>
+  <StepActionParameters />
+  <StepDefinition>
+    <Step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <TimeoutEnabled>false</TimeoutEnabled>
+      <TimeoutTarget>00000000-0000-0000-0000-000000000000</TimeoutTarget>
+      <SourcePoints>
+        <SourcePoint Guid="a229d5f2-c909-4c91-b765-16c036287434">
+          <Label>True path</Label>
+          <Condition>
+            <![CDATA[{%Rule("(Contact.IsInRecipientList(\"KenticoCommunityNewsletter\"))", "<rules><r pos=\"0\" par=\"\" op=\"and\" /><r pos=\"0\" par=\"0\" op=\"and\" n=\"CMSContactIsInRecipientList\" ><p n=\"list\"><t>#contact group</t><v>KenticoCommunityNewsletter</v><r>1</r><d>contact group</d><vt>objectcodenames</vt><tv>0</tv></p><p n=\"_is\"><t>#select operation</t><v></v><r>1</r><d>select operation</d><vt>text</vt><tv>0</tv></p></r></rules>")|(user)SeanW_kentico.com|(hash)94a402c7043c217315d417666ba75139e184b53a1b98656392103a443ba7b8a5%}]]>
+          </Condition>
+          <Type>1</Type>
+          <StepRolesSecurity>0</StepRolesSecurity>
+          <StepUsersSecurity>0</StepUsersSecurity>
+        </SourcePoint>
+        <SourcePoint Guid="cef4c429-e8ca-4faa-b262-72574c6aca2f">
+          <Label>False path</Label>
+          <Type>2</Type>
+          <StepRolesSecurity>0</StepRolesSecurity>
+          <StepUsersSecurity>0</StepUsersSecurity>
+        </SourcePoint>
+      </SourcePoints>
+      <Position>
+        <X>-1</X>
+        <Y>-1</Y>
+      </Position>
+    </Step>
+  </StepDefinition>
+  <StepDisplayName>Is confirmed</StepDisplayName>
+  <StepGUID>e86225e4-6d4f-4abc-9d15-e36e289810a1</StepGUID>
+  <StepName>IsConfirmed</StepName>
+  <StepRolesSecurity>0</StepRolesSecurity>
+  <StepType>6</StepType>
+  <StepUsersSecurity>0</StepUsersSecurity>
+  <StepWorkflowID>
+    <CodeName>NewsletterSubscriptionReminder</CodeName>
+    <GUID>848178d9-79f6-4b3b-b275-1b76840694a1</GUID>
+    <ObjectType>ma.automationprocess</ObjectType>
+  </StepWorkflowID>
+  <StepWorkflowType>3</StepWorkflowType>
+</ma.automationstep>

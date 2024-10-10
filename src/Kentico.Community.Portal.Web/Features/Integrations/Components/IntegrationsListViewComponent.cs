@@ -3,7 +3,9 @@ using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Membership;
+using Kentico.Community.Portal.Web.Rendering;
 using MediatR;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.Integrations;
@@ -11,11 +13,13 @@ namespace Kentico.Community.Portal.Web.Features.Integrations;
 public class IntegrationsListViewComponent(
     IMediator mediator,
     ITaxonomyRetriever taxonomyRetriever,
-    LinkGenerator linkGenerator) : ViewComponent
+    LinkGenerator linkGenerator,
+    IJSEncoder jSEncoder) : ViewComponent
 {
     private readonly IMediator mediator = mediator;
     private readonly ITaxonomyRetriever taxonomyRetriever = taxonomyRetriever;
     private readonly LinkGenerator linkGenerator = linkGenerator;
+    private readonly IJSEncoder jSEncoder = jSEncoder;
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
@@ -27,7 +31,7 @@ public class IntegrationsListViewComponent(
             .Select(i =>
             {
                 var (content, author) = i;
-                return new IntegrationItemViewModel(content, taxonomy, author, linkGenerator);
+                return new IntegrationItemViewModel(content, taxonomy, author, linkGenerator, jSEncoder);
             })
             .ToList();
 
@@ -40,21 +44,22 @@ public record IntegrationsListViewModel(IReadOnlyList<IntegrationItemViewModel> 
 public class IntegrationItemViewModel
 {
     public string Title { get; }
-    public MediaAssetContent? Logo { get; }
+    public Maybe<ImageViewModel> Logo { get; }
     public string ShortDescription { get; }
-    public string? RepositoryURL { get; }
-    public string? LibraryURL { get; }
+    public Maybe<string> RepositoryURL { get; }
+    public Maybe<string> LibraryURL { get; }
     public IntegrationTypeViewModel Type { get; }
     public string AuthorName { get; }
-    public string? AuthorURL { get; }
+    public Maybe<string> AuthorURL { get; }
+    public IHtmlContent MetadataJSON { get; }
 
-    public IntegrationItemViewModel(IntegrationContent content, TaxonomyData taxonomy, Maybe<CommunityMember> author, LinkGenerator linkGenerator)
+    public IntegrationItemViewModel(IntegrationContent content, TaxonomyData taxonomy, Maybe<CommunityMember> author, LinkGenerator linkGenerator, IJSEncoder jsEncoder)
     {
         Title = content.ListableItemTitle;
-        Logo = content.ListableItemFeaturedImage.FirstOrDefault();
+        Logo = content.ToImageViewModel();
         ShortDescription = content.ListableItemShortDescription;
-        RepositoryURL = string.IsNullOrWhiteSpace(content.IntegrationContentRepositoryLinkURL) ? null : content.IntegrationContentRepositoryLinkURL;
-        LibraryURL = string.IsNullOrWhiteSpace(content.IntegrationContentLibraryLinkURL) ? null : content.IntegrationContentLibraryLinkURL;
+        RepositoryURL = Maybe.From(content.IntegrationContentRepositoryLinkURL).MapNullOrWhiteSpaceAsNone();
+        LibraryURL = Maybe.From(content.IntegrationContentLibraryLinkURL).MapNullOrWhiteSpaceAsNone();
 
         AuthorName = author
             .Map(a => a.FullName)
@@ -68,8 +73,14 @@ public class IntegrationItemViewModel
 
         AuthorURL = author
             .Map(a => linkGenerator.GetPathByAction(nameof(MemberController.MemberDetail), "Member", new { memberID = a.Id }))
-            .Match(_ => _, () => Maybe.From(content.IntegrationContentAuthorLinkURL).WithNullOrWhiteSpaceAsNone())
-            .GetValueOrDefault();
+            .Match(_ => _, () => Maybe.From(content.IntegrationContentAuthorLinkURL).MapNullOrWhiteSpaceAsNone());
+
+        MetadataJSON = jsEncoder.EncodeToJson(new
+        {
+            title = Title.ToLowerInvariant(),
+            description = ShortDescription.ToLowerInvariant(),
+            type = Type.CodeName
+        });
     }
 }
 

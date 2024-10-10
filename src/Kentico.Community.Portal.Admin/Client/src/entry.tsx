@@ -7,3 +7,4 @@ export * from './components/UTMParametersDataTypeFormComponent';
 export * from './templates';
 export * from './layouts/StatsLayoutTemplate';
 export * from './layouts/MemberManagementLayoutTemplate';
+export * from './layouts/ContactMaintenanceLayoutTemplate';

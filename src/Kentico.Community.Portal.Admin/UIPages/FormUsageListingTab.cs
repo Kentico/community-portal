@@ -20,7 +20,7 @@ using Kentico.Xperience.Admin.Websites.UIPages;
     name: "Form usage",
     templateName: TemplateNames.LISTING,
     order: 1000,
-    icon: Icons.MultiChannel)]
+    Icon = Icons.MultiChannel)]
 
 namespace Kentico.Community.Portal.Admin.UIPages;
 
@@ -28,11 +28,11 @@ namespace Kentico.Community.Portal.Admin.UIPages;
 public class FormUsageListingTab(
     IInfoProvider<BizFormInfo> formProvider,
     IConversionService conversion,
-    IPageUrlGenerator pageUrlGenerator) : ListingPage
+    IPageLinkGenerator pageLinkGenerator) : ListingPage
 {
     private readonly IInfoProvider<BizFormInfo> formProvider = formProvider;
     private readonly IConversionService conversion = conversion;
-    private readonly IPageUrlGenerator pageUrlGenerator = pageUrlGenerator;
+    private readonly IPageLinkGenerator pageLinkGenerator = pageLinkGenerator;
 
     [PageParameter(typeof(IntPageModelBinder), typeof(FormEditSection))]
     public int FormId { get; set; }
@@ -106,7 +106,11 @@ public class FormUsageListingTab(
             return new TableRowLinkProps() { Label = valueStr, Path = "" };
         }
 
-        string pageUrl = pageUrlGenerator.GenerateUrl<PageBuilderTab>($"webpages-{channelID}", $"{languageName}_{webPageItemID}");
+        string pageUrl = pageLinkGenerator.GetPath<PageBuilderTab>(new()
+        {
+            { typeof(WebPageLayout), $"{languageName}_{webPageItemID}" },
+            { typeof(WebPagesApplication), $"webpages-{channelID}" },
+        });
 
         return new TableRowLinkProps()
         {

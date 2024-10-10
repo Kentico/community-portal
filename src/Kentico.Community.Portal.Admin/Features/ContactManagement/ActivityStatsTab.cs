@@ -12,9 +12,9 @@ using Kentico.Xperience.Admin.DigitalMarketing.UIPages;
     parentType: typeof(ContactManagementApplication),
     slug: "reporting",
     name: "Reporting",
-    icon: Icons.Graph,
     templateName: "@kentico-community/portal-web-admin/StatsLayout",
-    order: 1000)]
+    order: 1000,
+    Icon = Icons.Graph)]
 
 namespace Kentico.Community.Portal.Admin.Features.ContactManagement;
 

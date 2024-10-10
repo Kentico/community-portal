@@ -59,9 +59,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// EmailDefaultsFooterLogoImageContent.
+		/// EmailDefaultsContentFooterLogoImageContent.
 		/// </summary>
-		public IEnumerable<ImageContent> EmailDefaultsFooterLogoImageContent { get; set; }
+		public IEnumerable<ImageContent> EmailDefaultsContentFooterLogoImageContent { get; set; }
 
 
 		/// <summary>

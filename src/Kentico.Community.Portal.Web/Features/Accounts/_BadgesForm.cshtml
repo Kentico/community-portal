@@ -29,9 +29,9 @@
                         
                         <input type="hidden" value="@Model[i].BadgeId" asp-for="@Model[i].BadgeId"/>
                         <input type="hidden" x-model="selected" asp-for="@Model[i].IsSelected"/>
-                        @if (Model[i].BadgeImageUrl != null)
+                        @if (Model[i].BadgeImageUrl.TryGetValue(out string? url))
                         {
-                            <img src="@Model[i].BadgeImageUrl" class="c-tag_icon" />
+                            <img src="@url" class="c-tag_icon" />
                         }
                         @Model[i].MemberBadgeDisplayName
                     </span>

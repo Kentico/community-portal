@@ -16,11 +16,11 @@ namespace Kentico.Community.Portal.Admin.Features.MemberBadges;
 
 [UIEvaluatePermission(SystemPermissions.VIEW)]
 public class MemberBadgeListingPage(
-    IPageUrlGenerator pageUrlGenerator,
+    IPageLinkGenerator pageLinkGenerator,
     IInfoProvider<MemberBadgeMemberInfo> memberBadgeMemberProvider,
     IInfoProvider<MemberBadgeInfo> memberBadgeProvider) : ListingPage
 {
-    private readonly IPageUrlGenerator pageUrlGenerator = pageUrlGenerator;
+    private readonly IPageLinkGenerator pageLinkGenerator = pageLinkGenerator;
     private readonly IInfoProvider<MemberBadgeMemberInfo> memberBadgeMemberProvider = memberBadgeMemberProvider;
     private readonly IInfoProvider<MemberBadgeInfo> memberBadgeProvider = memberBadgeProvider;
 
@@ -68,7 +68,7 @@ public class MemberBadgeListingPage(
             _ = badge.Delete();
         }
 
-        var response = NavigateTo(pageUrlGenerator.GenerateUrl<MemberBadgeListingPage>());
+        var response = NavigateTo(pageLinkGenerator.GetPath<MemberBadgeListingPage>());
 
         return response;
     }

@@ -1,6 +1,5 @@
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.PageBuilder.Web.Mvc.Personalization;
-using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Identity;
 
 [assembly: RegisterPersonalizationConditionType(
@@ -19,12 +18,6 @@ public class IsMVPConditionType(IHttpContextAccessor contextAccessor, UserManage
 
     private readonly IHttpContextAccessor contextAccessor = contextAccessor;
     private readonly UserManager<CommunityMember> userManager = userManager;
-
-    /// <summary>
-    /// Unused property to resolve bug where the ConditionType does not work if it has no custom properties
-    /// </summary>
-    [TextWithLabelComponent]
-    public string Placeholder { get; set; } = "";
 
     public override bool Evaluate()
     {

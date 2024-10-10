@@ -130,17 +130,6 @@ namespace Kentico.Community.Portal.Core.Modules
 
 
         /// <summary>
-        /// Member badge media asset content item.
-        /// </summary>
-        [DatabaseField(ValueType = typeof(string))]
-        public IEnumerable<global::CMS.ContentEngine.ContentItemReference> MemberBadgeMediaAssetContentItem
-        {
-            get => global::CMS.DataEngine.Internal.JsonDataTypeConverter.ConvertToModels<global::CMS.ContentEngine.ContentItemReference>(GetValue(nameof(MemberBadgeMediaAssetContentItem), String.Empty));
-            set => SetValue(nameof(MemberBadgeMediaAssetContentItem), global::CMS.DataEngine.Internal.JsonDataTypeConverter.ConvertToString<IEnumerable<global::CMS.ContentEngine.ContentItemReference>>(value, Enumerable.Empty<global::CMS.ContentEngine.ContentItemReference>(), null));
-        }
-
-
-        /// <summary>
         /// Member badge image content.
         /// </summary>
         [DatabaseField(ValueType = typeof(string))]

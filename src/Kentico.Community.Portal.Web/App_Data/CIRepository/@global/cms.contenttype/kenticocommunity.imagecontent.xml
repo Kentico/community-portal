@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>Image Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="eb4be8d0-f9ef-401f-860b-1c25851b82a4" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="f1618367-5bf0-4c71-b80d-fdebcef879e1" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="5195fad7-c966-48e6-b46a-cc75146cfd9c" isunique="true" system="true" />
+      <schema guid="6fb07931-f628-4227-82c0-1038378360a1" name="6fb07931-f628-4227-82c0-1038378360a1">
+        <properties />
+      </schema>
+      <field allowempty="true" column="ImageContentAsset" columnprecision="0" columntype="contentitemasset" enabled="true" guid="f6c98f2d-65fc-44ba-9351-3f0beda8e921" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Asset (file)</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedExtensions>jpg;jpeg;webp;png</AllowedExtensions>
+          <controlname>Kentico.Administration.ContentItemAssetUploader</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues>
+              <ErrorMessage>You must add an asset (file)</ErrorMessage>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>40334c2a-0969-4e68-96eb-e0fb8d89b37e</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-picture</ClassIconClass>
+  <ClassName>KenticoCommunity.ImageContent</ClassName>
+  <ClassShortName>KenticoCommunityImageContent</ClassShortName>
+  <ClassTableName>KenticoCommunity_ImageContent</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

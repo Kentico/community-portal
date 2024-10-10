@@ -89,4 +89,10 @@ public static class ContentItemQueryBuilderExtensions
             .Parameters(p =>
                 configureParameters(p
                     .Where(w => w.WhereEquals(nameof(IWebPageFieldsSource.SystemFields.WebPageItemGUID), webPageGUID))));
+
+    public static ContentTypeQueryParameters ForContentItem(this ContentTypeQueryParameters p, Guid contentItemGUID) =>
+        p.Where(w => w.WhereEquals(nameof(ContentItemFields.ContentItemGUID), contentItemGUID));
+
+    public static ContentTypeQueryParameters ForContentItem(this ContentTypeQueryParameters p, int contentItemID) =>
+        p.Where(w => w.WhereEquals(nameof(ContentItemFields.ContentItemID), contentItemID));
 }

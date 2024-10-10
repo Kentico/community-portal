@@ -9,13 +9,15 @@ public static partial class SystemTaxonomies
     public static QAndADiscussionTypeTaxonomy QAndADiscussionType { get; } = new();
     public static IntegrationTypeTaxonomy IntegrationType { get; } = new();
     public static ContentAuthorizationTaxonomy ContentAuthorization { get; } = new();
+    public static EmbedTypeTaxonomy EmbedType { get; } = new();
 
     public static readonly IReadOnlyList<ISystemTaxonomy> ProtectedTaxonomies =
     [
         BlogType,
         QAndADiscussionType,
         IntegrationType,
-        ContentAuthorization
+        ContentAuthorization,
+        EmbedType
     ];
 
     public static bool Includes(TaxonomyInfo taxonomy) =>

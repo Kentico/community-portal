@@ -13,7 +13,9 @@ public class MediaAssetContentQueryHandler(ContentItemQueryTools tools) : Conten
     public override async Task<MediaAssetContent> Handle(MediaAssetContentQuery request, CancellationToken cancellationToken)
     {
         var b = new ContentItemQueryBuilder()
-            .ForContentType(MediaAssetContent.CONTENT_TYPE_NAME, queryParameters => queryParameters.Where(w => w.WhereEquals(nameof(ContentItemFields.ContentItemID), request.ContentItemID)));
+            .ForContentType(
+                MediaAssetContent.CONTENT_TYPE_NAME,
+                q => q.ForContentItem(request.ContentItemID));
 
         var r = await Executor.GetMappedResult<MediaAssetContent>(b, DefaultQueryOptions, cancellationToken);
 
@@ -34,7 +36,9 @@ public class MediaAssetContentByGUIDQueryHandler(ContentItemQueryTools tools) : 
     public override async Task<MediaAssetContent> Handle(MediaAssetContentByGUIDQuery request, CancellationToken cancellationToken)
     {
         var b = new ContentItemQueryBuilder()
-            .ForContentType(MediaAssetContent.CONTENT_TYPE_NAME, queryParameters => queryParameters.Where(w => w.WhereEquals(nameof(ContentItemFields.ContentItemGUID), request.ContentItemGUID)));
+            .ForContentType(
+                MediaAssetContent.CONTENT_TYPE_NAME,
+                q => q.ForContentItem(request.ContentItemGUID));
 
         var r = await Executor.GetMappedResult<MediaAssetContent>(b, DefaultQueryOptions, cancellationToken);
 

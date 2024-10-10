@@ -3,6 +3,7 @@ using CMS.Core;
 using CMS.Helpers;
 using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core;
+using Kentico.Community.Portal.Core.Content;
 using Kentico.Content.Web.Mvc;
 using SimpleMvcSitemap;
 
@@ -57,7 +58,7 @@ public class Sitemap(
 
         var b = new ContentItemQueryBuilder()
             .ForContentTypes(c => c
-                .OfReusableSchema("WebPageMeta")
+                .OfReusableSchema(IWebPageMeta.REUSABLE_FIELD_SCHEMA_NAME)
                 .ForWebsite(website.WebsiteChannelName))
             .InLanguage(PortalWebSiteChannel.DEFAULT_LANGUAGE);
 

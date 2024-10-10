@@ -25,7 +25,7 @@ namespace Kentico.Community.Portal.Admin.Features.MemberBadges;
 [UIEvaluatePermission(SystemPermissions.UPDATE)]
 internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formItemCollectionProvider,
     IFormDataBinder formDataBinder,
-    IPageUrlGenerator pageUrlGenerator,
+    IPageLinkGenerator pageLinkGenerator,
     IMemberBadgeMemberInfoProvider memberBadgeMemberInfoProvider,
     IContentQueryExecutor contentQueryExecutor,
     IMemberBadgeInfoProvider memberBadgeProvider,
@@ -37,7 +37,7 @@ internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formIte
     [PageParameter(typeof(IntPageModelBinder))]
     public int MemberID { get; set; }
 
-    private readonly IPageUrlGenerator pageUrlGenerator = pageUrlGenerator;
+    private readonly IPageLinkGenerator pageLinkGenerator = pageLinkGenerator;
     private readonly IMemberBadgeMemberInfoProvider memberBadgeMemberInfoProvider = memberBadgeMemberInfoProvider;
     private readonly IContentQueryExecutor contentQueryExecutor = contentQueryExecutor;
     private readonly IMemberBadgeInfoProvider memberBadgeProvider = memberBadgeProvider;
@@ -88,8 +88,8 @@ internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formIte
         memberBadgeMemberInfoProvider.BulkDelete(removeUnassignedBadgesQuery);
         memberBadgeMemberInfoProvider.BulkInsert(assignedBadges);
 
-        var successResponse = NavigateTo(pageUrlGenerator
-            .GenerateUrl<MemberBadgeAssignmentListingPage>())
+        var successResponse = NavigateTo(pageLinkGenerator
+            .GetPath<MemberBadgeAssignmentListingPage>())
             .AddSuccessMessage("Badge assigment updated.");
 
         return await Task.FromResult<ICommandResponse>(successResponse);
@@ -124,38 +124,29 @@ internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formIte
 
     public async Task<string?> RetrieveMediaAssetUrl(MemberBadgeInfo badge)
     {
-        Guid contentItemGUID = default;
-
-        if (badge.MemberBadgeImageContent.FirstOrDefault() is ContentItemReference imageRef)
-        {
-            contentItemGUID = imageRef.Identifier;
-        }
-        else if (badge.MemberBadgeMediaAssetContentItem.FirstOrDefault() is ContentItemReference mediaRef)
-        {
-            contentItemGUID = mediaRef.Identifier;
-        }
-
-        if (contentItemGUID == default)
+        if (badge.MemberBadgeImageContent.FirstOrDefault() is not ContentItemReference imageRef)
         {
             return null;
         }
 
+        var contentItemGUID = imageRef.Identifier;
+
         string? url = await cache.Load(async cs =>
         {
             var b = new ContentItemQueryBuilder()
-                .ForContentTypes(q => q.OfContentType(MediaAssetContent.CONTENT_TYPE_NAME).WithContentTypeFields())
-                .Parameters(q => q.Where(w => w.WhereEquals(nameof(MediaAssetContent.SystemFields.ContentItemGUID), contentItemGUID)));
+                .ForContentTypes(q => q.OfContentType(ImageContent.CONTENT_TYPE_NAME).WithContentTypeFields())
+                .Parameters(q => q.Where(w => w.WhereContentItem(contentItemGUID)));
 
-            var contentItems = await contentQueryExecutor.GetMappedResult<MediaAssetContent>(b, options: new ContentQueryExecutionOptions { ForPreview = true, IncludeSecuredItems = false });
+            var contentItems = await contentQueryExecutor.GetMappedResult<ImageContent>(b, options: new ContentQueryExecutionOptions { ForPreview = true, IncludeSecuredItems = false });
 
-            if (contentItems.FirstOrDefault() is not MediaAssetContent media)
+            if (contentItems.FirstOrDefault() is not ImageContent image)
             {
                 return null;
             }
 
             cs.GetCacheDependency = () => CacheHelper.GetCacheDependency($"contentitem|byguid|{contentItemGUID}");
 
-            return media.MediaAssetContentAssetLight.Url;
+            return image.ImageContentAsset.Url;
         }, new CacheSettings(3, $"{nameof(MemberBadgeAssignmentEditPage)}|{nameof(RetrieveMediaAssetUrl)}|{contentItemGUID}"));
 
         return url;

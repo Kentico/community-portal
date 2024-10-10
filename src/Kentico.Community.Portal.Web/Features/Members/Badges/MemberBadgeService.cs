@@ -21,14 +21,7 @@ public class MemberBadgeService(
         var badgeInfos = await GetMemberBadgesWithMediaAssets();
         var badgeDtos = await GetAllBadgesForMember(memberId, badgeInfos, true);
         return badgeDtos
-            .Select(a => new MemberBadgeViewModel
-            {
-                BadgeId = a.MemberBadge.MemberBadgeID,
-                MemberBadgeDisplayName = a.MemberBadge.MemberBadgeDisplayName,
-                MemberBadgeDescription = a.MemberBadge.MemberBadgeShortDescription,
-                BadgeImageUrl = a.Image?.URL,
-                IsSelected = true,
-            })
+            .Select(a => MemberBadgeViewModel.Create(a, true))
             .ToList();
     }
 
@@ -37,14 +30,7 @@ public class MemberBadgeService(
         var badgeInfos = await GetMemberBadgesWithMediaAssets();
         var badgeDtos = await GetAllBadgesForMember(memberId, badgeInfos, false);
         return badgeDtos
-            .Select(a => new MemberBadgeViewModel
-            {
-                BadgeId = a.MemberBadge.MemberBadgeID,
-                MemberBadgeDisplayName = a.MemberBadge.MemberBadgeDisplayName,
-                MemberBadgeDescription = a.MemberBadge.MemberBadgeShortDescription,
-                BadgeImageUrl = a.Image?.URL,
-                IsSelected = a.IsSelected,
-            })
+            .Select(MemberBadgeViewModel.Create)
             .ToList();
     }
 
@@ -57,14 +43,7 @@ public class MemberBadgeService(
         {
             var badgeDtos = await GetAllBadgesForMember(model.Author.ID, badgeInfos, true);
             model.Author.SelectedBadges = badgeDtos
-                .Select(a => new MemberBadgeViewModel
-                {
-                    BadgeId = a.MemberBadge.MemberBadgeID,
-                    MemberBadgeDisplayName = a.MemberBadge.MemberBadgeDisplayName,
-                    MemberBadgeDescription = a.MemberBadge.MemberBadgeShortDescription,
-                    BadgeImageUrl = a.Image?.URL,
-                    IsSelected = true,
-                })
+                .Select(a => MemberBadgeViewModel.Create(a, true))
                 .ToList();
         }
 
@@ -118,15 +97,6 @@ public class MemberBadgeService(
         var badges = await memberBadgeInfoProvider.GetAllMemberBadgesCached();
         var images = new Dictionary<Guid, ImageViewModel>();
 
-        foreach (var mediaAssetGUID in badges.SelectMany(b => b.MemberBadgeMediaAssetContentItem.Select(i => i.Identifier).Where(id => id != default)))
-        {
-            // We have very few badges, so an N+1 query is better for cache busting and not a huge performance hit
-            var mediaAsset = await mediator.Send(new MediaAssetContentByGUIDQuery(mediaAssetGUID));
-            if (mediaAsset is not null)
-            {
-                images.Add(mediaAssetGUID, ImageViewModel.Create(mediaAsset));
-            }
-        }
         foreach (var imageGUID in badges.SelectMany(b => b.MemberBadgeImageContent.Select(i => i.Identifier).Where(id => id != default)))
         {
             // We have very few badges, so an N+1 query is better for cache busting and not a huge performance hit
@@ -139,18 +109,12 @@ public class MemberBadgeService(
         foreach (var badge in badges)
         {
             var imageGUID = badge.MemberBadgeImageContent.Select(i => i.Identifier).FirstOrDefault();
-            if (images.TryGetValue(imageGUID, out var image))
+            if (!images.TryGetValue(imageGUID, out var image))
             {
-                resultsDictionary.Add(badge.MemberBadgeID, new MemberBadgetWithMediaAsset(badge, image));
                 continue;
             }
 
-            var assetGUID = badge.MemberBadgeMediaAssetContentItem.Select(i => i.Identifier).FirstOrDefault();
-            if (images.TryGetValue(assetGUID, out var asset))
-            {
-                resultsDictionary.Add(badge.MemberBadgeID, new MemberBadgetWithMediaAsset(badge, asset));
-                continue;
-            }
+            resultsDictionary.Add(badge.MemberBadgeID, new MemberBadgetWithMediaAsset(badge, image));
         }
 
         return resultsDictionary.ToFrozenDictionary();

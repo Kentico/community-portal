@@ -41,9 +41,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// CommunityGroupContentDescription.
+		/// CommunityGroupContentDescriptionHTML.
 		/// </summary>
-		public string CommunityGroupContentDescription { get; set; }
+		public string CommunityGroupContentDescriptionHTML { get; set; }
 
 
 		/// <summary>
@@ -74,6 +74,12 @@ namespace Kentico.Community.Portal.Core.Content
 		/// ListableItemShortDescription.
 		/// </summary>
 		public string ListableItemShortDescription { get; set; }
+
+
+		/// <summary>
+		/// ListableItemFeaturedImageContent.
+		/// </summary>
+		public IEnumerable<ImageContent> ListableItemFeaturedImageContent { get; set; }
 
 
 		/// <summary>

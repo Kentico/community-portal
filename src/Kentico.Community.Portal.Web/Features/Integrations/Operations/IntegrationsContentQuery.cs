@@ -33,12 +33,14 @@ public class IntegrationContentsQueryHandler(ContentItemQueryTools tools, IInfoP
 
     private async Task<Dictionary<int, CommunityMember>> GetIntegrationAuthors(IEnumerable<IntegrationContent> contents)
     {
-        var memberAuthorIDs = contents.Select(c => c.IntegrationContentAuthorMemberID).Distinct();
+        var memberAuthorIDs = contents
+            .Select(c => c.IntegrationContentAuthorMemberID)
+            .Distinct();
 
         var members = await memberProvider
-                        .Get()
-                        .WhereIn(nameof(MemberInfo.MemberID), memberAuthorIDs)
-                        .GetEnumerableTypedResultAsync();
+            .Get()
+            .WhereIn(nameof(MemberInfo.MemberID), memberAuthorIDs)
+            .GetEnumerableTypedResultAsync();
 
         return members.Select(CommunityMember.FromMemberInfo).ToDictionary(m => m.Id);
     }

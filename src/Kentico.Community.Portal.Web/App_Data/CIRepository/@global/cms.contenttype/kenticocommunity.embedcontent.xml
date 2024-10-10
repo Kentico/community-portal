@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>Embed Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="43a1c618-18a7-408e-995b-b16ae5555244" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="6f56a2ca-2f47-4b1b-b773-f0dddd29f46f" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="55f6c384-aa0a-408f-81b6-6ed961eff3b9" isunique="true" system="true" />
+      <field column="EmbedContentHTML" columnprecision="0" columntype="longtext" enabled="true" guid="69598b4f-9e42-4114-b56e-86e337c7822e" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Embed code HTML</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>8</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+          <WatermarkText>
+<![CDATA[
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID" 
+title="YouTube video player" ...></iframe>
+]]>
+          </WatermarkText>
+        </settings>
+      </field>
+      <field allowempty="true" column="EmbedContentType" columnprecision="0" columntype="taxonomy" enabled="true" guid="f8934951-5649-4c5d-9df7-3a097935e85a" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Type</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TagSelector</controlname>
+          <MaxSelectedTagsCount>1</MaxSelectedTagsCount>
+          <MinSelectedTagsCount>1</MinSelectedTagsCount>
+          <TaxonomyGroup>
+            <![CDATA[["43d45c4b-9e32-4a0b-bb51-5f9722060cf9"]]]>
+          </TaxonomyGroup>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>e3c927ca-6362-45f1-841a-f110932f9709</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-xml-tag</ClassIconClass>
+  <ClassName>KenticoCommunity.EmbedContent</ClassName>
+  <ClassShortName>KenticoCommunityEmbedContent</ClassShortName>
+  <ClassTableName>KenticoCommunity_EmbedContent</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

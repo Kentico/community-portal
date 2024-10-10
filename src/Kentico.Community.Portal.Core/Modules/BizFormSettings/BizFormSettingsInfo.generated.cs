@@ -17,7 +17,7 @@ namespace Kentico.Community.Portal.Core.Modules
     /// Data container class for <see cref="BizFormSettingsInfo"/>.
     /// </summary>
     [Serializable]
-    public partial class BizFormSettingsInfo : AbstractInfo<BizFormSettingsInfo, IInfoProvider<BizFormSettingsInfo>>, IInfoWithId, IInfoWithGuid
+    public class BizFormSettingsInfo : AbstractInfo<BizFormSettingsInfo, IInfoProvider<BizFormSettingsInfo>>, IInfoWithId, IInfoWithGuid
     {
         /// <summary>
         /// Object type.

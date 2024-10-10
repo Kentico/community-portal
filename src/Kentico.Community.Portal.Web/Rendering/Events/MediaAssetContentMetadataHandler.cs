@@ -16,7 +16,11 @@ public class MediaAssetContentMetadataHandler(
     private readonly IHttpContextAccessor accessor = accessor;
     private readonly IContentItemAssetPathProvider pathProvider = pathProvider;
 
-    public void Handle(UpdateContentItemDraftEventArgs args)
+    public void Handle(CreateContentItemEventArgs args) => HandleInternal(args.ContentTypeName, args.ContentItemData);
+
+    public void Handle(UpdateContentItemDraftEventArgs args) => HandleInternal(args.ContentTypeName, args.ContentItemData);
+
+    private void HandleInternal(string contentTypeName, ContentItemData contentItemData)
     {
         /*
          * Only perform processing when a request is available (eg not during CI restore)
@@ -26,12 +30,12 @@ public class MediaAssetContentMetadataHandler(
             return;
         }
 
-        if (!string.Equals(args.ContentTypeName, MediaAssetContent.CONTENT_TYPE_NAME))
+        if (!IsSupportedContentType(contentTypeName))
         {
             return;
         }
 
-        if (!args.ContentItemData.TryGetValue(nameof(MediaAssetContent.MediaAssetContentAssetLight), out ContentItemAssetMetadataWithSource metadata) || metadata is null)
+        if (!GetMetadata(contentItemData).TryGetValue(out var metadata))
         {
             return;
         }
@@ -41,10 +45,28 @@ public class MediaAssetContentMetadataHandler(
             return;
         }
 
-        var (width, height) = GetDimensions(metadata);
+        var dimensions = GetDimensions(metadata);
 
-        args.ContentItemData.SetValue(nameof(MediaAssetContent.MediaAssetContentImageLightWidth), width);
-        args.ContentItemData.SetValue(nameof(MediaAssetContent.MediaAssetContentImageLightHeight), height);
+        SetDimensions(contentTypeName, contentItemData, dimensions);
+    }
+
+    private static bool IsSupportedContentType(string contentTypeName) =>
+        string.Equals(contentTypeName, MediaAssetContent.CONTENT_TYPE_NAME)
+        || string.Equals(contentTypeName, ImageContent.CONTENT_TYPE_NAME);
+
+    private static Maybe<ContentItemAssetMetadataWithSource> GetMetadata(ContentItemData contentItemData)
+    {
+        if (contentItemData.TryGetValue(nameof(MediaAssetContent.MediaAssetContentAssetLight), out ContentItemAssetMetadataWithSource metadata) && metadata is not null)
+        {
+            return metadata;
+        }
+
+        if (contentItemData.TryGetValue(nameof(ImageContent.ImageContentAsset), out metadata) && metadata is not null)
+        {
+            return metadata;
+        }
+
+        return Maybe.None;
     }
 
     private (int width, int height) GetDimensions(ContentItemAssetMetadataWithSource metadata)
@@ -93,5 +115,32 @@ public class MediaAssetContentMetadataHandler(
         }
 
         return (width, height);
+    }
+
+    private static void SetDimensions(string contentTypeName, ContentItemData contentItemData, (int width, int height) dimensions)
+    {
+        var fields = Maybe<(string width, string height)>.None;
+
+        if (string.Equals(contentTypeName, MediaAssetContent.CONTENT_TYPE_NAME, StringComparison.OrdinalIgnoreCase))
+        {
+            fields = (
+                nameof(MediaAssetContent.MediaAssetContentImageLightWidth),
+                nameof(MediaAssetContent.MediaAssetContentImageLightHeight)
+            );
+        }
+
+        if (string.Equals(contentTypeName, ImageContent.CONTENT_TYPE_NAME, StringComparison.OrdinalIgnoreCase))
+        {
+            fields = (
+                nameof(ImageContent.MediaItemAssetWidth),
+                nameof(ImageContent.MediaItemAssetHeight)
+            );
+        }
+
+        fields.Execute(f =>
+        {
+            contentItemData.SetValue(f.width, dimensions.width);
+            contentItemData.SetValue(f.height, dimensions.height);
+        });
     }
 }

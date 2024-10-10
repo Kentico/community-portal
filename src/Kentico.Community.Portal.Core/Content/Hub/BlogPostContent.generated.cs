@@ -12,7 +12,6 @@
 using System;
 using System.Collections.Generic;
 using CMS.ContentEngine;
-using CMS.MediaLibrary;
 
 namespace Kentico.Community.Portal.Core.Content
 {
@@ -36,27 +35,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// BlogPostContentTitle.
-		/// </summary>
-		public string BlogPostContentTitle { get; set; }
-
-
-		/// <summary>
-		/// BlogPostContentShortDescription.
-		/// </summary>
-		public string BlogPostContentShortDescription { get; set; }
-
-
-		/// <summary>
 		/// BlogPostContentAuthor.
 		/// </summary>
 		public IEnumerable<AuthorContent> BlogPostContentAuthor { get; set; }
-
-
-		/// <summary>
-		/// BlogPostContentTeaserMediaFileImage.
-		/// </summary>
-		public IEnumerable<AssetRelatedItem> BlogPostContentTeaserMediaFileImage { get; set; }
 
 
 		/// <summary>
@@ -105,6 +86,12 @@ namespace Kentico.Community.Portal.Core.Content
 		/// ListableItemShortDescription.
 		/// </summary>
 		public string ListableItemShortDescription { get; set; }
+
+
+		/// <summary>
+		/// ListableItemFeaturedImageContent.
+		/// </summary>
+		public IEnumerable<ImageContent> ListableItemFeaturedImageContent { get; set; }
 
 
 		/// <summary>

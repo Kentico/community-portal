@@ -1,3 +1,4 @@
+using CMS.ContentEngine;
 using CMS.Core;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
@@ -15,12 +16,14 @@ namespace Kentico.Community.Portal.Web.Features.Blog.Events;
 public class BlogPostPublishCreateQAndAQuestionHandler(
     IHttpContextAccessor accessor,
     IMediator mediator,
+    IContentQueryExecutor queryExecutor,
     IWebPageUrlRetriever pageUrlRetriever,
     ISystemClock clock,
     IEventLogService log)
 {
     private readonly IHttpContextAccessor accessor = accessor;
     private readonly IMediator mediator = mediator;
+    private readonly IContentQueryExecutor queryExecutor = queryExecutor;
     private readonly IWebPageUrlRetriever pageUrlRetriever = pageUrlRetriever;
     private readonly ISystemClock clock = clock;
     private readonly IEventLogService log = log;
@@ -35,13 +38,23 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
             return;
         }
 
-        var page = await mediator.Send(new BlogPostPageQuery(new RoutedWebPage
+        /*
+         * We aren't using mediator for this query because it will return the cached page 
+         * which will result in an infinite loop for the check below ... ask me how I know 😅😅
+         */
+        var b = new ContentItemQueryBuilder()
+            .ForContentType(BlogPostPage.CONTENT_TYPE_NAME,
+                q => q
+                .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemID), args.ID))
+                .ForWebsite(args.WebsiteChannelName)
+                .WithLinkedItems(BlogPostPage.FullQueryDepth));
+
+        var pages = await queryExecutor.GetMappedWebPageResult<BlogPostPage>(b);
+
+        if (pages.FirstOrDefault() is not BlogPostPage page)
         {
-            ContentTypeName = args.ContentTypeName,
-            LanguageName = args.ContentLanguageName,
-            WebPageItemID = args.ID,
-            WebsiteChannelName = args.WebsiteChannelName
-        }));
+            return;
+        }
 
         // Do not re-process pages that already have a linked Q&A Discussion Page
         if (!string.IsNullOrEmpty(page.BlogPostPageQAndADiscussionLinkPath) || page.BlogPostPageQAndADiscussionPage.Any())
@@ -54,7 +67,10 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
         var questionMonthFolder = await mediator.Send(new QAndAMonthFolderQuery(rootQuestionPage, args.WebsiteChannelName, now.Year, now.Month, args.WebsiteChannelID));
 
         var url = await pageUrlRetriever.Retrieve(page);
-        string postTitle = page.BlogPostPageBlogPostContent.FirstOrDefault()?.BlogPostContentTitle ?? "";
+        string postTitle = page.BlogPostPageBlogPostContent
+            .TryFirst()
+            .Map(b => b.ListableItemTitle)
+            .GetValueOrDefault("");
         string questionTitle = $"Blog Discussion: {postTitle}";
         string questionContent = $"""
             Blog Post: [{postTitle}]({url.RelativePathTrimmed()})

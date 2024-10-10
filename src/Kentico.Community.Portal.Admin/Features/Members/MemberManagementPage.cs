@@ -10,9 +10,9 @@ using Path = CMS.IO.Path;
     parentType: typeof(CommunityMembersApplicationPage),
     slug: "management",
     name: "Management",
-    icon: Icons.Cogwheels,
     templateName: "@kentico-community/portal-web-admin/MemberManagementLayout",
-    order: 1)]
+    order: 1,
+    Icon = Icons.Cogwheels)]
 
 namespace Kentico.Community.Portal.Admin.Features.Members;
 
@@ -25,11 +25,15 @@ public class MemberManagementPage(IStoragePathService storagePathService) : Page
     public override async Task<MemberManagementPageClientProperties> ConfigureTemplateProperties(MemberManagementPageClientProperties properties)
     {
         var unmigratedDirectory = StorageHelper.GetDirectoryInfo(Path.Combine("default", "avatars"));
-        var unmigratedFiles = unmigratedDirectory.GetFiles();
+        var unmigratedFiles = unmigratedDirectory.Exists
+            ? unmigratedDirectory.GetFiles()
+            : [];
 
         string fullDirectoryPath = storagePathService.GetStorageFilePath("avatars", StorageAssetType.Member);
         var correctDirectory = StorageHelper.GetDirectoryInfo(fullDirectoryPath);
-        var correctFiles = correctDirectory.GetFiles();
+        var correctFiles = correctDirectory.Exists
+            ? correctDirectory.GetFiles()
+            : [];
 
         properties.IncorrectAvatarFiles = unmigratedFiles.Select(f => f.FullName).ToArray();
         properties.CorrectAvatarFiles = correctFiles.Select(f => f.FullName).ToArray();

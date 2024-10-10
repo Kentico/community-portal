@@ -16,7 +16,6 @@ using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Infrastructure.Storage;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Community.Portal.Web.Rendering.Events;
-using MediatR;
 using Slugify;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -41,15 +40,20 @@ public static class ServiceCollectionAppExtensions
     private static IServiceCollection AddOperations(this IServiceCollection services, IConfiguration config) =>
         services
             .AddSingleton<ICacheDependencyKeysBuilder, CacheDependencyKeysBuilder>()
-            .Configure<DefaultQueryCacheSettings>(config.GetSection("Cache:Query"))
-            .AddMediatR(c => c.RegisterServicesFromAssembly(typeof(HomePageQuery).Assembly))
+            .Configure<DefaultQueryCacheSettings>(settings =>
+            {
+                var section = config.GetSection("Cache:Query");
+
+                settings.CacheItemDuration = TimeSpan.FromMinutes(section.GetValue<int>("CacheItemDuration"));
+                settings.IsEnabled = section.GetValue<bool>("IsEnabled");
+                settings.IsSlidingExpiration = section.GetValue<bool>("IsSlidingExpiration");
+            })
+            .AddMediatR(c => c
+                .RegisterServicesFromAssembly(typeof(HomePageQuery).Assembly)
+                .AddOpenBehavior(typeof(QueryCachingPipelineBehavior<,>))
+                .AddOpenBehavior(typeof(CommandHandlerLogDecorator<,>)))
             .AddClosedGenericTypes(typeof(HomePageQuery).Assembly, typeof(IQueryHandler<,>), ServiceLifetime.Scoped)
             .AddClosedGenericTypes(typeof(HomePageQuery).Assembly, typeof(ICommandHandler<,>), ServiceLifetime.Scoped)
-            .Decorate(typeof(IRequestHandler<,>), typeof(QueryHandlerCacheDecorator<,>))
-            .Decorate(typeof(ICommandHandler<,>), typeof(CommandHandlerLogDecorator<,>))
-            .AddScoped<CacheDependenciesStore>()
-            .AddScoped<ICacheDependenciesStore>(s => s.GetRequiredService<CacheDependenciesStore>())
-            .AddScoped<ICacheDependenciesScope>(s => s.GetRequiredService<CacheDependenciesStore>())
             .AddTransient<WebPageCommandTools>()
             .AddTransient<IContentQueryExecutionOptionsCreator, DefaultContentQueryExecutionOptionsCreator>()
             .AddTransient<WebPageQueryTools>()

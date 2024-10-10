@@ -18,9 +18,9 @@ using Kentico.Xperience.Admin.Websites.UIPages;
 
 namespace Kentico.Community.Portal.Admin.Features.QAndA;
 
-public class QAndAListingPage(IPageUrlGenerator pageUrlGenerator) : ListingPage
+public class QAndAListingPage(IPageLinkGenerator pageLinkGenerator) : ListingPage
 {
-    private readonly IPageUrlGenerator pageUrlGenerator = pageUrlGenerator;
+    private readonly IPageLinkGenerator pageLinkGenerator = pageLinkGenerator;
 
     protected override string ObjectType => QAndAAnswerDataInfo.OBJECT_TYPE;
 
@@ -99,7 +99,11 @@ public class QAndAListingPage(IPageUrlGenerator pageUrlGenerator) : ListingPage
             return new TableRowLinkProps() { Label = label, Path = "" };
         }
 
-        string pageUrl = pageUrlGenerator.GenerateUrl<ContentTab>($"webpages-{websiteChannelID}", $"{PortalWebSiteChannel.DEFAULT_LANGUAGE}_{webPageItemID}");
+        string pageUrl = pageLinkGenerator.GetPath<ContentTab>(new()
+        {
+            { typeof(WebPageLayout), $"{PortalWebSiteChannel.DEFAULT_LANGUAGE}_{webPageItemID}" },
+            { typeof(WebPagesApplication), $"webpages-{websiteChannelID}" },
+        });
 
         return new TableRowLinkProps()
         {
@@ -109,7 +113,6 @@ public class QAndAListingPage(IPageUrlGenerator pageUrlGenerator) : ListingPage
                 : pageUrl
         };
     }
-
 }
 
 public class TableRowLinkProps

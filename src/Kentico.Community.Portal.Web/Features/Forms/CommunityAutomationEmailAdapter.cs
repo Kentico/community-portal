@@ -15,9 +15,11 @@ using Kentico.Community.Portal.Web.Features.Forms;
 namespace Kentico.Community.Portal.Web.Features.Forms;
 
 public class CommunityAutomationEmailAdapter(
+    IInfoProvider<BizFormInfo> bizFormProvider,
     IAutomationEmailAdapter defaultAutomationEmailAdapater,
     FormInternalAutoresponderEmailSender internalAutoresponderEmailSender) : IAutomationEmailAdapter
 {
+    private readonly IInfoProvider<BizFormInfo> bizFormProvider = bizFormProvider;
     private readonly IAutomationEmailAdapter defaultAutomationEmailAdapater = defaultAutomationEmailAdapater;
     private readonly FormInternalAutoresponderEmailSender internalAutoresponderEmailSender = internalAutoresponderEmailSender;
 
@@ -37,9 +39,14 @@ public class CommunityAutomationEmailAdapter(
 
     private async Task SendInternalAutoresponder(ContainerCustomData stateCustomData)
     {
-        if (stateCustomData[TriggerDataConstants.TRIGGER_DATA_FORMDATA] is BizFormItem bizFormItem
-            && stateCustomData[TriggerDataConstants.TRIGGER_DATA_BIZFORM] is BizFormInfo form)
+        if (stateCustomData[TriggerDataConstants.TRIGGER_DATA_BIZFORM_ITEM_ID] is int formItemID
+            && stateCustomData[TriggerDataConstants.TRIGGER_DATA_BIZFORM_ID] is int formID)
         {
+            var form = await bizFormProvider.GetAsync(formID);
+
+            string className = DataClassInfoProvider.GetClassName(form.FormClassID);
+            var bizFormItem = BizFormItemProvider.GetItem(formItemID, className);
+
             await internalAutoresponderEmailSender.SendEmail(bizFormItem, form);
         }
     }

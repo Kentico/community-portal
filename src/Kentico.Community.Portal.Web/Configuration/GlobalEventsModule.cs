@@ -36,6 +36,7 @@ internal class GlobalEventsModule : Module
 
         QAndAAnswerDataInfo.TYPEINFO.Events.Insert.After += QAndAAnswerDataInfo_InsertAfter;
         QAndAAnswerDataInfo.TYPEINFO.Events.Delete.After += QAndAAnswerDataInfo_DeleteAfter;
+        ContentItemEvents.Create.Before += ContentItem_CreateBefore;
         ContentItemEvents.UpdateDraft.Before += ContentItem_UpdateDraftBefore;
         WebPageEvents.Publish.Execute += WebPage_PublishExecute;
         ChannelInfo.TYPEINFO.Events.Update.Before += Channel_ModifyBefore;
@@ -106,13 +107,11 @@ internal class GlobalEventsModule : Module
             .GetResult();
     }
 
-    private void ContentItem_UpdateDraftBefore(object? sender, UpdateContentItemDraftEventArgs args)
-    {
-        if (string.Equals(args.ContentTypeName, MediaAssetContent.CONTENT_TYPE_NAME))
-        {
-            services.GetRequiredService<MediaAssetContentMetadataHandler>().Handle(args);
-        }
-    }
+    private void ContentItem_UpdateDraftBefore(object? sender, UpdateContentItemDraftEventArgs args) =>
+        services.GetRequiredService<MediaAssetContentMetadataHandler>().Handle(args);
+
+    private void ContentItem_CreateBefore(object? sender, CreateContentItemEventArgs args) =>
+        services.GetRequiredService<MediaAssetContentMetadataHandler>().Handle(args);
 
     private void WebPage_PublishExecute(object? sender, PublishWebPageEventArgs args)
     {

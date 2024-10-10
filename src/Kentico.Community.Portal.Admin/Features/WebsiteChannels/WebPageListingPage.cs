@@ -20,15 +20,15 @@ using Kentico.Community.Portal.Admin.UIPages;
     slug: "web-pages",
     uiPageType: typeof(WebPageListingPage),
     name: "Web Page List",
-    icon: Icons.Magnifier,
     templateName: TemplateNames.LISTING,
-    order: 0)]
+    order: 0,
+    Icon = Icons.Magnifier)]
 
 namespace Kentico.Community.Portal.Admin.Features.WebsiteChannels;
 
-public class WebPageListingPage(IPageUrlGenerator pageUrlGenerator, IConversionService conversion) : ListingPage
+public class WebPageListingPage(IPageLinkGenerator pageLinkGenerator, IConversionService conversion) : ListingPage
 {
-    private readonly IPageUrlGenerator pageUrlGenerator = pageUrlGenerator;
+    private readonly IPageLinkGenerator pageLinkGenerator = pageLinkGenerator;
     private readonly IConversionService conversion = conversion;
 
     protected override string ObjectType => ContentItemInfo.OBJECT_TYPE;
@@ -101,7 +101,11 @@ public class WebPageListingPage(IPageUrlGenerator pageUrlGenerator, IConversionS
             return new TableRowLinkProps() { Label = valueStr, Path = "" };
         }
 
-        string pageUrl = pageUrlGenerator.GenerateUrl<PageBuilderTab>($"webpages-{channelID}", $"{languageName}_{webPageItemID}");
+        string pageUrl = pageLinkGenerator.GetPath<PageBuilderTab>(new()
+        {
+            { typeof(WebPageLayout), $"{languageName}_{webPageItemID}" },
+            { typeof(WebPagesApplication), $"webpages-{channelID}" },
+        });
 
         return new TableRowLinkProps()
         {

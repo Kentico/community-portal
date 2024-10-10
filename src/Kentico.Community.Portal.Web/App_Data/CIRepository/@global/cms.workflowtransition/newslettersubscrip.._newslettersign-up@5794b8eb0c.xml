@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.workflowtransition>
+  <Parent>
+    <CodeName>NewsletterSign-up</CodeName>
+    <GUID>59bdea0b-8c88-492c-a481-e16ff0a2c76c</GUID>
+    <ObjectType>ma.automationstep</ObjectType>
+    <Parent>
+      <CodeName>NewsletterSubscriptionReminder</CodeName>
+      <GUID>848178d9-79f6-4b3b-b275-1b76840694a1</GUID>
+      <ObjectType>ma.automationprocess</ObjectType>
+    </Parent>
+  </Parent>
+  <Bindings>
+    <Binding id="ma.automationstep_1Day_ma.automationprocess_NewsletterSubscriptionReminder-ma.automationstep_1Day_ma.automationprocess_NewsletterSubscriptionReminder">
+      <TransitionEndStepID>
+        <CodeName>1Day</CodeName>
+        <GUID>f27b4db0-ca56-403d-b5fd-25d273390518</GUID>
+        <ObjectType>ma.automationstep</ObjectType>
+        <Parent>
+          <CodeName>NewsletterSubscriptionReminder</CodeName>
+          <GUID>848178d9-79f6-4b3b-b275-1b76840694a1</GUID>
+          <ObjectType>ma.automationprocess</ObjectType>
+        </Parent>
+      </TransitionEndStepID>
+      <TransitionSourcePointGUID>cafafd7f-bf1e-4ead-9f01-7d3e3181967e</TransitionSourcePointGUID>
+      <TransitionType>1</TransitionType>
+      <TransitionWorkflowID>
+        <CodeName>NewsletterSubscriptionReminder</CodeName>
+        <GUID>848178d9-79f6-4b3b-b275-1b76840694a1</GUID>
+        <ObjectType>ma.automationprocess</ObjectType>
+      </TransitionWorkflowID>
+    </Binding>
+  </Bindings>
+</cms.workflowtransition>

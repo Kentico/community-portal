@@ -4,6 +4,7 @@ using CMS.EmailEngine;
 using Kentico.Activities.Web.Mvc;
 using Kentico.Community.Portal.Web.Components.Sections.Grid;
 using Kentico.Community.Portal.Web.Features.DataCollection;
+using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Infrastructure.Storage;
 using Kentico.Content.Web.Mvc.Routing;
 using Kentico.CrossSiteTracking.Web.Mvc;
@@ -11,7 +12,6 @@ using Kentico.Forms.Web.Mvc;
 using Kentico.OnlineMarketing.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Web.Mvc;
-using Kentico.Xperience.MiniProfiler;
 using Microsoft.AspNetCore.Localization.Routing;
 
 [assembly: RegisterModule(typeof(StorageInitializationModule))]
@@ -93,5 +93,6 @@ public static class ServiceCollectionXperienceExtensions
             .Configure<FileUploadOptions>(options =>
             {
                 // No customization atm
-            });
+            })
+            .AddSingleton<IEmailActivityTrackingEvaluator, ConsentEmailActivityTrackingEvaluator>();
 }

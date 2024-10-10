@@ -12,6 +12,11 @@
       <field allowempty="true" column="SmartFolderModifiedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="40758402-b280-4648-83e9-394b0b843aee" system="true" />
       <field allowempty="true" column="SmartFolderModifiedByUserID" columnprecision="0" columntype="integer" enabled="true" guid="3b114428-ccf5-495d-b3c7-e9b837c87bfc" refobjtype="cms.user" reftype="NotRequired" system="true" />
       <field column="SmartFolderFilter" columnprecision="0" columntype="longtext" enabled="true" guid="f4f1899c-82e7-40ac-abaa-8ca39895fb62" system="true" />
+      <field column="SmartFolderIsContentDeliveryEnabled" columnprecision="0" columntype="boolean" enabled="true" guid="46c73e88-fa5f-4293-a325-559145be827b" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
     </form>
   </ClassFormDefinition>
   <ClassGUID>d245d59d-b602-47bd-9c21-f640a191bc37</ClassGUID>

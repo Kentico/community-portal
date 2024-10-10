@@ -15,7 +15,7 @@ public class FormInternalAutoresponderEmailSender(
     IInfoProvider<UserInfo> userProvider,
     IInfoProvider<BizFormSettingsInfo> formSettingsProvider,
     IEventLogService log,
-    IPageUrlGenerator pageUrlGenerator,
+    IPageLinkGenerator pageLinkGenerator,
     IEmailService emailService,
     IOptions<SystemDomainOptions> systemDomainOptions,
     IOptions<SystemEmailOptions> systemEmailOptions
@@ -24,7 +24,7 @@ public class FormInternalAutoresponderEmailSender(
     private readonly IInfoProvider<UserInfo> userProvider = userProvider;
     private readonly IInfoProvider<BizFormSettingsInfo> formSettingsProvider = formSettingsProvider;
     private readonly IEventLogService log = log;
-    private readonly IPageUrlGenerator pageUrlGenerator = pageUrlGenerator;
+    private readonly IPageLinkGenerator pageLinkGenerator = pageLinkGenerator;
     private readonly IEmailService emailService = emailService;
     private readonly SystemEmailOptions systemEmailOptions = systemEmailOptions.Value;
     private readonly SystemDomainOptions systemDomainOptions = systemDomainOptions.Value;
@@ -50,8 +50,15 @@ public class FormInternalAutoresponderEmailSender(
             return;
         }
 
-        string formUrl = pageUrlGenerator.GenerateUrl(typeof(FormInternalAutoresponderTab), [form.FormID.ToString()]);
-        string submissionUrl = pageUrlGenerator.GenerateUrl(typeof(FormSubmissionDetails), [form.FormID.ToString(), formItem.ItemID.ToString()]);
+        string formUrl = pageLinkGenerator.GetPath<FormInternalAutoresponderTab>(new()
+        {
+            { typeof(FormEditSection), form.FormID.ToString() }
+        });
+        string submissionUrl = pageLinkGenerator.GetPath<FormSubmissionDetails>(new()
+        {
+            { typeof(FormSubmissionDetails), formItem.ItemID },
+            { typeof(FormEditSection), form.FormID },
+        });
 
         var emailMessage = new EmailMessage
         {

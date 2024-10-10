@@ -1,23 +1,26 @@
 using CMS.Core;
+using MediatR;
 
 namespace Kentico.Community.Portal.Core.Operations;
 
-public class CommandHandlerLogDecorator<TCommand, TResult>(IEventLogService log, ICommandHandler<TCommand, TResult> decorated) : ICommandHandler<TCommand, TResult> where TCommand : ICommand<TResult>
+public class CommandHandlerLogDecorator<TCommand, TResult>(IEventLogService log)
+    : IPipelineBehavior<TCommand, TResult> where TCommand : ICommand<TResult>
 {
     private readonly IEventLogService log = log;
-    private readonly ICommandHandler<TCommand, TResult> decorated = decorated;
 
-    public async Task<TResult> Handle(TCommand request, CancellationToken cancellationToken)
+    public async Task<TResult> Handle(TCommand request, RequestHandlerDelegate<TResult> next, CancellationToken cancellationToken)
     {
         try
         {
-            var result = await decorated.Handle(request, cancellationToken);
-
-            return result;
+            return await next();
         }
         catch (Exception ex)
         {
-            log.LogException(request.GetType().Name, "COMMAND_FAILURE", ex);
+            log.LogException(
+                nameof(CommandHandlerLogDecorator<TCommand, TResult>),
+                "COMMAND_FAILURE",
+                ex,
+                $"{request.GetType().Name} command failed");
 
             throw;
         }

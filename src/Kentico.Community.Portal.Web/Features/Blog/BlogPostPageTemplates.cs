@@ -16,7 +16,17 @@ using Microsoft.AspNetCore.Mvc;
     propertiesType: typeof(BlogPostPageTemplateProperties),
     customViewName: "~/Features/Blog/BlogPostPage_Default.cshtml",
     ContentTypeNames = [BlogPostPage.CONTENT_TYPE_NAME],
-    Description = "",
+    Description = "Displays the blog post page content from the Blog Post Content fields",
+    IconClass = ""
+)]
+
+[assembly: RegisterPageTemplate(
+    identifier: "KenticoCommunity.BlogPostPage_Components",
+    name: "Blog Post Page - Components",
+    propertiesType: typeof(BlogPostPageTemplateProperties),
+    customViewName: "~/Features/Blog/BlogPostPage_Components.cshtml",
+    ContentTypeNames = [BlogPostPage.CONTENT_TYPE_NAME],
+    Description = "Requires the blog post page to be built with Page Builder components",
     IconClass = ""
 )]
 
@@ -30,14 +40,12 @@ namespace Kentico.Community.Portal.Web.Features.Blog;
 public class BlogPostPageTemplateProperties : IPageTemplateProperties { }
 
 public class BlogPostPageTemplateController(
-    AssetItemService assetService,
     WebPageMetaService metaService,
     IMediator mediator,
     MarkdownRenderer renderer,
     IWebPageDataContextRetriever contextRetriever,
     IWebPageUrlRetriever urlRetriever) : Controller
 {
-    private readonly AssetItemService assetService = assetService;
     private readonly WebPageMetaService metaService = metaService;
     private readonly IMediator mediator = mediator;
     private readonly MarkdownRenderer renderer = renderer;
@@ -53,24 +61,22 @@ public class BlogPostPageTemplateController(
 
         var blogPage = await mediator.Send(new BlogPostPageQuery(data.WebPage));
         var post = blogPage.BlogPostPageBlogPostContent.First();
-
         var author = await GetAuthor(post);
-
-        var teaser = await assetService.RetrieveMediaFileImage(post.BlogPostContentTeaserMediaFileImage.FirstOrDefault());
         var contentHTML = post.IsContentTypeMarkdown()
             ? renderer.RenderUnsafe(post.BlogPostContentContentMarkdown)
             : new(post.BlogPostContentContentHTML);
 
-        var vm = new BlogPostDetailViewModel(teaser, new()
+        var vm = new BlogPostDetailViewModel(new()
         {
-            Avatar = author.AuthorContentPhoto.FirstOrDefault(),
+            Photo = author.ToImageViewModel(),
             BiographyHTML = new(author.AuthorContentBiographyHTML),
             LinkProfilePath = GetAuthorMemberProfilePath(author),
             Name = author.FullName,
             Title = "" // TODO collect from Member
         })
         {
-            Title = post.BlogPostContentTitle,
+            Teaser = post.ToImageViewModel(),
+            Title = post.ListableItemTitle,
             Date = post.BlogPostContentPublishedDate,
             UnsanitizedContentHTML = contentHTML,
             AbsoluteURL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}{Request.Path}",
@@ -135,9 +141,9 @@ public class BlogPostPageTemplateController(
     }
 }
 
-public class BlogPostDetailViewModel(ImageAssetViewModel? teaser, AuthorViewModel author)
+public class BlogPostDetailViewModel(AuthorViewModel author)
 {
-    public ImageAssetViewModel? Teaser { get; init; } = teaser;
+    public Maybe<ImageViewModel> Teaser { get; init; }
     public string Title { get; init; } = "";
     public DateTime Date { get; init; }
     public HtmlString UnsanitizedContentHTML { get; init; } = HtmlString.Empty;
@@ -149,8 +155,8 @@ public class BlogPostDetailViewModel(ImageAssetViewModel? teaser, AuthorViewMode
 public class AuthorViewModel
 {
     public string Name { get; init; } = "";
-    public string? Title { get; init; }
-    public MediaAssetContent? Avatar { get; init; }
+    public Maybe<string> Title { get; init; }
+    public Maybe<ImageViewModel> Photo { get; init; }
     public Maybe<string> LinkProfilePath { get; init; }
     public HtmlString BiographyHTML { get; init; } = HtmlString.Empty;
 }

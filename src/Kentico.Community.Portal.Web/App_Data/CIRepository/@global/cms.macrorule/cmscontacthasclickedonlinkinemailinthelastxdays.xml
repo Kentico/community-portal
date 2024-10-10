@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[{_perfectum}Contact.ClickedOnLinkInEmail("{email}", ToInt({days}))]]>
+  </MacroRuleCondition>
+  <MacroRuleDescription>
+    <![CDATA[Checks if the contact has clicked on a link in a specific email in the last X days.]]>
+  </MacroRuleDescription>
+  <MacroRuleDisplayName>
+    <![CDATA[Contact has clicked on a link in a specific email in the last X days]]>
+  </MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>506f4d0a-fd17-40c0-8d2a-41975798fe5f</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactHasClickedOnLinkInEmailInTheLastXDays</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="_perfectum" columnsize="100" columntype="text" guid="52bd8bc6-2ce4-4bc8-aa3f-4c3cf2fecf61" visible="true">
+        <properties>
+          <defaultvalue>__is</defaultvalue>
+          <fieldcaption>select operation</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <EditText>False</EditText>
+          <IsPerfectum>True</IsPerfectum>
+          <Options>
+<![CDATA[
+__is;has
+__isnot;has not
+]]>
+          </Options>
+        </settings>
+      </field>
+      <field column="email" columnprecision="0" columntype="emails" guid="bb412d03-d907-465f-bde2-d88e59cff6d4" visible="true">
+        <properties>
+          <fieldcaption>select email</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.EmailSelector</controlname>
+          <ForPreview>true</ForPreview>
+          <MaximumEmails>1</MaximumEmails>
+          <Sortable>False</Sortable>
+        </settings>
+      </field>
+      <field allowempty="true" column="days" columntype="integer" guid="0e799834-1cbb-438e-80a4-bd80c0368c5a" visible="true">
+        <properties>
+          <fieldcaption>enter days</fieldcaption>
+        </properties>
+        <settings>
+          <AutoCompleteEnableCaching>False</AutoCompleteEnableCaching>
+          <AutoCompleteFirstRowSelected>False</AutoCompleteFirstRowSelected>
+          <AutoCompleteShowOnlyCurrentWordInCompletionListItem>False</AutoCompleteShowOnlyCurrentWordInCompletionListItem>
+          <controlname>Kentico.Administration.NumberInput</controlname>
+          <Trim>False</Trim>
+          <WatermarkText>enter number</WatermarkText>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>
+    <![CDATA[Contact {_perfectum} clicked on any link in email {email} in the last {days} days.]]>
+  </MacroRuleText>
+  <MacroRuleUsageLocation>3</MacroRuleUsageLocation>
+</cms.macrorule>
