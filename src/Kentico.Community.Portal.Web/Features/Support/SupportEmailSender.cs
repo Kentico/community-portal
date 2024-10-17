@@ -60,7 +60,7 @@ public class SupportEmailSender(
             <br>
             <p>Thanks,
                 <br>
-                <em>Kentio Community Portal</em>
+                <em>Kentico Community Portal</em>
             </p>
             """;
 
