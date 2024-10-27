@@ -1,9 +1,5 @@
 @model Kentico.Community.Portal.Web.Features.Accounts.AvatarFormViewModel
 
-@{
-    ClientAssets.RequireAlpine();
-}
-
 <div id="avatarForm" x-data='{ showAvatarForm: @(Model.ShowForm ? "true" : "false") }'>
     <div class="page-myaccount__avatar">
         <div class="page-myaccount__avatar-inner">

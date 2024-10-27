@@ -29,7 +29,7 @@ const config = ({ env }) => ({
             "align-text-top",
             "border-1",
           ],
-          greedy: [/form-/],
+          greedy: [/form-/, /milkdown/, /ProseMirror/],
         },
       }),
     // https://www.npmjs.com/package/postcss-preset-env

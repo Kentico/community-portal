@@ -1,9 +1,9 @@
-using Kentico.Xperience.Admin.Base.FormAnnotations;
-using Kentico.PageBuilder.Web.Mvc;
-using Microsoft.AspNetCore.Mvc;
-using Kentico.Community.Portal.Web.Components.Widgets.Video;
 using CMS.ContentEngine;
+using Kentico.Community.Portal.Web.Components.Widgets.Video;
+using Kentico.PageBuilder.Web.Mvc;
+using Kentico.Xperience.Admin.Base.FormAnnotations;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 [assembly: RegisterWidget(
     identifier: VideoWidget.IDENTIFIER,

@@ -9,6 +9,9 @@
   --default-border-color: $gray-200;
 
   &.default-border {
+    &.bordered {
+      --default-border-color: var(--bs-gray-200);
+    }
     &.success {
       --default-border-color: var(--bs-success);
     }

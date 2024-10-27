@@ -74,6 +74,9 @@ jobs:
         run: |
           docker exec sql mkdir /var/opt/mssql/backup
           docker cp "./database/${{ env.DATABASE_BACKUP_FILENAME }}" sql:/var/opt/mssql/backup
+          docker exec -u root sql bash -c "chown mssql:mssql /var/opt/mssql/backup/${{ env.DATABASE_BACKUP_FILENAME }}"
+          docker exec -u root sql bash -c "chmod 644 /var/opt/mssql/backup/${{ env.DATABASE_BACKUP_FILENAME }}"
+
           sqlcmd `
             -S localhost `
             -d master `
@@ -93,6 +96,11 @@ jobs:
             /sf:"./database/${{ env.DATABASE_BACKUP_FILENAME }}" `
             /tec:False
         if: endsWith(env.DATABASE_BACKUP_FILENAME, '.bacpac')
+
+      - name: Restore License Key
+        working-directory: "./scripts"
+        run: |
+          ./Restore-LicenseKey.ps1 -LicenseKey ${{ secrets.XPERIENCE_LICENSE_KEY }}
 
       - name: Restore CI Repository
         working-directory: "./scripts"

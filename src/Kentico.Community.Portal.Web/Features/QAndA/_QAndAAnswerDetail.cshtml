@@ -7,12 +7,13 @@
     string wrapperElId = $"answer_{guid}";
     string markAnswerFormElId = $"markAsAnswerForm_{guid}";
     string acceptedAnswerStyles = Model.IsAcceptedAnswer
-    ? "default-border success"
-    : "";
+    ? "success"
+    : "bordered";
 }
 
-<div id="@wrapperElId" class="my-3 target-bg rounded" style="--bg-target: var(--bs-purple-100)">
-    <div class="c-card p-0 p-2 @acceptedAnswerStyles">
+<div id="@wrapperElId" class="my-3" q-and-a-answer style="--bg-target: var(--bs-purple-100)"
+    data-accepted="@JSEncoder.EncodeToJson(Model.IsAcceptedAnswer)" data-created="@Model.DateCreated.Ticks">
+    <div class="c-card @acceptedAnswerStyles default-border">
         <div class="c-card_inner">
 
             <div class="c-card_content">
@@ -25,14 +26,14 @@
                     <span>@Model.DateCreated.ToString("MMMM d, yyyy") @Model.DateCreated.ToString("t")</span>
                 </div>
 
-                <div class="mb-3 member-generated-content overflow-auto" hx-disable>
+                <div class="member-generated-content overflow-auto" hx-disable>
                     @Model.HTMLSanitizedContentHTML
                 </div>
             </div>
 
             @if (Model.IsAcceptedAnswer)
             {
-                <div class="c-card_footer p-1 text-success">
+                <div class="c-card_footer text-success">
                     <div class="c-card_icon  text-success">
                         <svg class="c-icon mt-1">
                             <use xlink:href="/img/icons.svg#check" asp-append-version></use>
@@ -48,7 +49,7 @@
 
             @if (Model.Permissions.CanInteract)
             {
-                <div class="d-flex gap-1 mb-5">
+                <div class="d-flex gap-1 mt-2">
                     @if (Model.Permissions.CanMarkAnswered)
                     {
                         <form id="@markAnswerFormElId" method="post" hx-post hx-controller="QAndAAnswer"

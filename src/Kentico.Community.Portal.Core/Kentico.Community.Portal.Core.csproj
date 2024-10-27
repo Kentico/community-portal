@@ -10,7 +10,6 @@
     <PackageReference Include="Kentico.Xperience.WebApp" />
     <PackageReference Include="Mediatr" />
     <PackageReference Include="Enums.NET" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" />
     <PackageReference Include="System.Linq.Async" />
   </ItemGroup>
 
@@ -18,12 +17,5 @@
     <Using Include="CSharpFunctionalExtensions" />
     <Using Include="CMS.ContentEngine" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <!-- Required to prevent type conflicts with CSharpFunctionalExtensions types -->
-    <!-- Will be resolved in v14.0.0 https://github.com/ChilliCream/graphql-platform/releases/tag/14.0.0-p.75 -->
-    <!-- https://www.nuget.org/packages/Kentico.Xperience.WebApp/#dependencies-body-tab -->
-    <HotChocolateImplicitUsings>disable</HotChocolateImplicitUsings>
-  </PropertyGroup>
 
 </Project>

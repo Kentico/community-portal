@@ -1,7 +1,7 @@
-using Kentico.Xperience.Admin.Base.FormAnnotations;
-using Kentico.PageBuilder.Web.Mvc;
-using Microsoft.AspNetCore.Mvc;
 using Kentico.Community.Portal.Web.Components.Widgets.Heading;
+using Kentico.PageBuilder.Web.Mvc;
+using Kentico.Xperience.Admin.Base.FormAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using Slugify;
 
 [assembly: RegisterWidget(
@@ -53,11 +53,19 @@ public class HeadingWidgetProperties : BaseWidgetProperties
     public string HeadingText { get; set; } = "";
 
     [DropDownComponent(
+        Label = "Heading alignment",
+        ExplanationText = "Sets the alignment of the heading",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<HeadingAlignments>),
+        Order = 2
+    )]
+    public string HeadingAlignment { get; set; } = nameof(HeadingAlignments.Left);
+    public HeadingAlignments HeadingAlignmentsParsed => EnumDropDownOptionsProvider<HeadingAlignments>.Parse(HeadingAlignment, HeadingAlignments.Left);
+
+    [DropDownComponent(
         Label = "Heading level",
         ExplanationText = "Sets the level of the heading",
-        Tooltip = "Select padding",
         DataProviderType = typeof(EnumDropDownOptionsProvider<HeadingLevels>),
-        Order = 2
+        Order = 3
     )]
     public string HeadingLevel { get; set; } = nameof(HeadingLevels.H2);
     public HeadingLevels HeadingLevelsParsed => EnumDropDownOptionsProvider<HeadingLevels>.Parse(HeadingLevel, HeadingLevels.H2);
@@ -65,20 +73,19 @@ public class HeadingWidgetProperties : BaseWidgetProperties
     [CheckBoxComponent(
         Label = "Show heading anchor?",
         ExplanationText = "If true, an anchor link will be displayed adjacent to the heading.",
-        Order = 3
+        Order = 4
     )]
     public bool ShowHeadingAnchor { get; set; } = true;
 }
 
-public enum HeadingLevels
-{
-    H1, H2, H3, H4, H5, H6
-}
+public enum HeadingLevels { H1, H2, H3, H4, H5, H6 }
+public enum HeadingAlignments { Left, Center, Right }
 
 public class HeadingWidgetViewModel : BaseWidgetViewModel
 {
     protected override string WidgetName { get; } = HeadingWidget.NAME;
 
+    public HeadingAlignments HeadingAlignment { get; }
     public HeadingLevels HeadingLevel { get; }
     public string HeadingText { get; }
     public Maybe<string> HeadingAnchorSlug { get; }
@@ -86,10 +93,10 @@ public class HeadingWidgetViewModel : BaseWidgetViewModel
     public HeadingWidgetViewModel(HeadingWidgetProperties props, ISlugHelper slugHelper)
     {
         HeadingText = props.HeadingText;
+        HeadingAlignment = props.HeadingAlignmentsParsed;
         HeadingLevel = props.HeadingLevelsParsed;
         HeadingAnchorSlug = props.ShowHeadingAnchor
             ? slugHelper.GenerateSlug(HeadingText)
             : Maybe.None;
     }
-
 }

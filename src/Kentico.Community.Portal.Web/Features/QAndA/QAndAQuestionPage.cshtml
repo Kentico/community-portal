@@ -15,29 +15,38 @@
                     </p>
                 </div>
                 <div class="col-xl-10 col-xxl-9">
-                    <div role="main">
+                    <div role="main" x-data="answersListComponent">
                         <div class="mb-5">
                             <partial name="~/Features/QAndA/_QAndAQuestionDetail.cshtml" model="Model.Question" />
                         </div>
 
-                        <div>
+                        <div class="d-flex justify-content-between gap-1">
                             <h2 class="h3" data-ktc-search-exclude>Answers</h2>
+                            <div class="d-flex gap-1" style="max-width: 300px">
+                                <label for="answerOrder" class="form-label no-wrap align-self-center">Order by:</label>
+                                <select id="answerOrder" class="form-select-sm" @@change="reorder"
+                                    x-model="orderDirection">
+                                    <option value="oldest">Oldest</option>
+                                    <option value="newest">Newest</option>
+                                    @if (Model.HasAcceptedAnswer)
+                                    {
+                                        <option value="acceptedAnswer">Accepted answer, oldest</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
 
+                        <div x-ref="list">
                             @foreach (var answer in Model.Answers)
                             {
                                 <partial name="~/Features/QAndA/_QAndAAnswerDetail.cshtml" model="answer" />
-
-                                <hr>
                             }
                         </div>
 
                         @if (Model.Question.Permissions.CanAnswer)
                         {
-                            <button class="btn btn-primary btn-lighter px-5 mt-4" hx-get hx-controller="QAndAAnswer"
-                                hx-action="DisplayCreateAnswerForm" hx-route-questionID="@Model.Question.ID"
-                                hx-target="this" hx-swap="outerHTML">
-                                Answer Question
-                            </button>
+                            <partial name="~/Features/QAndA/Components/Form/_QAndAAnswerButton.cshtml"
+                                model="@Model.Question.ID" />
                         }
                         else
                         {

@@ -1,0 +1,14 @@
+.milkdown-container {
+  min-height: 300px;
+  padding: 0.5rem;
+
+  .milkdown {
+    milkdown-block-handle {
+      left: -4px !important;
+    }
+    .ProseMirror.editor {
+      padding: 0;
+      padding-inline-start: 4rem;
+    }
+  }
+}

@@ -24,9 +24,6 @@ public class QAndAListingPage(IPageLinkGenerator pageLinkGenerator) : ListingPag
 
     protected override string ObjectType => QAndAAnswerDataInfo.OBJECT_TYPE;
 
-    /// <summary>
-    /// Deletes user specified by the <paramref name="id"/> parameter.
-    /// </summary>
     [PageCommand(Permission = SystemPermissions.DELETE)]
     public override Task<ICommandResponse<RowActionResult>> Delete(int id) => base.Delete(id);
 
@@ -50,7 +47,7 @@ public class QAndAListingPage(IPageLinkGenerator pageLinkGenerator) : ListingPag
 
         PageConfiguration.ColumnConfigurations
             .AddColumn(nameof(QAndAAnswerDataInfo.QAndAAnswerDataID),
-                "ID",
+                "Answer",
                 searchable: true,
                 minWidth: 1)
             .AddColumn(
@@ -77,22 +74,24 @@ public class QAndAListingPage(IPageLinkGenerator pageLinkGenerator) : ListingPag
                 "Answer CodeName",
                 searchable: true)
             .AddColumn(nameof(QAndAAnswerDataInfo.QAndAAnswerDataWebsiteChannelID), visible: false)
-            .AddComponentColumn(nameof(WebPageItemInfo.WebPageItemName),
+            .AddComponentColumn(nameof(WebPageItemInfo.WebPageItemTreePath),
                 "@kentico-community/portal-web-admin/Link",
-                modelRetriever: AnswerLinkModelRetriever,
+                modelRetriever: QuestionPageLinkModelRetriever,
                 caption: "Question",
                 searchable: true,
-                minWidth: 25);
+                minWidth: 50);
 
         _ = PageConfiguration.TableActions.AddDeleteAction(nameof(Delete));
     }
 
-    private TableRowLinkProps AnswerLinkModelRetriever(object value, IDataContainer container)
+    private TableRowLinkProps QuestionPageLinkModelRetriever(object value, IDataContainer container)
     {
         int webPageItemID = ValidationHelper.GetInteger(container[nameof(WebPageItemInfo.WebPageItemID)], 0);
         int websiteChannelID = ValidationHelper.GetInteger(container[nameof(QAndAAnswerDataInfo.QAndAAnswerDataWebsiteChannelID)], 0);
         string valueStr = value.ToString() ?? "";
-        string label = $"{valueStr[..Math.Min(valueStr.Length, 50)]}...";
+        string label = valueStr.Length > 47
+            ? $"{valueStr[..Math.Min(valueStr.Length, 47)]}..."
+            : valueStr;
 
         if (webPageItemID == 0)
         {

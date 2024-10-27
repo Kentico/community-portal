@@ -15,6 +15,14 @@ function Get-ScriptConfig {
 
 <#
     .DESCRIPTION
+        Returns the solutions's root folder
+#>
+function Get-SolutionFolder {
+    return Resolve-Path($($scriptConfig.WorkspaceFolder))
+}
+
+<#
+    .DESCRIPTION
         Returns the main solution file path
 #>
 function Get-SolutionPath {
@@ -114,6 +122,26 @@ function Invoke-ExpressionWithException {
         throw $errorMessage
     }
 }
+
+function Invoke-SQLQuery {
+    param (
+        [string]$query
+    )
+
+    $connectionString = Get-ConnectionString
+        
+    $sqlCommand = New-Object System.Data.SqlClient.SqlCommand
+    $sqlConnection = New-Object System.Data.SqlClient.SqlConnection($connectionString)
+    $sqlConnection.Open()
+        
+    $sqlCommand.Connection = $sqlConnection
+    $sqlCommand.CommandText = $query
+    $result = $sqlCommand.ExecuteScalar()
+        
+    $sqlConnection.Close()
+    return $result
+}
+
 function Write-Status {
     param(
         [string]$message

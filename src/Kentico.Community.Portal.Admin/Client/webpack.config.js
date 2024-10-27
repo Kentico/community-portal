@@ -12,37 +12,44 @@ module.exports = (opts, argv) => {
     return baseWebpackConfig({
       orgName: 'kentico-community',
       projectName: 'portal-web-admin',
-      webpackConfigEnv: webpackConfigEnv,
-      argv: argv,
+      webpackConfigEnv,
+      argv,
     });
   };
 
   return new Promise((resolve) => {
-    //resolve(buildConfig(baseConfig, opts, argv));
-    // Ensure the certificate and key exist
-    if (!fs.existsSync(cert) || !fs.existsSync(key)) {
-      // Wait for the certificate to be generated
-      spawn(
-        'dotnet',
-        [
-          'dev-certs',
-          'https',
-          '--export-path',
-          cert,
-          '--format',
-          'Pem',
-          '--no-password',
-        ],
-        { stdio: 'inherit' },
-      ).on('exit', (code) => {
-        resolve(buildConfig(baseConfig, opts, argv));
-        if (code) {
-          process.exit(code);
-        }
-      });
-    } else {
+    // Skip cert/key creation for prod builds or if the cert/key exist
+    // See: https://github.com/dotnet/aspnetcore/issues/58330#issuecomment-2423338006
+    if (
+      argv.mode === 'production' ||
+      (fs.existsSync(cert) && fs.existsSync(key))
+    ) {
+      console.info('Skipping dev certification creation');
       resolve(buildConfig(baseConfig, opts, argv));
+
+      return;
     }
+
+    // Wait for the certificate to be generated
+    console.info('Creating aspnet core dev-certs');
+    spawn(
+      'dotnet',
+      [
+        'dev-certs',
+        'https',
+        '--export-path',
+        cert,
+        '--format',
+        'Pem',
+        '--no-password',
+      ],
+      { stdio: 'inherit' },
+    ).on('exit', (code) => {
+      resolve(buildConfig(baseConfig, opts, argv));
+      if (code) {
+        process.exit(code);
+      }
+    });
   });
 };
 

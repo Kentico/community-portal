@@ -1,7 +1,13 @@
-﻿using AngleSharp.Html.Parser;
-using CMS.Helpers;
+﻿using System.Text.RegularExpressions;
+using AngleSharp.Html.Parser;
 
 namespace Kentico.Community.Portal.Web.Infrastructure.Search;
+
+public static partial class WebScraperHtmlSanitizerParser
+{
+    [GeneratedRegex(@"\\s+")]
+    public static partial Regex WhiteSpace();
+}
 
 public class WebScraperHtmlSanitizer
 {
@@ -60,7 +66,7 @@ public class WebScraperHtmlSanitizer
         string textContent = body.TextContent;
 
         // Normalizes and trims whitespace characters
-        textContent = HTMLHelper.RegexHtmlToTextWhiteSpace.Replace(textContent, " ");
+        textContent = WebScraperHtmlSanitizerParser.WhiteSpace().Replace(textContent, " ");
         textContent = textContent.Trim();
 
         string title = doc.Head?.QuerySelector("title")?.TextContent ?? "";
@@ -68,7 +74,7 @@ public class WebScraperHtmlSanitizer
 
         return string.Join(
             " ",
-            new string[] { title, description, textContent }.Where(i => !string.IsNullOrWhiteSpace(i))
+            new[] { title, description, textContent }.Where(i => !string.IsNullOrWhiteSpace(i))
         );
     }
 }

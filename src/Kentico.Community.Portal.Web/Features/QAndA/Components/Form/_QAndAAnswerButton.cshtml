@@ -1,0 +1,6 @@
+@model Guid
+
+<button class="btn btn-primary btn-lighter px-5 mt-4" hx-get hx-controller="QAndAAnswer"
+    hx-action="DisplayCreateAnswerForm" hx-route-questionID="@Model" hx-target="this" hx-swap="outerHTML">
+    Answer Question
+</button>

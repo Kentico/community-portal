@@ -232,6 +232,24 @@
       }
     },
     {
+      "label": "Xperience: Database Backup",
+      "detail": "Creates a .bak of the Kentico Community database",
+      "type": "shell",
+      "command": "./Backup-Database.ps1",
+      "options": {
+        "cwd": "${workspaceFolder}/scripts"
+      },
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
       "label": "Xperience: Update Content Generated Code Files",
       "detail": "Updates generated code files in the repository for Content Types only",
       "type": "shell",

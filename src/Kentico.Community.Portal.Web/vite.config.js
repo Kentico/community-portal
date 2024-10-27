@@ -15,9 +15,13 @@ const fontPattern = /\.(woff|woff2|ttf)$/;
 const { cert, key } = getDotnetCertPaths();
 
 export default defineConfig(async ({ mode }) => {
+  // Skip cert/key creation for prod builds or if the cert/key exist
+  // See: https://github.com/dotnet/aspnetcore/issues/58330#issuecomment-2423338006
+
   // Ensure the certificate and key exist
-  if (!fs.existsSync(cert) || !fs.existsSync(key)) {
+  if (mode !== "production" && (!fs.existsSync(cert) || !fs.existsSync(key))) {
     // Wait for the certificate to be generated
+    console.info("Creating aspnet core dev-certs");
     await new Promise((resolve) => {
       spawn(
         "dotnet",
@@ -30,7 +34,7 @@ export default defineConfig(async ({ mode }) => {
           "Pem",
           "--no-password",
         ],
-        { stdio: "inherit" }
+        { stdio: "inherit" },
       ).on("exit", (code) => {
         resolve();
         if (code) {
@@ -38,6 +42,8 @@ export default defineConfig(async ({ mode }) => {
         }
       });
     });
+  } else {
+    console.info("Skipping dev certification creation");
   }
 
   /** @type {import('vite').UserConfig} */
@@ -47,6 +53,20 @@ export default defineConfig(async ({ mode }) => {
     // See https://github.com/Eptagone/Vite.AspNetCore/wiki#how-to-configure-a-subfolder-as-output-for-my-vite-assets
     base: "/dist/",
     publicDir: "",
+    css: {
+      preprocessorOptions: {
+        scss: {
+          /** https://sass-lang.com/documentation/breaking-changes/import/ */
+          silenceDeprecations: [
+            "mixed-decls",
+            "color-functions",
+            "import",
+            "global-builtin",
+            "legacy-js-api",
+          ],
+        },
+      },
+    },
     build: {
       manifest: appsettings.Vite.Manifest || "manifest.json",
       assetsDir: "",

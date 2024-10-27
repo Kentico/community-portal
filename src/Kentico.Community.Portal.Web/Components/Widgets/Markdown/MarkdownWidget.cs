@@ -1,9 +1,9 @@
-using Kentico.Xperience.Admin.Base.FormAnnotations;
-using Kentico.PageBuilder.Web.Mvc;
-using Microsoft.AspNetCore.Mvc;
 using Kentico.Community.Portal.Web.Components.Widgets.Markdown;
 using Kentico.Community.Portal.Web.Rendering;
+using Kentico.PageBuilder.Web.Mvc;
+using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc;
 
 [assembly: RegisterWidget(
     identifier: MarkdownWidget.IDENTIFIER,
@@ -75,6 +75,7 @@ public class MarkdownWidgetProperties : BaseWidgetProperties
         MinRowsNumber = 30,
         WatermarkText = "## Add some markdown",
         Order = 1)]
+    [TrackContentItemReference(typeof(MarkdownContentItemReferenceExtractor))]
     public string Markdown { get; set; } = "";
 
     [DropDownComponent(

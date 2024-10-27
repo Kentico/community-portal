@@ -8,12 +8,12 @@ using CMS.Websites;
 using CMS.Websites.Internal;
 using CSharpFunctionalExtensions;
 using Kentico.Community.Portal.Admin.Features.WebsiteChannels;
-using Kentico.Xperience.Admin.Base.FormAnnotations;
+using Kentico.Community.Portal.Admin.UIPages;
 using Kentico.Xperience.Admin.Base;
 using Kentico.Xperience.Admin.Base.Filters;
+using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Kentico.Xperience.Admin.Base.Forms;
 using Kentico.Xperience.Admin.Websites.UIPages;
-using Kentico.Community.Portal.Admin.UIPages;
 
 [assembly: UIPage(
     parentType: typeof(WebsiteChannelsApplicationPage),

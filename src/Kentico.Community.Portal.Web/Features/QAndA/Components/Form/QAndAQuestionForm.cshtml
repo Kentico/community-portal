@@ -23,7 +23,7 @@
             </h2>
 
             <form id="@formId" method="post" hx-post hx-controller="QAndAQuestion" hx-action="@action"
-                hx-swap="outerHTML" hx-target="#@rootElId">
+                hx-swap="outerHTML" hx-target="#@rootElId" hx-trigger="submitReady">
                 <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
 
                 <div class="row mb-5">
@@ -39,37 +39,34 @@
                     @Model.FormHelpMessageHTML
                 </div>
 
-                <div id="editor_@editormdId" style="height:800px;">
-                    <label for="@editormdId" class="form-label mt-3">Your question</label>
-                    <textarea asp-for="@Model.Content" id="@editormdId" class="form-control d-none"
-                        style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;"
-                        placeholder="Your full question description goes here"></textarea>
+                <div id="@editormdId" class="border border-1 border-dark-subtle rounded-2 milkdown-container">
+                    <textarea class="form-control" style="display:none;" asp-for="@Model.Content"
+                        style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;" name="Content"
+                        placeholder="Your full question description goes here" value="@Model.Content"></textarea>
                 </div>
 
                 <div class="d-grid">
                     <input asp-for="EditedObjectID">
-                    <button type="submit" class="btn btn-primary btn-lighter px-5 mt-4">Submit your
-                        question</button>
+                    <button type="submit" class="btn btn-primary btn-lighter px-5 mt-4">
+                        Submit your question
+                    </button>
 
                     @if (Model.EditedObjectID is Guid questionID)
                     {
-                        <button class="btn btn-outline-warning px-5 mt-4" hx-get hx-controller="QAndAQuestionPage"
+                        <button type="button" class="btn btn-outline-warning px-5 mt-4" hx-get hx-controller="QAndAQuestionPage"
                             hx-action="DisplayQuestionDetail" hx-route-questionID="@questionID" hx-swap="outerHTML"
-                            hx-target="#@rootElId">
+                            hx-target="#@rootElId" hx-trigger="cancelReady" cancel-button>
                             Cancel
                         </button>
                     }
                 </div>
             </form>
 
-            <vc:editor-md-assets />
-
             <script type="module">
                 asyncReady(async () => {
                     const qanda = await import('@ClientAssets.ViteAssetPath("js/q-and-a.js")');
 
                     qanda.initQAndA({
-                        formElemID: '@formId',
                         editorElemID: '@editormdId',
                         formType: 'Question'
                     });

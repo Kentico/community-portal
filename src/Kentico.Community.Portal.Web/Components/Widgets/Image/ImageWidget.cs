@@ -1,10 +1,10 @@
-using Kentico.Xperience.Admin.Base.FormAnnotations;
-using Kentico.PageBuilder.Web.Mvc;
-using Microsoft.AspNetCore.Mvc;
-using Kentico.Community.Portal.Web.Components.Widgets.Image;
 using CMS.ContentEngine;
-using MediatR;
+using Kentico.Community.Portal.Web.Components.Widgets.Image;
 using Kentico.Community.Portal.Web.Rendering;
+using Kentico.PageBuilder.Web.Mvc;
+using Kentico.Xperience.Admin.Base.FormAnnotations;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 [assembly: RegisterWidget(
     identifier: ImageWidget.IDENTIFIER,

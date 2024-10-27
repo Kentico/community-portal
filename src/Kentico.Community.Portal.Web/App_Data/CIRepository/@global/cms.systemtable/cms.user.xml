@@ -33,6 +33,13 @@
           <defaultvalue>False</defaultvalue>
         </properties>
       </field>
+      <field allowempty="true" column="UserAuthenticatorSharedKey" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="fb1f9bf3-516d-4841-880c-5b6fc62fee10" system="true" />
+      <field allowempty="true" column="UserAuthenticationRecoveryCode" columnprecision="0" columnsize="10" columntype="text" enabled="true" guid="332acaac-915a-4a4b-8b8a-516e6da0b6c6" system="true" />
+      <field column="UserAuthenticatorSharedKeyResetRequested" columnprecision="0" columntype="boolean" enabled="true" guid="56c134b7-4d52-4747-93d0-9f25e1f55253" system="true">
+        <properties>
+          <defaultvalue>False</defaultvalue>
+        </properties>
+      </field>
     </form>
   </ClassFormDefinition>
   <ClassGUID>2e02c378-0f3d-45de-9b2d-b8cf2bd87b55</ClassGUID>

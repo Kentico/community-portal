@@ -24,7 +24,7 @@
           <fieldcaption>Form updated</fieldcaption>
         </properties>
       </field>
-      <field allowempty="true" column="Email" columnsize="500" columntype="text" enabled="true" guid="1abff9b6-cc5d-44a5-bc72-de46bb14278a" visible="true">
+      <field column="Email" columnsize="500" columntype="text" enabled="true" guid="1abff9b6-cc5d-44a5-bc72-de46bb14278a" visible="true">
         <properties>
           <fieldcaption>Email</fieldcaption>
           <smart>False</smart>
@@ -73,7 +73,7 @@
               <xs:element name="Form_2023_09_22_15_53ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
               <xs:element name="FormInserted" type="xs:dateTime" />
               <xs:element name="FormUpdated" type="xs:dateTime" />
-              <xs:element name="Email" minOccurs="0">
+              <xs:element name="Email">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="500" />

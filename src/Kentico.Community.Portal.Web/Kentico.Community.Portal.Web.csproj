@@ -37,13 +37,6 @@
     <Using Include="Kentico.Community.Portal.Core.Content" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <!-- Required to prevent type conflicts with CSharpFunctionalExtensions types -->
-    <!-- Will be resolved in v14.0.0 https://github.com/ChilliCream/graphql-platform/releases/tag/14.0.0-p.75 -->
-    <!-- https://www.nuget.org/packages/Kentico.Xperience.WebApp/#dependencies-body-tab -->
-    <HotChocolateImplicitUsings>disable</HotChocolateImplicitUsings>
-  </PropertyGroup>
-
   <ItemGroup>
     <None Update="app_offline.htm_">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

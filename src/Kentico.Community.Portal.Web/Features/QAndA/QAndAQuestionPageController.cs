@@ -62,7 +62,8 @@ public class QAndAQuestionPageController(
         var vm = new QAndAQuestionPageViewModel
         {
             Question = await MapQuestion(question, currentMember, canManageContent),
-            Answers = answers
+            Answers = answers,
+            HasAcceptedAnswer = answers.Any(a => a.IsAcceptedAnswer)
         };
 
         return View("~/Features/QAndA/QAndAQuestionPage.cshtml", vm);
@@ -103,6 +104,10 @@ public class QAndAQuestionPageController(
         return PartialView("~/Features/QAndA/_QAndAAnswerDetail.cshtml", vm);
     }
 
+    [HttpGet]
+    public ActionResult DisplayAnswerButton(Guid questionID) =>
+        PartialView("~/Features/QAndA/Components/Form/_QAndAAnswerButton.cshtml", questionID);
+
     private async Task<IReadOnlyList<QAndAPostAnswerViewModel>> GetAnswers(
         QAndAQuestionPage question,
         CommunityMember? currentMember,
@@ -116,10 +121,7 @@ public class QAndAQuestionPageController(
             vms.Add(answerModel);
         }
 
-        return vms
-            .OrderByDescending(a => a.IsAcceptedAnswer)
-            .ThenBy(a => a.DateCreated)
-            .ToList();
+        return [.. vms.OrderBy(a => a.DateCreated)];
     }
 
     private async Task<QAndAPostQuestionViewModel> MapQuestion(
@@ -206,6 +208,7 @@ public class QAndAQuestionPageViewModel
 {
     public QAndAPostQuestionViewModel Question { get; set; } = new();
     public IReadOnlyList<QAndAPostAnswerViewModel> Answers { get; set; } = [];
+    public bool HasAcceptedAnswer { get; set; } = false;
 }
 
 public class QAndAPostQuestionViewModel

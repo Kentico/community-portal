@@ -62,25 +62,9 @@
 
     <script type="module" src='@ClientAssets.ViteAssetPath("js/main.js")'></script>
 
-    @if (!ClientAssets.EditormdRequired)
-    {
-        @* The Editormd assets View Component adds jquery automatically, so it isn't required to add it here *@
-        <script src="/vendor/js/jquery-3.5.1.min.js" asp-append-version="true"></script>
-    }
-
-    <script src="/vendor/js/jquery.validate.min.js" asp-append-version="true"></script>
-    <script src="/vendor/js/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
-
-    <script src="/vendor/js/htmx.min.js" asp-append-version="true"></script>
-
     @if (ClientAssets.PrismRequired)
     {
         <script src="/vendor/js/prism.min.js" asp-append-version="true"></script>
-    }
-
-    @if (ClientAssets.AlpineRequired)
-    {
-        <script defer src="/vendor/js/alpine.3.13.10.cdn.min.js"></script>
     }
 
     <page-builder-scripts />

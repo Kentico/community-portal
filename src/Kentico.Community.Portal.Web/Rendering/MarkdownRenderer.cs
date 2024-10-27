@@ -1,5 +1,6 @@
 using System.Text.Encodings.Web;
 using Markdig;
+using Markdig.Syntax;
 using Microsoft.AspNetCore.Html;
 
 namespace Kentico.Community.Portal.Web.Rendering;
@@ -48,6 +49,8 @@ public class MarkdownRenderer
 
         return new(contentHTML);
     }
+
+    public MarkdownDocument Parse(string contentWithHTML) => Markdown.Parse(contentWithHTML, unsafePipeline);
 }
 
 /// <summary>

@@ -6,7 +6,8 @@
     int id = Model.EditedObjectID ?? 0;
     var formId = $"answerForm_{id}";
     var rootElId = $"answerFormRoot_{id}";
-    var editormdId = $"editormd_{id}";
+    var editorID = $"milkdown_{id}";
+    var editorFieldID = $"{editorID}_field";
     string action = Model.EditedObjectID is null ? "CreateAnswer" : "UpdateAnswer";
     string qAndAAssetPath = ClientAssets.ViteAssetPath("js/q-and-a.js");
 }
@@ -15,22 +16,18 @@
     @if (User.Identity?.IsAuthenticated == true)
     {
         <form id="@formId" method="post" hx-post hx-controller="QAndAAnswer" hx-action="@action" hx-swap="outerHTML"
-            hx-target="#@rootElId">
+            hx-target="#@rootElId" hx-trigger="submitReady">
             <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
 
             <div class="mt-6">
-                <p class="text mt-3"><span class="text-secondary fw-bold">@User.Identity.Name</span> would answer</p>
-            </div>
-
-            <div class="row mb-3">
                 @Model.FormHelpMessageHTML
             </div>
 
-            <div id="editor_@editormdId" style="height:800px;">
-                <label for="@editormdId" class="form-label mt-3">Your answer</label>
-                <textarea class="form-control" style="display:none;" asp-for="@Model.Content" id="@editormdId"
-                    style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;" name="Content"
-                    placeholder="Your full question description goes here" value="@Model.Content"></textarea>
+            <label for="@editorFieldID" class="form-label"><span class="text-secondary fw-bold">@User.Identity.Name</span>
+                would answer</label>
+            <div id="@editorID" class="border border-1 border-dark-subtle rounded-2 milkdown-container">
+                <textarea id="@editorFieldID" class="form-control" style="display:none;" asp-for="@Model.Content"
+                    name="Content" placeholder="Your full question description goes here" value="@Model.Content"></textarea>
             </div>
 
             <div class="d-grid">
@@ -42,14 +39,21 @@
                 {
                     <button hx-get hx-controller="QAndAQuestionPage" hx-action="DisplayAnswerDetail"
                         hx-route-questionID="@Model.ParentQuestionID" hx-route-answerID="@answerID" hx-swap="outerHTML"
-                        hx-target="#@rootElId" class="btn btn-outline-warning px-5 mt-4">
+                        type="button" hx-trigger="cancelReady" hx-target="#@rootElId" class="btn btn-outline-warning px-5 mt-4"
+                        cancel-button>
+                        Cancel
+                    </button>
+                }
+                else
+                {
+                    <button hx-get hx-controller="QAndAQuestionPage" hx-action="DisplayAnswerButton" hx-trigger="cancelReady"
+                        type="button" hx-route-questionID="@Model.ParentQuestionID" hx-swap="outerHTML" hx-target="#@rootElId"
+                        class="btn btn-outline-warning px-5 mt-4" cancel-button>
                         Cancel
                     </button>
                 }
             </div>
         </form>
-
-        <vc:editor-md-assets />
 
         <script type="module">
             asyncReady(async () => {
@@ -57,8 +61,7 @@
                 const qanda = await import(path);
 
                 qanda.initQAndA({
-                    formElemID: '@formId',
-                    editorElemID: '@editormdId',
+                    editorElemID: '@editorID',
                     formType: 'Answer'
                 });
             });
@@ -67,7 +70,7 @@
     else
     {
         <div class="mt-6">
-            <h2 class="text-center k-dot">Need login</h2>
+            <h2 class="text-center k-dot">Please login</h2>
             <p class="text-center mt-3">
                 To post new answer, you have to
                 <a asp-controller="Authentication" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">login

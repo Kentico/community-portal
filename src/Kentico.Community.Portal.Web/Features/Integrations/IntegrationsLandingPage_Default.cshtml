@@ -9,8 +9,11 @@
 <vc:page-heading page="templateModel" />
 
 <main>
+    <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"
+        widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
+
     <vc:integrations-list />
 
-    <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"
+    <editable-area area-identifier="bottom" allow-widget-output-cache="View.CacheEnabled"
         widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
 </main>

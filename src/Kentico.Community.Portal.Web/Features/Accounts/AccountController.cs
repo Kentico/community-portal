@@ -239,6 +239,7 @@ public class ProfileViewModel
     [DataType(DataType.Text)]
     [DisplayName("LinkedIn Identifier")]
     [MaxLength(40, ErrorMessage = "The LinkedIn Identifier cannot be longer than 40 characters")]
+    [RegularExpression(@"^(?!.*https:\/\/www\.linkedin\.com\/).*$", ErrorMessage = "The value cannot contain the LinkedIn URL.")]
     public string? LinkedInIdentifier { get; set; } = "";
 
     public UpdateState State { get; set; } = UpdateState.Unmodified;

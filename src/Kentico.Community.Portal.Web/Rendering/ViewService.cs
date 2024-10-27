@@ -18,7 +18,7 @@ public class ViewService(
 
     public ISlugHelper SlugHelper { get; } = slugHelper;
 
-    public PageBuilderMode PageBuilderMode
+    public ApplicationPageBuilderMode PageBuilderMode
     {
         get
         {
@@ -26,15 +26,15 @@ public class ViewService(
 
             if (ctx.Kentico().PageBuilder().EditMode)
             {
-                return PageBuilderMode.Edit;
+                return ApplicationPageBuilderMode.Edit;
             }
 
             if (ctx.Kentico().Preview().Enabled)
             {
-                return PageBuilderMode.Preview;
+                return ApplicationPageBuilderMode.Preview;
             }
 
-            return PageBuilderMode.Live;
+            return ApplicationPageBuilderMode.Live;
         }
     }
 
@@ -47,7 +47,7 @@ public class ViewService(
         !env.IsDevelopment();
 }
 
-public enum PageBuilderMode
+public enum ApplicationPageBuilderMode
 {
     Live,
     Preview,

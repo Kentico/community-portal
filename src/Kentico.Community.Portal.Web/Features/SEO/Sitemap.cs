@@ -3,7 +3,6 @@ using CMS.Core;
 using CMS.Helpers;
 using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core;
-using Kentico.Community.Portal.Core.Content;
 using Kentico.Content.Web.Mvc;
 using SimpleMvcSitemap;
 

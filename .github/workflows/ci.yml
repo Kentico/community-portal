@@ -84,25 +84,20 @@ jobs:
         run: |
           docker exec sql mkdir /var/opt/mssql/backup
           docker cp "./database/${{ env.DATABASE_BACKUP_FILENAME }}" sql:/var/opt/mssql/backup
+          docker exec -u root sql bash -c "chown mssql:mssql /var/opt/mssql/backup/${{ env.DATABASE_BACKUP_FILENAME }}"
+          docker exec -u root sql bash -c "chmod 644 /var/opt/mssql/backup/${{ env.DATABASE_BACKUP_FILENAME }}"
+
           sqlcmd `
             -S localhost `
             -d master `
             -U "sa" `
             -P "Pass@12345" `
             -Q "RESTORE DATABASE [Kentico.Community] FROM DISK='/var/opt/mssql/backup/${{ env.DATABASE_BACKUP_FILENAME }}' WITH MOVE 'Kentico.Community' TO '/var/opt/mssql/data/Kentico.Community.mdf', MOVE 'Kentico.Community_log' TO '/var/opt/mssql/data/Kentico.Community_log.ldf'"
-        if: endsWith(env.DATABASE_BACKUP_FILENAME, '.bak')
 
-      - name: Restore Database .bacpac
+      - name: Restore License Key
+        working-directory: "./scripts"
         run: |
-          sqlpackage `
-            /a:Import `
-            /tsn:localhost `
-            /tdn:Kentico.Community `
-            /tu:sa `
-            /tp:Pass@12345 `
-            /sf:"./database/${{ env.DATABASE_BACKUP_FILENAME }}" `
-            /tec:False
-        if: endsWith(env.DATABASE_BACKUP_FILENAME, '.bacpac')
+          ./Restore-LicenseKey.ps1 -LicenseKey ${{ secrets.XPERIENCE_LICENSE_KEY }}
 
       - name: Restore CI Repository
         working-directory: "./scripts"

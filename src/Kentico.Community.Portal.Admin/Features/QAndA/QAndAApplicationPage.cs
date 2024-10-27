@@ -6,7 +6,7 @@ using Kentico.Xperience.Admin.Base;
 [assembly: UIApplication(
     identifier: QAndAApplicationPage.IDENTIFIER,
     type: typeof(QAndAApplicationPage),
-    slug: "questions-answers",
+    slug: "q-and-a",
     name: "Q&A",
     category: PortalWebAdminModule.COMMUNITY_CATEGORY,
     icon: Icons.RectangleParagraph,

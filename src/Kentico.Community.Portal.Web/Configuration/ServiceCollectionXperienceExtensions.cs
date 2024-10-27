@@ -1,14 +1,16 @@
 using CMS;
 using CMS.Base.Configuration;
+using CMS.ContentEngine;
+using CMS.Core;
 using CMS.EmailEngine;
 using Kentico.Activities.Web.Mvc;
 using Kentico.Community.Portal.Web.Components.Sections.Grid;
 using Kentico.Community.Portal.Web.Features.DataCollection;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Infrastructure.Storage;
+using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Content.Web.Mvc.Routing;
 using Kentico.CrossSiteTracking.Web.Mvc;
-using Kentico.Forms.Web.Mvc;
 using Kentico.OnlineMarketing.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Web.Mvc;
@@ -85,14 +87,11 @@ public static class ServiceCollectionXperienceExtensions
                     UIRouteDataStringKey = "culture"
                 });
             })
-            .Configure<FormBuilderBundlesOptions>(options =>
-            {
-                options.JQueryCustomBundleWebRootPath = "vendor/js/jquery-3.5.1.min.js";
-                options.JQueryUnobtrusiveAjaxCustomBundleWebRootPath = "vendor/js/jquery.unobtrusive-ajax.min.js";
-            })
             .Configure<FileUploadOptions>(options =>
             {
                 // No customization atm
             })
-            .AddSingleton<IEmailActivityTrackingEvaluator, ConsentEmailActivityTrackingEvaluator>();
+            .AddSingleton<IContentItemReferenceExtractor, MarkdownContentItemReferenceExtractor>()
+            .AddSingleton<IEmailActivityTrackingEvaluator, ConsentEmailActivityTrackingEvaluator>()
+            .Decorate<ILocalizationService, ApplicationLocalizationService>();
 }
