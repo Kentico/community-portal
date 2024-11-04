@@ -4,7 +4,7 @@
 
 <title>@Model.Title</title>
 
-@if (Model.OGImageURL is string ogImageURL)
+@if (Model.OGImageURL.TryGetValue(out string? ogImageURL))
 {
     <meta name="image" property="og:image" content="@ogImageURL">
 }
@@ -19,9 +19,9 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="author" content="Kentico software s.r.o.">
 
-@if (!string.IsNullOrWhiteSpace(Model.MetaRobotsContent))
+@if (Model.MetaRobotsContent.TryGetValue(out string? robots))
 {
-    <meta name="robots" content="@Model.MetaRobotsContent">
+    <meta name="robots" content="@robots">
 }
 
 <link rel="manifest" href="/manifest/site.webmanifest">
@@ -37,10 +37,10 @@
     <link name="canonical" rel="canonical" href="@url">
 }
 
-@if (!string.IsNullOrWhiteSpace(Model.CaptchaSiteKey))
+@if (Model.CaptchaSiteKey.TryGetValue(out string? recaptchaKey))
 {
-    <meta name="captchaSiteKey" content="@Model.CaptchaSiteKey">
-    <script src="https://www.google.com/recaptcha/api.js?render=@Model.CaptchaSiteKey" async defer></script>
+    <meta name="captchaSiteKey" content="@recaptchaKey">
+    <script src="https://www.google.com/recaptcha/api.js?render=@recaptchaKey" async defer></script>
 }
 
 <meta name="htmx-config" includeAspNetAntiforgeryToken="true" />

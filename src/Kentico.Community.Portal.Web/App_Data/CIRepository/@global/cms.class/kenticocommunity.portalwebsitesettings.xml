@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassCodeGenerationSettings>
+    <Data>
+      <CodeNameColumn>PortalWebsiteSettingsName</CodeNameColumn>
+      <DisplayNameColumn>PortalWebsiteSettingsName</DisplayNameColumn>
+      <GUIDColumn>PortalWebsiteSettingsGUID</GUIDColumn>
+      <LastModifiedColumn>PortalWebsiteSettingsDateModified</LastModifiedColumn>
+      <ObjectType>KenticoCommunity.PortalWebsiteSettings</ObjectType>
+      <UseGuidHashtable>False</UseGuidHashtable>
+      <UseIdHashtable>False</UseIdHashtable>
+      <UseNameHashtable>False</UseNameHashtable>
+    </Data>
+  </ClassCodeGenerationSettings>
+  <ClassDisplayName>Portal Website Settings</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="PortalWebsiteSettingsID" columntype="integer" enabled="true" guid="233368ce-abf3-4409-80ba-8e4ce4d71499" isPK="true" />
+      <field column="PortalWebsiteSettingsName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="de4bf214-66d9-4833-9dfc-7afcc380ac8f" />
+      <field column="PortalWebsiteSettingsGUID" columnprecision="0" columntype="guid" enabled="true" guid="08b48081-2d76-45ad-9391-e7d6bd67ba61" />
+      <field allowempty="true" column="PortalWebsiteSettingsWebsiteGlobalContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="b0b39307-1d7a-4bae-a905-d73be82ed44b" />
+      <field allowempty="true" column="PortalWebsiteSettingsWebsiteCookieBannerContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="0d7ec69b-439c-4787-ac67-562e69364d69" />
+      <field allowempty="true" column="PortalWebsiteSettingsWebsiteAlertSettingsContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="9810a91e-0a9f-4864-b393-8c4446654351" />
+      <field column="PortalWebsiteSettingsDateCreated" columnprecision="3" columntype="datetime" enabled="true" guid="6f30e852-13a4-4d87-a26e-f213bc6441d4" />
+      <field column="PortalWebsiteSettingsDateModified" columnprecision="3" columntype="datetime" enabled="true" guid="9a52e8c7-6613-41b2-b593-3f60783135a8" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>2e8215ba-ac27-40a5-b016-638b53e849a8</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>KenticoCommunity.PortalWebsiteSettings</ClassName>
+  <ClassResourceID>
+    <CodeName>KenticoCommunity</CodeName>
+    <GUID>5e10e4ec-a038-4b97-a9f6-c17724896c89</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>KenticoCommunity_PortalWebsiteSettings</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

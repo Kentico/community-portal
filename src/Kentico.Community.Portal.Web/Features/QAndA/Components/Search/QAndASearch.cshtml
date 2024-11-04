@@ -3,6 +3,17 @@
 <section class="c-section">
     <div class="container">
         <div class="row justify-content-center">
+            <div class="col-sm-6 col-md-4">
+                <a href="/q-and-a/new-question" rel="nofollow"
+                    class="btn btn-outline-primary w-100 d-inline-block">
+                    <svg class="c-icon me-1">
+                        <use xlink:href="/img/icons.svg#plus-circle" asp-append-version></use>
+                    </svg>
+                    @HtmlLocalizer["NEW QUESTION"]
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center">
             <div class="col-xl-10 col-xxl-9 d-flex flex-column gap-2">
                 <form method="get" id="qAndASearchForm">
                     <div class="row mt-4"> 
@@ -61,26 +72,6 @@
                     <input asp-for="@Model.DiscussionType" selected-facet-value="discussionType" />
                     <input asp-for="Page" />
                 </form>
-
-                <div class="row mt-4 mt-lg-5">
-                    
-                    <div class="col-sm-4">
-                        <a href="/q-and-a/new-question" rel="nofollow"
-                            class="btn btn-outline-primary w-100 d-sm-none">
-                            <svg class="c-icon me-1">
-                                <use xlink:href="/img/icons.svg#plus-circle" asp-append-version></use>
-                            </svg>
-                            @HtmlLocalizer["NEW QUESTION"]
-                        </a>
-                        <a href="/q-and-a/new-question" rel="nofollow"
-                            class="btn link-only text-primary d-none d-sm-inline-block mt-2">
-                            <svg class="c-icon me-1">
-                                <use xlink:href="/img/icons.svg#plus-circle" asp-append-version></use>
-                            </svg>
-                            @HtmlLocalizer["NEW QUESTION"]
-                        </a>
-                    </div>
-                </div>
 
                 @if (Model.Questions.Count == 0 && Model.TotalPages == 0)
                 {

@@ -1,6 +1,25 @@
 ﻿@model Kentico.Community.Portal.Web.Features.Errors.ErrorPageViewModel
 
-@if (Model.MessageHTML is not null)
-{
-    @Model.MessageHTML
-}
+<main>
+    <section class="c-section error-hero error404">
+        <div class="container">
+            <h1 class="text-center">@Model.StatusCode<span class="text-secondary">.</span></h1>
+        </div>
+    </section>
+    <section class="c-section default text-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5">
+
+                    <h2 class="fs-md-6">Page not found.</h2>
+
+                    <p class="mt-md-3">The page you were looking for could not be found.</p>
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-3 my-md-5 pt-2">
+                        <a class="btn btn-primary btn-lg" href="/q-and-a">Search our Q&A discussions</a>
+                        <a class="btn btn-outline-primary btn-lg" href="/">Or return to the home page</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

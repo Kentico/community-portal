@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>Website Alert Settings Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="8d8ba9f8-aa9d-48d2-a34c-1974caac9663" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="1fb63465-c92d-444d-8e10-3ba418a32b3e" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="2f7b0a1b-f0fd-4970-b879-a9e2708e080d" isunique="true" system="true" />
+      <field column="WebsiteAlertSettingsContentIsEnabled" columnprecision="0" columntype="boolean" enabled="true" guid="edb8d04a-80be-43d7-8098-d316a10a852b" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[If true, alert messages are displayed on the website]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Is Enabled?</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+      </field>
+      <field column="WebsiteAlertSettingsContentCookieExpirationDays" columnprecision="0" columntype="integer" enabled="true" guid="e25a3fbb-1ffb-4bb4-9896-24b3a64cfb80" visible="true">
+        <properties>
+          <defaultvalue>7</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Cookie expiration (days)</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.NumberInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="WebsiteAlertSettingsContentAlertMessageContents" columnprecision="0" columntype="contentitemreference" enabled="true" guid="13e5759c-945c-42a3-8957-a8a081329763" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Alert Messages</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["fea72523-73cf-4d4f-b37e-e0d960b7621f"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>6</MaximumItems>
+          <MinimumItems>0</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>2825d92c-cc61-48fb-a677-78f4c5c16b8f</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-exclamation-triangle</ClassIconClass>
+  <ClassName>KenticoCommunity.WebsiteAlertSettingsContent</ClassName>
+  <ClassShortName>KenticoCommunityWebsiteAlertSettingsContent</ClassShortName>
+  <ClassTableName>KenticoCommunity_WebsiteAlertSettingsContent</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

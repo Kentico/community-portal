@@ -19,33 +19,32 @@
             <div class="c-card_content">
 
                 <div class="mb-3 d-flex justify-content-between">
-                    <div class="d-flex gap-1">
-                        <a href="#@wrapperElId" class="answer-link" title="Link to this answer">🔗</a>
-                        <vc:author author="Model.Author" />
+                    <vc:author author="Model.Author" />
+
+                    <div>
+                        <span class="text-nowrap">@Model.DateCreated.ToString("yyyy/MM/dd")
+                            @Model.DateCreated.ToString("t") <a href="#@wrapperElId" class="answer-link"
+                                title="Link to this answer"></a></span>
+
+                        @if (Model.IsAcceptedAnswer)
+                        {
+                            <div class="c-card_icon text-success text-end">
+                                <svg class="c-icon mt-1">
+                                    <use xlink:href="/img/icons.svg#check" asp-append-version></use>
+                                </svg>
+                                <span class="fs-6">
+                                    <strong>Answer</strong>
+                                </span>
+                            </div>
+                        }
                     </div>
-                    <span>@Model.DateCreated.ToString("MMMM d, yyyy") @Model.DateCreated.ToString("t")</span>
+
                 </div>
 
                 <div class="member-generated-content overflow-auto" hx-disable>
                     @Model.HTMLSanitizedContentHTML
                 </div>
             </div>
-
-            @if (Model.IsAcceptedAnswer)
-            {
-                <div class="c-card_footer text-success">
-                    <div class="c-card_icon  text-success">
-                        <svg class="c-icon mt-1">
-                            <use xlink:href="/img/icons.svg#check" asp-append-version></use>
-                        </svg>
-                    </div>
-                    <div class="fs-sm-4">
-                        <small>
-                            <b>Answer</b>
-                        </small>
-                    </div>
-                </div>
-            }
 
             @if (Model.Permissions.CanInteract)
             {

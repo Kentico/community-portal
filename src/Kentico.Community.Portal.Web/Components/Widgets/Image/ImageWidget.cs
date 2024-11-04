@@ -48,7 +48,7 @@ public class ImageWidget(IMediator mediator) : ViewComponent
             return Result.Failure<ImageWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "The selected content item or image file no longer exists."));
         }
 
-        return new ImageWidgetViewModel(ImageViewModel.Create(img));
+        return new ImageWidgetViewModel(ImageViewModel.Create(img), props);
     }
 }
 
@@ -63,11 +63,33 @@ public class ImageWidgetProperties : BaseWidgetProperties
         AllowContentItemCreation = true,
         Order = 1)]
     public IEnumerable<ContentItemReference> SelectedImages { get; set; } = [];
+
+    [CheckBoxComponent(
+        Label = "Show description as caption?",
+        ExplanationText = "If true, a caption will appear below the image, populated by the image's description field.",
+        Order = 2
+    )]
+    public bool ShowDescriptionAsCaption { get; set; } = false;
+
+    [CheckBoxComponent(
+        Label = "Link image to full size file?",
+        ExplanationText = "If true, the image will be linked to a full resolution version of the image.",
+        Order = 3)]
+    public bool LinkToFullsizeImage { get; set; } = true;
 }
 
-public class ImageWidgetViewModel(ImageViewModel image) : BaseWidgetViewModel
+public class ImageWidgetViewModel : BaseWidgetViewModel
 {
     protected override string WidgetName { get; } = ImageWidget.NAME;
 
-    public ImageViewModel Image { get; } = image;
+    public ImageViewModel Image { get; }
+    public bool ShowDescriptionAsCaption { get; }
+    public bool LinkToFullsizeImage { get; }
+
+    public ImageWidgetViewModel(ImageViewModel image, ImageWidgetProperties props)
+    {
+        Image = image;
+        ShowDescriptionAsCaption = props.ShowDescriptionAsCaption;
+        LinkToFullsizeImage = props.LinkToFullsizeImage;
+    }
 }

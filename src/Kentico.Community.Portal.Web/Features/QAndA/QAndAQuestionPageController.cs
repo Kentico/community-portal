@@ -243,7 +243,7 @@ public class QAndAAuthorViewModel
     public string FormattedName =>
         string.IsNullOrWhiteSpace(FullName)
             ? Username
-            : $"{FullName} ({Username})";
+            : FullName;
 
     public IReadOnlyList<MemberBadgeViewModel> SelectedBadges { get; set; } = [];
 

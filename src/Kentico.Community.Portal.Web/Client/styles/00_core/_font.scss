@@ -42,6 +42,11 @@ $font-path: "/fonts"; // This is the runtime path - see vite.config.js
     url("#{$font-path}/xp-icons.woff2") format("woff2");
 }
 
+.heading:hover .heading-link {
+  visibility: visible;
+  opacity: 1;
+}
+
 .heading-link {
   visibility: hidden;
   opacity: 0;
@@ -56,21 +61,17 @@ $font-path: "/fonts"; // This is the runtime path - see vite.config.js
     color 0.2s;
   transition-timing-function: linear;
   text-decoration: none;
-}
-.heading-link:before {
-  font-family: "xp-icons";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-style: normal;
-  font-weight: 400;
-  font-variant: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  content: "\e962";
-}
 
-.heading:hover .heading-link {
-  visibility: visible;
-  opacity: 1;
+  &:before {
+    font-family: "xp-icons";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    content: "\e962";
+  }
 }

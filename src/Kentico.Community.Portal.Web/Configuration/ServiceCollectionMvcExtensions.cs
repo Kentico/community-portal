@@ -83,7 +83,7 @@ public static class ServiceCollectionMvcExtensions
             {
                 if (!env.IsDevelopment())
                 {
-                    _ = config.Filters.Add<CustomExceptionFilter>();
+                    _ = config.Filters.Add<GlobalExceptionFilter>();
                 }
             })
             .AddViewLocalization()

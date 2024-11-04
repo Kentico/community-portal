@@ -47,8 +47,15 @@
 
                 <div class="d-grid">
                     <input asp-for="EditedObjectID">
-                    <button type="submit" class="btn btn-primary btn-lighter px-5 mt-4">
-                        Submit your question
+                    <button type="submit" class="btn btn-primary btn-lighter px-5 mt-4">                    
+                        @if (Model.EditedObjectID is Guid)
+                        {
+                            <text>Update your question</text>
+                        }
+                        else
+                        {
+                            <text>Submit your question</text>
+                        }
                     </button>
 
                     @if (Model.EditedObjectID is Guid questionID)

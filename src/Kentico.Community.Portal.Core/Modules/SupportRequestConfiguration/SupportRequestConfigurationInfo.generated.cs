@@ -1,6 +1,5 @@
 using System;
 using System.Data;
-using System.Runtime.Serialization;
 
 using CMS;
 using CMS.DataEngine;
@@ -14,7 +13,6 @@ namespace Kentico.Community.Portal.Core.Modules
     /// <summary>
     /// Data container class for <see cref="SupportRequestConfigurationInfo"/>.
     /// </summary>
-    [Serializable]
     public partial class SupportRequestConfigurationInfo : AbstractInfo<SupportRequestConfigurationInfo, IInfoProvider<SupportRequestConfigurationInfo>>, IInfoWithId, IInfoWithGuid
     {
         /// <summary>
@@ -29,11 +27,6 @@ namespace Kentico.Community.Portal.Core.Modules
         public static readonly ObjectTypeInfo TYPEINFO = new ObjectTypeInfo(typeof(IInfoProvider<SupportRequestConfigurationInfo>), OBJECT_TYPE, "KenticoCommunity.SupportRequestConfiguration", "SupportRequestConfigurationID", "SupportRequestConfigurationLastModified", "SupportRequestConfigurationGUID", null, null, null, null, null)
         {
             TouchCacheDependencies = true,
-            ContinuousIntegrationSettings =
-            {
-                Enabled = true
-            },
-            SensitiveColumns = [nameof(SupportRequestConfigurationExternalEndpointURL)]
         };
 
 
@@ -107,17 +100,6 @@ namespace Kentico.Community.Portal.Core.Modules
         protected override void SetObject()
         {
             Provider.Set(this);
-        }
-
-
-        /// <summary>
-        /// Constructor for de-serialization.
-        /// </summary>
-        /// <param name="info">Serialization info.</param>
-        /// <param name="context">Streaming context.</param>
-        protected SupportRequestConfigurationInfo(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
         }
 
 

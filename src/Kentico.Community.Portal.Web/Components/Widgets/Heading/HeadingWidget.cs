@@ -53,22 +53,22 @@ public class HeadingWidgetProperties : BaseWidgetProperties
     public string HeadingText { get; set; } = "";
 
     [DropDownComponent(
-        Label = "Heading alignment",
-        ExplanationText = "Sets the alignment of the heading",
-        DataProviderType = typeof(EnumDropDownOptionsProvider<HeadingAlignments>),
-        Order = 2
-    )]
-    public string HeadingAlignment { get; set; } = nameof(HeadingAlignments.Left);
-    public HeadingAlignments HeadingAlignmentsParsed => EnumDropDownOptionsProvider<HeadingAlignments>.Parse(HeadingAlignment, HeadingAlignments.Left);
-
-    [DropDownComponent(
         Label = "Heading level",
         ExplanationText = "Sets the level of the heading",
         DataProviderType = typeof(EnumDropDownOptionsProvider<HeadingLevels>),
-        Order = 3
+        Order = 2
     )]
     public string HeadingLevel { get; set; } = nameof(HeadingLevels.H2);
     public HeadingLevels HeadingLevelsParsed => EnumDropDownOptionsProvider<HeadingLevels>.Parse(HeadingLevel, HeadingLevels.H2);
+
+    [DropDownComponent(
+        Label = "Heading alignment",
+        ExplanationText = "Sets the alignment of the heading",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<HeadingAlignments>),
+        Order = 3
+    )]
+    public string HeadingAlignment { get; set; } = nameof(HeadingAlignments.Left);
+    public HeadingAlignments HeadingAlignmentsParsed => EnumDropDownOptionsProvider<HeadingAlignments>.Parse(HeadingAlignment, HeadingAlignments.Left);
 
     [CheckBoxComponent(
         Label = "Show heading anchor?",

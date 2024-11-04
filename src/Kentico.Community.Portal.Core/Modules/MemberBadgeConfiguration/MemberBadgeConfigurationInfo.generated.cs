@@ -1,6 +1,5 @@
 using System;
 using System.Data;
-using System.Runtime.Serialization;
 
 using CMS;
 using CMS.DataEngine;
@@ -14,7 +13,6 @@ namespace Kentico.Community.Portal.Core.Modules
     /// <summary>
     /// Data container class for <see cref="MemberBadgeConfigurationInfo"/>.
     /// </summary>
-    [Serializable]
     public partial class MemberBadgeConfigurationInfo : AbstractInfo<MemberBadgeConfigurationInfo, IInfoProvider<MemberBadgeConfigurationInfo>>, IInfoWithId, IInfoWithGuid
     {
         /// <summary>
@@ -29,10 +27,6 @@ namespace Kentico.Community.Portal.Core.Modules
         public static readonly ObjectTypeInfo TYPEINFO = new ObjectTypeInfo(typeof(IInfoProvider<MemberBadgeConfigurationInfo>), OBJECT_TYPE, "KenticoCommunity.MemberBadgeConfiguration", "MemberBadgeConfigurationID", "MemberBadgeConfigurationLastModified", "MemberBadgeConfigurationGUID", null, null, null, null, null)
         {
             TouchCacheDependencies = true,
-            ContinuousIntegrationSettings =
-            {
-                Enabled = true
-            },
         };
 
 
@@ -117,17 +111,6 @@ namespace Kentico.Community.Portal.Core.Modules
         protected override void SetObject()
         {
             Provider.Set(this);
-        }
-
-
-        /// <summary>
-        /// Constructor for de-serialization.
-        /// </summary>
-        /// <param name="info">Serialization info.</param>
-        /// <param name="context">Streaming context.</param>
-        protected MemberBadgeConfigurationInfo(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
         }
 
 

@@ -12,50 +12,16 @@
     grid-area: main;
   }
 
-  &.v2 {
-    gap: 1.25rem;
-    grid-template-columns: 100%;
-    grid-template-areas:
-      "sidebar"
-      "main";
-  }
-
-  @include media-breakpoint-up(sm) {
-    &.v2 {
-      grid-template-columns: 13.5rem auto;
-      grid-template-areas: "sidebar main";
-    }
-  }
-
-  @include media-breakpoint-up(md) {
-    &.v2 {
-      gap: 2.5rem;
-      grid-template-columns: 15rem auto;
-      grid-template-areas: "sidebar main";
-    }
-  }
-
   @include media-breakpoint-up(lg) {
     gap: 1.5rem;
     grid-template-columns: 15rem auto;
     grid-template-rows: auto;
     grid-template-areas: "sidebar main";
-
-    &.v2 {
-      grid-template-columns: 15rem auto 15rem;
-      grid-template-areas: "sidebar main .";
-    }
   }
 
   @include media-breakpoint-up(xl) {
     gap: 3rem;
     grid-template-columns: 18rem auto;
-
-    &.v2 {
-      gap: 10%;
-      grid-template-columns: 16rem auto 16rem;
-      grid-template-areas: "sidebar main .";
-    }
   }
 }
 

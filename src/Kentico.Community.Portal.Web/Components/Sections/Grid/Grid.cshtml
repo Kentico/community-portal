@@ -60,10 +60,10 @@
         Alignments.Left or _ => "text-left"
       };
 
-      <h2 id="@slug" class="@alignmentClass">@Model.Heading
+      <h2 id="@slug" class="heading @alignmentClass">@Model.Heading
         @if (Model.IsHeadingAnchorLinkVisible)
         {
-          <span class="ml-2"><a href="#@slug">#</a></span>
+          <a title="Copy link to heading" class="heading-link" href="#@(slug)"></a>
         }
       </h2>
     }

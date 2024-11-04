@@ -1,6 +1,25 @@
-﻿@model Kentico.Community.Portal.Web.Features.Errors.ErrorPageViewModel
+@model Kentico.Community.Portal.Web.Features.Errors.ErrorPageViewModel
 
-@if (Model.MessageHTML is not null)
-{
-    @Model.MessageHTML
-}
+<main>
+    <section class="c-section error-hero">
+        <div class="container">
+            <h1 class="text-center">@Model.StatusCode<span class="text-secondary">.</span></h1>
+        </div>
+    </section>
+    <section class="c-section default text-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5">
+
+                    <h2 class="fs-md-6">There was a problem.</h2>
+
+                    <p class="mt-md-3">We were unable to complete your request.</p>
+                    <p class="mt-md-3">If you continue to experience this problem, let us know.</p>
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-3 my-md-5 pt-2">
+                        <a class="btn btn-primary btn-lg" href="/support/feedback">Send us some feedback</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

@@ -1,0 +1,54 @@
+@using Kentico.Community.Portal.Web.Components.ViewComponents.Navigation
+
+@model NotificationTrayViewModel
+
+<div class="notification-tray" id="notificationTray">
+    <div class="notification-tray-header">
+        <h5 class="mb-0">Notifications</h5>
+        <button id="notificationsClose" class="btn-close btn-close-dark" type="button" aria-label="Close"
+            title="Close tray"></button>
+    </div>
+    <div class="notification-tray-body">
+        @if (Model.Messages.Count == 0)
+        {
+            <div class="notification-item">
+                <p>You have no notifications.</p>
+            </div>
+        }
+        @foreach (var notification in Model.Messages)
+        {
+            <form hx-post hx-route="@NotificationController.ROUTE_CONFIRM_ALERT" hx-route-messageGUID="@notification.GUID"
+                hx-swap="outerHTML" class="notification-item d-flex gap-2">
+                <div>
+                    @if (notification.Title.TryGetValue(out string? title))
+                    {
+                        <span class="me-1"><strong>@title</strong></span>
+                    }
+                    @notification.HTML
+                </div>
+                <button class="btn-close btn-close-dark" type="submit" aria-label="Close"></button>
+            </form>
+        }
+    </div>
+</div>
+
+<script type="module">
+    const notificationCount = @Model.Messages.Count;
+    if (notificationCount > 0) {
+        /** 
+          * @@type { HTMLButtonElement[] } 
+          */
+        const notificationBellEls = [document.getElementById('notificationBell'), document.querySelector('#notificationBellMobile')];
+        /** 
+          * @@type { HTMLSpanElement } 
+          */
+        const notificationCountEls = document.querySelectorAll('[notification-count]');
+        for (const countEl of notificationCountEls) {
+            countEl.innerHTML = notificationCount;
+            countEl.classList.remove('d-none');
+            for (const bellEl of notificationBellEls) {
+                bellEl.classList.add('btn-outline-secondary');
+            }
+        }
+    }
+</script>

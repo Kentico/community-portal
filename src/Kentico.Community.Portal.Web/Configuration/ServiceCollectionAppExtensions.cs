@@ -3,6 +3,7 @@ using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Infrastructure;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
+using Kentico.Community.Portal.Web.Components.ViewComponents.Navigation;
 using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
 using Kentico.Community.Portal.Web.Features.Blog.Events;
 using Kentico.Community.Portal.Web.Features.DataCollection;
@@ -60,7 +61,9 @@ public static class ServiceCollectionAppExtensions
             .AddTransient<ContentItemQueryTools>()
             .AddTransient<DataItemCommandTools>()
             .AddTransient<DataItemQueryTools>()
-            .AddSingleton<IChannelDataProvider, ChannelDataProvider>();
+            .AddSingleton<IChannelDataProvider, ChannelDataProvider>()
+            .AddTransient<AlertMessageCookieManager>()
+            .AddSingleton(_ => TimeProvider.System);
 
     private static IServiceCollection AddRendering(this IServiceCollection services) =>
         services

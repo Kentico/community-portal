@@ -79,7 +79,7 @@ public class BlogPostPageTemplateController(
             Title = post.ListableItemTitle,
             Date = post.BlogPostContentPublishedDate,
             UnsanitizedContentHTML = contentHTML,
-            AbsoluteURL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}{Request.Path}",
+            AbsoluteURL = Request.Path.Value!.RelativePathToAbsoluteURL(Request),
             DiscussionLinkPath = await GetDiscussionLinkPath(blogPage, data.WebPage.WebsiteChannelName)
         };
 

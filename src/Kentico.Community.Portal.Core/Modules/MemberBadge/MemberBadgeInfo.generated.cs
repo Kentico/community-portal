@@ -1,6 +1,5 @@
 using System;
 using System.Data;
-using System.Runtime.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +15,7 @@ namespace Kentico.Community.Portal.Core.Modules
     /// <summary>
     /// Data container class for <see cref="MemberBadgeInfo"/>.
     /// </summary>
-    [Serializable, InfoCache(InfoCacheBy.ID)]
+    [InfoCache(InfoCacheBy.ID)]
     public partial class MemberBadgeInfo : AbstractInfo<MemberBadgeInfo, IInfoProvider<MemberBadgeInfo>>, IInfoWithId, IInfoWithName, IInfoWithGuid
     {
         /// <summary>
@@ -33,10 +32,6 @@ namespace Kentico.Community.Portal.Core.Modules
             TouchCacheDependencies = true,
             DependsOn = new List<ObjectDependency>()
             {
-            },
-            ContinuousIntegrationSettings =
-            {
-                Enabled = true
             },
         };
 
@@ -166,17 +161,6 @@ namespace Kentico.Community.Portal.Core.Modules
         protected override void SetObject()
         {
             Provider.Set(this);
-        }
-
-
-        /// <summary>
-        /// Constructor for de-serialization.
-        /// </summary>
-        /// <param name="info">Serialization info.</param>
-        /// <param name="context">Streaming context.</param>
-        protected MemberBadgeInfo(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
         }
 
 

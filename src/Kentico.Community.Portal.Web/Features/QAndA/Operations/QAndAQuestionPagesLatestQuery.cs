@@ -22,7 +22,7 @@ public class QAndAQuestionPagesLatestQueryHandler(WebPageQueryTools tools) : Web
             .Parameters(
                 q => q
                 .Where(w => w.WhereContainsTags(nameof(QAndAQuestionPage.QAndAQuestionPageDiscussionType), [SystemTaxonomies.QAndADiscussionTypeTaxonomy.Question.TagGUID]))
-                .OrderBy(new[] { new OrderByColumn(nameof(QAndAQuestionPage.QAndAQuestionPageDateCreated), OrderDirection.Descending) })
+                .OrderBy([new OrderByColumn(nameof(QAndAQuestionPage.QAndAQuestionPageDateCreated), OrderDirection.Descending)])
                 .TopN(request.Count));
 
         var pages = await Executor.GetMappedWebPageResult<QAndAQuestionPage>(b, DefaultQueryOptions, cancellationToken);

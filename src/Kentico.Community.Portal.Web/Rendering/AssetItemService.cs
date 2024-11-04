@@ -170,9 +170,3 @@ public class AssetItemService(IInfoProvider<MediaFileInfo> mediaFileInfoProvider
         return span.ToString();
     }
 }
-
-public static class MediaFileURLExtensions
-{
-    public static string AbsoluteURL(this IMediaFileUrl url, HttpRequest request) =>
-        AssetItemService.BuildFullFileUrl(url, request);
-}

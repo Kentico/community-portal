@@ -4,27 +4,29 @@
 
 @if (Model.ID == 0)
 {
-    <div class="mb-2">
-        <div class="page-QandA__author-container">
-            <div class="page-QandA__author">
-                <div class="page-QandA__avatar-image-sm-div">
-                    <img class="page-QandA__avatar-image-sm img-fluid" xpc-member-avatar="@Model.ID" />
-                </div>
-                <span class="ms-1">@Model.FormattedName</span>
+    <div class="page-QandA__author-container">
+        <div class="page-QandA__author">
+            <div class="page-QandA__avatar-image-sm-div">
+                <img class="page-QandA__avatar-image-sm img-fluid" xpc-member-avatar="@Model.ID" />
             </div>
+            <span class="ms-1">
+                @Model.FormattedName
+            </span>
         </div>
     </div>
 
     return;
 }
 
-<div class="mb-2">
+<div>
     <div class="page-QandA__author-container">
         <a class="page-QandA__author" asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@Model.ID">
             <div class="page-QandA__avatar-image-sm-div">
                 <img class="page-QandA__avatar-image-sm img-fluid" xpc-member-avatar="@Model.ID" />
             </div>
-            <span class="ms-1">@Model.FormattedName</span>
+            <span class="ms-1">
+                @Model.FormattedName
+            </span>
         </a>
     </div>
     <vc:member-badges badges=@Model.SelectedBadges />

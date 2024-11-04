@@ -1,7 +1,24 @@
 @model Kentico.Community.Portal.Web.Components.Widgets.Image.ImageWidgetViewModel
 
-<div xpc-preview-outline="@Model.ComponentName">
-    <a href="@Model.Image.URL">
-        <img xpc-image="Model.Image" class="img-fluid">
-    </a>
-</div>
+<figure class="figure" xpc-preview-outline="@Model.ComponentName">
+    @if (Model.LinkToFullsizeImage)
+    {
+        <a href="@Model.Image.URL">
+            <picture>
+                <img xpc-image="Model.Image" class="img-fluid">
+            </picture>
+        </a>
+    }
+    else
+    {
+        <picture>
+            <img xpc-image="Model.Image" class="img-fluid">
+        </picture>
+    }
+    @if (Model.ShowDescriptionAsCaption)
+    {
+        <figcaption class="figure-caption">
+            @Model.Image.AltText
+        </figcaption>
+    }
+</figure>

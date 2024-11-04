@@ -23,8 +23,8 @@ public class SeoController(Sitemap sitemap, IMediator mediator) : Controller
     [HttpGet("robots.txt")]
     public async Task<ActionResult> RobotsTxt()
     {
-        var settings = await mediator.Send(new WebsiteSettingsContentQuery());
+        var settings = await mediator.Send(new PortalWebsiteSettingsQuery());
 
-        return Content(settings.WebsiteSettingsContentRobotsTxt, "text/plain", Encoding.UTF8);
+        return Content(settings.GlobalContent.WebsiteGlobalContentRobotsTxt, "text/plain", Encoding.UTF8);
     }
 }

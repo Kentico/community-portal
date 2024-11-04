@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>Alert Message Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="f41f9609-2304-45b9-bbb7-afc44b2eac48" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="e1b5a50f-181e-4797-a1e0-e4880a00a6a9" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="941a12ba-fdae-4bac-ac9c-387dd8e16b36" isunique="true" system="true" />
+      <field allowempty="true" column="AlertMessageContentTitle" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="c2d86f6a-ffaa-4963-aefa-02995e0d677c" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Title (optional)</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+          <WatermarkText>Ex: New blog post</WatermarkText>
+        </settings>
+      </field>
+      <field column="AlertMessageContentMessageHTML" columnprecision="0" columntype="richtexthtml" enabled="true" guid="3e48566a-3684-49c2-b828-d2e2f1bba096" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Message</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <ConfigurationName>Kentico.Administration.WebsitesStructuredContent</ConfigurationName>
+          <controlname>Kentico.Administration.RichTextEditor</controlname>
+        </settings>
+      </field>
+      <field column="AlertMessageContentType" columnprecision="0" columnsize="25" columntype="text" enabled="true" guid="b063a0ea-ee4b-4985-bc83-ccd442810908" visible="true">
+        <properties>
+          <defaultvalue>Medium</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Type</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+High;High
+Medium;Medium
+Low;Low
+
+]]>
+          </Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+          <Placeholder>(select)</Placeholder>
+        </settings>
+      </field>
+      <field allowempty="true" column="AlertMessageContentDisplayForContactGroup" columnprecision="0" columntype="objectguids" enabled="true" guid="f5faf97e-cead-4c02-a708-70d3803c9d77" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[If selected, this alert will only be displayed to contacts in the given Contact Group]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Contact Groups</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectGuidSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <ObjectType>OM.ContactGroup</ObjectType>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>fea72523-73cf-4d4f-b37e-e0d960b7621f</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-exclamation-triangle</ClassIconClass>
+  <ClassName>KenticoCommunity.AlertMessageContent</ClassName>
+  <ClassShortName>KenticoCommunityAlertMessageContent</ClassShortName>
+  <ClassTableName>KenticoCommunity_AlertMessageContent</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

@@ -1,6 +1,5 @@
 using System;
 using System.Data;
-using System.Runtime.Serialization;
 
 using CMS;
 using CMS.DataEngine;
@@ -14,7 +13,7 @@ namespace Kentico.Community.Portal.Core.Modules
     /// <summary>
     /// Data container class for <see cref="SupportRequestProcessingEventInfo"/>.
     /// </summary>
-    [Serializable, InfoCache(InfoCacheBy.ID)]
+    [InfoCache(InfoCacheBy.ID)]
     public partial class SupportRequestProcessingEventInfo : AbstractInfo<SupportRequestProcessingEventInfo, IInfoProvider<SupportRequestProcessingEventInfo>>, IInfoWithId
     {
         /// <summary>
@@ -102,17 +101,6 @@ namespace Kentico.Community.Portal.Core.Modules
         protected override void SetObject()
         {
             Provider.Set(this);
-        }
-
-
-        /// <summary>
-        /// Constructor for de-serialization.
-        /// </summary>
-        /// <param name="info">Serialization info.</param>
-        /// <param name="context">Streaming context.</param>
-        protected SupportRequestProcessingEventInfo(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
         }
 
 

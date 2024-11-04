@@ -1,5 +1,6 @@
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Membership;
+using Kentico.OnlineMarketing.Web.Mvc;
 using Microsoft.AspNetCore.Identity;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -32,6 +33,7 @@ public static class ServiceCollectionMembershipExtensions
             .AddSignInManager<SignInManager<CommunityMember>>()
             .Services
             .AddScoped<MemberContactManager>()
+            .Decorate<IMemberToContactMapper, CommunityMemberToContactMapper>()
             .ConfigureApplicationCookie(options =>
             {
                 options.ExpireTimeSpan = TimeSpan.FromDays(1);

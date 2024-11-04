@@ -25,21 +25,24 @@
             <a class="navbar-brand" href="/">
                 <img src="/img/logo.svg" alt="Kentico">
             </a>
-            @if (User.Identity?.IsAuthenticated != true)
-            {
-                <a id="sign-in-tablet" class="btn btn-primary btn-lg text-uppercase" asp-controller="Authentication"
-                    asp-action="Login" test-id="signInMobile">Sign in</a>
-            }
-            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-bar"></span>
-                <span class="navbar-toggler-bar"></span>
-                <span class="navbar-toggler-bar"></span>
-            </button>
-            <div class="collapse navbar-collapse d-none d-md-block" id="navbarNavDropdown">
+            <div class="d-block d-md-none">
+                <button class="btn position-relative p-2 mx-3" id="notificationBellMobile">
+                    <svg class="c-icon">
+                        <use xlink:href="/img/icons.svg#bell" asp-append-version></use>
+                    </svg>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none"
+                        notification-count>0</span>
+                </button>
+                <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar"></span>
+                    <span class="navbar-toggler-bar"></span>
+                    <span class="navbar-toggler-bar"></span>
+                </button>
+            </div>
+            <div class="d-none d-md-block">
                 <ul class="c-main-nav navbar-nav ms-auto">
-                    <div class="c-navbar-dropdown-bg"></div>
                     @foreach (var item in Model.NavItems)
                     {
                         <li class="nav-item">
@@ -50,9 +53,9 @@
 
                     @if (User.Identity?.IsAuthenticated != true)
                     {
-                        <li class="nav-item with-btn">
-                            <a class="btn btn-primary btn-lg text-uppercase" asp-controller="Authentication"
-                                asp-action="Login" asp-route-returnURL="@Context.Request.Path" test-id="signIn">Sign in</a>
+                        <li class="nav-item d-none d-md-block ms-3">
+                            <a class="btn btn-primary text-uppercase" asp-controller="Authentication" asp-action="Login"
+                                asp-route-returnURL="@Context.Request.Path" test-id="signIn">Sign in</a>
                         </li>
                     }
                     else
@@ -86,6 +89,16 @@
                             </ul>
                         </li>
                     }
+                    <li class="nav-item d-flex align-items-center">
+                        <button class="btn position-relative p-2 mx-3" id="notificationBell">
+                            <svg class="c-icon d-none d-md-block">
+                                <use xlink:href="/img/icons.svg#bell" asp-append-version></use>
+                            </svg>
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none"
+                                notification-count>0</span>
+                        </button>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -93,7 +106,6 @@
 
     <div class="collapse navbar-collapse position-static d-md-none" id="navbarNavDropdown">
         <ul class="c-main-nav navbar-nav ms-auto">
-            <div class="c-navbar-dropdown-bg"></div>
             @foreach (var item in Model.NavItems)
             {
                 <li class="nav-item">
@@ -142,6 +154,31 @@
         </ul>
     </div>
 
-    <vc:alert-box />
+    <vc:notification-tray />
 
 </header>
+
+<script>
+    const notificationBellEls = [document.getElementById('notificationBell'), document.querySelector('#notificationBellMobile')];
+    const notificationTray = document.getElementById('notificationTray');
+    const closeTray = document.getElementById('notificationsClose');
+    /** 
+     * @@type { HTMLSpanElement } 
+     */
+    const notificationCountEls = document.querySelectorAll('[notification-count]');
+
+    for (const bellEl of notificationBellEls) {
+        bellEl.addEventListener('click', () => {
+            notificationTray.classList.toggle('open');
+            for (const countEl of notificationCountEls) {
+                countEl.classList.add('d-none');
+                countEl.innerHTML = '';
+                bellEl.classList.remove('btn-outline-secondary')
+            }
+        });
+    }
+
+    closeTray.addEventListener('click', () => {
+        notificationTray.classList.remove('open');
+    });
+</script>

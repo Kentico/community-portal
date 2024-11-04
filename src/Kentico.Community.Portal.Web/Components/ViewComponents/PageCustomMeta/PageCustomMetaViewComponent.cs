@@ -15,7 +15,7 @@ public class PageCustomMetaViewComponent(
     private readonly IMediator mediator = mediator;
     private readonly WebPageMetaService metaService = metaService;
     private readonly IHttpContextAccessor contextAccessor = contextAccessor;
-    private readonly ReCaptchaSettings settings = options.Value;
+    private readonly ReCaptchaSettings reCaptchaSettings = options.Value;
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
@@ -23,16 +23,15 @@ public class PageCustomMetaViewComponent(
 
         string url = contextAccessor.HttpContext?.Request.GetEncodedUrl() ?? "";
 
-        var settings = await mediator.Send(new WebsiteSettingsContentQuery());
+        var settings = await mediator.Send(new PortalWebsiteSettingsQuery());
 
         var vm = new PageCustomMetaViewModel(meta)
         {
-            SiteName = settings.WebsiteSettingsContentWebsiteDisplayName,
+            SiteName = settings.GlobalContent.WebsiteGlobalContentDisplayName,
             URL = url,
-            // TODO set this based on the current page specifying to include it
-            CaptchaSiteKey = this.settings.SiteKey,
-            OGImageURL = meta.OGImageURL,
-            MetaRobotsContent = meta.Robots
+            CaptchaSiteKey = Maybe.From(reCaptchaSettings.SiteKey).MapNullOrWhiteSpaceAsNone(),
+            OGImageURL = Maybe.From(meta.OGImageURL).MapNullOrWhiteSpaceAsNone(),
+            MetaRobotsContent = Maybe.From(meta.Robots).MapNullOrWhiteSpaceAsNone()
         };
 
         return View("~/Components/ViewComponents/PageCustomMeta/PageCustomMeta.cshtml", vm);
@@ -41,8 +40,6 @@ public class PageCustomMetaViewComponent(
 
 public class PageCustomMetaViewModel
 {
-    public static PageCustomMetaViewModel Empty { get; } = new PageCustomMetaViewModel();
-
     public PageCustomMetaViewModel(WebpageMeta meta)
     {
         Title = meta.Title;
@@ -52,22 +49,12 @@ public class PageCustomMetaViewModel
             : meta.CanonicalURL;
     }
 
-    private PageCustomMetaViewModel()
-    {
-        OGImageURL = "";
-        Title = "";
-        Description = "";
-        SiteName = "";
-        CaptchaSiteKey = null;
-        MetaRobotsContent = null;
-    }
-
-    public string URL { get; init; } = "";
-    public string? OGImageURL { get; init; } = "";
     public string Title { get; init; } = "";
     public string Description { get; init; } = "";
-    public string? CaptchaSiteKey { get; init; } = null;
+    public string URL { get; init; } = "";
+    public Maybe<string> OGImageURL { get; init; }
     public string SiteName { get; init; } = "";
-    public string? MetaRobotsContent { get; init; } = null;
+    public Maybe<string> MetaRobotsContent { get; init; }
     public Maybe<string> CanonicalURL { get; init; }
+    public Maybe<string> CaptchaSiteKey { get; init; }
 }

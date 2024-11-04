@@ -47,7 +47,7 @@ public class VideoWidget(IMediator mediator) : ViewComponent
             return Result.Failure<VideoWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "The selected content item or video file no longer exists."));
         }
 
-        return new VideoWidgetViewModel(video.GetValueOrDefault(), props.VideoAlignmentParsed);
+        return new VideoWidgetViewModel(vid, props);
     }
 }
 
@@ -68,14 +68,29 @@ public class VideoWidgetProperties : BaseWidgetProperties
     )]
     public string VideoAlignment { get; set; } = nameof(Alignments.Left);
     public Alignments VideoAlignmentParsed => EnumDropDownOptionsProvider<Alignments>.Parse(VideoAlignment, Alignments.Left);
+
+    [CheckBoxComponent(
+        Label = "Show description as caption?",
+        ExplanationText = "If true, a caption will appear below the video, populated by the video's description field.",
+        Order = 3
+    )]
+    public bool ShowDescriptionAsCaption { get; set; } = false;
 }
 
-public class VideoWidgetViewModel(VideoContent video, Alignments alignment) : BaseWidgetViewModel
+public class VideoWidgetViewModel : BaseWidgetViewModel
 {
     protected override string WidgetName { get; } = VideoWidget.NAME;
 
-    public VideoContent Video { get; } = video;
-    public Alignments Alignment { get; } = alignment;
+    public VideoContent Video { get; }
+    public Alignments Alignment { get; }
+    public bool ShowDescriptionAsCaption { get; }
+
+    public VideoWidgetViewModel(VideoContent video, VideoWidgetProperties props)
+    {
+        Video = video;
+        Alignment = props.VideoAlignmentParsed;
+        ShowDescriptionAsCaption = props.ShowDescriptionAsCaption;
+    }
 };
 
 public enum Alignments

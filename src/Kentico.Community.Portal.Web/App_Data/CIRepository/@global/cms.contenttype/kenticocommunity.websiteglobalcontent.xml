@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>Website Global Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="846a5e3c-884a-4d3d-a0ad-c7184022f788" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="1335b026-aa6f-4a81-a34c-d6912ec34b56" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="bcab580f-0d32-4d80-9c75-402aea142b45" isunique="true" system="true" />
+      <field column="WebsiteGlobalContentDisplayName" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="97f7e871-9b38-4f3f-862c-b664a90503e5" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Display Name</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field column="WebsiteGlobalContentPageTitleFormat" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="1a5db3bd-31a6-4b9d-bb7c-7506d91807d4" visible="true">
+        <properties>
+          <defaultvalue>{0}</defaultvalue>
+          <explanationtext>
+            <![CDATA[<p>C# format string used to create the HTML title of a page.</p><p>Use {0} to define the location of the page title.</p><p>Ex: {0} | Kentico Community</p>]]>
+          </explanationtext>
+          <explanationtextashtml>True</explanationtextashtml>
+          <fieldcaption>Page title format</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field allowempty="true" column="WebsiteGlobalContentLogoImageContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="30bca487-bc57-440c-83da-a6c4ebdb5074" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[Used in the website header, footer, or anywhere else with globally applied brand logo.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Logo</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["40334c2a-0969-4e68-96eb-e0fb8d89b37e"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>1</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field column="WebsiteGlobalContentRobotsTxt" columnprecision="0" columntype="longtext" enabled="true" guid="9701b7ca-c812-4d1e-aa72-67c27aed1db9" visible="true">
+        <properties>
+          <explanationtext>Served from /robots.txt</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Robots.txt</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>cdaf9f58-7a05-4d5b-91ad-84014c970786</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-earth</ClassIconClass>
+  <ClassName>KenticoCommunity.WebsiteGlobalContent</ClassName>
+  <ClassShortName>KenticoCommunityWebsiteGlobalContent</ClassShortName>
+  <ClassTableName>KenticoCommunity_WebsiteGlobalContent</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

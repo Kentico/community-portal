@@ -12,9 +12,16 @@
 }
 
 <div class="@alignmentClass" xpc-preview-outline="@Model.ComponentName">
-    <video class="w-100" controls>
-        <source src="@Model.Video.VideoContentAsset.Url"
-            type="@MimeTypeHelper.GetMimetype(Model.Video.VideoContentAsset.Metadata.Extension)">
-        Your browser does not support the video tag.
-    </video>
+    <figure>
+        <video class="w-100" controls>
+            <source src="@Model.Video.VideoContentAsset.Url" type="@Model.Video.VideoContentAssetMimeType">
+            Your browser does not support the video tag.
+        </video>
+        @if (Model.ShowDescriptionAsCaption)
+        {
+            <figcaption class="figure-caption">
+                @Model.Video.MediaItemShortDescription
+            </figcaption>
+        }
+    </figure>
 </div>

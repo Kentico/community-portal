@@ -15,7 +15,7 @@ public class CookieBannerViewComponent(IMediator mediator, IHttpContextAccessor 
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var settings = await mediator.Send(new WebsiteSettingsContentQuery());
+        var settings = await mediator.Send(new PortalWebsiteSettingsQuery());
 
         bool accepted = ValidationHelper.GetBoolean(cookies.Get(CookieNames.COOKIE_ACCEPTANCE), false);
         bool isCookiePolicyPage = contextAccessor.HttpContext?.Request.Path.ToString().Equals("/cookies-policy", StringComparison.InvariantCultureIgnoreCase) ?? false;
@@ -24,8 +24,8 @@ public class CookieBannerViewComponent(IMediator mediator, IHttpContextAccessor 
 
         var vm = new CookieBannerViewModel()
         {
-            CookieBannerHeading = settings.WebsiteSettingsContentCookieBannerHeading,
-            CookieBannerContentHTML = new HtmlString(settings.WebsiteSettingsContentCookiebannerContentHTML),
+            CookieBannerHeading = settings.CookieBannerSettings.WebsiteCookieBannerSettingsContentHeading,
+            CookieBannerContentHTML = new HtmlString(settings.CookieBannerSettings.WebsiteCookieBannerSettingsContentMessageHTML),
             CookiePolicyPagePath = "/cookies-policy",
             HideBanner = hideBanner
         };

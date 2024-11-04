@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using CMS.ContentEngine;
-using CMS.DataEngine;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components.Widgets.LinkList;
 using Kentico.PageBuilder.Web.Mvc;
@@ -110,16 +109,19 @@ public class LinkContentQueryHandler(ContentItemQueryTools tools) : ContentItemQ
 {
     public override async Task<LinkContentsQueryResponse> Handle(LinkContentsQuery request, CancellationToken cancellationToken = default)
     {
-        var b = new ContentItemQueryBuilder().ForContentType(LinkContent.CONTENT_TYPE_NAME, queryParameters =>
-        {
-            _ = queryParameters
-                .Where(w => w.WhereIn(nameof(ContentItemFields.ContentItemGUID), request.ContentItemGUIDs.ToArray()))
-                .OrderBy(new[] { new OrderByColumn(nameof(LinkContent.LinkContentLabel), OrderDirection.Ascending) });
-        });
+        var b = new ContentItemQueryBuilder()
+            .ForContentType(
+                LinkContent.CONTENT_TYPE_NAME,
+                q => q
+                    .Where(w => w.WhereIn(
+                        nameof(ContentItemFields.ContentItemGUID),
+                        request.ContentItemGUIDs.ToArray())));
 
-        var contents = await Executor.GetMappedResult<LinkContent>(b, DefaultQueryOptions, cancellationToken);
+        var contents = (await Executor.GetMappedResult<LinkContent>(b, DefaultQueryOptions, cancellationToken))
+            .OrderBy(p => Array.IndexOf(request.ContentItemGUIDs, p.SystemFields.ContentItemGUID))
+            .ToList();
 
-        return new(contents.ToList());
+        return new(contents);
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(LinkContentsQuery query, LinkContentsQueryResponse result, ICacheDependencyKeysBuilder builder) =>

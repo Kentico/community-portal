@@ -13,10 +13,33 @@ form .editormd-fullscreen {
 }
 
 .answer-link {
+  --link-color: #2b2422;
+  visibility: visible;
+  opacity: 1;
+  cursor: pointer;
+  margin-left: 2px;
+  font-size: 1.2em;
+  transition:
+    color 0.2s,
+    text-decoration 0.2s;
+  transition-timing-function: linear;
   text-decoration: none;
 
   &:hover {
     text-decoration: underline;
+  }
+
+  &::before {
+    font-family: "xp-icons";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    content: "\e962";
   }
 }
 

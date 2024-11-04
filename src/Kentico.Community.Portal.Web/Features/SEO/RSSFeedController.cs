@@ -151,7 +151,7 @@ public class RSSFeedController(
                 .TryFirst()
                 .Map(c => c.ListableItemShortDescription)
                 .GetValueOrDefault("");
-            var absoluteURI = new Uri(postURL.AbsoluteURL(Request));
+            var absoluteURI = new Uri(postURL.WebPageAbsoluteURL(Request));
             string pageID = postPage.SystemFields.WebPageItemGUID.ToString("N");
             var item = new SyndicationItem(title, description, absoluteURI, pageID, post.BlogPostContentPublishedDate)
             {
@@ -171,7 +171,7 @@ public class RSSFeedController(
                 .Execute(tag => item.Categories.Add(new SyndicationCategory(tag.DisplayName)));
 
             post.ToImageViewModel()
-                .Execute(image => item.ElementExtensions.Add(new XElement("image", image.URL.AbsoluteURL(Request))));
+                .Execute(image => item.ElementExtensions.Add(new XElement("image", image.URL.RelativePathToAbsoluteURL(Request))));
 
             items.Add(item);
         }
@@ -199,7 +199,7 @@ public class RSSFeedController(
             string description = Maybe.From(page.WebPageMetaDescription)
                 .MapNullOrWhiteSpaceAsNone()
                 .GetValueOrDefault("");
-            var absoluteURI = new Uri(postURL.AbsoluteURL(Request));
+            var absoluteURI = new Uri(postURL.WebPageAbsoluteURL(Request));
             string pageID = page.SystemFields.WebPageItemGUID.ToString("N");
             var item = new SyndicationItem(title, description, absoluteURI, pageID, page.QAndAQuestionPageDateModified)
             {

@@ -1,6 +1,5 @@
 using System;
 using System.Data;
-using System.Runtime.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +15,7 @@ namespace Kentico.Community.Portal.Core.Modules
     /// <summary>
     /// Data container class for <see cref="QAndAAnswerDataInfo"/>.
     /// </summary>
-    [Serializable, InfoCache(InfoCacheBy.ID)]
+    [InfoCache(InfoCacheBy.ID)]
     public partial class QAndAAnswerDataInfo : AbstractInfo<QAndAAnswerDataInfo, IInfoProvider<QAndAAnswerDataInfo>>, IInfoWithId, IInfoWithName, IInfoWithGuid
     {
         /// <summary>
@@ -37,10 +36,6 @@ namespace Kentico.Community.Portal.Core.Modules
                 new ObjectDependency("QAndAAnswerDataQuestionWebPageItemID", "cms.webpageitem", ObjectDependencyEnum.Binding),
                 new ObjectDependency("QAndAAnswerDataWebsiteChannelID", "cms.websitechannel", ObjectDependencyEnum.NotRequired),
             },
-            ContinuousIntegrationSettings =
-            {
-                Enabled = true
-            }
         };
 
 
@@ -158,17 +153,6 @@ namespace Kentico.Community.Portal.Core.Modules
         protected override void SetObject()
         {
             Provider.Set(this);
-        }
-
-
-        /// <summary>
-        /// Constructor for de-serialization.
-        /// </summary>
-        /// <param name="info">Serialization info.</param>
-        /// <param name="context">Streaming context.</param>
-        protected QAndAAnswerDataInfo(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
         }
 
 

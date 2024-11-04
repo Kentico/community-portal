@@ -1,6 +1,5 @@
 using System;
 using System.Data;
-using System.Runtime.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,8 +15,7 @@ namespace Kentico.Community.Portal.Core.Modules
     /// <summary>
     /// Data container class for <see cref="BizFormSettingsInfo"/>.
     /// </summary>
-    [Serializable]
-    public class BizFormSettingsInfo : AbstractInfo<BizFormSettingsInfo, IInfoProvider<BizFormSettingsInfo>>, IInfoWithId, IInfoWithGuid
+    public partial class BizFormSettingsInfo : AbstractInfo<BizFormSettingsInfo, IInfoProvider<BizFormSettingsInfo>>, IInfoWithId, IInfoWithGuid
     {
         /// <summary>
         /// Object type.
@@ -36,10 +34,6 @@ namespace Kentico.Community.Portal.Core.Modules
                 new ObjectDependency("BizFormSettingsBizFormID", "cms.form", ObjectDependencyEnum.Required),
                 new ObjectDependency("BizFormSettingsInternalAutoresponderRecipientUserID", "cms.user", ObjectDependencyEnum.NotRequired),
             },
-            ContinuousIntegrationSettings =
-            {
-                Enabled = true
-            }
         };
 
 
@@ -135,17 +129,6 @@ namespace Kentico.Community.Portal.Core.Modules
         protected override void SetObject()
         {
             Provider.Set(this);
-        }
-
-
-        /// <summary>
-        /// Constructor for de-serialization.
-        /// </summary>
-        /// <param name="info">Serialization info.</param>
-        /// <param name="context">Streaming context.</param>
-        protected BizFormSettingsInfo(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
         }
 
 

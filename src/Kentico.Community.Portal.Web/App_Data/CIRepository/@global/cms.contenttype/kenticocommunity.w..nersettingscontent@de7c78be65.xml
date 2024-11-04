@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>Website Cookie Banner Settings Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="d59c78d1-4d20-447b-adc3-eda9c337abc3" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="4435254b-23f2-4271-abe1-90cacf3b6d0e" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="47cb8e9f-3e6d-4d73-b3b0-e227a03a308a" isunique="true" system="true" />
+      <field column="WebsiteCookieBannerSettingsContentHeading" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="26f93c94-b1fa-454d-a573-f7706bdb58b3" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Heading</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field column="WebsiteCookieBannerSettingsContentMessageHTML" columnprecision="0" columntype="richtexthtml" enabled="true" guid="052d4ed1-6631-4e02-b903-0a2cadc97135" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Message</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.RichTextEditor</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>143434c5-f46c-4b36-81ea-755d2f10a92e</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-cookie</ClassIconClass>
+  <ClassName>
+    <![CDATA[KenticoCommunity.WebsiteCookieBannerSettingsContent]]>
+  </ClassName>
+  <ClassShortName>KenticoCommunityWebsiteCookieBannerSettingsContent</ClassShortName>
+  <ClassTableName>
+    <![CDATA[KenticoCommunity_WebsiteCookieBannerSettingsContent]]>
+  </ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

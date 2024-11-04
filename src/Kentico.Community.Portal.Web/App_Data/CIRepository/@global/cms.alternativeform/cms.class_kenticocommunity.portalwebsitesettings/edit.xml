@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>KenticoCommunity.PortalWebsiteSettings</CodeName>
+    <GUID>2e8215ba-ac27-40a5-b016-638b53e849a8</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="PortalWebsiteSettingsID" guid="233368ce-abf3-4409-80ba-8e4ce4d71499" enabled="" />
+      <field column="PortalWebsiteSettingsName" guid="de4bf214-66d9-4833-9dfc-7afcc380ac8f" enabled="" />
+      <field column="PortalWebsiteSettingsGUID" guid="08b48081-2d76-45ad-9391-e7d6bd67ba61" enabled="" />
+      <field column="PortalWebsiteSettingsWebsiteGlobalContent" enabled="true" guid="b0b39307-1d7a-4bae-a905-d73be82ed44b" visible="true">
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["cdaf9f58-7a05-4d5b-91ad-84014c970786"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>1</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Global content</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="PortalWebsiteSettingsWebsiteCookieBannerContent" enabled="true" guid="0d7ec69b-439c-4787-ac67-562e69364d69" visible="true">
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["143434c5-f46c-4b36-81ea-755d2f10a92e"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>1</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Cookie banner content</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="PortalWebsiteSettingsWebsiteAlertSettingsContent" enabled="true" guid="9810a91e-0a9f-4864-b393-8c4446654351" visible="true">
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["2825d92c-cc61-48fb-a677-78f4c5c16b8f"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>1</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Alert settings content</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="PortalWebsiteSettingsDateCreated" guid="6f30e852-13a4-4d87-a26e-f213bc6441d4" visible="true" enabled="">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY hh:mm AM/PM</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Created</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="PortalWebsiteSettingsDateModified" guid="9a52e8c7-6613-41b2-b593-3f60783135a8" visible="true" enabled="">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY hh:mm AM/PM</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Modified</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit</FormDisplayName>
+  <FormGUID>d75cddcf-56a5-4581-a99f-fa323dd59eed</FormGUID>
+  <FormIsCustom>True</FormIsCustom>
+  <FormName>Edit</FormName>
+</cms.alternativeform>
