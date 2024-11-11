@@ -58,14 +58,15 @@
       <field column="QAndAQuestionPageAuthorMemberID" columnprecision="0" columntype="integer" enabled="true" guid="9cf3c9fc-bd1c-4b33-b7b3-d791356ff81c" visible="true">
         <properties>
           <defaultvalue>0</defaultvalue>
+          <explanationtext>
+            <![CDATA[Member ID of the author, 0 if created by the system]]>
+          </explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Author</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
-          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
-          <ObjectType>CMS.Member</ObjectType>
-          <Placeholder>0</Placeholder>
+          <controlname>Kentico.Administration.NumberInput</controlname>
         </settings>
       </field>
       <field allowempty="true" column="QAndAQuestionPageDiscussionType" columnprecision="0" columntype="taxonomy" enabled="true" guid="22ef0471-1e20-432b-9af4-fd7004dcfbda" visible="true">

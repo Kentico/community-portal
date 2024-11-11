@@ -1,15 +1,11 @@
-using CMS.ContentEngine;
 using CMS.Core;
-using CMS.DataEngine;
-using CMS.EmailEngine;
-using CMS.Websites.Routing;
+using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Community.Portal.Web.Resources;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Options;
 
 namespace Kentico.Community.Portal.Web.Features.Registration;
 
@@ -20,23 +16,17 @@ public class RegistrationController(
     UserManager<CommunityMember> userManager,
     CaptchaValidator captchaValidator,
     IStringLocalizer<SharedResources> localizer,
-    IOptions<SystemEmailOptions> systemEmailOptions,
     IEventLogService log,
-    IEmailService emailService,
-    IInfoProvider<ChannelInfo> channelProvider,
-    IWebsiteChannelContext channelContext,
+    IMemberEmailService emailService,
     ConsentManager consentManager) : Controller
 {
     private readonly WebPageMetaService metaService = metaService;
     private readonly SignInManager<CommunityMember> signInManager = signInManager;
     private readonly UserManager<CommunityMember> userManager = userManager;
-    private readonly SystemEmailOptions systemEmailOptions = systemEmailOptions.Value;
     private readonly CaptchaValidator captchaValidator = captchaValidator;
     private readonly IStringLocalizer<SharedResources> localizer = localizer;
     private readonly IEventLogService log = log;
-    private readonly IEmailService emailService = emailService;
-    private readonly IInfoProvider<ChannelInfo> channelProvider = channelProvider;
-    private readonly IWebsiteChannelContext channelContext = channelContext;
+    private readonly IMemberEmailService emailService = emailService;
     private readonly ConsentManager consentManager = consentManager;
 
     [HttpGet]
@@ -176,7 +166,6 @@ public class RegistrationController(
 
     private async Task SendVerificationEmail(CommunityMember member)
     {
-        var channel = await channelProvider.GetAsync(channelContext.WebsiteChannelName);
         string confirmToken = await userManager.GenerateEmailConfirmationTokenAsync(member);
         string confirmationURL = Url.Action(nameof(ConfirmEmail), "Registration",
         new
@@ -186,17 +175,7 @@ public class RegistrationController(
         },
         Request.Scheme) ?? "";
 
-        await emailService.SendEmail(new EmailMessage()
-        {
-            From = $"no-reply@{systemEmailOptions.SendingDomain}",
-            Recipients = member.Email,
-            Subject = $"Confirm your email for {channel.ChannelDisplayName}",
-            Body = $"""
-                <p>To confirm your email address, click <a data-confirmation-url href="{confirmationURL}">here</a>.</p>
-                <p style="margin-bottom: 1rem;">You can also copy and paste this URL into your browser.</p>
-                <p>{confirmationURL}</p>
-                """
-        });
+        await emailService.SendEmail(member, MemberEmailConfiguration.RegistrationConfirmation(confirmationURL));
     }
 }
 

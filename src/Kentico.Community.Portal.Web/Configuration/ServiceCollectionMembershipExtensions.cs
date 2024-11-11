@@ -1,3 +1,4 @@
+using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Membership;
 using Kentico.OnlineMarketing.Web.Mvc;
@@ -43,5 +44,6 @@ public static class ServiceCollectionMembershipExtensions
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.Lax;
             })
-            .AddAuthorization();
+            .AddAuthorization()
+            .AddSingleton<IMemberEmailService, MemberEmailService>();
 }

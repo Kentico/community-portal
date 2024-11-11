@@ -31,79 +31,53 @@ function initializeSortByOnForm(formEl) {
  *
  * @param {HTMLFormElement} formEl
  */
-function initializeCheckboxOnForm(formEl) {
-  let checkboxes = document.querySelectorAll("[search-checkbox]");
-
-  for (let i = 0; i < checkboxes.length; i++) {
-    checkboxes[i].addEventListener("change", function (e) {
-      if (formEl !== null) {
-        if (e.target instanceof HTMLInputElement) {
-          // For aspnet core model binding
-          e.target.value = e.target.checked;
-        }
-        const loadPanel = document.getElementById("overlay");
-        showLoadPanel(loadPanel);
-        formEl.submit();
-      }
-    });
-  }
-}
-
-/**
- *
- * @param {HTMLFormElement} formEl
- * @param {string} facetType
- */
-function initializeFacetsOnForm(formEl, facetType) {
+function initializeCheckboxFacetsOnForm(formEl) {
   const submitButton = document.querySelector("#submitSearch");
   if (!(submitButton instanceof HTMLButtonElement)) {
     throw new Error("Missing search submit button");
   }
-
-  const facetInput = document.querySelector(
-    `[selected-facet-value="${facetType}"]`
-  );
-  if (!(facetInput instanceof HTMLElement)) {
-    throw new Error("Missing facet value form input");
-  }
-
-  function addFacetsToFacetInput() {
-    let tags = document.querySelectorAll(
-      `[facet-selected][facet-type="${facetType}"]`
-    );
-
-    const selectedValues = [...tags].map((tag) =>
-      tag.getAttribute("facet-value")
-    );
-
-    facetInput.value = selectedValues.join(";");
-    // TODO - reset page number
-  }
-
-  let facets = document.querySelectorAll(
-    `[facet-value][facet-type="${facetType}"]`
-  );
+  submitButton.addEventListener("click", () => {
+    showLoadPanel(loadPanel);
+  });
 
   const loadPanel = document.getElementById("overlay");
 
-  for (let i = 0; i < facets.length; i++) {
-    facets[i].addEventListener("click", (e) => {
-      e.preventDefault();
-      showLoadPanel(loadPanel);
-      if (facets[i].hasAttribute("facet-selected")) {
-        facets[i].removeAttribute("facet-selected");
-      } else if (!facets[i].hasAttribute("facet-selected")) {
-        facets[i].setAttribute("facet-selected", "");
+  /**
+   * @type {HTMLInputElement[]}
+   */
+  const facetEls = [...formEl.querySelectorAll(`[facet-field]`)];
+  for (const facetEl of facetEls) {
+    facetEl.addEventListener("click", (e) => {
+      if (!(e.target instanceof HTMLInputElement)) {
+        return;
       }
-      addFacetsToFacetInput();
+
+      const value = e.target.value;
+
+      if (e.target.hasAttribute("facet-mobile")) {
+        /**
+         * @type {HTMLInputElement}
+         */
+        const el = document.querySelector(
+          `[value="${value}"]:not([facet-mobile])`,
+        );
+        if (el instanceof HTMLInputElement) {
+          /** disable unused field to prevent double field submission */
+          el.disabled = true;
+        }
+      } else {
+        /**
+         * @type {HTMLInputElement}
+         */
+        const el = document.querySelector(`[value=${value}][facet-mobile]`);
+        if (el instanceof HTMLInputElement) {
+          /** disable unused field to prevent double field submission */
+          el.disabled = true;
+        }
+      }
       formEl.submit();
     });
   }
-
-  submitButton.addEventListener("click", () => {
-    showLoadPanel(loadPanel);
-    addFacetsToFacetInput();
-  });
 }
 
 function initializeQAndASearch() {
@@ -113,8 +87,7 @@ function initializeQAndASearch() {
   }
 
   initializeSortByOnForm(form);
-  initializeCheckboxOnForm(form);
-  initializeFacetsOnForm(form, "discussionType");
+  initializeCheckboxFacetsOnForm(form);
 }
 
 function initializeBlogSearch() {
@@ -123,6 +96,6 @@ function initializeBlogSearch() {
     return;
   }
 
-  initializeFacetsOnForm(form, "blogType");
   initializeSortByOnForm(form);
+  initializeCheckboxFacetsOnForm(form);
 }

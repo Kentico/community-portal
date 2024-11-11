@@ -1,7 +1,7 @@
 ﻿using System.Collections.Frozen;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.Accounts;
-using Kentico.Community.Portal.Web.Features.QAndA;
+using Kentico.Community.Portal.Web.Features.QAndA.Search;
 using Kentico.Community.Portal.Web.Rendering;
 using MediatR;
 

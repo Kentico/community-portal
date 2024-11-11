@@ -259,3 +259,30 @@ public enum ItemLayout
     Minimal
 }
 
+public class BlogPostListWidgetViewModel : BaseWidgetViewModel
+{
+    protected override string WidgetName { get; } = BlogPostListWidget.NAME;
+
+    public string? Heading { get; } = "";
+    public IReadOnlyList<BlogPostViewModel> BlogPosts { get; set; } = [];
+    public ItemLayout Layout { get; set; } = ItemLayout.Minimal;
+    public string BlogType { get; set; } = "";
+
+    public BlogPostListWidgetViewModel(BlogPostListWidgetProperties props, IEnumerable<BlogPostViewModel> posts)
+    {
+        Heading = string.IsNullOrWhiteSpace(props.Heading) ? null : props.Heading;
+        BlogPosts = posts.ToList();
+        Layout = props.ItemLayoutSourceParsed;
+    }
+}
+
+public class BlogPostViewModel(BlogPostAuthorViewModel author)
+{
+    public string Title { get; init; } = "";
+    public DateTime Date { get; init; }
+    public Maybe<ImageViewModel> TeaserImage { get; init; }
+    public BlogPostAuthorViewModel Author { get; init; } = author;
+    public string ShortDescription { get; init; } = "";
+    public string LinkPath { get; init; } = "";
+    public string? Taxonomy { get; set; } = "";
+}

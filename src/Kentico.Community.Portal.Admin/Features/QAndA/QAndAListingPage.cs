@@ -6,6 +6,7 @@ using Kentico.Community.Portal.Admin.Features.QAndA;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
+using Kentico.Xperience.Admin.Websites;
 using Kentico.Xperience.Admin.Websites.UIPages;
 
 [assembly: UIPage(
@@ -100,7 +101,7 @@ public class QAndAListingPage(IPageLinkGenerator pageLinkGenerator) : ListingPag
 
         string pageUrl = pageLinkGenerator.GetPath<ContentTab>(new()
         {
-            { typeof(WebPageLayout), $"{PortalWebSiteChannel.DEFAULT_LANGUAGE}_{webPageItemID}" },
+            { typeof(WebPageLayout), new WebPageUrlIdentifier(PortalWebSiteChannel.DEFAULT_LANGUAGE, webPageItemID) },
             { typeof(WebPagesApplication), $"webpages-{websiteChannelID}" },
         });
 

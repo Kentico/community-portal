@@ -3,9 +3,11 @@ using CMS.ContentEngine;
 using CMS.Core;
 using CMS.DataEngine;
 using CMS.EmailLibrary;
+using CMS.EmailLibrary.Internal;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Configuration;
 using Kentico.Community.Portal.Web.Features.Blog.Events;
+using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.QAndA.Events;
 using Kentico.Community.Portal.Web.Rendering.Events;
 
@@ -47,6 +49,12 @@ internal class GlobalEventsModule : Module
         TaxonomyInfo.TYPEINFO.Events.Delete.Before += Taxonomy_DeleteBefore;
         TagInfo.TYPEINFO.Events.Update.Before += Tag_ModifyBefore;
         TagInfo.TYPEINFO.Events.Delete.Before += Tag_DeleteBefore;
+
+        EmailContentFilterRegister.Instance
+            .Register(
+                () => new CustomValueFilter(),
+                EmailContentFilterType.Sending,
+                100);
 
         base.OnInit(parameters);
     }

@@ -1,9 +1,10 @@
+using System.ComponentModel;
 using CMS.Core;
 using Kentico.Xperience.Lucene.Core.Indexing;
 using Kentico.Xperience.Lucene.Core.Search;
 using Lucene.Net.Analysis.Standard;
+using Lucene.Net.Documents;
 using Lucene.Net.Facet;
-using Lucene.Net.Index;
 using Lucene.Net.Search;
 using Lucene.Net.Util;
 
@@ -17,9 +18,15 @@ public class QAndASearchRequest
     {
         var query = request.Query;
 
-        DiscussionType = query.TryGetValue("discussionType", out var facetValues)
-            ? facetValues.ToString()
-            : "";
+        DiscussionTypes = query.TryGetValue("discussionTypes", out var facetValues)
+            ? facetValues
+            : [];
+        DXTopics = query.TryGetValue("dxTopics", out var topicValues)
+            ? topicValues
+            : [];
+        DiscussionStates = query.TryGetValue("discussionStates", out var discussionStates)
+            ? discussionStates
+            : [];
         SearchText = query.TryGetValue("query", out var queryValues)
             ? queryValues.ToString()
             : "";
@@ -37,10 +44,6 @@ public class QAndASearchRequest
                 ? a
                 : 0
             : 0;
-
-        OnlyAcceptedResponses = query.TryGetValue(nameof(OnlyAcceptedResponses), out var acceptedResponsesValues)
-            && acceptedResponsesValues.Count > 0 && bool.TryParse(acceptedResponsesValues[0], out bool ar)
-            && ar;
     }
 
     public QAndASearchRequest(string sortBy, int pageSize)
@@ -54,16 +57,70 @@ public class QAndASearchRequest
     public int PageNumber { get; } = 1;
     public int PageSize { get; } = PAGE_SIZE;
     public int AuthorMemberID { get; set; }
-    public bool OnlyAcceptedResponses { get; set; }
-    public string DiscussionType { get; set; } = "";
+    public IEnumerable<string> DiscussionStates { get; } = [];
+    public IEnumerable<string> DiscussionTypes { get; set; } = [];
+    public IEnumerable<string> DXTopics { get; set; } = [];
 
-    public bool AreFiltersDefault => string.IsNullOrWhiteSpace(SearchText) && AuthorMemberID < 1 && !OnlyAcceptedResponses;
+    public bool AreFiltersDefault =>
+        string.IsNullOrWhiteSpace(SearchText)
+        && AuthorMemberID < 1;
+}
+
+public enum DiscussionStates
+{
+    [Description("Has accepted answer")]
+    HasAcceptedAnswer,
+    [Description("No accepted answer")]
+    NoAcceptedAnswer
 }
 
 
-public class QAndASearchResultViewModel<T> : LuceneSearchResultModel<T>
+public class QAndASearchResult
 {
+    public string Query { get; set; } = "";
+    public IEnumerable<QAndASearchIndexModel> Hits { get; set; } = [];
+    public int TotalHits { get; set; }
+    public int TotalPages { get; set; }
+    public int PageSize { get; set; }
+    public int Page { get; set; }
+    public LabelAndValue[] DiscussionTypes { get; set; } = [];
+    public LabelAndValue[] DXTopics { get; set; } = [];
+    public LabelAndValue[] DiscussionStates { get; set; } = [];
     public string SortBy { get; set; } = "";
+
+    public static QAndASearchResult Empty(QAndASearchRequest request) =>
+        new()
+        {
+            Page = request.PageNumber,
+            PageSize = request.PageSize,
+            Query = request.SearchText,
+            SortBy = request.SortBy,
+        };
+
+    public QAndASearchResult(TopDocs topDocs, MultiFacets facets, QAndASearchRequest request, Func<ScoreDoc, Document> retrieveDoc)
+    {
+        int pageSize = Math.Max(1, request.PageSize);
+        int pageNumber = Math.Max(1, request.PageNumber);
+        int offset = pageSize * (pageNumber - 1);
+        int limit = pageSize;
+
+        Query = request.SearchText ?? "";
+        Page = pageNumber;
+        PageSize = pageSize;
+        TotalPages = topDocs.TotalHits <= 0 ? 0 : ((topDocs.TotalHits - 1) / pageSize) + 1;
+        TotalHits = topDocs.TotalHits;
+        Hits = topDocs.ScoreDocs
+            .Skip(offset)
+            .Take(limit)
+            .Select(d => QAndASearchIndexModel.FromDocument(retrieveDoc(d)))
+            .ToList();
+        DiscussionTypes = facets.GetTopChildren(100, nameof(QAndASearchIndexModel.DiscussionTypeFacet), [])?.LabelValues.ToArray() ?? [];
+        DXTopics = facets.GetTopChildren(100, nameof(QAndASearchIndexModel.DXTopicsFacet), [])?.LabelValues.ToArray() ?? [];
+        DiscussionStates = facets.GetTopChildren(100, nameof(QAndASearchIndexModel.DiscussionStatesFacet), [])?.LabelValues.ToArray() ?? [];
+        SortBy = request.SortBy;
+    }
+
+    private QAndASearchResult() { }
 }
 
 public class QAndASearchService(
@@ -80,65 +137,31 @@ public class QAndASearchService(
     private readonly QAndASearchIndexingStrategy qAndASearchStrategy = qAndASearchStrategy;
     private readonly ILuceneIndexManager indexManager = indexManager;
 
-    public QAndASearchResultViewModel<QAndASearchIndexModel> SearchQAndA(QAndASearchRequest request)
+    public QAndASearchResult SearchQAndA(QAndASearchRequest request)
     {
         var index = indexManager.GetRequiredIndex(QAndASearchIndexModel.IndexName);
 
         var query = GetQAndATermQuery(request);
 
-        var combinedQuery = new BooleanQuery
+        var combinedQuery = FacetsQuery(request, new BooleanQuery
         {
             { query, Occur.MUST }
-        };
-
-        if (request.DiscussionType is string facet)
-        {
-            var drillDownQuery = new DrillDownQuery(qAndASearchStrategy.FacetsConfigFactory());
-
-            string[] subFacets = facet.Split(';', StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string subFacet in subFacets)
-            {
-                drillDownQuery.Add(nameof(QAndASearchIndexModel.DiscussionType), subFacet);
-            }
-
-            combinedQuery.Add(drillDownQuery, Occur.MUST);
-        }
+        });
 
         try
         {
             return luceneSearchService.UseSearcherWithFacets(
                 index,
-                query, 20,
+                combinedQuery, 20,
                 (searcher, facets) =>
                 {
                     var sortOptions = GetSortOption(request.SortBy);
-                    var chosenSubFacets = new List<string>();
-                    int pageSize = Math.Max(1, request.PageSize);
-                    int pageNumber = Math.Max(1, request.PageNumber);
-                    int offset = pageSize * (pageNumber - 1);
-                    int limit = pageSize;
 
                     TopDocs topDocs = sortOptions is null
                         ? topDocs = searcher.Search(combinedQuery, MAX_RESULTS)
                         : topDocs = searcher.Search(combinedQuery, MAX_RESULTS, new Sort(sortOptions));
 
-                    return new QAndASearchResultViewModel<QAndASearchIndexModel>
-                    {
-                        Query = request.SearchText ?? "",
-                        Page = pageNumber,
-                        PageSize = pageSize,
-                        TotalPages = topDocs.TotalHits <= 0 ? 0 : ((topDocs.TotalHits - 1) / pageSize) + 1,
-                        TotalHits = topDocs.TotalHits,
-                        Hits = topDocs.ScoreDocs
-                            .Skip(offset)
-                            .Take(limit)
-                            .Select(d => QAndASearchIndexModel.FromDocument(searcher.Doc(d.Doc)))
-                            .ToList(),
-                        Facet = request.DiscussionType,
-                        Facets = facets?.GetTopChildren(10, nameof(QAndASearchIndexModel.DiscussionType), [.. chosenSubFacets])?.LabelValues.ToArray(),
-                        SortBy = request.SortBy
-                    };
+                    return new QAndASearchResult(topDocs, facets, request, (d) => searcher.Doc(d.Doc));
                 }
             );
         }
@@ -146,18 +169,7 @@ public class QAndASearchService(
         {
             log.LogException(nameof(QAndASearchService), "Q&A_SEARCH_FAILURE", ex);
 
-            return new QAndASearchResultViewModel<QAndASearchIndexModel>
-            {
-                Facet = null,
-                Facets = [],
-                Hits = [],
-                Page = request.PageNumber,
-                PageSize = request.PageSize,
-                Query = request.SearchText,
-                SortBy = request.SortBy,
-                TotalHits = 0,
-                TotalPages = 0
-            };
+            return QAndASearchResult.Empty(request);
         }
     }
 
@@ -195,14 +207,34 @@ public class QAndASearchService(
             booleanQuery = AddToTermQuery(booleanQuery, contentShould, 0.1f);
         }
 
-        if (request.OnlyAcceptedResponses)
+        return booleanQuery;
+    }
+
+    private Query FacetsQuery(QAndASearchRequest request, Query query)
+    {
+        if (!request.DiscussionTypes.Any() && !request.DXTopics.Any() && !request.DiscussionStates.Any())
         {
-            var bytes = new BytesRef(NumericUtils.BUF_SIZE_INT32);
-            NumericUtils.Int32ToPrefixCoded(int.Parse("1"), 0, bytes);
-            booleanQuery.Add(new TermQuery(new Term(nameof(QAndASearchIndexModel.HasAcceptedResponse), bytes)), Occur.MUST);
+            return query;
         }
 
-        return booleanQuery;
+        var drillDownQuery = new DrillDownQuery(qAndASearchStrategy.FacetsConfigFactory(), query);
+
+        foreach (string discussionType in request.DiscussionTypes)
+        {
+            drillDownQuery.Add(nameof(QAndASearchIndexModel.DiscussionTypeFacet), discussionType);
+        }
+
+        foreach (string topic in request.DXTopics)
+        {
+            drillDownQuery.Add(nameof(QAndASearchIndexModel.DXTopicsFacet), topic);
+        }
+
+        foreach (string state in request.DiscussionStates)
+        {
+            drillDownQuery.Add(nameof(QAndASearchIndexModel.DiscussionStatesFacet), state);
+        }
+
+        return drillDownQuery;
     }
 
     private static BooleanQuery AddToTermQuery(BooleanQuery query, Query textQueryPart, float boost)

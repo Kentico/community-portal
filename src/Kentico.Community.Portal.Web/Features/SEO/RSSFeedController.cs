@@ -167,7 +167,7 @@ public class RSSFeedController(
 
             post.BlogPostContentBlogType
                 .TryFirst()
-                .Bind(tr => blogTags.Items.TryFirst(i => i.Guid == tr.Identifier))
+                .Bind(tr => blogTags.Types.TryFirst(i => i.Guid == tr.Identifier))
                 .Execute(tag => item.Categories.Add(new SyndicationCategory(tag.DisplayName)));
 
             post.ToImageViewModel()

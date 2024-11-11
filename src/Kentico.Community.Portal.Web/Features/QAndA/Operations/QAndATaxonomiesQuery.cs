@@ -4,18 +4,18 @@ using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 
-namespace Kentico.Community.Portal.Web.Features.Blog;
+namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public record BlogPostTaxonomiesQuery() : IQuery<BlogPostTaxonomiesQueryResponse>;
+public record QAndATaxonomiesQuery() : IQuery<QAndATaxonomiesQueryResponse>;
 
-public class BlogPostTaxonomy
+public class QAndATaxonomy
 {
     public Guid Guid { get; set; }
     public string Name { get; set; }
     public string NormalizedName { get; set; }
     public string DisplayName { get; set; }
 
-    public BlogPostTaxonomy(Tag tag)
+    public QAndATaxonomy(Tag tag)
     {
         Guid = tag.Identifier;
         Name = tag.Name;
@@ -24,27 +24,27 @@ public class BlogPostTaxonomy
     }
 }
 
-public record BlogPostTaxonomiesQueryResponse(IReadOnlyList<BlogPostTaxonomy> Types, IReadOnlyList<BlogPostTaxonomy> DXTopics);
-public class BlogPostTaxonomiesQueryHandler(DataItemQueryTools tools, ITaxonomyRetriever taxonomyRetriever) : DataItemQueryHandler<BlogPostTaxonomiesQuery, BlogPostTaxonomiesQueryResponse>(tools)
+public record QAndATaxonomiesQueryResponse(IReadOnlyList<QAndATaxonomy> Types, IReadOnlyList<QAndATaxonomy> DXTopics);
+public class QAndATaxonomiesQueryHandler(DataItemQueryTools tools, ITaxonomyRetriever taxonomyRetriever) : DataItemQueryHandler<QAndATaxonomiesQuery, QAndATaxonomiesQueryResponse>(tools)
 {
     private readonly ITaxonomyRetriever taxonomyRetriever = taxonomyRetriever;
 
-    public override async Task<BlogPostTaxonomiesQueryResponse> Handle(BlogPostTaxonomiesQuery request, CancellationToken cancellationToken = default)
+    public override async Task<QAndATaxonomiesQueryResponse> Handle(QAndATaxonomiesQuery request, CancellationToken cancellationToken = default)
     {
-        var typeTaxonomy = await taxonomyRetriever.RetrieveTaxonomy(SystemTaxonomies.BlogTypeTaxonomy.CodeName, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
+        var typeTaxonomy = await taxonomyRetriever.RetrieveTaxonomy(SystemTaxonomies.QAndADiscussionTypeTaxonomy.CodeName, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
         var typeTags = typeTaxonomy.Tags
-            .Select(tag => new BlogPostTaxonomy(tag))
+            .Select(tag => new QAndATaxonomy(tag))
             .ToList();
 
         var topicsTaxonomy = await taxonomyRetriever.RetrieveTaxonomy(SystemTaxonomies.DXTopicTaxonomy.CodeName, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
         var topicTags = topicsTaxonomy.Tags
-            .Select(tag => new BlogPostTaxonomy(tag))
+            .Select(tag => new QAndATaxonomy(tag))
             .ToList();
 
-        return new BlogPostTaxonomiesQueryResponse(typeTags, topicTags);
+        return new QAndATaxonomiesQueryResponse(typeTags, topicTags);
     }
 
-    protected override ICacheDependencyKeysBuilder AddDependencyKeys(BlogPostTaxonomiesQuery query, BlogPostTaxonomiesQueryResponse result, ICacheDependencyKeysBuilder builder) =>
+    protected override ICacheDependencyKeysBuilder AddDependencyKeys(QAndATaxonomiesQuery query, QAndATaxonomiesQueryResponse result, ICacheDependencyKeysBuilder builder) =>
         builder.Object(TaxonomyInfo.OBJECT_TYPE, SystemTaxonomies.BlogTypeTaxonomy.CodeName)
             .Collection(result.Types, i => builder.Object(TagInfo.OBJECT_TYPE, i.Name));
 }

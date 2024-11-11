@@ -9,6 +9,7 @@ using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Content;
 using Kentico.Xperience.Admin.Base;
 using Kentico.Xperience.Admin.Base.UIPages;
+using Kentico.Xperience.Admin.Websites;
 using Kentico.Xperience.Admin.Websites.UIPages;
 
 [assembly: UIPage(
@@ -100,7 +101,7 @@ public class MemberQAndAQuestionsListPage(
 
         string pageUrl = pageLinkGenerator.GetPath<ContentTab>(new()
         {
-            { typeof(WebPageLayout), $"{PortalWebSiteChannel.DEFAULT_LANGUAGE}_{webPageItemID}" },
+            { typeof(WebPageLayout), new WebPageUrlIdentifier(PortalWebSiteChannel.DEFAULT_LANGUAGE, webPageItemID) },
             { typeof(WebPagesApplication), $"webpages-{websiteChannelID}" },
         });
 

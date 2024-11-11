@@ -1,0 +1,204 @@
+@using EnumsNET
+@using Kentico.Community.Portal.Web.Features.QAndA.Search
+
+@model QAndASearchViewModel
+
+<section class="c-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-6 col-md-4">
+                <a href="/q-and-a/new-question" rel="nofollow" class="btn btn-outline-primary w-100 d-inline-block">
+                    <svg class="c-icon me-1">
+                        <use xlink:href="/img/icons.svg#plus-circle" asp-append-version></use>
+                    </svg>
+                    <span class="text-uppercase">New question</span>
+                </a>
+            </div>
+        </div>
+
+        <form method="get" id="qAndASearchForm" class="grid mt-3">
+            <div class="category-filters d-none d-lg-block g-col-2">
+                <div class="mb-5">
+                    <h5>Type</h5>
+                    @foreach (var discussionType in Model.DiscussionTypes)
+                    {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="discussionTypes" value="@discussionType.Value" id="Type-@discussionType.Value"
+                                    facet-field @(discussionType.IsSelected ? "checked" : "")>
+                                <label class="form-check-label" for="Type-@discussionType.Value">@discussionType.Label (@discussionType.Count)</label>
+                            </div>
+                    }
+                </div>
+
+                <div class="mb-5">
+                    <h5>Answers</h5>
+                    @foreach (var state in Model.DiscussionStates)
+                    {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="discussionStates" value="@state.Value" id="State-@state.Value"
+                                    facet-field @(state.IsSelected ? "checked" : "")>
+                                <label class="form-check-label" for="State-@state.Value">@state.Label (@state.Count)</label>
+                            </div>
+                    }
+                </div>
+
+                @if (Model.DXTopics.Count > 0)
+                {
+                        <div>
+                            <h5>Topic</h5>
+                        @foreach (var topic in Model.DXTopics)
+                        {
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="dxTopics" value="@topic.Value" id="Topic-@topic.Value"
+                                            facet-field @(topic.IsSelected ? "checked" : "")>
+                                        <label class="form-check-label" for="Topic-@topic.Value">@topic.Label (@topic.Count)</label>
+                                    </div>
+                        }
+                        </div>
+                }
+            </div>
+
+            <div class="g-col-12 g-col-lg-10">
+                <div class="d-flex justify-content-md-end align-items-center gap-4 flex-wrap flex-lg-nowrap mb-3">
+                    <div class="input-group">
+                        <input asp-for="Query" type="text" class="form-control search rounded-pill"
+                            placeholder="Search by tag, name or phrase" aria-label="Search"
+                            aria-describedby="submitSearch">
+                        <button class="btn btn-primary text-uppercase" type="submit"
+                            id="submitSearch">Search</button>
+                    </div>
+
+                    <div class="justify-content-between d-flex gap-3 flex-grow-1">
+                        <button class="btn btn-primary align-self-center d-lg-none text-white text-uppercase" 
+                            type="button" 
+                            data-bs-toggle="collapse" 
+                            data-bs-target="#categoryFilters" 
+                            aria-expanded="true" 
+                            aria-controls="categoryFilters">
+                            Select filters @(Model.TotalAppliedFilters > 0 ? $"({Model.TotalAppliedFilters})" : "")
+                        </button>
+                        <div>
+                            <label asp-for="@Model.SortBy" class="form-label text-nowrap mb-0">Sort by</label>
+                            <select asp-for="@Model.SortBy" class="form-select form-select-sm w-auto" search-sort-by>
+                                <option value="relevance">Relevance</option>
+                                <option value="publishdate">Latest question</option>
+                                <option value="responsedate">Latest response</option>
+                            </select>
+                            <input asp-for="@Model.Page" />
+                        </div>
+                    </div>
+
+                    <div class="category-filters d-lg-none collapse w-100" id="categoryFilters">
+
+                        <div class="mb-5">
+                            <h5>Type</h5>
+                            @foreach (var discussionType in Model.DiscussionTypes)
+                            {
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="discussionTypes" value="@discussionType.Value" id="TypeM-@discussionType.Value"
+                                            facet-field facet-mobile @(discussionType.IsSelected ? "checked" : "")>
+                                        <label class="form-check-label" for="TypeM-@discussionType.Value">@discussionType.Label (@discussionType.Count)</label>
+                                    </div>
+                            }
+                        </div>
+
+                        <div class="mb-5">
+                            <h5>Answers</h5>
+                            @foreach (var state in Model.DiscussionStates)
+                            {
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="discussionStates" value="@state.Value" id="StateM-@state.Value"
+                                            facet-field facet-mobile @(state.IsSelected ? "checked" : "")>
+                                        <label class="form-check-label" for="StateM-@state.Value">@state.Label (@state.Count)</label>
+                                    </div>
+                            }
+                        </div>
+
+                        @if (Model.DXTopics.Count > 0)
+                        {
+                                <div>
+                                    <h5>Topic</h5>
+                                @foreach (var topic in Model.DXTopics)
+                                {
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="dxTopics" value="@topic.Value" id="TopicM-@topic.Value"
+                                                    facet-field facet-mobile  @(topic.IsSelected ? "checked" : "")>
+                                                <label class="form-check-label" for="TopicM-@topic.Value">@topic.Label (@topic.Count)</label>
+                                            </div>
+                                }
+                                </div>
+                        }
+                    </div>
+                </div>
+
+                @if (Model.Questions.Count == 0 && Model.TotalPages == 0)
+                {
+                        <div>
+                            <p>No results could be found.</p>
+                        </div>
+                }
+
+                @foreach (var question in Model.Questions)
+                {
+                        <div
+                            class="c-card question default-border overflow-y-auto d-grid @(question.HasAcceptedResponse ? "success" : "")">
+                            <div class="c-card_content">
+                            @if (question.HasAcceptedResponse)
+                            {
+                                        <div class="fs-sm-4 text-success mb-1">
+                                            <svg class="c-icon mt-1 me-2 ">
+                                                <use xlink:href="/img/icons.svg#check" asp-append-version></use>
+                                            </svg><small><b>Has Accepted Response</b></small>
+                                        </div>
+                            }
+                                <div class="c-card_title">
+                                    <h3 class="h3 mb-1">
+                                        <a href="@question.LinkPath" rel="nofollow">@question.Title</a>
+                                    </h3>
+                                </div>
+
+                                <div class="mb-2 d-none d-sm-block">
+                                    <vc:author author="question.Author" />
+                                    <small>Discussion created<br> @question.DateCreated.ToString("d", View.Culture)
+                                    @question.DateCreated.ToString("t")<br></small>
+                                </div>
+                            </div>
+                            <div class="c-card_footer">
+                                <div class="mb-2 d-sm-none">
+                                    <vc:author author="question.Author" />
+                                    <small>Discussion created<br> @question.DateCreated.ToString("d", View.Culture)
+                                    @question.DateCreated.ToString("t")<br></small>
+                                </div>
+                                <div class="text-end text-sm-center">
+                                    <span class="fs-4 fs-sm-1 text-secondary fw-bold lh-sm">@question.ResponseCount</span>
+                                    <br class="d-none d-sm-block">
+                                    <span class="fs-4 fs-sm-6">
+                                    @{
+                                        string text = question.ResponseCount switch
+                                        {
+                                            0 or > 1 => "Responses",
+                                            1 => "Response",
+                                            _ => ""
+                                        };
+                                        <text>@text</text>
+                                    }
+                                    </span>
+
+                                @if (question.ResponseCount > 0)
+                                {
+                                        <div>
+                                            <small>Latest response
+                                                <br>@question.LatestResponseDate.ToString("d", View.Culture)
+                                            @question.LatestResponseDate.ToString("t")
+                                            </small>
+                                        </div>
+                                }
+                                </div>
+                            </div>
+                        </div>
+                }
+                <vc:pagination model="Model" />
+            </div>
+        </form>
+    </div>
+</section>

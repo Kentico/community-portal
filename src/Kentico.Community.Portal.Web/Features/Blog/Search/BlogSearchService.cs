@@ -2,6 +2,7 @@
 using Kentico.Xperience.Lucene.Core.Indexing;
 using Kentico.Xperience.Lucene.Core.Search;
 using Lucene.Net.Analysis.Standard;
+using Lucene.Net.Documents;
 using Lucene.Net.Facet;
 using Lucene.Net.Search;
 using Lucene.Net.Util;
@@ -16,9 +17,12 @@ public class BlogSearchRequest
     {
         var query = request.Query;
 
-        BlogType = query.TryGetValue("blogType", out var facetValues)
-            ? facetValues.ToString()
-            : "";
+        BlogTypes = query.TryGetValue("blogTypes", out var blogTypeValues)
+            ? blogTypeValues.WhereNotNull().ToList()
+            : [];
+        DXTopics = query.TryGetValue("dxTopics", out var topicValues)
+            ? topicValues.WhereNotNull().ToList()
+            : [];
         SearchText = query.TryGetValue("query", out var queryValues)
             ? queryValues.ToString()
             : "";
@@ -38,7 +42,8 @@ public class BlogSearchRequest
         PageSize = pageSize;
     }
 
-    public string BlogType { get; } = "";
+    public IEnumerable<string> BlogTypes { get; } = [];
+    public IEnumerable<string> DXTopics { get; } = [];
     public string SearchText { get; } = "";
     public string SortBy { get; } = "";
     public int PageNumber { get; } = 1;
@@ -48,9 +53,56 @@ public class BlogSearchRequest
     public bool AreFiltersDefault => string.IsNullOrWhiteSpace(SearchText) && AuthorMemberID < 1;
 }
 
-public class BlogSearchResultViewModel<T> : LuceneSearchResultModel<T>
+public class BlogSearchResultsViewModel
 {
-    public string SortBy { get; set; } = "";
+    public string Query { get; init; } = "";
+    public IEnumerable<BlogSearchIndexModel> Hits { get; } = [];
+    public int TotalHits { get; set; }
+    public int TotalPages { get; set; }
+    public int PageSize { get; init; }
+    public int Page { get; init; }
+    public LabelAndValue[] BlogTypes { get; } = [];
+    public LabelAndValue[] BlogDXTopics { get; } = [];
+    public string SortBy { get; init; } = "";
+
+    public static BlogSearchResultsViewModel Empty(BlogSearchRequest request) => new()
+    {
+        Page = request.PageNumber,
+        PageSize = request.PageSize,
+        Query = request.SearchText,
+        SortBy = request.SortBy,
+    };
+
+    public BlogSearchResultsViewModel(TopDocs topDocs, MultiFacets facets, BlogSearchRequest request, Func<ScoreDoc, Document> retrieveDoc)
+    {
+        /*
+        * This is performing "fake" paging. We request all the results and then
+        * offset/limit from there.
+        * This is normal for Lucene.NET because the ScoreDocs are very lightweight
+        * until they are actually retrieved from the index using searcher.Doc()
+        * https://stackoverflow.com/a/8287427/939634
+        */
+        int pageSize = Math.Max(1, request.PageSize);
+        int pageNumber = Math.Max(1, request.PageNumber);
+        int offset = pageSize * (pageNumber - 1);
+        int limit = pageSize;
+
+        Query = request.SearchText ?? "";
+        Page = pageNumber;
+        PageSize = pageSize;
+        TotalPages = topDocs.TotalHits <= 0 ? 0 : ((topDocs.TotalHits - 1) / pageSize) + 1;
+        TotalHits = topDocs.TotalHits;
+        Hits = topDocs.ScoreDocs
+            .Skip(offset)
+            .Take(limit)
+            .Select(d => BlogSearchIndexModel.FromDocument(retrieveDoc(d)))
+            .ToList();
+        BlogTypes = facets.GetTopChildren(100, nameof(BlogSearchIndexModel.BlogTypeFacet))?.LabelValues.ToArray() ?? [];
+        BlogDXTopics = facets.GetTopChildren(100, nameof(BlogSearchIndexModel.DXTopicsFacets))?.LabelValues.ToArray() ?? [];
+        SortBy = request.SortBy;
+    }
+
+    private BlogSearchResultsViewModel() { }
 }
 
 public class BlogSearchService(
@@ -67,72 +119,33 @@ public class BlogSearchService(
     private readonly BlogSearchIndexingStrategy blogSearchStrategy = blogSearchStrategy;
     private readonly ILuceneIndexManager indexManager = indexManager;
 
-    public LuceneSearchResultModel<BlogSearchIndexModel> SearchBlog(BlogSearchRequest request)
+    public BlogSearchResultsViewModel SearchBlog(BlogSearchRequest request)
     {
         var index = indexManager.GetRequiredIndex(BlogSearchIndexModel.IndexName);
 
         var query = GetBlogTermQuery(request);
 
-        var combinedQuery = new BooleanQuery
-        {
-            { query, Occur.MUST }
-        };
-
-        if (request.BlogType is string facet)
-        {
-            var drillDownQuery = new DrillDownQuery(blogSearchStrategy.FacetsConfigFactory());
-
-            string[] subFacets = facet.Split(';', StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string subFacet in subFacets)
+        var combinedQuery = AddFacetsToQuery(
+            request,
+            new BooleanQuery
             {
-                drillDownQuery.Add(nameof(BlogSearchIndexModel.BlogTypeFacetField), subFacet);
-            }
-
-            combinedQuery.Add(drillDownQuery, Occur.MUST);
-        }
+                { query, Occur.MUST }
+            });
 
         try
         {
             return luceneSearchService.UseSearcherWithFacets(
                 index,
-                query, 20,
+                combinedQuery, 20,
                 (searcher, facets) =>
                 {
                     var sortOptions = GetSortOption(request.SortBy);
-                    var chosenSubFacets = new List<string>();
-                    /*
-                     * This is performing "fake" paging. We request all the results and then
-                     * offset/limit from there.
-                     * This is normal for Lucene.NET because the ScoreDocs are very lightweight
-                     * until they are actually retrieved from the index using searcher.Doc()
-                     * https://stackoverflow.com/a/8287427/939634
-                     */
-                    int pageSize = Math.Max(1, request.PageSize);
-                    int pageNumber = Math.Max(1, request.PageNumber);
-                    int offset = pageSize * (pageNumber - 1);
-                    int limit = pageSize;
 
                     TopDocs topDocs = sortOptions is null
                         ? topDocs = searcher.Search(combinedQuery, MAX_RESULTS)
                         : topDocs = searcher.Search(combinedQuery, MAX_RESULTS, new Sort(sortOptions));
 
-                    return new BlogSearchResultViewModel<BlogSearchIndexModel>
-                    {
-                        Query = request.SearchText ?? "",
-                        Page = pageNumber,
-                        PageSize = pageSize,
-                        TotalPages = topDocs.TotalHits <= 0 ? 0 : ((topDocs.TotalHits - 1) / pageSize) + 1,
-                        TotalHits = topDocs.TotalHits,
-                        Hits = topDocs.ScoreDocs
-                            .Skip(offset)
-                            .Take(limit)
-                            .Select(d => BlogSearchIndexModel.FromDocument(searcher.Doc(d.Doc)))
-                            .ToList(),
-                        Facet = request.BlogType,
-                        Facets = facets?.GetTopChildren(10, nameof(BlogSearchIndexModel.BlogTypeFacetField), [.. chosenSubFacets])?.LabelValues.ToArray(),
-                        SortBy = request.SortBy
-                    };
+                    return new BlogSearchResultsViewModel(topDocs, facets, request, d => searcher.Doc(d.Doc));
                 }
             );
         }
@@ -140,19 +153,30 @@ public class BlogSearchService(
         {
             log.LogException(nameof(BlogSearchService), "BLOG_SEARCH_FAILURE", ex);
 
-            return new BlogSearchResultViewModel<BlogSearchIndexModel>
-            {
-                Facet = null,
-                Facets = [],
-                Hits = [],
-                Page = request.PageNumber,
-                PageSize = request.PageSize,
-                Query = request.SearchText,
-                SortBy = request.SortBy,
-                TotalHits = 0,
-                TotalPages = 0
-            };
+            return BlogSearchResultsViewModel.Empty(request);
         }
+    }
+
+    private Query AddFacetsToQuery(BlogSearchRequest request, Query baseQuery)
+    {
+        if (!request.BlogTypes.Any() && !request.DXTopics.Any())
+        {
+            return baseQuery;
+        }
+
+        var drillDownQuery = new DrillDownQuery(blogSearchStrategy.FacetsConfigFactory(), baseQuery);
+
+        foreach (string blogType in request.BlogTypes)
+        {
+            drillDownQuery.Add(nameof(BlogSearchIndexModel.BlogTypeFacet), blogType.ToLowerInvariant());
+        }
+
+        foreach (string topic in request.DXTopics)
+        {
+            drillDownQuery.Add(nameof(BlogSearchIndexModel.DXTopicsFacets), topic.ToLowerInvariant());
+        }
+
+        return drillDownQuery;
     }
 
     private static Query GetBlogTermQuery(BlogSearchRequest request)

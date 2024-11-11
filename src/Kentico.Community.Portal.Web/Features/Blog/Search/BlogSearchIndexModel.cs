@@ -1,18 +1,15 @@
-﻿using System.Collections.Specialized;
+﻿using System.Text.Json;
 using CMS.ContentEngine;
 using CMS.Core;
-using CMS.Helpers;
 using CMS.MediaLibrary;
 using Kentico.Community.Portal.Core;
-using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 using Kentico.Community.Portal.Web.Rendering;
-using Kentico.Content.Web.Mvc;
 using Kentico.Xperience.Lucene.Core.Indexing;
 using Lucene.Net.Documents;
 using Lucene.Net.Documents.Extensions;
 using Lucene.Net.Facet;
-using Newtonsoft.Json;
+using MediatR;
 
 namespace Kentico.Community.Portal.Web.Features.Blog.Search;
 
@@ -24,9 +21,9 @@ public class BlogSearchIndexModel
     public string Title { get; set; } = "";
     public string Content { get; set; } = "";
     public DateTime PublishedDate { get; set; }
-    public const string DXTopicsFacetField = $"{nameof(DXTopics)}_Facet";
-    public string DXTopics { get; set; } = "";
-    public const string BlogTypeFacetField = $"{nameof(BlogType)}_Facet";
+    public List<string> DXTopicsFacets { get; set; } = [];
+    public List<string> DXTopics { get; set; } = [];
+    public string BlogTypeFacet { get; set; } = "";
     public string BlogType { get; set; } = "";
     public string ShortDescription { get; set; } = "";
     public ImageAssetViewModelSerializable? TeaserImage { get; set; } = null;
@@ -41,32 +38,39 @@ public class BlogSearchIndexModel
             new TextField(nameof(Title), Title, Field.Store.YES),
             new TextField(nameof(Content), Content, Field.Store.NO),
             new Int64Field(nameof(PublishedDate), DateTools.TicksToUnixTimeMilliseconds(PublishedDate.Ticks), Field.Store.YES),
-            new TextField(nameof(DXTopics), (string.IsNullOrWhiteSpace(DXTopics) ? "untaxonomized" : DXTopics).ToLowerInvariant(), Field.Store.YES),
-            new TextField(nameof(BlogType), (string.IsNullOrWhiteSpace(BlogType) ? "untaxonomized" : BlogType).ToLowerInvariant(), Field.Store.YES),
+            new TextField(nameof(DXTopics), string.Join(";", DXTopics), Field.Store.YES),
+            new TextField(nameof(BlogType), BlogType, Field.Store.YES),
             new TextField(nameof(ShortDescription), ShortDescription, Field.Store.YES),
-            new TextField(nameof(TeaserImage), JsonConvert.SerializeObject(TeaserImage), Field.Store.YES),
+            new TextField(nameof(TeaserImage), JsonSerializer.Serialize(TeaserImage), Field.Store.YES),
             new Int32Field(nameof(AuthorMemberID), AuthorMemberID, Field.Store.YES),
             new TextField(nameof(AuthorName), AuthorName, Field.Store.YES),
-            new TextField(nameof(AuthorAvatarImage), JsonConvert.SerializeObject(AuthorAvatarImage), Field.Store.YES),
+            new TextField(nameof(AuthorAvatarImage), JsonSerializer.Serialize(AuthorAvatarImage), Field.Store.YES),
         };
 
-        _ = indexDocument.AddFacetField(nameof(DXTopicsFacetField), indexDocument.Get(nameof(DXTopics)));
-        _ = indexDocument.AddFacetField(nameof(BlogTypeFacetField), indexDocument.Get(nameof(BlogType)));
+        foreach (string topicFacet in DXTopicsFacets)
+        {
+            _ = indexDocument.AddFacetField(nameof(DXTopicsFacets), topicFacet);
+        }
+
+        if (!string.IsNullOrWhiteSpace(BlogTypeFacet))
+        {
+            _ = indexDocument.AddFacetField(nameof(BlogTypeFacet), BlogTypeFacet);
+        }
 
         return indexDocument;
     }
 
     public static BlogSearchIndexModel FromDocument(Document doc)
     {
-        var teaserImage = JsonConvert.DeserializeObject<ImageAssetViewModelSerializable>(doc.Get(nameof(TeaserImage)) ?? "{ }");
-        var authorImage = JsonConvert.DeserializeObject<ImageAssetViewModelSerializable>(doc.Get(nameof(AuthorAvatarImage)) ?? "{ }");
+        var teaserImage = JsonSerializer.Deserialize<ImageAssetViewModelSerializable>(doc.Get(nameof(TeaserImage)) ?? "{ }");
+        var authorImage = JsonSerializer.Deserialize<ImageAssetViewModelSerializable>(doc.Get(nameof(AuthorAvatarImage)) ?? "{ }");
 
         var model = new BlogSearchIndexModel
         {
             Url = doc.Get(nameof(Url)),
             Title = doc.Get(nameof(Title)),
             ShortDescription = doc.Get(nameof(ShortDescription)),
-            DXTopics = doc.Get(nameof(DXTopics)),
+            DXTopics = [.. doc.Get(nameof(DXTopics)).Split(";")],
             BlogType = doc.Get(nameof(BlogType)),
             TeaserImage = teaserImage,
             AuthorMemberID = int.TryParse(doc.Get(nameof(AuthorMemberID)), out int authorMemberID)
@@ -84,25 +88,21 @@ public class BlogSearchIndexModel
     }
 }
 
-public class BlogSearchIndexingStrategy(
+public partial class BlogSearchIndexingStrategy(
     IContentQueryExecutor executor,
-    AssetItemService assetService,
-    ITaxonomyRetriever taxonomyRetriever,
     WebScraperHtmlSanitizer htmlSanitizer,
     WebCrawlerService webCrawler,
     IChannelDataProvider channelDataProvider,
-    IProgressiveCache cache,
+    IMediator mediator,
     IEventLogService log) : DefaultLuceneIndexingStrategy
 {
     public const string IDENTIFIER = "BLOG_SEARCH";
 
     private readonly IContentQueryExecutor executor = executor;
-    private readonly AssetItemService assetService = assetService;
-    private readonly ITaxonomyRetriever taxonomyRetriever = taxonomyRetriever;
     private readonly WebScraperHtmlSanitizer htmlSanitizer = htmlSanitizer;
     private readonly WebCrawlerService webCrawler = webCrawler;
     private readonly IChannelDataProvider channelDataProvider = channelDataProvider;
-    private readonly IProgressiveCache cache = cache;
+    private readonly IMediator mediator = mediator;
     private readonly IEventLogService log = log;
 
     public override async Task<IEnumerable<IIndexEventItemModel>> FindItemsToReindex(IndexEventWebPageItemModel changedItem) => await Task.FromResult<List<IIndexEventItemModel>>([changedItem]);
@@ -197,23 +197,31 @@ public class BlogSearchIndexingStrategy(
         blogPost.ListableItemFeaturedImageContent
             .TryFirst()
             .Map(i => new ImageAssetViewModelSerializable(i))
-            .IfNoValue(blogPost.ListableItemFeaturedImage
-                .TryFirst()
-                .Map(i => new ImageAssetViewModelSerializable(i)))
             .Execute(i => indexModel.TeaserImage = i);
 
-        var blogPostTaxonomy = await GetBlogPostTaxonomy();
-        var dxTopicsTaxonomy = await GetDXTopicsTaxonomy();
+        var taxonomies = await mediator.Send(new BlogPostTaxonomiesQuery());
 
         blogPost.BlogPostContentBlogType
             .TryFirst()
             .Map(t => t.Identifier)
-            .Bind(id => blogPostTaxonomy.Tags.TryFirst(t => t.Identifier == id))
-            .Execute(tag => indexModel.BlogType = tag.Title);
-        indexModel.DXTopics = string.Join(",", blogPost
+            .Bind(id => taxonomies.Types
+                .TryFirst(t => t.Guid == id))
+            .Execute(tag =>
+            {
+                indexModel.BlogType = tag.DisplayName;
+                indexModel.BlogTypeFacet = tag.NormalizedName;
+            });
+        var dxTopics = blogPost
             .BlogPostContentDXTopics
-            .Select(t => dxTopicsTaxonomy.Tags.FirstOrDefault(t => t.Identifier == t.Identifier)?.Title ?? "")
-            .Where(t => !string.IsNullOrWhiteSpace(t)));
+            .Select(tagRef => taxonomies.DXTopics
+                .FirstOrDefault(t => tagRef.Identifier == t.Guid))
+            .WhereNotNull();
+
+        foreach (var tag in dxTopics)
+        {
+            indexModel.DXTopics.Add(tag.DisplayName);
+            indexModel.DXTopicsFacets.Add(tag.NormalizedName);
+        }
 
         string content = await webCrawler.CrawlWebPage(page);
         indexModel.Content = htmlSanitizer.SanitizeHtmlDocument(content);
@@ -234,27 +242,12 @@ public class BlogSearchIndexingStrategy(
     {
         var facetConfig = new FacetsConfig();
 
-        facetConfig.SetMultiValued(nameof(BlogSearchIndexModel.DXTopicsFacetField), false);
-        facetConfig.SetMultiValued(nameof(BlogSearchIndexModel.BlogTypeFacetField), false);
+        facetConfig.SetMultiValued(nameof(BlogSearchIndexModel.DXTopicsFacets), true);
+        facetConfig.SetMultiValued(nameof(BlogSearchIndexModel.BlogTypeFacet), false);
 
         return facetConfig;
     }
-
-    private Task<TaxonomyData> GetBlogPostTaxonomy() =>
-        cache.LoadAsync(cs =>
-        {
-            cs.CacheDependency = CacheHelper.GetCacheDependency($"{TaxonomyInfo.OBJECT_TYPE}|byname|{SystemTaxonomies.BlogTypeTaxonomy.CodeName}");
-            return taxonomyRetriever.RetrieveTaxonomy(SystemTaxonomies.BlogTypeTaxonomy.CodeName, PortalWebSiteChannel.DEFAULT_LANGUAGE);
-        }, new CacheSettings(5, [nameof(BlogSearchIndexModel), nameof(GetBlogPostTaxonomy)]));
-    private Task<TaxonomyData> GetDXTopicsTaxonomy() =>
-        cache.LoadAsync(cs =>
-        {
-            cs.CacheDependency = CacheHelper.GetCacheDependency($"{TaxonomyInfo.OBJECT_TYPE}|byname|{SystemTaxonomies.DXTopicTaxonomy.CodeName}");
-            return taxonomyRetriever.RetrieveTaxonomy(SystemTaxonomies.DXTopicTaxonomy.CodeName, PortalWebSiteChannel.DEFAULT_LANGUAGE);
-        }, new CacheSettings(5, [nameof(BlogSearchIndexModel), nameof(GetDXTopicsTaxonomy)]));
 }
-
-
 
 public class ImageAssetViewModelSerializable
 {
@@ -267,15 +260,6 @@ public class ImageAssetViewModelSerializable
         Dimensions = new() { Width = image.MediaItemAssetWidth, Height = image.MediaItemAssetHeight };
     }
 
-    public ImageAssetViewModelSerializable(MediaAssetContent image)
-    {
-        ID = image.SystemFields.ContentItemGUID;
-        Title = image.MediaAssetContentTitle;
-        URL = image.MediaAssetContentAssetLight.Url;
-        AltText = image.MediaAssetContentShortDescription;
-        Dimensions = new() { Width = image.MediaAssetContentImageLightWidth, Height = image.MediaAssetContentImageLightHeight };
-    }
-
     public ImageAssetViewModelSerializable() { }
 
     public Guid ID { get; set; }
@@ -285,37 +269,4 @@ public class ImageAssetViewModelSerializable
     public AssetDimensions Dimensions { get; set; } = new();
 
     public ImageViewModel ToImageViewModel() => new(Title, AltText, Dimensions.Width, Dimensions.Height, URL) { ID = ID };
-}
-
-public class SerializableMediaFileUrl
-{
-    public string RelativePath { get; set; } = "";
-    public string DirectPath { get; set; } = "";
-    public bool IsImage { get; set; }
-
-    public SerializableMediaFileUrl(IMediaFileUrl url)
-    {
-        RelativePath = url.RelativePath;
-        DirectPath = url.DirectPath;
-        IsImage = url.IsImage;
-    }
-
-    public SerializableMediaFileUrl() { }
-
-    public DefaultMediaFileUrl ToMediaFileUrl() =>
-        new()
-        {
-            DirectPath = DirectPath,
-            IsImage = IsImage,
-            RelativePath = RelativePath,
-            QueryStringParameters = []
-        };
-}
-
-public class DefaultMediaFileUrl : IMediaFileUrl
-{
-    public string RelativePath { get; set; } = "";
-    public string DirectPath { get; set; } = "";
-    public NameValueCollection QueryStringParameters { get; set; } = [];
-    public bool IsImage { get; set; }
 }

@@ -1,20 +1,21 @@
 ﻿using CMS.ContentEngine;
 using CMS.DataEngine;
 using CMS.Membership;
+using EnumsNET;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Xperience.Lucene.Core.Indexing;
 using Lucene.Net.Documents;
+using Lucene.Net.Documents.Extensions;
 using Lucene.Net.Facet;
+using MediatR;
 using Newtonsoft.Json;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA.Search;
 
 public class DiscussionAuthorAttributes()
 {
-    public bool IsMVP { get; set; }
-
     public static DiscussionAuthorAttributes Default { get; } = new();
 };
 
@@ -33,9 +34,12 @@ public class QAndASearchIndexModel
     public string AuthorUsername { get; set; } = "";
     public string AuthorFullName { get; set; } = "";
     public DiscussionAuthorAttributes AuthorAttributes { get; set; } = DiscussionAuthorAttributes.Default;
-    public bool HasAcceptedResponse { get; set; }
+    public string DiscussionTypeFacet { get; set; } = "";
     public string DiscussionType { get; set; } = "";
-    public IEnumerable<string> Topics { get; set; } = [];
+    public List<string> DXTopicsFacet { get; set; } = [];
+    public List<string> DXTopics { get; set; } = [];
+    public string DiscussionStatesFacet { get; set; } = "";
+    public string DiscussionState { get; set; } = "";
     public int ResponseCount { get; set; } = 0;
 
     public Document ToDocument()
@@ -51,15 +55,20 @@ public class QAndASearchIndexModel
             new Int32Field(nameof(AuthorMemberID), AuthorMemberID, Field.Store.YES),
             new TextField(nameof(AuthorUsername), AuthorUsername, Field.Store.YES),
             new TextField(nameof(AuthorFullName), AuthorFullName, Field.Store.YES),
-            new Int32Field(nameof(HasAcceptedResponse), HasAcceptedResponse ? 1 : 0, Field.Store.YES),
             new Int32Field(nameof(ResponseCount), ResponseCount, Field.Store.YES),
-            new FacetField(nameof(DiscussionType), (string.IsNullOrWhiteSpace(DiscussionType) ? "None" : DiscussionType).ToLowerInvariant()),
+            new TextField(nameof(DiscussionType), string.IsNullOrWhiteSpace(DiscussionType) ? "none" : DiscussionType, Field.Store.YES),
+            new TextField(nameof(DiscussionState), string.IsNullOrWhiteSpace(DiscussionState) ? "none" : DiscussionState, Field.Store.YES),
+            new TextField(nameof(DXTopics), string.Join(';', DXTopics), Field.Store.YES),
         };
 
-        if (Topics.Any())
+        _ = indexDocument.AddFacetField(nameof(DiscussionTypeFacet), DiscussionTypeFacet);
+
+        foreach (string topic in DXTopicsFacet)
         {
-            indexDocument.Add(new FacetField(nameof(Topics), Topics.Select(t => t.ToLowerInvariant()).ToArray()));
+            _ = indexDocument.AddFacetField(nameof(DXTopicsFacet), topic);
         }
+
+        _ = indexDocument.AddFacetField(nameof(DiscussionStatesFacet), DiscussionStatesFacet);
 
         return indexDocument;
     }
@@ -82,11 +91,6 @@ public class QAndASearchIndexModel
                 ? authorMemberID
                 : 0,
             AuthorAttributes = JsonConvert.DeserializeObject<DiscussionAuthorAttributes>(doc.Get(nameof(AuthorAttributes) ?? "{ }")) ?? DiscussionAuthorAttributes.Default,
-            HasAcceptedResponse = doc.Get(nameof(HasAcceptedResponse)) switch
-            {
-                "1" => true,
-                "0" or _ => false
-            },
             ResponseCount = int.TryParse(doc.Get(nameof(ResponseCount)), out int answerCount)
                 ? answerCount
                 : 0,
@@ -99,7 +103,8 @@ public class QAndASearchIndexModel
                     long.TryParse(doc.Get(nameof(LatestResponseDate)), out long responseVal) ? responseVal : DateTools.TicksToUnixTimeMilliseconds(DefaultTime.Ticks)
                 )),
             DiscussionType = doc.Get(nameof(DiscussionType)) ?? "",
-            Topics = doc.GetValues(nameof(Topics)) ?? []
+            DiscussionState = doc.Get(nameof(DiscussionState)) ?? "",
+            DXTopics = [.. doc.Get(nameof(DXTopics)).Split(";")],
         };
 
         return model;
@@ -110,16 +115,17 @@ public class QAndASearchIndexingStrategy(
     IContentQueryExecutor executor,
     WebScraperHtmlSanitizer htmlSanitizer,
     IInfoProvider<MemberInfo> memberProvider,
-    ITaxonomyRetriever taxonomyRetriever,
-    IInfoProvider<QAndAAnswerDataInfo> answerProvider) : DefaultLuceneIndexingStrategy
+    IInfoProvider<QAndAAnswerDataInfo> answerProvider,
+    IMediator mediator) : DefaultLuceneIndexingStrategy
 {
     public const string IDENTIFIER = "QANDA_SEARCH";
 
     private readonly IContentQueryExecutor executor = executor;
     private readonly WebScraperHtmlSanitizer htmlSanitizer = htmlSanitizer;
-    private readonly ITaxonomyRetriever taxonomyRetriever = taxonomyRetriever;
     private readonly IInfoProvider<MemberInfo> memberProvider = memberProvider;
     private readonly IInfoProvider<QAndAAnswerDataInfo> answerProvider = answerProvider;
+    private readonly IMediator mediator = mediator;
+
 
     public override async Task<Document?> MapToLuceneDocumentOrNull(IIndexEventItemModel item)
     {
@@ -152,10 +158,36 @@ public class QAndASearchIndexingStrategy(
         indexModel.PublishedDate = page.QAndAQuestionPageDateCreated != default
             ? page.QAndAQuestionPageDateCreated
             : DateTime.MinValue;
-        indexModel.HasAcceptedResponse = page.QAndAQuestionPageAcceptedAnswerDataGUID != default;
+        indexModel.DiscussionStatesFacet = page.QAndAQuestionPageAcceptedAnswerDataGUID switch
+        {
+            var g when g == default => Enums.AsString(DiscussionStates.NoAcceptedAnswer, EnumFormat.Name)?.ToLowerInvariant() ?? "",
+            _ => Enums.AsString(DiscussionStates.HasAcceptedAnswer, EnumFormat.Name)?.ToLowerInvariant() ?? "",
+        };
+        indexModel.DiscussionState = indexModel.DiscussionStatesFacet;
 
-        indexModel.DiscussionType = await GetDiscussionType(page, item);
-        indexModel.Topics = await GetTopics(page, item);
+        var taxonomies = await mediator.Send(new QAndATaxonomiesQuery());
+
+        page.QAndAQuestionPageDiscussionType
+            .TryFirst()
+            .Map(t => t.Identifier)
+            .Bind(id => taxonomies.Types
+                .TryFirst(t => t.Guid == id))
+            .Execute(tag =>
+            {
+                indexModel.DiscussionType = tag.DisplayName;
+                indexModel.DiscussionTypeFacet = tag.NormalizedName;
+            });
+        var dxTopics = page
+            .QAndAQuestionPageDXTopics
+            .Select(tagRef => taxonomies.DXTopics
+                .FirstOrDefault(t => tagRef.Identifier == t.Guid))
+            .WhereNotNull();
+
+        foreach (var tag in dxTopics)
+        {
+            indexModel.DXTopics.Add(tag.DisplayName);
+            indexModel.DXTopicsFacet.Add(tag.NormalizedName);
+        }
 
         var answers = (await answerProvider
             .Get()
@@ -176,8 +208,9 @@ public class QAndASearchIndexingStrategy(
     {
         var facetConfig = new FacetsConfig();
 
-        facetConfig.SetMultiValued(nameof(QAndASearchIndexModel.Topics), true);
-        facetConfig.SetMultiValued(nameof(QAndASearchIndexModel.DiscussionType), false);
+        facetConfig.SetMultiValued(nameof(QAndASearchIndexModel.DXTopicsFacet), true);
+        facetConfig.SetMultiValued(nameof(QAndASearchIndexModel.DiscussionTypeFacet), false);
+        facetConfig.SetMultiValued(nameof(QAndASearchIndexModel.DiscussionStatesFacet), false);
 
         return facetConfig;
     }
@@ -197,7 +230,7 @@ public class QAndASearchIndexingStrategy(
         if (member is not null)
         {
             var cm = CommunityMember.FromMemberInfo(member);
-            return new(cm.Id, cm.UserName!, cm.FullName, new() { IsMVP = cm.IsMVP });
+            return new(cm.Id, cm.UserName!, cm.FullName, new());
         }
 
         var b = new ContentItemQueryBuilder()
@@ -209,19 +242,5 @@ public class QAndASearchIndexingStrategy(
         var author = authors.First();
 
         return new(0, author.AuthorContentCodeName, author.FullName, DiscussionAuthorAttributes.Default);
-    }
-
-    private async Task<string> GetDiscussionType(QAndAQuestionPage page, IIndexEventItemModel item)
-    {
-        var tags = await taxonomyRetriever.RetrieveTags(page.QAndAQuestionPageDiscussionType.Select(t => t.Identifier), item.LanguageName);
-
-        return tags.FirstOrDefault()?.Title ?? "";
-    }
-
-    private async Task<IEnumerable<string>> GetTopics(QAndAQuestionPage page, IIndexEventItemModel item)
-    {
-        var tags = await taxonomyRetriever.RetrieveTags(page.QAndAQuestionPageDXTopics.Select(t => t.Identifier), item.LanguageName);
-
-        return tags.Select(t => t.Title);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Web;
-using CMS.EmailEngine;
+using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Registration;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
@@ -7,7 +7,6 @@ using Kentico.Community.Portal.Web.Resources;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Options;
 
 namespace Kentico.Community.Portal.Web.Features.PasswordRecovery;
 
@@ -16,9 +15,8 @@ public class PasswordRecoveryController(
     UserManager<CommunityMember> userManager,
     SignInManager<CommunityMember> signInManager,
     IStringLocalizer<SharedResources> localizer,
-    IOptions<SystemEmailOptions> systemEmailOptions,
-    IEmailService emailService,
-    WebPageMetaService metaService) : Controller
+    WebPageMetaService metaService,
+    IMemberEmailService emailService) : Controller
 {
     /**
      * TODO: update View Location Expander to find this via conventions
@@ -26,11 +24,10 @@ public class PasswordRecoveryController(
     private const string VIEW_PATH_ERROR = "~/Features/PasswordRecovery/ResetPasswordError.cshtml";
 
     private readonly IStringLocalizer<SharedResources> localizer = localizer;
-    private readonly IEmailService emailService = emailService;
-    private readonly SystemEmailOptions systemEmailOptions = systemEmailOptions.Value;
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly SignInManager<CommunityMember> signInManager = signInManager;
     private readonly WebPageMetaService metaService = metaService;
+    private readonly IMemberEmailService emailService = emailService;
 
     /// <summary>
     /// Step 1
@@ -58,28 +55,28 @@ public class PasswordRecoveryController(
             return PartialView("~/Features/PasswordRecovery/_RequestRecoveryEmailForm.cshtml", model);
         }
 
-        var user = await userManager.FindByEmailAsync(model.Email);
-        if (user is null)
+        var member = await userManager.FindByEmailAsync(model.Email);
+        if (member is null)
         {
             return PartialView("~/Features/PasswordRecovery/_RequestRecoveryEmailForm.cshtml", new RequestRecoveryEmailViewModel());
         }
 
-        if (!user.Enabled)
+        if (!member.Enabled)
         {
             return PartialView("~/Features/Registration/EmailConfirmation.cshtml", new EmailConfirmationViewModel
             {
                 State = EmailConfirmationState.Failure_NotYetConfirmed,
                 Message = "You cannot reset your password until you confirm your email address.",
                 SendButtonText = "Send confirmation email",
-                Username = user.UserName!
+                Username = member.UserName!
             });
         }
 
-        string token = await userManager.GeneratePasswordResetTokenAsync(user);
+        string token = await userManager.GeneratePasswordResetTokenAsync(member);
         string? resetURL = Url.Action(
             nameof(SetNewPassword),
             "PasswordRecovery",
-            new { userId = user.Id, token = HttpUtility.UrlEncode(token) },
+            new { userId = member.Id, token = HttpUtility.UrlEncode(token) },
             Request.Scheme);
 
         if (resetURL is null)
@@ -90,17 +87,7 @@ public class PasswordRecoveryController(
         }
 
         await emailService
-            .SendEmail(new EmailMessage()
-            {
-                From = $"no-reply@{systemEmailOptions.SendingDomain}",
-                Recipients = model.Email,
-                Subject = "Password reset request",
-                Body = $"""
-                    <p>To reset your account's password, click <a href="{resetURL}">here</a>.</p>
-                    <p style="margin-bottom: 1rem;">You can also copy and paste this URL into your browser.</p>
-                    <p>{resetURL}</p>
-                    """
-            });
+            .SendEmail(member, MemberEmailConfiguration.ResetPassword(resetURL));
 
         return PartialView("~/Features/PasswordRecovery/_RequestRecoveryEmailForm.cshtml", new RequestRecoveryEmailViewModel());
     }

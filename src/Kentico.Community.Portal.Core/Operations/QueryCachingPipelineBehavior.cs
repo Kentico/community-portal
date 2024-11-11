@@ -1,6 +1,7 @@
 using CMS.Helpers;
 using CMS.Websites.Routing;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
 namespace Kentico.Community.Portal.Core.Operations;
@@ -15,7 +16,8 @@ public class QueryCachingPipelineBehavior<TQuery, TResult>(
     IEnumerable<IQueryCacheKeysCreator<TQuery, TResult>> creators,
     IEnumerable<IQueryCacheSettingsCustomizer<TQuery, TResult>> cacheCustomizers,
     IWebsiteChannelContext channelContext,
-    IOptions<DefaultQueryCacheSettings> settings) : IPipelineBehavior<TQuery, TResult>
+    IOptions<DefaultQueryCacheSettings> settings,
+    IHttpContextAccessor contextAccessor) : IPipelineBehavior<TQuery, TResult>
     where TQuery : IQuery<TResult>
 {
     private readonly IProgressiveCache cache = cache;
@@ -26,6 +28,7 @@ public class QueryCachingPipelineBehavior<TQuery, TResult>(
     private readonly IEnumerable<IQueryCacheKeysCreator<TQuery, TResult>> creators = creators;
     private readonly IEnumerable<IQueryCacheSettingsCustomizer<TQuery, TResult>> cacheCustomizers = cacheCustomizers;
     private readonly IWebsiteChannelContext channelContext = channelContext;
+    private readonly IHttpContextAccessor contextAccessor = contextAccessor;
     private readonly DefaultQueryCacheSettings settings = settings.Value;
 
     public async Task<TResult> Handle(TQuery query, RequestHandlerDelegate<TResult> next, CancellationToken cancellationToken)
@@ -33,9 +36,15 @@ public class QueryCachingPipelineBehavior<TQuery, TResult>(
         var creator = creators.FirstOrDefault();
 
         /*
+         * Guard against IWebsiteChannelContext.IsPreview throwing an exception
+         * when no HttpContext is available (e.g. background process)
+         */
+        bool isPreview = contextAccessor.HttpContext is not null && channelContext.IsPreview;
+
+        /*
          * Skip caching is we are in preview mode, caching is disabled, or we cannot generate cache keys for the current query
          */
-        if (channelContext.IsPreview ||
+        if (isPreview ||
             !this.settings.IsEnabled ||
             creator is null)
         {

@@ -254,10 +254,7 @@ public class QAndAAuthorViewModel
         ID = member.Id;
         Username = member.UserName!;
         FullName = member.FullName;
-        AuthorAttributes = new()
-        {
-            IsMVP = member.IsMVP
-        };
+        AuthorAttributes = new();
     }
 
     public QAndAAuthorViewModel(AuthorContent author)
