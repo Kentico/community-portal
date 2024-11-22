@@ -17,6 +17,8 @@ using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Infrastructure.Storage;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Community.Portal.Web.Rendering.Events;
+using Sidio.Sitemap.AspNetCore;
+using Sidio.Sitemap.Core.Services;
 using Slugify;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -77,7 +79,8 @@ public static class ServiceCollectionAppExtensions
     private static IServiceCollection AddSEO(this IServiceCollection services) =>
         services
             .AddScoped<WebPageMetaService>()
-            .AddTransient<Sitemap>();
+            .AddTransient<SitemapRetriever>()
+            .AddDefaultSitemapServices<HttpContextBaseUrlProvider>();
 
     private static IServiceCollection AddForms(this IServiceCollection services, IConfiguration config) =>
         services

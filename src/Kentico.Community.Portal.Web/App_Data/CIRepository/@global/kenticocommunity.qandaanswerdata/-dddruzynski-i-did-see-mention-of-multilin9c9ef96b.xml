@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-dddruzynski-I-did-see-mention-of-multilin9c9ef96b</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+@dddruzynski
+
+> I did see mention of multilingual forms on the roadmap so perhaps this sort of change will be accommodated by that update?
+
+Yes, like Liam mentioned, improvements to forms will come with the [Multilingual forms](https://roadmap.kentico.com/c/226-multilingual-forms) roadmap feature.
+
+The localization of that validation message is handled by `ResHelper.GetString(...)` which is backed by `ILocalizationService.GetString(...)`
+
+You can [decorate](https://docs.kentico.com/developers-and-admins/customization/decorate-system-services) the existing `ILocalizationService` with your custom implementation for that specific `general.requiresvalue` resource key and forward the rest of the method calls to the existing implementation.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-09-09 21:00:19Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>c36ae928-6447-43a4-81c0-8676585c8111</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Updating-default-validation-messages-on-XbyK-Forms--f2bc9075-ga2rwup5</CodeName>
+    <GUID>0a7e6eac-388c-4e6b-be5f-ea0cab07ddc6</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

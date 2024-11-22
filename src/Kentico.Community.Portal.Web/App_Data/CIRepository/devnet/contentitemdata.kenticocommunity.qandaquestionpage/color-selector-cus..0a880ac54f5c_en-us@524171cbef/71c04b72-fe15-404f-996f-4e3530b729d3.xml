@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>a9e447e8-5600-4db2-9a04-0a880ac54f5c</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Color-Selector-Custom-Form-Component-Elem-8e470bc1</CodeName>
+      <GUID>8b4e2c81-2e54-4996-bdec-06f14a6b9a95</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>71c04b72-fe15-404f-996f-4e3530b729d3</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>385a45a2-1960-4531-af22-12e30a8edb75</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent><![CDATA[
+[describe your problem or question]
+
+---Hi All, I'm trying to get the provided ColorSelector form component working in XbyK Color Selector Documentation I was able to get everything set up. I can add the color selector as the Form component in a text field: 
+
+![](https://i.ibb.co/7nbmVDL/selector.png)
+
+but when I add a new content item of that content type I get the following:
+
+![Content error message](https://i.ibb.co/wrhpCyH/error.png "Content error message")
+
+With a console error that points to this react error: https://react.dev/errors/306?invariant=306&args%5B%5D=undefined&args%5B%5D=
+
+Element type is invalid. Received a promise that resolves to: undefined.
+
+Haven't worked with React much and followed the Xperience by Kentico documentation to get to this point. Any help in pointing me in the right direction is appreciated.
+
+**Environment**
+- Xperience by Kentico version: [28.2.2]
+- .NET version: [6]
+- Deployment environment: [local]
+- Link to relevant [Xperience by Kentico documentation](https://docs.xperience.io/xp)
+]]></QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2024-02-14 18:42:12Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2024-02-14 18:42:12Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle><![CDATA[Color Selector Custom Form Component Element Type Invalid Error]]></QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

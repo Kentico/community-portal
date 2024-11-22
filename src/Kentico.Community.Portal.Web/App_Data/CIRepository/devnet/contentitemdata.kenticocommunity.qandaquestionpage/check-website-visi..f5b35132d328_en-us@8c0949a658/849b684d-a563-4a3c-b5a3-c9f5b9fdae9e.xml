@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>a9a62636-d1a5-4ca0-9663-f5b35132d328</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Check-website-visitor-is-authenticated-in-admin-site-16a9ba36-hqz1m0xe</CodeName>
+      <GUID>24d4b22b-48aa-4de8-a826-2d0c284765b9</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>849b684d-a563-4a3c-b5a3-c9f5b9fdae9e</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>54b0f1b7-6ec8-4c51-8529-52901562e668</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent><![CDATA[
+In some scenarios you _might_ want to check if the current visitor is authenticated in the admin portal.  This might be to adjust the website behaviour specifically for admin visitors.
+
+Is there a Kentico API that we can use on the .NET front-end to detect if the visitor is authenticated in the admin site?
+
+If not, I think just checking for the existence of the admin authentication cookie seems to work well:
+
+```
+var adminCookie = Request.Cookies[".AspNetCore.Xperience.Application"];
+```
+
+Are there any other suggestions?
+
+---
+
+**Environment**
+- Xperience by Kentico version: [29.3.0]
+- .NET version: [8]
+]]></QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2024-08-14 22:57:28Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2024-08-14 23:26:39Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle><![CDATA[Check website visitor is authenticated in admin site]]></QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

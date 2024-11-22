@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.notificationemail>
+  <NotificationEmailContent>
+    <![CDATA[<p id="isPasted">Hi {{UserName}}, <br>your account has been temporarily locked after a number of unsuccessful sign-in attempts, in order to prevent unauthorized use.</p><p>If you did not attempt to sign in, contact your project's administrator as soon as possible.</p><p>Otherwise, you can unlock your account using the following link: <a href="{{UnlockAccountUrl}}">Click here</a></p>]]>
+  </NotificationEmailContent>
+  <NotificationEmailDisplayName>User account lockout</NotificationEmailDisplayName>
+  <NotificationEmailGUID>8275b009-4392-4475-ba95-8f9a650ed3c7</NotificationEmailGUID>
+  <NotificationEmailName>Kentico.UserAccountLockout</NotificationEmailName>
+  <NotificationEmailNotificationEmailTemplateID>
+    <CodeName>Kentico.General</CodeName>
+    <GUID>fd1107c3-3b5d-4372-972e-5e4890f12f71</GUID>
+    <ObjectType>cms.notificationemailtemplate</ObjectType>
+  </NotificationEmailNotificationEmailTemplateID>
+  <NotificationEmailSender>no-reply</NotificationEmailSender>
+  <NotificationEmailSubject>User account locked for {{ServiceDomain}}</NotificationEmailSubject>
+</cms.notificationemail>

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>TLDR-It-turns-out-this-is-related-to-delet5214fbaf</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+TLDR;
+
+It turns out this is related to deleting a referenced content item. I needed to re-publish the content item that linked to the deleted content item.
+
+Here's an example:
+
+I have a content type, named `AuthorContent`, that references other content items in field using the [Content items data type](https://docs.kentico.com/x/RoXWCQ). Let's call this field `AuthorContentImage` and it references content items of a `MediaAssetContent` content type.
+
+I deleted a referenced `MediaAssetContent` content item from the Content hub, which is the source of the problem.
+
+Xperience tracks content item references in the `cms.contentitemcommondata` CI repository file under the `<ContentItemReferences>` XML node but this node is not updated when a referenced content item is deleted from the Content hub.
+
+To resolve the problem, I updated the `AuthorContent` content item in the Content hub by creating a new draft version and publishing it with no changes. This updated the serialized version of this content item in the CI Repository and updated the `<ContentItemReferences>` node in the `cms.contentitemcommondata` file.
+
+I then ran the CI Restore and it succeeded.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-09-05 10:30:24Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>563c8a8e-b520-4726-bdbd-ca01dffb637f</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Running-CI-Restore-fails-for-Content-item-common-data--9ba02534-4iut74nz</CodeName>
+    <GUID>b0bf2f5f-f197-46bb-af5c-4ab4bbfd925b</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

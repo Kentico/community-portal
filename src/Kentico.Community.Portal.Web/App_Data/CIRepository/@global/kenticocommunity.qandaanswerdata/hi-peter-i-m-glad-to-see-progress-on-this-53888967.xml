@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Hi-Peter-I-m-glad-to-see-progress-on-this-53888967</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+Hi Peter,
+
+I'm glad to see progress on this and that you were able to reproduce the issue! Hopefully, a fix is on the way soon.
+
+I did spend around 15 hours trying to track down the problem on my end and had to be quite vocal to get the right support, so I'm relieved we're moving forward.
+
+Could I also ask you to look into another error? This one also only occurs in SaaS environments, both in QA and PROD. It seems to be logged only during the first request after a deployment finishes. I'm sharing the logs below for reference.
+
+From the Exceptions tab in Xperience Portal:
+![](https://assets-us-01.kc-usercontent.com/2548121d-cad8-4458-a910-5e4b54cb0956/d94d309a-6686-495c-a258-aa5b9bd3b321/iScreen%20Shoter%20-%20Google%20Chrome%20-%20240904191743.jpg)
+
+From Event log:
+![](https://assets-us-01.kc-usercontent.com/2548121d-cad8-4458-a910-5e4b54cb0956/6401b531-04bd-4c33-a0a7-4155b28f16c4/iScreen%20Shoter%20-%20Google%20Chrome%20-%20240904190905.jpg)
+
+Thanks so much for your help!
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-09-04 21:21:44Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>bae4df86-f577-408a-8dbd-fc9f6604ce62</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>SaaS-Event-Log-errors-that-I-cannot-trace-back-to-their-origin-dd1b2e5e-3do7s1mx</CodeName>
+    <GUID>cd08011e-6570-4ecd-88c7-bd0699b1f8ca</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

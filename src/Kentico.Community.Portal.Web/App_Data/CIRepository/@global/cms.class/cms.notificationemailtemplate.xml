@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Notification email template</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="NotificationEmailTemplateID" columntype="integer" enabled="true" guid="beb124c8-6c57-4402-9cbf-883fa9916625" isPK="true" system="true" />
+      <field column="NotificationEmailTemplateGUID" columnprecision="0" columntype="guid" enabled="true" guid="cc0de410-d75f-4704-a947-c15c433c41e0" system="true" />
+      <field column="NotificationEmailTemplateName" columnprecision="0" columnsize="250" columntype="text" enabled="true" guid="b289649c-df98-4620-848e-41e7e685301e" system="true" />
+      <field column="NotificationEmailTemplateDisplayName" columnprecision="0" columnsize="250" columntype="text" enabled="true" guid="fc2656d9-80dc-4dee-b818-3a30d2a8c11c" system="true" />
+      <field allowempty="true" column="NotificationEmailTemplateDescription" columnprecision="0" columntype="longtext" enabled="true" guid="86d3ef5b-becd-4369-ac2e-7744b451b917" system="true" />
+      <field column="NotificationEmailTemplateCode" columnprecision="0" columntype="longtext" enabled="true" guid="83f870c2-c5b6-4db6-9329-03e26a2c53dd" system="true" />
+      <field column="NotificationEmailTemplateLastModified" columnprecision="7" columntype="datetime" enabled="true" guid="f2db3ccf-94a6-4a35-85a1-7d14f508a8e0" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>043ec04e-7e87-481b-8088-ebf66160d4d9</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.NotificationEmailTemplate</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Notifications</CodeName>
+    <GUID>82db1a57-847d-4087-ba71-a62a627ea907</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_NotificationEmailTemplate</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>8e20779f-dc95-44a5-83ba-98b7ffdd03e4</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Get-ContentItemDataCommonDataID-from-Pages-84c73291-i7nb8k2q</CodeName>
+      <GUID>899013e3-07d3-4406-aa05-e849326b306f</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>c73f5894-ab59-46d7-bdc0-8bd6bda578d5</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>571f9b22-7077-4b57-9172-cffa5626b2dc</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>2</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent><![CDATA[
+I'm trying to get out the Page builder widget data via code using 
+
+	private readonly IInfoProvider<ContentItemCommonDataInfo> _commonDataInfoProvider
+
+I need to get this on a page by page basis, so I need a way of getting out the `ContentItemDataCommonDataID` for the current page.
+
+I'm currently using
+
+	private readonly IWebPageDataContextRetriever _pageDataContextRetriever;
+	
+	var currentPage = _pageDataContextRetriever.Retrieve().WebPage;
+
+but this doesn't give access to the `ContentItemDataCommonDataID` field. 
+
+Looking in the database this value appears to be stored against the table for the specific content type as well but I need to be able to get this for any content type.
+
+Is there another API I need to be using to get this value? 
+
+---
+
+**Environment**
+- Xperience by Kentico version: 29.3.1
+- .NET version: [8]
+- Deployment environment: Azure
+]]></QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2024-10-04 14:30:20Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2024-10-04 14:30:20Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle>Get ContentItemDataCommonDataID from Pages</QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

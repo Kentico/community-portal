@@ -77,6 +77,9 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
 
             Continue discussions 🤗 on this blog post below.
             """;
+        var dxTopicTagIdentifiers = page.BlogPostPageBlogPostContent
+            .TryFirst()
+            .Match(c => c.BlogPostContentDXTopics, () => []);
         var member = new CommunityMember()
         {
             Id = 0 // Only the Id is required and an Id of 0 will result in the author being the Kentico Community author
@@ -88,6 +91,7 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
             questionTitle,
             questionContent,
             SystemTaxonomies.QAndADiscussionTypeTaxonomy.BlogTag.GUID,
+            dxTopicTagIdentifiers,
             page);
 
         await mediator.Send(command, default)

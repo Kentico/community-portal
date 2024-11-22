@@ -53,6 +53,15 @@
           <ConsentCodeName>KenticoCommunityPortalTracking</ConsentCodeName>
         </settings>
       </field>
+      <field allowempty="true" column="Recaptcha_FormComponent" columnsize="1" columntype="text" enabled="true" guid="75cb7e0f-364a-425e-9676-6379988d9ac2" visible="true">
+        <properties>
+          <fieldcaption>Community ReCaptcha</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.Components.Recaptcha-FormComponent</componentidentifier>
+        </settings>
+      </field>
     </form>
   </ClassFormDefinition>
   <ClassGUID>0545cc9f-9ec3-470d-9c9b-837adde8a0d1</ClassGUID>
@@ -81,6 +90,13 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="ConsentAgreement" msdata:DataType="System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" type="xs:string" minOccurs="0" />
+              <xs:element name="Recaptcha_FormComponent" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

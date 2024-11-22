@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>You-re-right-about-needing-custom-componend40eea6e</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+You're right about needing custom components for advanced validation, as the UI currently only handles basic validation like "Required". The `RegisterFormValidationRule` is still available for custom validation. As far as I know, there's no official plan on the roadmap to expose these rules in the UI yet.
+
+For now, you'll need to implement [custom validation using the API](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/ui-form-component-validation-rules "custom validation using the API").
+
+Since there’s no mention of this feature on the [roadmap](https://roadmap.kentico.com/ "roadmap"), I’d recommend submitting it as a suggestion!
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-10-22 09:10:28Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>42264374-da73-4a6b-b1df-ba1401471eb5</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Accessing-the-form-validation-rules-within-the-form-builder-c4302049-ru7nxlsj</CodeName>
+    <GUID>c06705e1-3691-4938-8f38-9b1a8ee23c25</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

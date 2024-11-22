@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-msr-The-main-issue-is-a-key-difference-be29f52723</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+@msr
+
+The main issue is a key difference between `dotnet run --project MyApp.csproj` and `dotnet MyApp.dll`.
+
+`dotnet run` is [meant to be used with local source code](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-run#description) during development.
+
+`dotnet` [runs compiled .NET applications](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet#description).
+
+When you are doing a deployment, you want to use `dotnet MyApp.dll --kxp-cd-restore ...`
+
+You can see this differentiation in [our documentation on updating Xperience by Kentico](https://docs.kentico.com/developers-and-admins/installation/update-xperience-by-kentico-projects#update-process-overview).
+
+> For deployed applications containing built assemblies, run the following `dotnet` command (replace the assembly with the name of your Xperience project’s DLL)
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-05-02 00:38:09Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>0cfdd934-e822-48b6-836f-d77bb6bbad18</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Is-source-code-required-on-target-server--0deec21f</CodeName>
+    <GUID>0942953b-cb29-4483-a250-37dedf624ffb</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

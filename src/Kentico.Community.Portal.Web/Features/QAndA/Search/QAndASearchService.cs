@@ -114,9 +114,9 @@ public class QAndASearchResult
             .Take(limit)
             .Select(d => QAndASearchIndexModel.FromDocument(retrieveDoc(d)))
             .ToList();
-        DiscussionTypes = facets.GetTopChildren(100, nameof(QAndASearchIndexModel.DiscussionTypeFacet), [])?.LabelValues.ToArray() ?? [];
+        DiscussionTypes = facets.GetTopChildren(2, nameof(QAndASearchIndexModel.DiscussionTypeFacet), [])?.LabelValues.ToArray() ?? [];
+        DiscussionStates = facets.GetTopChildren(2, nameof(QAndASearchIndexModel.DiscussionStatesFacet), [])?.LabelValues.ToArray() ?? [];
         DXTopics = facets.GetTopChildren(100, nameof(QAndASearchIndexModel.DXTopicsFacet), [])?.LabelValues.ToArray() ?? [];
-        DiscussionStates = facets.GetTopChildren(100, nameof(QAndASearchIndexModel.DiscussionStatesFacet), [])?.LabelValues.ToArray() ?? [];
         SortBy = request.SortBy;
     }
 

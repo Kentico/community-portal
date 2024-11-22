@@ -57,13 +57,9 @@
       "label": ".NET: watch (Web)",
       "command": "dotnet",
       "type": "process",
-      "args": [
-        "watch",
-        "run",
-        "--project",
-        "${workspaceFolder}/src/Kentico.Community.Portal.Web/Kentico.Community.Portal.Web.csproj"
-      ],
+      "args": ["watch"],
       "options": {
+        "cwd": "${workspaceFolder}/src/Kentico.Community.Portal.Web",
         "env": {
           "DOTNET_WATCH_RESTART_ON_RUDE_EDIT": "true"
         }

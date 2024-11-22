@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-TreePathUtils-was-moved-to-a-different-as93368839</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+`TreePathUtils` was moved to a different assembly and namespace. Specifically it is now in `CMS.ContentEngine.dll` as `CMS.ContentEngine.Internal.TreePathUtils`. I performed the upgrade today and can publish without error.
+
+Do you have any third-party libraries or custom code built for another version? If not, could you try peforming a clean and rebuild to see if the error goes away?
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-04-19 00:28:47Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>782c6e0e-5cd4-4963-8b04-e13bb663659f</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Bug-in-Publish-version-29-0-0-23710690</CodeName>
+    <GUID>fead9c2f-44fa-41e9-8a9c-5d8fc5df3597</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

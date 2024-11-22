@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-liamgold-I-have-just-been-playing-with-th8fc61385</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+@liamgold
+
+> I have just been playing with the Taxonomies and Tags, it looks like a great first release! One thing I can see myself needing, is modifying the taxonomies/tags further - I'm thinking being able to add extra fields to tags. In the past, clients might have wanted to associate a Tag with a specific colour, or image, or some other metadata that you'd ideally store against the Tag.
+
+Yes, [taxonomies in Xperience by Kentico](https://docs.kentico.com/x/taxonomies_xp) are a lot closer to "content" than Categories or Tags in Kentico Xperience 13, but they aren't pure content, like a custom content type model is.
+
+To keep taxonomies fast (and highly cacheable), we don't support versioning or workflow with them. Which means you aren't penalized with the complexity of the Content hub data if you don't need it. I think if you need to treat taxonomies as content, then model that content as a content type and connect the content type back to the taxonomy with its own Tags field.
+
+There _is_ a `TaxonomyMetadata` column in the `CMS_Taxonomy` table which is used for localization of the taxonomy Title/Description, but it's definitely an implementation detail and not meant to be customized (yet!)
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-03-25 21:55:13Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>d96029a6-145d-4e1c-b89f-06a60d5a5083</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Blog-Discussion-Xperience-by-Kentico-Refr-960adf96</CodeName>
+    <GUID>6aa278c0-f9e0-43e2-9f67-c0d3d632e5ba</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

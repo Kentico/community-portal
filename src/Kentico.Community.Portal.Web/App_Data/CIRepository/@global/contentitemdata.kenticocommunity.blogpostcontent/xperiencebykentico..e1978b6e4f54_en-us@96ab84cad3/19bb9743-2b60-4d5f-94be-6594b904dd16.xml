@@ -6,43 +6,11 @@
   <BlogPostContentBlogType>
     <![CDATA[[{"Identifier":"0865e8f6-2568-425e-94d8-2bf53adcdd57"}]]]>
   </BlogPostContentBlogType>
-  <BlogPostContentContentMarkdown>
-<![CDATA[
-Check out the new Refresh in [our documentation](https://docs.xperience.io/xp/changelog#Changelog-Refresh(August10,2023)).
-
-This refresh includes the following enhancements
-
-## Content Hub filters
-
-New filters in the Content Hub improve your ability to quickly find the content you are searching for.
-
-![Content Hub filters dialog](/getmedia/fb65f832-79a4-490c-a694-c0faa220caaa/refresh-v26-5-0-content-hub-filters.jpg)
-
-## Custom Listing Filters
-
-You can now create [code defined listing filters](https://docs.xperience.io/xp/developers-and-admins/customization/extend-the-administration-interface/ui-pages/reference-ui-page-templates/listing-ui-page-template#ListingUIpagetemplate-Addalistingfilter) for Administration customizations.
-
-You can add a custom filter to a listing page like this:
-
-```csharp
-public override Task ConfigurePage()
-{
-    ...
-
-    // Assigns a listing filter model
-    PageConfiguration.FilterFormModel = new UserListFilterModel();
-}
-```
-
-## Local Lucene Search 
-
-We have a Lucene.NET search integration package which you can learn more about at [our GitHub repository](https://github.com/Kentico/xperience-by-kentico-lucene/) for this library.
-]]>
-  </BlogPostContentContentMarkdown>
+  <BlogPostContentContentMarkdown />
   <BlogPostContentDXTopics>
-    <![CDATA[[{"Identifier":"803ca767-e932-4db9-a6bb-cb1393bfd255"},{"Identifier":"aa57c06d-5738-4fdb-ab10-08b42fc6c9c2"},{"Identifier":"ba042c18-9429-4cf0-91a8-dabf62520a27"}]]]>
+    <![CDATA[[{"Identifier":"427bcd78-d1db-4d80-8abc-d1ffc1a25d8e"},{"Identifier":"04589071-087e-4523-854c-0e11551ed166"},{"Identifier":"eb2bec5f-f893-4bd1-abcc-7e06a919e0d1"}]]]>
   </BlogPostContentDXTopics>
-  <BlogPostContentPublishedDate>2023-08-10 18:46:00Z</BlogPostContentPublishedDate>
+  <BlogPostContentPublishedDate>2023-08-10 22:46:00Z</BlogPostContentPublishedDate>
   <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
   <ContentItemDataCommonDataID>
     <GUID>39173b5f-5365-46b2-b531-e1978b6e4f54</GUID>

@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <cms.scheduledtask>
-  <TaskAssemblyName>CMS.LicenseProvider</TaskAssemblyName>
-  <TaskClass>CMS.LicenseProvider.SubscriptionLicenseRenewalTask</TaskClass>
   <TaskData />
   <TaskDeleteAfterLastRun>False</TaskDeleteAfterLastRun>
   <TaskDisplayName>Subscription license renewal</TaskDisplayName>
   <TaskEnabled>True</TaskEnabled>
   <TaskGUID>be17499a-7695-4fd4-b138-ee01f3bdd196</TaskGUID>
+  <TaskIdentifier>
+    <![CDATA[Kentico.ScheduledTask.SubscriptionLicenseRenewalTask]]>
+  </TaskIdentifier>
   <TaskInterval>
     <![CDATA[day;7/13/2011 9:46:53 AM;1;Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday]]>
   </TaskInterval>

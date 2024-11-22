@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Ah-yes-both-of-my-suggestions-will-only-wo5b0a0232</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+Ah, yes, both of my suggestions will only work if you view the page from the Page Builder/Preview views, not directly through visiting a page in a website channel.
+
+If you need "public" validation of the user's administration cookie, then your approach is the correct one.
+
+But, don't forget - this will _only_ work if you log in to the administration from the same domain that you use to browse a website.
+
+Because the administration application is not a "site" or a "channel", you can access it from _any_ domain/port that Kestrel answers requests on.
+
+If you have multiple channels setup on different domains, you can log into the administration through any of them and the administration cookie will be set for the one you use. Your browser won't send that cookie when you visit a website channel that uses a different domain.
+
+For this to work for all website channels, you would need to log into the administration from _every_ website channel domain.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-08-21 01:01:32Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>d001c14a-1118-4f55-babb-1807bb48b5c5</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Check-website-visitor-is-authenticated-in-admin-site-16a9ba36-hqz1m0xe</CodeName>
+    <GUID>7cae71e5-c24c-403f-904c-68256e171475</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

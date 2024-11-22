@@ -26,5 +26,6 @@ public class ImageTagHelper : TagHelper
         output.Attributes.SetAttribute("width", img.Width);
         output.Attributes.SetAttribute("height", img.Height);
         output.Attributes.SetAttribute("alt", img.AltText);
+        output.Attributes.SetAttribute("loading", "lazy");
     }
 }

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>You-could-use-a-configurator-https-docs-ke2dfb24dd</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+You could use a [configurator](https://docs.kentico.com/x/34BwCg) to dynamically change values, properties, visibility conditions, and validation rules for a widget property. I'm not sure if this allows you to change the disabled/enabled status.
+
+You could also add a [visibility condition](https://docs.kentico.com/developers-and-admins/development/builders/builder-component-properties-visibility-and-validation#add-visibility-conditions) which could show/hide the field based on value of a preceeding property.
+
+If those don't solve your issue then you'll need to make [a custom UI Form Component](https://docs.kentico.com/x/5ASiCQ) which could toggle between enabled/disabled using a configurator.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-10-04 18:25:36Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>9410c791-a40b-4b89-ae4b-4b1042891bb1</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Dynamic-Disable-Property-Based-on-Checkbox-in-Xperience-by-Kentico-Widget--1290a172-y7gjnamh</CodeName>
+    <GUID>0ec40ca2-2ba9-4fe8-b051-1a4327c45fee</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>8dc34fa6-58b4-42d7-aaf7-1d0af4e195ab</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Running-CI-Restore-fails-for-Content-item-common-data--9ba02534-4iut74nz</CodeName>
+      <GUID>0a3fd079-5534-44ac-8e0d-fa14ac3f0cae</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>a24afa01-68e3-4ecb-a5e4-26967e30bca4</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>563c8a8e-b520-4726-bdbd-ca01dffb637f</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>3</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent><![CDATA[
+I made some content type changes which were reflected in [the application's CI repository](https://docs.kentico.com/x/FAKQC) but after the changes were made I cannot successfully [run a CI Restore](https://docs.kentico.com/developers-and-admins/ci-cd/continuous-integration#restore-repository-files-to-the-database).
+
+The restore fails with the following exception:
+
+```
+Message: Restoration of object type "Content item common data" failed during objects' insertion and update. See inner exception for further details.
+
+Exception type: CMS.ContinuousIntegration.ObjectTypeSerializationException
+Stack trace:
+   at CMS.ContinuousIntegration.Internal.FileSystemRestoreJobBase.TryRun(Action`2 method, String objectType, String exceptionMessageFormat, CancellationToken cancellationToken)
+   at CMS.ContinuousIntegration.Internal.FileSystemRestoreAllJob.<>c__DisplayClass2_0.<CreateAndUpsertObjects>b__0(String objectType)
+   at CMS.ContinuousIntegration.Internal.AbstractFileSystemJob.<>c__DisplayClass38_0`1.<CancellableForEach>b__0(T item, Int32 _)
+   at CMS.ContinuousIntegration.Internal.AbstractFileSystemJob.CancellableForEach[T](IEnumerable`1 collection, Action`2 action, CancellationToken cancellationToken)
+   at CMS.ContinuousIntegration.Internal.AbstractFileSystemJob.CancellableForEach[T](IEnumerable`1 collection, Action`1 action, CancellationToken cancellationToken)
+   at CMS.ContinuousIntegration.Internal.FileSystemRestoreAllJob.CreateAndUpsertObjects(IEnumerable`1 orderedObjectTypes, CancellationToken cancellationToken)
+   at CMS.ContinuousIntegration.Internal.FileSystemRestoreAllJob.RunInternal(CancellationToken cancellationToken)
+   at CMS.ContinuousIntegration.Internal.AbstractFileSystemAllJob.Run(Nullable`1 cancellationToken)
+
+Message: Restoration of object type "Content item common data" (cms.contentitemcommondata) failed for object "aeb0e246-019e-46d4-b639-26d367a3f8ca" (ContentItemCommonDataID: 2). See inner exception for further details.
+
+Exception type: CMS.ContinuousIntegration.ObjectTypeSerializationException
+Stack trace:
+   at CMS.ContinuousIntegration.Internal.FileSystemChangedObjectsByTypeJobBase.ProcessChangedObject(DeserializedObject deserializedObject, String logMessageFormat)
+   at CMS.ContinuousIntegration.Internal.FileSystemChangedObjectsByTypeJobBase.<>c__DisplayClass15_0.<ProcessChangedObjects>b__0(DeserializedObject deserializedObject)
+   at CMS.ContinuousIntegration.Internal.AbstractFileSystemJob.<>c__DisplayClass38_0`1.<CancellableForEach>b__0(T item, Int32 _)
+   at CMS.ContinuousIntegration.Internal.AbstractFileSystemJob.CancellableForEach[T](IEnumerable`1 collection, Action`2 action, CancellationToken cancellationToken)
+   at CMS.ContinuousIntegration.Internal.AbstractFileSystemJob.CancellableForEach[T](IEnumerable`1 collection, Action`1 action, CancellationToken cancellationToken)
+   at CMS.ContinuousIntegration.Internal.FileSystemChangedObjectsByTypeJobBase.ProcessChangedObjects(String objectType, IEnumerable`1 objects, CancellationToken cancellationToken)
+   at CMS.ContinuousIntegration.Internal.FileSystemUpsertObjectsByTypeJob.RunInternal(String objectType, ISet`1 fileLocations, CancellationToken cancellationToken)
+   at CMS.ContinuousIntegration.Internal.AbstractFileSystemTypeWideJob.Run(String objectType, ISet`1 fileLocations, Nullable`1 cancellationToken)
+   at CMS.ContinuousIntegration.Internal.FileSystemRestoreObjectsByTypeInternalJob.RunUpsertObjectsByTypeJob()
+   at CMS.ContinuousIntegration.Internal.FileSystemRestoreAllJob.CreateAndUpsert(String objectType, CancellationToken cancellationToken)
+   at CMS.ContinuousIntegration.Internal.FileSystemRestoreJobBase.TryRun(Action`2 method, String objectType, String exceptionMessageFormat, CancellationToken cancellationToken)
+
+Message: Column 'ContentItemReferenceTargetItemID' does not allow DBNull.Value.
+```
+
+---
+
+**Environment**
+- Xperience by Kentico version: [29.4.1]
+- .NET version: [8]
+- Deployment environment: [SaaS]
+- Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)
+]]></QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2024-09-05 00:59:20Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2024-09-05 00:59:20Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle><![CDATA[Running CI Restore fails for "Content item common data"]]></QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

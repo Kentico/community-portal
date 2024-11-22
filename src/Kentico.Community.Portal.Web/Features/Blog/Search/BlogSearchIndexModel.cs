@@ -70,7 +70,7 @@ public class BlogSearchIndexModel
             Url = doc.Get(nameof(Url)),
             Title = doc.Get(nameof(Title)),
             ShortDescription = doc.Get(nameof(ShortDescription)),
-            DXTopics = [.. doc.Get(nameof(DXTopics)).Split(";")],
+            DXTopics = doc.Get(nameof(DXTopics)).Split(";").WhereNotNullOrWhiteSpace().ToList(),
             BlogType = doc.Get(nameof(BlogType)),
             TeaserImage = teaserImage,
             AuthorMemberID = int.TryParse(doc.Get(nameof(AuthorMemberID)), out int authorMemberID)
@@ -213,7 +213,7 @@ public partial class BlogSearchIndexingStrategy(
             });
         var dxTopics = blogPost
             .BlogPostContentDXTopics
-            .Select(tagRef => taxonomies.DXTopics
+            .Select(tagRef => taxonomies.DXTopicsAll
                 .FirstOrDefault(t => tagRef.Identifier == t.Guid))
             .WhereNotNull();
 

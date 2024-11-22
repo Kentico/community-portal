@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>e3bc2cd0-b012-4ab8-ba4a-17d30301f5c5</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Issue-with-community-portal-repository-v29-3-0-5-sql-erros-on-startup-d7c8c740-ooghnopd</CodeName>
+      <GUID>971c72d8-da24-4d0f-b96b-535d2cd281d5</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>189fcbc9-8a24-40cf-bfe5-1ce1da06b22a</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>0e9892f5-e98b-4a79-a97d-08514f90184d</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>1</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent><![CDATA[
+I had an older version of the portal running locally. I decided to use a newer version to see the implementations. Mostly to learn from it.
+Installing the 29.3.0.5 version of the portal gave me some issues with the SQL Database. Once starting up the project I receive SQL errors.
+
+I tries to lower my version and installed the 29.2.0.6. This one does work and I have no issues with this.
+
+
+    Query: 
+    INSERT INTO CMS_EventLog ([EventType], [EventTime], [Source], [EventCode], [UserID], [UserName], [IPAddress], [EventDescription], [EventUrl], [EventMachineName], [EventUserAgent], [EventUrlReferrer]) 
+    VALUES (@EventType, @EventTime, @Source, @EventCode, @UserID, @UserName, @IPAddress, @EventDescription, @EventUrl, @EventMachineName, @EventUserAgent, @EventUrlReferrer);
+    
+    SELECT SCOPE_IDENTITY() AS [ID]
+    
+    Caused exception: 
+    String or binary data would be truncated.
+    The statement has been terminated.
+    
+    
+    Exception type: System.Exception
+    Stack trace: 
+       at CMS.DataEngine.AbstractDataConnection.HandleError(String queryText, Exception ex)
+       at CMS.DataEngine.AbstractDataConnection.ExecuteScalar(String queryText, QueryDataParameters queryParams, QueryTypeEnum queryType, Boolean requiresTransaction)
+       at CMS.DataEngine.GeneralConnection.ExecuteScalar(QueryParameters query)
+       at CMS.DataEngine.DataQueryBase`1.GetScalarResult()
+       at CMS.DataEngine.DataQueryBase`1.GetScalarResult[T](T defaultValue)
+       at CMS.DataEngine.DataClassDataSqlStore.Insert(IDataClass dataClass, Boolean initializeId)
+       at CMS.DataEngine.AbstractInfoBase`1.InsertData()
+       at CMS.DataEngine.AbstractInfoProvider`3.SetInfo(TInfo info)
+       at CMS.EventLog.EventLogProvider.LogEventInternal(EventLogInfo eventObject)
+       at CMS.EventLog.EventLogProvider.LogEventInternal(EventLogInfo eventObject, Boolean logDirectly)
+       at CMS.EventLog.EventLogProvider.LogEventCore(EventLogInfo eventObject, Boolean logDirectly)
+
+
+
+---
+
+**Environment**
+- Xperience by Kentico version: [29.3.0]
+- .NET version: [8]
+- Deployment environment: local
+- Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)
+]]></QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2024-08-15 15:06:28Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2024-08-15 15:06:28Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle><![CDATA[Issue with community portal repository v29.3.0.5 - sql erros on startup]]></QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

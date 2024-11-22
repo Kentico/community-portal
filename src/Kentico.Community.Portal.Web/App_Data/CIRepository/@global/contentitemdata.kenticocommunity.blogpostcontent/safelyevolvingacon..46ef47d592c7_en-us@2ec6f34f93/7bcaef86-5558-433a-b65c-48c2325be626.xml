@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.blogpostcontent>
+  <BlogPostContentAuthor>
+    <![CDATA[[{"Identifier":"f9ac36a5-e1a6-4d21-9cb7-beb385d0fea0"}]]]>
+  </BlogPostContentAuthor>
+  <BlogPostContentBlogType>
+    <![CDATA[[{"Identifier":"0cb21dda-384b-4792-8e1b-41034f113d28"}]]]>
+  </BlogPostContentBlogType>
+  <BlogPostContentContentMarkdown>
+<![CDATA[
+:::note
+This post was written for Xperience by Kentico v28.4.0. Please [consult the documentation](https://docs.xperience.io/xp/changelog) for any feature or API changes when using a different version. Be sure to check the [System Requirements](https://docs.xperience.io/x/DgKQC) in the product documentation.
+:::
+
+Xperience by Kentico solutions are ever evolving organisms. The product itself evolves over time [with monthly Refreshes](https://roadmap.kentico.com/tabs/5-released), enabling marketers and developers with new features, integrating [marketing](https://roadmap.kentico.com/c/191-enhance-your-writing-instantly-ai-powered-rich-text-editor-for-smart-quick-content-transformation) and [technology trends](https://roadmap.kentico.com/c/180-leverage-net-8-when-building-websites-in-xperience-by-kentico).
+
+The web platform, quarterly marketing strategy goals, technology stack changes and innovations - all of these initiate conversations that often lead to changes in a DXP solution.
+
+How can developers manage an evolving solution that will inevitably have some breaking changes while maintaining business continuity 🤔? Can they do this without drowning in ever-growing system complexity 🙄?
+
+Let's consider some possibilities!
+
+## Evolving an Article content model
+
+To help understand the problem we're facing, let's use a real world scenario.
+
+Imagine we have an `ArticlePage` web page content type with the following schema.
+
+:::note
+If you want to follow along 👋 in your own solution, you can use the Dancing Goat project template [described in our installation documentation](https://docs.kentico.com/developers-and-admins/installation#available-project-templates).
+:::
+
+[![The original Article Page website page content type](/getmedia/94076e9d-44ff-4624-a88a-416dc9870951/expand-and-contract-article-page-content-model-1.png)](/getmedia/94076e9d-44ff-4624-a88a-416dc9870951/expand-and-contract-article-page-content-model-1.png)
+
+When we look at this content model, we can see it has a mix of channel-specific content (the `SEOFields` [reusable field schema](https://docs.kentico.com/x/D4_OD)) which only makes sense in a website channel, and channel-independent content (ex: `ArticleTitle`, `ArticlePageSummary`, ect...) that could be used in [website](https://docs.kentico.com/x/JwKQC), [email](https://docs.kentico.com/x/IaDWCQ), or [headless](https://docs.kentico.com/x/xIWOD) channels.
+
+If we want to modify the content model by adding a new `ArticlePageSummaryHTML` field, which would use the [Rich Text UI Form Component](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/reference-admin-ui-form-components#rich-text-editor) to author a summary with links and some text formatting, we could just add the new field. Non-destructive additions are easy and that's not what we're focusing on here.
+
+Instead, what if we want to move all of the channel-independent fields to a new `ArticleContent` reusable content type and reference that here?
+
+:::note
+If you are interested in understanding _why_ we might want to change a content model in this way,
+take a look at our Quickstart Guide [Model a reusable Article](https://docs.kentico.com/x/wYOOD).
+:::
+
+## Append-only
+
+If a DXP solution prioritizes business continuity above all else, a developer's instincts might lead them to avoid modifying existing content or behavior and instead use an "append-only" approach.
+
+With our example scenario, this would mean we create our new [reusable](https://docs.kentico.com/developers-and-admins/development/content-modeling/store-content#use-content-hub-for-reusable-content) `ArticleContent` content type.
+
+[![New reusable Article Content content type](/getmedia/c4ae2af3-284e-4357-a442-337faf779f0f/expand-and-contract-article-content-content-model-1.png)](/getmedia/c4ae2af3-284e-4357-a442-337faf779f0f/expand-and-contract-article-content-content-model-1.png)
+
+Then we can add a `ArticlePageArticleContent` field to the `ArticlePage` content type to reference it.
+
+[![Updated Article Page website page content type](/getmedia/a5a09308-d6fa-4563-98c0-9ab3881b3d07/expand-and-contract-article-page-content-model-2.png)](/getmedia/a5a09308-d6fa-4563-98c0-9ab3881b3d07/expand-and-contract-article-page-content-model-2.png)
+
+We leave all the existing `ArticlePage` fields because they still contain content from the web pages authored before we change the content type, but we can hide the fields in the form since marketers won't need them going forward 😉.
+
+Developers will need to accommodate both old and new content models. The original web pages will have their content in `ArticlePage` fields and the new pages will use the `ArticlePageArticleContent` related items. This complicates the application logic, but it is the safest approach.
+
+We've solved the problem of evolving our content model, but now we have some uncomfortable questions to answer:
+
+- Do we maintain this old, duplicate content forever?
+- When we onboard new developers to the project, do we always have to remind them "You need to check for content authored the new and old ways".
+- What happens when we add new behavior that depends on the Article content model - like search indexing?
+- Can we handle this growing complexity across the entire solution as we continuously evolve content models many times to meet the needs of changing marketing strategies?
+
+It seems like we'll eventually be overwhelmed with complexity 😓.
+
+:::note
+Should we move the `ArticlePage.ArticleRelatedArticles` field in the new `ArticleContent` content type or leave it in the `ArticlePage` content type? It depends on the goals of that content relationship.
+
+If it is meant only for website channels, then we should leave it where it is.
+However, if it is part of the core article content, then it might make sense to move it to the `ArticleContent` content type _and_ change it to a "Content items" field instead of "Pages".
+
+Let me know your thoughts in the comments!
+:::
+
+## Transactional Breaking Change
+
+Developers want to build useful and performant software, but they also have their own responsibilities with any project. One of the most difficult of those responsibilities is managing system complexity 😰.
+
+Wouldn't it be great if we could accommodate the example scenario above in a single deployment! Over an done with, make the breaking change but keep the code and content model simple 👏.
+
+The assumption with this kind of breaking change is that our code represents a single state, not a transitionary state. To put it more concretely, our code either handles the original `ArticlePage` content type or a new one that references the `ArticleContent` reusable content and doesn't duplicate any content.
+
+[![Updated Article Page website page content type with breaking changes](/getmedia/c37d62fb-6fdc-47a1-90d3-a9cb2cb4b24a/expand-and-contract-article-page-content-model-3.png)](/getmedia/c37d62fb-6fdc-47a1-90d3-a9cb2cb4b24a/expand-and-contract-article-page-content-model-3.png)
+
+Isn't that nice! It's a simple, comprehensible state of affairs and our code that renders this content in a website channel also reflects this.
+
+However, to achieve this we must change the state of the entire world in one single operation and it requires careful technical choreography 🩰 of data migrations and code deployment.
+
+This puts a lot of responsibility on any migration code, which will run _after_ a deployment but _before_ we start the application back up. We need to handle all corner cases and if the migration does fail, it needs to without corrupting the solution.
+
+It's important to remember that reusable content in Xperience by Kentico solutions isn't used in website channels only - it's also used in email and headless channels. This means if our scenario involved breaking changes with an existing reusable content type, we'd also have to migrate [email templates](https://docs.kentico.com/x/eRT_Cw) and coordinate our deployment with any [consumers of the GraphQL API](https://docs.kentico.com/x/34VwCg) of a headless channel.
+
+This deployment is starting to sound a lot more complex and kinda scary 👻. We've traded complexity of a content model and our code with the complexity of a single, point-in-time deployment operation.
+
+If this has you sweating a bit 😅, the **Append-only** approach above might sound more appealing that it originally did.
+
+## Expand and Contract
+
+There are things marketers and developers like about both of the approaches above. **Append-only** prioritizes business continuity, simplifies deployments, and prevents regressions. The **Transactional Breaking Change** approach prioritizes managing solution complexity, which becomes more important over time.
+
+What if we could combine the best of both options 🧐? Well, that's goal of **Expand and Contract**, also known as [parallel change](https://martinfowler.com/bliki/ParallelChange.html).
+
+To put it simply, this solution involves doing both **Append-only** _and_ **Transactional Breaking Change**, but it treats them as two separate steps or deployments. This is where the term "Expand and Contract" comes from - first we expand our solution complexity and then contract it. Let's see how this would work with our example scenario.
+
+### Managing Complexity
+
+We'll do all the steps we took in the **Append-only** approach - add a new `ArticleContent` content type and modify the `ArticlePage` content type to reference it. This is the **expand** phase.
+
+Our code will _temporarily_ become more complex because we want to accommodate article web pages that include all the content in their fields _and_ ones that reference reusable article content items. Most of our Razor templating code should stay exactly the same if we've created some separation between content retrieval and content rendering 🤓, but our content item querying and DTO or view model mapping will have to handle both content models.
+
+After we deploy the updated content types and the code to handle them, we can start thinking about migrations.
+
+If we only have a few articles, marketers can copy/paste content from `ArticlePage` web pages to the new reusable `ArticleContent` items. We'll need to leave the fields visible for the marketers to copy the content and also train them to not use the old fields when authoring a new article web page.
+
+If we have many `ArticlePage` web pages, we can [write migration code](https://docs.kentico.com/x/ywAcCQ), in either SQL or C#, to automate the work for marketers.
+
+Even if we are automating migrations, we don't have to execute them as one large transaction. Instead, we can run them batches - during future deployments or at runtime - because our code will continue to handle the old and new content models.
+
+What about the scenario where reusable content needs to be evolve but it's being used in headless and email channels 🤷🏼‍♀️? Well, we now have the time to adopt those changes and inform any external consumers about the changes so they can adapt their code 👍🏾.
+
+We can even do a deployment where we just update the old content type fields to make them invisible, simplifying the marketer's content management experience, while we wait for external consumers to adapt.
+
+Once all the content has been migrated and we know the old code paths are no longer in use we can deploy our breaking change and remove the old fields. This is the **contract** phase.
+
+But, at this point, it isn't really a breaking change anymore because nothing is relying on those fields - they've become an internal implementation detail.
+
+This "contract" deployment is always satisfying - we don't have to be concerned about our breaking change (because nothing depends on it) and we get to simplify the system, usually by deleting a lot of code 🤗.
+
+**Expand and Contract** is not focused on _eliminating_ complexity, it's a way to _manage_ complexity.
+
+## Caveats and opportunities
+
+**Expand and Contract** isn't a magic 🪄 cure-all solution. It still has to manage a temporary increase in complexity and it's up to developers and marketers to decide how to handle that with communication and planning. But, it avoids the permanent complexity of **Append-only** and the deployment complexity of **Transactional Breaking Change**.
+
+This is extremely important for solutions built with Xperience by Kentico because of the observation we made at the beginning of this article. Xperience as product, marketing strategies, web technologies, and code dependencies all continue to evolve and we need to design a system _and_ processes of working with that system that allow us to maintain business continuity.
+
+For marketing teams using a DXP, that continuity has a **direct connection** to the R-word used in commercial side of a business - 💰 **Revenue** 💰.
+
+If you'd like to explore these concepts further, here's some articles describing Expand and Contract with more complex examples.
+
+- [Parallel Change](https://martinfowler.com/bliki/ParallelChange.html)
+- [Expand/Contract: making a breaking change without a big bang](https://blog.thepete.net/blog/2023/12/05/expand/contract-making-a-breaking-change-without-a-big-bang/)
+- [Expand and Contract: A Pattern to Apply Breaking Changes to Persistent Data with Zero Downtime](https://www.tim-wellhausen.de/papers/ExpandAndContract/ExpandAndContract.html)
+
+]]>
+  </BlogPostContentContentMarkdown>
+  <BlogPostContentDXTopics>
+    <![CDATA[[{"Identifier":"b492b56d-3869-4f3e-bda5-cf8dd6588291"},{"Identifier":"e3623da6-d90c-4089-9fd0-25df6c30bee8"},{"Identifier":"578bdfaa-ab53-4901-8c0d-1a90f833dc0f"},{"Identifier":"32675374-2ca5-4e47-bcf9-8e3bc952ccdb"},{"Identifier":"378366be-601d-42b0-a719-5daee7392fb9"},{"Identifier":"1015b219-7365-459f-9474-0c96a842291c"}]]]>
+  </BlogPostContentDXTopics>
+  <BlogPostContentPublishedDate>2024-03-22 18:57:00Z</BlogPostContentPublishedDate>
+  <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
+  <ContentItemDataCommonDataID>
+    <GUID>b9288c53-c6b8-4915-953f-46ef47d592c7</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>SafelyEvolvingAContentModelWithExpandAndContract-39vg67eb</CodeName>
+      <GUID>eef9eece-40b6-44b3-be51-7508a235791c</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>7bcaef86-5558-433a-b65c-48c2325be626</ContentItemDataGUID>
+</contentitemdata.kenticocommunity.blogpostcontent>

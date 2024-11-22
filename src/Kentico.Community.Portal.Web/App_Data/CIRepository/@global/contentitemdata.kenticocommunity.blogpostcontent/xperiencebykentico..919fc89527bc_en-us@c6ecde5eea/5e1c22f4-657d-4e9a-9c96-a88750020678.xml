@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.blogpostcontent>
+  <BlogPostContentAuthor>
+    <![CDATA[[{"Identifier":"2dce9183-2830-4794-ad72-edd6bd9dc5c3"}]]]>
+  </BlogPostContentAuthor>
+  <BlogPostContentBlogType>
+    <![CDATA[[{"Identifier":"0865e8f6-2568-425e-94d8-2bf53adcdd57"}]]]>
+  </BlogPostContentBlogType>
+  <BlogPostContentContentMarkdown>
+<![CDATA[
+Check out this month's latest addition to Xperience by Kentico. We have some big content organization features like classic folders in the Content hub. We also have powerful content modeling enhancements, like ordering of selected content items, along with helpful UX updates. Dive in and learn about all the enhancements we've just delivered in Xperience by Kentico.
+
+## Content hub classic folders
+
+While we're super excited for _the next big "folders" feature_ on our roadmap - [Smartfolders](https://roadmap.kentico.com/c/200-content-organization-discovery-smartfolders-in-the-content-hub) - we still think this month's "classic" Content hub folders are pretty cool too.
+
+[Content hub folders](https://docs.kentico.com/business-users/content-hub#content-hub-folders) are "static" - content doesn't move between folders, it stays where you put it (unlike Smartfolders, which will be dynamic). You can think of these folders like folders on your computer file system. Content items can be organized into a specific folder to make them easier to find and govern.
+
+[![Content hub classic folders list](/getmedia/85d85194-39f2-4caa-9fd7-225257e13fea/v29-00-content-hub-classic-folders-list.webp)](/getmedia/85d85194-39f2-4caa-9fd7-225257e13fea/v29-00-content-hub-classic-folders-list.webp)
+
+Classic folders are for marketer organization in the Content hub only and are not designed for content delivery, but they can still be really helpful when combined with mass actions like "move" to enable a marketer to quickly move multiple items into a specific folder. Just apply your Content hub filters, select all and then move the items where you want them to go.
+
+[![Content hub classic folders bulk move](/getmedia/c9285a5e-0adb-4d9a-8a47-35fc4a4e8e35/v29-00-content-hub-classic-folders-bulk-move.webp)](/getmedia/c9285a5e-0adb-4d9a-8a47-35fc4a4e8e35/v29-00-content-hub-classic-folders-bulk-move.webp)
+
+We recommend using classic folders semantically. As you can see in the example above, we don't have folders for items of a specific content type (like Coffee) and instead have created folders that align with a marketing or business purpose.
+
+Classic folders should be helpful when migrating from other products (like Kentico Xperience 13) which use a static folder structure to organize structured content, or for anyone that wants to model media assets as reusable content and replicate a media library folder structure in the Content hub.
+
+If you find that classic folders aren't yet helpful (like when you don't have much content to organize), you can disable them in the Xperience administration settings. Any folders you create and the content items in them will be persisted, so that if you turn folders back on later everything you created will still be there!
+
+## Content hub mass publishing
+
+While we're on the topic of the Content hub, we will also mention that we've introduced mass publishing of content items.
+
+[![Content hub mass publish](/getmedia/81bd9cc0-6f82-448e-a81f-b3867d455396/v29-00-content-hub-mass-publish.webp)](/getmedia/81bd9cc0-6f82-448e-a81f-b3867d455396/v29-00-content-hub-mass-publish.webp)
+
+Just like when moving multiple items into a folder, marketers can select multiple content items and click the Publish action at the top of the grid. If all of the items are ready to be published you will see a simple confirmation dialog.
+
+<video controls class="w-100">
+  <source src="/getmedia/2fd8fc9d-2747-49b2-95c8-18127c015617/V29-00-Content-Hub-Mass-Publish-Workflow.webm" type="video/webm" />
+</video>
+
+If instead, you are using Xperience's workflow feature and some of the items are still in a workflow and cannot be published, you will see a dialog showing the unpublishable items. They can be resolved individually by moving them to a pre-publish workflow step and the dialog can then be refreshed until all items are ready for publishing.
+
+As you can see in the video above, this also works with the cascade publishing feature - alerting you of any related unpublished items so you can ensure everything goes "live" together.
+
+Next month you can see how all of this ties in [with scheduled publishing](https://roadmap.kentico.com/c/172-scheduling-the-publishing-of-public-facing-content)!
+
+## Reusable field schemas update
+
+One of Xperience by Kentico's most powerful content modeling features is the ability to create reusable content types and link them to each other using the content item selector - creating a graph of content relationships that can be delivered over web, email, and headless channels.
+
+[Reusable field schemas](https://docs.kentico.com/x/D4_OD) are a key part of that powerful content modeling story, allowing marketers to treat multiple different types of content the same, because they share a common set a fields.
+
+We've expanded the types of fields that reusable field schemas can use, adding content items, media files, pages, and taxonomy to the list (among others).
+
+[![Content type reusable field schema advanced types](/getmedia/a6b4d7bf-dae5-427d-8692-45a7bbc5ae28/v29-00-content-type-reusable-field-schema-advanced-types.webp)](/getmedia/a6b4d7bf-dae5-427d-8692-45a7bbc5ae28/v29-00-content-type-reusable-field-schema-advanced-types.webp)
+
+In this example we can see a reusable field schema named "Product fields" which has a "ProductFieldImage" reusable content type modeling image assets.
+
+Using this approach, we can ensure any product content type - Coffee and Grinders in Dancing Goat - has these common fields.
+
+[![Content type content items allowed reusable field schema](/getmedia/a0978b03-0445-4269-a7c4-11abd48c9d75/v29-00-content-type-content-items-allowed-reusable-field-schema.webp)](/getmedia/a0978b03-0445-4269-a7c4-11abd48c9d75/v29-00-content-type-content-items-allowed-reusable-field-schema.webp)
+
+Just as powerful is the new ability to limit the content selected for a Content items field. We can now limit the quantity (minimum and maximum) of related content items **and** use a reusable field schema as the "content type" for a field. In our Dancing Goat example, this means we can select both Coffee and Grinder content types using the content item selector for a single field. Pretty powerful stuff!
+
+Developers will love it too, because the selected content items all [implement the C# interface of the reusable field schema](https://docs.kentico.com/x/5IbWCQ) but can be [pattern matched](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/functional/pattern-matching#type-tests) to the specific content types (example: Coffee or Grinder) to gain access to each content model's unique fields.
+
+In the example above, I've added a "Related Products" field to the Coffee content type so that Coffee content items can have related Coffee, Grinders, or any new content types we create that use the Product fields reusable field schema.
+
+[![Page Builder component reusable field schema selection](/getmedia/1c8622c7-5dd9-4285-87a3-1a539b32daf6/v29-00-page-builder-component-reusable-field-schema-selection.webp)](/getmedia/1c8622c7-5dd9-4285-87a3-1a539b32daf6/v29-00-page-builder-component-reusable-field-schema-selection.webp)
+
+Oh, and this feature can be used with Page Builder components using [the content item selector](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/reference-admin-ui-form-components#content-item-selector) for their properties. The Product cards widget above has a "Selected products" property that allows for any content item using the "Product fields" reusable field schema to be selected - Coffee and Grinders, together! We know marketers are really going to love this.
+
+## Content item selectors
+
+All of these content modeling improvements are great, but if a marketer can't control that selected content then we have a nice car with no gas.
+
+Well, this month we're also delivering a much requested improvement to the content item and headless item selectors. We can now [explicitly order the selected items](https://roadmap.kentico.com/c/203-ordering-items-within-the-content-item-selectors-and-validation-for-a-number-of-selected-items), using a drap and drop user experience.
+
+Do you need to see it to believe it? Thankfully, we have a recording for you to watch!
+
+<video controls class="w-100">
+  <source src="/getmedia/f9dc338f-bf34-4d93-bc73-1ca99c394663/V29-00-Content-Item-Content-Item-Selector-Ordering.webm" type="video/webm" />
+</video>
+
+Ordering of content often has a semantic meaning, independent of a channel. You now have an intuitive way to represent that in your content modeling. Huzzah!
+
+## UX Improvements
+
+As always we have an assortment of smaller UX improvements in the product with this Refresh - the kind that you feel were always there, because "of course" it works that way!
+
+Key among these is the new dialog to create new pages and folders in a website channel page tree. It will save you a few clicks and a few gray hairs if you're creating many pages in a row.
+
+We've also added a "Creating..." placeholder in the page tree so you can feel confident you know exactly where that page is going to be created.
+
+<video controls class="w-100">
+  <source src="/getmedia/5919a7aa-a624-4643-a7b1-8db51856e34f/V29-00-Website-Channel-New-Page-Creation.webm" type="video/webm" />
+</video>
+
+## What's next?
+
+As always, check out [our documentation Changelog](https://docs.kentico.com/changelog#refresh-april-18-2024) for the full Refresh feature and technical details.
+
+We hope these new capabilities, features, and API improvements unlock solutions for you. Try them out, let us know 👋 what you think.
+
+For [the next Refresh](https://docs.kentico.com/changelog#refresh-april-18-2024), you can expect [scheduled content publishing](https://roadmap.kentico.com/c/172-scheduling-the-publishing-of-public-facing-content), [taxonomy filtering](https://roadmap.kentico.com/c/199-using-taxonomy-tags-for-content-hub-filtering) in the Content hub and [delivery over headless channels](https://roadmap.kentico.com/c/184-taxonomy-support-for-headless-and-email-content-types), [more flexible Contact Groups](https://roadmap.kentico.com/c/210-marketer-enhancements-macros-for-custom-fields-direct-publishing-basic-filtering-in-emails-improved-display-of-initial-draft) for personalization, [Smartfolders](https://roadmap.kentico.com/c/200-content-organization-discovery-smartfolders-in-the-content-hub)!! and other [UX improvements](https://roadmap.kentico.com/c/209-editor-enhancements-preview-of-linked-content-items-resizing-of-the-tree-view-component-and-draft-preview-button).
+
+Check back next month for another Xperience by Kentico Refresh review!
+]]>
+  </BlogPostContentContentMarkdown>
+  <BlogPostContentDXTopics>
+    <![CDATA[[{"Identifier":"803ca767-e932-4db9-a6bb-cb1393bfd255"},{"Identifier":"79fe8557-f24c-4fd9-ba03-3be795855e15"},{"Identifier":"57224794-f403-47a4-995c-7c748dbd6524"},{"Identifier":"aa57c06d-5738-4fdb-ab10-08b42fc6c9c2"},{"Identifier":"e3623da6-d90c-4089-9fd0-25df6c30bee8"}]]]>
+  </BlogPostContentDXTopics>
+  <BlogPostContentPublishedDate>2024-04-18 20:44:00Z</BlogPostContentPublishedDate>
+  <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
+  <ContentItemDataCommonDataID>
+    <GUID>228494e2-ceb6-4cde-a52c-919fc89527bc</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>XperienceByKenticoRefresh-April18_2024-eeu7ch50</CodeName>
+      <GUID>2edfbcfe-4813-42b6-a5b2-88844fa3c1c5</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>5e1c22f4-657d-4e9a-9c96-a88750020678</ContentItemDataGUID>
+</contentitemdata.kenticocommunity.blogpostcontent>

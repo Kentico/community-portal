@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>56f0ad14-6f9f-48cd-b7fe-08afa0ec0acd</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>IWebsiteChannelContext-Properties-1b22c5c8-ep41bx38</CodeName>
+      <GUID>d0c4c98e-8440-4664-b8cf-cf3153fcca89</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>0d3a2346-78d1-45d2-b9c0-52e42706761d</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>d128f70a-105d-4ef3-b862-819101ccb6d8</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent><![CDATA[
+For the three properties returned in the injected IWebsiteChannelContext interface, the WebsiteChannelName property returns the "Code name" instead of the "Channel Name". The naming convention of the property suggests that Channel name should be the resulting value instead of Code name.
+
+Can a fourth property be added for CodeName to distinguish between the Channel managements's application? I could then inject the IWebsiteChannelContext into the layout using the Channel's name in a layout's footer to ensure the things like a copywrite notice are specific to a channel.
+
+© 2024 Channel Name
+© 2024 CodeName
+
+---
+
+**Environment**
+- Xperience by Kentico version: [29.6.0]
+- .NET version: [8]
+- Deployment environment: [VM]
+- Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)
+]]></QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2024-10-18 18:54:15Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2024-10-18 21:38:24Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle>IWebsiteChannelContext Properties Observation</QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

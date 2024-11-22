@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>dd132d06-4858-4db3-9d9a-421e1529309b</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>With-the-option-to-remove-Jquery-in-K13-Refresh-11-does-XbyK-by-default-not-need-it-now--e6-se9f9moa</CodeName>
+      <GUID>3626b3e8-c6a5-48e4-b860-86cc1552a956</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>e0e77fdd-c638-45a4-8653-7e076ace0325</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>8522e571-05dd-48a9-80c7-26bf43e0de84</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>1</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent><![CDATA[
+To elaborate further on the title, does XbyK use jQuery/jQuery validate/jQuery unobtrusive etc for Kentico Forms and if it doesn't, what is the minimum that needs to be included for it to work properly?
+
+I have an XbyK project running Forms on which I have compared to the XbyK Dancing Goat demo site. Both have the page builder styles and scripts included on the page i.e.
+<page-builder-styles />
+<page-builder-scripts />
+
+Yet for some reason the validation between the 2 projects Form pages varies slightly and the Dancing Goat seems to perform a server side validation check first and my other project seems to default to built in browser HTML 5 checks (like those verifying a valid email address in an email field).
+
+This wouldn't normally be a problem but we have an "inconsistency" that our client is experiencing where on longer site pages that email validation message is hidden when the browser scrolls up to the offending field and when the "submit" button is nearer to that offending field the error message can still be seen.
+
+The solution I have which seems to be working is disabling the frontend validation altogether by adding a novalidate attribute on the pages form element.
+
+This bypasses the frontend "glitch" mentioned above but the Kentico form error messages then come into play and it pretty much does what we want.
+
+This solution however seems a bit of a hack so just checking if my initial query that I have fulfilled the minimum requirement with page builder inclusions for this form setup to working correctly?
+
+---
+
+**Environment**
+- Xperience by Kentico version: [29.3.1]
+- .NET version: [8]
+
+]]></QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2024-08-30 00:43:05Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2024-08-30 00:43:05Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle><![CDATA[With the option to remove Jquery in K13 Refresh 11 does XbyK, by default not need it now?]]></QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

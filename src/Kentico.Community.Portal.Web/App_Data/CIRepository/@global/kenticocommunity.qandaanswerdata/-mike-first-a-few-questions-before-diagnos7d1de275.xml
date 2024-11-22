@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-Mike-first-a-few-questions-before-diagnos7d1de275</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+@Mike, first a few questions before diagnosing your problems.
+
+1. _Why_ do you need to separate your presentation code into 1 or more libraries?
+
+    A multi-project architecture will add complexity to your solution and you should adopt it only if it helps manage complexity in other areas.
+
+1. If you _do_ need a multi-project architecture, what do you want to isolate and what do you want to share?
+
+    You will need to decide with each presentational component and generated class, which project it should assigned to and how to organize your dependencies.
+
+If you _need_ a multi-project solution architecture to isolate your website channel presentation logic, then you'd likely end up with something like this:
+
+![Multi-project Xperience by Kentico architecture](/getmedia/d9af6f07-a325-4d12-9efe-b7a4f08ebbc9/xperience-multi-project-architecture.webp)
+
+Your website channel libraries will contain Controller, View, View model, View component, and content type classes that are used by specific website channels.
+
+Your core library will contain the types of code that are used across all website channels.
+
+When using those separate library projects in your ASP.NET Core project, you'll need to make sure you [add the application parts](https://andrewlock.net/when-asp-net-core-cant-find-your-controller-debugging-application-parts/) to make them discoverable by ASP.NET Core, and [enable class discovery](https://docs.kentico.com/developers-and-admins/customization/integrate-custom-code#enable-class-discovery) for any Xperience code in each project.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-06-10 22:18:08Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>3c5a3351-8103-43d7-92fa-47d1c2240a8b</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Multiple-Sites-Razor-Class-Libraries-9155e094-brzqn0nx</CodeName>
+    <GUID>e5f2f135-64b6-4755-968e-9beb220432d9</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

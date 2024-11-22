@@ -42,6 +42,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kentico.Community.Portal.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kentico.Community.Portal.Web.Integration.Tests", "test\Kentico.Community.Portal.Web.Integration.Tests\Kentico.Community.Portal.Web.Integration.Tests.csproj", "{2C529E00-A092-42A3-B01B-8854C2D86B42}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{2E0CED6A-E180-494C-A400-ECC6BC3D00D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kentico.Community.DataCleaner.App", "data\Kentico.Community.DataCleaner.App\Kentico.Community.DataCleaner.App.csproj", "{94843652-A3F1-4F5C-9CA8-11180BD5248E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +76,10 @@ Global
 		{2C529E00-A092-42A3-B01B-8854C2D86B42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C529E00-A092-42A3-B01B-8854C2D86B42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C529E00-A092-42A3-B01B-8854C2D86B42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94843652-A3F1-4F5C-9CA8-11180BD5248E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94843652-A3F1-4F5C-9CA8-11180BD5248E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94843652-A3F1-4F5C-9CA8-11180BD5248E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94843652-A3F1-4F5C-9CA8-11180BD5248E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +91,7 @@ Global
 		{9B41350E-7AB4-4F93-BA7B-CA1C9C7F469D} = {333535A3-F34A-4792-A14A-C65C80A039C5}
 		{5A8A3AA6-5322-4A76-BDF8-E9171BA12EFF} = {333535A3-F34A-4792-A14A-C65C80A039C5}
 		{2C529E00-A092-42A3-B01B-8854C2D86B42} = {333535A3-F34A-4792-A14A-C65C80A039C5}
+		{94843652-A3F1-4F5C-9CA8-11180BD5248E} = {2E0CED6A-E180-494C-A400-ECC6BC3D00D8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3A726AD7-34B2-4007-84EB-FC71DA366607}

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>a5fc47c9-2c06-4a91-945e-93ff30e17054</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Email-Notifications-from-Forms-d5764091-9vipbroy</CodeName>
+      <GUID>33f181f0-c945-4d95-ba73-59e51d6be445</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>aaf25ef1-edca-4df9-a0df-e8e5af50f239</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent><![CDATA[
+I am working on a site migrating from K12 where our client has a number of forms configured that send both autoresponders and email notifications. Within the XbyK interface I can see the option for sending autoresponders but no ability to send email notifications.
+
+A couple of solutions I looked into were:
+
+1. Whether it is possible to create custom automation steps that I can then use to create a new type of step for sending an email to a set email address. This is maybe the preferred solution looking at the way XbyK is heading but based on what I can see, the automation steps are essentially hard coded.
+2. Using a custom after insert event to manually trigger an email. This will work but in my opinion is the least desirable approach. I can do things to expose the configuration of this to the form interface, but I don't like that its inconsistent with the autoresponder format.
+
+Any insights into whether I have missed something or if there is a preferred strategy from Kentico.
+]]></QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2024-10-29 03:36:40Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2024-10-29 03:36:40Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle>Email Notifications from Forms</QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

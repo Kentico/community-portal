@@ -20,7 +20,7 @@
                             <a class="slash" href="@post.LinkPath">@post.Title</a>
                         </h4>
                     </div>
-                    <div class="c-card_footer">
+                    <div class="c-card_footer d-flex">
                         <small class="me-1">Written on @post.Date.ToString("d", View.Culture) by</small>
                         @if (post.Author.ID > 0)
                         {
@@ -32,8 +32,10 @@
                         }
                         else
                         {
-                            <img xpc-image="post.Author.Photo" style="max-width: 24px" class="c-tag_icon me-1" />
-                            <span>@post.Author.Name</span>
+                            <div>
+                                <img xpc-image="post.Author.Photo" style="max-width: 24px" class="c-tag_icon me-1" />
+                                <span>@post.Author.Name</span>
+                            </div>
                         }
 
                     </div>

@@ -52,6 +52,12 @@ Headless;{$base.channels.channel.headless.caption$}
       <field column="ChannelSize" enabled="true" guid="cd7665d1-05f5-40e9-a140-da05df9abd83" visible="true">
         <settings>
           <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+Standard;{$base.channels.channel.size.standard$}
+Micro;{$base.channels.channel.size.micro$}
+]]>
+          </Options>
           <OptionsValueSeparator>;</OptionsValueSeparator>
         </settings>
         <properties>

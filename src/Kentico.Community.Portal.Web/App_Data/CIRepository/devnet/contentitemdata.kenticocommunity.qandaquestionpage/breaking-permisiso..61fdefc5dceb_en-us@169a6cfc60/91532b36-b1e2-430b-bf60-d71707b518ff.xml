@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>3f8d2620-c772-4697-9817-61fdefc5dceb</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Breaking-permisison-inheritance-on-a-tree-node--551db60e-tx8z04td</CodeName>
+      <GUID>dc1c8bce-a7c2-4f33-8598-246b56219cfc</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>91532b36-b1e2-430b-bf60-d71707b518ff</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>57db9995-76bf-476e-8eea-b402c0ada877</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>2</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent><![CDATA[
+**I have a question on page permission inheritance, it's long but bear with me:**\
+\
+Suppose I have 3 different user roles: A, B, and C.
+
+\
+All three roles have permission to access a website channel, but I need to limit Role C so they can only edit the section under the tree node `/C`.
+
+To achieve this, I add Role C to the root node without granting any permissions other than the built-in display permission. This allows Role C to see the entire tree, but not to view or edit any specific nodes. Then, I navigate to `/C` and break inheritance to customize the permissions for C. Now, Role C can see and edit the `/C` folder and everything within it but nothing else.
+
+This setup works fine, but it can start becoming problematic when we have multiple roles (e.g., 5 roles), each needing access to only specific sections of the website channel. In such cases, we end up with many sections where inheritance is broken, affecting permissions for all roles.
+
+For example, if Roles A and B also have edit access to `/C` (which has broken inheritance), what happens if I later need to restrict Role A to only edit `/A`? I would have to manually go through the entire tree to locate nodes with broken inheritance where Role A might still have edit privileges. Similarly, if I need to remove Role C altogether, I can remove their access to the channel, preventing them from editing anything. However, the `/C` node would still have broken inheritance, which is unnecessary. Multiply this scenario by 5 roles, and it quickly becomes unmanageable.
+
+The issues are compounded most severely when the target folders are nested deeper in the tree. A direct child of ROOT is less an issue of course.
+
+**Question:**\
+Is there a better way to achieve this? Based on the documentation, it doesn't seem like it, but I am curious if there are plans for updates to role/channel/page permissions in the future.
+]]></QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2024-11-09 02:38:57Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2024-11-09 02:38:57Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle>Breaking permisison inheritance on a tree node.</QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>47aa5509-db72-4eed-9229-916cb9f427ce</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Updating-dependency-with-vulnerability-in-b148d775</CodeName>
+      <GUID>128148de-b561-4a31-a63b-6d078a219075</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>86602c16-753e-402b-8f22-f30588856330</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>4139a1ed-17b0-4a4e-9c0b-98001164be38</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>2</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent><![CDATA[
+Hi, we are on K13 on .NET6. We recently got an alert about a vulnerability as noted on this github advisory - https://github.com/advisories/GHSA-8g9c-28fc-mcx2. The solution is simply to update Microsoft.IdentityModel.JsonWebTokens and System.IdentityModel.Tokens.Jwt to 6.34.0 to receive the patch. This works fine on the MVC sites, but a breaking change within those packages causes and error in the CMS at runtime as seen in the image below.
+
+It looks like there was an update that required the key to be >512 bits that the CMS is not reaching. Is there a plan to address this to resolve this vulnerability?
+
+[![https://iili.io/J7i1x71.md.png](https://iili.io/J7i1x71.md.png "https://iili.io/J7i1x71.md.png")](https://iili.io/J7i1x71.md.png "https://iili.io/J7i1x71.md.png")
+---
+
+**Environment**
+- Xperience by Kentico version: [13.0.131]
+- .NET version: [6]
+- Deployment environment: [Azure]
+- Link to relevant [Xperience by Kentico documentation](https://docs.xperience.io/xp)
+]]></QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2024-01-12 20:43:00Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2024-01-12 20:43:00Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle><![CDATA[Updating dependency with vulnerability in CMS causes runtime error]]></QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

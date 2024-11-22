@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.blogpostcontent>
+  <BlogPostContentAuthor>
+    <![CDATA[[{"Identifier":"2dce9183-2830-4794-ad72-edd6bd9dc5c3"}]]]>
+  </BlogPostContentAuthor>
+  <BlogPostContentBlogType>
+    <![CDATA[[{"Identifier":"0865e8f6-2568-425e-94d8-2bf53adcdd57"}]]]>
+  </BlogPostContentBlogType>
+  <BlogPostContentContentMarkdown>
+<![CDATA[
+Check out [this month's latest addition to Xperience by Kentico](https://docs.kentico.com/changelog#refresh-june-27-2024). We added several content publishing features, the initial release of smart folders, and the ability to create microchannels. Dive in and learn about all the updates we've just delivered in Xperience by Kentico.
+
+## Scheduled content unpublishing
+
+Last month's Refresh added [scheduled content publishing](https://roadmap.kentico.com/c/172-scheduling-the-publishing-of-public-facing-content), but this month we are letting you reverse that behavior by [scheduling content to be unpublished](https://roadmap.kentico.com/c/202-scheduling-the-unpublishing-of-public-facing-content).
+
+<video controls="" class="w-100">
+  <source src="/getmedia/9eaec3b4-479e-402e-87c4-db8b31503612/v29-02-00-scheduled-unpublish-home-page.webm" type="video/webm">
+</video>
+
+In this video we can see that content now has a set of "unpublish options" which marketers use to set a date in the future when content should be unpublished.
+
+Ok, but what is unpublishing?
+
+Previously, Xperience allowed for content to be archived, but this archiving didn't affect the content item selection within the administration - it really worked as a unpublish behavior.
+
+To better align the product behavior with the terminology, we've [renamed archive to unpublish](https://docs.kentico.com/changelog#new-features). When a content item is unpublished it will still appear in the administration UI everywhere you would expect to find content, but it is not available for content delivery.
+
+If you would like the content to again be visible to customers in a channel, simply schedule the item for publishing or immediately publish it.
+
+:::note
+We will add true content _archiving_ - removing a content item from content selection in the administration UI - in a future Refresh.
+:::
+
+Marketers can identify that a content item has been unpublished with a new status and icon.
+
+[![](/getmedia/9c3ce6a7-c7a8-417f-87f9-b2a81ce2a281/v29-02-00-content-hub-unpublished-tooltip.webp)](/getmedia/9c3ce6a7-c7a8-417f-87f9-b2a81ce2a281/v29-02-00-content-hub-unpublished-tooltip.webp)
+
+Items that have been both scheduled to publish _and_ unpublish will include those details in a helpful tooltip that appears over content items when hovered.
+
+[![](/getmedia/1b00e1de-081e-4eaa-8c1b-922e75d817f2/v29-02-00-content-hub-scheduled-publishing-tooltip.webp)](/getmedia/1b00e1de-081e-4eaa-8c1b-922e75d817f2/v29-02-00-content-hub-scheduled-publishing-tooltip.webp)
+
+Items that are published but scheduled to be unpublished have a new icon and tooltip to show the unpublish schedule.
+
+[![](/getmedia/2e3a68b8-b417-47eb-9a06-e7d561174304/v29-02-00-content-hub-scheduled-unpublish-icon-tooltip.webp)](/getmedia/2e3a68b8-b417-47eb-9a06-e7d561174304/v29-02-00-content-hub-scheduled-unpublish-icon-tooltip.webp)
+
+Scheduled unpublishing is a great tool to help make sure time sensitive information doesn't stay visible after it's no longer relevant. We'll be adding [automatic redirect support for unpublished web page items](https://roadmap.kentico.com/c/239-system-redirects-for-delete-and-unpublish) in a future Refresh.
+
+## Cascade scheduled publishing
+
+Our December 2023 Refresh brough the ability to [publish a content item and all of its linked content items](https://roadmap.kentico.com/c/176-publish-the-whole-content-cascade), traversing the entire content relationship graph. We called this "cascade publishing".
+
+When we added [scheduled content publishing](https://roadmap.kentico.com/c/172-scheduling-the-publishing-of-public-facing-content) in our May 2024 Refresh we also enabled it for cascade publishing but with a limitation. The main content item could be scheduled for publishing but linked items were published immediately.
+
+This month's Refresh brings the ability to have the entire cascade of items all scheduled together so that they will all publish at the same scheduled time.
+
+[![](/getmedia/bffbe31a-ea4e-47b1-8b8f-edafb5fbbf03/v29-02-00-cascade-scheduled-publishing.webp)](/getmedia/bffbe31a-ea4e-47b1-8b8f-edafb5fbbf03/v29-02-00-cascade-scheduled-publishing.webp)
+
+This helps marketers coordinate product launches and event announcements, making sure _all_ their new content remains unpublished until it should go live.
+
+## Microchannels
+
+You've probably heard us talking about microchannels quite a bit over the past 6-8 months. It's a feature we're really excited about and now you can see them realized in Xperience by Kentico for the first time.
+
+Website and headless channels in Xperience are now either [Standard channels or Microchannels](https://roadmap.kentico.com/c/219-channels-licensing-microchannels).
+
+[![](/getmedia/11f92f09-11e2-4c05-b26e-fe7588285354/v29-02-00-new-microchannel.webp)](/getmedia/11f92f09-11e2-4c05-b26e-fe7588285354/v29-02-00-new-microchannel.webp)
+
+Microchannels are limited to a maximum of 20 items for that specific channel type - folders and web page items for website channels and headless items for headless channels. However, this limitation is balanced with commercial pricing and packaging so that they fit well with marketing teams' strategies.
+
+Adopting microchannels in Xperience by Kentico can help teams simplify their technology footprint, consolidating and centralizing channels managed in different CMS products into Xperience. This reduces the number of technologies an IT team needs to secure, duplicated or outdated content and branding, and the number of platforms marketers need to learn.
+
+Upcoming Refreshes will automatically connect all standard and microchannels with customer licensing, with helpful messaging in the Xperience administration to let marketers know how many channels of each type they have available with their license.
+
+## Smart folders for content organization
+
+There's unanimous excitement for [the Refresh feature we're calling smart folders](https://roadmap.kentico.com/c/200-content-organization-discovery-smartfolders-in-the-content-hub).
+
+What are [smart folders](https://docs.kentico.com/business-users/content-hub#smart-folders)? That's easy! Smart folders are dynamic selections of content based on a set of declarative rules.
+
+...🤔
+
+Ok, let's try again. Smart folders are a content organization feature that is under a marketer's control, allowing them to define a set of filters in the Content hub and save those filters with a specific name. 
+
+[![](/getmedia/aff35f20-4381-4076-a469-9b94e35b3ba7/v29-02-00-content-hub-smartfolder-recently-modified.webp)](/getmedia/aff35f20-4381-4076-a469-9b94e35b3ba7/v29-02-00-content-hub-smartfolder-recently-modified.webp)
+
+In this screenshot we see the definition of a smart folder named "Recently modified" which filters the Content hub to only show items which have been modified in the last 30 days. The 30 days is always relative to _now_, meaning every time we select that smart folder in the Content hub, it will always show us the last 30 days.
+
+This is a great example of the **declarative** part - a marketer doesn't need to know _how_ to select all content items modified in the last 30 days, they just need to use the filter interface to _declare_ that is what they want - and the **dynamic** part - content items modified more than 30 days ago will be filtered out by the smart folder, until they are modified again.
+
+[![](/getmedia/3a38f2f9-c86b-43a7-8196-642cf62999af/v29-02-00-content-hub-smartfolder-content-in-draft.webp)](/getmedia/3a38f2f9-c86b-43a7-8196-642cf62999af/v29-02-00-content-hub-smartfolder-content-in-draft.webp)
+
+Similarly, in this screenshot above we see a smart folder named "Content in draft" which only includes Content hub items that are in the Draft status. If a new draft is created for a content item tomorrow, the smart folder will automatically include that item. If the item is scheduled for publishing and is later published, the smart folder will no longer include that item.
+
+You can build smart folders from any of the conditions in the Content hub filter panel - including content type, publish status, taxonomy tags, authorized access, and modification time.
+
+Smart folders are an extremely powerful feature and take the [Content hub folders](https://docs.kentico.com/business-users/content-hub#content-hub-folders) we already have to the next level.
+
+They can even be used within the content item selector in the Page Builder, making it far easier for marketers to find the reusable content they want delivered across various channels.
+
+<video controls="" class="w-100">
+  <source src="/getmedia/ec409131-c49a-403f-b2da-adc5b3f78f3a/v29-02-00-content-item-selector-smart-folders.webm" type="video/webm">
+</video>
+
+Today, marketers can use them as bookmarks for a combination of filters that are helpful for their daily tasks and a way to quickly check and govern an always evolving content library.
+
+These use-cases are focused on search and organization for marketers, but soon smart folders can be used as a way to [deliver content to customers](https://roadmap.kentico.com/c/222-smartfolders-for-dynamic-content-delivery) - e.g. "Use this widget to display all coffee with the  **Decaf** and **On Sale** tags" - just by selecting the smart folder itself in a widget's properties.
+
+Overall, smart folders will have a huge impact on enabling marketers to do more with their content _without_ needing a developer.
+
+## Custom configuration for Xperience by Kentico SaaS cloud levels
+
+With this Refresh, we’ve enabled the [customization of existing SaaS cloud levels](https://roadmap.kentico.com/c/183-custom-saas-service-plans), which helps us fit SaaS infrastructure to specific customers' Xperience by Kentico solutions.
+
+[Contact our sales team](https://www.kentico.com/about/contact) to find out more.
+
+## UX and developer improvements
+
+We've also included a number of UX and developer improvements in June's Refresh, like email selection which has been improved by giving more context in the UI related to email status.
+
+For developers, listing page filter forms now support validation rules, visibility conditions, and state configurators. The UX of applied filters can also be customized. These changes will allow developers to create even more [unique and easy to use custom applications](https://docs.kentico.com/x/GwKQC) within Xperience, improving marketer's experience in the Xperience administration. 
+
+## What's next?
+
+As always, check out [our documentation Changelog](https://docs.kentico.com/changelog#refresh-june-27-2024) for the full Refresh feature and technical details.
+
+We hope these new capabilities, features, and API improvements unlock solutions for you. Try them out, [let us know](https://roadmap.kentico.com/tabs/6-next-refreshes) 👋 what you think.
+
+For [the next Refresh](https://roadmap.kentico.com/tabs/6-next-refreshes), you can expect an exciting capability for marketers managing large content libraries across multiple channels - [content usage tracking](https://roadmap.kentico.com/c/201-locate-where-reusable-content-items-are-used-across-all-channels). We'll also be adding [direct content publishing](https://roadmap.kentico.com/c/220-editor-improvement-direct-publishing) to allow marketers with permission to skip unneeded workflow steps, and [customizable scheduled infrastructure update windows](https://roadmap.kentico.com/c/211-automated-regional-infrastructure-updates) for our SaaS customers. These updates will, as always, accompany a number of UX and developer-focused improvements.
+
+Check back next month for another Xperience by Kentico Refresh review!
+]]>
+  </BlogPostContentContentMarkdown>
+  <BlogPostContentDXTopics>
+    <![CDATA[[{"Identifier":"427bcd78-d1db-4d80-8abc-d1ffc1a25d8e"},{"Identifier":"803ca767-e932-4db9-a6bb-cb1393bfd255"},{"Identifier":"79fe8557-f24c-4fd9-ba03-3be795855e15"},{"Identifier":"57224794-f403-47a4-995c-7c748dbd6524"},{"Identifier":"1a2a8dca-bfab-4c00-ac5d-898d0a08d5e4"},{"Identifier":"577d5787-5562-4e9a-8ad6-044fdfa6ac31"}]]]>
+  </BlogPostContentDXTopics>
+  <BlogPostContentPublishedDate>2024-07-01 14:25:00Z</BlogPostContentPublishedDate>
+  <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
+  <ContentItemDataCommonDataID>
+    <GUID>d318f26e-6175-496e-8776-623f3a8dc24d</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>XperienceByKenticoRefresh-June27_2024-m35cd4au</CodeName>
+      <GUID>0d8afaa5-1578-4fe4-85e7-054e86f38c12</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>2847ed5d-17d7-4b9c-8c53-bfe4688028a0</ContentItemDataGUID>
+</contentitemdata.kenticocommunity.blogpostcontent>

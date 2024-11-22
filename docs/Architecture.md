@@ -2,13 +2,14 @@
 
 ## Projects
 
-| Name                                   | Purpose                                                                                                |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Kentico.Community.Portal.Core          | Xperience by Kentico generated content/data types and types shared across live site and administration |
-| Kentico.Community.Portal.Admin         | Admin-only customizations to the Xperience by Kentico app                                              |
-| Kentico.Community.Portal.Web           | Xperience by Kentico Community Portal ASP.NET Core app                                                 |
-| Kentico.Community.Portal.Web.Tests     | Unit and integration tests for Kentico.Community.Portal.Web                                            |
-| Kentico.Community.Portal.Web.E2E.Tests | End-to-end tests in Playwright.NET for Kentico.Community.Portal.Web                                    |
+| Name                                   | Purpose                                                                                                  |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Kentico.Community.Portal.Core          | Xperience by Kentico generated content/data types and types shared across live site and administration   |
+| Kentico.Community.Portal.Admin         | Admin-only customizations to the Xperience by Kentico app                                                |
+| Kentico.Community.Portal.Web           | Xperience by Kentico Community Portal ASP.NET Core app                                                   |
+| Kentico.Community.Portal.Web.Tests     | Unit and integration tests for Kentico.Community.Portal.Web                                              |
+| Kentico.Community.Portal.Web.E2E.Tests | End-to-end tests in Playwright.NET for Kentico.Community.Portal.Web                                      |
+| Kentico.Community.DataCleaner.App      | Console app that processes CI files to clear or replace invalid data imported from external environments |
 
 ## Technologies and Frameworks
 

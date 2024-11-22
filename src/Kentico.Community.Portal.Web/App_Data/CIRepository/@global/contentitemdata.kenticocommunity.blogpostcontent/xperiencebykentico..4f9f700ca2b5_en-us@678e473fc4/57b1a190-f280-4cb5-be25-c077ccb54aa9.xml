@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.blogpostcontent>
+  <BlogPostContentAuthor>
+    <![CDATA[[{"Identifier":"2dce9183-2830-4794-ad72-edd6bd9dc5c3"}]]]>
+  </BlogPostContentAuthor>
+  <BlogPostContentBlogType>
+    <![CDATA[[{"Identifier":"0865e8f6-2568-425e-94d8-2bf53adcdd57"}]]]>
+  </BlogPostContentBlogType>
+  <BlogPostContentContentMarkdown>
+<![CDATA[
+Check out this month's latest addition to Xperience by Kentico. We added UX enhancements all over the product that marketers will love. We're also expanding support of Taxonomy to email and headless channels, and adding scheduled content publishing. Dive in and learn about all the updates we've just delivered in Xperience by Kentico.
+
+## Scheduled content publishing
+
+With this month's Refresh, Xperience by Kentico now supports [scheduled content publishing](https://docs.kentico.com/business-users/website-content/edit-and-publish-pages#scheduled-publishing) for reusable content items and website channel pages.
+
+When a piece of content is published, a marketer can select to publish now or schedule for publishing later.
+
+[![Content item scheduled publishing tray](/getmedia/d627f013-53cb-410a-8f8b-638159eb0c80/v29-01-scheduled-publishing-content-item.webp)](/getmedia/d627f013-53cb-410a-8f8b-638159eb0c80/v29-01-scheduled-publishing-content-item.webp)
+
+Once scheduled, a notification is visible above the content item detailing when it scheduled to be published.
+
+[![Content item scheduled for publishing](/getmedia/a97ecfe4-e1fc-42a0-8c2c-0ae2487d6957/v29-01-scheduled-publishing-content-item-scheduled.webp)](/getmedia/a97ecfe4-e1fc-42a0-8c2c-0ae2487d6957/v29-01-scheduled-publishing-content-item-scheduled.webp)
+
+We can also see the new scheduled status for the item in the Content hub.
+
+[![Content hub with a scheduled content item](/getmedia/0fa44bb5-b962-422e-922f-4933fa44bfbd/v29-01-scheduled-publishing-content-item-scheduled-content-hub.webp)](/getmedia/0fa44bb5-b962-422e-922f-4933fa44bfbd/v29-01-scheduled-publishing-content-item-scheduled-content-hub.webp)
+
+This enhancement to content authoring helps marketers coordinate their digital channel messaging. For example, scheduling for in-person events, publishing social media campaign, and content collaboration with team members.
+
+### Related content
+
+When you are scheduling to publish a content item that links to other content items the linked items can either be published immediately or individually scheduled.
+
+Additionally, when the scheduler begins publishing items that are all scheduled to be published at the same time, reusable items are published _before_ web page items to help guarantee web pages don't go live without the reusable content they depend on.
+
+In an upcoming Refresh we will deliver [cascade scheduled publishing](https://roadmap.kentico.com/c/217-editor-improvements-direct-publishing-and-cascade-scheduled-publishing), making it easier to coordinate publishing multiple items _and_ [scheduled unpublishing](https://roadmap.kentico.com/c/202-scheduling-the-unpublishing-of-public-facing-content) for content that should have a limited public lifetime.
+
+### Time zones
+
+To support scheduled publishing, and any future time based events driven by marketers, we've added support for time zones into Xperience under the hood.
+
+Dates, times and time zones are presented in the local time of the administration user's browser and operating system, but the application itself stores all dates and times consistently in the time zone of the operating system the application runs on.
+
+This all happens without marketers needing to consider the technical details, but developers can leverage our internal time zone support when needed.
+
+## Customer data segmentation
+
+[Contact groups](https://docs.kentico.com/x/o4PWCQ) come built-in with a set of customizable conditions in our condition builder. Previously, these conditions were not able to take advantage of any business-specific customizations you made to contacts - for example, a custom contact status value used when synchronizing them to and from an external CRM.
+
+In this Refresh we've added a new Contact Group condition you can use to support these custom scenarios.
+
+Below, we see a custom field `ContactCustomerTier` has been added to the Contact object in Xperience.
+
+[![ContactInfo object type fields definition list](/getmedia/022d8d71-b67b-4e83-9e6e-79cbe5856f33/v29-01-contact-group-contact-custom-field.webp)](/getmedia/022d8d71-b67b-4e83-9e6e-79cbe5856f33/v29-01-contact-group-contact-custom-field.webp)
+
+This field represents the "customer tier" of our contact in an external CRM - let's pretend it's Gold, Silver, Bronze, or None/empty.
+
+We can create a new Contact Group using the new "Contact has field in value" condition.
+
+[![Contact Group Condition Builder conditions list](/getmedia/96d52b5e-42f9-4b84-9c31-88efab2cf3b3/v29-01-contact-group-contact-details-conditions.webp)](/getmedia/96d52b5e-42f9-4b84-9c31-88efab2cf3b3/v29-01-contact-group-contact-details-conditions.webp)
+
+This will provide us with a dropdown list of fields available for the Contact - including our new "Customer tier" field. We can match this against a value to segment our customer base into "Gold", "Silver", "Bronze" groups and use these groups for content personalization in website channels.
+
+[![Customer tier field value Contact Group condition](/getmedia/839aae03-a83e-4519-950e-979145a026a1/v29-01-contact-group-contact-custom-field-condition.webp)](/getmedia/839aae03-a83e-4519-950e-979145a026a1/v29-01-contact-group-contact-custom-field-condition.webp)
+
+## User experience
+
+We have quite a few UX improvements to cover in this Refresh, so let's begin!
+
+### Content workflow statuses
+
+Content item workflow statuses have been improved to support scheduled content publishing (as mentioned above) and future unpublishing, but also to help marketers know more about a piece of content's history, at a glance.
+
+Here, we can see that two content items are in a "Draft" status but they are slightly different types of draft. The first is "Draft (Initial)", which means this content item has never been published. The second is "Draft (New version)" which means it is currently published but a new draft of that content is being worked on and which has not yet been published.
+
+[![Content hub showing content items in various statuses](/getmedia/5945c883-743f-4682-b6c9-8b997e901988/v29-01-content-item-statuses-content-hub.webp)](/getmedia/5945c883-743f-4682-b6c9-8b997e901988/v29-01-content-item-statuses-content-hub.webp)
+
+These status changes have been made throughout the entire administration experience!
+
+### Content item filtering
+
+Next, we've added support for filtering by Taxonomy in the Content hub.
+
+[![Content hub filtering interface with taxonomy conditions](/getmedia/53508033-144d-47a1-8725-d48c1c038bba/v29-01-content-hub-taxonomy-filtering.webp)](/getmedia/53508033-144d-47a1-8725-d48c1c038bba/v29-01-content-hub-taxonomy-filtering.webp)
+
+You can combine multiple sets of tags to build up complex filter conditions and if you have a hierarchy of tags in a taxonomy, selecting parent tags will match any content items that include those tags child items.
+
+[![Content hub taxonomy filtering with tag hierarchies](/getmedia/e52bbfd4-56bc-4a67-9235-2b7df37df797/v29-01-content-hub-taxonomy-filtering-child-tags.webp)](/getmedia/e52bbfd4-56bc-4a67-9235-2b7df37df797/v29-01-content-hub-taxonomy-filtering-child-tags.webp)
+
+This filtering improvement also appears in the emails list for email channels.
+
+[![Email channel email list filter UI](/getmedia/d17f4abd-17d0-4c88-8da7-55b8adedf516/v29-01-emails-list-filtering.webp)](/getmedia/d17f4abd-17d0-4c88-8da7-55b8adedf516/v29-01-emails-list-filtering.webp)
+
+And, the headless items list.
+
+[![Headless channel headless items filter UI](/getmedia/6b79cfec-433e-4ff8-83dc-2e6de9e97512/v29-01-headless-items-list-filtering.webp)](/getmedia/6b79cfec-433e-4ff8-83dc-2e6de9e97512/v29-01-headless-items-list-filtering.webp)
+
+As your content investment grows, we're making sure you have the tools available to manage and benefit from what you've created.
+
+### Content hub folders
+
+To further help with auditing and content organization, we've exposed the meta properties of Content hub folders.
+
+[![Content hub folders properties dialog](/getmedia/1c478b44-f195-42f4-9d4c-21cfb7829fc0/v29-01-content-hub-folder-properties.webp)](/getmedia/1c478b44-f195-42f4-9d4c-21cfb7829fc0/v29-01-content-hub-folder-properties.webp)
+
+The editable code name field can be valuable when using the public [Content hub folder management APIs](https://docs.kentico.com/x/content_hub_folders_api) we added for developers. These APIs can be used to programmatically organize imported content into folders or move things around as content governance needs change.
+
+### Linked content exploration
+
+Here's a tiny improvement with a huge impact for marketers. Previously, you would need to create a new draft of a published content item to interact with the item's fields because they're disabled when the item is published. Now, we've made the pencil icon of linked content items interactive even when the parent content item is published!
+
+<video controls="" class="w-100">
+  <source src="/getmedia/2b4ef97e-43ce-45a9-8a14-375ac7b7f14e/v29-01-preview-published-content-linked-items.webm" type="video/webm">
+</video>
+
+This video is worth 1,000 words... or at least 1,000 clicks you no longer need to make😉.
+
+### Website channels
+
+We've also made some enhancements that will be appreciated by anyone who spends time working with website channels.
+
+The pages tree in website channels (and other places in Xperience), can now be resized to make it easier to see items that are deeply nested or have long names.
+
+<video controls="" class="w-100">
+  <source src="/getmedia/37997726-eccb-49c9-81c9-f8a2ca8d90d9/v29-01-website-channel-page-tree-resize.webm" type="video/webm">
+</video>
+
+Additionally, there's a new button to open the current page in a new, dedicated tab in your browser, but still see the preview of unpublished content and design changes.
+
+<video controls="" class="w-100">
+  <source src="/getmedia/e501e4e4-3fdd-4c5d-abf2-02004e8bd48b/v29-01-website-channel-preview-tab.webm" type="video/webm">
+</video>
+
+:::note
+This preview URL is linked to the currently logged in user and can't be used to share a preview of changes with other users.
+
+If you'd like to see us add shareable preview URLs to Xperience, [send us feedback](https://roadmap.kentico.com/tabs/6-next-refreshes) on our roadmap.
+:::
+
+## Content modeling
+
+As mentioned above, we've added Taxonomy support for filtering in Email and Headless channels, but we've also included taxonomy support for content modeling in these channels.
+
+This means you can add taxonomy fields to headless _and_ email items, and filter by taxonomy tags in headless channel GraphQL APIs.
+
+Another exciting content modeling improvement, for those of us that spend a lot of time refining [content types](https://docs.kentico.com/x/gYHWCQ), reusable field schemas (RFS) now display all of their fields in the field definition of the content types that use them.
+
+[![Content type fields list showing all reusable field schema fields](/getmedia/b43c15b0-60b5-4ccd-96db-d1be2e0df343/v29-01-content-type-reusable-field-schema-inline.webp)](/getmedia/b43c15b0-60b5-4ccd-96db-d1be2e0df343/v29-01-content-type-reusable-field-schema-inline.webp)
+
+This is a real time saver when you are creating, modifying, or exploring your content types and don't want to jump back and forth between the type and the RFSs it uses to remind yourself what fields they include.
+
+The RFS fields can't be modified inline, but the pencil icon will open the RFS definition in a new tab for quick editing.
+
+While we're on the topic of RFSs, the content item query APIs have been enhanced with 2 new querying methods - `LinkingSchemaField` and `LinkedFromSchemaField`. These are most useful in advanced scenarios but if you are heavily invested in RFSs and related content items, they will be helpful. You can read more about these methods [in our documentation](https://docs.kentico.com/developers-and-admins/api/content-item-api/reference-content-item-query#forcontenttypes-parameterization).
+
+## What's next?
+
+As always, check out [our documentation Changelog](https://docs.kentico.com/changelog#refresh-may-16-2024) for the full Refresh feature and technical details.
+
+We hope these new capabilities, features, and API improvements unlock solutions for you. Try them out, [let us know](https://roadmap.kentico.com/tabs/6-next-refreshes) 👋 what you think.
+
+For [the next Refresh](https://roadmap.kentico.com/tabs/6-next-refreshes), you can expect the (slightly delayed) introduction of [smart folders](https://roadmap.kentico.com/c/200-content-organization-discovery-smartfolders-in-the-content-hub) for convent governance and discovery, [customizable SaaS service tiers](https://roadmap.kentico.com/c/183-custom-cloud-service-tier) to more easily "right fit" customers, and the [scheduling of content unpublishing](https://roadmap.kentico.com/c/202-scheduling-the-unpublishing-of-public-facing-content) and [scheduled cascade publishing](https://roadmap.kentico.com/c/217-editor-improvements-direct-publishing-and-cascade-scheduled-publishing) as mentioned above. These updates will, as always, accompany a number of UX and developer-focused improvements.
+
+Check back next month for another Xperience by Kentico Refresh review!
+]]>
+  </BlogPostContentContentMarkdown>
+  <BlogPostContentDXTopics>
+    <![CDATA[[{"Identifier":"a4b73ecd-9a1a-4a18-9237-073a0fb82262"},{"Identifier":"e3623da6-d90c-4089-9fd0-25df6c30bee8"},{"Identifier":"6ad7092e-2b5b-4dc6-a89c-37d4c38df71e"},{"Identifier":"57224794-f403-47a4-995c-7c748dbd6524"},{"Identifier":"427bcd78-d1db-4d80-8abc-d1ffc1a25d8e"},{"Identifier":"5cd3c0b2-39ec-442e-a9ec-2e0933621c2b"}]]]>
+  </BlogPostContentDXTopics>
+  <BlogPostContentPublishedDate>2024-05-16 17:45:00Z</BlogPostContentPublishedDate>
+  <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
+  <ContentItemDataCommonDataID>
+    <GUID>c1b9063d-4daf-41d7-94a6-4f9f700ca2b5</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>XperienceByKenticoRefresh-May16_2024-wp3owdck</CodeName>
+      <GUID>e48ec899-5f22-4507-9f02-b4d3c0b0e2e3</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>57b1a190-f280-4cb5-be25-c077ccb54aa9</ContentItemDataGUID>
+</contentitemdata.kenticocommunity.blogpostcontent>

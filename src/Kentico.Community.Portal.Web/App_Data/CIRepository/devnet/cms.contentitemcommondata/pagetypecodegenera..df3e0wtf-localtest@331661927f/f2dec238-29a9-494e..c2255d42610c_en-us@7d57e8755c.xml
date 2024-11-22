@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <cms.contentitemcommondata>
-  <ContentAuthorizationAllowedTags />
   <ContentItemCommonDataContentItemID>
     <CodeName>PageTypeCodeGenerationWithXperienceByKentico-df3e0wtf-localtest</CodeName>
     <GUID>d2924db9-da42-4b39-8d1d-8d2e366c9d73</GUID>
@@ -13,13 +12,19 @@
   </ContentItemCommonDataContentLanguageID>
   <ContentItemCommonDataGUID>f2dec238-29a9-494e-a35c-c2255d42610c</ContentItemCommonDataGUID>
   <ContentItemCommonDataIsLatest>True</ContentItemCommonDataIsLatest>
+  <ContentItemCommonDataLastPublishedWhen>2024-10-25 07:47:47Z</ContentItemCommonDataLastPublishedWhen>
   <ContentItemCommonDataPageBuilderWidgets>
-    <![CDATA[{"editableAreas":[]}]]>
+    <![CDATA[{"editableAreas":[{"identifier":"main","sections":[{"identifier":"8e497e23-cc06-48cf-ada0-94965c79616c","type":"CommunityPortal.SingleColumnSection","properties":{"layout":"Standard","layoutParsed":0,"paddingTop":"Large","paddingTopParsed":0,"paddingBottom":"Large","paddingBottomParsed":0,"backgroundColor":"White","backgroundColorParsed":1},"zones":[{"identifier":"d87da346-fdc6-404e-852c-f2ea8d06e223","widgets":[{"identifier":"9b759c21-c9de-4968-aef6-003f16463a76","type":"CommunityPortal.MarkdownWidget","variants":[{"identifier":"dd08427b-a1ea-43b8-a188-61bd134fca20","properties":{"markdown":"Working with strongly typed objects for page types has always been a preference for Kentico Xperience developers.  Nobody wants to work with a TreeNode directly, right?  You want a class that inherits from TreeNode, contains all the page type fields, and uses the correct data types throughout.\n\nIn previous versions of Kentico Xperience, we were provided with a few different ways of generating strongly typed classes.  In all scenarios, you had to authenticate with the administration portal and navigate to the Page Types module.  From there you could either copy and paste the individual generated classes or click a button to save them to a folder within the project.\n\nXperience by Kentico, being the next generation of Kentico Xperience, wanted to improve and build upon this key piece of developer functionality.  Since Xperience by Kentico is entirely rewritten in .NET Core, it is more appropriate that the new code generation tool sits outside of the administration portal and is access through a [.NET CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/) command.\n\nThe new .NET CLI command is so simple to use and was extremely useful when migrating [my blog website](https://www.goldfinch.me/) to Xperience by Kentico.  If I created or edited a page type, I just opened PowerShell and reran the same command:","markdownStyle":"Standard","markdownStyleParsed":0,"markdownCodeLanguage":"","id":"e204ecf3-fee8-483e-86e8-af751139e295"},"fieldIdentifiers":{"markdown":"1476efd9-8488-48db-859c-1b1abd98697d","markdownStyle":"48e1dd11-599d-4c81-9067-6d32ed6a98b8","markdownStyleParsed":"3a09ad6a-73f1-48cc-98fc-6fbb379960c7","markdownCodeLanguage":"c561b529-4c18-4320-81f1-fa0210c5fb51","id":"6d9c4a88-a48a-4b67-bbae-42c3dd01bcc9"}}]},{"identifier":"8fe9406f-1d08-4fff-abdc-16533b535c5a","type":"CommunityPortal.MarkdownWidget","variants":[{"identifier":"d6d23034-45ab-4f52-b719-8d7046657d48","properties":{"markdown":"dotnet run --no-build -- --kxp-codegen --type \"All\" --location \"../Goldfinch.Core/{type}/{dataClassNamespace}/{name}/\"","markdownStyle":"Code","markdownStyleParsed":2,"markdownCodeLanguage":"powershell","id":"53b0af30-4c43-4cc0-9121-be57f988d2e7"},"fieldIdentifiers":{"markdown":"597848d7-65ce-4340-9aac-400773d6b7fe","markdownStyle":"2bf28b84-8f8d-46ee-a876-2d80368ff922","markdownStyleParsed":"9048badb-defb-46aa-a57d-555f58c24dc4","markdownCodeLanguage":"3fd24f0e-b6a9-47da-9cd7-2a4620969e36","id":"d59960c7-1fde-489f-84cf-eb5d1f144e7f"}}]},{"identifier":"d100bd25-ce05-419f-b014-2e7c3ac0706c","type":"CommunityPortal.MarkdownWidget","variants":[{"identifier":"8cc83732-069d-41d1-ade6-41f8bfe5b6c1","properties":{"markdown":"The example above would generate all page type classes, without rebuilding the project first.   The last parameter for location allowed me to customize where the generated class files were placed in my project.  The CLI command comes with other options for including or excluding objects based on patterns, skipping the confirmation warning message, and customizing the namespaces of the files being generated.\n\nIf you need any further help getting started with the code generation tool, then I would highly recommend checking the documentation page.  It covers all aspects of the code generation tool and provides explanations and examples for each of the parameters available.","markdownStyle":"Standard","markdownStyleParsed":0,"markdownCodeLanguage":"","id":"18ab2aab-4337-4eef-8c02-1b8276394f1e"},"fieldIdentifiers":{"markdown":"f05f97bb-a533-4537-a2c9-5d2288977f29","markdownStyle":"7b66a1a0-e760-40bb-8b38-eb4c97177ea2","markdownStyleParsed":"d3261505-5f8e-4975-ac70-ce1cac7dcf22","markdownCodeLanguage":"5c0a9ac2-ca85-4034-8df0-f4a6f290a931","id":"24377a7d-5970-4a8e-8465-c1e31d95f745"}}]},{"identifier":"051e7f91-e71d-4300-b0bf-e69d37d83e87","type":"CommunityPortal.ImageWidget","variants":[{"identifier":"7ebc4394-e779-45a6-8afc-23dc5a028453","properties":{"selectedImages":[{"identifier":"1a96721b-d6cd-49b6-b5cc-a8ca529f146b"}],"id":"a7b1f6b5-0fe5-4768-a2db-eba7bbaaa076"},"fieldIdentifiers":{"selectedImages":"a57f76f8-08e8-45c0-99eb-fe6c65c99042","id":"2beac990-bfa7-4bf4-9bb4-62359ba05144"}}]}]}],"fieldIdentifiers":{"layout":"c64c9651-7ede-40c8-82fb-26f1c2c93453","layoutParsed":"bcb6a359-d3d0-41f8-afa9-4ce009b4ea9a","paddingTop":"5137e84a-4734-47c4-a2c9-0e43adee3f2d","paddingTopParsed":"f4343d9f-adce-4ed6-9ce6-9388c12b4c8e","paddingBottom":"24aad218-82ca-4b34-a25c-21d8ef2e177a","paddingBottomParsed":"e5bf3e45-9238-46f4-b894-f187d9d45e69","backgroundColor":"1c3ea08e-b40c-497e-9b78-96c253bae693","backgroundColorParsed":"6d858a76-89da-4aea-be58-f987308cc0c9"}}]}]}]]>
   </ContentItemCommonDataPageBuilderWidgets>
   <ContentItemCommonDataPageTemplateConfiguration>
-    <![CDATA[{"identifier":"KenticoCommunity.BlogPostPage_Default","properties":{},"fieldIdentifiers":{}}]]>
+    <![CDATA[{"identifier":"KenticoCommunity.BlogPostPage_Components","properties":{},"fieldIdentifiers":{}}]]>
   </ContentItemCommonDataPageTemplateConfiguration>
   <ContentItemCommonDataVersionStatus>2</ContentItemCommonDataVersionStatus>
+  <WebPageCanonicalURL />
+  <WebPageMetaDescription />
+  <WebPageMetaExcludeFromSitemap>False</WebPageMetaExcludeFromSitemap>
+  <WebPageMetaRobots />
+  <WebPageMetaTitle />
   <ContentItemReferences>
     <cms.contentitemreference>
       <ContentItemReferenceGroupGUID>9a93d64c-5cc7-47f0-94e8-f7b3cc48946e</ContentItemReferenceGroupGUID>
@@ -31,6 +36,19 @@
       <ContentItemReferenceTargetItemID>
         <CodeName>PageTypeCodeGenerationWithXperienceByKentico-vnquqdtu-localtest</CodeName>
         <GUID>b50fbfd0-3354-455a-98db-46c4484c9bbf</GUID>
+        <ObjectType>cms.contentitem</ObjectType>
+      </ContentItemReferenceTargetItemID>
+    </cms.contentitemreference>
+    <cms.contentitemreference>
+      <ContentItemReferenceGroupGUID>a57f76f8-08e8-45c0-99eb-fe6c65c99042</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>216f5daf-d3b6-45cf-bc96-0b09062c024e</ContentItemReferenceGUID>
+      <ContentItemReferenceSourceCommonDataID>
+        <GUID>f2dec238-29a9-494e-a35c-c2255d42610c</GUID>
+        <ObjectType>cms.contentitemcommondata</ObjectType>
+      </ContentItemReferenceSourceCommonDataID>
+      <ContentItemReferenceTargetItemID>
+        <CodeName>ContentTypeC_CodeGenerationInPowerShell-g4qwdgre</CodeName>
+        <GUID>1a96721b-d6cd-49b6-b5cc-a8ca529f146b</GUID>
         <ObjectType>cms.contentitem</ObjectType>
       </ContentItemReferenceTargetItemID>
     </cms.contentitemreference>

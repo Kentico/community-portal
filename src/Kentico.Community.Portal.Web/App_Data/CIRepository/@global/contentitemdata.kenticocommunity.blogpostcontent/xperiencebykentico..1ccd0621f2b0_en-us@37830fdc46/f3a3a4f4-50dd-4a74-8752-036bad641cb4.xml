@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.blogpostcontent>
+  <BlogPostContentAuthor>
+    <![CDATA[[{"Identifier":"2dce9183-2830-4794-ad72-edd6bd9dc5c3"}]]]>
+  </BlogPostContentAuthor>
+  <BlogPostContentBlogType>
+    <![CDATA[[{"Identifier":"0865e8f6-2568-425e-94d8-2bf53adcdd57"}]]]>
+  </BlogPostContentBlogType>
+  <BlogPostContentContentMarkdown>
+<![CDATA[
+Check out this month's latest addition to Xperience by Kentico. We have some big updates, like reusable field schemas, and some small but impactful ones too, like mass deletion in the Content hub! Dive in and learn about all the enhancements we've just delivered in Xperience by Kentico.
+
+## Headless contact management and activity tracking
+
+Our strategy with Xperience by Kentico is for every type of channel to be a pipeline built to deliver content and great experiences to an audience and for that audience to provide engagement insights back to marketers.
+
+Our headless channel capability, released in our [December Refresh](/blog/xperience-by-kentico-refresh-december-14-2023), provided a great content delivery story, and now we've [enhanced it to also work with customer data](https://docs.xperience.io/x/TpSOD).
+
+This improvement includes API endpoints for contact creation, consent management, and activity tracking 😲.
+
+What does this mean for marketers and developers?
+
+If a customer can be identified (through email or some other means) in a mobile app using Xperience's headless content delivery, and that same customer visits a website channel (re-identifying themselves), marketers will see their end-to-end customer journey of engagement with those channels.
+
+Developers can enhance their mobile apps, microsites or any other touchpoints, sending data they are likely already collecting, creating even more value from their technical implementations 👏.
+
+And, of course, this enhancement supports data privacy management, meaning you can guarantee you only target and track customers who have consented ✅.
+
+Here's a common workflow we envision for these APIs:
+
+- A customer engages with a headless channel supported experience (mobile app or microsite)
+- The experience creates an anonymous contact and retrieves the data consent text, which is presented to the customer
+- The customer approves the consent
+- The customer's activities and data are sent back to Xperience, associated with the channel and the new contact
+
+This opens up an amazing number of possibilities 🤯!
+
+## Headless channel basic previews
+
+We know marketers love using the Xperience by Kentico Page builder because the visual content composition experience is intuitive and productive - authors a content change and then immediately preview it before it's published!
+
+We also know that when working with content headlessly that visual confirmation of content authoring can be hard to live without 😔.
+
+In this Refresh, we've added the ability to deliver unpublished content through headless channels ([protected by API keys](https://docs.xperience.io/xp/developers-and-admins/configuration/headless-channel-management#Headlesschannelmanagement-AccesstypesofAPIkeys)) and then "preview" how that content appears in websites consuming the unpublished content.
+
+This first iteration of headless channel previews focuses on a specific marketer workflow.
+
+A marketer will create a new headless channel and add a "preview URL" - a test or preview URL of a website, a website emulating a mobile app ([assuming the app technology supports this](https://ionicframework.com/)), or the live website URL if viewing is more important than previewing.
+
+[![Headless channel settings](/getmedia/e12d912c-6a25-490b-aa89-9423464891d2/v28-02-headless-channel-settings.jpg)](/getmedia/e12d912c-6a25-490b-aa89-9423464891d2/v28-02-headless-channel-settings.jpg)
+
+Now, the typical content modeling and authoring process happens - marketers coordinating with developers consuming the headless channel API. As marketers make content updates they will want to see what impact the changes have on the developer authored experience. They can head to the headless channel item list and click the [Preview button](https://docs.xperience.io/xp/business-users/headless-content#Headlesscontent-Previewheadlessitems) to open a new tab and display the site hosted on the domain supplied in the channel Preview URL field.
+
+[![Headless channel item list](/getmedia/f106c5a4-10fd-487d-aed8-c76712e79c7a/v28-02-headless-channel-item-list.jpg)](/getmedia/f106c5a4-10fd-487d-aed8-c76712e79c7a/v28-02-headless-channel-item-list.jpg)
+
+Assuming the preview URL points to a special "preview" site, each time a marketer makes a content change they can refresh their preview site tab and see the change immediately 🙌 (as long as the preview site uses a [draft content API key](https://docs.xperience.io/xp/developers-and-admins/configuration/headless-channel-management#Headlesschannelmanagement-AccesstypesofAPIkeys)).
+
+In the future we will enable a way for individual headless items to map to URLs so marketers can see previews for specific pages in the external site if those pages map to individual headless items.
+
+## Reusable field schemas
+
+For some of us the name **reusable field schema** provides a clear explanation of what this next product enhancement is and how it can be used - but for the rest of us 😅, let's look at a visual example and real-world use case.
+
+Content modeling is a key step in building scalable digital experiences with a DXP. Often there are sets of fields that are reused across several content types - kind of like how content items are reused across channels. We don't want to recreate those fields for each content type - that's error prone and difficult to maintain over time 😫. It would be great if we could define a single set of fields and reuse it! This would help us guarantee consistency across content types and quickly add new reused fields in the future.
+
+Well, [reusable field schemas](https://docs.xperience.io/x/D4_OD) solve this exact problem 😄!
+
+Below, we see the definition of a reusable field schema for SEO fields. These are fields that every web page item in our website channels would have. These fields could be expanded to also include [schema.org metadata](https://schema.org/), [Open Graph fields](https://ogp.me/), or anything else our solution needs.
+
+[![Reusable field schema definition](/getmedia/207fc8c6-6a73-4512-a803-bbed949e1da1/v28-02-resusable-field-schema-definition.jpg)](/getmedia/207fc8c6-6a73-4512-a803-bbed949e1da1/v28-02-resusable-field-schema-definition.jpg)
+
+Reusable field schemas are authored just like content types. Today we only support simple fields in reusable field schemas (boolean, text, numbers, dates) but we will add support for complex data types in a future iteration (as seen [on our roadmap](https://roadmap.kentico.com/c/192-reusable-field-schema-phase-2)).
+
+Once the schema is defined, it can be used in the field definition for an Article content type.
+
+[![Reusable field schema usage](/getmedia/641c20e4-7b64-48bc-9d79-b1e85cea209c/v28-02-resusable-field-schema-usage.jpg)](/getmedia/641c20e4-7b64-48bc-9d79-b1e85cea209c/v28-02-resusable-field-schema-usage.jpg)
+
+When the schema is added to a content type, that content type's form will include the schema fields, giving marketers a consistent authoring experience wherever that schema is used.
+
+[![Reusable field schema authoring experience](/getmedia/b8664809-5323-49fc-86be-bb482308fe16/v28-02-resusable-field-schema-authoring.webp)](/getmedia/b8664809-5323-49fc-86be-bb482308fe16/v28-02-resusable-field-schema-authoring.webp)
+
+And, of course, developers can get in on the action too 🤓! All generated content type code will include [C# interfaces for the reusable field schemas](https://docs.xperience.io/xp/developers-and-admins/api/generate-code-files-for-system-objects#Generatecodefilesforsystemobjects-Reusablefieldschemainterfaces). This means a solution's code will always accurately match its content models.
+
+## Mass delete in the Content hub
+
+The first of our "mass" actions in Xperience by Kentico has now arrived with the ability to mass delete items in the Content hub. This will be most useful when combined with searching, sorting and filtering for a specific set of items and then quickly removing them.
+
+<video controls class="w-100">
+  <source src="/getmedia/1ba8c8ce-12a6-49ca-823e-177cfe1cf424/v28-02-content-hub-mass-delete.mp4" type="video/mp4" />
+</video>
+
+In next month's Refresh [we'll introduce mass publishing](https://roadmap.kentico.com/c/181-mass-publishing-of-content-items-in-content-hub)!
+
+## SaaS improvements
+
+We have several impactful updates this month for our [SaaS environment](https://docs.xperience.io/x/pISyCg).
+
+First, we now support deployments of Xperience by Kentico that [target .NET 8](https://community.kentico.com/blog/xperience-by-kentico-refresh-november-16-2023#net-8-support), meaning you get the best performance 🚤 and latest technology as the foundation for your solution.
+
+:::note
+In case you didn't know, the site you're reading this on - the Kentico Community Portal - is running on the latest Xperience by Kentico Refresh in our SaaS environment and using .NET 8. Go [check out the code yourself](https://github.com/Kentico/community-portal/releases/tag/v28.2.1.0).
+:::
+
+More and more customers need the ability to use IPv6 addresses for their DNS configuration. We now support both IPv4 and IPv6 for apex domains in the custom domain web channel management dashboard.
+
+Last, but certainly not least, our engineers optimized the database backup logic during deployments to do more work in parallel, speeding up the entire process for customers and their teams managing deployments through the Xperience Portal.
+
+## Tag management and CRM integrations
+
+We develop our open source integrations alongside our core product enhancements, giving us more agility to improve your use of Xperience by Kentico.
+
+This month we're releasing 2 new integrations, based on the latest versions of Xperience by Kentico.
+
+### CRM (Salesforce and MS Dynamics)
+
+Almost all of our customers use a CRM product and most integrate it with their DXP solution, or wish they could 😏! At the same time, most CRM integrations are heavily customized based on the sales and business processes of an organization.
+
+With the [Kentico.Xperience.CRM](https://github.com/Kentico/xperience-by-kentico-crm) integration, we provide a core layer of common CRM integration features which supports implementations for both Salesforce Sales Cloud and Dynamics CRM. The Salesforce and Dynamics integrations are plug-and-play and allow teams to define the code-based mappings between contact data in Xperience and the CRM platforms.
+
+[![Salesforce CRM integration settings](/getmedia/db8f54e1-5a97-4ec0-ab6b-170d2b16372c/v28-02-salesforce-crm-integration.png)](/getmedia/db8f54e1-5a97-4ec0-ab6b-170d2b16372c/v28-02-salesforce-crm-integration.png)
+
+The [core common layer](https://github.com/Kentico/xperience-by-kentico-crm/tree/main/src/Kentico.Xperience.CRM.Common) can be used if teams need something lower level to build on but also want the benefits of not starting from scratch.
+
+The integrations keep track of synchronization and make it visible for marketers in the Xperience administration.
+
+[![Dynamics CRM integration synchronization](/getmedia/8e0eafd8-b869-4267-b606-8274b43d2862/v28-02-crm-synchronization-integration.png)](/getmedia/8e0eafd8-b869-4267-b606-8274b43d2862/v28-02-crm-synchronization-integration.png)
+
+### Tag Manager with Google Tag Manager support
+
+Tag management on a website often sits in a gray area of responsibility. Tags are often delivered as code, which is a technical responsibilty, but are managed by marketers 🤷🏽‍♂️.
+
+Tools like Google Tag Manager (GTM) require tags to be added to a website [following specific instructions](https://support.google.com/tagmanager/answer/12002338?sjid=6895322268869763989-NC). Later, making changes to tags can require coordination between marketing and technical teams.
+
+Additionally, tags can be used to perform data tracking which often requires data and privacy consents from an audience - something developers need to understand to make sure tags are enabled for visitors under the right conditions.
+
+Our new [Kentico.Xperience.TagManger](https://github.com/Kentico/xperience-by-kentico-tag-manager) integration allows marketers to handle the tags themselves - no handoff required 👏!
+
+[![Tag Manager tag list](/getmedia/643e88bc-77df-41e5-aa03-2aacbc8fda85/v28-02-tag-manager-tag-list.png)](/getmedia/643e88bc-77df-41e5-aa03-2aacbc8fda85/v28-02-tag-manager-tag-list.png)
+
+Marketers can author and manage custom tags, or if they're leveraging GTM for all of their tags they can create a special GTM tag which handles all the code insertion for them.
+
+[![Tag Manager tag details](/getmedia/66d2e97d-1a6c-4b7f-b715-0091b4f00165/v28-02-tag-manager-tag-details.png)](/getmedia/66d2e97d-1a6c-4b7f-b715-0091b4f00165/v28-02-tag-manager-tag-details.png)
+
+These tags are added to every page on the selected website channel and the integration ensures the tags aren't immediately added to a page if the required consents aren't agreed to. The tags provide a Javascript hook for developers that will auto-insert tags once the visitor's data privacy conditions have been met.
+
+## What's next?
+
+We hope these new capabilities, features, and UX improvements unlock solutions for you and your clients. Try them out, let us know 👋 what you think.
+
+For [the next Refresh](https://roadmap.kentico.com/tabs/6-next-refreshes), you can expect [basic workflows](https://roadmap.kentico.com/c/156-basic-workflows-for-approving-and-publishing-pages-content-items), [new AI features](https://roadmap.kentico.com/c/191-enhance-your-writing-instantly-ai-powered-rich-text-editor-for-smart-quick-content-transformation), a couple of [new open source integrations](https://roadmap.kentico.com/c/173-azure-ai-search), and - of course - other quality of life improvements.
+
+Check back next month for another Xperience by Kentico Refresh review!
+]]>
+  </BlogPostContentContentMarkdown>
+  <BlogPostContentDXTopics>
+    <![CDATA[[{"Identifier":"57224794-f403-47a4-995c-7c748dbd6524"},{"Identifier":"b492b56d-3869-4f3e-bda5-cf8dd6588291"},{"Identifier":"803ca767-e932-4db9-a6bb-cb1393bfd255"},{"Identifier":"482aaf60-a549-4414-9800-475f108fb9ad"},{"Identifier":"3b1a5210-f2f3-4a22-87a4-d568ecca0c66"},{"Identifier":"53529b65-dba0-4617-a3bf-859b1bc25909"}]]]>
+  </BlogPostContentDXTopics>
+  <BlogPostContentPublishedDate>2024-02-02 21:00:00Z</BlogPostContentPublishedDate>
+  <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
+  <ContentItemDataCommonDataID>
+    <GUID>943dd5f8-5f57-4fd9-9b9b-1ccd0621f2b0</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>XperienceByKenticoRefresh-January25_2024-k7y2qzvz</CodeName>
+      <GUID>bb6f9d94-fbb0-4bb1-baee-2201e6139ffe</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>f3a3a4f4-50dd-4a74-8752-036bad641cb4</ContentItemDataGUID>
+</contentitemdata.kenticocommunity.blogpostcontent>

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-liamgold-The-language-variant-copying-soue7eff997</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+@liamgold
+
+> The language variant copying sounds good - I think similar functionality for when you duplicate a content item would be amazing
+
+We have cloning enabled for Emails already in the product, but we don't have it for Content hub items or Web pages. I believe this will be coming in a later Refresh.
+
+> a scenario where you might want to embed references to content from the Content Hub [...], is this possible yet or in the future?
+
+I'm not sure how much attention Rich text will receive in the near future - my guess is not too much.
+
+Rich text, even when using structured content via embedded references, is still very difficult to get right. I know the product team could deliver on it, but I also think the items on the roadmap are higher priority.
+
+> If this isn't possible, what would the content modelling recommendation be here?
+
+In the past, I explored using only Page Builder widgets to build a blog post. It was a pretty nice presentational experience, but it definitely has some caveats!
+
+1. Content isn't easily reusable - it's "stuck" in the Page Builder.
+1. This approach uses related content that is embedded in the page with the Page Builder components. Changing this related content will change the blog post. Sometimes this is intended, but sometimes its not. Teams would definitely have to consider how this would impact a website long-term.
+1. It could take more time to author the blog post because each component (Rich text, image, video, related posts) would need to be configured by the post author. Having this content rendered programmatically could be a lot less work.
+
+> but I can probably take a look at the community site content models blog posts and how it constructs the page 🤔
+
+Nothing special going on here!
+
+[We use Markdown to author blog posts](https://github.com/Kentico/community-portal/blob/592bcaf296ae0818194d32fa5c3cf8319d67779b/src/Kentico.Community.Portal.Web/App_Data/CIRepository/%40global/contentitemdata.kenticocommunity.blogpostcontent/excludingcontentit..a23597e8cf7d_en-us%407df3936f37/d95842e2-484a-4386-9001-7fa003b5b871.xml#L8) and reference media in the media library.
+
+It's all hand written - mostly because Markdown is sooo easy to author and doesn't require any special knowledge to prevent the design from getting messed up by errant Rich text edits.
+
+You _can_ create custom components with Markdown and we do use a few, like this:
+
+```markdown
+:::note
+This is a callout note with a different background
+:::
+```
+
+But going too far in this direction has similar caveats to embedding lots of logic in Rich text.
+
+---
+
+From what I remember, Kentico's Rich text embeddable widgets/webparts from Portal Engine were powerful but could also get really complex, fast (and I don't think they were that performant on first-render).
+
+I think WordPress' Gutenberg technology for creating blocks of configurable components that generate HTML - while content is being created - is an interesting approach, but that has required years of development to get off the ground.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2023-11-18 23:42:33Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>99373cdd-ab81-40fd-9a19-bdfba9b463d5</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Blog-Discussion-Xperience-by-Kentico-Refr-448d25b0</CodeName>
+    <GUID>bef326f0-3064-4c0a-b4d2-f67d51f05526</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

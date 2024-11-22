@@ -2,22 +2,28 @@
 
 ## .NET Runtime
 
-.NET 8.0 SDK or newer
+.NET 9.0 SDK or newer
 
-- <https://dotnet.microsoft.com/en-us/download/dotnet/8.0>
+- <https://dotnet.microsoft.com/en-us/download/dotnet/9.0>
 - See `global.json` file for specific SDK requirements
 
 ## Node.js Runtime
 
 - [Node.js](https://nodejs.org/en/download/package-manager) 20.16.0 or newer
-- [NVM for Windows](https://github.com/coreybutler/nvm-windows) to manage multiple installed versions of Node.js
-- See `engines` in the solution's `package.json` files for specific version requirements
+- [NVM for Windows](https://github.com/coreybutler/nvm-windows) to manage
+  multiple installed versions of Node.js
+- See `engines` in the solution's `package.json` files for specific version
+  requirements
 
 ## PowerShell
 
-- [PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.3) v7.3 or newer
-  - Note: You cannot use [Windows PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/what-is-windows-powershell) with this project.
-    Windows PowerShell is an older, Windows-only, version of PowerShell. This project requires the modern, cross-platform version of PowerShell which is v7.0+.
+- [PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.3)
+  v7.3 or newer
+  - Note: You cannot use
+    [Windows PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/what-is-windows-powershell)
+    with this project. Windows PowerShell is an older, Windows-only, version of
+    PowerShell. This project requires the modern, cross-platform version of
+    PowerShell which is v7.0+.
 
 ## C# Editor
 
@@ -47,4 +53,6 @@ Azure storage is used locally for data storage and background job processing
 
 ## Email SMTP Server
 
-- [MailHog](https://github.com/mailhog/MailHog), [Mailpit](https://github.com/axllent/mailpit) or a similar local SMTP server for local email testing
+- [MailHog](https://github.com/mailhog/MailHog),
+  [Mailpit](https://github.com/axllent/mailpit) or a similar local SMTP server
+  for local email testing

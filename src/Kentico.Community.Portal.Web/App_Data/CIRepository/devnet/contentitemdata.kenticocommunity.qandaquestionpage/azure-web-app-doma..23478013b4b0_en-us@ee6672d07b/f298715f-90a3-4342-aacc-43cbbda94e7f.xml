@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>ccb9198f-c387-4c9d-8a7f-23478013b4b0</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Azure-web-app-domain-license-missing-c239208c</CodeName>
+      <GUID>220fe9b8-5d8c-4eac-94f4-5d9767f86f00</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>f298715f-90a3-4342-aacc-43cbbda94e7f</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>c0749220-3687-4f12-9011-066536d59870</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent><![CDATA[
+**Overview**
+I am currently working on deploying an upgraded XbK project to our Azure hosted UAT environment. The project was upgraded from version 26 and is now at 27.0.1. 
+
+After deploying I get errors when trying to access the site. The errors point to a missing license for the azure app's domain however we previosuly did not need a license for the app domain since traffic went through the custom domain.
+
+Is there something I am potentially overlooking?
+
+**Deployment steps**
+When deploying I followed the following high level steps:
+- Deployed published code to UAT environment.
+- Targeted UAT environment from local and ran DB upgrade command.
+- Ran CD command targeting UAT environment.
+
+All steps were executed successfully. Afterward, I could access the admin, and I can see my site channel and all the content types in the tree.
+
+**Errors**
+Although I can see the content in the tree, I cannot access each content items content or preview. If I click on a node I get an internal server error. See Eventlog point 1 for event log errors first few lines of stack trace.
+
+If I try access the site using the assigned domain which worked pre-upgrade I get a 404 error. See Eventlog point 2 for event log errors first few lines of stack trace.
+
+**Event Log errors**
+-	An unhandled exception has occurred while executing the request.
+Message: Value cannot be null. (Parameter 'container')
+
+	Exception type: System.ArgumentNullException
+Stack trace:
+at Kentico.Xperience.Admin.Base.Forms.FormDataBinder.Bind(ICollection`1 components, IDataContainer container, CancellationToken cancellationToken)
+at Kentico.Xperience.Admin.Base.Forms.FormComponentsFormUtils.Bind(ICollection`1 components, IDataContainer container, IFormContext context, CancellationToken cancellationToken)
+
+-	Connection ID "16573246630334065470", Request ID "80006b3f-0000-e600-b63f-84710c7967bb": An unhandled exception was thrown by the application.
+Message: You don't have a valid license for the domain '*web app domain*'. License status: Missing license
+
+	Exception type: System.InvalidOperationException
+Stack trace:
+at Kentico.Web.Mvc.ApplicationSetup.LicenseCheckerMiddleware.CheckLicenseForCurrentDomain(String domain)
+
+**Environment**
+- Xperience by Kentico version: [27.0.1]
+- .NET version: [6]
+- Deployment environment: [Azure]
+
+]]></QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2024-01-04 16:41:01Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2024-01-04 16:41:01Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle>Azure web app domain license missing</QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

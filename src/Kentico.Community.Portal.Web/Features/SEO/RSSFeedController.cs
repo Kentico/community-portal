@@ -101,7 +101,8 @@ public class RSSFeedController(
         {
             var members = await mediator.Send(new MembersAllQuery());
             var tags = await mediator.Send(new QAndATaxonomiesQuery());
-            return await cache.LoadAsync(cs => QAndAQuestionPageInternal(feed, feedPage, tags, members), GetCacheSettings(feedPage));
+            var resp = await mediator.Send(new QAndAQuestionPagesLatestQuery(feedPage.RSSFeedPageItemsLimit, channelContext.WebsiteChannelName));
+            return await cache.LoadAsync(cs => QAndAQuestionPageInternal(feed, tags, members, resp), GetCacheSettings(feedPage));
         }
 
         return new SyndicationFeed();
@@ -183,11 +184,10 @@ public class RSSFeedController(
 
     private async Task<SyndicationFeed> QAndAQuestionPageInternal(
         SyndicationFeed feed,
-        RSSFeedPage feedPage,
         QAndATaxonomiesQueryResponse qAndATags,
-        Dictionary<int, MemberInfo> members)
+        Dictionary<int, MemberInfo> members,
+        QAndAQuestionPagesLatestQueryResponse resp)
     {
-        var resp = await mediator.Send(new QAndAQuestionPagesLatestQuery(feedPage.RSSFeedPageItemsLimit, channelContext.WebsiteChannelName));
         var items = new List<SyndicationItem>();
         foreach (var page in resp.Items)
         {
@@ -212,7 +212,7 @@ public class RSSFeedController(
             }
 
             page.QAndAQuestionPageDXTopics
-                .Select(t => qAndATags.DXTopics.TryFirst(i => i.Guid == t.Identifier))
+                .Select(t => qAndATags.DXTopicsAll.TryFirst(i => i.Guid == t.Identifier))
                 .ToList()
                 .ForEach(i => i.Execute(tag => item.Categories.Add(new SyndicationCategory(tag.DisplayName))));
 

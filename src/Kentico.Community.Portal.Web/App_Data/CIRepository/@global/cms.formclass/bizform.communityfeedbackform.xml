@@ -91,7 +91,7 @@
           <componentidentifier>Kentico.TextArea</componentidentifier>
         </settings>
       </field>
-      <field allowempty="true" column="Recaptcha_FormComponent" columnsize="1" columntype="text" enabled="true" guid="3abed7a9-6087-4829-9732-a5d5b81c2abb" visible="true">
+      <field allowempty="true" column="Recaptcha_FormComponent" columnsize="1" columntype="text" enabled="true" guid="8d230d9a-e0ca-4035-806f-2616d6c70c16" visible="true">
         <properties>
           <fieldcaption>Community ReCaptcha</fieldcaption>
           <smart>False</smart>
@@ -120,13 +120,6 @@
               <xs:element name="Form_2023_11_10_09_36ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
               <xs:element name="FormInserted" type="xs:dateTime" />
               <xs:element name="FormUpdated" type="xs:dateTime" />
-              <xs:element name="Feedback">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="2147483647" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
               <xs:element name="FirstName" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -145,6 +138,13 @@
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Feedback">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

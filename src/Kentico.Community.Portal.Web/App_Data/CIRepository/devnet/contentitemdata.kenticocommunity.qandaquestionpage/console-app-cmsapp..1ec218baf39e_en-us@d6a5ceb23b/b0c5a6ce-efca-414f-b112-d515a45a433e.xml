@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>13827c70-4f78-4bb0-bed9-1ec218baf39e</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Console-app-CMSApplication-Init-seemingly-can-t-read-CMSConnectionString-713d31ac-dh468dqp</CodeName>
+      <GUID>d4e56792-bff8-425f-9ba8-ec9447a0951b</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>b0c5a6ce-efca-414f-b112-d515a45a433e</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>3</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent><![CDATA[
+Hi,
+I'm trying to access to Kentico API from a console app but am getting the exception `Cannot access the database specified by the 'CMSConnectionString' connection string. Please install the database externally and set a correct connection string.`
+
+Running the following I can see that connection string is read and the SqlConnection opens successfully, which rules out an invalid connection string or malformed json file.
+
+Is there any  other setup required so that the Kentico API can read the json?
+
+```
+using CMS.DataEngine;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(AppContext.BaseDirectory)
+    .AddJsonFile("appsettings.json").Build();
+
+var connectionString = configuration.GetConnectionString("CMSConnectionString");
+await using (var connection = new SqlConnection(connectionString))
+{
+    connection.Open();
+    Console.WriteLine("Database connection successful."); // success
+}
+
+CMSApplication.Init(); // exception
+```
+
+The license file is places into the same directory. I can't see anything missing from https://docs.kentico.com/developers-and-admins/api/use-the-xperience-by-kentico-api-externally
+
+Thanks
+
+**Environment**
+- Xperience by Kentico version: [29.1.3]
+- .NET version: [8]
+- Deployment environment: local
+]]></QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2024-06-11 13:13:31Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2024-06-11 13:13:31Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle><![CDATA[Console app CMSApplication.Init() seemingly can't read CMSConnectionString]]></QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

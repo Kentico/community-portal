@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.blogpostcontent>
+  <BlogPostContentAuthor>
+    <![CDATA[[{"Identifier":"2dce9183-2830-4794-ad72-edd6bd9dc5c3"}]]]>
+  </BlogPostContentAuthor>
+  <BlogPostContentBlogType>
+    <![CDATA[[{"Identifier":"0865e8f6-2568-425e-94d8-2bf53adcdd57"}]]]>
+  </BlogPostContentBlogType>
+  <BlogPostContentContentMarkdown>
+<![CDATA[
+Check out [this month's addition to Xperience by Kentico](https://docs.kentico.com/changelog#refresh-august-22-2024). We added two huge capabilities - smart folder content delivery and marketing automation! But, of course that's not all, so dive in and learn about the updates we've just delivered in Xperience by Kentico.
+
+## Smart folder content delivery
+
+One theme visible in the past 6 months of Refreshes for Xperience by Kentico is how we help marketers maintain control over their messaging across channels and not end up in content chaos!
+
+Features supporting this theme include:
+
+- Content organization - folders in the Content hub (both [classic](https://docs.kentico.com/business-users/content-hub#content-folders) and [smart](https://docs.kentico.com/business-users/content-hub#smart-folders)) and [taxonomies](https://docs.kentico.com/x/taxonomies_xp)
+- Content governance - [publishing workflows](https://docs.kentico.com/x/workflows_xp), cascade and scheduled [publishing/unpublishing](https://docs.kentico.com/business-users/website-content/edit-and-publish-pages#publish-pages)
+- Content discovery - [content usage tracking](https://docs.kentico.com/business-users/content-hub#track-usage-of-content-items) and [more advanced Content hub filtering](https://docs.kentico.com/business-users/content-hub#find-content-items)
+
+But, what about actually _using_ that content to build experiences for customers? Where's the payoff for all that investment into shared, structured content?
+
+With smart folder content delivery marketers can easily define rules to select the messaging they want to present to customers in website channels, without needing a developer. This means marketers are in control and are even more efficient managing those customer experiences.
+
+Let's look at an example!
+
+## Smart folder content delivery
+
+The most common way for a marketer to select content they want to display in a Page Builder widget is with the [content item selector](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/reference-admin-ui-form-components#content-item-selector).
+
+[![Content item selector panel in the Page Builder](/getContentAsset/9f7f33ff-1cb6-4b20-9359-6143d771afef/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-03-00-widget-content-item-selector.jpg?language=en-US)](/getContentAsset/9f7f33ff-1cb6-4b20-9359-6143d771afef/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-03-00-widget-content-item-selector.jpg?language=en-US)
+
+Above, the content item selector is used to select coffee content items from the Content hub. When a marketer needs to select specific content items and explicitly order them the content item selector is great! It's like driving with a car with a manual transmission (is my analogy too old for young people?) - full control and full responsibility.
+
+### Displaying your latest products
+
+What if you want to select all items of a specific content type or with a designated taxonomy tag? Yes, a developer could accomplish this by combining multiple selectors in a single widget and handling the complexity themselves.
+
+But then what if a marketer decides they want to use a different set of rules for selecting content than the ones originally built into the widget? The developer has to get involved - creating a new widget or adding even more logic (and complexity) to the existing one.
+
+Wouldn't it be great if the marketer was in control and could make these changes themselves?
+
+If we replace the content item selector with the [smart folder selector](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/reference-admin-ui-form-components#smart-folder-selector) the marketer can select (or create) a smart folder that defines what content is displayed by the widget.
+
+[![Smart folder selector widget property](/getContentAsset/153fc2e7-cb79-4b72-964b-5551990dc516/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-widget-smart-folder-selector.webp?language=en-US)](/getContentAsset/153fc2e7-cb79-4b72-964b-5551990dc516/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-widget-smart-folder-selector.webp?language=en-US)
+
+In this case, the marketer chose to display "recent products" with the smart folder they selected.
+
+[![Smart folder selector content preview panel](/getContentAsset/d4fe5559-e6bf-41a2-9488-6626644c1284/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-widget-smart-folder-selector-preview.webp?language=en-US)](/getContentAsset/d4fe5559-e6bf-41a2-9488-6626644c1284/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-widget-smart-folder-selector-preview.webp?language=en-US)
+
+They can also quickly see a preview of the content included in the selected smart folder.
+
+[![Smart folder filter rules in the Content hub](/getContentAsset/867abe94-4211-4bc5-880d-e1dec5545a56/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-content-hub-smart-folder-content-delivery.webp?language=en-US)](/getContentAsset/867abe94-4211-4bc5-880d-e1dec5545a56/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-content-hub-smart-folder-content-delivery.webp?language=en-US)
+
+By clicking the pencil icon on the smart folder, we arrive at the Content hub where we can see the rules the marketer defined for this smart folder.
+
+- Coffee content items
+- Tagged with "2024"
+
+The "2024" tag is being used as an internal taxonomy (something customers wouldn't see). When the marketing team wants to update the coffee displayed on the landing page (or across all their channels) for 2025 they don't need to go and select all the 2025 coffee in each widget that displays the latest coffee.
+
+[![Content item form with selected taxonomy tags](/getContentAsset/86516762-c75f-402f-b159-2bcc2aa36121/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-content-item-internal-taxonomy.webp?language=en-US)](/getContentAsset/86516762-c75f-402f-b159-2bcc2aa36121/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-content-item-internal-taxonomy.webp?language=en-US)
+
+Instead, they just **update the smart folder** (not the widgets or content items) and replace the filter replacing the "2024" taxonomy tag with "2025". Any coffee that has been added and tagged with "2025" will now be displayed _everywhere_ that smart folder is used.
+
+We've shifted the rules of content delivery closer to content organization and away from the presentation by adding a layer of indirection and control - the smart folder.
+
+It's worth noting in the example above that the "Recent products" smart folder can be used in multiple Page Builder components or even assigned as the selected smart folder _in a field of another reusable or web page content type_ 🤯. Here at Kentico, we're very excited about this technology and we're also excited to see the creative ways you use it!
+
+### Smart folder management
+
+We've also made several improvements to the [management features for smart folders](https://docs.kentico.com/business-users/content-hub#smart-folders) including the ability to clone a smart folder and view its properties - like when it was last updated.
+
+[![Smart folder clone modal](/getContentAsset/69ccb43f-8852-435e-ad48-fbe91a2bb9cf/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-content-hub-smart-folder-clone.webp?language=en-US)](/getContentAsset/69ccb43f-8852-435e-ad48-fbe91a2bb9cf/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-content-hub-smart-folder-clone.webp?language=en-US)
+
+A marketer might want to clone a smart folder when they have one being used for content delivery and don't want to impact the website experience but they do want the same set of filters as a starting point for an organizational smart folder or a variation for more content delivery.
+
+[![Smart folder properties modal](/getContentAsset/0f4c583a-004e-4996-b1e6-fe3127fac178/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-content-hub-smart-folder-properties.webp?language=en-US)](/getContentAsset/0f4c583a-004e-4996-b1e6-fe3127fac178/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-content-hub-smart-folder-properties.webp?language=en-US)
+
+Smart folder properties are a helpful content governance feature, showing who modified a smart folder and when it happened, which can help explain why a marketer is seeing different content in the smart folder than they expected.
+
+[![Content hub filter tooltip](/getContentAsset/ad222121-9513-4713-89f6-dd02461978f9/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-content-hub-filter-tooltip.webp?language=en-US)](/getContentAsset/ad222121-9513-4713-89f6-dd02461978f9/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-content-hub-filter-tooltip.webp?language=en-US)
+
+We've also made it easier to identify the details of a filter applied to the Content hub listing. This will be helpful as teams create more smart folders and need to remind themselves of any filtering rules applied to them as the toggle between folders.
+
+## Marketing automation
+
+There are many marketing tasks that require complex planning and in-context decision making. For example, if a new product needs announced should that message be announced across multiple channels? Which ones? What content should the message say and what do we want the customer to do when they see the message?
+
+There are also other types of tasks that only require simple planning and decisions. For these types of tasks we can take advantage of **automation** to do the work for us. We define some conditions and rules and let a program handle executing a series of steps for us to achieve a goal.
+
+We are happy to announce with August's Refresh we've introduced [automations](https://docs.kentico.com/x/automation_xp) into Xperience by Kentico and for this initial release we are focusing form submissions.
+
+[![Xperience administration dashboard with highlighted Automation application tile](/getContentAsset/bb46d77e-db4b-4d26-a375-705431042ee7/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-administration-dashboard-highlight-automation.webp?language=en-US)](/getContentAsset/bb46d77e-db4b-4d26-a375-705431042ee7/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-administration-dashboard-highlight-automation.webp?language=en-US)
+
+A classic marketing task handled by automation is the [email funnel](https://www.pipedrive.com/en/blog/email-sales-funnel). In an advanced scenario this funnel could include multiple campaigns, downloadable assets, and conditions to determine how much we've nurtured a lead. But, in all scenarios this typically starts with a form submission where we've collected an email address and some information about a customer.
+
+[![](/getContentAsset/10abf20b-cc5a-4910-b405-669812776777/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-automations-statistics-flow.webp?language=en-US)](/getContentAsset/10abf20b-cc5a-4910-b405-669812776777/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-automations-statistics-flow.webp?language=en-US)
+
+In the screenshot above, we have an example automation that is triggered by a website visitor signing up for an email newsletter. If they haven't confirmed their double opt-in subscription after 1 day, we send them a reminder confirmation email and then end the automation. This will help increase our subscribers by reminding those who missed the first confirmation email to opt-in... and it will take you just a minute or two to create and enable. Done and done!
+
+[![Automation builder steps modal](/getContentAsset/afd9c315-80e0-4a4e-a43e-9036672632fe/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-automation-select-steps-modal.webp?language=en-US)](/getContentAsset/afd9c315-80e0-4a4e-a43e-9036672632fe/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-automation-select-steps-modal.webp?language=en-US)
+
+With this first release of automations in Xperience by Kentico, we've included 4 out-of-the-box automation steps:
+
+- Send email - a specific email to send to the form submitter, from an email channel 
+- Wait - pause the automation for a specific time period (or until a specific date) before moving on to the next step
+- Condition - a contact condition rule (4 available today, but we will continue to add more) to send the contact down 1 of 2 different automation paths
+- Finish - end the automation for the current path
+
+The automation builder is an easy to use drag-and-drop no-code user interface with additional features like [recurrence controls and step statistics](https://docs.kentico.com/x/automation_xp).
+
+[![Automation properties in Form Builder application](/getContentAsset/76c94e37-d327-4851-a0bd-d2beaafdffea/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-form-builder-automation-panel.webp?language=en-US)](/getContentAsset/76c94e37-d327-4851-a0bd-d2beaafdffea/62da2f74-2484-4f51-9c27-93fdd8db50f9/v29-04-00-form-builder-automation-panel.webp?language=en-US)
+
+We also added the ability to create and manage automations directly from the Form Builder application, making it that much easier for marketers to always accomplish their next step from wherever they are in Xperience by Kentico.
+
+We've decided to release automations in preview this month, similar to our release of [AIRA features](https://docs.kentico.com/x/BRX_Cw) for content creation, and our headless API last year which became [headless channels](https://docs.kentico.com/x/xIWOD). You can expect us to promote automations to a fully supported feature next month when we release more automations focused on [membership registration](https://roadmap.kentico.com/c/215-automate-engagement-with-newly-registered-members). We also plan to continue adding support for specific customer engagement scenarios to automations over the next several Refreshes, so stay tuned!
+
+## Page Builder read-only mode
+
+When we release highly impactful updates to Xperience, like smart folder content delivery and marketing automations, it's easy for smaller updates to get lost of the shuffle. But, that won't happen with this next product update!
+
+Xperience by Kentico's [Page Builder](https://docs.kentico.com/x/8IfWCQ) can be in 2 different modes when visually interacting with a web page - Page Builder and Preview. 
+
+Preview mode is useful when you want a high fidelity view of how the web page will look with any unpublished page configuration or content changes. Page Builder (or "edit") mode is how marketers actually make web page customizations with the no-code visual Page Builder.
+
+However, Page Builder mode required creating a new version of a web page to see which widgets are used on a page and what their configuration is. Reverting to the published page after inspecting the configuration wasn't difficult but it _was_ an unnecessary step.
+
+<video controls="" class="w-100">
+  <source src="/getContentAsset/c18d8612-f55c-447f-9bcc-9dbb9ffb82c2/62da2f74-2484-4f51-9c27-93fdd8db50f9/page-builder-read-only-mode.webm?language=en-US" type="video/webm">
+</video>
+
+Now, marketers can view the Page Builder in read-only mode, see which components are being used and see all their properties _without_ creating a new version of the web page. Additionally, Page Builder sections and widgets can be copied from the read-only view and pasted into another web page being edited. This makes it much easier to reuse existing components and speeds up page creation and validation.
+
+A small, but mighty update!
+
+## Sitefinity Migration Tool
+
+As mentioned last month, we released the latest tool addition to our constantly growing [Xperience by Kentico Migration Toolkit](https://community.kentico.com/blog/announcing-the-updated-xperience-by-kentico-migration-toolkit) with the [Sitefinity Migration Tool](https://github.com/Kentico/xperience-by-kentico-sitefinity-migration-tool).
+
+This was initially released in "preview" and we actually published it as a fully supported tool several weeks ago, so now we're officially announcing that 7-day bugfix support that we have for all of our other supported open-source tools and integrations.
+
+If you are interested in the Sitefinity Migration Tool, watch this tutorial video. It walks you through the tool's features, setup, and shows a live migration to Xperience by Kentico. Very cool 😎.
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/6inN0Ea3Qkc?si=NWPrDgo5nJ2yE4Q6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+## What's next?
+
+As always, check out [our documentation Changelog](https://docs.kentico.com/changelog#refresh-august-22-2024) for the full Refresh feature and technical details.
+
+We hope these new capabilities, features, and API improvements unlock solutions for you. Try them out, [let us know](https://roadmap.kentico.com/tabs/6-next-refreshes) 👋 what you think.
+
+For [the next Refresh](https://roadmap.kentico.com/tabs/6-next-refreshes), you can expect a variety of exciting updates - [vanity URL management](https://roadmap.kentico.com/c/158-support-for-vanity-urls), [marketing activity tracking for email engagement](https://roadmap.kentico.com/c/223-tracking-email-marketing-activities), and more [automations for membership registration](https://roadmap.kentico.com/c/215-automate-engagement-with-newly-registered-members). These updates will, as always, accompany a number of UX and developer-focused improvements.
+
+Check back next month for another Xperience by Kentico Refresh review!
+
+:::note
+For the technical audience, this Refresh is represented by [v29.4.0](https://www.nuget.org/packages/Kentico.Xperience.Core/29.4.0#readme-body-tab) of Xperience by Kentico.
+:::
+]]>
+  </BlogPostContentContentMarkdown>
+  <BlogPostContentDXTopics>
+    <![CDATA[[{"Identifier":"427bcd78-d1db-4d80-8abc-d1ffc1a25d8e"},{"Identifier":"a4b73ecd-9a1a-4a18-9237-073a0fb82262"},{"Identifier":"aa57c06d-5738-4fdb-ab10-08b42fc6c9c2"},{"Identifier":"1a2a8dca-bfab-4c00-ac5d-898d0a08d5e4"},{"Identifier":"e89f195c-fcea-4d3a-836f-c78c1e6b3bfe"}]]]>
+  </BlogPostContentDXTopics>
+  <BlogPostContentPublishedDate>2024-08-26 21:00:00Z</BlogPostContentPublishedDate>
+  <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
+  <ContentItemDataCommonDataID>
+    <GUID>4661d7a1-1e9f-49f1-8569-8e20a81d43da</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>XperienceByKenticoRefresh-August22_2024-w4tqm52x</CodeName>
+      <GUID>b7f81cc7-c321-438a-acce-a5bf0d0eb3d8</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>8feec08a-18a4-489b-bb17-e2034ff68c60</ContentItemDataGUID>
+</contentitemdata.kenticocommunity.blogpostcontent>

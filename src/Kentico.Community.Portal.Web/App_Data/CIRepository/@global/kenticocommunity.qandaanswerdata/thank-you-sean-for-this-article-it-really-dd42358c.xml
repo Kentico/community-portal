@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Thank-you-Sean-for-this-article-it-really-dd42358c</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+Thank you, Sean, for this article—it really resonates with me! I spend a lot of time writing both client- and server-side JavaScript, so if I may, I’d like to share my perspective on removing jQuery from XbyK and its potential successors.
+
+In the XbyK context, I see jQuery as an unnecessary, render-blocking dependency that only serves to hurt the LCP web vitals metric on live sites. Removing it is definitely a welcome improvement!
+
+When it comes to replacing jQuery, I’m all for using vanilla JavaScript (and CSS). jQuery originally added syntax sugar for easier developer experience (DX) and helped address the lack of standardization across web browsers, which was a bit of a wild west back then. But the languages and browsers have matured so much now that jQuery feels mostly irrelevant. For those who still want that "syntax sugar" feel, [Umbrella JS](https://umbrellajs.com/) is a nice, lightweight alternative.
+
+Frameworks like React, Svelte, and Vue.js, on the other hand, address different challenges—such as state management, reactivity, and templating—that neither jQuery nor vanilla JavaScript fully solve. Personally, I’d avoid using these in XbyK, as they’re generally better suited for web applications rather than websites.
+
+In server-side frameworks like Next.js, SvelteKit, or Nuxt.js, I could only see these being used alongside an XbyK Headless channel serving data.
+
+Then there are libraries like Unpoly, Swup, HTMX, and Alpine.js, which focus on specific interactive or visual functions, similar to how jQuery plugins once did. Some also bridge elements of state management, reactivity, and templating. For XbyK, these could be useful if you need to add a high level of interactivity. However, it’s important to choose wisely, considering factors like feature set, size, and ongoing support.
+
+As for your question on priorities, I’d always put visitor experience first—making websites fast to load and accessible. When developing sites in XbyK, I’d lean on vanilla JavaScript as much as possible, adding external dependencies only when truly necessary.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-11-13 13:07:59Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>a3d64226-9e5b-4158-b385-01c25db2574c</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Blog-Discussion-What-s-the-best-modern-JavaScript-jQuery-replacement--cd9c5065-r55dso44</CodeName>
+    <GUID>901d9975-b11a-4053-8d2d-b350637ba03e</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

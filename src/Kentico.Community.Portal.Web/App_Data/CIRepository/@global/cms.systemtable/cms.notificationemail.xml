@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassDisplayName>Notification email</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="NotificationEmailID" columntype="integer" enabled="true" guid="eb33bf28-5b40-4aa8-8613-6a371f294876" isPK="true" system="true" />
+      <field column="NotificationEmailGUID" columnprecision="0" columntype="guid" enabled="true" guid="e5e72067-1960-4ad2-86b1-f972178aad26" system="true" />
+      <field column="NotificationEmailName" columnprecision="0" columnsize="250" columntype="text" enabled="true" guid="635090c2-8ae6-45b3-b0c8-64a5950fe439" system="true" />
+      <field column="NotificationEmailDisplayName" columnprecision="0" columnsize="250" columntype="text" enabled="true" guid="34635883-6e48-49d5-9ba9-3348b5852426" system="true" />
+      <field column="NotificationEmailNotificationEmailTemplateID" columnprecision="0" columntype="integer" enabled="true" guid="8a1fa75a-8eae-4364-a85c-d9f78086087b" refobjtype="cms.notificationemailtemplate" reftype="Required" system="true" />
+      <field column="NotificationEmailSender" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="55219f6e-cbdf-40b2-bb5c-487d8382d0c2" system="true" />
+      <field column="NotificationEmailLastModified" columnprecision="7" columntype="datetime" enabled="true" guid="f7e4e7a5-13de-4365-afd7-bb24520b9752" system="true" />
+      <field allowempty="true" column="NotificationEmailDescription" columnprecision="0" columntype="longtext" enabled="true" guid="7eb088de-fccf-459a-be90-9d88d8d0c3cd" system="true" />
+      <field allowempty="true" column="NotificationEmailSubject" columnprecision="0" columnsize="450" columntype="text" enabled="true" guid="9ab204e1-7146-42de-9a62-fe5354a86dbd" system="true" />
+      <field allowempty="true" column="NotificationEmailContent" columnprecision="0" columntype="richtexthtml" enabled="true" guid="a33d488a-190b-4f63-aa43-f44e6a573649" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>804f49e5-c5ed-40f9-822b-ed833cf89f37</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.NotificationEmail</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Notifications</CodeName>
+    <GUID>82db1a57-847d-4087-ba71-a62a627ea907</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_NotificationEmail</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>

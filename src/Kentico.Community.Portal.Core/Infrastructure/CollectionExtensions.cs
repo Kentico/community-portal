@@ -9,6 +9,30 @@ public static class CollectionExtensions
         o.Where(x => x != null)!;
 
     [Pure]
-    public static IEnumerable<T> WHereNotNull<T>(this IEnumerable<T?> enumerable) where T : struct =>
+    public static IEnumerable<string> WhereNotNullOrWhiteSpace(this IEnumerable<string?> o) =>
+        o.Where(x => !string.IsNullOrWhiteSpace(x))!;
+
+    [Pure]
+    public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T?> enumerable) where T : struct =>
         enumerable.Where(e => e.HasValue).Select(e => e!.Value);
+
+    [Pure]
+    public static IEnumerable<T> If<T>(this IEnumerable<T> o, bool condition, Func<IEnumerable<T>, IEnumerable<T>> projection) =>
+        condition
+            ? projection(o)
+            : o;
+
+    [Pure]
+    public static IEnumerable<T> OrderByDirection<T>(this IEnumerable<T> o, Func<T, string> keySelector, OrderByDirections orderByDirection) =>
+        orderByDirection switch
+        {
+            OrderByDirections.DESC => o.OrderByDescending(keySelector),
+            OrderByDirections.ASC or _ => o.OrderBy(keySelector),
+        };
+}
+
+public enum OrderByDirections
+{
+    ASC,
+    DESC
 }

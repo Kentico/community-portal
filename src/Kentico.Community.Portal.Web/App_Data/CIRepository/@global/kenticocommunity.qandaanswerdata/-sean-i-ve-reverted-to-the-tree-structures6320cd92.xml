@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-Sean-I-ve-reverted-to-the-tree-structures6320cd92</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+@Sean
+
+I've reverted to the tree structures and pointing widgets to the tree roots where the Content Items are placed.
+
+With the current pattern, if one document is shared across two or more channel/pages, I would need to build a nav type for each channel/page linked to a Docement content type. In 26.# I could reuse the nav item from the content hub, making it a more efficient solution. The change, to 27 forced me to scrap weeks of work. 
+
+This will have to be a temp solution since the site I'm building is a document repository where hundreds of documents may be shared across multiple divisions in each of the states/countries with their associated products. 
+
+Without a "smart folders" feature in the content hub, finding a document will become a management nightmare for content managers who may have to update/modify documents (sometimes) weekly as laws and regulations change.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2023-11-08 19:50:08Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>dd174b27-ac8c-4338-adfa-af14f4333b7d</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>27-0-0-Navigation-Item-Reusabilityb9af66de</CodeName>
+    <GUID>bbe368d1-1048-48aa-8168-28c8cf65740b</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

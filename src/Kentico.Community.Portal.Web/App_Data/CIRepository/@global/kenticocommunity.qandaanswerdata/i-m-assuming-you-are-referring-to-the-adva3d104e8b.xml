@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>I-m-assuming-you-are-referring-to-the-adva3d104e8b</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+I'm assuming you are referring to the [advanced search example](https://github.com/Kentico/xperience-by-kentico-lucene/blob/v7.0.1/examples/DancingGoat/Search/Services/AdvancedSearchService.cs#L138) in the DancingGoat project?
+
+Which analyzer are you using? The `StandardAnalyzer` uses a [LowerCaseFilter](https://lucenenet.apache.org/docs/4.8.0-beta00016/api/Lucene.Net.Analysis/Lucene.Net.Analysis.Standard.StandardAnalyzer.html) to ensure values are normalized (e.g. all lowercase) on tokenized fields.
+
+Also, you mention that you aren't tokenizing your sortable field - are you using `StringField`? That field type [is not tokenized](https://lucenenet.apache.org/docs/4.8.0-beta00016/api/Lucene.Net/Lucene.Net.Documents.StringField.html), which means it's not normalized.
+
+When [adding the title to the index](https://github.com/Kentico/xperience-by-kentico-lucene/blob/v7.0.1/examples/DancingGoat/Search/AdvancedSearchIndexingStrategy.cs) you might want to try calling `.ToLower()` or `.ToLowerInvariant()` on the value so you don't have any issues with alphanumeric sorting.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-07-06 00:58:01Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>852d6512-6870-4333-b510-25605e9b95cb</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Xperience-By-Kentico-Lucene-index-sorting-e2395ca0-lxmv9har</CodeName>
+    <GUID>ede00e25-1a08-4a3c-ae37-e052e8f3a140</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

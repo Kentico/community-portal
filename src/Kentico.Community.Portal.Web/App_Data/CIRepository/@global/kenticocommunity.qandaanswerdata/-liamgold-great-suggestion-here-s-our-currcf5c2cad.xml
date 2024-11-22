@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-liamgold-Great-suggestion-Here-s-our-currcf5c2cad</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+@liamgold
+
+Great suggestion! Here's our current plan:
+
+First, we'll improve media management in the Content hub by adding things like folders for organization, thumbnail views, APIs for developers.
+
+Once we have shipped enough features that the UX for marketers and developers is _better_ in the Content hub than the Media Library, we will "sunset" (deprecate) the Media Library. It will be included in the product, and fully supported, for another 12 months.
+
+At the same time, we'll include a migration feature in our [Universal Migration Toolkit](https://github.com/Kentico/xperience-by-kentico-universal-migration-toolkit), which will enable teams to decide themselves _when_ they want to transfer content from the Media Library to the Content hub  - maybe you [do it in stages](https://community.kentico.com/blog/safely-evolving-a-content-model-with-expand-and-contract).
+
+Developers will need to update their content querying code to retrieve media URLs (and metadata) from the Content hub instead of the Media Library. This also opens the opportunity to include _more_ content in your custom media content models and begin to use localization, workflows, ect...
+
+[Classic folders](https://roadmap.kentico.com/c/194-content-organization-discovery-classic-folders-in-the-content-hub) in the Content hub arrives next month and most of the other features I mentioned will come over the next few months, so it could make sense for you to start using the Content hub for media today, if you are starting a new project.
+
+If you want to see an example of how you can start to bridge the gap today and start using the Content hub for media, check out this customization in the [Community Portal source code](https://github.com/Kentico/community-portal/blob/v28.2.1.9/src/Kentico.Community.Portal.Web/Rendering/Events/MediaAssetContentMetadataHandler.cs).
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-03-26 23:11:01Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>4e9c7b44-f50c-4bc9-84e5-6c1a077a35eb</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Will-the-ability-to-search-the-media-libr-35e1df19</CodeName>
+    <GUID>bc5a27f0-3ac1-4e35-9211-ed91017cb4b5</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

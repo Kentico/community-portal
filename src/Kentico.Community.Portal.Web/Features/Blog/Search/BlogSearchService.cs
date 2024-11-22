@@ -18,10 +18,10 @@ public class BlogSearchRequest
         var query = request.Query;
 
         BlogTypes = query.TryGetValue("blogTypes", out var blogTypeValues)
-            ? blogTypeValues.WhereNotNull().ToList()
+            ? blogTypeValues.WhereNotNullOrWhiteSpace().ToList()
             : [];
         DXTopics = query.TryGetValue("dxTopics", out var topicValues)
-            ? topicValues.WhereNotNull().ToList()
+            ? topicValues.WhereNotNullOrWhiteSpace().ToList()
             : [];
         SearchText = query.TryGetValue("query", out var queryValues)
             ? queryValues.ToString()
@@ -53,7 +53,7 @@ public class BlogSearchRequest
     public bool AreFiltersDefault => string.IsNullOrWhiteSpace(SearchText) && AuthorMemberID < 1;
 }
 
-public class BlogSearchResultsViewModel
+public class BlogSearchResults
 {
     public string Query { get; init; } = "";
     public IEnumerable<BlogSearchIndexModel> Hits { get; } = [];
@@ -62,10 +62,10 @@ public class BlogSearchResultsViewModel
     public int PageSize { get; init; }
     public int Page { get; init; }
     public LabelAndValue[] BlogTypes { get; } = [];
-    public LabelAndValue[] BlogDXTopics { get; } = [];
+    public LabelAndValue[] DXTopics { get; } = [];
     public string SortBy { get; init; } = "";
 
-    public static BlogSearchResultsViewModel Empty(BlogSearchRequest request) => new()
+    public static BlogSearchResults Empty(BlogSearchRequest request) => new()
     {
         Page = request.PageNumber,
         PageSize = request.PageSize,
@@ -73,7 +73,7 @@ public class BlogSearchResultsViewModel
         SortBy = request.SortBy,
     };
 
-    public BlogSearchResultsViewModel(TopDocs topDocs, MultiFacets facets, BlogSearchRequest request, Func<ScoreDoc, Document> retrieveDoc)
+    public BlogSearchResults(TopDocs topDocs, MultiFacets facets, BlogSearchRequest request, Func<ScoreDoc, Document> retrieveDoc)
     {
         /*
         * This is performing "fake" paging. We request all the results and then
@@ -98,11 +98,11 @@ public class BlogSearchResultsViewModel
             .Select(d => BlogSearchIndexModel.FromDocument(retrieveDoc(d)))
             .ToList();
         BlogTypes = facets.GetTopChildren(100, nameof(BlogSearchIndexModel.BlogTypeFacet))?.LabelValues.ToArray() ?? [];
-        BlogDXTopics = facets.GetTopChildren(100, nameof(BlogSearchIndexModel.DXTopicsFacets))?.LabelValues.ToArray() ?? [];
+        DXTopics = facets.GetTopChildren(100, nameof(BlogSearchIndexModel.DXTopicsFacets))?.LabelValues.ToArray() ?? [];
         SortBy = request.SortBy;
     }
 
-    private BlogSearchResultsViewModel() { }
+    private BlogSearchResults() { }
 }
 
 public class BlogSearchService(
@@ -119,7 +119,7 @@ public class BlogSearchService(
     private readonly BlogSearchIndexingStrategy blogSearchStrategy = blogSearchStrategy;
     private readonly ILuceneIndexManager indexManager = indexManager;
 
-    public BlogSearchResultsViewModel SearchBlog(BlogSearchRequest request)
+    public BlogSearchResults SearchBlog(BlogSearchRequest request)
     {
         var index = indexManager.GetRequiredIndex(BlogSearchIndexModel.IndexName);
 
@@ -145,7 +145,7 @@ public class BlogSearchService(
                         ? topDocs = searcher.Search(combinedQuery, MAX_RESULTS)
                         : topDocs = searcher.Search(combinedQuery, MAX_RESULTS, new Sort(sortOptions));
 
-                    return new BlogSearchResultsViewModel(topDocs, facets, request, d => searcher.Doc(d.Doc));
+                    return new BlogSearchResults(topDocs, facets, request, d => searcher.Doc(d.Doc));
                 }
             );
         }
@@ -153,7 +153,7 @@ public class BlogSearchService(
         {
             log.LogException(nameof(BlogSearchService), "BLOG_SEARCH_FAILURE", ex);
 
-            return BlogSearchResultsViewModel.Empty(request);
+            return BlogSearchResults.Empty(request);
         }
     }
 

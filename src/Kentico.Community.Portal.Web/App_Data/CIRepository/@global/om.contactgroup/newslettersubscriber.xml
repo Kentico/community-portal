@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<om.contactgroup>
+  <ContactGroupDisplayName>Newsletter Subscriber</ContactGroupDisplayName>
+  <ContactGroupDynamicCondition>
+    <![CDATA[{%Rule("((Contact.AgreedWithConsent(\"KenticoCommunityPortalTracking\")) && (Contact.SubmittedForm(\"NewsletterSignup\", ToInt(365))) && (Contact.VisitedPage(\"986740d7-f03d-481c-bf43-aa749c4fbf47\", ToInt(365))))", "<rules><r pos=\"0\" par=\"\" op=\"and\" /><r pos=\"0\" par=\"0\" op=\"and\" n=\"CMSContactHasAgreedWithConsent\" ><p n=\"consent\"><t>#consent</t><v>KenticoCommunityPortalTracking</v><r>1</r><d>consent</d><vt>objectcodenames</vt><tv>0</tv></p><p n=\"_perfectum\"><t>#select operation</t><v></v><r>1</r><d>select operation</d><vt>text</vt><tv>0</tv></p></r><r pos=\"1\" par=\"0\" op=\"and\" n=\"CMSContactHasSubmittedSpecifiedFormInLastXDays\" ><p n=\"_perfectum\"><t>#select operation</t><v></v><r>1</r><d>select operation</d><vt>text</vt><tv>0</tv></p><p n=\"days\"><t>#enter days</t><v>365</v><r>0</r><d>enter days</d><vt>integer</vt><tv>0</tv></p><p n=\"item\"><t>#form</t><v>NewsletterSignup</v><r>1</r><d>form</d><vt>objectcodenames</vt><tv>0</tv></p></r><r pos=\"2\" par=\"0\" op=\"and\" n=\"CMSContactHasVisitedSpecifiedPageInLastXDays\" ><p n=\"_perfectum\"><t>#select operation</t><v></v><r>1</r><d>select operation</d><vt>text</vt><tv>0</tv></p><p n=\"days\"><t>#enter days</t><v>365</v><r>0</r><d>enter days</d><vt>integer</vt><tv>0</tv></p><p n=\"item\"><t>#select page</t><v>986740d7-f03d-481c-bf43-aa749c4fbf47</v><r>1</r><d>select page</d><vt>pages</vt><tv>0</tv></p></r></rules>")|(identity)GlobalAdministrator|(hash)c152ab3cad312b5a2261ce424f38360e2049dbc1397692daf92b33f1954fe01d%}]]>
+  </ContactGroupDynamicCondition>
+  <ContactGroupEnabled>True</ContactGroupEnabled>
+  <ContactGroupGUID>19655e93-4771-48a7-a40a-91a3d1642dae</ContactGroupGUID>
+  <ContactGroupIsRecipientList>False</ContactGroupIsRecipientList>
+  <ContactGroupName>NewsletterSubscriber</ContactGroupName>
+</om.contactgroup>

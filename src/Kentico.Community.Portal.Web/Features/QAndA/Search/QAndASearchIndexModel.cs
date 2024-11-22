@@ -62,13 +62,12 @@ public class QAndASearchIndexModel
         };
 
         _ = indexDocument.AddFacetField(nameof(DiscussionTypeFacet), DiscussionTypeFacet);
+        _ = indexDocument.AddFacetField(nameof(DiscussionStatesFacet), DiscussionStatesFacet);
 
         foreach (string topic in DXTopicsFacet)
         {
             _ = indexDocument.AddFacetField(nameof(DXTopicsFacet), topic);
         }
-
-        _ = indexDocument.AddFacetField(nameof(DiscussionStatesFacet), DiscussionStatesFacet);
 
         return indexDocument;
     }
@@ -104,7 +103,7 @@ public class QAndASearchIndexModel
                 )),
             DiscussionType = doc.Get(nameof(DiscussionType)) ?? "",
             DiscussionState = doc.Get(nameof(DiscussionState)) ?? "",
-            DXTopics = [.. doc.Get(nameof(DXTopics)).Split(";")],
+            DXTopics = doc.Get(nameof(DXTopics)).Split(";").WhereNotNullOrWhiteSpace().ToList(),
         };
 
         return model;
@@ -179,7 +178,7 @@ public class QAndASearchIndexingStrategy(
             });
         var dxTopics = page
             .QAndAQuestionPageDXTopics
-            .Select(tagRef => taxonomies.DXTopics
+            .Select(tagRef => taxonomies.DXTopicsAll
                 .FirstOrDefault(t => tagRef.Identifier == t.Guid))
             .WhereNotNull();
 

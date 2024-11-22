@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.blogpostcontent>
+  <BlogPostContentAuthor>
+    <![CDATA[[{"Identifier":"f9ac36a5-e1a6-4d21-9cb7-beb385d0fea0"}]]]>
+  </BlogPostContentAuthor>
+  <BlogPostContentBlogType>
+    <![CDATA[[{"Identifier":"0cb21dda-384b-4792-8e1b-41034f113d28"}]]]>
+  </BlogPostContentBlogType>
+  <BlogPostContentContentMarkdown>
+<![CDATA[
+Xperience by Kentico's [templated email](https://docs.xperience.io/x/IaDWCQ) functionality, enabled through [email channels](https://docs.xperience.io/x/eBT_Cw) is great for marketers that want to author emails, use the structured content they've already created, and send them out to recipients without having to write any code!
+
+We love when marketers can do everything themselves. But, what if we have a more advanced scenario - like sending an email to a recipient when a webhook in our solution is called from an external service, some data is imported through an integration, or some customer data is submitted to a website as part of a complex business process?
+
+Thankfully, we can use Xperience's APIs to send out an autoresponder email to a recipient while also using an email already authored by a marketer! We can even include dynamic data using tokens that a marketer places in the email content 😲.
+
+:::note
+This post was written for Xperience by Kentico v27.0.2. Please [consult the documentation](https://docs.xperience.io/xp/changelog) for any feature or API changes when using a different version. Be sure to check the [System Requirements](https://docs.xperience.io/x/DgKQC) in the product documentation.
+:::
+
+:::note
+Please note that this solution uses several APIs from `internal` namespaces, even though the C# types are `public`. Internal APIs are not guaranteed to be stable over time and may change when applying a Hotfix or Refresh.
+:::
+
+## [#](#defining-our-dependencies) Defining our dependencies
+
+Let's assume we trigger the email send through ASP.NET Core API Endpoint. First, we'll create a Controller and action method:
+
+:::note
+Today, in v27 of Xperience by Kentico there are quite a few services and APIs we need to juggle to achieve our result of sending an email through C#, but hopefully in the future there will be improvements to make this easier for developers!
+:::
+
+```csharp
+[ApiController]
+[Route("[controller]/[action]")]
+public class EmailController : Controller
+{
+    private readonly IEmailConfigurationInfoProvider emailConfigurationProvider;
+    private readonly IEmailContentResolver emailContentResolver;
+    private readonly IEmailTemplateMergeService mergeService;
+    private readonly IEmailChannelLanguageRetriever languageRetriever;
+    private readonly IContentItemDataInfoRetriever dataRetriever;
+    private readonly IEmailChannelSenderEmailProvider senderInfoProvider;
+    private readonly IEmailService emailService;
+    private readonly IInfoProvider<EmailChannelInfo> emailChannels;
+    private readonly IInfoProvider<ContentItemInfo> contentItems;
+    private readonly IInfoProvider<EmailChannelSenderInfo> emailChannelSenders;
+
+    public EmailController(
+        IEmailConfigurationInfoProvider emailConfigurationProvider,
+        IEmailContentResolver emailContentResolver,
+        IEmailService emailService,
+        IEmailTemplateMergeService mergeService,
+        IEmailChannelLanguageRetriever languageRetriever,
+        IContentItemDataInfoRetriever dataRetriever,
+        IEmailChannelSenderEmailProvider senderInfoProvider,
+        IInfoProvider<ContentItemInfo> contentItems,
+        IInfoProvider<EmailChannelInfo> emailChannels,
+        IInfoProvider<EmailChannelSenderInfo> emailChannelSenders
+    )
+    {
+        this.emailConfigurationProvider = emailConfigurationProvider;
+        this.emailContentResolver = emailContentResolver;
+        this.emailService = emailService;
+        this.contentItems = contentItems;
+        this.languageRetriever = languageRetriever;
+        this.dataRetriever = dataRetriever;
+        this.senderInfoProvider = senderInfoProvider;
+        this.emailChannels = emailChannels;
+        this.emailChannelSenders = emailChannelSenders;
+        this.mergeService = mergeService;
+    }
+```
+
+Now that we have all the required services available, we can start composing our email:
+
+```csharp
+[HttpGet]
+public async Task<IActionResult> Index()
+{
+    /*
+     * Retrieve these values from the endpoint request or db
+     */
+    var recipient = new Recipient
+    {
+        FirstName = "Dana",
+        LastName = "Scully",
+        Email = "dscully@x-files.com"
+    };
+
+    var dataContext = new CustomValueDataContext
+    {
+        Recipient = recipient,
+        Items = new()
+        {
+            /*
+             * Define any tokens you want to replace
+             */
+            {
+                "TOKEN_DynamicGatedAssetURL", 
+                "https://www.youtube.com/watch?v=TYdC1uwO4UI" 
+            }
+        }
+    };
+```
+
+Our `CustomValueDataContext` is a simple class that inherits from `FormAutoresponderEmailDataContext` since our email will be an autoresponder email:
+
+```csharp
+public class CustomValueDataContext : FormAutoresponderEmailDataContext
+{
+    public Dictionary<string, string> Items { get; set; } = new();
+}
+```
+
+It has a collection of key/value pairs that we can populate with whatever we want. This is what lets us have dynamic email content that we define. For our use-case, we're doing to replace a `TOKEN_DynamicGatedAssetURL` token in the email with a hard-coded URL, but this URL could come from the database and be based on the information submitted to the API endpoint.
+
+We'll return later to this data context object to define how the token replacement works.
+
+## [#](#generating-an-email-programmatically) Generating an email programmatically
+
+Now, we can begin to use all our dependencies to generate the email body and retrieve the sender information:
+
+```csharp
+var emailConfig = await emailConfigurationProvider
+    .GetAsync("DancingGoatAutoresponder-v6dz12bu");
+```
+
+We first retrieve our `EmailConfigurationInfo` which we are calling `emailConfig`. 
+
+Don't confuse this with an `EmailInfo`... in Xperience by Kentico, `EmailInfo` represents a packaged email to a specific recipient ready to be sent (typically from the [email queue](https://docs.xperience.io/x/KgwcCQ)).
+
+So what is an `EmailConfigurationInfo`? Well, that represents the email that a marketer creates in an email channel. For example, in the Dancing Goat sample solution email channel, it represents one of the items in this image.
+
+[![Email channel email item list](/getmedia/1da987d7-0d48-4cb4-8399-f8707b99da0d/dancing-goat-email-channel-emails-v27-0-2.webp)](/getmedia/1da987d7-0d48-4cb4-8399-f8707b99da0d/dancing-goat-email-channel-emails-v27-0-2.webp)
+
+We then use our `IEmailTemplateMergeService` to merge the email and all of its structured content with its associated email template. We end up with a string that includes our non-personalized or dynamic email body.
+
+```csharp
+string mergedTemplate = await mergeService
+    .GetMergedTemplateWithEmailData(emailConfig, false);
+```
+
+Then we use the `IEmailContentResolver` to resolve all the email content, populating personalization tokens _and_ our custom data tokens (like `TOKEN_DynamicGatedAssetURL`).
+
+```csharp
+string emailBody = await emailContentResolver.Resolve(
+    emailConfig, 
+    mergedTemplate, 
+    EmailContentFilterType.Sending, 
+    dataContext);
+```
+
+Next, we need to get all the related email configuration that is part of our email channel configuration. This requires a few steps, but it ensures that our email sending address works exactly how a marketer would expect it to.
+
+```csharp
+var contentItem = await contentItems
+    .GetAsync(emailConfig.EmailConfigurationContentItemID);
+var contentLanguage = await languageRetriever
+    .GetEmailChannelLanguageInfoOrThrow(emailConfig.EmailConfigurationEmailChannelID);
+var data = await dataRetriever
+    .GetContentItemData(contentItem, contentLanguage.ContentLanguageID, false);
+var emailFieldValues = new EmailContentTypeSpecificFieldValues(data);
+```
+
+What we end up with here is an Xperience `EmailContentTypeSpecificFieldValues` object that looks like this:
+
+```csharp
+public sealed class EmailContentTypeSpecificFieldValues 
+    : IEmailContentTypeSpecificFieldValues
+{
+    public string EmailSubject { get; }
+    public string EmailPreviewText { get; }
+    public string EmailPlainText { get; }
+    public int EmailSenderID { get; }
+    public int EmailTemplateID { get; }
+}
+```
+
+This object includes our `EmailSenderID` which is what we use to get the rest of our email configuration:
+
+```csharp
+var emailChannel = (await emailChannels.Get()
+    .WhereEquals(
+        nameof(EmailChannelInfo.EmailChannelChannelID), 
+        emailConfig.EmailConfigurationEmailChannelID)
+    .GetEnumerableTypedResultAsync())
+    .FirstOrDefault();
+
+var sender = await emailChannelSenders
+    .GetAsync(emailData.EmailSenderID);
+string senderEmail = await senderInfoProvider
+    .GetEmailAddress(emailChannel.EmailChannelID, sender.EmailChannelSenderName);
+```
+
+Our `senderEmail` is the full email address for the sender configured for this autoresponder email.
+
+We're finally ready to author and send the email message!
+
+```csharp
+    var emailMessage = new EmailMessage
+    {
+        From = $"\"{sender.EmailChannelSenderDisplayName}\" <{senderEmail}>",
+        Recipients = recipient.Email,
+        Subject = emailData.EmailSubject,
+        Body = emailBody,
+        PlainTextBody = emailData.EmailPlainText,
+        EmailConfigurationID = emailConfig.EmailConfigurationID,
+        MailoutGuid = dataContext.MailoutGuid
+    };
+
+    await emailService.SendEmail(emailMessage);
+
+    return Ok();
+}
+```
+
+We use the [address specification](https://superuser.com/a/1625690/215670) for the `From` property so that we can include the email address _and_ display name.
+
+If we were to make a request to our HTTP endpoint now, we'd successfully send an email to our recipient, but our dynamic content would not be inserted into the email. For that, we need to create a custom `IEmailContentFilter`.
+
+## [#](#email-content-filters) Email content filters
+
+To transform our token value `TOKEN_DynamicGatedAssetURL` into the URL value we provided to our `CustomValueDataContext` requires we define and register an `IEmailContentFilter`.
+
+First, we'll create a `CustomValueFilter` class:
+
+```csharp
+public class CustomValueFilter : IEmailContentFilter
+{
+    public Task<string> Apply(
+        string text, 
+        EmailConfigurationInfo email, 
+        IEmailDataContext dataContext)
+    {
+        if (dataContext is CustomValueDataContext customValueContext)
+        {
+            foreach (var (key, val) in customValueContext.Items)
+            {
+                text = text.Replace(key, val);
+            }
+        }
+
+        return Task.FromResult(text);
+    }
+}
+```
+
+This class is really simple! It will be instantiated and the `Apply()` method will be executed for each email sent out by Xperience.
+
+We have access to the `EmailConfigurationInfo` and `IEmailDataContext` which means we can make sure our filter only does its work for emails that can use it. By patterning matching on `dataContext` we can get access to a strongly typed `CustomValueDataContext`.
+
+We then loop through all the keys in the `Items` dictionary, doing a simple string replace for the values.
+
+The last step is to register our filter with Xperience, which we need to do in a custom module class:
+
+```csharp
+[assembly: RegisterModule(typeof(DancingGoatModule))]
+
+namespace DancingGoat;
+
+public class DancingGoatModule : Module
+{
+    public DancingGoatModule() : base(nameof(DancingGoatModule)) { }
+
+    protected override void OnInit()
+    {
+        base.OnInit();
+
+        EmailContentFilterRegister.Instance
+            .Register(
+                () => new CustomValueFilter(), 
+                EmailContentFilterType.Sending, 
+                100);
+    }
+}
+```
+
+With our filter registered, a marketer can now insert the dynamic token value anywhere in the email content:
+
+[![Highlighted token text used for an anchor link in Email HTML](/getmedia/991b43fd-b92f-4cb6-8eca-5718c4481bed/dancing-goat-dynamic-email-token-v27-0-2.webp)](/getmedia/991b43fd-b92f-4cb6-8eca-5718c4481bed/dancing-goat-dynamic-email-token-v27-0-2.webp)
+
+Pretty neat!
+
+Now when we hit our API endpoint, we'll see a link in our email that is tailored for our recipient!
+
+[![Rendered email screenshot](/getmedia/3c4e8d4f-a523-4c1d-844e-e000034eb03b/dancing-goat-dynamic-email-rendered-v27-0-2.webp)](/getmedia/3c4e8d4f-a523-4c1d-844e-e000034eb03b/dancing-goat-dynamic-email-rendered-v27-0-2.webp)
+
+If you have any ideas on how to build on this idea and help marketers achieve even more, share your thoughts in the comments!
+]]>
+  </BlogPostContentContentMarkdown>
+  <BlogPostContentDXTopics>
+    <![CDATA[[{"Identifier":"0f35b486-d76e-4791-aca0-139456d98980"},{"Identifier":"6ad7092e-2b5b-4dc6-a89c-37d4c38df71e"},{"Identifier":"378366be-601d-42b0-a719-5daee7392fb9"}]]]>
+  </BlogPostContentDXTopics>
+  <BlogPostContentPublishedDate>2023-11-09 19:33:00Z</BlogPostContentPublishedDate>
+  <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
+  <ContentItemDataCommonDataID>
+    <GUID>ec8dbbb5-8a6e-4c17-8ee6-1813808452e7</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>ProgrammaticallySendingTemplatedEmailsWithDynamicData-okscjczw</CodeName>
+      <GUID>56a78a0f-1a36-4055-85d4-1045e4359b9f</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>0789ffe6-a7be-4c9b-9df2-1c2c3695950e</ContentItemDataGUID>
+</contentitemdata.kenticocommunity.blogpostcontent>

@@ -57,7 +57,7 @@ public class PreviewTabExtender(IWebPageUrlRetriever urlRetriever, IWebsiteChann
             ? relativeUrl[1..]
             : relativeUrl;
 
-        string domain = await domainProvider.GetDomain(Page.ApplicationIdentifier.WebsiteChannelID);
+        string domain = await domainProvider.GetDomain(Page.ApplicationIdentifier.WebsiteChannelID, default);
         string fullUrl = UriHelper.BuildAbsolute(
             scheme: contextAccessor.HttpContext!.Request.Scheme,
             host: new HostString(domain),

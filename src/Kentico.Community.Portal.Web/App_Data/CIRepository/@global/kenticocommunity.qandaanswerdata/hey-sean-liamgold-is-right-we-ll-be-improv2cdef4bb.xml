@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Hey-Sean-liamgold-is-right-we-ll-be-improv2cdef4bb</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+Hey @Sean!
+
+@liamgold is right - we'll be improving things related to your use case with that Refresh by adding more APIs for content querying.
+
+Here are some example improvements that should be coming with that Refresh
+
+- Query for web page items without needing to specify a website channel
+- Query for content items by specifying multiple content types
+- Query for content items without specifying any content type
+- Query for content items by their reusable field schema
+- Query for content items without including the "content type" fields (the custom fields)
+
+@liamgold's approach is basically the same thing we do here [on the Community Portal](https://github.com/Kentico/community-portal/blob/v28.2.1.0/src/Kentico.Community.Portal.Web/Features/SEO/Sitemap.cs)
+
+And you can see what that code generates by [looking at the sitemap.xml](https://community.kentico.com/sitemap.xml).
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-02-07 03:45:47Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>2dcd8361-02b5-4b69-af95-fbe9a9929994</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Best-way-to-approach-Breadcrumbs-and-Site-74087926</CodeName>
+    <GUID>5aea48f9-cd82-431c-8d94-b1669d03c3fd</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

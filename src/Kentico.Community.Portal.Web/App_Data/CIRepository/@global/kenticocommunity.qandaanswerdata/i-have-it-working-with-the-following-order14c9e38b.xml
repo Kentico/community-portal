@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>I-have-it-working-with-the-following-order14c9e38b</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+I have it working with the following order:
+
+```CSharp
+var app = builder.Build();
+
+app.InitKentico();
+
+app.UseStaticFiles();
+
+app.UseKentico();
+
+if (env.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseMiniProfiler();
+}
+
+app.UseStatusCodePagesWithReExecute("/error/{0}");
+```
+
+Maybe try make sure it is registered after InitKentico/UseKentico?
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-10-30 19:55:29Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>ca4544b4-cf7b-40eb-a870-408bb9e81981</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>UseStatusCodePagesWithReExecute-conflict-with-Admin-8f6193a8-qc2u0l1b</CodeName>
+    <GUID>31699cd6-4afd-4fc9-a8d9-57f74c3e2495</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

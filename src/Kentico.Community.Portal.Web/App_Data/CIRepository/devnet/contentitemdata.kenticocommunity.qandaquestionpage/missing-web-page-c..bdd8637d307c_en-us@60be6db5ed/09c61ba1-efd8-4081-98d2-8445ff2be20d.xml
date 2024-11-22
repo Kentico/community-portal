@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>cc867e67-2494-4f7e-96fe-bdd8637d307c</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Missing-web-page-context-data-If-required-use-IWebPageDataContextInitializer-Initialize-dce-d4ov3bwm</CodeName>
+      <GUID>80eeab8e-c3a4-4272-a5d1-b0be3bb72a00</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>09c61ba1-efd8-4081-98d2-8445ff2be20d</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>e9645d1d-cc26-4f4e-8b04-92938bd9e290</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>3</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent><![CDATA[
+I have error pages that are using custom routing rather than content tree-based routing. These error page has page builder enabled. Having editable areas on this page that has a custom route is causing the following error:
+
+`Missing web page context data. If required use IWebPageDataContextInitializer.Initialize method to initialize the context manually. For POST actions use HtmlHelper extension method Html.Kentico().PageData() to persist the page context.`
+
+I have tried adding page data context by adding the following code to the controller, but this did not fix the issue. 
+
+
+```csharp
+        var pageDataContext = webPageDataContextRetriever.Retrieve().WebPage;
+        webPageDataContextInitializer.Initialize(pageDataContext);
+```
+
+Has anyone else ran into this issue? Any help would be much appreciated!
+
+---
+
+**Environment**
+- Xperience by Kentico version: [29.1.0]
+- .NET version: [8]
+- Deployment environment: [SaaS|Azure|VM]
+]]></QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2024-06-11 18:12:55Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2024-06-11 18:12:55Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle><![CDATA[Missing web page context data. If required use IWebPageDataContextInitializer.Initialize]]></QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

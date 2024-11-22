@@ -35,12 +35,12 @@
       <field allowempty="true" column="From" columnsize="256" columntype="text" guid="03d20e31-9f89-4954-a9ad-435a532dffdd" visible="true">
         <properties>
           <enabledmacro ismacro="true">
-            <![CDATA[{%BasedOn.Value == "1"|(identity)GlobalAdministrator|(hash)e0828400314bf5a67848e08a80ce9ec223f7e59d42221ca72c674c32a441a64f%}]]>
+            <![CDATA[{%BasedOn.Value == "1"|(identity)GlobalAdministrator|(hash)0f99bd49cb8a56ce04fc72730d3674132ebc128fa43575d563b94cc51c5b8bb9%}]]>
           </enabledmacro>
           <fieldcaption>{$general.fromemail$}</fieldcaption>
           <fielddescription>{$ma.action.sendemails.from.desc$}</fielddescription>
           <visiblemacro ismacro="true">
-            <![CDATA[{%BasedOn.Value == "1"|(identity)GlobalAdministrator|(hash)e0828400314bf5a67848e08a80ce9ec223f7e59d42221ca72c674c32a441a64f%}]]>
+            <![CDATA[{%BasedOn.Value == "1"|(identity)GlobalAdministrator|(hash)0f99bd49cb8a56ce04fc72730d3674132ebc128fa43575d563b94cc51c5b8bb9%}]]>
           </visiblemacro>
         </properties>
         <settings>
@@ -55,12 +55,12 @@
       <field allowempty="true" column="To" columntype="longtext" guid="b0d64701-e65c-42f5-897f-147e95628d4d" visible="true">
         <properties>
           <enabledmacro ismacro="true">
-            <![CDATA[{%BasedOn.Value == "1"|(identity)GlobalAdministrator|(hash)e0828400314bf5a67848e08a80ce9ec223f7e59d42221ca72c674c32a441a64f%}]]>
+            <![CDATA[{%BasedOn.Value == "1"|(identity)GlobalAdministrator|(hash)0f99bd49cb8a56ce04fc72730d3674132ebc128fa43575d563b94cc51c5b8bb9%}]]>
           </enabledmacro>
           <fieldcaption>{$general.toemail$}</fieldcaption>
           <fielddescription>{$ma.action.sendemails.to.desc$}</fielddescription>
           <visiblemacro ismacro="true">
-            <![CDATA[{%BasedOn.Value == "1"|(identity)GlobalAdministrator|(hash)e0828400314bf5a67848e08a80ce9ec223f7e59d42221ca72c674c32a441a64f%}]]>
+            <![CDATA[{%BasedOn.Value == "1"|(identity)GlobalAdministrator|(hash)0f99bd49cb8a56ce04fc72730d3674132ebc128fa43575d563b94cc51c5b8bb9%}]]>
           </visiblemacro>
         </properties>
         <settings>
@@ -76,12 +76,12 @@
       <field allowempty="true" column="Subject" columnsize="998" columntype="text" guid="45595d6d-814f-4590-a079-6dd895f9edc0" visible="true">
         <properties>
           <enabledmacro ismacro="true">
-            <![CDATA[{%BasedOn.Value == "1"|(user)administrator|(hash)67471eff4db5c22cf909988f9e8b878767247a18d4bf92cc0b5d101328b44043%}]]>
+            <![CDATA[{%BasedOn.Value == "1"|(identity)GlobalAdministrator|(hash)0f99bd49cb8a56ce04fc72730d3674132ebc128fa43575d563b94cc51c5b8bb9%}]]>
           </enabledmacro>
           <fieldcaption>{$general.subject$}</fieldcaption>
           <fielddescription>{$ma.action.sendemails.subject.desc$}</fielddescription>
           <visiblemacro ismacro="true">
-            <![CDATA[{%BasedOn.Value == "1"|(user)administrator|(hash)67471eff4db5c22cf909988f9e8b878767247a18d4bf92cc0b5d101328b44043%}]]>
+            <![CDATA[{%BasedOn.Value == "1"|(identity)GlobalAdministrator|(hash)0f99bd49cb8a56ce04fc72730d3674132ebc128fa43575d563b94cc51c5b8bb9%}]]>
           </visiblemacro>
         </properties>
         <settings>
@@ -96,12 +96,12 @@
       <field allowempty="true" column="Body" columntype="longtext" guid="f4ef4406-3691-44c1-9d02-8ad215c4ec24" visible="true">
         <properties>
           <enabledmacro ismacro="true">
-            <![CDATA[{%BasedOn.Value == "1"|(identity)GlobalAdministrator|(hash)e0828400314bf5a67848e08a80ce9ec223f7e59d42221ca72c674c32a441a64f%}]]>
+            <![CDATA[{%BasedOn.Value == "1"|(identity)GlobalAdministrator|(hash)0f99bd49cb8a56ce04fc72730d3674132ebc128fa43575d563b94cc51c5b8bb9%}]]>
           </enabledmacro>
           <fieldcaption>{$general.body$}</fieldcaption>
           <fielddescription>{$ma.action.sendemails.body.desc$}</fielddescription>
           <visiblemacro ismacro="true">
-            <![CDATA[{%BasedOn.Value == "1"|(identity)GlobalAdministrator|(hash)e0828400314bf5a67848e08a80ce9ec223f7e59d42221ca72c674c32a441a64f%}]]>
+            <![CDATA[{%BasedOn.Value == "1"|(identity)GlobalAdministrator|(hash)0f99bd49cb8a56ce04fc72730d3674132ebc128fa43575d563b94cc51c5b8bb9%}]]>
           </visiblemacro>
         </properties>
         <settings>

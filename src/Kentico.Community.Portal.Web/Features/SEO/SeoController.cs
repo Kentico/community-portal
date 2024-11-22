@@ -2,22 +2,24 @@
 using Kentico.Community.Portal.Web.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SimpleMvcSitemap;
+using Sidio.Sitemap.AspNetCore;
+using Sidio.Sitemap.Core;
 
 namespace Kentico.Community.Portal.Web.Features.SEO;
 
 [Route("")]
-public class SeoController(Sitemap sitemap, IMediator mediator) : Controller
+public class SeoController(SitemapRetriever retriever, IMediator mediator) : Controller
 {
-    private readonly Sitemap sitemap = sitemap;
+    private readonly SitemapRetriever retriever = retriever;
     private readonly IMediator mediator = mediator;
+
 
     [HttpGet("sitemap.xml")]
     public async Task<IActionResult> Sitemap()
     {
-        var nodes = await sitemap.GetSitemapNodes();
+        var nodes = await retriever.GetSitemapNodes();
 
-        return new SitemapProvider().CreateSitemap(new SitemapModel(nodes));
+        return new SitemapResult(new Sitemap(nodes));
     }
 
     [HttpGet("robots.txt")]

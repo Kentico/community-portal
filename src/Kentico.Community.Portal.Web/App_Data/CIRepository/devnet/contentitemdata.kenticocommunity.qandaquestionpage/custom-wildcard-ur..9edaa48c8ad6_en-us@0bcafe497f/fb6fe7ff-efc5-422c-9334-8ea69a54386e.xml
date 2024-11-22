@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>c2ca2abc-a37f-46f0-9b01-9edaa48c8ad6</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Custom-wildcard-URL-route-with-page-builder-support-a7ebec63-pg9086ir</CodeName>
+      <GUID>5818b560-775d-47f1-b4f1-f41d0ea5c011</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>fb6fe7ff-efc5-422c-9334-8ea69a54386e</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>cde49f4e-2338-46bb-a30a-1740545e82cc</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>1</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent><![CDATA[
+Hi there! I came across a need to create a custom dynamic route with a wildcard segment to render data from third-party system by ID, and ideally the layout of this page should be managed by the page builder, below are more detailed requirements:
+
+1. There needs to be a single page in the website channel representing these dynamic pages, so that content editors can configure page builder template, components, and configure personalization
+2. The URL of these dynamic pages will be something like /third-party-details/{identifier}
+3. Custom controller will take this identifier, fetch the object from the external API, and populate the context object
+4. Some of the components will render data from this fetched context object, other components will be just normal content
+5. In my custom controller I need to initialize page builder from that particular single page in the tree (I can store this dynamic page ID somewhere in the config or even hardcode, doesn't matter much)
+
+Points 1-4 are fairly straightforward and I know how to achieve this. But I've got issues with implementing number 5.
+
+
+
+In previous versions of Kentico because we had a lot more control of the routing this was easily achievable:
+
+* In portal engine you could create a page with dynamic {identifier} in the URL and just edit it's template
+* In version 12 you could call `HttpContext.Kentico().PageBuilder().Initialize(myDynamicPage.DocumentID);` to init it from your custom route controller
+* In version 13 you could still call `IPageDataContextInitializer.Initialize(myDynamicPage);`
+* But in XbyK most of the routing classes are internal and I can't seem to find an alternative ways of achieving this.
+
+
+
+Remember that importing this third-party data into Kentico to create pages with page builder is not an option. The dataset is large and there's no chance content editors will go into every single page to manage the components. Instead, they need to be able to change layout and components for all these pages in one go.
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: 29.6.0
+* .NET version: 8
+]]></QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2024-11-01 14:31:51Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2024-11-01 14:31:51Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle><![CDATA[Custom wildcard URL route with page builder support]]></QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

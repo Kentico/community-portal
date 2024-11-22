@@ -59,6 +59,7 @@ public class QAndAQuestionController(
             requestModel.Title,
             requestModel.Content,
             SystemTaxonomies.QAndADiscussionTypeTaxonomy.QuestionTag.GUID,
+            [],
             Maybe<BlogPostPage>.None))
             .Match(
                 _ => PartialView("~/Features/QAndA/Components/Form/QAndAQuestionFormConfirmation.cshtml") as IActionResult,

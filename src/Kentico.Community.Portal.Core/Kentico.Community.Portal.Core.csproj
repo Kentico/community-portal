@@ -11,6 +11,8 @@
     <PackageReference Include="Mediatr" />
     <PackageReference Include="Enums.NET" />
     <PackageReference Include="System.Linq.Async" />
+    <!-- https://github.com/advisories/GHSA-8g4q-xg66-9fp4 -->
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <ItemGroup>

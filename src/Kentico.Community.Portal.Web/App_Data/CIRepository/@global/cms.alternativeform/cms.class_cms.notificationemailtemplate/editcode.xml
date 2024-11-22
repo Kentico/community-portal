@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>CMS.NotificationEmailTemplate</CodeName>
+    <GUID>043ec04e-7e87-481b-8088-ebf66160d4d9</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="NotificationEmailTemplateID" guid="beb124c8-6c57-4402-9cbf-883fa9916625" enabled="" />
+      <field column="NotificationEmailTemplateGUID" guid="cc0de410-d75f-4704-a947-c15c433c41e0" enabled="" />
+      <field column="NotificationEmailTemplateName" guid="b289649c-df98-4620-848e-41e7e685301e" enabled="" />
+      <field column="NotificationEmailTemplateDisplayName" guid="fc2656d9-80dc-4dee-b818-3a30d2a8c11c" enabled="" />
+      <field column="NotificationEmailTemplateDescription" guid="86d3ef5b-becd-4369-ac2e-7744b451b917" enabled="" />
+      <field column="NotificationEmailTemplateLastModified" guid="f2db3ccf-94a6-4a35-85a1-7d14f508a8e0" enabled="" order="5" />
+      <field column="NotificationEmailTemplateCode" enabled="true" guid="83f870c2-c5b6-4db6-9329-03e26a2c53dd" visible="true" order="6">
+        <settings>
+          <controlname>Kentico.Administration.CodeEditor</controlname>
+          <Language>html</Language>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$base.notifications.emailtemplates.code.templatecode$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit code</FormDisplayName>
+  <FormGUID>b1f94eea-a290-454a-89fc-54d2411200bb</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>editcode</FormName>
+</cms.alternativeform>

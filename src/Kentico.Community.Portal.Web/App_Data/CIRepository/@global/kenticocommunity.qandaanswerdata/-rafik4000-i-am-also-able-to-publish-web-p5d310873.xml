@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-Rafik4000-I-am-also-able-to-publish-web-p5d310873</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+@Rafik4000
+
+I am also able to publish web pages without issue on v29.0.0
+
+Are all of your packages updated to the latest version?
+
+Is this a new project or an upgrade from an existing one? If you were on an older version of Xperience and upgraded you'll want to make sure you read the Changelog and adjust your code to handle any API changes.
+
+Also, like @christiansen mentioned, any libraries you depend on might need to update their Xperience NuGet package dependencies too.
+
+Can you reproduce this in an unmodifed Dancing Goat solution?
+
+You can spin one up pretty quickly from the terminal:
+
+```powershell
+dotnet new update
+dotnet new kentico-xperience-sample-mvc -n DancingGoat -o xk-29-00-00-01
+cd xk-29-00-00-01
+dotnet kentico-xperience-dbmanager -- -s "localhost" -a "Pass@12345" -d "xk-29-00-00-01" --license-file "..\..\xperience-license.txt" --recreate-existing-database
+```
+
+--- Edit
+
+I'm guessing your solution is using one of our search integrations. These required an update to support v29.0.0 due to a breaking API change (a type was moved between C# namespaces).
+
+Update your solution to the newest version of [Xperience by Kentico Azure Search](https://github.com/Kentico/xperience-by-kentico-azure-ai-search) or [Xperience by Kentico Lucene](https://github.com/Kentico/xperience-by-kentico-lucene).
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-04-19 01:45:28Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>810f8066-7c5e-4c35-8870-972db340ff70</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Bug-in-Publish-version-29-0-0-23710690</CodeName>
+    <GUID>fead9c2f-44fa-41e9-8a9c-5d8fc5df3597</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

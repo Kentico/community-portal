@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>The-why-We-have-a-single-instance-of-Kenti0d86c68b</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+The why: We have a single instance of Kentico that will host 4-5 distinct website channels in it. For clarity in managing this, I assume we would want to separate out the codebase for each website.
+
+The what: There isn't much that would be shared amongst them all, although we will be mindful of this as we build the site and if there are things that can be shared we will plan accordingly. For the most part, though, the sites will be independent of each other.
+
+Would you suggest another way of structuring this besides what the doucmentation described for multiple site configurations?
+
+If not though, and if I was headed in the right direction, I think I need to look more into the last two things you mentioned (application parts and class discovery) because I started down that path but wasn't sure if it was what I needed to do.
+
+I appreciate your helpful insights though!
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-06-10 22:33:46Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>8521d3cd-64b9-4d5b-9ea7-a7757a0c345c</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Multiple-Sites-Razor-Class-Libraries-9155e094-brzqn0nx</CodeName>
+    <GUID>e5f2f135-64b6-4755-968e-9beb220432d9</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

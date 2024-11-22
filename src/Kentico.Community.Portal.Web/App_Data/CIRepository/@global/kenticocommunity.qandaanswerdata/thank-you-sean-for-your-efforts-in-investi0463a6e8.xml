@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Thank-you-Sean-for-your-efforts-in-investi0463a6e8</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+Thank you, Sean, for your efforts in investigating this issue further. I really appreciate it.
+1. Since this issue only occurs in the SaaS environment and not locally, I don't have the option to try to reproduce it anywhere other than on the affected client's site. Unfortunately, there are no available slots in the SaaS account to set up additional sites. I hope that makes sense.
+2. The error is only appearing in the Event Log and Exceptions page in Xperience Portal. It's not visible in the Page Builder or on the live/preview site.
+3. Same as point 2.
+4. The environment is on a Standard tier, most likely Level 1.
+5. I can only reproduce the issue in SaaS, in both QA and PROD environments.
+6. No updates have been made yet, as we are currently in a freeze period while we finalize the site to go live soon.
+7. In our case, I see the error occurring in the content of the "AlwaysOn" request approximately once an hour.
+
+The logs are now filled with this issue since it gets logged at least once an hour. Once the site is live, I'm concerned that we might see this error more frequently as more visitors access the site. Additionally, I'm worried this error could potentially lead to more serious problems in the future. This is why I would like to investigate it further and, if possible, find a fix. Resolving this would also help prevent similar issues in future projects. I apologize if I sound a bit direct about this, but given that I can only reproduce the issue in the SaaS environment—which is somewhat of a black box to us—I don't see any other option.
+Regarding my communication with the consulting team, they have promised to reach out to the Cloud team to see if they can investigate this further on their end.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-09-04 11:46:33Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>3af90c9f-3f1c-4f6a-905e-4850125efb00</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>SaaS-Event-Log-errors-that-I-cannot-trace-back-to-their-origin-dd1b2e5e-3do7s1mx</CodeName>
+    <GUID>cd08011e-6570-4ecd-88c7-bd0699b1f8ca</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -3,6 +3,11 @@
     Generates a .bak of the database
 #>
 
+param (
+    [string]$backupFolderPath = "",
+    [string]$mappedBackupFolderPath = ""
+)
+
 Import-Module (Resolve-Path Utilities) `
     -Function Get-SolutionFolder, `
     Get-ConnectionString, `
@@ -35,9 +40,16 @@ Write-Status "CMSDBVersion found: $cmsDbVersion"
 
 $currentDate = Get-Date -Format "yyyy-MM-dd"
 $backupFileName = "Kentico.Community-$cmsDbVersion-$currentDate.bak"
-$backupFilePath = Join-Path $(Get-SolutionFolder) 'database' $backupFileName
+if ([string]::IsNullOrWhiteSpace($backupFolderPath)) {
+    $backupFilePath = Join-Path $(Get-SolutionFolder) 'database' $backupFileName
+    $outputPath = $backupFilePath
+}
+else {
+    $backupFilePath = Join-Path $backupFolderPath $backupFileName
+    $outputPath = Join-Path $mappedBackupFolderPath $backupFileName
+}
 
-Write-Status "Backup file will be saved as: $backupFilePath"
+Write-Status "Backup file will be saved as: $outputPath"
 
 $setEmptyKeyQuery = "UPDATE CMS_SettingsKey SET KeyValue = NULL WHERE KeyName = 'CMSLicenseKey'"
 Invoke-SQLQuery -query $setEmptyKeyQuery
@@ -46,17 +58,24 @@ Write-Notification "License key cleared."
 $backupQuery = @"
 BACKUP DATABASE [Kentico.Community] TO DISK = N'$backupFilePath' WITH NOFORMAT, NOINIT, NAME = N'Kentico.Community', SKIP, NOREWIND, NOUNLOAD, STATS = 10;
 "@
-Invoke-Sqlcmd -ConnectionString $(Get-ConnectionString) -Query $backupQuery
-while (!(Test-Path $backupFilePath)) {
-    Write-Warning "Waiting for backup to be created at $backupFilePath"
+$backupResult = Invoke-Sqlcmd -ConnectionString $(Get-ConnectionString) -Query $backupQuery -ErrorAction Stop
+
+Write-Notification "Result $backupResult"
+
+while (!(Test-Path $outputPath)) {
+    Write-Warning "Waiting for backup to be created at $outputPath"
     Start-Sleep -Seconds 1
 }
-Write-Notification "Database backup created at $backupFilePath"
+Write-Notification "Database backup created at $outputPath"
 
 $restoreKeyQuery = "UPDATE CMS_SettingsKey SET KeyValue = '$licenseKeyValue' WHERE KeyName = 'CMSLicenseKey'"
 Invoke-SQLQuery -query $restoreKeyQuery
 Write-Notification "License key restored."
 
+if (![string]::IsNullOrWhiteSpace($backupFolderPath)) {
+    $backupFilePath = (Join-Path $(Get-SolutionFolder) 'database' $backupFileName)
+    Copy-Item $outputPath $backupFilePath
+}
 $zipFilePath = "$backupFilePath.zip"
 Compress-Archive -Path $backupFilePath -DestinationPath $zipFilePath
 Remove-Item $backupFilePath

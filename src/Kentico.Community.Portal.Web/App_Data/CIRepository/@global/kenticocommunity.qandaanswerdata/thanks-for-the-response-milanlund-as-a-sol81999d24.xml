@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Thanks-for-the-response-milanlund-As-a-sol81999d24</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+Thanks for the response @milanlund. As a solution I don't love it as it requires that I select custom form autoresponder email, in addition to setting an automation flow in order to send both an autoresponder and email notification. Furthermore, while there are workarounds by using content items for setting the data of the admin notifications, as shown in your blog post, it creates yet another area of configuration for email notifications outside of the email channel and the form.
+
+
+
+In most cases I can see this solution working, but for the sake of future planning, I would like to hear if @seangwright has any other opinions around this.
+
+
+
+Regardless of the above, the particular solution I am working on also has a requirement for form data to be sent back in both the email notification and autoresponder so the automation step won't be suitable. In this case I think I may just need to bake something custom for this project.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-10-29 10:38:16Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>8d5da161-9105-4328-8c36-a7e177ddc8f0</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Email-Notifications-from-Forms-d5764091-9vipbroy</CodeName>
+    <GUID>ab41511b-de8c-4109-b81a-0a70d86bef74</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

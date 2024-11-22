@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>There-is-a-separation-between-channel-typea32dbf85</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+There is a separation between channel-type independent channel information - `ChannelInfo` - and channel-type specific channel information - `WebsiteChannelInfo`, `HeadlessChannelInfo`, and `EmailChannelInfo`.
+
+[![CMS_WebsiteChannel SQL table definition column list](/getContentAsset/96d7253f-d62d-4871-a7f2-279b33ffea94/f6c98f2d-65fc-44ba-9351-3f0beda8e921/v29-06-00-cms_websitechannel-sql-table.webp?language=en-US){style='max-width:800px'}](/getContentAsset/96d7253f-d62d-4871-a7f2-279b33ffea94/f6c98f2d-65fc-44ba-9351-3f0beda8e921/v29-06-00-cms_websitechannel-sql-table.webp?language=en-US)
+
+The channel-type specific objects do not have a "code name" since they are extensions of the channel-type independent `ChannelInfo`, which does have a code name - `ChannelInfo.ChannelName`.
+
+[![CMS_Channel SQL table definition column list](/getContentAsset/b4889023-1173-4082-9127-159b94e60d8d/f6c98f2d-65fc-44ba-9351-3f0beda8e921/v29-06-00-cms_channel-sql-table.webp?language=en-US){style='max-width:800px'}](/getContentAsset/b4889023-1173-4082-9127-159b94e60d8d/f6c98f2d-65fc-44ba-9351-3f0beda8e921/v29-06-00-cms_channel-sql-table.webp?language=en-US)
+
+This `ChannelInfo.ChannelName` is what is exposed by `IWebsiteChannelContext.WebsiteChannelName`.
+
+> The naming convention of the property suggests that Channel name should be the resulting value instead of Code name.
+
+If you look at the SQL table `CMS_WebsiteChannel` you can see all of its columns follow the naming convention `WebsiteChannel*` including the link back to the `CMS_Channel` table `WebsiteChannelChannelID`. I suppose `IWebsiteChannelContext.WebsiteChannelName` could have been named `IWebsiteChannelContext.WebsiteChannelChannelName` but `IWebsiteChannelContext` is _not_ a `WebsiteChannelInfo`. Instead it's just a convenient way to access the current context information for a specific purpose.
+
+The purpose of `IWebsiteChannelContext` is for querying with `ContentItemQueryBuilder` where methods like `.ForWebsite()` accept a `ChannelInfo.ChannelName` value.
+
+> Can a fourth property be added for CodeName to distinguish between the Channel managements's application?
+
+What would that fourth property be? There is no other "Code name" value for channels.
+
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-10-19 19:45:28Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>d128f70a-105d-4ef3-b862-819101ccb6d8</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>IWebsiteChannelContext-Properties-1b22c5c8-ep41bx38</CodeName>
+    <GUID>5871109c-3d2c-4c7c-aa0a-6ae0b0895489</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

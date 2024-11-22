@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>CMS.NotificationEmail</CodeName>
+    <GUID>804f49e5-c5ed-40f9-822b-ed833cf89f37</GUID>
+    <ObjectType>cms.systemtable</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="NotificationEmailID" guid="eb33bf28-5b40-4aa8-8613-6a371f294876" enabled="" />
+      <field column="NotificationEmailGUID" guid="e5e72067-1960-4ad2-86b1-f972178aad26" enabled="" />
+      <field column="NotificationEmailName" guid="635090c2-8ae6-45b3-b0c8-64a5950fe439" enabled="" />
+      <field column="NotificationEmailDisplayName" guid="34635883-6e48-49d5-9ba9-3348b5852426" enabled="" />
+      <field column="NotificationEmailNotificationEmailTemplateID" guid="8a1fa75a-8eae-4364-a85c-d9f78086087b" enabled="" />
+      <field column="NotificationEmailSender" guid="55219f6e-cbdf-40b2-bb5c-487d8382d0c2" enabled="" />
+      <field column="NotificationEmailLastModified" guid="f7e4e7a5-13de-4365-afd7-bb24520b9752" enabled="" />
+      <field column="NotificationEmailDescription" guid="7eb088de-fccf-459a-be90-9d88d8d0c3cd" enabled="" />
+      <field column="NotificationEmailSubject" enabled="true" guid="9ab204e1-7146-42de-9a62-fe5354a86dbd" visible="true" allowempty="">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.notifications.emails.edit.subject$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="NotificationEmailContent" enabled="true" guid="a33d488a-190b-4f63-aa43-f44e6a573649" visible="true" allowempty="">
+        <settings>
+          <ConfigurationName>Kentico.Administration.EmailNotificationContent</ConfigurationName>
+          <controlname>Kentico.Administration.RichTextEditor</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.notifications.emails.edit.content$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Content</FormDisplayName>
+  <FormGUID>2132d406-d3ca-4ce4-9fdc-cd51d1a4d4ac</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>content</FormName>
+</cms.alternativeform>

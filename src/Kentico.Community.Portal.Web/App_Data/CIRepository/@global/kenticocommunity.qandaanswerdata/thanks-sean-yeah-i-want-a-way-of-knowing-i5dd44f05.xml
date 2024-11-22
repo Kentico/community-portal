@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Thanks-Sean-yeah-I-want-a-way-of-knowing-i5dd44f05</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+Thanks Sean - yeah I want a way of knowing if the visitor to the website channel is currently authenticated to the Xperience administration portal. If the visitor is authenticated as an admin user, a ViewComponent on the master page will display different contents.
+
+Your first recommendation wouldn't be sufficient as I want to utilise on the front-end, not preview/pagebuilder tabs.
+
+I tried the second point but it was not returning the ClaimsIdentity for the admin portal at all.
+
+After doing a little more digging, it seems this could be the best way:
+
+```
+var authenticateResult = await HttpContext.AuthenticateAsync(AdminIdentityConstants.APPLICATION_SCHEME);
+
+if (authenticateResult.Succeeded &&
+   authenticateResult.Principal?.Identity != null &&
+   authenticateResult.Principal.Identity.IsAuthenticated)
+{
+   return View(ViewName);
+}
+
+return Content(string.Empty);
+```
+
+This lets me check if the user is already authenticated under a specific authentication scheme (using the constant Kentico internally uses).
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-08-20 23:34:54Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>54b0f1b7-6ec8-4c51-8529-52901562e668</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Check-website-visitor-is-authenticated-in-admin-site-16a9ba36-hqz1m0xe</CodeName>
+    <GUID>7cae71e5-c24c-403f-904c-68256e171475</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

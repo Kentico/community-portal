@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.blogpostcontent>
+  <BlogPostContentAuthor>
+    <![CDATA[[{"Identifier":"2dce9183-2830-4794-ad72-edd6bd9dc5c3"}]]]>
+  </BlogPostContentAuthor>
+  <BlogPostContentBlogType>
+    <![CDATA[[{"Identifier":"0865e8f6-2568-425e-94d8-2bf53adcdd57"}]]]>
+  </BlogPostContentBlogType>
+  <BlogPostContentContentMarkdown>
+<![CDATA[
+Check out [March's addition](https://docs.kentico.com/changelog#refresh-march-21-2024) to Xperience by Kentico. We have some big updates, like taxonomies and improvements to our SDK for content item querying, along with a deluge of integration updates. Dive in and learn about all the enhancements we've just delivered in Xperience by Kentico.
+
+## Taxonomies and content tagging
+
+There's no question the big feature this month is a keystone 🏛️ of any rich content library - [taxonomies](https://docs.kentico.com/x/taxonomies_xp)!
+
+<div style="max-width: 25%">
+
+[![Taxonomy application tile](/getmedia/03075371-60a6-4979-a5fe-409b3027c289/v28-04-taxonomies-application-tile.jpg){ width=300 }](/getmedia/03075371-60a6-4979-a5fe-409b3027c289/v28-04-taxonomies-application-tile.jpg)
+
+</div>
+
+Our new taxonomies application allows marketers to dynamically author multiple taxonomies.
+
+[![List of taxonomies](/getmedia/eb9bfa6f-ef14-4ddc-973c-27079231ee7f/v28-04-taxonomies-list.webp)](/getmedia/eb9bfa6f-ef14-4ddc-973c-27079231ee7f/v28-04-taxonomies-list.webp)
+
+Each taxonomy has its own hierarchical tree of tags and each tag has its own title, code name, and description. The title and description fields can be localized into each of languages defined for the Xperience solution if they are used for content delivery and presentation purposes.
+
+[![Taxonomy details](/getmedia/12a8f4b4-cf71-4c9b-af2f-b1ccc7ffa2f9/v28-04-taxonomies-details.webp)](/getmedia/12a8f4b4-cf71-4c9b-af2f-b1ccc7ffa2f9/v28-04-taxonomies-details.webp)
+
+After creating taxonomies, they can be used in the content modeling process. There is a new content type field data type "Taxonomy", which allows tags from the specified taxonomy to be assigned to that field.
+
+We support taxonomies for content modeling with reusable content items and web pages today. Adding taxonomies to headless items and emails is [on our roadmap](https://roadmap.kentico.com/c/184-taxonomy-support-for-headless-and-email-content-types).
+
+[![Content modeling with taxonomies](/getmedia/c84dbb86-a22b-4a94-bc98-85afb48e54b9/v28-04-taxonomies-content-modeling.webp)](/getmedia/c84dbb86-a22b-4a94-bc98-85afb48e54b9/v28-04-taxonomies-content-modeling.webp)
+
+Once the content type is modeled, marketers can edit content items of this type and assign the correct taxonomy tags.
+
+[![Content editing with taxonomies](/getmedia/248d98c4-9275-4e9a-8f61-8c4c905aa67b/v28-04-taxonomies-content-editing.webp)](/getmedia/248d98c4-9275-4e9a-8f61-8c4c905aa67b/v28-04-taxonomies-content-editing.webp)
+
+Marketers can also select taxonomies from Page Builder properties using our [Tag Selector component](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/reference-admin-ui-form-components#tag-selector) and developers can retrieve taxonomized content using the `WhereContainsTags` [Content item querying API](https://docs.kentico.com/developers-and-admins/development/content-retrieval/retrieve-content-items#filter-content-items-based-on-tags).
+
+[![Configuring a widget with taxonomies](/getmedia/490f51b4-76c4-4aaa-a4d1-f33ab772f082/v28-04-taxonomies-widget.webp)](/getmedia/490f51b4-76c4-4aaa-a4d1-f33ab772f082/v28-04-taxonomies-widget.webp)
+
+By organizing tags in multiple distinct taxonomies, partners can provide a great content governance experience for marketers and enable all common website channel taxonomy scenarios - grouping content, faceted search, and easier content item selection in the Page Builder.
+
+Look for our [refinement of taxonomies next month](https://roadmap.kentico.com/c/199-using-taxonomy-tags-for-content-hub-filtering), which will allow marketers quickly find items in the Content hub by their taxonomy!
+
+## Content query API enhancements
+
+Let's get technical 🧐 for a minute (or two)!
+
+Xperience by Kentico developers know their primary goal to enable their client's marketing teams. Technical tools and APIs we include in the product are key to a developer's ability to quickly and effectively build website channel experiences. We heard feedback from partners ([via our Roadmap](https://roadmap.kentico.com/tabs/5-released)) that our content modeling features are amazing 🤩, but the APIs used to query for these content models have some gaps.
+
+We heard you loud and clear! This month we are releasing [a new set of powerful Content item query APIs](https://docs.kentico.com/developers-and-admins/api/content-item-api/reference-content-item-query#forcontenttypes-parameterization) 🦾!
+
+Now, developers can easily handle more advanced content querying scenarios, like:
+
+- Query for content by reusable field schemas
+- Query for content belonging to multiple content types
+- Query for content items by identifier without knowing the content type
+- Query for website page items without knowing which website they belong to
+- Query for content items by taxonomy (as mentioned above)
+
+Additionally, we've added a simpler way to map query results to a specific content type using the `IContentQueryExecutor` interface directly - `GetMappedResult` and `GetMappedWebPageResult`. The mapping services developers used previously are now optional. Importantly, we haven't removed the lower-level API `GetResult`, which means developers can still handle their most complex content retrieval scenarios.
+
+Developers should take a look at [this Refresh's Changelog](https://docs.kentico.com/changelog#refresh-march-21-2024) and our updated documentation to get started with these new features.
+
+## New integrations and integration updates
+
+If you look at our roadmap, you can easily see how [Xperience by Kentico has evolved](https://roadmap.kentico.com/tabs/5-released) over the past several months - but it might not be as obvious how our existing integrations have been evolving as well.
+
+### Tag Manager
+
+This month, it will be very clear 👀 with the improvements we've made to the [Xperience by Kentico Tag Manager](https://github.com/Kentico/xperience-by-kentico-tag-manager) integration. When we first launched this integration, it supported Google Tag Manager and "free text" custom tags.
+
+Now, we've introduced support for custom templated tag and several featured tags from the following vendors and services...
+
+[![Tag manager tag list](/getmedia/660fbe19-4319-441c-bfbe-96985c2c2914/v28-04-integration-tag-manager.webp)](/getmedia/660fbe19-4319-441c-bfbe-96985c2c2914/v28-04-integration-tag-manager.webp)
+
+#### A/B testing with VWO
+
+With this tag, a marketer can add their [VWO](https://vwo.com/) account ID and they are ready to optimize with this market leading optimization platform - A/B and multivariate testing. VWO has [flexible pricing](https://vwo.com/pricing/) and teams can start off free to try it out and later scale up to use it across an entire Xperience by Kentico solution.
+
+[![WVO configuration](/getmedia/f70e91fe-c0f5-4440-8e78-8716905a5947/v28-04-integration-tag-manager-vwo.webp)](/getmedia/f70e91fe-c0f5-4440-8e78-8716905a5947/v28-04-integration-tag-manager-vwo.webp)
+
+#### Chatbots with Intercom
+
+The [Intercom](https://www.intercom.com/ai-chatbot) tag allows marketers to add their Intercom ID and immediately engage with their website visitors with a chat UI plugin. [Pricing for Intercom](https://www.intercom.com/pricing) starts at $40 USD / month / seat.
+
+[![Intercom chat plugin](/getmedia/d209bb8e-82aa-4a3d-9766-f4657075a67b/v28-04-integration-tag-manager-intercom.webp)](/getmedia/d209bb8e-82aa-4a3d-9766-f4657075a67b/v28-04-integration-tag-manager-intercom.webp)
+
+#### Heatmap analytics with Microsoft Clarity
+
+[Microsoft Clarity](https://clarity.microsoft.com/) is a GDPR compliant behavior analytics service, built on [an open-source library](https://github.com/microsoft/clarity), that enables marketers to see heatmaps of their customers engagement with their website.
+
+[![Microsoft Clarity heatmaps](/getmedia/ded949ac-c872-41eb-b89f-b4e185ce69b3/v28-04-integration-tag-manager-clarity.webp)](/getmedia/ded949ac-c872-41eb-b89f-b4e185ce69b3/v28-04-integration-tag-manager-clarity.webp)
+
+Clarity is [completely free](https://clarity.microsoft.com/pricing) to use and as an added bonus integrates with the next tag we've added support for...
+
+#### GA4 tags from Google Analytics
+
+Many marketers use Google Tag Manager to load their [Google Analytics](https://marketingplatform.google.com/) tags on their websites, but now we also support Google Analytics tags directly for that extra optimization of script load speed.
+
+As mentioned above, Microsoft Clarity [integrates directly with Google Analytics](https://clarity.microsoft.com/google-analytics) - giving marketers they insights they need, where they are 🙌.
+
+### CRM
+
+Our CRM integration already supported sending Contact data to either Salesforce Sales Cloud or Microsoft Dynamics Sales. This month [it has been enhanced](https://github.com/Kentico/xperience-by-kentico-crm/releases/tag/v2.0.0) - enabling two-way contact synchronization between Xperience and those CRMs.
+
+Developers can [check out our thorough documentation](https://github.com/Kentico/xperience-by-kentico-crm/blob/main/docs/Usage-Guide.md#sync-from-crm-to-kentico) to see how they can configure the integration for their solutions.
+
+### Zapier
+
+Our [integration with Zapier](https://github.com/Kentico/Xperience-by-kentico-Zapier), a service that enables to marketers to connect over 6,000 other products and services together, continues to evolve and has been updated to handle inbound communication - messages from Zapier to Xperience by Kentico 👏.
+
+In addition to already supporting actions from Xperience sending data to Zapier, we now support scenarios like:
+
+- Ingesting external forms data like from Google Ads by creating a new form submission in Xperience
+- Triggering content in Xperience to move through workflow steps or publish from an external system, like Slack
+
+### MiniProfiler
+
+We've also released a new diagnotic integration that developers are sure to love 💖!
+
+[MiniProfiler](https://miniprofiler.com/) is a .NET library created by the team at Stack Overflow, where they use it to fine-tune their .NET services that power the entire Stack Exchange family of sites.
+
+
+[![MiniProfiler plugin UI](/getmedia/58e447ad-d9f1-4903-bf17-b7279656f81e/v28-04-integration-mini-profiler.webp)](/getmedia/58e447ad-d9f1-4903-bf17-b7279656f81e/v28-04-integration-mini-profiler.webp)
+
+This month, we're releasing support for [MiniProfiler in Xperience by Kentico](https://github.com/Kentico/xperience-by-kentico-miniprofiler) which will help developers identify the SQL queries being executed by their website channel pages and see how long those queries take to execute. These insights can be helpful when learning our [Content query APIs](https://docs.kentico.com/developers-and-admins/api/content-item-api/reference-content-item-query) or trying to optimize page load speeds for the best customer experience.
+
+## What's next?
+
+We hope these new capabilities, features, and API improvements unlock solutions for you and your clients. Try them out, let us know 👋 what you think. You can find all the details about March's Refresh in [our documentation Changelog](https://docs.kentico.com/changelog#refresh-march-21-2024).
+
+For [the next Refresh](https://roadmap.kentico.com/tabs/6-next-refreshes), you can expect [scheduled content publishing](https://roadmap.kentico.com/c/172-scheduling-the-publishing-of-public-facing-content), the next [round of updates](https://roadmap.kentico.com/c/192-reusable-field-schema-phase-2) to reusable field schemas, [classic folders](https://roadmap.kentico.com/c/194-content-organization-discovery-classic-folders-in-the-content-hub) and [taxonomy filtering](https://roadmap.kentico.com/c/199-using-taxonomy-tags-for-content-hub-filtering) in the Content hub, and other [UX improvements](https://roadmap.kentico.com/c/203-ordering-items-within-the-content-item-selectors-and-validation-for-a-number-of-selected-items).
+
+Check back next month for another Xperience by Kentico Refresh review!
+]]>
+  </BlogPostContentContentMarkdown>
+  <BlogPostContentDXTopics>
+    <![CDATA[[{"Identifier":"6786b215-d033-4019-a0d6-6b26727cda7a"},{"Identifier":"32675374-2ca5-4e47-bcf9-8e3bc952ccdb"},{"Identifier":"426073bb-93c4-4f20-a263-65bcae9ee019"},{"Identifier":"3b1a5210-f2f3-4a22-87a4-d568ecca0c66"},{"Identifier":"53529b65-dba0-4617-a3bf-859b1bc25909"}]]]>
+  </BlogPostContentDXTopics>
+  <BlogPostContentPublishedDate>2024-03-21 17:54:00Z</BlogPostContentPublishedDate>
+  <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
+  <ContentItemDataCommonDataID>
+    <GUID>07d5d81d-a902-4c2e-9b24-2764a5848798</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>XperienceByKenticoRefresh-March21_2024-jorcmcz2</CodeName>
+      <GUID>f9b77045-8845-4be5-b2cc-2fc8b2ef3946</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>8eda1612-0445-4dfb-8d9d-9176be3b46c9</ContentItemDataGUID>
+</contentitemdata.kenticocommunity.blogpostcontent>

@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.blogpostcontent>
+  <BlogPostContentAuthor>
+    <![CDATA[[{"Identifier":"f9ac36a5-e1a6-4d21-9cb7-beb385d0fea0"}]]]>
+  </BlogPostContentAuthor>
+  <BlogPostContentBlogType>
+    <![CDATA[[{"Identifier":"0865e8f6-2568-425e-94d8-2bf53adcdd57"}]]]>
+  </BlogPostContentBlogType>
+  <BlogPostContentContentMarkdown>
+<![CDATA[
+A couple of years back, we announced [we were dropping support for .NET Core 3.1](https://devnet.kentico.com/articles/the-end-of-support-for-net-core-3-1-is-coming) to align with Microsoft's support lifecycle for that version of .NET.
+
+Today we are making a similar announcement, a bit more preemptively 😉, for .NET 6.
+
+:::note
+You can [view the detailed .NET support lifecycle](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core) which includes all currently and previously supported versions.
+:::
+
+## The Summary
+
+Let's do the summary first for those who want the answer now 🤓 and questions later:
+
+- Microsoft's support of .NET 6 will reach end-of-life (EOL) in November 2024
+- Kentico's support for Xperience by Kentico solutions running on .NET 6 will also reach EOL in November 2024
+- Customers are encouraged to begin adopting .NET 8 now and _all_ new projects should start on .NET 8
+- We have already updated documentation [to recommend .NET 8](https://docs.xperience.io/xp/developers-and-admins/installation/system-requirements#Systemrequirements-Softwarerequirements)
+- Xperience by Kentico .NET solution templates are being updated to target .NET 8 by default
+- Starting now, *new* Xperience by Kentico [open source libraries on GitHub](https://github.com/orgs/Kentico/repositories) will target _.NET 8 only_
+- Existing libraries will be updated to target _.NET 8 only_ when our support of .NET 6 reaches EOL
+- Xperience by Kentico, as a product, will be updated to target _.NET 8 only_ sometime after .NET 6 EOL, at which point .NET 6 projects will be _required_ to target .NET 8 to apply Refreshes
+
+## Microsoft's .NET support lifecycle
+
+Microsoft has [documented its .NET support lifecycle](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core) for awhile now, and for the past few versions of long term support (LTS) and standard term support (STS) releases things have settled into a familiar and predictable cadence. LTS releases (even numbered, like .NET 6 and .NET 8) are supported for 3 years and STS releases (odd numbered, like .NET 5 and .NET 7) for 18 months.
+
+With the release of .NET 8 in November of 2023 we have a new LTS release, which means the previous LTS release - .NET 6 - will only be supported for an additional 12 months. That's right 🧐, .NET 6 will no longer be supported after November, 2024.
+
+## Kentico's .NET support lifecycle
+
+Because Xperience by Kentico is built on top of .NET, we cannot provide support for a version of the framework Microsoft no longer supports. This means that our support of Xperience by Kentico running on .NET 6 will also end after November, 2024.
+
+Our plan is to always be aligned with Microsoft's .NET support lifecycle to keep things simple for customers, while also ensuring they have a pathway 🛣️ to the next LTS version of .NET.
+
+Thankfully, we already [introduced support for .NET 8](/blog/xperience-by-kentico-refresh-november-16-2023#net-8-support) back in our November 2024 Refresh, so customers have been able to update existing projects or start new ones on the latest LTS version of .NET for several months.
+
+## Strategic adoption
+
+What does all of this mean for you and your Xperience by Kentico solutions 🤔?
+
+If you are starting a new Xperience by Kentico project, we recommend you check the Target Framework Moniker (TFM) in your Xperience by Kentico project `.csproj` file and ensure it's targeting .NET 8. If you are authoring new libraries to support your Xperience projects, those should also target .NET 8.
+
+What if you have an existing Xperience by Kentico project 🤨?
+
+While you could [wait for the buzzer](https://youtu.be/tC-Djge2Q6o?si=EKNER66jZH-Crzse) and delay updating your project until November 2024, there's really no reason to wait and we recommend updating now 👍. All existing .NET libraries for Xperience by Kentico that you or your team authors should also update to .NET 8.
+
+As part of our effort to be a modern, evergreen product, we'll be adopting .NET 8 in all of our _new_ open source libraries on GitHub. If this causes a problem for your project, let us know - we want to better understand your hurdles in adopting .NET 8.
+
+## Updating to .NET 8
+
+Microsoft has detailed documentation covering the API changes and steps to update between each major version of .NET. There's both [.NET 6 to .NET 7](https://learn.microsoft.com/en-us/aspnet/core/migration/60-70?view=aspnetcore-8.0&tabs=visual-studio) and [.NET 7 to .NET 8](https://learn.microsoft.com/en-us/aspnet/core/migration/70-80?view=aspnetcore-8.0&tabs=visual-studio) documentation. However, much of this documentation covers ASP.NET Core Blazor projects, which have seen quite a bit of evolution over the past few years. For most Xperience by Kentico applications, there are only 3 steps 👏 _and_ they can jump directly from .NET 6 to .NET 8:
+
+0. Make sure you have the [latest version of the .NET SDK](https://dotnet.microsoft.com/download/dotnet/8.0) installed. If you are using Visual Studio and it is up-to-date, you'll already have it.
+
+1. Update your solution's `global.json` file (if you have one) to use the latest SDK version:
+
+    ```json
+    {
+        "sdk": {
+            "version": "8.0.100"
+        }
+    }
+    ```
+
+    :::note
+    Not using a `global.json` file? Add one to your solution to [ensure everyone is using the same version of the .NET SDK](https://learn.microsoft.com/en-us/dotnet/core/tools/global-json) 🧠.
+
+    You can see an example of this in the [Community Portal repository](https://github.com/Kentico/community-portal/blob/main/global.json).
+    :::
+
+2. Update your TFM which can be found in your `.csproj` files:
+
+    ```xml
+    <Project Sdk="Microsoft.NET.Sdk.Web">
+
+        <PropertyGroup>
+            <TargetFramework>net8.0</TargetFramework>
+        </PropertyGroup>
+
+    <!-- other MSBuild props and items -->
+
+    </Project>
+    ```
+
+    :::note
+    Want to make updating your TFM a simple 1 line change across an entire .NET solution 🧠? Try using a `Directory.Build.props` file [to share MSBuild settings across multiple projects](https://garywoodfine.com/what-is-this-directory-build-props-file-all-about/)!
+
+    You can see an example of this in the [Community Portal repository](https://github.com/Kentico/community-portal/blob/main/Directory.Build.props).
+    :::
+
+3. Update your Microsoft managed NuGet packages to their .NET 8 versions:
+
+    ```xml
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+        <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
+    </ItemGroup>
+    ```
+
+    :::note
+    Tired of the complexity of maintaining all your package versions across multiple projects in a solution? Try using a single `Directory.Packages.props` file and NuGet's [Central Package Management](https://learn.microsoft.com/en-us/nuget/consume-packages/Central-Package-Management) functionality 🧠.
+
+    You can see an example of this in the [Community Portal repository](https://github.com/Kentico/community-portal/blob/main/Directory.Packages.props).
+    :::
+
+Now, build your solution and resolve any errors or warnings you see (there should be very few from new .NET 8 analyzers, if any).
+
+Is there anything you need to do for your Xperience by Kentico code? Nope, _it just works_ 🙌!
+
+If you need any more convincing that _now_ is the right time to update to or start using .NET 8, just read through [the 300,000 word .NET 8 performance improvements blog post](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-8/) 😲, the [large list of new features in .NET 8](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-8) or [the cool language updates in C# 12](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-12) that were released with .NET 8.
+
+:::note
+We understand there's often more to adopting a new version of .NET than just updating _your_ project. You might need to update the [ANCM](https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/aspnet-core-module?view=aspnetcore-8.0) for hosting ASP.NET Core apps in IIS, the [.NET runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) in sensitive server environments (thankfully, modern .NET versions can all be installed side-by-side), or update CI/CD pipelines to support a new version of .NET.
+
+That's why our support of .NET 6 mirrors Microsoft's, so teams have plenty of time to make these changes, not just for Xperience by Kentico but all their other .NET properties.
+:::
+
+## Wrap Up
+
+Hopefully, both Microsoft's and Kentico's timelines for .NET 6 support are now clear, but just in case the details got lost in the explanation you can follow the link below to the discussion for this blog post and leave a comment 💬, or reach out to us at <support@kentico.com>.
+]]>
+  </BlogPostContentContentMarkdown>
+  <BlogPostContentDXTopics>
+    <![CDATA[[{"Identifier":"9d7f9413-3142-4f27-a6bc-fb9ec266d45f"},{"Identifier":"1015b219-7365-459f-9474-0c96a842291c"},{"Identifier":"40e93dab-1279-49b7-b8a6-fc1518568b1b"},{"Identifier":"3faf2fdf-2c4e-43cf-aeef-ed9bf794f437"}]]]>
+  </BlogPostContentDXTopics>
+  <BlogPostContentPublishedDate>2024-01-09 13:15:00Z</BlogPostContentPublishedDate>
+  <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
+  <ContentItemDataCommonDataID>
+    <GUID>9ffa473d-8816-4135-a42a-a03da1677998</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>XperienceByKentico_s.NETSupportLifecycle-.NET6-pwlkkmyq</CodeName>
+      <GUID>16185569-7623-4216-a829-3aca014b5ff1</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>139414b3-54d0-4ff8-b63f-6ed3c30de850</ContentItemDataGUID>
+</contentitemdata.kenticocommunity.blogpostcontent>

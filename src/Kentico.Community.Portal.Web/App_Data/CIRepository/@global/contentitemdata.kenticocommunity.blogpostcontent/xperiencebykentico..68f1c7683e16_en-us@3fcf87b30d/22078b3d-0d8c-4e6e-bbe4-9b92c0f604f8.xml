@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.blogpostcontent>
+  <BlogPostContentAuthor>
+    <![CDATA[[{"Identifier":"2dce9183-2830-4794-ad72-edd6bd9dc5c3"}]]]>
+  </BlogPostContentAuthor>
+  <BlogPostContentBlogType>
+    <![CDATA[[{"Identifier":"0865e8f6-2568-425e-94d8-2bf53adcdd57"}]]]>
+  </BlogPostContentBlogType>
+  <BlogPostContentContentMarkdown>
+<![CDATA[
+Check out [February's addition](https://docs.kentico.com/changelog#refresh-february-22-2024) to Xperience by Kentico. We have some big updates, like basic workflows and AI-powered rich text editing. Dive in and learn about all the enhancements we've just delivered in Xperience by Kentico.
+
+## Basic workflows
+
+Capabilities like centralized reusable content, structed content models, content validation, along with features like role and permission management, work together to improve a marketer's ability to achieve effective [content governance](blog.hubspot.com/marketing/content-governance-model) within Xperience by Kentico. Today we are delivering a much anticipated feature that adds to this content governance experience - [basic workflows](docs.kentico.com/x/workflows_xp).
+
+We already had the ability to move content through draft, published, and archived stages. Now, basic workflows enable marketing teams to insert their own custom steps to the content publishing process between the draft and published steps.
+
+Marketers can create multiple custom workflows for different content governance requirements.
+
+[![Basic workflow setup](/getmedia/513247db-922b-4638-abb8-613f4abfc1c1/v28-03-basic-workflow-setup.webp)](/getmedia/513247db-922b-4638-abb8-613f4abfc1c1/v28-03-basic-workflow-setup.webp)
+
+These workflows are assigned to one or more content types. Each content type can be assigned to at most one workflow.
+
+[![Basic workflow content types](/getmedia/1277186d-f7af-4eec-a6d3-ce9dd44b2d91/v28-03-basic-workflow-content-types.webp)](/getmedia/1277186d-f7af-4eec-a6d3-ce9dd44b2d91/v28-03-basic-workflow-content-types.webp)
+
+After assigning content types to the workflow, marketers can create the custom steps that content must pass through before it can be published. These steps are assigned roles that are allowed to approve content through those steps.
+
+[![Basic workflow step role assignments](/getmedia/7e235a5c-3fd2-457b-87a2-2009404aa6b2/v28-03-basic-workflow-step-role-assignments.webp)](/getmedia/7e235a5c-3fd2-457b-87a2-2009404aa6b2/v28-03-basic-workflow-step-role-assignments.webp)
+
+Marketers can create as many steps as they need and those steps can be reordered through the drag-and-drop UI.
+
+[![Basic workflow step ordering](/getmedia/496e8536-3426-4436-9645-cef15151880e/v28-03-basic-workflow-step-ordering.webp)](/getmedia/496e8536-3426-4436-9645-cef15151880e/v28-03-basic-workflow-step-ordering.webp)
+
+After creating a new workflow, a new "Change workflow step" button will replace the Publish button for any content types managed by the workflow.
+
+[![Basic workflow content editing](/getmedia/18edcc41-5641-4df1-9e13-f93b222ba1ac/v28-03-basic-workflow-content-editing.webp)](/getmedia/18edcc41-5641-4df1-9e13-f93b222ba1ac/v28-03-basic-workflow-content-editing.webp)
+
+The marketer will be presented with the option to advance the content to the next step (assuming they have the assigned role required for that step) or a previous one.
+
+[![Basic workflow step selection](/getmedia/a70df20e-7abf-4cc2-b11f-41ca0592968a/v28-03-basic-workflow-step-selection.webp)](/getmedia/a70df20e-7abf-4cc2-b11f-41ca0592968a/v28-03-basic-workflow-step-selection.webp)
+
+When the content reaches the end of the workflow, and is about to be published, the cascade publishing dialog will appear if there are unpublished linked items. Publishing all linked items will now require that those items are also ready to be published, since they could be in various stages of other custom workflows. Linked items can be accessed through the pencil icon and handled individually (again, assuming the current user has the required roles for those workflow steps).
+
+[![Basic workflow publishing](/getmedia/0521b883-030d-4af5-81c1-dd2f745397c4/v28-03-basic-workflow-publishing.webp)](/getmedia/0521b883-030d-4af5-81c1-dd2f745397c4/v28-03-basic-workflow-publishing.webp)
+
+Today, basic workflows enable much more effective content governance, but you might be wondering about email notifications? The current basic workflows features does not include notification management, but we plan on adding a more general purpose notification system in the future, which workflows will tie into.
+
+However, we did include global events for workflows - `WebPageWorkflowEvents`, `ContentItemWorkflowEvents`, `HeadlessItemWorkflowEvents` - that developers can hook into and use to send their own custom notifications. When combined with our new Zapier integration, moving a content item to the next workflow step could notify the right people in a team's Slack channel!
+
+## AI-Powered rich text editing
+
+Continuing our investment into AI capabilities that empower marketers in Xperience by Kentico, we are expanding the types of content that can be transformed by AI. Previously, the AI transformations were focused on email content, but today any rich text content can also be transformed by our built-in integration with Azure OpenAI. This applies to emails, reusable content items, web pages, and headless items!
+
+<video controls class="w-100">
+  <source src="/getmedia/7859a437-5598-4f00-8620-64ce5d4ee1cd/v28-03-rich-text-ai-transformation.mp4" type="video/mp4" />
+</video>
+
+The video above shows how simple it is for a marketer to use the refinements AI feature for rich text fields, once the content type field has been configured. They can select some text and click the AI icon which opens a dialog with some refinement prompts. Selecting one of these prompts will open up the Generate with AI tray where the content can be refined further or selected to be used in the rich text.
+
+We plan to continue exposing AI content transformations in other content type text fields and many more places in Xperience by Kentico - stay tuned!
+
+## Azure AI Search
+
+Xperience by Kentico already has two great search integration options - [Lucene](github.com/Kentico/xperience-by-kentico-lucene/) and [Algolia](github.com/Kentico/xperience-by-kentico-algolia/) - representing different ends of the the cost, features, and deployment spectrums. With this month's Refresh, we are adding an integration with [Azure AI Search](github.com/kentico/xperience-by-kentico-azure-ai-search/) which covers the gap between Lucene and Algolia.
+
+[![Azure AI Search Xperience dashboard](/getmedia/f978baa7-a6e6-43a3-99e7-4b99d93593ab/v28-03-azure-ai-search-dashboard.webp)](/getmedia/f978baa7-a6e6-43a3-99e7-4b99d93593ab/v28-03-azure-ai-search-dashboard.webp)
+
+Azure AI Search includes the [Semantic Ranking](learn.microsoft.com/en-us/azure/search/semantic-search-overview) search so customers can find the search results they're looking for by asking a question rather than knowing specific keywords to use. With this integration users can also find the closest geographically relevant result thanks to Azure AI Search's [geo-spatial querying](learn.microsoft.com/en-us/azure/search/search-query-odata-geo-spatial-functions).
+
+This search integration is designed with the same API and integration patterns as our other two search integrations, which means developers don't have to re-learn how to enable search in Xperience by Kentico if they've already had experience with one of the other libraries.
+
+## Zapier and Outbound Actions
+
+[Zapier](https://zapier.com/) is a powerful automation service with a library of over 6,000 connectors, that enables non-developers to connect systems together and build automation processes through a visual UI.
+
+[![Zapier visual automation definition](/getmedia/1fc0fff4-827b-426e-a4e3-a3e66128cb6c/v28-03-zapier-visual-automation.webp)](/getmedia/1fc0fff4-827b-426e-a4e3-a3e66128cb6c/v28-03-zapier-visual-automation.webp)
+
+We're now releasing a first iteration of a Zapier integration for Xperience by Kentico, focusing on [triggering Zaps](help.zapier.com/hc/en-us/articles/8496309697421-Create-Zaps) based on changes to data managed in Xperience. Some key scenarios enabled by this integration include:
+
+- Sending form submission data to CRM
+- Notifying your salespeople about new demo requests (form submission) through Slack
+- Alerting site admins about critical Event Log entries
+- Creating notifications when content moves through custom workflow steps
+
+The triggers for these automations are first defined in Xperience.
+
+[![Zapier automation triggers](/getmedia/4b726583-2137-4f9b-ac84-6ea8554014a1/v28-03-zapier-automation-triggers.webp)](/getmedia/4b726583-2137-4f9b-ac84-6ea8554014a1/v28-03-zapier-automation-triggers.webp)
+
+Then, the automations can be configured in the Zapier UI.
+
+[![Zapier visual automation configuration](/getmedia/6e42bdd1-931f-4c5e-b019-e9156b4f9611/v28-03-zapier-visual-automation-configuration.webp)](/getmedia/6e42bdd1-931f-4c5e-b019-e9156b4f9611/v28-03-zapier-visual-automation-configuration.webp)
+
+Once fully configured, they can even be tested directly in Zapier.
+
+[![Zapier visual automation testing](/getmedia/cda290af-7b0b-4248-b5d5-797e91cae944/v28-03-zapier-visual-automation-testing.webp)](/getmedia/cda290af-7b0b-4248-b5d5-797e91cae944/v28-03-zapier-visual-automation-testing.webp)
+
+This is our first iteration because in our next Refresh we plan on [enabling Zapier to call into Xperience](roadmap.kentico.com/c/195-zapier-integration-phase-2-inbound-actions), completing the full event automation cycle!
+
+(The Zapier integration repository on GitHub will be available soon and we'll update this post to link to it once it's live).
+
+## What's next?
+
+We hope these new capabilities, features, and UX improvements unlock solutions for you and your clients. Try them out, let us know 👋 what you think. You can find all the details about February's Refresh in [our documentation Changlog](docs.kentico.com/changelog#refresh-february-22-2024).
+
+For [the next Refresh](roadmap.kentico.com/tabs/6-next-refreshes), you can expect [taxonomies](roadmap.kentico.com/c/182-user-defined-taxonomies-and-content-tagging), [Content hub folders](roadmap.kentico.com/c/194-content-organization-discovery-folders-in-the-content-hub), [content query API improvements](roadmap.kentico.com/c/193-new-api-cross-content-type-querying) for developers, a [new open source integration](roadmap.kentico.com/c/197-vwo-integration-for-a-b-testing), and - of course - other [quality of life improvements](roadmap.kentico.com/c/181-mass-publishing-of-content-items-in-content-hub).
+
+Check back next month for another Xperience by Kentico Refresh review!
+]]>
+  </BlogPostContentContentMarkdown>
+  <BlogPostContentDXTopics>
+    <![CDATA[[{"Identifier":"427bcd78-d1db-4d80-8abc-d1ffc1a25d8e"},{"Identifier":"1a2a8dca-bfab-4c00-ac5d-898d0a08d5e4"},{"Identifier":"42641617-6e43-42cf-ab40-d3ccf77d0dca"},{"Identifier":"04589071-087e-4523-854c-0e11551ed166"},{"Identifier":"7b5fe08a-dcea-46f6-b8d4-c6095989645a"},{"Identifier":"e89f195c-fcea-4d3a-836f-c78c1e6b3bfe"}]]]>
+  </BlogPostContentDXTopics>
+  <BlogPostContentPublishedDate>2024-02-22 19:28:00Z</BlogPostContentPublishedDate>
+  <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
+  <ContentItemDataCommonDataID>
+    <GUID>6661402f-8cb6-4850-9fca-68f1c7683e16</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>XperienceByKenticoRefresh-February22_2024-t8xl2zb9</CodeName>
+      <GUID>0c6ab58d-cd13-4b2b-9945-0dacdabe882e</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>22078b3d-0d8c-4e6e-bbe4-9b92c0f604f8</ContentItemDataGUID>
+</contentitemdata.kenticocommunity.blogpostcontent>

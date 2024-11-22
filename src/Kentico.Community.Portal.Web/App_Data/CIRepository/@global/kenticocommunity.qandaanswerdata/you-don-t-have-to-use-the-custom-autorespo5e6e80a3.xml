@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>You-don-t-have-to-use-the-custom-autorespo5e6e80a3</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+You don't _have_ to use the custom autoresponder to achieve what you want. Take a look at the Kentico Community Portal which [has this functionality built in](https://github.com/Kentico/community-portal/blob/v29.6.1.6/src/Kentico.Community.Portal.Admin/UIPages/FormInternalAutoresponderTab.cs).
+
+When a visitor submits a form, the normal autoresponder is sent back to them. That autoresponder is designed and managed in the Email channel.
+
+The internal autoresponder (notification) recipient is selected from a list. This is a single user selection in the Community Portal but you could adapt it to multiple user selection if you needed. This is done through an extension to the administration UI.
+
+The application then [hooks into the underlying automation system](https://github.com/Kentico/community-portal/blob/v29.6.1.6/src/Kentico.Community.Portal.Web/Features/Forms/CommunityAutomationEmailAdapter.cs) and manually sends an "automation" email to the internal recipient when the form is submitted on the website. This _can_ use some logic to determine who to send an email to for each specific form.
+
+***
+
+All that said... [notifications for administration users](https://roadmap.kentico.com/c/221-notifications-for-admin-ui-users) is coming up quick on the roadmap which includes assigning internal notification recipients for form submissions. So, if you don't need the functionality today you can save some custom development by waiting for us to ship the feature.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-10-29 16:15:45Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>e7ca7814-7b7e-4311-bd77-883c97077d81</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Email-Notifications-from-Forms-d5764091-9vipbroy</CodeName>
+    <GUID>ab41511b-de8c-4109-b81a-0a70d86bef74</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

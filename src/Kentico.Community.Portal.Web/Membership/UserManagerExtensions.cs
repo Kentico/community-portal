@@ -1,5 +1,7 @@
 using System.Security.Claims;
+using CMS.DataEngine;
 using CMS.Membership;
+using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Web.Membership;
 
 namespace Microsoft.AspNetCore.Identity;
@@ -31,7 +33,7 @@ public static class UserManagerExtensions
     /// <param name="httpContext"></param>
     /// <param name="userInfoProvider"></param>
     /// <returns></returns>
-    public static async Task<bool> CanManageContent(this UserManager<CommunityMember> userManager, HttpContext httpContext, IUserInfoProvider userInfoProvider)
+    public static async Task<bool> CanManageContent(this UserManager<CommunityMember> userManager, HttpContext httpContext, IInfoProvider<UserInfo> userInfoProvider)
     {
         var currentUser = await userManager.CurrentUser(httpContext);
 
@@ -50,10 +52,10 @@ public static class UserManagerExtensions
             return false;
         }
 
-        return cmsUser.IsInRole("ContentManager");
+        return cmsUser.IsInRole(PortalWebSiteChannel.ROLE_COMMUNITY_MANAGER);
     }
 
-    public static async Task<bool> CanManageContent(this UserManager<CommunityMember> _, CommunityMember? communityMember, IUserInfoProvider userInfoProvider)
+    public static async Task<bool> CanManageContent(this UserManager<CommunityMember> _, CommunityMember? communityMember, IInfoProvider<UserInfo> userInfoProvider)
     {
         if (communityMember is null)
         {
@@ -70,6 +72,6 @@ public static class UserManagerExtensions
             return false;
         }
 
-        return cmsUser.IsInRole("ContentManager");
+        return cmsUser.IsInRole(PortalWebSiteChannel.ROLE_COMMUNITY_MANAGER);
     }
 }

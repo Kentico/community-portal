@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-kdsain-I-think-bkehren-might-be-on-to-som10a7b4b6</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+@kdsain,
+
+I think @bkehren might be on to something.
+
+In a future release we will have [reusable field schemas](https://roadmap.kentico.com/c/150-reusable-field-schemas) which might help solve your issue.
+
+Multiple Content Types could all have the same set of fields - this would let you retrieve multiple types of content but treat them all the same way.
+
+Ex: they could all implement the same C# interface and allow you to grab their "navigation" fields easily.
+
+You could also create a custom "Mapper" class that encapsulates mapping a "navigation"-enabled Content Type to a consistent `NavigationViewModel` or something similar.
+
+Reusable field scheams is our Xperience by Kentico solution to Page Type inheritance from Kentico Xperience 13.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2023-11-04 00:25:40Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>ea176178-2336-4498-82cb-e9af035de35f</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>27-0-0-Navigation-Item-Reusabilityb9af66de</CodeName>
+    <GUID>bbe368d1-1048-48aa-8168-28c8cf65740b</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

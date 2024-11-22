@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using EnumsNET;
+using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Components.ViewComponents.Pagination;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
@@ -38,22 +39,44 @@ public class QAndASearchViewModel : IPagedViewModel
     public string Query { get; } = "";
     public string SortBy { get; } = "";
     public IReadOnlyList<QAndAPostViewModel> Questions { get; }
-    public ImmutableList<FacetOption> DiscussionTypes { get; }
-    public ImmutableList<FacetOption> DXTopics { get; }
-    public ImmutableList<FacetOption> DiscussionStates { get; }
+    public IReadOnlyList<FacetOption> DiscussionTypes { get; }
+    public int DiscussionTypesSelected { get; }
+    public IReadOnlyList<FacetGroup> DXTopics { get; }
+    public int DXTopicsSelected { get; }
+    public IReadOnlyList<FacetOption> DiscussionStates { get; }
+    public int DiscussionStatesSelected { get; }
     public DiscussionStates DiscussionState { get; }
     public int TotalAppliedFilters { get; }
     public int TotalPages { get; set; }
     [HiddenInput]
     public int Page { get; set; }
 
-    public Dictionary<string, string?> GetRouteData(int page) =>
-        new()
+    public Dictionary<string, string?> GetRouteData(int page)
+    {
+        var routeData = new Dictionary<string, string?>
         {
-            { "query", Query },
-            { "page", page.ToString() },
-            { "sortBy", SortBy }
+            ["page"] = page.ToString()
         };
+
+        if (!string.IsNullOrWhiteSpace(Query))
+        {
+            routeData["query"] = Query;
+        }
+        if (!string.IsNullOrWhiteSpace(SortBy))
+        {
+            routeData["sortBy"] = SortBy;
+        }
+        if (DiscussionTypes.Any(t => t.IsSelected))
+        {
+            routeData["discussionTypes"] = string.Join("&discussionTypes=", DiscussionTypes.Where(t => t.IsSelected).Select(t => t.Value)).Trim('&');
+        }
+        if (DXTopics.Any(g => g.Count > 0))
+        {
+            routeData["dxTopics"] = string.Join("&dxTopics=", DXTopics.SelectMany(t => t.Facets).Where(f => f.IsSelected).Select(f => f.Value)).Trim('&');
+        }
+
+        return routeData;
+    }
 
     public QAndASearchViewModel(QAndASearchRequest request, QAndASearchResult result, List<QAndAPostViewModel> viewModels, QAndATaxonomiesQueryResponse taxonomies)
     {
@@ -62,50 +85,65 @@ public class QAndASearchViewModel : IPagedViewModel
         SortBy = request.SortBy;
         Query = request.SearchText;
         TotalPages = result.TotalPages;
-        DXTopics = [.. taxonomies.DXTopics
-            .Select(x => new FacetOption()
-            {
-                Label = x.DisplayName,
-                Value = x.NormalizedName,
-                Count = result
-                    .DXTopics
-                    .FirstOrDefault(y => y.Label.Equals(x.NormalizedName, StringComparison.InvariantCultureIgnoreCase))
-                    ?.Value ?? 0,
-                IsSelected = request
-                    .DXTopics
-                    .Contains(x.NormalizedName, StringComparer.OrdinalIgnoreCase)
-            })
-            .Where(x => x.Count != 0)
-            .OrderBy(f => f.Label)];
+        DXTopics = BuildGroups(taxonomies.DXTopicsHierarchy, result, request).ToList();
+        DXTopicsSelected = DXTopics.Sum(g => g.Count);
         DiscussionTypes = [.. taxonomies.Types
             .Select(x => new FacetOption()
             {
                 Label = x.DisplayName,
                 Value = x.NormalizedName,
-                Count = result
+                Count = (int)Math.Round(result
                     .DiscussionTypes
                     .FirstOrDefault(y => y.Label.Equals(x.NormalizedName, StringComparison.InvariantCultureIgnoreCase))
-                    ?.Value ?? 0,
+                    ?.Value ?? 0),
                 IsSelected = request
                     .DiscussionTypes
                     .Contains(x.NormalizedName, StringComparer.OrdinalIgnoreCase)
             })
-            .Where(x => x.Count != 0)
             .OrderBy(f => f.Label)];
+        DiscussionTypesSelected = DiscussionTypes.Count(t => t.IsSelected);
         DiscussionStates = [..Enums.GetMembers<DiscussionStates>()
             .Select(m => new FacetOption()
             {
                 Label = m.AsString(EnumFormat.Description) ?? "",
                 Value = (m.AsString(EnumFormat.Name) ?? "").ToLowerInvariant(),
-                Count = result
+                Count = (int)Math.Round(result
                     .DiscussionStates
                     .FirstOrDefault(y => y.Label.Equals(m.AsString(EnumFormat.Name), StringComparison.InvariantCultureIgnoreCase))
-                    ?.Value ?? 0,
+                    ?.Value ?? 0),
                 IsSelected = request.DiscussionStates.Contains(m.AsString(EnumFormat.Name) ?? "", StringComparer.OrdinalIgnoreCase)
             })
-            .Where(x => x.Count != 0)
             .OrderBy(f => f.Label)];
-        TotalAppliedFilters = DXTopics.Count(t => t.IsSelected) + DiscussionTypes.Count(t => t.IsSelected);
+        DiscussionStatesSelected = DiscussionStates.Count(t => t.IsSelected);
+        TotalAppliedFilters = DXTopics.Sum(t => t.Count) + DiscussionTypes.Count(t => t.IsSelected);
+
+        IEnumerable<FacetGroup> BuildGroups(IReadOnlyList<TaxonomyTag> parentTags, QAndASearchResult results, QAndASearchRequest request)
+        {
+            foreach (var parent in parentTags)
+            {
+                yield return new FacetGroup()
+                {
+                    Label = parent.DisplayName,
+                    Value = parent.NormalizedName,
+                    Count = parent.Children.Count(c => request
+                        .DXTopics
+                        .Contains(c.NormalizedName, StringComparer.OrdinalIgnoreCase)),
+                    Facets = [.. parent.Children
+                        .Select(x => new FacetOption()
+                        {
+                            Label = x.DisplayName,
+                            Value = x.NormalizedName,
+                            Count = (int)Math.Round(result
+                                .DXTopics
+                                .FirstOrDefault(t => t.Label.Equals(x.NormalizedName, StringComparison.InvariantCultureIgnoreCase))?.Value ?? 0),
+                            IsSelected = request
+                                .DXTopics
+                                .Contains(x.NormalizedName, StringComparer.OrdinalIgnoreCase)
+                        })
+                        .If(string.Equals(parent.NormalizedName, "Refreshes", StringComparison.OrdinalIgnoreCase), fs => fs.OrderByDescending(x => x.Label))],
+                };
+            }
+        }
     }
 }
 

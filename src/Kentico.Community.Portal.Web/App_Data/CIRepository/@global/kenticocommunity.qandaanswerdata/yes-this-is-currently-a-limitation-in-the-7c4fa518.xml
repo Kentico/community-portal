@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Yes-this-is-currently-a-limitation-in-the-7c4fa518</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+Yes, this is currently a limitation in the API, which I believe is being improved in [this planned refresh](https://roadmap.kentico.com/c/193-new-api-cross-content-type-querying "this planned refresh") update for March 2024. I understand it will let you query for pages a bit more generically, without having to specify the content type names.
+
+Until then, to build a sitemap on [my blog site](https://www.goldfinch.me/sitemap.xml "my blog site") I have done the retrieval like this...
+
+```
+        private async Task<List<SitemapNode>> GetSitemapNodesAsync()
+        {
+            // TODO: redo this when APIs are better
+            var homePages = await GetHomePagesAsync();
+            var blogListPages = await GetBlogListingPagesAsync();
+            var innerPages = await GetInnerPagesAsync();
+            var blogPostPages = await GetBlogPostPagesAsync();
+
+            List<SitemapNode> sitemapNodes =
+            [
+                .. homePages,
+                .. blogListPages,
+                .. innerPages,
+                .. blogPostPages,
+            ];
+
+            return sitemapNodes;
+        }
+```
+
+Basically I'm doing a ContentItemQueryBuilder query per content type and returning a generic `SitemapNode` class that will be used in the rendering of the sitemap.
+
+This isn't an ideal approach, but something I'm happy to do until the API is ready. Hope this helps!
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-02-06 14:49:46Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>6e44ea9f-13f3-4393-b36f-9287e3c5d19f</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Best-way-to-approach-Breadcrumbs-and-Site-74087926</CodeName>
+    <GUID>5aea48f9-cd82-431c-8d94-b1669d03c3fd</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

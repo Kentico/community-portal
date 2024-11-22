@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ma.automationstep>
+  <StepActionParameters />
+  <StepDefinition>
+    <Step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <TimeoutEnabled>true</TimeoutEnabled>
+      <TimeoutInterval>day;1/1/0001 12:00:00 AM;2</TimeoutInterval>
+      <TimeoutTarget>00000000-0000-0000-0000-000000000000</TimeoutTarget>
+      <SourcePoints>
+        <SourcePoint Guid="9c64f20a-c85f-4b14-952e-22bdfaf203f2">
+          <Label>workflowsourcepoint.standard</Label>
+          <Type>0</Type>
+          <StepRolesSecurity>0</StepRolesSecurity>
+          <StepUsersSecurity>0</StepUsersSecurity>
+        </SourcePoint>
+      </SourcePoints>
+      <Position>
+        <X>-1</X>
+        <Y>-1</Y>
+      </Position>
+    </Step>
+  </StepDefinition>
+  <StepDisplayName>Wait 2 days</StepDisplayName>
+  <StepGUID>299c824e-7aba-495e-aef8-1a6ad6744331</StepGUID>
+  <StepName>Wait2Days</StepName>
+  <StepRolesSecurity>0</StepRolesSecurity>
+  <StepType>10</StepType>
+  <StepUsersSecurity>0</StepUsersSecurity>
+  <StepWorkflowID>
+    <CodeName>NewsletterConfirmationReminder</CodeName>
+    <GUID>f7a212b3-5b2f-4bc7-96ef-b4ddd6d095de</GUID>
+    <ObjectType>ma.automationprocess</ObjectType>
+  </StepWorkflowID>
+  <StepWorkflowType>3</StepWorkflowType>
+</ma.automationstep>

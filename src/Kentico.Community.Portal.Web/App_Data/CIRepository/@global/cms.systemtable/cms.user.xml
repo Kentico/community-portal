@@ -40,6 +40,12 @@
           <defaultvalue>False</defaultvalue>
         </properties>
       </field>
+      <field column="UserFailedLoginAttempts" columnprecision="0" columntype="integer" enabled="true" guid="e6de69e5-3583-4927-91ee-f26dcf53f31d" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="UserLockoutEnd" columnprecision="7" columntype="datetime" enabled="true" guid="c37477fe-7208-4bd0-a89f-5306950b78ee" system="true" />
     </form>
   </ClassFormDefinition>
   <ClassGUID>2e02c378-0f3d-45de-9b2d-b8cf2bd87b55</ClassGUID>

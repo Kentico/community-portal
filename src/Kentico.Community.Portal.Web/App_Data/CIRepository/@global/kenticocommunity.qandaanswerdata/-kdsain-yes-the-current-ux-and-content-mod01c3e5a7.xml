@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-kdsain-yes-the-current-UX-and-content-mod01c3e5a7</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+@kdsain - yes, the current UX and content modeling design is intentional with v27.0.0
+
+When creating a new Content Type, you can select from Pages, Emails, or Reusable content.
+
+Pages and Emails are channel-specific and currently are only available in the channels they are associated with. Reusable content is meant to be used across any channel and is authored/created in the Content Hub.
+
+We don't currently enable accessing Pages, which are channel-specific, from reusable Content Items in the Content Hub, which are channel-independent.
+
+This could change in the future, but our guidance today would be to reference content in the opposite direction - from a channel item (like a Page or Email) to the Content Hub, or from a channel item to another channel item of the same type (like Page to Page).
+
+If I'm misunderstanding your approach, let me know, but we also don't recommend modeling pages to also serve the purpose of navigation. Instead we suggest you [model navigation as its own Content Type](https://docs.xperience.io/x/rZTWCQ) (specifically a Page Content Type that has "Include in routing" disabled).
+
+From this Navigation Content Type, you can create (multiple) menus dynamically in the Page Tree of a website channel.
+
+Here's an example from our Kbank demo solution.
+
+[![Kbank page tree navigation](/getmedia/ea759511-384c-45a4-bb06-80c97a461e17/xperience-by-kentico-kbank-navigation-content-20231102.webp)](/getmedia/ea759511-384c-45a4-bb06-80c97a461e17/xperience-by-kentico-kbank-navigation-content-20231102.webp)
+
+With this approach your navigation can be as flexible as you need it to be, modeled as its own content, and independent of the hierarchy of other navigable pages in Page Tree.
+
+It also improves site performance because clearing cache for a page linked in the navigation doesn't require clearing the cache for the whole site!
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2023-11-03 03:28:48Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>0f88923a-30bf-4e19-b004-5aef622a1600</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>27-0-0-Navigation-Item-Reusabilityb9af66de</CodeName>
+    <GUID>bbe368d1-1048-48aa-8168-28c8cf65740b</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

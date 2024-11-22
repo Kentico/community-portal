@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>8805073f-cdcf-4e68-9ac5-05ad61917e27</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Can-I-filter-on-linked-items-when-retriev-81fde7ed</CodeName>
+      <GUID>520a03d0-3020-4dcd-bc56-18415aff94ea</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>468c7462-3251-4e67-bff5-4a148fa292df</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent><![CDATA[
+In my react native  application im using the graphQL endpoint to retrieve the data. 
+
+I am trying to get my 'related' insights based on a linked categories field
+
+Like this : 
+
+```{
+  CollectionName(languageName: "nl", useLanguageFallbacks: true) {
+    items {
+      insights(where: { categories: { some: { categoryKey: { in: ["Data"] }}}})  {
+        items  {
+            teaserImage {
+            path
+            }
+          articleTitle
+          articleDescription
+          introTitle 
+          introText
+          articleBody
+          articleConclusion
+          categories {
+            items {
+              categoryKey
+              categoryValue
+            }
+          }
+          publishDate
+          
+        }
+      }
+    }
+  }
+}```
+
+I got the follwoing error 
+`The specified input object field 'categories' does not exist.`
+
+**It seems like I am not able to acces 'linked' fields. **
+
+I alrady tried this, like the docs are also mentioning: 
+
+```
+{
+      CollectionName(languageName: "nl", useLanguageFallbacks: true) {
+        items {
+          insights  {
+            items  {
+                teaserImage {
+                path
+                }
+              articleTitle
+              articleDescription
+              introTitle 
+              introText
+              articleBody
+              articleConclusion
+              categories (where: { categoryKey: { in: ["Data"] }}) {
+                items {
+                  categoryKey
+                  categoryValue
+                }
+              }
+              publishDate
+              
+            }
+          }
+        }
+      }
+    }
+```
+
+Then I retrieve all the insights and it just filters the categories inside it. 
+
+Thanks in advance! 
+
+---
+
+**Environment**
+- Xperience by Kentico version: [28.4.1]
+- .NET version: [8]
+- Deployment environment: [Local|Azure]
+- Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com/developers-and-admins/development/content-retrieval/retrieve-headless-content#basic-querying)
+]]></QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2024-04-26 18:32:38Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2024-04-26 18:32:38Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle><![CDATA[Can I filter on linked items when retrieving headless content via the GraphQL API endpoint?]]></QAndAQuestionPageTitle>
+</contentitemdata.kenticocommunity.qandaquestionpage>

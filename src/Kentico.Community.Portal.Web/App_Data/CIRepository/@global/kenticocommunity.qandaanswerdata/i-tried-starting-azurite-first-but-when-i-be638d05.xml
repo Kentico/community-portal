@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>I-tried-starting-Azurite-first-but-when-I-be638d05</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+I tried starting Azurite first but when I do that I get a similar but different error, plus sometimes VS gives me an "Unable to connect to web server 'Portal.Web' error message too. This is the new error when Azurite is running:
+
+fail: Microsoft.Extensions.Hosting.Internal.Host[9]
+      BackgroundService failed
+      CMS.DataEngine.DataClassNotFoundException: [DataClassInfoProvider.GetClassStructureInfoFromDB]: Class information for class 'KenticoCommunity.SupportRequestConfiguration' not found.
+         at CMS.DataEngine.DataClassInfoProvider.GetClassStructureInfoFromDB(String className)
+         at CMS.DataEngine.ClassStructureInfo.GetClassInfo(String className)
+         at CMS.DataEngine.ObjectTypeInfo.get_ClassStructureInfo()
+         at CMS.DataEngine.ObjectQueryBase`2.GetClassStructureInfo()
+         at CMS.DataEngine.DataQueryBase`1.GetDefaultSource()
+         at CMS.DataEngine.DataQueryBase`1.EnsureDefaultSource(DataQuerySettings settings)
+         at CMS.DataEngine.DataQueryBase`1.GetCompleteSettings(IDataQuery executingQuery)
+         at CMS.DataEngine.ObjectQueryBase`2.GetExecutingQuery(DataQuerySettings settings)
+         at CMS.DataEngine.DataQueryBase`1.GetReaderFromDBAsync(CommandBehavior commandBehavior, Boolean newConnection, CancellationToken cancellationToken)
+         at CMS.DataEngine.DataQueryBase`1.GetAsyncEnumerableResult(CommandBehavior commandBehavior, Boolean newConnection, CancellationToken cancellationToken)+MoveNext()
+         at CMS.DataEngine.DataQueryBase`1.GetAsyncEnumerableResult(CommandBehavior commandBehavior, Boolean newConnection, CancellationToken cancellationToken)+System.Threading.Tasks.Sources.IValueTaskSource<System.Boolean>.GetResult()
+         at CMS.DataEngine.DataExtensions.As[InfoType](IAsyncEnumerable`1 dataRecords, Func`2 createObjectFunc, CancellationToken cancellationToken)
+         at CMS.DataEngine.DataExtensions.As[InfoType](IAsyncEnumerable`1 dataRecords, Func`2 createObjectFunc, CancellationToken cancellationToken)
+         at Kentico.Community.Portal.Web.Features.Support.SupportMessageProcessorHostedService.<GetConfiguration>b__19_0(CacheSettings cs) in F:\Client Files\KenticoCommunity\community-portal\src\Kentico.Community.Portal.Web\Features\Support\SupportMessageProcessorHostedService.cs:line 146
+         at CMS.Helpers.ProgressiveCache.<>c__DisplayClass6_0`1.<<LoadCoreAsync>b__0>d.MoveNext()
+      --- End of stack trace from previous location ---
+         at CMS.Helpers.ProgressiveLoadItem`1.ExecuteTaskAsync(CancellationToken cancellationToken)
+         at CMS.Helpers.ProgressiveLoadItem`1.GetResultAsync(CancellationToken cancellationToken)
+         at CMS.Helpers.ProgressiveLoader.GetResultAsync[TData](IProgressiveLoadItem progressiveLoadItem, String progressiveItemName, CancellationToken cancellationToken)
+         at CMS.Helpers.ProgressiveCache.LoadCoreAsync[TData](Func`3 loadDataFuncAsync, CacheSettings settings, CancellationToken cancellationToken)
+         at Kentico.Community.Portal.Web.Features.Support.SupportMessageProcessorHostedService.GetConfiguration() in F:\Client Files\KenticoCommunity\community-portal\src\Kentico.Community.Portal.Web\Features\Support\SupportMessageProcessorHostedService.cs:line 142
+         at Kentico.Community.Portal.Web.Features.Support.SupportMessageProcessorHostedService.ExecuteAsync(CancellationToken stoppingToken) in F:\Client Files\KenticoCommunity\community-portal\src\Kentico.Community.Portal.Web\Features\Support\SupportMessageProcessorHostedService.cs:line 48
+         at Microsoft.Extensions.Hosting.Internal.Host.TryExecuteBackgroundServiceAsync(BackgroundService backgroundService)
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: https://localhost:45039
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: https://localhost:45040
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:45038
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: F:\Client Files\KenticoCommunity\community-portal\src\Kentico.Community.Portal.Web
+crit: Microsoft.Extensions.Hosting.Internal.Host[10]
+      The HostOptions.BackgroundServiceExceptionBehavior is configured to StopHost. A BackgroundService has thrown an unhandled exception, and the IHost instance is stopping. To avoid this behavior, configure this to Ignore; however the BackgroundService will not be restarted.
+      CMS.DataEngine.DataClassNotFoundException: [DataClassInfoProvider.GetClassStructureInfoFromDB]: Class information for class 'KenticoCommunity.SupportRequestConfiguration' not found.
+         at CMS.DataEngine.DataClassInfoProvider.GetClassStructureInfoFromDB(String className)
+         at CMS.DataEngine.ClassStructureInfo.GetClassInfo(String className)
+         at CMS.DataEngine.ObjectTypeInfo.get_ClassStructureInfo()
+         at CMS.DataEngine.ObjectQueryBase`2.GetClassStructureInfo()
+         at CMS.DataEngine.DataQueryBase`1.GetDefaultSource()
+         at CMS.DataEngine.DataQueryBase`1.EnsureDefaultSource(DataQuerySettings settings)
+         at CMS.DataEngine.DataQueryBase`1.GetCompleteSettings(IDataQuery executingQuery)
+         at CMS.DataEngine.ObjectQueryBase`2.GetExecutingQuery(DataQuerySettings settings)
+         at CMS.DataEngine.DataQueryBase`1.GetReaderFromDBAsync(CommandBehavior commandBehavior, Boolean newConnection, CancellationToken cancellationToken)
+         at CMS.DataEngine.DataQueryBase`1.GetAsyncEnumerableResult(CommandBehavior commandBehavior, Boolean newConnection, CancellationToken cancellationToken)+MoveNext()
+         at CMS.DataEngine.DataQueryBase`1.GetAsyncEnumerableResult(CommandBehavior commandBehavior, Boolean newConnection, CancellationToken cancellationToken)+System.Threading.Tasks.Sources.IValueTaskSource<System.Boolean>.GetResult()
+         at CMS.DataEngine.DataExtensions.As[InfoType](IAsyncEnumerable`1 dataRecords, Func`2 createObjectFunc, CancellationToken cancellationToken)
+         at CMS.DataEngine.DataExtensions.As[InfoType](IAsyncEnumerable`1 dataRecords, Func`2 createObjectFunc, CancellationToken cancellationToken)
+         at Kentico.Community.Portal.Web.Features.Support.SupportMessageProcessorHostedService.<GetConfiguration>b__19_0(CacheSettings cs) in F:\Client Files\KenticoCommunity\community-portal\src\Kentico.Community.Portal.Web\Features\Support\SupportMessageProcessorHostedService.cs:line 146
+         at CMS.Helpers.ProgressiveCache.<>c__DisplayClass6_0`1.<<LoadCoreAsync>b__0>d.MoveNext()
+      --- End of stack trace from previous location ---
+         at CMS.Helpers.ProgressiveLoadItem`1.ExecuteTaskAsync(CancellationToken cancellationToken)
+         at CMS.Helpers.ProgressiveLoadItem`1.GetResultAsync(CancellationToken cancellationToken)
+         at CMS.Helpers.ProgressiveLoader.GetResultAsync[TData](IProgressiveLoadItem progressiveLoadItem, String progressiveItemName, CancellationToken cancellationToken)
+         at CMS.Helpers.ProgressiveCache.LoadCoreAsync[TData](Func`3 loadDataFuncAsync, CacheSettings settings, CancellationToken cancellationToken)
+         at Kentico.Community.Portal.Web.Features.Support.SupportMessageProcessorHostedService.GetConfiguration() in F:\Client Files\KenticoCommunity\community-portal\src\Kentico.Community.Portal.Web\Features\Support\SupportMessageProcessorHostedService.cs:line 142
+         at Kentico.Community.Portal.Web.Features.Support.SupportMessageProcessorHostedService.ExecuteAsync(CancellationToken stoppingToken) in F:\Client Files\KenticoCommunity\community-portal\src\Kentico.Community.Portal.Web\Features\Support\SupportMessageProcessorHostedService.cs:line 48
+         at Microsoft.Extensions.Hosting.Internal.Host.TryExecuteBackgroundServiceAsync(BackgroundService backgroundService)
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+
+F:\Client Files\KenticoCommunity\community-portal\src\Kentico.Community.Portal.Web\bin\Debug\net8.0\Kentico.Community.Portal.Web.exe (process 11976) exited with code 0.
+To automatically close the console when debugging stops, enable Tools->Options->Debugging->Automatically close the console when debugging stops.
+Press any key to close this window . . .
+
+
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-04-05 00:40:05Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>53d8f416-d37e-4045-8bb9-c185734fdb02</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Cannot-get-Community-Portal-to-run-locall-7d5b1424</CodeName>
+    <GUID>46be700e-1d90-4bf5-b3f2-2a47e1d1d810</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

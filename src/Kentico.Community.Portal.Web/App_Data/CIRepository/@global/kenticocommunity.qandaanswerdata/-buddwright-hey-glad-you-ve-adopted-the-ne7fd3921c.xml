@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-buddwright-Hey-Glad-you-ve-adopted-the-ne7fd3921c</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+@buddwright
+
+Hey! Glad you've adopted the new APIs.
+
+Make sure you're doing a full build to use the re-generated content types C# classes.
+
+Also, make sure you have the "AssemblyDiscoverable" attribute somewhere in the project containing your generated content type classes.
+
+My preferred approach is to use an attribute in the `.csproj`, because this attribute tells Xperience to pay attention to the assembly/project when looking for types and configuration.
+
+```xml
+  <ItemGroup>
+    <AssemblyAttribute Include="CMS.AssemblyDiscoverableAttribute">
+    </AssemblyAttribute>
+  </ItemGroup>
+  ```
+  
+But you can also include the attribute in any compilable C# file in the project.
+
+```csharp
+using CMS;
+
+[assembly: AssemblyDiscoverable]
+```
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-03-25 21:48:06Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>f650057e-dc12-456e-822d-66c49807c981</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Blog-Discussion-Xperience-by-Kentico-Refr-960adf96</CodeName>
+    <GUID>6aa278c0-f9e0-43e2-9f67-c0d3d632e5ba</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

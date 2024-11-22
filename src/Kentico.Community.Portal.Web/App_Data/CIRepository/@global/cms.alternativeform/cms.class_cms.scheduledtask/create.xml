@@ -44,27 +44,18 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="TaskAssemblyName" enabled="true" guid="4c567e00-bf7a-42e8-878b-a5befde1faed" visible="true" order="16">
+      <field column="TaskIdentifier" enabled="true" guid="75a90f00-4b01-4abf-b135-3ce892d2851f" visible="true" order="16">
         <settings>
-          <controlname>Kentico.Administration.TextInput</controlname>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
         </settings>
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>{$base.scheduledtasks.assembly$}</fieldcaption>
+          <fieldcaption>Implementation</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="TaskClass" enabled="true" guid="c7a260a0-d909-4e9e-b1d3-bcbda7eb9076" visible="true" allowempty="" order="17">
-        <settings>
-          <controlname>Kentico.Administration.TextInput</controlname>
-        </settings>
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>{$base.scheduledtasks.class$}</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-      </field>
-      <field column="TaskInterval" columnsize="200" enabled="true" guid="02900d9c-c032-4081-9532-a48c339dbbce" visible="true" order="18">
+      <field column="TaskInterval" columnsize="200" enabled="true" guid="02900d9c-c032-4081-9532-a48c339dbbce" visible="true" order="17">
         <settings>
           <controlname>Kentico.Administration.TextArea</controlname>
           <CopyButtonVisible>False</CopyButtonVisible>
@@ -77,7 +68,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="TaskData" columnprecision="0" enabled="true" guid="a8fd0828-3456-483d-9845-f93c6d9fc9fd" visible="true" order="19">
+      <field column="TaskData" columnprecision="0" enabled="true" guid="a8fd0828-3456-483d-9845-f93c6d9fc9fd" visible="true" order="18">
         <settings>
           <controlname>Kentico.Administration.TextArea</controlname>
           <CopyButtonVisible>False</CopyButtonVisible>
@@ -93,7 +84,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="TaskEnabled" columnprecision="0" enabled="true" guid="dbd5d77f-f7f4-4da4-87f8-9027cbcca5e1" visible="true" order="20">
+      <field column="TaskEnabled" columnprecision="0" enabled="true" guid="dbd5d77f-f7f4-4da4-87f8-9027cbcca5e1" visible="true" order="19">
         <settings>
           <controlname>Kentico.Administration.Checkbox</controlname>
         </settings>
@@ -104,7 +95,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="TaskID" guid="4419f729-75ac-4eb7-a4d4-bdcdb8d03884" order="21" />
+      <field column="TaskID" guid="4419f729-75ac-4eb7-a4d4-bdcdb8d03884" order="20" />
     </form>
   </FormDefinition>
   <FormDisplayName>create</FormDisplayName>

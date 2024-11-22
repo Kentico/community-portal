@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Hi-Mike-No-I-am-talking-about-xperience-byc8f8a81a</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+Hi Mike,
+
+No I am talking about [xperience-by-kentico-k13ecommerce](https://github.com/Kentico/xperience-by-kentico-k13ecommerce "xperience-by-kentico-k13ecommerce")
+
+The XbyK project get ApiException: The HTTP status code of the response was not expected (405) from checkout cart. I get this error message from remove item, update item but add item work. the detailed error look like this `Kentico.Xperience.K13Ecommerce.StoreApi.KenticoStoreApiClient.RemoveItemFromCartAsync(Guid shoppingCartGUID, int itemId, CancellationToken cancellationToken) in swaggerClient.cs, line 2478`
+
+`Kentico.Xperience.K13Ecommerce.StoreApi.KenticoStoreApiClient.UpdateItemQuantityAsync(Guid shoppingCartGUID, int itemId, int quantity, CancellationToken cancellationToken) in swaggerClient.cs, line 2377`
+
+`Kentico.Xperience.K13Ecommerce.StoreApi.KenticoStoreApiClient.ValidateCartItemsAsync(Guid shoppingCartGUID, CancellationToken cancellationToken) in swaggerClient.cs, line 3768`
+
+but products sync, add item to cart worked. I used exactly the same way of codes in goat example. I followed the document also
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-08-07 20:21:42Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>77ffdfeb-3ee4-42f8-acb9-f0d512746199</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Kentico-ecommerce-13-with-dxp-61ed1c75-ko53yefr</CodeName>
+    <GUID>222ae573-c7f4-4e00-9c9f-e9f728916998</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

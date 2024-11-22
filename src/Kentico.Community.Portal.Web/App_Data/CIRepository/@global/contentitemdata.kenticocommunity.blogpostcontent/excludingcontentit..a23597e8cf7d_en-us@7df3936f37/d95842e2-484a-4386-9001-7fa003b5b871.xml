@@ -90,7 +90,7 @@ We make sure that we only execute this event in "Development" environments - we 
 
 Now let's create our `EnsureLocalCodeNames` event handler method.
 
-```sharp
+```csharp
 private void EnsureLocalCodeNames(object sender, CreateWebPageEventArgs e)
 {
     if (string.Equals(e.ContentTypeName, CoffeePage.CONTENT_TYPE_NAME))
@@ -131,9 +131,9 @@ If we need to exclude other items in the future, we can update our global event 
 ]]>
   </BlogPostContentContentMarkdown>
   <BlogPostContentDXTopics>
-    <![CDATA[[{"Identifier":"ba042c18-9429-4cf0-91a8-dabf62520a27"},{"Identifier":"426073bb-93c4-4f20-a263-65bcae9ee019"},{"Identifier":"378366be-601d-42b0-a719-5daee7392fb9"}]]]>
+    <![CDATA[[{"Identifier":"9d7f9413-3142-4f27-a6bc-fb9ec266d45f"},{"Identifier":"9c5dd783-aea6-497e-833a-2ff4e1a6ce89"},{"Identifier":"1015b219-7365-459f-9474-0c96a842291c"},{"Identifier":"578bdfaa-ab53-4901-8c0d-1a90f833dc0f"}]]]>
   </BlogPostContentDXTopics>
-  <BlogPostContentPublishedDate>2023-10-21 19:48:00Z</BlogPostContentPublishedDate>
+  <BlogPostContentPublishedDate>2023-10-21 23:48:00Z</BlogPostContentPublishedDate>
   <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
   <ContentItemDataCommonDataID>
     <GUID>d7759517-4202-44d3-aa17-a23597e8cf7d</GUID>

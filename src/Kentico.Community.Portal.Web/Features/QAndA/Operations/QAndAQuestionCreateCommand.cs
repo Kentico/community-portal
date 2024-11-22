@@ -16,6 +16,7 @@ public record QAndAQuestionCreateCommand(
     string QuestionTitle,
     string QuestionContent,
     Guid DiscussionTypeTagIdentifier,
+    IEnumerable<TagReference> DXTopics,
     Maybe<BlogPostPage> LinkedBlogPost) : ICommand<Result<int>>;
 public class QAndAQuestionCreateCommandHandler(
     WebPageCommandTools tools,
@@ -40,8 +41,8 @@ public class QAndAQuestionCreateCommandHandler(
         {
             { nameof(QAndAQuestionPage.QAndAQuestionPageDateCreated), now },
             { nameof(QAndAQuestionPage.QAndAQuestionPageDateModified), now },
-            // Content is not sanitized because it can include fenced code blocks.
             { nameof(QAndAQuestionPage.QAndAQuestionPageTitle), request.QuestionTitle },
+            // Content is not sanitized because it can include fenced code blocks.
             { nameof(QAndAQuestionPage.QAndAQuestionPageContent), request.QuestionContent },
             { nameof(QAndAQuestionPage.QAndAQuestionPageAuthorMemberID), request.MemberAuthor.Id },
             { nameof(QAndAQuestionPage.QAndAQuestionPageAcceptedAnswerDataGUID), Guid.Empty },
@@ -49,6 +50,9 @@ public class QAndAQuestionCreateCommandHandler(
                 nameof(QAndAQuestionPage.QAndAQuestionPageDiscussionType),
                 JsonSerializer.Serialize<IEnumerable<TagReference>>([new() { Identifier = request.DiscussionTypeTagIdentifier }])
             },
+            {
+                nameof(QAndAQuestionPage.QAndAQuestionPageDXTopics), JsonSerializer.Serialize(request.DXTopics)
+            }
         });
         request.LinkedBlogPost
             .Execute(post =>

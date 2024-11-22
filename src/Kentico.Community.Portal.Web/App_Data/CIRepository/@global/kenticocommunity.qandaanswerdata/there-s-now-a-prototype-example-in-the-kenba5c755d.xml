@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>There-s-now-a-prototype-example-in-the-Kenba5c755d</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+There's now a prototype example in the [Kentico Community Portal](https://github.com/Kentico/community-portal/releases/tag/v29.6.1.10) which shows how you can send file contents to the browser and initiate a download of the file.
+
+* [RecipientListOverviewExtender.cs](https://github.com/Kentico/community-portal/blob/v29.6.1.10/src/Kentico.Community.Portal.Admin/Features/RecipientLists/RecipientListOverviewExtender.cs#L66) - creates the `EXPORT_LIST` command called by the client
+* [DataExportComponent.tsx](https://github.com/Kentico/community-portal/blob/v29.6.1.10/src/Kentico.Community.Portal.Admin/Client/src/components/DataExportComponent.tsx#L60) - initiates the file download from a CTA
+
+I'm sure there are many ways to refine this setup, but it "works" and should be able to scale to downloading files up to a hundred MB in size.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-11-05 21:38:37Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>376b9b25-c9a3-4101-aebf-a83e5d10be7f</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Trigger-a-file-download-through-a-PageCommand-9376fa90-ct73purk</CodeName>
+    <GUID>80882485-0691-4460-9ddd-3a3f5b3d2b5c</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

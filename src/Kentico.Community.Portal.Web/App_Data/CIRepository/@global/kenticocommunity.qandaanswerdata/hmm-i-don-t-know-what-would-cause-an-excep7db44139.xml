@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Hmm-I-don-t-know-what-would-cause-an-excep7db44139</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+Hmm. I don't know what would cause an exception when logging events to the Event Log.
+
+I did truncate that table at one point - that might be what is causing the issue?
+
+I released [a new version](https://github.com/Kentico/community-portal/releases/tag/v29.3.3.0) of the Community Portal.
+
+Try restoring that database backup and see if it works for you.
+
+I know the database _does_ work because the CI/CD pipeline restores the database backup, then restores the CI repository, and then registers member accounts (which would cause a write to the Event Log).
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-08-17 02:40:44Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>0e9892f5-e98b-4a79-a97d-08514f90184d</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Issue-with-community-portal-repository-v29-3-0-5-sql-erros-on-startup-d7c8c740-ooghnopd</CodeName>
+    <GUID>01e457c3-2ce4-4eaf-8179-9d74c841dd9b</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

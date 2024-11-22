@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.blogpostcontent>
+  <BlogPostContentAuthor>
+    <![CDATA[[{"Identifier":"f9ac36a5-e1a6-4d21-9cb7-beb385d0fea0"}]]]>
+  </BlogPostContentAuthor>
+  <BlogPostContentBlogType>
+    <![CDATA[[{"Identifier":"0cb21dda-384b-4792-8e1b-41034f113d28"}]]]>
+  </BlogPostContentBlogType>
+  <BlogPostContentContentMarkdown>
+<![CDATA[
+To AI or not to AI - that is a question that many marketers are asking themselves today. Not only are they wondering if they [should use GenAI tools themselves](https://www.kentico.com/discover/blog/the-future-of-marketing-ai-infused-martech), but they are also confronting the question "Should we allow another company's AI models to be trained on our content?"
+
+Some have been arguing that traditional search experiences will either [be replaced with large-language model (LLM) based information retrieval](https://www.pcmag.com/news/when-will-chatgpt-replace-search-engines-maybe-sooner-than-you-think) or it at least merge with it. Others argue that [traditional search won't be replaced by LLMs](https://moz.com/blog/chatgpt-replace-google) (at least for now).
+
+That said, some of the arguments presented by Algolia, in their blog post _[Why ChatGPT won’t replace search engines any time soon](https://www.algolia.com/blog/ai/why-chatgpt-wont-replace-search-engines-any-time-soon/)_ have already been countered with technologies like [retrieval augmented generation](https://weaviate.io/blog/llms-and-search#retrieval-augmented-generation)).
+
+Ok, let's assume that traditional SEO-supported search will continue to co-exist with [LLM](https://en.wikipedia.org/wiki/Large_language_model) experiences [like ChatGPT](https://chatgpt.com/). If customers are using both, marketers will want their message to appear in both. That means ensuring ChatGPT knows something about your company is a good thing!
+
+It's just like a site that doesn't optimize for SEO and ends up ranking very low in search results. If you're not part of the LLM's model then no one using it will know about you, right?
+
+Well, some content owners feel they need to push back, like [the NY Times when they sued OpenAI and Microsoft in late 2023](https://www.reuters.com/legal/transactional/ny-times-sues-openai-microsoft-infringing-copyrighted-work-2023-12-27/) and [some authors who sued Meta, Microsoft, and Bloomberg](https://www.reuters.com/legal/litigation/authors-sue-meta-microsoft-bloomberg-latest-ai-copyright-clash-2023-10-18/) (yes, Bloomberg is working on its own commercial LLM product).
+
+These groups either want to be compensated for the use of their content or entirely prevent the LLMs from accessing it. The NY Times' argues that OpenAI and Microsoft's LLM based services return content that is nearly identical to what the publication hosts on its own website - why would people visit their site and pay for a subscription if they can get the answers from a free version of ChatGPT? Is OpenAI profiting off copyright infringement?
+
+Additionally, the "bots" that scrape websites for content that these LLMs are trained on cost the website owners bandwidth and resources. When Google's search crawler bot visits your site you are assuming you'll be compensated in traffic and therefore revenue (assuming you use [a modern DXP like Xperience by Kentico](https://www.kentico.com/platforms/xperience-by-kentico) so you can capitalize on that engagement 😉). But this isn't guaranteed with LLM services that might just "give" the answer to users - potentially without attribution - meaning there's no reason for them to come and visit your site or subscribe to your emails.
+
+These are thorny questions and might lead some marketers to question if they allow their content to be used for LLM training or at least limit _which_ AI bot web crawlers can scrape their content.
+
+Cloudflare has recently announced a tool to help website owners block AI bot traffic in their blog post [Declare your AIndependence: block AI bots, scrapers and crawlers with a single click](https://blog.cloudflare.com/declaring-your-aindependence-block-ai-bots-scrapers-and-crawlers-with-a-single-click).
+
+> To help preserve a safe Internet for content creators, we’ve just launched a brand new “easy button” to block all AI bots.
+
+It's interesting to note this feature wasn't only enabled for Cloudflare's enterprise tier customers!
+
+> It’s available for all customers, including those on our free tier.
+
+In the feature announcement post, Cloudflare details all the data they've gathered about AI bot traffic across their giant network noting which AI bots make the most number of requests.
+
+> We looked at common AI crawler user agents and aggregated the number of requests on our platform from these AI user agents over the last year [...] When looking at the number of requests made to Cloudflare sites, we see that Bytespider, Amazonbot, ClaudeBot, and GPTBot are the top four AI crawlers. Operated by ByteDance, the Chinese company that owns TikTok, Bytespider is reportedly used to gather training data for its large language models (LLMs), including those that support its ChatGPT rival, Doubao.
+
+They also note which customers have the most traffic and which customers block the most AI bots.
+
+> Moreover, the higher-ranked (more popular) an Internet property is, the more likely it is to be targeted by AI bots, and correspondingly, the more likely it is to block such requests.
+
+This seems to be inline with the lawsuit from the NY Times - sites focused on content (which top sites tend to be) potentially have the most to lose and are taking a careful approach.
+
+Cloudflare also notes that some AI bots are not respecting the [robots.txt](https://www.rfc-editor.org/rfc/rfc9309.html#name-the-user-agent-line) exclusion protocol and are even pretending to be real browsers, so they plan to continue updating their AI bot blocking capabilities to deal with this.
+
+> We fear that some AI companies intent on circumventing rules to access content will persistently adapt to evade bot detection. We will continue to keep watch and add more bot blocks to our AI Scrapers and Crawlers rule and evolve our machine learning models to help keep the Internet a place where content creators can thrive and keep full control over which models their content is used to train or run inference on.
+
+Kentico uses Cloudflare as a web application firewall and content delivery network for Xperience by Kentico solutions [running in our SaaS environment](https://docs.kentico.com/x/E6DWCQ). If you are using or are interested in our SaaS service and Cloudflare's AI bot blocking, [send us some feedback](https://roadmap.kentico.com/tabs/6-next-refreshes)!
+
+## Wrap up
+
+So, where do you stand in all of this? I'm sure, like me, you are using services like ChatGPT and [Claude](https://claude.ai) on a regular (if not daily) basis.
+
+Maybe there needs to be some clearer agreement between sites and AI service providers or a better understanding of the payoff for content owners - [the benefit for companies like OpenAI is very clear](https://www.bloomberg.com/news/articles/2024-06-12/openai-doubles-annualized-revenue-to-3-4-billion-information).
+
+Go read [the original Cloudflare feature announcement](https://blog.cloudflare.com/declaring-your-aindependence-block-ai-bots-scrapers-and-crawlers-with-a-single-click) and decide if you are going to opt-out of the AI revolution... at least for your own website.
+]]>
+  </BlogPostContentContentMarkdown>
+  <BlogPostContentDXTopics>
+    <![CDATA[[{"Identifier":"42641617-6e43-42cf-ab40-d3ccf77d0dca"},{"Identifier":"53e66968-e081-4cbf-b471-75c25b2b3a57"},{"Identifier":"c088f691-541c-4f41-be8e-09141f853d76"},{"Identifier":"04589071-087e-4523-854c-0e11551ed166"},{"Identifier":"1a2a8dca-bfab-4c00-ac5d-898d0a08d5e4"},{"Identifier":"482aaf60-a549-4414-9800-475f108fb9ad"},{"Identifier":"79fe8557-f24c-4fd9-ba03-3be795855e15"},{"Identifier":"7c322266-a328-4405-88d3-be8c97df34a6"}]]]>
+  </BlogPostContentDXTopics>
+  <BlogPostContentPublishedDate>2024-07-13 00:30:00Z</BlogPostContentPublishedDate>
+  <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
+  <ContentItemDataCommonDataID>
+    <GUID>f2518e71-f71c-4ba5-ab08-d22f2f536e9e</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Re-post_DeclareYourAIndependence_BlockAIBots_ScrapersAndCrawlersWithASingleClick-oqifwqu9</CodeName>
+      <GUID>745adb98-1d57-4c49-b642-7259e1af37cc</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>6602df2a-2fda-424d-be87-8a8eb5a2e3b4</ContentItemDataGUID>
+</contentitemdata.kenticocommunity.blogpostcontent>

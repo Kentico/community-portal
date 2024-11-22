@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>When-I-see-issues-that-appear-only-for-the42685e9b</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+When I see issues that appear only for the deployed version of an application I investigate in a few areas
+
+1. Infrastructure configuration
+1. Release vs Debug builds
+1. Race conditions
+
+You can rule out #2 by doing a Release build locally and "deploying" the app on your machine with a `dotnet publish` - more specifically the prep steps you take to build your SaaS deployment package.
+
+It's more difficult to test #1, especially since you don't manage the infrastructure for SaaS but I also don't think this is a likely cause.
+
+For #3 you can look for code that uses `Task`/`Task<T>` but hasn't been `await`'d or it is `await`'d in a different order than it was executed. ASP.NET Core middleware and Controller/endpoint code is the most common place to find `Task` based race conditions.
+
+The reason the race conditions show up when the application is deployed is because the execution speed, single request nature of `localhost` hides a lot of problems. Also middleware based race conditions can also be related to #2 in the list above since some middleware paths are only executed in Release mode.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-09-01 17:58:37Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>547a696f-c87a-4616-8d4f-f193c55cb85c</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>SaaS-Event-Log-errors-that-I-cannot-trace-back-to-their-origin-dd1b2e5e-3do7s1mx</CodeName>
+    <GUID>cd08011e-6570-4ecd-88c7-bd0699b1f8ca</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

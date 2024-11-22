@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Use-the-Linking-https-docs-kentico-com-dev6d1040dc</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent><![CDATA[
+Use the [Linking()](https://docs.kentico.com/developers-and-admins/api/content-item-api/reference-content-item-query#forcontenttype-parameterization) content query extension.
+
+It's used in [the Kentico Community Portal project](https://github.com/Kentico/community-portal/blob/v29.2.0.3/src/Kentico.Community.Portal.Web/Features/Blog/Operations/BlogPostPagesLatestQuery.cs#L37) to do the exact thing you are asking about.
+
+```csharp
+// Full query to retrieve entire content graph
+var postsQuery = new ContentItemQueryBuilder().ForContentType(BlogPostPage.CONTENT_TYPE_NAME, queryParams =>
+{
+    _ = queryParams
+        .ForWebsite(request.ChannelName)
+                .Linking(nameof(BlogPostPage.BlogPostPageBlogPostContent), contentItemIDs)
+        .WithLinkedItems(2);
+});
+```
+
+In this example the first parameter passed to `Linking()` is the field name in your Article page content type that references the reusable content item. The second parameter is the Content Item IDs of the article resusable content items.
+
+You _could_ just retrieve the web pages and then glue them to the reusable content items if you already have access to them. But I find it's simpler to retrieve the whole content graph (`.WithLinkedItems(2)`) since this is all behind cache anyway.
+]]></QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2024-07-13 21:05:43Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>0fcff402-7323-4d18-a2d3-e866d08e3cec</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Page-URL-of-content-item-c18fc6ef-xr3qv5iy</CodeName>
+    <GUID>a0e1eebc-8226-403f-bc5e-4f8ba6a56586</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>
