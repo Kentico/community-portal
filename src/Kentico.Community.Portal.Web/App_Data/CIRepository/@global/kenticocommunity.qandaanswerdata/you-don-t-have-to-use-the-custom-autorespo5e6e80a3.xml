@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>You-don-t-have-to-use-the-custom-autorespo5e6e80a3</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 You don't _have_ to use the custom autoresponder to achieve what you want. Take a look at the Kentico Community Portal which [has this functionality built in](https://github.com/Kentico/community-portal/blob/v29.6.1.6/src/Kentico.Community.Portal.Admin/UIPages/FormInternalAutoresponderTab.cs).
 
 When a visitor submits a form, the normal autoresponder is sent back to them. That autoresponder is designed and managed in the Email channel.
@@ -17,7 +18,8 @@ The application then [hooks into the underlying automation system](https://githu
 ***
 
 All that said... [notifications for administration users](https://roadmap.kentico.com/c/221-notifications-for-admin-ui-users) is coming up quick on the roadmap which includes assigning internal notification recipients for form submissions. So, if you don't need the functionality today you can save some custom development by waiting for us to ship the feature.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-10-29 16:15:45Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>e7ca7814-7b7e-4311-bd77-883c97077d81</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

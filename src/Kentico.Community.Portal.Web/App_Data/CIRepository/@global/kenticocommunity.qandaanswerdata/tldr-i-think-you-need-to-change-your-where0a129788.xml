@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>TLDR-I-think-you-need-to-change-your-Where0a129788</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 TLDR;
 
 I think you need to change your `.Where()` syntax to `q.Where(w => w.WhereLike(‘field1’, ‘value’).Or().WhereLike(‘field2’, ‘value’));`
@@ -69,7 +70,8 @@ WHERE [ArticlePagePublishDate] > '2023/08/12' AND ([ArticleTitle] LIKE 'o%' OR [
 ```
 
 This all looks correct to me!
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-09-26 01:11:32Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>1eb3e056-8e01-4fb1-a928-82c605edb08c</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

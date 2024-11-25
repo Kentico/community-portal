@@ -15,6 +15,9 @@ on:
       - "**.json"
       - "**.css"
       - "**.scss"
+      - "**.ts"
+      - "**.tsx"
+      - "**.js"
 
 jobs:
   build_and_test:
@@ -117,9 +120,10 @@ jobs:
         run: |
           ./test/Kentico.Community.Portal.Web.E2E.Tests/bin/Release/net8.0/playwright.ps1 install
 
-      - name: Install Azurite
-        id: azuright
-        uses: potatoqualitee/azuright@e56d2754eb15218d507961493bc83ca037216887 # set as a commit hash for security - v1.1
+      - name: Install Azurite from npm
+        run: npm install -g azurite@3.33.0
+      - name: Run Azurite in Background
+        run: azurite -s -l ./.azurite &
 
       - name: Run Application and E2E Tests
         run: |

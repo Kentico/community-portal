@@ -12,7 +12,8 @@
   <ContentItemDataGUID>9e34be1f-76aa-48cc-9f0d-92e68a6daf4d</ContentItemDataGUID>
   <QAndAQuestionPageAcceptedAnswerDataGUID>57fa5418-af6d-45b5-8ead-9e65723a0864</QAndAQuestionPageAcceptedAnswerDataGUID>
   <QAndAQuestionPageAuthorMemberID>2</QAndAQuestionPageAuthorMemberID>
-  <QAndAQuestionPageContent><![CDATA[
+  <QAndAQuestionPageContent>
+<![CDATA[
 Hi all.
 
 After looking through what is available in terms of validation for form fields, it looks to me like there is only limited validation exposed on the field properties configuration through the use of the required checkbox. It appears then that there are additional controls available with other more specific validation rules built into the logic of the components.
@@ -20,9 +21,14 @@ After looking through what is available in terms of validation for form fields, 
 I can see in the code that there are still references to the RegisterFormValidationRule which is used to define the standard set of validation (regex, min/max, compare, email, and more) available on prior versions of Kentico.
 
 Are there plans to expose these dynamic validation rules through the UI, or is it intended that we create custom components to deal with each validation scenario independently?
-]]></QAndAQuestionPageContent>
+]]>
+  </QAndAQuestionPageContent>
   <QAndAQuestionPageDateCreated>2024-10-21 10:20:38Z</QAndAQuestionPageDateCreated>
   <QAndAQuestionPageDateModified>2024-10-21 10:20:38Z</QAndAQuestionPageDateModified>
-  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
-  <QAndAQuestionPageTitle><![CDATA[Accessing the form validation rules within the form builder]]></QAndAQuestionPageTitle>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle>
+    <![CDATA[Accessing the form validation rules within the form builder]]>
+  </QAndAQuestionPageTitle>
 </contentitemdata.kenticocommunity.qandaquestionpage>

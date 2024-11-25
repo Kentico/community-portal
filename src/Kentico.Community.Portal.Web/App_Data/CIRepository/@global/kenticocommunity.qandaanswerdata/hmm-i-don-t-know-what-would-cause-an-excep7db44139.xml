@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>Hmm-I-don-t-know-what-would-cause-an-excep7db44139</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 Hmm. I don't know what would cause an exception when logging events to the Event Log.
 
 I did truncate that table at one point - that might be what is causing the issue?
@@ -15,7 +16,8 @@ I released [a new version](https://github.com/Kentico/community-portal/releases/
 Try restoring that database backup and see if it works for you.
 
 I know the database _does_ work because the CI/CD pipeline restores the database backup, then restores the CI repository, and then registers member accounts (which would cause a write to the Event Log).
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-08-17 02:40:44Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>0e9892f5-e98b-4a79-a97d-08514f90184d</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

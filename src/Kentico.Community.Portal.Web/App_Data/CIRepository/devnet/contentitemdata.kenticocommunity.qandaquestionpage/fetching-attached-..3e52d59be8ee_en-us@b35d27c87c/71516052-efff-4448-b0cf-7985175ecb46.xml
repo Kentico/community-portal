@@ -12,7 +12,8 @@
   <ContentItemDataGUID>71516052-efff-4448-b0cf-7985175ecb46</ContentItemDataGUID>
   <QAndAQuestionPageAcceptedAnswerDataGUID>1cf2d960-80df-48e8-8e01-e372e6ef4ed4</QAndAQuestionPageAcceptedAnswerDataGUID>
   <QAndAQuestionPageAuthorMemberID>1</QAndAQuestionPageAuthorMemberID>
-  <QAndAQuestionPageContent><![CDATA[
+  <QAndAQuestionPageContent>
+<![CDATA[
 When getting pages using the REST API is there any way to access the data of attached pages?  We have a page type that has a page field but the REST API returns null for that field, even when there is a page populated in that field in the CMS.  That field's page can be accessed server-side in MVC using the generated class files, it is only when calling the REST endpoints that the field returns null.  All of the more standard/basic fields for stuff like text, number etc are present and populated.
 
 Here is the URL I am attempting this with:
@@ -25,9 +26,12 @@ https://EXAMPLE.COM/rest/content/currentsite/defaultculture/childrenof/?format=j
 - .NET version: [4.8]
 - Deployment environment: [Azure]
 - Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com/13/integrating-3rd-party-systems/xperience-rest-service/getting-data-using-rest)
-]]></QAndAQuestionPageContent>
+]]>
+  </QAndAQuestionPageContent>
   <QAndAQuestionPageDateCreated>2024-05-31 23:59:36Z</QAndAQuestionPageDateCreated>
   <QAndAQuestionPageDateModified>2024-05-31 23:59:36Z</QAndAQuestionPageDateModified>
-  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
   <QAndAQuestionPageTitle>Fetching attached pages using REST</QAndAQuestionPageTitle>
 </contentitemdata.kenticocommunity.qandaquestionpage>

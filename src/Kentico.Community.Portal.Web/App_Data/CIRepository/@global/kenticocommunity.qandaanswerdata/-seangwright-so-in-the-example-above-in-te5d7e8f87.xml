@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>-seangwright-So-in-the-example-above-in-te5d7e8f87</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 @seangwright
 
 So in the example above in test method the given functions are mocked which is syntactically correct and the test passes! It's exactly what you'd expect. However the real issue starts when you do the actual calls to the mocked functions to verify that they return the correct values.
@@ -56,7 +57,8 @@ When I debug the test method I see that the value in the `mappedResult` variable
 
 I've also tried this out in v28.4.1, but it yields the same result. It could genuinely be the case that using `xUnit` is what's causing this problem. I'm curious to see whether this actually works in `NUnit`.
 
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-03-27 14:19:51Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>b6f3d13a-9b9c-4737-98cb-5425443297da</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

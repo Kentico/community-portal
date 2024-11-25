@@ -12,7 +12,8 @@
   <ContentItemDataGUID>4340ccb6-3d7b-40d1-8368-5757fd65333c</ContentItemDataGUID>
   <QAndAQuestionPageAcceptedAnswerDataGUID>ca4544b4-cf7b-40eb-a870-408bb9e81981</QAndAQuestionPageAcceptedAnswerDataGUID>
   <QAndAQuestionPageAuthorMemberID>1</QAndAQuestionPageAuthorMemberID>
-  <QAndAQuestionPageContent><![CDATA[
+  <QAndAQuestionPageContent>
+<![CDATA[
 In previous sites, we would use the app.UseStatusCodePagesWithReExecute("/error/{0}") to have a custom error page and handling for the website, however now that the admin and website are the same, this breaks some of Kentico's admin functionality.  Anyone have any idea of how to have a custom error message *only* for the website but not touch any admin stuff?
 
 ***
@@ -22,9 +23,14 @@ In previous sites, we would use the app.UseStatusCodePagesWithReExecute("/error/
 * Xperience by Kentico version: 29.6.0
 * .NET version: 8
 * Execution environment: Local
-]]></QAndAQuestionPageContent>
+]]>
+  </QAndAQuestionPageContent>
   <QAndAQuestionPageDateCreated>2024-10-30 19:23:49Z</QAndAQuestionPageDateCreated>
   <QAndAQuestionPageDateModified>2024-10-30 19:23:49Z</QAndAQuestionPageDateModified>
-  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
-  <QAndAQuestionPageTitle><![CDATA[UseStatusCodePagesWithReExecute conflict with Admin]]></QAndAQuestionPageTitle>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle>
+    <![CDATA[UseStatusCodePagesWithReExecute conflict with Admin]]>
+  </QAndAQuestionPageTitle>
 </contentitemdata.kenticocommunity.qandaquestionpage>

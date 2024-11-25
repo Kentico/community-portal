@@ -12,7 +12,8 @@
   <ContentItemDataGUID>40a00e0a-194b-456a-aa30-4b15b8abe5e6</ContentItemDataGUID>
   <QAndAQuestionPageAcceptedAnswerDataGUID>4bd1e91f-de31-4a48-8ad0-2fb11027a73d</QAndAQuestionPageAcceptedAnswerDataGUID>
   <QAndAQuestionPageAuthorMemberID>2</QAndAQuestionPageAuthorMemberID>
-  <QAndAQuestionPageContent><![CDATA[
+  <QAndAQuestionPageContent>
+<![CDATA[
 I have widget where editor can select products to display. ContentItemSelectorComponent returns Guids of selected products. I need to get some data from product page so in query I need to retreive all product pages which have product from widget selected in field `IEnumerable<Product> ProductContentItem`.
 I would like use this code:
 ```c#
@@ -29,9 +30,14 @@ Thanks
 - .NET version: [8]
 - Deployment environment: [local]
 - Link to relevant [Reference - Content item query](https://docs.kentico.com/developers-and-admins/api/content-item-api/reference-content-item-query)
-]]></QAndAQuestionPageContent>
+]]>
+  </QAndAQuestionPageContent>
   <QAndAQuestionPageDateCreated>2024-06-21 13:06:20Z</QAndAQuestionPageDateCreated>
   <QAndAQuestionPageDateModified>2024-06-21 13:16:01Z</QAndAQuestionPageDateModified>
-  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
-  <QAndAQuestionPageTitle><![CDATA[ContentTypeQueryParameters - Linking works only with item ID]]></QAndAQuestionPageTitle>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle>
+    <![CDATA[ContentTypeQueryParameters - Linking works only with item ID]]>
+  </QAndAQuestionPageTitle>
 </contentitemdata.kenticocommunity.qandaquestionpage>

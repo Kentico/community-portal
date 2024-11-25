@@ -5,13 +5,15 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>I-haven-t-seen-an-example-of-how-to-downloe2fcb1d5</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 I haven't seen an example of how to download a file through a `PageCommand`, but here are some things you could try.
 
 1. Use `ResponseFrom()` and send the file as binary data (not a stream). Turn the response into a `Blob` in the browser. Add an invisible `<a href="...">` to the page and "click" it to trigger the download.
 2. Send the URL of the file in `ResponseFrom()` and turn that into a `<a href="...">Download</a>`. The user can click it and download the file.
 3. If you need special processing or protection of the file you might need to make an administration authorized ASP.NET Core Controller or endpoint that looks up the file and sends the response. You can then send a request to this endpoint from the client instead of invoking a `PageCommand`.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-10-29 16:38:23Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>ab30ac79-997e-4d54-83fe-797e8ed06d19</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>-liamgold-I-have-just-been-playing-with-th8fc61385</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 @liamgold
 
 > I have just been playing with the Taxonomies and Tags, it looks like a great first release! One thing I can see myself needing, is modifying the taxonomies/tags further - I'm thinking being able to add extra fields to tags. In the past, clients might have wanted to associate a Tag with a specific colour, or image, or some other metadata that you'd ideally store against the Tag.
@@ -15,7 +16,8 @@ Yes, [taxonomies in Xperience by Kentico](https://docs.kentico.com/x/taxonomies_
 To keep taxonomies fast (and highly cacheable), we don't support versioning or workflow with them. Which means you aren't penalized with the complexity of the Content hub data if you don't need it. I think if you need to treat taxonomies as content, then model that content as a content type and connect the content type back to the taxonomy with its own Tags field.
 
 There _is_ a `TaxonomyMetadata` column in the `CMS_Taxonomy` table which is used for localization of the taxonomy Title/Description, but it's definitely an implementation detail and not meant to be customized (yet!)
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-03-25 21:55:13Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>d96029a6-145d-4e1c-b89f-06a60d5a5083</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>If-you-have-the-selector-appearing-in-the-dee78c00</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 If you have the selector appearing in the list, it sounds like you've got the C# code done correctly for the component and you need to check the admin customisation project is set up correctly.
 
 I would double check the organization/project name's match, in the `webpack.config.js` file, the csproj of the project that holds your admin c# code, and the class where you've called `RegisterClientModule`. All three need to match or the admin project may not load. Some documentation around this can be found [here](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/prepare-your-environment-for-admin-development).
@@ -16,7 +17,8 @@ If they match, then I would maybe check you've definitely amended the entry poin
 // Exposes components from the module. All added components need to be exported.
 export * from "./components/ColorSelector/ColorSelectorFormComponent";
 ```
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-02-14 20:11:45Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>385a45a2-1960-4531-af22-12e30a8edb75</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

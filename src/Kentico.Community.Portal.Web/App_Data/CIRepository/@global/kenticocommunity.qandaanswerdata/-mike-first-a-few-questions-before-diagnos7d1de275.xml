@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>-Mike-first-a-few-questions-before-diagnos7d1de275</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 @Mike, first a few questions before diagnosing your problems.
 
 1. _Why_ do you need to separate your presentation code into 1 or more libraries?
@@ -25,7 +26,8 @@ Your website channel libraries will contain Controller, View, View model, View c
 Your core library will contain the types of code that are used across all website channels.
 
 When using those separate library projects in your ASP.NET Core project, you'll need to make sure you [add the application parts](https://andrewlock.net/when-asp-net-core-cant-find-your-controller-debugging-application-parts/) to make them discoverable by ASP.NET Core, and [enable class discovery](https://docs.kentico.com/developers-and-admins/customization/integrate-custom-code#enable-class-discovery) for any Xperience code in each project.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-06-10 22:18:08Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>3c5a3351-8103-43d7-92fa-47d1c2240a8b</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>-nele-debrouwer-Hm-I-m-guessing-you-are-accf2581be</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 @nele.debrouwer
 
 Hm, I'm guessing you are accessing the administration through one of the website channel domains?
@@ -115,7 +116,8 @@ services.AddScoped<
 And then inject into your visibility condition class constructor.
 
 You'll probably want to add better guards in the `Retrieve()` method or maybe convert it to `TryRetrieve()` in case the context can't be retrieved.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-04-16 16:07:53Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>632354ab-ca4b-4fd2-bd7f-91379ca98e8a</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

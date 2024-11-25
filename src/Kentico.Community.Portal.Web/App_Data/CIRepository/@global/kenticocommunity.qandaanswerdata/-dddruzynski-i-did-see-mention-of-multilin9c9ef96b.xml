@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>-dddruzynski-I-did-see-mention-of-multilin9c9ef96b</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 @dddruzynski
 
 > I did see mention of multilingual forms on the roadmap so perhaps this sort of change will be accommodated by that update?
@@ -15,7 +16,8 @@ Yes, like Liam mentioned, improvements to forms will come with the [Multilingual
 The localization of that validation message is handled by `ResHelper.GetString(...)` which is backed by `ILocalizationService.GetString(...)`
 
 You can [decorate](https://docs.kentico.com/developers-and-admins/customization/decorate-system-services) the existing `ILocalizationService` with your custom implementation for that specific `general.requiresvalue` resource key and forward the rest of the method calls to the existing implementation.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-09-09 21:00:19Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>c36ae928-6447-43a4-81c0-8676585c8111</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

@@ -33,6 +33,11 @@ export default function setup() {
 const moveHeaderDropdownBg = (e) => {
   let dropdownBg = document.querySelector(".c-navbar-dropdown-bg");
   let currentDropdown = e.target.querySelector(".dropdown-menu");
+
+  if (!dropdownBg || !currentDropdown) {
+    return;
+  }
+
   let mainNavOffset = document
     .querySelector(".c-main-nav")
     .getBoundingClientRect().left;
@@ -106,7 +111,7 @@ function initialiseCookiePreferences() {
       function () {
         selectOption(option);
       },
-      false
+      false,
     );
     option.style.top =
       (300 / (options.length - 1)) * i - options.length * (i * 2) + "px";

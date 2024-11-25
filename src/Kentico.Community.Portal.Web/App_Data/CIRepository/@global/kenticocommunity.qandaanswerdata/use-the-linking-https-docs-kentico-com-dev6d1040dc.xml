@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>Use-the-Linking-https-docs-kentico-com-dev6d1040dc</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 Use the [Linking()](https://docs.kentico.com/developers-and-admins/api/content-item-api/reference-content-item-query#forcontenttype-parameterization) content query extension.
 
 It's used in [the Kentico Community Portal project](https://github.com/Kentico/community-portal/blob/v29.2.0.3/src/Kentico.Community.Portal.Web/Features/Blog/Operations/BlogPostPagesLatestQuery.cs#L37) to do the exact thing you are asking about.
@@ -24,7 +25,8 @@ var postsQuery = new ContentItemQueryBuilder().ForContentType(BlogPostPage.CONTE
 In this example the first parameter passed to `Linking()` is the field name in your Article page content type that references the reusable content item. The second parameter is the Content Item IDs of the article resusable content items.
 
 You _could_ just retrieve the web pages and then glue them to the reusable content items if you already have access to them. But I find it's simpler to retrieve the whole content graph (`.WithLinkedItems(2)`) since this is all behind cache anyway.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-07-13 21:05:43Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>0fcff402-7323-4d18-a2d3-e866d08e3cec</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

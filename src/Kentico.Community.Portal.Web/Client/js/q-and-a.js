@@ -64,12 +64,15 @@ export async function initQAndA({ editorElemID, formType = "" }) {
             `;
           },
         },
+        placeholder: {
+          text: getPlaceholderText(),
+        },
       },
     });
 
     c.editor
       .config((ctx) => {
-        const listener = ctx.get(listenerCtx);
+        const list = ctx.get(listenerCtx);
 
         const updateField = debounce((ctx, markdown, prevMarkdown) => {
           if (markdown !== prevMarkdown) {
@@ -78,7 +81,7 @@ export async function initQAndA({ editorElemID, formType = "" }) {
           }
         }, 250);
 
-        listener.markdownUpdated(updateField);
+        list.markdownUpdated(updateField);
       })
       .use(listener);
 
@@ -136,7 +139,8 @@ export async function initQAndA({ editorElemID, formType = "" }) {
     }
 
     return formType === "Question"
-      ? `[describe your problem or question]
+      ? `[describe your question]
+
 
 ---
 
@@ -145,7 +149,11 @@ export async function initQAndA({ editorElemID, formType = "" }) {
 - .NET version: [8|9]
 - Execution environment: [Local|Azure|SaaS|Other]
 - Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)`
-      : "[detail your answer]";
+      : "";
+  }
+
+  function getPlaceholderText() {
+    return "Type something...";
   }
 
   /**

@@ -12,7 +12,8 @@
   <ContentItemDataGUID>8bd0d790-0be3-47de-a7b1-eee53c5fcf4f</ContentItemDataGUID>
   <QAndAQuestionPageAcceptedAnswerDataGUID>3c5a3351-8103-43d7-92fa-47d1c2240a8b</QAndAQuestionPageAcceptedAnswerDataGUID>
   <QAndAQuestionPageAuthorMemberID>1</QAndAQuestionPageAuthorMemberID>
-  <QAndAQuestionPageContent><![CDATA[
+  <QAndAQuestionPageContent>
+<![CDATA[
 I was looking at the documentation, specifically this page about [managing multiple sites](https://docs.kentico.com/x/OQpdD) and I'm having issues getting it to work correctly.
 
 I created the RCL and added my /Features folder with a folder called /Home under it and added my MVC files in it. I added a reference in the main project to the RCL but two things I'm noticing are that my controller file in the RCL is now missing references to Kentico objects (and I can't add a reference to the RCL because it will cause cyclical references) and also no matter what I've tried to do it won't read my MVC files in the RCL when running Kentico. If I have the same files present in both projects, I do get errors about clashing files but once I remove the main project's files it just gives the "The View '' was not found" errors and it won't hit a breakpoint in my controller either. 
@@ -27,9 +28,12 @@ Also, I'm curious if we should leave the generated class files that Kentico make
 - Xperience by Kentico version: [29.1.2]
 - .NET version: [8]
 - Deployment environment: localhost
-]]></QAndAQuestionPageContent>
+]]>
+  </QAndAQuestionPageContent>
   <QAndAQuestionPageDateCreated>2024-06-06 05:53:58Z</QAndAQuestionPageDateCreated>
   <QAndAQuestionPageDateModified>2024-06-06 05:53:58Z</QAndAQuestionPageDateModified>
-  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
   <QAndAQuestionPageTitle>Multiple Sites / Razor Class Libraries</QAndAQuestionPageTitle>
 </contentitemdata.kenticocommunity.qandaquestionpage>

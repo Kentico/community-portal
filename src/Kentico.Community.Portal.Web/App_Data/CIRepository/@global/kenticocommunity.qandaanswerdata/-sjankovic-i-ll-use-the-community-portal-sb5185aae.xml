@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>-sjankovic-I-ll-use-the-Community-Portal-sb5185aae</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 @sjankovic
 
 I'll use the [Community Portal solution](https://github.com/kentico/community-portal) (which runs in our SaaS service) as an example.
@@ -38,7 +39,8 @@ Each full backup (scheduled, pre-deployment, or self-initiated) can be restored 
 When performing a deployment that results in an error during the deployment process (CD restore or Xperience update), the deployment process stops. The deployment executes on a backed up copy of the environment, so the original environment (deployment slot) is automatically "turned on" and no restoring is required.
 
 If your deployment results in data loss or the application fails to start (both as a result of developer customizations), the environment can be restored from the automatically created pre-deployment backup or one of the other historical backups.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-05-07 02:06:15Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>4736d336-5f33-40a2-9916-f397636f05b3</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

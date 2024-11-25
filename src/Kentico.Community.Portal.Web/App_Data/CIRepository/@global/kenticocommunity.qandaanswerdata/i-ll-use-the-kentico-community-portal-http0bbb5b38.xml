@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>I-ll-use-the-Kentico-Community-Portal-http0bbb5b38</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 I'll use the [Kentico Community Portal](https://github.com/Kentico/community-portal) as an example of where all the configuration values need set in a project to make client/React administration customization work.
 
 1. In the [.csproj](https://github.com/Kentico/community-portal/blob/v29.4.1.3/src/Kentico.Community.Portal.Admin/Kentico.Community.Portal.Admin.csproj) of the project containing the React code
@@ -63,7 +64,8 @@ I'll use the [Kentico Community Portal](https://github.com/Kentico/community-por
   	}
 	```
 1. You also need to ensure the webpack dev server is serving over https if your ASP.NET Core app is running over https and the webpack dev server [needs to be using a trusted localhost cert](https://github.com/Kentico/community-portal/blob/v29.4.1.3/src/Kentico.Community.Portal.Admin/Client/webpack.config.js#L81).
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-09-26 17:01:35Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>5973100c-6146-4de6-b3bb-0187412060b2</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

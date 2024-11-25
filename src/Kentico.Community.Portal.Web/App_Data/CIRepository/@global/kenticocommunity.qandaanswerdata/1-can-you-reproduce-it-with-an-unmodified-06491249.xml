@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>1-Can-you-reproduce-it-with-an-unmodified-06491249</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 1. Can you reproduce it with an unmodified Dancing Goat or SaaS starter solution? If not, then it could be an infrastructure (networking, Azure) issue.
 1. Is the issue customer facing / does it impact the website presentation or is it only causing errors in the Event Log?
 1. When you say you are able to reproduce it when you quickly switch back and forth from the Page Builder to Preview tabs for a page, do you see an error in the UI or only in the Event Log?
@@ -13,7 +14,8 @@
 1. Can you reproduce it in QA/UAT and PROD in SaaS?
 1. Have you tried updating to v29.4.x?
 1. The "AlwaysOn" setting of the App Service is abstracted away (along with all the other App Service settings) and I haven't seen reports of this issue with other SaaS customers, nor have I seen it with the Community Portal. "AlwaysOn" just means the App Service pings itself at the application root every ~5 minutes.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-09-03 22:00:31Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>d8a828db-ba1b-47a7-bf52-7e560891a3e8</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

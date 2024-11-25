@@ -12,7 +12,8 @@
   <ContentItemDataGUID>86602c16-753e-402b-8f22-f30588856330</ContentItemDataGUID>
   <QAndAQuestionPageAcceptedAnswerDataGUID>4139a1ed-17b0-4a4e-9c0b-98001164be38</QAndAQuestionPageAcceptedAnswerDataGUID>
   <QAndAQuestionPageAuthorMemberID>2</QAndAQuestionPageAuthorMemberID>
-  <QAndAQuestionPageContent><![CDATA[
+  <QAndAQuestionPageContent>
+<![CDATA[
 Hi, we are on K13 on .NET6. We recently got an alert about a vulnerability as noted on this github advisory - https://github.com/advisories/GHSA-8g9c-28fc-mcx2. The solution is simply to update Microsoft.IdentityModel.JsonWebTokens and System.IdentityModel.Tokens.Jwt to 6.34.0 to receive the patch. This works fine on the MVC sites, but a breaking change within those packages causes and error in the CMS at runtime as seen in the image below.
 
 It looks like there was an update that required the key to be >512 bits that the CMS is not reaching. Is there a plan to address this to resolve this vulnerability?
@@ -25,9 +26,14 @@ It looks like there was an update that required the key to be >512 bits that the
 - .NET version: [6]
 - Deployment environment: [Azure]
 - Link to relevant [Xperience by Kentico documentation](https://docs.xperience.io/xp)
-]]></QAndAQuestionPageContent>
+]]>
+  </QAndAQuestionPageContent>
   <QAndAQuestionPageDateCreated>2024-01-12 20:43:00Z</QAndAQuestionPageDateCreated>
   <QAndAQuestionPageDateModified>2024-01-12 20:43:00Z</QAndAQuestionPageDateModified>
-  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
-  <QAndAQuestionPageTitle><![CDATA[Updating dependency with vulnerability in CMS causes runtime error]]></QAndAQuestionPageTitle>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle>
+    <![CDATA[Updating dependency with vulnerability in CMS causes runtime error]]>
+  </QAndAQuestionPageTitle>
 </contentitemdata.kenticocommunity.qandaquestionpage>

@@ -12,7 +12,8 @@
   <ContentItemDataGUID>89fed135-efb3-4216-b2b0-2ce588c7c00c</ContentItemDataGUID>
   <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
   <QAndAQuestionPageAuthorMemberID>1</QAndAQuestionPageAuthorMemberID>
-  <QAndAQuestionPageContent><![CDATA[
+  <QAndAQuestionPageContent>
+<![CDATA[
 An error occurs when retrieving a `ContentType` on the following line (with cache management, from documentation):
 
 ```csharp
@@ -33,9 +34,12 @@ Using the debugger, it appears the error originates from the *Get()* method of t
 ```csharp
 IList<int> contentItemCommonDataIds = GetContentItemCommonDataIds(webPageIds);  // Line 50
 ```
-]]></QAndAQuestionPageContent>
+]]>
+  </QAndAQuestionPageContent>
   <QAndAQuestionPageDateCreated>2024-10-18 14:00:58Z</QAndAQuestionPageDateCreated>
   <QAndAQuestionPageDateModified>2024-10-18 14:00:58Z</QAndAQuestionPageDateModified>
-  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
   <QAndAQuestionPageTitle>Error when Retrieving ContentType ()</QAndAQuestionPageTitle>
 </contentitemdata.kenticocommunity.qandaquestionpage>

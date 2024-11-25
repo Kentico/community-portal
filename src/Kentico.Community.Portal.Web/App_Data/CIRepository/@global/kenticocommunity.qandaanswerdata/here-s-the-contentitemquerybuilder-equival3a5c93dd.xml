@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>Here-s-the-ContentItemQueryBuilder-equival3a5c93dd</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 Here's the `ContentItemQueryBuilder` equivalent (we build the query in several stages depending on the values present in the filter) :
 
 ```CSharp
@@ -22,7 +23,8 @@ At the query creation stage, here's how we apply the DateTime filter (`q` is a `
         if (MinDate.HasValue) q.Where(w => w.WhereGreaterOrEquals(DateColumnName, MinDate.Value.Date));
         if (MaxDate.HasValue) q.Where(w => w.WhereLessOrEquals(DateColumnName, MaxDate.Value.Date.AddDays(1).AddMilliseconds(-1)));
 ```
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-10-28 12:16:33Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>e29ef1a6-af73-4abc-9eb7-46a9c31b766e</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

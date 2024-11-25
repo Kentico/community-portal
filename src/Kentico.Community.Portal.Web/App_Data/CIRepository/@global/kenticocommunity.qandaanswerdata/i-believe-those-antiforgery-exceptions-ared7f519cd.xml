@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>I-believe-those-Antiforgery-exceptions-ared7f519cd</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 I believe those Antiforgery exceptions are caused by key rotation during deployments? (or something like that).
 
 If you are logged into the admin and the admin auth cookie is not expired but no longer valid (because the application was redeployed), then you'll see this exception.
@@ -31,7 +32,8 @@ You can disable it for this specific scenario by adding the following to your `a
   // ...
 }
 ```
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-09-04 21:28:06Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>ca104297-80e0-4d9b-a4b5-7267f66c4899</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

@@ -12,7 +12,8 @@
   <ContentItemDataGUID>4326f4cc-2c9d-40a9-a814-d115b6263787</ContentItemDataGUID>
   <QAndAQuestionPageAcceptedAnswerDataGUID>d5d5907d-9f71-4464-950f-37d3fb006c07</QAndAQuestionPageAcceptedAnswerDataGUID>
   <QAndAQuestionPageAuthorMemberID>1</QAndAQuestionPageAuthorMemberID>
-  <QAndAQuestionPageContent><![CDATA[
+  <QAndAQuestionPageContent>
+<![CDATA[
 We found an issue where the 'preview' mode for pages wasn't showing the most recent data. Looked into it and found it was an issue with the caching only clearing when changes were published rather than saved.
 
 I added in the 'allstates' prefix to the cache key to resolve this but it now means the cache on the live site is also clearing when something is saved rather than published.
@@ -44,9 +45,12 @@ Is there another recomended way of handling caching so that the live site cache 
 - Xperience by Kentico version: [29.3.1]
 - .NET version: [8]
 - Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)
-]]></QAndAQuestionPageContent>
+]]>
+  </QAndAQuestionPageContent>
   <QAndAQuestionPageDateCreated>2024-08-28 14:25:13Z</QAndAQuestionPageDateCreated>
   <QAndAQuestionPageDateModified>2024-08-28 14:25:13Z</QAndAQuestionPageDateModified>
-  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
   <QAndAQuestionPageTitle>Caching page data for preview mode</QAndAQuestionPageTitle>
 </contentitemdata.kenticocommunity.qandaquestionpage>

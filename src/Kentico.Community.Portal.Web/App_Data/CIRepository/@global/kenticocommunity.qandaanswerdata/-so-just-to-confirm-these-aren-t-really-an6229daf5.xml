@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>-So-just-to-confirm-these-aren-t-really-an6229daf5</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 > So, just to confirm, these aren't really an issue, and it's safe to mute the error log?
 
 That's how it looks [in the ASP.NET Core source code](https://source.dot.net/#Microsoft.AspNetCore.Antiforgery/Internal/DefaultAntiforgery.cs,337).
@@ -43,7 +44,8 @@ You could try adding the log level configuration for antiforgery to the overall 
 ```
 
 Also, your original StatusCode error issue should be resolved in an upcoming hotfix.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-09-10 16:01:36Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>111583ec-b775-4e2a-b233-a0f0af1a560c</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

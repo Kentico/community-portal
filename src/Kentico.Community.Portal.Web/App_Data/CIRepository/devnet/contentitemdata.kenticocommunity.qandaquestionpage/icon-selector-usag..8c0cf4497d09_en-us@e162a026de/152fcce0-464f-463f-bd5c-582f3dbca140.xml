@@ -12,7 +12,8 @@
   <ContentItemDataGUID>152fcce0-464f-463f-bd5c-582f3dbca140</ContentItemDataGUID>
   <QAndAQuestionPageAcceptedAnswerDataGUID>1db31a1d-db73-4a10-8676-a2302217a58b</QAndAQuestionPageAcceptedAnswerDataGUID>
   <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
-  <QAndAQuestionPageContent><![CDATA[
+  <QAndAQuestionPageContent>
+<![CDATA[
 I'm currently working on a feature where I'm attempting to leverage the built-in **Icon selector** form control to add icons to a Content Type within my site.
 
 I see that when an icon is selected on a Content Item, the name is what gets saved in the database (e.g. **xp-accordion**). I was hoping the existing approach of using icons in the UI would be the same as in Kentico Xperience 13 (<https://docs.kentico.com/13/custom-development/extending-the-administration-interface/working-with-font-icons>), where I can just throw this into the class of an icon element, but this doesn't appear to be the case.
@@ -30,9 +31,12 @@ I'll roll my own custom solution if that's the best path forward, but don't want
 
 * Xperience by Kentico version: 29.6.2
 * .NET version: 8
-]]></QAndAQuestionPageContent>
+]]>
+  </QAndAQuestionPageContent>
   <QAndAQuestionPageDateCreated>2024-11-01 23:39:45Z</QAndAQuestionPageDateCreated>
   <QAndAQuestionPageDateModified>2024-11-01 23:42:08Z</QAndAQuestionPageDateModified>
-  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
   <QAndAQuestionPageTitle>Icon selector usage in live site</QAndAQuestionPageTitle>
 </contentitemdata.kenticocommunity.qandaquestionpage>

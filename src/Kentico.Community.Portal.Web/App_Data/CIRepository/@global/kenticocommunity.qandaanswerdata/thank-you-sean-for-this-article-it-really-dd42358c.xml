@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>Thank-you-Sean-for-this-article-it-really-dd42358c</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 Thank you, Sean, for this article—it really resonates with me! I spend a lot of time writing both client- and server-side JavaScript, so if I may, I’d like to share my perspective on removing jQuery from XbyK and its potential successors.
 
 In the XbyK context, I see jQuery as an unnecessary, render-blocking dependency that only serves to hurt the LCP web vitals metric on live sites. Removing it is definitely a welcome improvement!
@@ -19,7 +20,8 @@ In server-side frameworks like Next.js, SvelteKit, or Nuxt.js, I could only see 
 Then there are libraries like Unpoly, Swup, HTMX, and Alpine.js, which focus on specific interactive or visual functions, similar to how jQuery plugins once did. Some also bridge elements of state management, reactivity, and templating. For XbyK, these could be useful if you need to add a high level of interactivity. However, it’s important to choose wisely, considering factors like feature set, size, and ongoing support.
 
 As for your question on priorities, I’d always put visitor experience first—making websites fast to load and accessible. When developing sites in XbyK, I’d lean on vanilla JavaScript as much as possible, adding external dependencies only when truly necessary.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-11-13 13:07:59Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>a3d64226-9e5b-4158-b385-01c25db2574c</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

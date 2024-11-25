@@ -1,3 +1,4 @@
+using Kentico.Community.Portal.Admin;
 using Kentico.Community.Portal.Web.Components.Widgets.Markdown;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.PageBuilder.Web.Mvc;
@@ -69,11 +70,9 @@ public class MarkdownWidget(MarkdownRenderer markdownRenderer) : ViewComponent
 
 public class MarkdownWidgetProperties : BaseWidgetProperties
 {
-    [TextAreaComponent(
+    [MarkdownComponent(
         Label = "Markdown",
         ExplanationText = "Markdown content that will be rendered on the page as HTML",
-        MinRowsNumber = 30,
-        WatermarkText = "## Add some markdown",
         Order = 1)]
     [TrackContentItemReference(typeof(MarkdownContentItemReferenceExtractor))]
     public string Markdown { get; set; } = "";

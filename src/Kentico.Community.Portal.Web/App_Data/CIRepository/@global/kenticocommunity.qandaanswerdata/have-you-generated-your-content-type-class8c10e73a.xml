@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>Have-you-generated-your-content-type-class8c10e73a</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 Have you generated your content type classes recently? They need to have the [RegisterContentTypeMapping](https://docs.kentico.com/developers-and-admins/api/generate-code-files-for-system-objects#registercontenttypemapping-attribute) attribute.
 
 See the [BlogPostPage.generated.cs file](https://github.com/Kentico/community-portal/blob/v29.2.0.6/src/Kentico.Community.Portal.Core/Content/Pages/BlogPostPage.generated.cs#L22) from the Community Portal project.
@@ -13,7 +14,8 @@ See the [BlogPostPage.generated.cs file](https://github.com/Kentico/community-po
 If you want to use `GetMappedResult` or `GetMappedWebPageResult`, your content type classes need this attribute to support the auto-mapping.
 
 Also, whatever assembly your content type classes are in needs the [AssemblyDiscoverable](https://github.com/Kentico/community-portal/blob/v29.2.0.6/src/Kentico.Community.Portal.Core/Kentico.Community.Portal.Core.csproj#L4) attribute so that the types can be discovered and the `RegisterContentTypeMapping` attribute can be processed.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-07-29 20:06:14Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>6b39bf43-9e8b-471c-8c21-56d5fcb06aa3</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

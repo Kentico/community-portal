@@ -12,7 +12,8 @@
   <ContentItemDataGUID>a24afa01-68e3-4ecb-a5e4-26967e30bca4</ContentItemDataGUID>
   <QAndAQuestionPageAcceptedAnswerDataGUID>563c8a8e-b520-4726-bdbd-ca01dffb637f</QAndAQuestionPageAcceptedAnswerDataGUID>
   <QAndAQuestionPageAuthorMemberID>3</QAndAQuestionPageAuthorMemberID>
-  <QAndAQuestionPageContent><![CDATA[
+  <QAndAQuestionPageContent>
+<![CDATA[
 I made some content type changes which were reflected in [the application's CI repository](https://docs.kentico.com/x/FAKQC) but after the changes were made I cannot successfully [run a CI Restore](https://docs.kentico.com/developers-and-admins/ci-cd/continuous-integration#restore-repository-files-to-the-database).
 
 The restore fails with the following exception:
@@ -57,9 +58,14 @@ Message: Column 'ContentItemReferenceTargetItemID' does not allow DBNull.Value.
 - .NET version: [8]
 - Deployment environment: [SaaS]
 - Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)
-]]></QAndAQuestionPageContent>
+]]>
+  </QAndAQuestionPageContent>
   <QAndAQuestionPageDateCreated>2024-09-05 00:59:20Z</QAndAQuestionPageDateCreated>
   <QAndAQuestionPageDateModified>2024-09-05 00:59:20Z</QAndAQuestionPageDateModified>
-  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
-  <QAndAQuestionPageTitle><![CDATA[Running CI Restore fails for "Content item common data"]]></QAndAQuestionPageTitle>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageTitle>
+    <![CDATA[Running CI Restore fails for "Content item common data"]]>
+  </QAndAQuestionPageTitle>
 </contentitemdata.kenticocommunity.qandaquestionpage>

@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>Hey-Liam-Thanks-for-pointing-me-to-the-cus261661ba</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 Hey @Liam Thanks for pointing me to the custom visibility conditions.
 
 I was able to create a custom condition and check the channel Name, however when calling `CMS.Core.Service.Resolve<IWebPageDataContextRetriever>().WebsiteChannelName` it always returns my first channel.
@@ -16,7 +17,8 @@ Any idea how I can retrieve the correct channel context?
 
 fyi, when I use `IWebsiteChannelContext` through depency injection in a ViewComponent, I do get the correct Channel Name.
 
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-04-15 16:08:16Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>51c19f66-6d1f-4c9f-8580-5bcc2792078d</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

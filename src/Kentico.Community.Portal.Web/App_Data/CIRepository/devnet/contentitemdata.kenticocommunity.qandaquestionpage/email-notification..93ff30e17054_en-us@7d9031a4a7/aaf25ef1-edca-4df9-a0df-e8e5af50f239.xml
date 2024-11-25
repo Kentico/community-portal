@@ -12,7 +12,8 @@
   <ContentItemDataGUID>aaf25ef1-edca-4df9-a0df-e8e5af50f239</ContentItemDataGUID>
   <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
   <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
-  <QAndAQuestionPageContent><![CDATA[
+  <QAndAQuestionPageContent>
+<![CDATA[
 I am working on a site migrating from K12 where our client has a number of forms configured that send both autoresponders and email notifications. Within the XbyK interface I can see the option for sending autoresponders but no ability to send email notifications.
 
 A couple of solutions I looked into were:
@@ -21,9 +22,12 @@ A couple of solutions I looked into were:
 2. Using a custom after insert event to manually trigger an email. This will work but in my opinion is the least desirable approach. I can do things to expose the configuration of this to the form interface, but I don't like that its inconsistent with the autoresponder format.
 
 Any insights into whether I have missed something or if there is a preferred strategy from Kentico.
-]]></QAndAQuestionPageContent>
+]]>
+  </QAndAQuestionPageContent>
   <QAndAQuestionPageDateCreated>2024-10-29 03:36:40Z</QAndAQuestionPageDateCreated>
   <QAndAQuestionPageDateModified>2024-10-29 03:36:40Z</QAndAQuestionPageDateModified>
-  <QAndAQuestionPageDiscussionType><![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]></QAndAQuestionPageDiscussionType>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
   <QAndAQuestionPageTitle>Email Notifications from Forms</QAndAQuestionPageTitle>
 </contentitemdata.kenticocommunity.qandaquestionpage>

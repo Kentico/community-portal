@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>Thanks-Sean-so-much-for-your-quick-responsc4434443</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 Thanks Sean so much for your quick response! I’ve spent hours trying to apply your general suggestions to my case and investigating further. Unfortunately, I haven’t had much luck so far. Here are some specific thoughts based on your suggestions:
 
 1. You’re right—it’s impossible to simulate Kentico’s SaaS environment locally, so I don’t think that approach will work.
@@ -17,7 +18,8 @@ Thanks Sean so much for your quick response! I’ve spent hours trying to apply 
 Regarding the specific issue of the `StatusCode cannot be set because the response has already started.`, I tried removing most elements from the `_Layout.cshtml` file to limit any problematic code and redeployed to the SaaS environment, but still no luck, the issue is still there. I also removed custom middlewares and checked whether order of XbyK-related middlewares is correct. No luck.
 I did notice that I’m able to reproduce the issue in the *Admin > Channels > Website Channel* when quickly navigating between *Preview* and *Page Builder*. 
 The issue started appearing in the logs on August 26th. Around that time, I only made some CSS updates and cleared a few unused references to external NuGet packages. Is there any chance that this might XbyK-related issue? I am a bit desperate here.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-09-02 01:24:49Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>bd50a7cb-d416-4c33-9ec1-023535c44e5b</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

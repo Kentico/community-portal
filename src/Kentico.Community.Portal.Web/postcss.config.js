@@ -1,12 +1,12 @@
 import postcssPresentEnv from "postcss-preset-env";
-import purgecss from "@fullhuman/postcss-purgecss";
+import { purgeCSSPlugin } from "@fullhuman/postcss-purgecss";
 
 /** @type { import('postcss-load-config').ConfigFn} */
 const config = ({ env }) => ({
   plugins: [
     // https://purgecss.com/configuration.html
     env === "production" &&
-      purgecss({
+      purgeCSSPlugin({
         content: ["./**/*.cshtml"],
 
         safelist: {

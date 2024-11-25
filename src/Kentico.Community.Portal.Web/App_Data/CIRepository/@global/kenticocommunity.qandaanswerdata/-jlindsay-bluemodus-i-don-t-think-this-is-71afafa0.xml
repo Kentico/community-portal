@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>-jlindsay-bluemodus-I-don-t-think-this-is-71afafa0</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 @jlindsay-bluemodus
 
 I don't think this is possible. The exception is being caught by the platform at such a high/general level - the code displaying the toast doesn't know the cause or context of the error.
@@ -13,7 +14,8 @@ I don't think this is possible. The exception is being caught by the platform at
 If you are building a custom module UI then I'd do the validation at the point that the data is being modified. You'll have some [page command](https://docs.kentico.com/x/4ASiCQ) or [page event lifecycle method](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-pages/ui-pages-with-forms#data-processing) that can catch the exception thrown by the event handler and return a more helpful message.
 
 Worst case, you can provide a lot of helpful formatted details in the Event Log error message to guide the user to help resolve the problem.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-03-25 22:01:59Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>05638462-4e68-44ca-88c2-216c04f3c809</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

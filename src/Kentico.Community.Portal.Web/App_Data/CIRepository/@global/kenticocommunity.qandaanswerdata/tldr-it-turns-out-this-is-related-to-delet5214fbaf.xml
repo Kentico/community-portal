@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>TLDR-It-turns-out-this-is-related-to-delet5214fbaf</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 TLDR;
 
 It turns out this is related to deleting a referenced content item. I needed to re-publish the content item that linked to the deleted content item.
@@ -21,7 +22,8 @@ Xperience tracks content item references in the `cms.contentitemcommondata` CI r
 To resolve the problem, I updated the `AuthorContent` content item in the Content hub by creating a new draft version and publishing it with no changes. This updated the serialized version of this content item in the CI Repository and updated the `<ContentItemReferences>` node in the `cms.contentitemcommondata` file.
 
 I then ran the CI Restore and it succeeded.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-09-05 10:30:24Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>563c8a8e-b520-4726-bdbd-ca01dffb637f</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

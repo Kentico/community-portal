@@ -15,25 +15,25 @@
 <div id="@rootElId">
     @if (User.Identity?.IsAuthenticated == true)
     {
-            <form id="@formId" method="post" hx-post hx-controller="QAndAAnswer" hx-action="@action" hx-swap="outerHTML"
-                hx-target="#@rootElId" hx-trigger="submitReady">
-                <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
+        <form id="@formId" method="post" hx-post hx-controller="QAndAAnswer" hx-action="@action" hx-swap="outerHTML"
+            hx-target="#@rootElId" hx-trigger="submitReady">
+            <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
 
-                <div class="mt-6">
+            <div class="mt-6">
                 @Model.FormHelpMessageHTML
-                </div>
+            </div>
 
-                <label for="@editorFieldID" class="form-label"><span class="text-secondary fw-bold">@User.Identity.Name</span>
-                    would answer</label>
-                <div id="@editorID" class="border border-1 border-dark-subtle rounded-2 milkdown-container">
-                    <textarea id="@editorFieldID" class="form-control" style="display:none;" asp-for="@Model.Content"
-                        name="Content" placeholder="Your full question description goes here" value="@Model.Content"></textarea>
-                </div>
+            <label for="@editorFieldID" class="form-label"><span class="text-secondary fw-bold">@User.Identity.Name</span>
+                would answer</label>
+            <div id="@editorID" class="border border-1 border-dark-subtle rounded-2 milkdown-container">
+                <textarea id="@editorFieldID" class="form-control" style="display:none;" asp-for="@Model.Content"
+                    name="Content" placeholder="Your full question description goes here" value="@Model.Content"></textarea>
+            </div>
 
-                <div class="d-grid">
-                    <input asp-for="EditedObjectID">
-                    <input asp-for="ParentQuestionID">
-                    <button type="submit" class="btn btn-primary btn-lighter px-5 mt-4">
+            <div class="d-grid">
+                <input asp-for="EditedObjectID">
+                <input asp-for="ParentQuestionID">
+                <button type="submit" class="btn btn-primary btn-lighter px-5 mt-4">
                     @if (Model.EditedObjectID is int)
                     {
                         <text>Update your answer</text>
@@ -42,49 +42,49 @@
                     {
                         <text>Submit your answer</text>
                     }
-                    </button>
+                </button>
 
                 @if (Model.EditedObjectID is int answerID)
                 {
-                            <button hx-get hx-controller="QAndAQuestionPage" hx-action="DisplayAnswerDetail"
-                                hx-route-questionID="@Model.ParentQuestionID" hx-route-answerID="@answerID" hx-swap="outerHTML"
-                                type="button" hx-trigger="cancelReady" hx-target="#@rootElId" class="btn btn-outline-warning px-5 mt-4"
-                                cancel-button>
-                                Cancel
-                            </button>
+                    <button hx-get hx-controller="QAndAQuestionPage" hx-action="DisplayAnswerDetail"
+                        hx-route-questionID="@Model.ParentQuestionID" hx-route-answerID="@answerID" hx-swap="outerHTML"
+                        type="button" hx-trigger="cancelReady" hx-target="#@rootElId" class="btn btn-outline-warning px-5 mt-4"
+                        cancel-button>
+                        Cancel
+                    </button>
                 }
                 else
                 {
-                            <button hx-get hx-controller="QAndAQuestionPage" hx-action="DisplayAnswerButton" hx-trigger="cancelReady"
-                                type="button" hx-route-questionID="@Model.ParentQuestionID" hx-swap="outerHTML" hx-target="#@rootElId"
-                                class="btn btn-outline-warning px-5 mt-4" cancel-button>
-                                Cancel
-                            </button>
+                    <button hx-get hx-controller="QAndAQuestionPage" hx-action="DisplayAnswerButton" hx-trigger="cancelReady"
+                        type="button" hx-route-questionID="@Model.ParentQuestionID" hx-swap="outerHTML" hx-target="#@rootElId"
+                        class="btn btn-outline-warning px-5 mt-4" cancel-button>
+                        Cancel
+                    </button>
                 }
-                </div>
-            </form>
+            </div>
+        </form>
 
-            <script type="module">
-                asyncReady(async () => {
-                    const path = @JSEncoder.EncodeToJson(qAndAAssetPath);
-                    const qanda = await import(path);
+        <script type="module">
+            asyncReady(async () => {
+                const path = @JSEncoder.EncodeToJson(qAndAAssetPath);
+                const qanda = await import(path);
 
-                    qanda.initQAndA({
-                        editorElemID: '@editorID',
-                        formType: 'Answer'
-                    });
+                qanda.initQAndA({
+                    editorElemID: '@editorID',
+                    formType: 'Answer'
                 });
-            </script>
+            });
+        </script>
     }
     else
     {
-            <div class="mt-6">
-                <h2 class="text-center k-dot">Please login</h2>
-                <p class="text-center mt-3">
-                    To post new answer, you have to
-                    <a asp-controller="Authentication" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">login
-                        first</a>.
-                </p>
-            </div>
+        <div class="mt-6">
+            <h2 class="text-center k-dot">Please login</h2>
+            <p class="text-center mt-3">
+                To post new answer, you have to
+                <a asp-controller="Authentication" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">login
+                    first</a>.
+            </p>
+        </div>
     }
 </div>

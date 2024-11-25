@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>When-I-see-issues-that-appear-only-for-the42685e9b</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 When I see issues that appear only for the deployed version of an application I investigate in a few areas
 
 1. Infrastructure configuration
@@ -19,7 +20,8 @@ It's more difficult to test #1, especially since you don't manage the infrastruc
 For #3 you can look for code that uses `Task`/`Task<T>` but hasn't been `await`'d or it is `await`'d in a different order than it was executed. ASP.NET Core middleware and Controller/endpoint code is the most common place to find `Task` based race conditions.
 
 The reason the race conditions show up when the application is deployed is because the execution speed, single request nature of `localhost` hides a lot of problems. Also middleware based race conditions can also be related to #2 in the list above since some middleware paths are only executed in Release mode.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-09-01 17:58:37Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>547a696f-c87a-4616-8d4f-f193c55cb85c</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

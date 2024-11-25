@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>I-don-t-think-you-can-directly-restrict-a-b70cfc34</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 I don't think you can directly restrict a widget to a specific Content Type, but you can restrict them in the View used for the Page Type's template. I believe there's a couple ways of approaching it:
 
 
@@ -37,7 +38,8 @@ You can [restrict widgets for widget zones](https://docs.kentico.com/developers-
     @await Html.Kentico().WidgetZoneAsync(allowedWidgets: widgetsAllowlist)
 </div>
 ```
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-03-26 13:06:11Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>50920fb0-3f81-48e3-8f7d-294775ea9ac9</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

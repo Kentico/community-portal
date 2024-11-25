@@ -5,14 +5,16 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>-liamgold-do-you-mean-determine-if-someone2bea5d0e</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 @liamgold - do you mean determine if someone viewing a website channel is authenticated as an Xperience administration user?
 
 There's a couple things you could check
 
 1. `httpContext.Kentico().Preview().Enabled` - this is true when viewing a web page in the "Preview" or "Page Builder" tab, which can only be done by an authenticated administration user
 2. If you are in an ASP.NET Core `Controller`, you can access `ControllerBase.User` which will have an `ClaimsIdentity` with an `AuthenticationType` value of `Xperience.Application`, set by the Xperience administration ASP.NET Core cookie. This is also accessible via `IHttpContextAccessor.HttpContext.User.Identity.AuthenticationType` if you are outside of a `Controller`.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-08-17 02:54:09Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>504bdf91-9e0d-4ce0-a448-1ffd912222fb</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

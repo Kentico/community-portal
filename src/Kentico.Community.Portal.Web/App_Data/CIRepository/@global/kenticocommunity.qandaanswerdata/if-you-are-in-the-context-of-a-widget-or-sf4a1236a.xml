@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>If-you-are-in-the-context-of-a-widget-or-sf4a1236a</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 If you are in the context of a widget or section, you can use the [ComponentViewModel<T>.Page](https://docs.kentico.com/developers-and-admins/development/builders/page-builder/widgets-for-page-builder#widgets-based-on-a-view-component) property and use its `WebPageItemID` to retrieve the web page using a `ContentItemQueryBuilder()`.
 
 (Using `ComponentViewModel<T>.Page` means you don't need to inject `IWebPageDataContextRetriever`).
@@ -42,7 +43,8 @@ Is your sidebar navigation dynamically built from the Widgets rendered on the pa
 How will that work with personalization? Personalization will pick the variant of a Widget based on the contact details and the priority of [variants of the widget](https://docs.kentico.com/x/p4PWCQ) but without replicating that logic, your sidebar navigation could display links that don't match the displayed content.
 
 This almost seems to me to be an ok place to render something client side based on what is actually in the DOM (using vanilla JS, [AlpineJS](https://alpinejs.dev), or jQuery). If the navigation is outside of the main content flow you won't need to worry about [cumulative layout shift](https://web.dev/articles/cls) from client-side rendering.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-10-07 16:08:29Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>571f9b22-7077-4b57-9172-cffa5626b2dc</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

@@ -5,13 +5,15 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>-ContentItemLanguageMetadataDisplayName-is6b5c7dc0</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 `ContentItemLanguageMetadataDisplayName` is not meant for content presentation - it's meant to be used by marketers inside the Xperience administration for content identification and organization. If you want to present content to website visitors, create a custom content type field for that purpose.
 
 This is why you can't access that field on the content item you retrieve using the `ContentItemQueryBuilder` APIs.
 
 Instead, think of this as a great use case for [Reusable field schemas](https://docs.kentico.com/x/D4_OD). You would assign a reusable field schema with a "Page Title" field to all web page content types. Then, you can query on the schema without caring what the content type of the page is and always have access to the "Page Title" field to display in your breadcrumb.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-06-13 01:41:34Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>2e0f53aa-abd9-4404-8caf-4a16ebf4b6e0</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

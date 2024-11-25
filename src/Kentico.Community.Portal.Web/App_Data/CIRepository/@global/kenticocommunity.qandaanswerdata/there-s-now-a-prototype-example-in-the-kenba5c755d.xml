@@ -5,14 +5,16 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>There-s-now-a-prototype-example-in-the-Kenba5c755d</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 There's now a prototype example in the [Kentico Community Portal](https://github.com/Kentico/community-portal/releases/tag/v29.6.1.10) which shows how you can send file contents to the browser and initiate a download of the file.
 
 * [RecipientListOverviewExtender.cs](https://github.com/Kentico/community-portal/blob/v29.6.1.10/src/Kentico.Community.Portal.Admin/Features/RecipientLists/RecipientListOverviewExtender.cs#L66) - creates the `EXPORT_LIST` command called by the client
 * [DataExportComponent.tsx](https://github.com/Kentico/community-portal/blob/v29.6.1.10/src/Kentico.Community.Portal.Admin/Client/src/components/DataExportComponent.tsx#L60) - initiates the file download from a CTA
 
 I'm sure there are many ways to refine this setup, but it "works" and should be able to scale to downloading files up to a hundred MB in size.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-11-05 21:38:37Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>376b9b25-c9a3-4101-aebf-a83e5d10be7f</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>

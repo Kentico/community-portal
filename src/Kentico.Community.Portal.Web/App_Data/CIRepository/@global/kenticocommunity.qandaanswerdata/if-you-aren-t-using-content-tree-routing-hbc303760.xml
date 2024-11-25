@@ -5,7 +5,8 @@
     <ObjectType>cms.member</ObjectType>
   </QAndAAnswerDataAuthorMemberID>
   <QAndAAnswerDataCodeName>If-you-aren-t-using-Content-Tree-routing-hbc303760</QAndAAnswerDataCodeName>
-  <QAndAAnswerDataContent><![CDATA[
+  <QAndAAnswerDataContent>
+<![CDATA[
 If you aren't using [Content Tree routing](https://docs.kentico.com/x/GoXWCQ) then it is _your_ responsibility to tell Xperience which content tree page is associated with the given URL. How else would it know 🤷?
 
 Why does it need this information? Well, all Page Builder configuration is persisted into the web page item's widget field (stored in `CMS_ContentItemCommonData.ContentItemCommonDataPageBuilderWidgets` and `CMS_ContentItemCommonData.ContentItemCommonDataPageTemplateConfiguration` in the database).
@@ -15,7 +16,8 @@ Without knowing which web page item is being requested, the widgets cannot be re
 You can construct a `RoutedWebPage` (`pageDataContext`) manually, having queried for the web page item details from the database yourself, and populate it.
 
 Then you can pass that `RoutedWebPage` to `webPageDataContextInitializer.Initialize(pageDataContext);` _before_ the Razor view is executed.
-]]></QAndAAnswerDataContent>
+]]>
+  </QAndAAnswerDataContent>
   <QAndAAnswerDataDateCreated>2024-06-12 01:15:00Z</QAndAAnswerDataDateCreated>
   <QAndAAnswerDataGUID>e9645d1d-cc26-4f4e-8b04-92938bd9e290</QAndAAnswerDataGUID>
   <QAndAAnswerDataQuestionWebPageItemID>
