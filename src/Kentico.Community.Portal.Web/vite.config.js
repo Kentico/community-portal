@@ -43,7 +43,7 @@ export default defineConfig(async ({ mode }) => {
       });
     });
   } else {
-    console.info("Skipping dev certification creation");
+    console.info("Skipping dev certificates creation");
   }
 
   /** @type {import('vite').UserConfig} */
@@ -68,7 +68,7 @@ export default defineConfig(async ({ mode }) => {
       },
     },
     build: {
-      manifest: appsettings.Vite.Manifest || "manifest.json",
+      manifest: appsettings.Vite.Manifest ?? "manifest.json",
       assetsDir: "",
       emptyOutDir: true,
       outDir: "../wwwroot/dist",

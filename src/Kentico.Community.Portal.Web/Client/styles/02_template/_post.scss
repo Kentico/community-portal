@@ -81,15 +81,11 @@
   object-fit: cover;
 }
 
-.greyscale .template-banner__bg {
+.template-banner__bg {
   z-index: -1;
 }
 
-.greyscale .template-banner__bg img {
-  filter: grayscale(1);
-}
-
-.greyscale .template-banner__bg:before {
+.template-banner__bg:before {
   width: 100%;
   height: 100%;
   content: "";
@@ -99,7 +95,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.4);
   z-index: 2;
 }
 

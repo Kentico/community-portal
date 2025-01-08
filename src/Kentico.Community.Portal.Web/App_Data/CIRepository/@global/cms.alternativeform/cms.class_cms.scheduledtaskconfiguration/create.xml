@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>cms.ScheduledTaskConfiguration</CodeName>
+    <GUID>57b78754-4137-4220-b736-8c16cbbe6c87</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="ScheduledTaskConfigurationLastRunTime" guid="c1c5fbe3-cf9b-4055-b663-18898c5cae18" order="0" />
+      <field column="ScheduledTaskConfigurationNextRunTime" guid="72b48b10-53ca-4934-8be4-c3044af2be7d" order="1" />
+      <field column="ScheduledTaskConfigurationIsRunning" guid="94914428-22b2-41c8-ae75-f42e57ca8e14" order="2" />
+      <field column="ScheduledTaskConfigurationLastResult" guid="feb262dd-3a25-4301-8b31-6d068f0a75a1" order="3" />
+      <field column="ScheduledTaskConfigurationDeleteAfterLastRun" guid="564b2be3-fa3f-4517-8cf3-f36bff312e6b" order="4" />
+      <field column="ScheduledTaskConfigurationGUID" guid="6db955f1-124a-4a2b-ad66-596dd53936ea" order="5" />
+      <field column="ScheduledTaskConfigurationLastModified" guid="5a02bac7-ee29-497a-a42d-22f1201e1b1c" order="6" />
+      <field column="ScheduledTaskConfigurationExecutions" guid="5f1cbc53-2a56-415b-b194-fdf91a48a8ad" order="7" />
+      <field column="ScheduledTaskConfigurationUserID" guid="c362f5fa-bc6d-47c9-b238-cf91083809b6" order="8" />
+      <field column="ScheduledTaskConfigurationInterval" guid="02900d9c-c032-4081-9532-a48c339dbbce" order="9" />
+      <field column="ScheduledTaskConfigurationObjectType" guid="c0144c6b-2105-4543-9e41-6f017fb58a69" order="10" />
+      <field column="ScheduledTaskConfigurationObjectID" guid="944b2dbf-fd97-41e3-8788-fc47d5158a30" order="11" />
+      <field column="ScheduledTaskConfigurationExecutingServerName" guid="21247dd8-8c7a-47c9-b925-fc9ba485f9ba" order="12" />
+      <field column="ScheduledTaskConfigurationName" enabled="true" guid="e9eabd43-9133-4cd9-8012-aefa513e87b2" visible="true" order="13">
+        <settings>
+          <controlname>Kentico.Administration.CodeName</controlname>
+          <HasAutomaticCodeNameGenerationOption>True</HasAutomaticCodeNameGenerationOption>
+          <IsCollapsed>True</IsCollapsed>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$general.codename$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ScheduledTaskConfigurationDisplayName" enabled="true" guid="a3f95b42-bd02-4db6-b1aa-0d340952a27e" visible="true" order="14">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.scheduledtasks.displayname$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ScheduledTaskConfigurationScheduledTaskIdentifier" enabled="true" guid="75a90f00-4b01-4abf-b135-3ce892d2851f" visible="true" order="15">
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.scheduledtasks.implementation$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ScheduledTaskConfigurationID" guid="4419f729-75ac-4eb7-a4d4-bdcdb8d03884" order="16" />
+      <field column="ScheduledTaskConfigurationData" guid="a8fd0828-3456-483d-9845-f93c6d9fc9fd" order="17" />
+      <field column="ScheduledTaskConfigurationIsSystem" guid="15887877-f1a4-4381-96c0-36d37c79c46a" enabled="" order="18" />
+      <field column="ScheduledTaskConfigurationEnabled" enabled="true" guid="dbd5d77f-f7f4-4da4-87f8-9027cbcca5e1" visible="true" order="19">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <defaultvalue>True</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$general.enabled$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <category name="Configure_recurrence" order="20">
+        <properties>
+          <caption>{$base.scheduledtasks.configurerecurrence$}</caption>
+          <visible>true</visible>
+        </properties>
+      </category>
+      <field column="StartTime" columnprecision="7" columntype="datetime" dummy="altform" enabled="true" guid="a0809a2a-0e97-406e-949c-06490e8f8cb6" system="true" visible="true" order="21">
+        <properties>
+          <defaultvalue ismacro="true">{% Now %}</defaultvalue>
+          <explanationtext>{$base.scheduledtasks.starttime.explanationtext$}</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.scheduledtasks.starttime$}</fieldcaption>
+          <fielddescription>{$base.scheduledtasks.starttime.tooltip$}</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues>
+              <ErrorMessage />
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field column="Period" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="0665a8db-6375-4379-be27-1ee6a83585b1" system="true" visible="true" order="22">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.scheduledtasks.period$}</fieldcaption>
+          <fielddescription>{$base.scheduledtasks.period.tooltip$}</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+timesecond;{$base.scheduledtasks.period.second$}
+minute;{$base.scheduledtasks.period.minute$}
+hour;{$base.scheduledtasks.period.hour$}
+day;{$base.scheduledtasks.period.day$}
+week;{$base.scheduledtasks.period.week$}
+month;{$base.scheduledtasks.period.month$}
+year;{$base.scheduledtasks.period.year$}
+once;{$base.scheduledtasks.period.once$}
+]]>
+          </Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field column="Every" columnprecision="0" columntype="integer" dummy="altform" enabled="true" guid="514ab7f1-7f88-4ac6-abdf-3a3f6038851e" system="true" visible="true" order="23">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.scheduledtasks.every$}</fieldcaption>
+          <fielddescription>{$base.scheduledtasks.every.tooltip$}</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.NumberInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.MinimumIntegerValue</ValidationRuleIdentifier>
+            <RuleValues>
+              <MinValue>1</MinValue>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field column="DayOfTheMonth" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="191ad2e0-96d8-43b9-9735-08d32f07bbb3" system="true" visible="true" order="24">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.scheduledtasks.dayofthemonth$}</fieldcaption>
+          <fielddescription>{$base.scheduledtasks.dayofthemonth.tooltip$}</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+1;1
+2;2
+3;3
+4;4
+5;5
+6;6
+7;7
+8;8
+9;9
+10;10
+11;11
+12;12
+13;13
+14;14
+15;15
+16;16
+17;17
+18;18
+19;19
+20;20
+21;21
+22;22
+23;23
+24;24
+25;25
+26;26
+27;27
+28;28
+29;29
+30;30
+31;31
+-1;{$base.scheduledtasks.dayofthemonth.last$}
+]]>
+          </Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
+      </field>
+      <category name="Select_days" order="25">
+        <properties>
+          <caption>{$base.scheduledtasks.selectdays$}</caption>
+          <visible>true</visible>
+        </properties>
+      </category>
+      <field column="Monday" columnprecision="0" columntype="boolean" dummy="altform" enabled="true" guid="a1178947-31a2-4ec3-937f-13ea834b82d0" system="true" visible="true" order="26">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.scheduledtasks.day.monday$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+      </field>
+      <field column="Tuesday" columnprecision="0" columntype="boolean" dummy="altform" enabled="true" guid="f940a69c-8d31-48b1-81fc-4765053239d6" system="true" visible="true" order="27">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.scheduledtasks.day.tuesday$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+      </field>
+      <field column="Wednesday" columnprecision="0" columntype="boolean" dummy="altform" enabled="true" guid="c8228dc1-a851-4679-9e80-aa6f2914aecb" system="true" visible="true" order="28">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.scheduledtasks.day.wednesday$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+      </field>
+      <field column="Thursday" columnprecision="0" columntype="boolean" dummy="altform" enabled="true" guid="34721971-2caa-45d9-ab83-c260823e6673" system="true" visible="true" order="29">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.scheduledtasks.day.thursday$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+      </field>
+      <field column="Friday" columnprecision="0" columntype="boolean" dummy="altform" enabled="true" guid="a34b5e57-e239-4941-a7c0-5b0715b84c61" system="true" visible="true" order="30">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.scheduledtasks.day.friday$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+      </field>
+      <field column="Saturday" columnprecision="0" columntype="boolean" dummy="altform" enabled="true" guid="10d2b7db-09b2-4cda-9694-736b8d0cec63" system="true" visible="true" order="31">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.scheduledtasks.day.saturday$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+      </field>
+      <field column="Sunday" columnprecision="0" columntype="boolean" dummy="altform" enabled="true" guid="ca5c57ad-b6f8-4fc5-ab19-a0e52fc06f2a" system="true" visible="true" order="32">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.scheduledtasks.day.sunday$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+      </field>
+      <field column="ScheduledTaskConfigurationCreatedDynamically" guid="52bbea9b-9dd2-42a2-a1b3-3cfbc457ed10" enabled="" order="33" />
+    </form>
+  </FormDefinition>
+  <FormDisplayName>create</FormDisplayName>
+  <FormGUID>38b60633-c158-4949-826c-254b44548bee</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>create</FormName>
+</cms.alternativeform>

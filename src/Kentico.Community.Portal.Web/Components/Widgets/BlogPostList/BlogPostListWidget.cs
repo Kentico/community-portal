@@ -43,9 +43,11 @@ public class BlogPostListWidget(
         var props = cvm.Properties;
         var posts = props.BlogPostSourceParsed switch
         {
+            BlogPostSources.Smart_Folder => await GetBlogPostsBySmartFolder(props),
             BlogPostSources.Individual_Selection => await GetBlogPostsBySelection(props),
             BlogPostSources.Post_Taxonomy => await GetBlogPostsByTaxonomy(props),
-            BlogPostSources.Latest_Published or _ => await GetLatestBlogPosts(props)
+            BlogPostSources.Latest_Published or _ => await GetLatestBlogPosts(props),
+
         };
 
         return Validate(props, posts)
@@ -63,6 +65,19 @@ public class BlogPostListWidget(
         }
 
         var resp = await mediator.Send(new BlogPostsByTaxonomyQuery([.. tagReferences.Select(t => t.Identifier)], props.PostLimit, channelContext.WebsiteChannelName));
+        var posts = resp.Items;
+        return await BuildPostPageViewModels(posts, props);
+    }
+
+    private async Task<IReadOnlyList<BlogPostViewModel>> GetBlogPostsBySmartFolder(BlogPostListWidgetProperties props)
+    {
+        var folderReference = props.FolderReference;
+        if (folderReference is null)
+        {
+            return [];
+        }
+
+        var resp = await mediator.Send(new BlogPostsBySmartFolderQuery(props.FolderReference.Identifier, props.PostLimit, channelContext.WebsiteChannelName));
         var posts = resp.Items;
         return await BuildPostPageViewModels(posts, props);
     }
@@ -141,6 +156,7 @@ public class BlogPostListWidget(
         {
             string error = props.BlogPostSourceParsed switch
             {
+                BlogPostSources.Smart_Folder => "Select a smart folder",
                 BlogPostSources.Individual_Selection => "Select a Post to display",
                 BlogPostSources.Post_Taxonomy => "Select a Taxonomy with associated Posts",
                 BlogPostSources.Latest_Published or _ => "There are no posts available to display"
@@ -187,6 +203,18 @@ public class BlogPostListWidgetProperties : IWidgetProperties
     public string BlogPostSource { get; set; } = nameof(BlogPostSources.Individual_Selection);
     public BlogPostSources BlogPostSourceParsed => EnumDropDownOptionsProvider<BlogPostSources>.Parse(BlogPostSource, BlogPostSources.Individual_Selection);
 
+    [SmartFolderSelectorComponent(
+        Label = "Smart folder",
+        Order = 3,
+        ExplanationText = "Select a smart folder containing Blog Post Content items",
+        AllowedContentTypeIdentifiersFilter = typeof(BlogPostContentFilter))]
+    [VisibleIfEqualTo(
+        nameof(BlogPostSource),
+        nameof(BlogPostSources.Smart_Folder),
+        StringComparison.OrdinalIgnoreCase
+    )]
+    public SmartFolderReference FolderReference { get; set; } = null!;
+
     [TagSelectorComponent(
         SystemTaxonomies.BlogTypeTaxonomy.CodeName,
         Label = "Blog Type",
@@ -204,19 +232,6 @@ public class BlogPostListWidgetProperties : IWidgetProperties
     )]
     public IEnumerable<TagReference> TagReferences { get; set; } = [];
 
-    [NumberInputComponent(
-        Label = "Post Limit",
-        ExplanationText = "The maximum number of posts to display from the selected Taxonomies",
-        Order = 4
-    )]
-    [VisibleIfEqualTo(
-        nameof(BlogPostSource),
-        nameof(BlogPostSources.Post_Taxonomy),
-        StringComparison.OrdinalIgnoreCase
-    )]
-    [Range(1, 12)]
-    public int PostLimit { get; set; } = 1;
-
     [WebPageSelectorComponent(
         Label = "Posts",
         Sortable = true,
@@ -231,6 +246,19 @@ public class BlogPostListWidgetProperties : IWidgetProperties
     )]
     public IEnumerable<WebPageRelatedItem> BlogPosts { get; set; } = [];
 
+    [NumberInputComponent(
+        Label = "Post Limit",
+        ExplanationText = "The maximum number of posts to display from the selected Taxonomies",
+        Order = 4
+    )]
+    [VisibleIfNotEqualTo(
+        nameof(BlogPostSource),
+        nameof(BlogPostSources.Individual_Selection),
+        StringComparison.OrdinalIgnoreCase
+    )]
+    [Range(1, 12)]
+    public int PostLimit { get; set; } = 1;
+
     [DropDownComponent(
         Label = "Item Layout",
         ExplanationText = "How the content is presented",
@@ -243,6 +271,8 @@ public class BlogPostListWidgetProperties : IWidgetProperties
 
 public enum BlogPostSources
 {
+    [Description("Smart Folder")]
+    Smart_Folder,
     [Description("Individual Selection")]
     Individual_Selection,
     [Description("Post Taxonomy")]
@@ -285,4 +315,10 @@ public class BlogPostViewModel(BlogPostAuthorViewModel author)
     public string ShortDescription { get; init; } = "";
     public string LinkPath { get; init; } = "";
     public string? Taxonomy { get; set; } = "";
+}
+
+public class BlogPostContentFilter : IContentTypesNameFilter
+{
+    public IEnumerable<string> AllowedContentTypeNames { get; } = [BlogPostContent.CONTENT_TYPE_NAME];
+
 }

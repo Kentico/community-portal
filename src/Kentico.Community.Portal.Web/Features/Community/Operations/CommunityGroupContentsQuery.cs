@@ -24,5 +24,5 @@ public class CommunityGroupContentsQueryHandler(ContentItemQueryTools tools) : C
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(CommunityGroupContentsQuery query, CommunityGroupContentsQueryResponse result, ICacheDependencyKeysBuilder builder) =>
         builder
             .AllContentItems(CommunityGroupContent.CONTENT_TYPE_NAME)
-            .Collection(result.Items, (i, b) => b.ContentItem(i.ListableItemFeaturedImage.FirstOrDefault()));
+            .Collection(result.Items, (i, b) => b.ContentItem(i.ListableItemFeaturedImageContent.FirstOrDefault()));
 }

@@ -19,13 +19,15 @@ let crepeReadonly: Crepe | undefined = undefined;
 
 type EditorMode = 'edit' | 'readonly';
 type EditorType = 'markdown' | 'editor';
+type ComponentState = { type: EditorType };
 
 export const MarkdownFormComponent = (props: FormComponentProps) => {
   const defaultValue =
     typeof props.value === 'string' && !!props.value ? props.value : '';
 
-  const [state, setState] = useState<{ mode: EditorMode; type: EditorType }>({
-    mode: props.disabled === true ? 'readonly' : 'edit',
+  const mode: EditorMode = props.disabled === true ? 'readonly' : 'edit';
+
+  const [state, setState] = useState<ComponentState>({
     type: 'editor',
   });
 
@@ -54,32 +56,32 @@ export const MarkdownFormComponent = (props: FormComponentProps) => {
       <FormItemWrapper
         label={'Markdown'}
         childrenWrapperClassnames={
-          state.mode === 'readonly'
+          mode === 'readonly'
             ? 'markdown-editor-form-item disabled'
             : 'markdown-editor-form-item'
         }
-        disabled={state.mode === 'readonly'}
+        disabled={mode === 'readonly'}
       >
         {state.type === 'markdown' ? (
           <RawEditor
             {...{
               defaultValue,
               UpdateContent: updatedContent,
-              mode: state.mode,
+              mode,
             }}
           />
-        ) : state.mode === 'edit' ? (
-          <MilkdownProvider>
-            <MilkdownEditor
-              {...{
-                defaultValue,
-                UpdateContent: updateContentDebounced,
-              }}
-            />
-          </MilkdownProvider>
         ) : (
           <MilkdownProvider>
-            <MilkdownEditorReadOnly {...{ defaultValue }} />
+            {mode === 'edit' ? (
+              <MilkdownEditor
+                {...{
+                  defaultValue,
+                  UpdateContent: updateContentDebounced,
+                }}
+              />
+            ) : (
+              <MilkdownEditorReadOnly {...{ defaultValue }} />
+            )}
           </MilkdownProvider>
         )}
       </FormItemWrapper>

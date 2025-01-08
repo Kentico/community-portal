@@ -42,17 +42,5 @@ namespace Kentico.Community.Portal.Core.Content
 		/// MediaItemTaxonomy.
 		/// </summary>
 		public IEnumerable<TagReference> MediaItemTaxonomy { get; set; }
-
-
-		/// <summary>
-		/// MediaItemAssetWidth.
-		/// </summary>
-		public int MediaItemAssetWidth { get; set; }
-
-
-		/// <summary>
-		/// MediaItemAssetHeight.
-		/// </summary>
-		public int MediaItemAssetHeight { get; set; }
 	}
 }

@@ -2,6 +2,7 @@ using CMS.ContentEngine;
 using CMS.DataEngine;
 using CMS.Membership;
 using Kentico.Community.Portal.Core;
+using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Infrastructure;
 
@@ -11,13 +12,16 @@ public record QAndAQuestionUpdateCommand(
     QAndAQuestionPage Question,
     string UpdatedQuestionTitle,
     string UpdatedQuestionContent,
+    IReadOnlyList<string> DXTopics,
     int ChannelID) : ICommand<Result>;
 public class QAndAQuestionUpdateCommandHandler(
     WebPageCommandTools tools,
     IInfoProvider<UserInfo> users,
+    ITaxonomyRetriever taxonomyRetriever,
     ISystemClock clock) : WebPageCommandHandler<QAndAQuestionUpdateCommand, Result>(tools)
 {
     private readonly IInfoProvider<UserInfo> users = users;
+    private readonly ITaxonomyRetriever taxonomyRetriever = taxonomyRetriever;
     private readonly ISystemClock clock = clock;
 
     public override async Task<Result> Handle(QAndAQuestionUpdateCommand request, CancellationToken cancellationToken)
@@ -26,6 +30,12 @@ public class QAndAQuestionUpdateCommandHandler(
         string filteredTitle = QandAContentParser.Alphanumeric(request.UpdatedQuestionTitle);
         string uniqueID = Guid.NewGuid().ToString("N");
         string displayName = $"{filteredTitle[..Math.Min(91, filteredTitle.Length)]}-{uniqueID[..8]}";
+        var dxTaxonomy = await taxonomyRetriever.RetrieveTaxonomy(SystemTaxonomies.DXTopicTaxonomy.CodeName, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
+        var validTags = dxTaxonomy
+            .Tags
+            .Where(t => request.DXTopics.Contains(t.Name, StringComparer.OrdinalIgnoreCase))
+            .Select(t => new TagReference() { Identifier = t.Identifier })
+            .ToList();
 
         var user = await users.GetPublicMemberContentAuthor();
         var webPageManager = WebPageManagerFactory.Create(request.ChannelID, user.UserID);
@@ -58,6 +68,7 @@ public class QAndAQuestionUpdateCommandHandler(
             { nameof(QAndAQuestionPage.QAndAQuestionPageTitle), request.UpdatedQuestionTitle },
             // Content is not sanitized because it can include fenced code blocks.
             { nameof(QAndAQuestionPage.QAndAQuestionPageContent), request.UpdatedQuestionContent },
+            { nameof(QAndAQuestionPage.QAndAQuestionPageDXTopics), validTags }
         });
         var draftData = new UpdateDraftData(itemData);
         bool update = await webPageManager.TryUpdateDraft(question.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, draftData, cancellationToken);

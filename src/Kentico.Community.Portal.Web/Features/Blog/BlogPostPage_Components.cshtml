@@ -1,4 +1,3 @@
-@using Kentico.Community.Portal.Web.Components.Sections.SingleColumn
 @using Kentico.Community.Portal.Web.Features.Blog
 
 @model TemplateViewModel<BlogPostPageTemplateProperties>
@@ -12,16 +11,20 @@
     <div class="t-article">
         <div class="content-wrapper">
             <section class="c-section hero-article">
-                <section class="template-banner blog greyscale">
-                    @if (post.Teaser.TryGetValue(out var teaser))
-                    {
-                        <div class="template-banner__bg">
+                <section class="template-banner blog">
+                    <div class="template-banner__bg">
+                        @if (post.Teaser.TryGetValue(out var teaser))
+                        {
                             <img class="t-article_hero-picture img-fluid" src="@teaser.URL"
                                 alt="@teaser.AltText" title="@teaser.Title"
                                 width="@teaser.Width"
                                 height="@teaser.Height" />
-                        </div>
-                    }
+                        }
+                        else
+                        {
+                            <partial name="~/Features/Blog/_BlogHero.cshtml" />
+                        }
+                    </div>
                     <div class="site-wide grid-container grid-container--full">
                         <div class="grid-column">
                             <div class="template-banner__content-wrapper">
@@ -62,7 +65,7 @@
             <section class="c-section default">
                 <div role="main" class="t-article_body">
                     <editable-area area-identifier="main"
-                        area-options-default-section-identifier="@SingleColumnSection.IDENTIFIER"
+                        area-options-default-section-identifier="@SI.SingleColumn"
                         area-options-allowed-sections="
                         [
                             SI.Grid,
@@ -88,10 +91,9 @@
                             <div class="t-article_footer mt-6">
                                 @if (post.DiscussionLinkPath is string discussionPath)
                                 {
-                                    <div>
-                                        <a class="btn btn-outline-primary" href="@discussionPath">Discuss this post in the
-                                            Q&A</a>
-                                    </div>
+                                    <a class="btn btn-secondary" href="@discussionPath">
+                                        Discuss this post with the community
+                                    </a>
                                 }
                                 <div class="t-article_footer_share">
                                     <p>Share on:</p>

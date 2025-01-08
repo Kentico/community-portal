@@ -16,7 +16,6 @@ using Kentico.Community.Portal.Web.Features.Support;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Infrastructure.Storage;
 using Kentico.Community.Portal.Web.Rendering;
-using Kentico.Community.Portal.Web.Rendering.Events;
 using Sidio.Sitemap.AspNetCore;
 using Sidio.Sitemap.Core.Services;
 using Slugify;
@@ -94,7 +93,6 @@ public static class ServiceCollectionAppExtensions
             .AddSingleton<ISystemClock, SystemClock>()
             .AddSingleton<AssetItemService>()
             .AddSingleton<IStoragePathService, StoragePathService>()
-            .AddTransient<MediaAssetContentMetadataHandler>()
             .AddScoped<CaptchaValidator>()
             .Configure<ReCaptchaSettings>(config.GetSection("ReCaptcha"));
 

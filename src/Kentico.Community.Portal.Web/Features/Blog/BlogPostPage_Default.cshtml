@@ -11,14 +11,20 @@
     <div class="t-article">
         <div class="content-wrapper">
             <section class="c-section hero-article">
-                <section class="template-banner blog greyscale">
-                    @if (post.Teaser.TryGetValue(out var teaser))
-                    {
-                        <div class="template-banner__bg">
-                            <img class="t-article_hero-picture img-fluid" src="@teaser.URL" alt="@teaser.AltText"
-                                title="@teaser.Title" width="@teaser.Width" height="@teaser.Height" />
-                        </div>
-                    }
+                <section class="template-banner blog">
+                    <div class="template-banner__bg">
+                        @if (post.Teaser.TryGetValue(out var teaser))
+                        {
+                            <img class="t-article_hero-picture img-fluid" src="@teaser.URL"
+                                alt="@teaser.AltText" title="@teaser.Title"
+                                width="@teaser.Width"
+                                height="@teaser.Height" />
+                        }
+                        else
+                        {
+                            <partial name="~/Features/Blog/_BlogHero.cshtml" />
+                        }
+                    </div>
                     <div class="site-wide grid-container grid-container--full">
                         <div class="grid-column">
                             <div class="template-banner__content-wrapper">

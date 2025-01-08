@@ -123,11 +123,6 @@ public class BlogPostPageTemplateController(
 
     private async Task<string?> GetDiscussionLinkPath(BlogPostPage blogPostPage, string channelName)
     {
-        if (!string.IsNullOrWhiteSpace(blogPostPage.BlogPostPageQAndADiscussionLinkPath))
-        {
-            return blogPostPage.BlogPostPageQAndADiscussionLinkPath;
-        }
-
         if (blogPostPage.BlogPostPageQAndADiscussionPage.FirstOrDefault() is not WebPageRelatedItem relatedItem)
         {
             return null;
@@ -135,9 +130,11 @@ public class BlogPostPageTemplateController(
 
         var questionPage = await mediator.Send(new QAndAQuestionPageByGUIDQuery(relatedItem.WebPageGuid, channelName));
 
-        var pageUrl = await urlRetriever.Retrieve(questionPage);
-
-        return pageUrl.RelativePath;
+        return await questionPage
+            .Map(p => urlRetriever.Retrieve(p))
+            .Match(
+                url => url.RelativePath,
+                () => null!);
     }
 }
 

@@ -49,11 +49,11 @@ public class CommunityStatsPage(ISystemClock clock) : Page<StatsLayoutClientProp
         var totals = await GetTotals();
         ImmutableList<StatsDatum> data =
         [
-            new("Active members", membersData),
-            new("Newsletter subscribers", subscribers),
-            new("Blog posts", blogPosts),
-            new("Q&A Questions", questions),
-            new("Q&A Answers", answers),
+            new("New active members", membersData),
+            new("New newsletter subscribers", subscribers),
+            new("New blog posts", blogPosts),
+            new("New Q&A Questions", questions),
+            new("New Q&A Answers", answers),
         ];
 
         return new StatsData(totals, null, data);

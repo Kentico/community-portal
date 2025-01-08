@@ -56,6 +56,9 @@ public class MemberIntegrationsListPage(
                 "Content Item",
                 searchable: true,
                 minWidth: 1)
+            .AddColumn(nameof(ContentItemInfo.ContentItemWorkspaceID),
+                nameof(ContentItemInfo.ContentItemWorkspaceID),
+                visible: false)
             .AddColumn(
                 nameof(IntegrationContent.IntegrationContentPublishedDate),
                 "Published",
@@ -73,6 +76,7 @@ public class MemberIntegrationsListPage(
     private TableRowLinkProps ContentLinkModelRetriever(object value, IDataContainer container)
     {
         int contentItemID = conversionService.GetInteger(container[nameof(IntegrationContent.SystemFields.ContentItemID)], 0);
+        int workspaceID = conversionService.GetInteger(container[nameof(ContentItemInfo.ContentItemWorkspaceID)], 0);
         string valueStr = value.ToString() ?? "";
         string label = valueStr.Length > 47
             ? $"{valueStr[..Math.Min(valueStr.Length, 47)]}..."
@@ -85,6 +89,7 @@ public class MemberIntegrationsListPage(
 
         string pageUrl = pageLinkGenerator.GetPath<ContentItemEdit>(new()
         {
+            { typeof(ContentHubWorkspace), workspaceID },
             { typeof(ContentHubContentLanguage), PortalWebSiteChannel.DEFAULT_LANGUAGE },
             { typeof(ContentItemEditSection), contentItemID },
             { typeof(ContentHubFolder), ContentHubSlugs.ALL_CONTENT_ITEMS },

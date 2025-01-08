@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassConnectionString>CMSConnectionString</ClassConnectionString>
+  <ClassDisplayName>Temporary visual builder widgets</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="VisualBuilderWidgetsID" columntype="integer" guid="355398b4-0973-4d28-8c3b-fb89b14b63cf" isPK="true" system="true" />
+      <field allowempty="true" column="VisualBuilderWidgetsConfiguration" columntype="longtext" guid="4d69dcdf-34fa-4b61-976f-67197c9a5af8" system="true" />
+      <field allowempty="true" column="VisualBuilderTemplateConfiguration" columntype="longtext" guid="bc74f698-52a9-47b7-a469-a0425367717f" system="true" />
+      <field column="VisualBuilderWidgetsGuid" columntype="guid" guid="05680a9f-20e5-4dd2-a5c6-75316bb711b1" system="true" />
+      <field column="VisualBuilderWidgetsLastModified" columnprecision="7" columntype="datetime" guid="3962d803-b795-4475-96ad-5936e24405bb" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>8200dd77-16e8-4aec-ab65-db9595622464</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>Temp.VisualBuilderWidgets</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Websites</CodeName>
+    <GUID>87975c89-f788-4e6c-a91f-08f38097cc32</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassShowTemplateSelection>False</ClassShowTemplateSelection>
+  <ClassTableName>Temp_VisualBuilderWidgets</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

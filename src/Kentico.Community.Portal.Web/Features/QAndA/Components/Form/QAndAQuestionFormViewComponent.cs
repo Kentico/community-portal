@@ -13,30 +13,27 @@ public class QAndAQuestionFormViewComponent(IMediator mediator, IWebsiteChannelC
 
     public async Task<IViewComponentResult> InvokeAsync(Guid? questionID = null)
     {
-        var rootPage = await mediator.Send(new QAndALandingPageQuery(channelContext.WebsiteChannelName));
+        var landingResp = await mediator.Send(new QAndALandingPageQuery(channelContext.WebsiteChannelName));
 
-        if (rootPage is null)
+        if (!landingResp.TryGetValue(out var landingPage))
         {
             return View("~/Components/ComponentError.cshtml");
         }
 
-        var vm = new QAndAQuestionFormViewModel
-        {
-            FormHelpMessageHTML = new(rootPage.QAndALandingPageMarkdownFormHelpMessageHTML)
-        };
+        var formHelpMessageHTML = new HtmlString(landingPage.QAndALandingPageMarkdownFormHelpMessageHTML);
 
-        if (questionID is Guid id)
+        if (questionID is not Guid id)
         {
-            var question = await mediator.Send(new QAndAQuestionPageByGUIDQuery(id, channelContext.WebsiteChannelName));
-            if (question is null)
-            {
-                return View("~/Components/ComponentError.cshtml");
-            }
-
-            vm.EditedObjectID = id;
-            vm.Title = question.QAndAQuestionPageTitle;
-            vm.Content = question.QAndAQuestionPageContent;
+            return View("~/Features/QAndA/Components/Form/QAndAQuestionForm.cshtml", QAndAQuestionFormViewModel.ForNewQuestion(formHelpMessageHTML));
         }
+
+        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(id, channelContext.WebsiteChannelName));
+        if (!questionResp.TryGetValue(out var questionPage))
+        {
+            return View("~/Components/ComponentError.cshtml");
+        }
+
+        var vm = new QAndAQuestionFormViewModel(id, questionPage.QAndAQuestionPageTitle, questionPage.QAndAQuestionPageContent, formHelpMessageHTML, []);
 
         return View("~/Features/QAndA/Components/Form/QAndAQuestionForm.cshtml", vm);
     }
@@ -46,15 +43,37 @@ public class QAndAQuestionFormViewModel
 {
     [Required(ErrorMessage = "A Title is required")]
     [MaxLength(100, ErrorMessage = "Title can be at most 100 characters")]
-    public string Title { get; set; } = "";
+    public string Title { get; }
 
     [Required(ErrorMessage = "Content is required")]
-    public string Content { get; set; } = "";
+    public string Content { get; }
 
     [HiddenInput]
-    public Guid? EditedObjectID { get; set; }
+    public Guid? EditedObjectID { get; }
 
-    public HtmlString FormHelpMessageHTML { get; set; } = HtmlString.Empty;
+    public HtmlString FormHelpMessageHTML { get; }
+    public IReadOnlyList<string> DXTopics { get; }
+
+    public static QAndAQuestionFormViewModel ForNewQuestion(HtmlString formHelpMessageHTML) => new(formHelpMessageHTML);
+    public static QAndAQuestionFormViewModel FromFormSubmission(QAndAQuestionFormSubmissionViewModel vm, HtmlString formHelpMessageHTML) =>
+        new(vm.EditedObjectID, vm.Title, vm.Content, formHelpMessageHTML, vm.DXTopics);
+
+    private QAndAQuestionFormViewModel(HtmlString formHelpMessageHTML)
+    {
+        Title = "";
+        Content = "";
+        DXTopics = [];
+        FormHelpMessageHTML = formHelpMessageHTML;
+    }
+
+    public QAndAQuestionFormViewModel(Guid? editedObjectID, string title, string content, HtmlString formHelpMessageHTML, IReadOnlyList<string> dxTopics)
+    {
+        EditedObjectID = editedObjectID;
+        Title = title;
+        Content = content;
+        FormHelpMessageHTML = formHelpMessageHTML;
+        DXTopics = dxTopics;
+    }
 }
 
 public class QAndAQuestionFormSubmissionViewModel
@@ -67,4 +86,5 @@ public class QAndAQuestionFormSubmissionViewModel
     public string Content { get; set; } = "";
 
     public Guid? EditedObjectID { get; set; }
+    public IReadOnlyList<string> DXTopics { get; set; } = [];
 }

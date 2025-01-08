@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Workspace data permission</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="WorkspaceDataPermissionID" columntype="integer" enabled="true" guid="f8ea333f-0019-4667-adc0-07adbe181b71" isPK="true" system="true" />
+      <field column="WorkspaceDataPermissionGUID" columnprecision="0" columntype="guid" enabled="true" guid="f73cbd96-1519-4068-a8f8-f95a35af04c8" system="true" />
+      <field column="WorkspaceDataPermissionWorkspaceID" columnprecision="0" columntype="integer" enabled="true" guid="6f75be98-6aa2-4db0-8953-39c2f0201389" refobjtype="cms.workspace" reftype="Required" system="true" />
+      <field column="WorkspaceDataPermissionRoleID" columnprecision="0" columntype="integer" enabled="true" guid="488aac71-2c18-49ea-b12c-fd9b5bdbec21" refobjtype="cms.role" reftype="Required" system="true" />
+      <field column="WorkspaceDataPermissionApplicationName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="9ce7f26c-14ec-4ec2-ab67-e40872478f8e" system="true" />
+      <field column="WorkspaceDataPermissionPermissionName" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="b69ff640-f242-418f-943d-cd196e148701" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>62ed1614-6e93-4218-8a7f-ada5d7ae0ac2</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.WorkspaceDataPermission</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Workspaces</CodeName>
+    <GUID>edd79013-cee1-4ceb-b023-5f05a8b24d1e</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_WorkspaceDataPermission</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

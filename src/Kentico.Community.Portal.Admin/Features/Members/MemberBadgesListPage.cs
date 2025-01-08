@@ -49,12 +49,12 @@ public class MemberBadgesListPage(
 
         _ = PageConfiguration.ColumnConfigurations
             .AddColumn(nameof(MemberBadgeInfo.MemberBadgeID),
-                "Badge ID",
+                "Badge",
                 searchable: true,
                 minWidth: 1)
             .AddColumn(
                 nameof(MemberBadgeMemberInfo.MemberBadgeMemberMemberBadgeId),
-                "Member Badge ID",
+                "Member Badge",
                 searchable: true,
                 minWidth: 7)
             .AddColumn(

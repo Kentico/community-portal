@@ -13,8 +13,8 @@
       <field column="ContentItemCommonDataContentLanguageID" columnprecision="0" columntype="integer" enabled="true" guid="66a47fdf-75d6-4bd6-b99d-f37a816b8676" refobjtype="cms.contentlanguage" reftype="Required" system="true" />
       <field column="ContentItemCommonDataVersionStatus" columnprecision="0" columntype="integer" enabled="true" guid="a26f89d5-5e71-4e55-97e9-0f121c2ec231" system="true" />
       <field column="ContentItemCommonDataIsLatest" columnprecision="0" columntype="boolean" enabled="true" guid="8fda7834-4aeb-4f2d-9ba9-cb3861e56b62" system="true" />
-      <field allowempty="true" column="ContentItemCommonDataPageBuilderWidgets" columnprecision="0" columntype="longtext" enabled="true" guid="b67cbb13-d340-42bf-bb5b-e479bf31f509" system="true" />
-      <field allowempty="true" column="ContentItemCommonDataPageTemplateConfiguration" columnprecision="0" columntype="longtext" enabled="true" guid="0d5a573b-759a-4dd7-a86b-be2ef2f5bac4" system="true" />
+      <field allowempty="true" column="ContentItemCommonDataVisualBuilderWidgets" columnprecision="0" columntype="longtext" enabled="true" guid="b67cbb13-d340-42bf-bb5b-e479bf31f509" system="true" />
+      <field allowempty="true" column="ContentItemCommonDataVisualBuilderTemplateConfiguration" columnprecision="0" columntype="longtext" enabled="true" guid="0d5a573b-759a-4dd7-a86b-be2ef2f5bac4" system="true" />
       <field allowempty="true" column="ContentItemCommonDataFirstPublishedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="1318327e-9a4c-47e7-be2e-3da0fe99c15e" system="true" />
       <field allowempty="true" column="ContentItemCommonDataLastPublishedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="169ce320-e362-4b70-b4dd-cc055082c254" system="true" />
       <schema guid="19eeca92-ebc9-4489-ad27-3d51bd2d2622" name="WebPageMeta">
@@ -181,24 +181,6 @@
           <SelectionType>contentTypes</SelectionType>
         </settings>
       </field>
-      <field allowempty="true" column="ListableItemFeaturedImage" columnprecision="0" columntype="contentitemreference" enabled="true" guid="c912089f-b715-481b-8bb8-03ce3ef791ec" visible="true">
-        <properties>
-          <explanationtext>[deprecated]</explanationtext>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Featured Image</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-          <kxp_schema_identifier>058caefa-c8d6-440f-8f3e-cd0fd9d7a41a</kxp_schema_identifier>
-        </properties>
-        <settings>
-          <AllowedContentItemTypeIdentifiers>
-            <![CDATA[["0722a045-5aff-4c3b-a356-1a1fd3be8a61"]]]>
-          </AllowedContentItemTypeIdentifiers>
-          <controlname>Kentico.Administration.ContentItemSelector</controlname>
-          <MaximumItems>1</MaximumItems>
-          <MinimumItems>0</MinimumItems>
-          <SelectionType>contentTypes</SelectionType>
-        </settings>
-      </field>
       <schema guid="b31febaf-3b91-41a2-bb69-b8b80642b4ba" name="ContentAuthorization">
         <properties>
           <description>
@@ -293,28 +275,6 @@
             </RuleValues>
           </ValidationRuleConfiguration>
         </validationrulesdata>
-      </field>
-      <field allowempty="true" column="MediaItemAssetWidth" columnprecision="0" columntype="integer" enabled="true" guid="6d7a14ed-84d6-4916-926e-9a3c5d940110" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Asset width</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-          <kxp_schema_identifier>6fb07931-f628-4227-82c0-1038378360a1</kxp_schema_identifier>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.NumberInput</controlname>
-        </settings>
-      </field>
-      <field allowempty="true" column="MediaItemAssetHeight" columnprecision="0" columntype="integer" enabled="true" guid="d7246947-f821-4474-b0d7-26b8142dbe12" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Asset height</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-          <kxp_schema_identifier>6fb07931-f628-4227-82c0-1038378360a1</kxp_schema_identifier>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.NumberInput</controlname>
-        </settings>
       </field>
     </form>
   </ClassFormDefinition>

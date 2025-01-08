@@ -42,7 +42,12 @@ public class QAndALandingPageTemplateController(IMediator mediator, WebPageMetaS
 
     public async Task<ActionResult> Index()
     {
-        var landingPage = await mediator.Send(new QAndALandingPageQuery(channelContext.WebsiteChannelName));
+        var landingPageResp = await mediator.Send(new QAndALandingPageQuery(channelContext.WebsiteChannelName));
+
+        if (!landingPageResp.TryGetValue(out var landingPage))
+        {
+            return NotFound();
+        }
 
         metaService.SetMeta(new(landingPage));
 

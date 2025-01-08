@@ -16,7 +16,7 @@
     @if (User.Identity?.IsAuthenticated == true)
     {
         <form id="@formId" method="post" hx-post hx-controller="QAndAAnswer" hx-action="@action" hx-swap="outerHTML"
-            hx-target="#@rootElId" hx-trigger="submitReady">
+            hx-target="#@rootElId" hx-trigger="submitReady" class="d-flex flex-column">
             <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
 
             <div class="mt-6">
@@ -26,8 +26,14 @@
             <label for="@editorFieldID" class="form-label"><span class="text-secondary fw-bold">@User.Identity.Name</span>
                 would answer</label>
             <div id="@editorID" class="border border-1 border-dark-subtle rounded-2 milkdown-container">
-                <textarea id="@editorFieldID" class="form-control" style="display:none;" asp-for="@Model.Content"
-                    name="Content" placeholder="Your full question description goes here" value="@Model.Content"></textarea>
+                <textarea id="@editorFieldID" class="form-control d-none field-sizing-content h-100 border-0"
+                    asp-for="@Model.Content" name="Content" placeholder="Your full question description goes here"
+                    value="@Model.Content"></textarea>
+            </div>
+
+            <div class="form-check form-switch align-self-end" x-data="{ mode: 'editor' }">
+                <input class="form-check-input" type="checkbox" role="switch" id="viewMarkdown" @@change="toggleEditor">
+                <label class="form-check-label" for="viewMarkdown">View markdown</label>
             </div>
 
             <div class="d-grid">

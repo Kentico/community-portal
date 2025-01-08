@@ -55,9 +55,9 @@ public class MemberQAndAAnswersListPage(
 
         _ = PageConfiguration.ColumnConfigurations
             .AddColumn(nameof(QAndAAnswerDataInfo.QAndAAnswerDataID),
-                "Answer ID",
+                "ID",
                 searchable: true,
-                minWidth: 1)
+                minWidth: 5)
             .AddColumn(nameof(QAndAQuestionPage.QAndAQuestionPageAcceptedAnswerDataGUID), visible: false)
             .AddComponentColumn(nameof(QAndAAnswerDataInfo.QAndAAnswerDataGUID),
                 NamedComponentCellComponentNames.SIMPLE_STATUS_COMPONENT,
@@ -65,10 +65,10 @@ public class MemberQAndAAnswersListPage(
                 modelRetriever: AcceptAnswerModelRetriever,
                 searchable: false,
                 sortable: false,
-                minWidth: 1)
+                minWidth: 5)
             .AddColumn(
                 nameof(QAndAAnswerDataInfo.QAndAAnswerDataQuestionWebPageItemID),
-                "Web Page ID",
+                "Web Page",
                 searchable: true,
                 minWidth: 7)
             .AddColumn(
@@ -106,7 +106,7 @@ public class MemberQAndAAnswersListPage(
         return acceptedAnswerGUID == answerGUID && acceptedAnswerGUID != default
             ? new SimpleStatusNamedComponentCellProps()
             {
-                Label = "Accepted",
+                Label = "",
                 LabelColor = Color.SuccessText,
                 IconName = Icons.CheckCircle,
                 IconColor = Color.SuccessIcon

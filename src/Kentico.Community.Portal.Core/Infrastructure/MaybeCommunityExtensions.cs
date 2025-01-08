@@ -37,4 +37,15 @@ public static class MaybeCommunityExtensions
             ? Maybe.None
             : item;
     }
+
+    public static async Task<TE> Match<TE, T>(this Task<Maybe<T>> maybe, Func<T, TE> some, Func<TE> none)
+    {
+        var m = await maybe;
+        if (m.HasNoValue)
+        {
+            return none();
+        }
+
+        return some(m.GetValueOrThrow());
+    }
 }

@@ -67,10 +67,9 @@ public class BlogSearchViewModel : IPagedViewModel
 
     public BlogSearchViewModel(BlogSearchRequest request, BlogSearchResults result, BlogPostTaxonomiesQueryResponse taxonomies)
     {
-        BlogPosts = result
+        BlogPosts = [.. result
             .Hits
-            .Select(result => new BlogPostSearchResultViewModel(result))
-            .ToList();
+            .Select(result => new BlogPostSearchResultViewModel(result))];
 
         Page = request.PageNumber;
         Query = request.SearchText;

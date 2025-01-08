@@ -46,7 +46,6 @@ public class FormUsageListingTab(
         var form = await formProvider.GetAsync(FormId);
 
         PageConfiguration.QueryModifiers.AddModifier((query, s) =>
-        {
             query
                 .Source(source => source
                     .Join<WebPageItemInfo>(nameof(ContentItemInfo.ContentItemID), nameof(WebPageItemInfo.WebPageItemContentItemID))
@@ -58,13 +57,10 @@ public class FormUsageListingTab(
                     .Join<DataClassInfo>($"CMS_ContentItem.{nameof(ContentItemInfo.ContentItemContentTypeID)}", nameof(DataClassInfo.ClassID))
                     .Join<ContentLanguageInfo>($"CMS_ContentItemLanguageMetadata.{nameof(ContentItemLanguageMetadataInfo.ContentItemLanguageMetadataContentLanguageID)}", nameof(ContentLanguageInfo.ContentLanguageID)))
                 .WhereLike(
-                    nameof(ContentItemCommonDataInfo.ContentItemCommonDataPageBuilderWidgets),
+                    nameof(ContentItemCommonDataInfo.ContentItemCommonDataVisualBuilderWidgets),
                     $$"""%{"selectedForm":[[]{"objectGuid":null,"objectCodeName":"{{form.FormName}}"}]%""")
                 .AddColumn(nameof(WebsiteChannelInfo.WebsiteChannelID))
-                .AddColumn(nameof(ContentLanguageInfo.ContentLanguageName));
-
-            return query;
-        });
+                .AddColumn(nameof(ContentLanguageInfo.ContentLanguageName)));
 
         PageConfiguration.ColumnConfigurations
             .AddColumn(nameof(WebPageItemInfo.WebPageItemID),

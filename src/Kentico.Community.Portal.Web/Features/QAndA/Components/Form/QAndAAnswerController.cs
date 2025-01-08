@@ -38,8 +38,8 @@ public class QAndAAnswerController(
             return ViewComponent(typeof(QAndAAnswerFormViewComponent), new { questionID });
         }
 
-        var parentQuestion = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
-        if (parentQuestion is null)
+        var parentQuestionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
+        if (!parentQuestionResp.TryGetValue(out var parentQuestionPage))
         {
             ModelState.AddModelError(nameof(questionID), "Question is not valid");
 
@@ -53,18 +53,16 @@ public class QAndAAnswerController(
             return Unauthorized();
         }
 
-        return await mediator.Send(new QAndAAnswerCreateCommand(member, requestModel.Content, parentQuestion, channelContext))
+        return await mediator.Send(new QAndAAnswerCreateCommand(member, requestModel.Content, parentQuestionPage, channelContext))
             .Match(async id =>
             {
-                string questionPath = (await urlRetriever.Retrieve(parentQuestion)).RelativePathTrimmed();
+                string questionPath = (await urlRetriever.Retrieve(parentQuestionPage)).RelativePathTrimmed();
 
                 Response.Htmx(h => h.Redirect(questionPath));
 
                 return Ok().AsStatusCodeResult();
 
             }, LogAndReturnErrorAsync("ANSWER_CREATE"));
-
-
     }
 
     [HttpPost]
@@ -83,8 +81,8 @@ public class QAndAAnswerController(
             return NotFound();
         }
 
-        var parentQuestion = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
-        if (parentQuestion is null)
+        var parentQuestionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
+        if (!parentQuestionResp.TryGetValue(out var parentQuestionPage))
         {
             ModelState.AddModelError(nameof(questionID), "Question is not valid");
 
@@ -100,7 +98,7 @@ public class QAndAAnswerController(
 
         _ = await mediator.Send(new QAndAAnswerUpdateCommand(answer, requestModel.Content));
 
-        string questionPath = (await urlRetriever.Retrieve(parentQuestion)).RelativePathTrimmed();
+        string questionPath = (await urlRetriever.Retrieve(parentQuestionPage)).RelativePathTrimmed();
 
         Response.Htmx(h => h.Redirect(questionPath));
 
@@ -139,8 +137,8 @@ public class QAndAAnswerController(
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> MarkApprovedAnswer(Guid questionID, int answerID)
     {
-        var parentQuestion = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
-        if (parentQuestion is null)
+        var parentQuestionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
+        if (!parentQuestionResp.TryGetValue(out var parentQuestionPage))
         {
             return NotFound();
         }
@@ -152,21 +150,21 @@ public class QAndAAnswerController(
         }
 
         bool canManageContent = await userManager.CanManageContent(member, userInfoProvider);
-        if (parentQuestion.QAndAQuestionPageAuthorMemberID != member.Id && !canManageContent)
+        if (parentQuestionPage.QAndAQuestionPageAuthorMemberID != member.Id && !canManageContent)
         {
             return Forbid();
         }
 
-        if (parentQuestion.QAndAQuestionPageAcceptedAnswerDataGUID != default)
+        if (parentQuestionPage.QAndAQuestionPageAcceptedAnswerDataGUID != default)
         {
             return Forbid();
         }
 
         var answer = await mediator.Send(new QAndAAnswerDataByIDQuery(answerID));
 
-        _ = await mediator.Send(new QAndAQuestionMarkAnsweredCommand(parentQuestion, answer, channelContext.WebsiteChannelID));
+        _ = await mediator.Send(new QAndAQuestionMarkAnsweredCommand(parentQuestionPage, answer, channelContext.WebsiteChannelID));
 
-        string questionPath = (await urlRetriever.Retrieve(parentQuestion)).RelativePathTrimmed();
+        string questionPath = (await urlRetriever.Retrieve(parentQuestionPage)).RelativePathTrimmed();
 
         Response.Htmx(h => h.Redirect(questionPath));
 

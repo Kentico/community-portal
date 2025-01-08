@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>CMS.Workspace</CodeName>
+    <GUID>d8d2794e-e2a8-4da1-beb0-e9325baee585</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="WorkspaceID" guid="d69e6fac-6e9a-42a1-b514-63ccf50d04de" enabled="" />
+      <field column="WorkspaceGUID" guid="4d43146c-8e80-4a9a-adb1-ee38888e39ff" enabled="" />
+      <field column="WorkspaceDisplayName" enabled="true" guid="a3b37c8c-2246-492f-a37a-c075441fe2e9" visible="true" order="2">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.workspaces.workspace.workspacename$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="WorkspaceName" enabled="true" guid="056a3ca8-4ed5-413c-9d62-e6d87797c524" visible="true" order="3">
+        <settings>
+          <controlname>Kentico.Administration.CodeName</controlname>
+          <HasAutomaticCodeNameGenerationOption>True</HasAutomaticCodeNameGenerationOption>
+          <IsCollapsed>True</IsCollapsed>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.workspaces.workspace.codename$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Create workspace</FormDisplayName>
+  <FormGUID>9d154bf2-2677-4f32-a76f-6edceb5622eb</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>create</FormName>
+</cms.alternativeform>

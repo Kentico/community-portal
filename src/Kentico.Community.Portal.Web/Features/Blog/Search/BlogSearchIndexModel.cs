@@ -257,7 +257,7 @@ public class ImageAssetViewModelSerializable
         Title = image.MediaItemTitle;
         URL = image.ImageContentAsset.Url;
         AltText = image.MediaItemShortDescription;
-        Dimensions = new() { Width = image.MediaItemAssetWidth, Height = image.MediaItemAssetHeight };
+        Dimensions = new() { Width = image.ImageContentAsset.Metadata.Width ?? 0, Height = image.ImageContentAsset.Metadata.Height ?? 0 };
     }
 
     public ImageAssetViewModelSerializable() { }

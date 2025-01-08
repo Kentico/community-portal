@@ -23,7 +23,7 @@
             </h2>
 
             <form id="@formId" method="post" hx-post hx-controller="QAndAQuestion" hx-action="@action"
-                hx-swap="outerHTML" hx-target="#@rootElId" hx-trigger="submitReady">
+                hx-swap="outerHTML" hx-target="#@rootElId" hx-trigger="submitReady" class="d-flex flex-column">
                 <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
 
                 <div class="row mb-5">
@@ -40,9 +40,14 @@
                 </div>
 
                 <div id="@editormdId" class="border border-1 border-dark-subtle rounded-2 milkdown-container">
-                    <textarea class="form-control" style="display:none;" asp-for="@Model.Content"
+                    <textarea class="form-control d-none field-sizing-content h-100 border-0" asp-for="@Model.Content"
                         style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;" name="Content"
                         placeholder="Your full question description goes here" value="@Model.Content"></textarea>
+                </div>
+
+                <div class="form-check form-switch align-self-end" x-data="{ mode: 'editor' }">
+                    <input class="form-check-input" type="checkbox" role="switch" id="viewMarkdown" @@change="toggleEditor">
+                    <label class="form-check-label" for="viewMarkdown">View markdown</label>
                 </div>
 
                 <div class="d-grid">

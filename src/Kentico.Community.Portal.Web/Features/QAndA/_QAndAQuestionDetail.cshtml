@@ -16,9 +16,23 @@
                         <span>@Model.DateCreated.ToString("yyyy/MM/dd") @Model.DateCreated.ToString("t")</span>
                     </div>
 
-                    <div class="mb-3 member-generated-content overflow-auto" hx-disable>@Model.HTMLSanitizedContentHTML
+                    <div class="mb-3 member-generated-content overflow-auto" hx-disable>
+                        @Model.HTMLSanitizedContentHTML
                     </div>
                 </div>
+
+                @if (Model.DXTopics.Count > 0)
+                {
+                    <div class="c-card_tags d-flex align-items-end">
+                        <span class="me-2 align-self-start">Tags:</span>
+                        <div class="c-group tags">
+                            @foreach (string topic in Model.DXTopics)
+                            {
+                                <span class="c-tag secondary invert" title="Topic - @topic">@topic</span>
+                            }
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>

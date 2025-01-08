@@ -55,6 +55,7 @@ module.exports = (opts, argv) => {
 
 function buildConfig(baseConfig, opts, argv) {
   const projectConfig = {
+    devtool: 'inline-source-map',
     module: {
       rules: [
         {

@@ -77,7 +77,7 @@ if (![string]::IsNullOrWhiteSpace($backupFolderPath)) {
     Copy-Item $outputPath $backupFilePath
 }
 $zipFilePath = "$backupFilePath.zip"
-Compress-Archive -Path $backupFilePath -DestinationPath $zipFilePath
+Compress-Archive -Path $backupFilePath -DestinationPath $zipFilePath -Force
 Remove-Item $backupFilePath
 Write-Notification "Backup file zipped at $zipFilePath"
 

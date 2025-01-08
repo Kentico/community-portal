@@ -13,9 +13,9 @@ public class QAndAAnswerFormViewComponent(IMediator mediator, IWebsiteChannelCon
 
     public async Task<IViewComponentResult> InvokeAsync(Guid questionID, int? answerID = null)
     {
-        var rootPage = await mediator.Send(new QAndALandingPageQuery(channelContext.WebsiteChannelName));
+        var landingResp = await mediator.Send(new QAndALandingPageQuery(channelContext.WebsiteChannelName));
 
-        if (rootPage is null)
+        if (!landingResp.TryGetValue(out var landingPage))
         {
             return View("~/Components/ComponentError.cshtml");
         }
@@ -23,7 +23,7 @@ public class QAndAAnswerFormViewComponent(IMediator mediator, IWebsiteChannelCon
         var model = new QAndAAnswerViewModel
         {
             ParentQuestionID = questionID,
-            FormHelpMessageHTML = new(rootPage.QAndALandingPageMarkdownFormHelpMessageHTML)
+            FormHelpMessageHTML = new(landingPage.QAndALandingPageMarkdownFormHelpMessageHTML)
         };
 
         if (answerID is int id)

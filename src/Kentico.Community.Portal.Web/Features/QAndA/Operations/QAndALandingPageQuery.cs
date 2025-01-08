@@ -3,23 +3,24 @@ using Kentico.Community.Portal.Core.Operations;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public record QAndALandingPageQuery(string ChannelName) : IQuery<QAndALandingPage>, IChannelContentQuery;
-public class QAndALandingPageQueryHandler(ContentItemQueryTools tools) : ContentItemQueryHandler<QAndALandingPageQuery, QAndALandingPage>(tools)
+public record QAndALandingPageQuery(string ChannelName) : IQuery<Maybe<QAndALandingPage>>, IChannelContentQuery;
+public class QAndALandingPageQueryHandler(ContentItemQueryTools tools) : ContentItemQueryHandler<QAndALandingPageQuery, Maybe<QAndALandingPage>>(tools)
 {
-    public override async Task<QAndALandingPage> Handle(QAndALandingPageQuery request, CancellationToken cancellationToken = default)
+    public override async Task<Maybe<QAndALandingPage>> Handle(QAndALandingPageQuery request, CancellationToken cancellationToken = default)
     {
-        var b = new ContentItemQueryBuilder().ForContentType(QAndALandingPage.CONTENT_TYPE_NAME, queryParameters =>
-        {
-            _ = queryParameters
-                .ForWebsite(request.ChannelName)
-                .TopN(1);
-        });
+        var b = new ContentItemQueryBuilder()
+            .ForContentTypes(
+                q => q
+                    .OfContentType(QAndALandingPage.CONTENT_TYPE_NAME)
+                    .WithContentTypeFields()
+                    .ForWebsite(request.ChannelName))
+            .Parameters(q => q.TopN(1));
 
         var pages = await Executor.GetMappedWebPageResult<QAndALandingPage>(b, DefaultQueryOptions, cancellationToken);
 
-        return pages.First();
+        return pages.TryFirst();
     }
 
-    protected override ICacheDependencyKeysBuilder AddDependencyKeys(QAndALandingPageQuery query, QAndALandingPage result, ICacheDependencyKeysBuilder builder) =>
+    protected override ICacheDependencyKeysBuilder AddDependencyKeys(QAndALandingPageQuery query, Maybe<QAndALandingPage> result, ICacheDependencyKeysBuilder builder) =>
         builder.AllContentItems(QAndALandingPage.CONTENT_TYPE_NAME);
 }

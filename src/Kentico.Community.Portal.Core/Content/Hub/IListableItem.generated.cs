@@ -41,11 +41,5 @@ namespace Kentico.Community.Portal.Core.Content
 		/// ListableItemFeaturedImageContent.
 		/// </summary>
 		public IEnumerable<ImageContent> ListableItemFeaturedImageContent { get; set; }
-
-
-		/// <summary>
-		/// ListableItemFeaturedImage.
-		/// </summary>
-		public IEnumerable<MediaAssetContent> ListableItemFeaturedImage { get; set; }
 	}
 }

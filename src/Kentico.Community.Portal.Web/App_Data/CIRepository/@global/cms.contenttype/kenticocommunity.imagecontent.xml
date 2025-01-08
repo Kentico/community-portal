@@ -19,6 +19,12 @@
         <settings>
           <AllowedExtensions>jpg;jpeg;webp;png</AllowedExtensions>
           <controlname>Kentico.Administration.ContentItemAssetUploader</controlname>
+          <InputImageExtensions>
+            <![CDATA[["jpeg","jpg","png"]]]>
+          </InputImageExtensions>
+          <IsFormatConversionEnabled>True</IsFormatConversionEnabled>
+          <OutputImageExtension>webp</OutputImageExtension>
+          <OutputQuality>80</OutputQuality>
         </settings>
         <validationrulesdata>
           <ValidationRuleConfiguration>

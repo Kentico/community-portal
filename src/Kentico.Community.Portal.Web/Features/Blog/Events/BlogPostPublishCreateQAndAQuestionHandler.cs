@@ -57,7 +57,7 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
         }
 
         // Do not re-process pages that already have a linked Q&A Discussion Page
-        if (!string.IsNullOrEmpty(page.BlogPostPageQAndADiscussionLinkPath) || page.BlogPostPageQAndADiscussionPage.Any())
+        if (page.BlogPostPageQAndADiscussionPage.Any())
         {
             return;
         }

@@ -42,12 +42,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// BlogPostPageQAndADiscussionLinkPath.
-		/// </summary>
-		public string BlogPostPageQAndADiscussionLinkPath { get; set; }
-
-
-		/// <summary>
 		/// BlogPostPageQAndADiscussionPage.
 		/// </summary>
 		public IEnumerable<WebPageRelatedItem> BlogPostPageQAndADiscussionPage { get; set; }

@@ -9,15 +9,11 @@ public class ImageViewModel
     public int Height { get; }
     public string URL { get; }
 
-    public static ImageViewModel Create(MediaAssetContent content) => new(content);
     public static ImageViewModel Create(ImageContent content) => new(content);
     public static Maybe<ImageViewModel> Create(IListableItem item) =>
         item.ListableItemFeaturedImageContent
             .TryFirst()
-            .Map(Create)
-            .IfNoValue(item.ListableItemFeaturedImage
-                .TryFirst()
-                .Map(Create));
+            .Map(Create);
 
     public ImageViewModel(string title, string altText, int width, int height, string url)
     {
@@ -28,23 +24,13 @@ public class ImageViewModel
         URL = url;
     }
 
-    public ImageViewModel(MediaAssetContent content)
-    {
-        ID = content.SystemFields.ContentItemGUID;
-        Title = content.MediaAssetContentTitle;
-        AltText = content.MediaAssetContentShortDescription;
-        Width = content.MediaAssetContentImageLightWidth;
-        Height = content.MediaAssetContentImageLightHeight;
-        URL = content.MediaAssetContentAssetLight.Url;
-    }
-
     public ImageViewModel(ImageContent content)
     {
         ID = content.SystemFields.ContentItemGUID;
         Title = content.MediaItemTitle;
         AltText = content.MediaItemShortDescription;
-        Width = content.MediaItemAssetWidth;
-        Height = content.MediaItemAssetHeight;
+        Width = content.ImageContentAsset.Metadata.Width ?? 0;
+        Height = content.ImageContentAsset.Metadata.Height ?? 0;
         URL = content.ImageContentAsset.Url;
     }
 }

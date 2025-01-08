@@ -11,6 +11,11 @@ import { Crepe } from "@milkdown/crepe";
 import { listener, listenerCtx } from "@milkdown/kit/plugin/listener";
 
 export async function initQAndA({ editorElemID, formType = "" }) {
+  /**
+   * @type {Crepe | undefined}
+   */
+  let crepeEditor = undefined;
+
   const editorSelector = `#${editorElemID}`;
   const editorEl = document.querySelector(editorSelector);
 
@@ -32,18 +37,41 @@ export async function initQAndA({ editorElemID, formType = "" }) {
 
   const cancelButtonEls = formEl.querySelectorAll("button[cancel-button]");
 
-  await initialize(formEl, cancelButtonEls);
+  const elements = { editorEl, formEl, textareaEl, cancelButtonEls };
+
+  await initialize(elements);
+
+  /**
+   * @param {Event} event
+   */
+  window.toggleEditor = async function (event) {
+    if (!(event.target instanceof HTMLInputElement)) {
+      throw new Error("Editor toggle requires checkbox");
+    }
+
+    this.mode = this.mode === "editor" ? "markdown" : "editor";
+    if (this.mode === "editor") {
+      await initialize(elements);
+    } else {
+      cleanupCrepe("toggleEditor")(event);
+      event.target.innerText = "View editor";
+    }
+
+    textareaEl.classList.toggle("d-none");
+  };
 
   /**
    * Initialized the Crepe instance
-   * @param {HTMLFormElement} formEl
-   * @param {HTMLButtonElement[]} cancelButtonEls
+   * @param {typeof elements} elements
    * @returns
    */
-  async function initialize(formEl, cancelButtonEls) {
-    const c = new Crepe({
+  async function initialize(elements) {
+    const { editorEl, formEl, textareaEl, cancelButtonEls } = elements;
+
+    textareaEl.value = getInitialMarkdown(textareaEl.value);
+    crepeEditor = new Crepe({
       root: editorEl,
-      defaultValue: getInitialMarkdown(),
+      defaultValue: getInitialMarkdown(textareaEl.value),
       featureConfigs: {
         "code-mirror": {
           languages: getCodeMirrorLanguages(),
@@ -70,14 +98,14 @@ export async function initQAndA({ editorElemID, formType = "" }) {
       },
     });
 
-    c.editor
+    crepeEditor.editor
       .config((ctx) => {
         const list = ctx.get(listenerCtx);
 
         const updateField = debounce((ctx, markdown, prevMarkdown) => {
           if (markdown !== prevMarkdown) {
             console.log("markdown updated");
-            textareaEl.value = c.getMarkdown().trim();
+            textareaEl.value = crepeEditor.getMarkdown().trim();
           }
         }, 250);
 
@@ -85,7 +113,7 @@ export async function initQAndA({ editorElemID, formType = "" }) {
       })
       .use(listener);
 
-    await c.create();
+    await crepeEditor.create();
 
     formEl.addEventListener("submit", cleanupCrepe("submitReady"));
 
@@ -93,61 +121,73 @@ export async function initQAndA({ editorElemID, formType = "" }) {
       buttonEl.addEventListener("click", cleanupCrepe("cancelReady"));
     }
 
-    return c;
-
-    /**
-     * Cleans up the generated Crepe instance and emits the given custom event when complete
-     * @param {string} customEvent
-     * @returns {(event: SubmitEvent | MouseEvent) => void}
-     */
-    function cleanupCrepe(customEvent) {
-      return (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        if (
-          !(event.target instanceof HTMLButtonElement) &&
-          !(event.target instanceof HTMLFormElement)
-        ) {
-          return;
-        }
-
-        /** Code language bug: https://github.com/Milkdown/milkdown/issues/1521 */
-        if (event.target.classList.contains("language-button")) {
-          return;
-        }
-        if (
-          event instanceof SubmitEvent &&
-          event.submitter instanceof HTMLButtonElement &&
-          (event.submitter.classList.contains("language-button") ||
-            event.submitter.classList.contains("toolbar-item"))
-        ) {
-          return;
-        }
-
-        c.destroy(true);
-        console.log("editor destroyed");
-        event.target.dispatchEvent(new CustomEvent(customEvent));
-      };
-    }
+    return crepeEditor;
   }
 
-  function getInitialMarkdown() {
-    const existingMarkdown = (textareaEl.value ?? "").trim();
+  /**
+   * Cleans up the generated Crepe instance and emits the given custom event when complete
+   * @param {'submitReady' | 'cancelReady' | 'toggleEditor'} customEvent
+   * @returns {(event: SubmitEvent | MouseEvent | Event ) => void}
+   */
+  function cleanupCrepe(customEvent) {
+    return async (event) => {
+      if (event instanceof SubmitEvent) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      if (
+        !(event.target instanceof HTMLButtonElement) &&
+        !(event.target instanceof HTMLFormElement) &&
+        !(event.target instanceof HTMLInputElement)
+      ) {
+        return;
+      }
+
+      /** Code language bug: https://github.com/Milkdown/milkdown/issues/1521 */
+      if (event.target.classList.contains("language-button")) {
+        return;
+      }
+      if (
+        event instanceof SubmitEvent &&
+        event.submitter instanceof HTMLButtonElement &&
+        (event.submitter.classList.contains("language-button") ||
+          event.submitter.classList.contains("toolbar-item"))
+      ) {
+        return;
+      }
+
+      if (crepeEditor) {
+        await crepeEditor.destroy();
+        crepeEditor = undefined;
+        console.log("editor destroyed");
+      }
+
+      if (customEvent === "submitReady" || customEvent === "cancelReady") {
+        event.target.dispatchEvent(new CustomEvent(customEvent));
+      }
+    };
+  }
+
+  /**
+   * @param {string} initialValue
+   * @returns
+   */
+  function getInitialMarkdown(initialValue) {
+    const existingMarkdown = (initialValue ?? "").trim();
 
     if (existingMarkdown) {
       return existingMarkdown;
     }
 
     return formType === "Question"
-      ? `[describe your question]
-
+      ? `Describe your question...
 
 ---
 
 **Environment**
-- Xperience by Kentico version: [29.7.0]
+- Xperience by Kentico version: [30.0.0]
 - .NET version: [8|9]
-- Execution environment: [Local|Azure|SaaS|Other]
+- Execution environment: [SaaS|Private cloud (Azure/AWS/Virtual machine)]
 - Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)`
       : "";
   }

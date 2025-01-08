@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[{_is}Contact.IsContactFieldEmpty("{field}")]]>
+  </MacroRuleCondition>
+  <MacroRuleDisplayName>Contact field value is empty</MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>442fb8ba-33d7-4045-a7ed-520bf784cac8</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactFieldValueIsEmpty</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="field" columnsize="100" columntype="text" guid="c89a8a02-e22d-48f9-8a0f-ecd1f39113b9" visible="true">
+        <properties>
+          <fieldcaption>select field</fieldcaption>
+          <fielddescription>
+            <![CDATA[Select name of the field you want to use in the condition.]]>
+          </fielddescription>
+        </properties>
+        <settings>
+          <configuratorfulltype>
+            <![CDATA[Kentico.Administration.ContactFieldForEmptyValueCheckConfigurator]]>
+          </configuratorfulltype>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Placeholder>select field</Placeholder>
+        </settings>
+      </field>
+      <field column="_is" columnsize="100" columntype="text" guid="de326917-b99d-45ad-a8b4-0c36f8cf8fad" visible="true">
+        <properties>
+          <defaultvalue>__is</defaultvalue>
+          <fieldcaption>select operation</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <IsPerfectum>True</IsPerfectum>
+          <Options>
+<![CDATA[
+__is;is
+__isnot;is not
+]]>
+          </Options>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>Contact field {field} {_is} empty.</MacroRuleText>
+  <MacroRuleUsageLocation>3</MacroRuleUsageLocation>
+</cms.macrorule>

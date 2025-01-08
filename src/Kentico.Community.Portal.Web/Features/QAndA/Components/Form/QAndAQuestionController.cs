@@ -9,6 +9,7 @@ using Kentico.Content.Web.Mvc;
 using Kentico.Xperience.Admin.Base;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -72,7 +73,7 @@ public class QAndAQuestionController(
     {
         if (!ModelState.IsValid)
         {
-            return PartialView("~/Features/QAndA/Components/Form/QAndAQuestionForm.cshtml", new QAndAQuestionFormViewModel());
+            return ViewComponent(typeof(QAndAQuestionFormViewComponent), new { questionID = requestModel.EditedObjectID });
         }
 
         if (requestModel.EditedObjectID is not Guid questionID)
@@ -82,16 +83,16 @@ public class QAndAQuestionController(
 
         var user = await userManager.CurrentUser(HttpContext)!;
 
-        var question = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
-        if (question is null)
+        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
+        if (!questionResp.TryGetValue(out var questionPage))
         {
             return NotFound();
         }
 
-        return await mediator.Send(new QAndAQuestionUpdateCommand(question, requestModel.Title, requestModel.Content, channelContext.WebsiteChannelID))
+        return await mediator.Send(new QAndAQuestionUpdateCommand(questionPage, requestModel.Title, requestModel.Content, requestModel.DXTopics, channelContext.WebsiteChannelID))
             .Match<StatusCodeResult>(async () =>
             {
-                string redirectURL = (await urlRetriever.Retrieve(question)).RelativePathTrimmed();
+                string redirectURL = (await urlRetriever.Retrieve(questionPage)).RelativePathTrimmed();
 
                 Response.Htmx(h => h.Redirect(redirectURL));
 
@@ -109,15 +110,15 @@ public class QAndAQuestionController(
             return Unauthorized();
         }
 
-        var question = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
-        if (question is null)
+        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
+        if (!questionResp.TryGetValue(out var questionPage))
         {
             return NotFound();
         }
 
         bool canManageContent = await userManager.CanManageContent(member, userInfoProvider);
 
-        if (question.QAndAQuestionPageAuthorMemberID != member.Id && !canManageContent)
+        if (questionPage.QAndAQuestionPageAuthorMemberID != member.Id && !canManageContent)
         {
             return Forbid();
         }
@@ -140,13 +141,13 @@ public class QAndAQuestionController(
             return Forbid();
         }
 
-        var question = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
-        if (question is null)
+        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
+        if (!questionResp.TryGetValue(out var questionPage))
         {
             return NotFound();
         }
 
-        return await mediator.Send(new QAndAQuestionDeleteCommand(question, channelContext.WebsiteChannelID))
+        return await mediator.Send(new QAndAQuestionDeleteCommand(questionPage, channelContext.WebsiteChannelID))
             .Match(Ok, LogAndReturnError("QUESTION_DELETE"));
     }
 }
