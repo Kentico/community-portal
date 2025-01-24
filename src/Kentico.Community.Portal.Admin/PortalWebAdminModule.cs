@@ -55,7 +55,7 @@ internal class PortalWebAdminModule : AdminModule, IDataTypeRegister
 
 public interface IDataTypeRegister
 {
-    void AddRegistrations(DataTypeRegistration[] registrations);
+    public void AddRegistrations(DataTypeRegistration[] registrations);
 }
 
 public record DataTypeRegistration(

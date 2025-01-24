@@ -64,9 +64,9 @@ jobs:
             -DestinationPath "./database"
 
       - name: Install a SQL Server suite of tools (SQLEngine, SQLPackage)
-        uses: potatoqualitee/mssqlsuite@v1.7
+        uses: potatoqualitee/mssqlsuite@v1.8 # set as a commit hash for security
         with:
-          install: sqlpackage, sqlengine
+          install: sqlpackage, sqlengine, sqlclient
           sa-password: Pass@12345
           version: 2022
 
@@ -82,6 +82,8 @@ jobs:
             -d master `
             -U "sa" `
             -P "Pass@12345" `
+            -N o `
+            -C `
             -Q "RESTORE DATABASE [Kentico.Community] FROM DISK='/var/opt/mssql/backup/${{ env.DATABASE_BACKUP_FILENAME }}' WITH MOVE 'Kentico.Community' TO '/var/opt/mssql/data/Kentico.Community.mdf', MOVE 'Kentico.Community_log' TO '/var/opt/mssql/data/Kentico.Community_log.ldf'"
         if: endsWith(env.DATABASE_BACKUP_FILENAME, '.bak')
 

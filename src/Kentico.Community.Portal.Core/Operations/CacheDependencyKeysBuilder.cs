@@ -10,88 +10,87 @@ namespace Kentico.Community.Portal.Core.Operations;
 /// </summary>
 public interface ICacheDependencyKeysBuilder
 {
-    ICacheDependencyKeysBuilder AllContentItems();
-
+    public ICacheDependencyKeysBuilder AllContentItems();
     /// <summary>
     /// contentitem|byid|&lt;content item ID&gt;
     /// </summary>
     /// <param name="contentItemID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder ContentItem(int contentItemID);
+    public ICacheDependencyKeysBuilder ContentItem(int contentItemID);
     /// <summary>
     /// contentitem|byid|&lt;content item ID&gt;
     /// </summary>
     /// <param name="contentItemID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder ContentItem(IContentItemFieldsSource? content);
+    public ICacheDependencyKeysBuilder ContentItem(IContentItemFieldsSource? content);
     /// <summary>
     /// contentitem|byid|&lt;content item ID&gt;
     /// </summary>
     /// <param name="contentItemID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder ContentItem(Maybe<int> contentItemID);
+    public ICacheDependencyKeysBuilder ContentItem(Maybe<int> contentItemID);
     /// <summary>
     /// contentitem|byid|&lt;content item ID&gt;|&lt;language name&gt;
     /// </summary>
     /// <param name="contentItemID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder ContentItem(int contentItemID, string languageName);
+    public ICacheDependencyKeysBuilder ContentItem(int contentItemID, string languageName);
     /// <summary>
     /// contentitem|byid|&lt;content item ID&gt;|&lt;language name&gt;
     /// </summary>
     /// <param name="contentItemID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder ContentItem(Maybe<int> contentItemID, string languageName);
+    public ICacheDependencyKeysBuilder ContentItem(Maybe<int> contentItemID, string languageName);
 
     /// <summary>
     /// contentitem|byname|&lt;content item name&gt;
     /// </summary>
     /// <param name="contentItemCodeName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder ContentItem(string contentItemCodeName);
+    public ICacheDependencyKeysBuilder ContentItem(string contentItemCodeName);
     /// <summary>
     /// contentitem|byname|&lt;content item name&gt;
     /// </summary>
     /// <param name="contentItemCodeName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder ContentItem(Maybe<string> contentItemCodeName);
+    public ICacheDependencyKeysBuilder ContentItem(Maybe<string> contentItemCodeName);
     /// <summary>
     /// contentitem|byname|&lt;content item name&gt;|&lt;language name&gt;
     /// </summary>
     /// <param name="contentItemName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder ContentItem(string contentItemName, string languageName);
+    public ICacheDependencyKeysBuilder ContentItem(string contentItemName, string languageName);
     /// <summary>
     /// contentitem|byname|&lt;content item name&gt;|&lt;language name&gt;
     /// </summary>
     /// <param name="contentItemName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder ContentItem(Maybe<string> contentItemName, string languageName);
+    public ICacheDependencyKeysBuilder ContentItem(Maybe<string> contentItemName, string languageName);
 
     /// <summary>
     /// contentitem|byguid|&lt;content item guid&gt;
     /// </summary>
     /// <param name="contentItemGUID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder ContentItem(Guid contentItemGUID);
+    public ICacheDependencyKeysBuilder ContentItem(Guid contentItemGUID);
     /// <summary>
     /// contentitem|byguid|&lt;content item guid&gt;
     /// </summary>
     /// <param name="contentItemGUID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder ContentItem(Maybe<Guid> contentItemGUID);
+    public ICacheDependencyKeysBuilder ContentItem(Maybe<Guid> contentItemGUID);
     /// <summary>
     /// contentitem|byguid|&lt;content item guid&gt|&lt;language name&gt;
     /// </summary>
     /// <param name="contentItemGUID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder ContentItem(Guid contentItemGUID, string languageName);
+    public ICacheDependencyKeysBuilder ContentItem(Guid contentItemGUID, string languageName);
     /// <summary>
     /// contentitem|byguid|&lt;content item guid&gt|&lt;language name&gt;
     /// </summary>
     /// <param name="contentItemGUID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder ContentItem(Maybe<Guid> contentItemGUID, string languageName);
+    public ICacheDependencyKeysBuilder ContentItem(Maybe<Guid> contentItemGUID, string languageName);
 
     /// <summary>
     /// contentitem|bycontenttype|&lt;page type code name&gt;
@@ -99,14 +98,14 @@ public interface ICacheDependencyKeysBuilder
     /// <param name="contentTypeName"></param>
     /// <remarks>This generates a cache dependencey key for Pages of a given Type</remarks>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder AllContentItems(string contentTypeName);
+    public ICacheDependencyKeysBuilder AllContentItems(string contentTypeName);
     /// <summary>
     /// contentitem|bycontenttype|&lt;page type code name&gt;|&lt;language name&gt;
     /// </summary>
     /// <param name="contentTypeName"></param>
     /// <remarks>This generates a cache dependencey key for Pages of a given Type</remarks>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder AllContentItems(string contentTypeName, string languageName);
+    public ICacheDependencyKeysBuilder AllContentItems(string contentTypeName, string languageName);
 
     /// <summary>
     /// webpageitem|all
@@ -114,120 +113,120 @@ public interface ICacheDependencyKeysBuilder
     /// <param name="contentTypeName"></param>
     /// <remarks>Generates a cache dependency key for all web pages across all channels</remarks>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder AllWebPages();
+    public ICacheDependencyKeysBuilder AllWebPages();
     /// <summary>
     /// webpageitem|bychannel|&lt;channel name&gt;|all
     /// </summary>
     /// <param name="channelName"></param>
     /// <remarks>Generates a cache dependency key for all web pages in the given channel</remarks>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder AllWebPages(string channelName);
+    public ICacheDependencyKeysBuilder AllWebPages(string channelName);
 
     /// <summary>
     /// webpageitem|byid|&lt;web page id&gt;
     /// </summary>
     /// <param name="webPageID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPage(int webPageID);
+    public ICacheDependencyKeysBuilder WebPage(int webPageID);
     /// <summary>
     /// webpageitem|byid|&lt;web page id&gt;
     /// </summary>
     /// <param name="webPageID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPage(IWebPageFieldsSource page);
+    public ICacheDependencyKeysBuilder WebPage(IWebPageFieldsSource page);
     /// <summary>
     /// webpageitem|byid|&lt;web page id&gt;
     /// </summary>
     /// <param name="webPageID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPage(Maybe<int> webPageID);
+    public ICacheDependencyKeysBuilder WebPage(Maybe<int> webPageID);
     /// <summary>
     /// webpageitem|byid|&lt;web page id&gt|&lt;language name&gt;
     /// </summary>
     /// <param name="webPageID"></param>
     /// <param name="languageName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPage(int webPageID, string languageName);
+    public ICacheDependencyKeysBuilder WebPage(int webPageID, string languageName);
     /// <summary>
     /// webpageitem|byid|&lt;web page id&gt|&lt;language name&gt;
     /// </summary>
     /// <param name="webPageID"></param>
     /// <param name="languageName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPage(Maybe<int> webPageID, string languageName);
+    public ICacheDependencyKeysBuilder WebPage(Maybe<int> webPageID, string languageName);
 
     /// <summary>
     /// webpageItem|byname|&lt;web page code name&gt;
     /// </summary>
     /// <param name="webPageCodeName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPage(string webPageCodeName);
+    public ICacheDependencyKeysBuilder WebPage(string webPageCodeName);
     /// <summary>
     /// webpageItem|byname|&lt;web page code name&gt;
     /// </summary>
     /// <param name="webPageCodeName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPage(Maybe<string> webPageCodeName);
+    public ICacheDependencyKeysBuilder WebPage(Maybe<string> webPageCodeName);
     /// <summary>
     /// webpageItem|byname|&lt;web page code name&gt;|&lt;language name&gt;
     /// </summary>
     /// <param name="webPageCodeName"></param>
     /// <param name="languageName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPage(string webPageCodeName, string languageName);
+    public ICacheDependencyKeysBuilder WebPage(string webPageCodeName, string languageName);
     /// <summary>
     /// webpageItem|byname|&lt;web page code name&gt;|&lt;language name&gt;
     /// </summary>
     /// <param name="webPageName"></param>
     /// <param name="languageName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPage(Maybe<string> webPageName, string languageName);
+    public ICacheDependencyKeysBuilder WebPage(Maybe<string> webPageName, string languageName);
 
     /// <summary>
     /// webpageItem|byguid|&lt;web page guid&gt;
     /// </summary>
     /// <param name="webPageGUID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPage(Guid webPageGUID);
+    public ICacheDependencyKeysBuilder WebPage(Guid webPageGUID);
     /// <summary>
     /// webpageItem|byguid|&lt;web page guid&gt;
     /// </summary>
     /// <param name="webPageGUID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPage(Maybe<Guid> webPageGUID);
+    public ICacheDependencyKeysBuilder WebPage(Maybe<Guid> webPageGUID);
     /// <summary>
     /// webpageItem|byguid|&lt;web page guid&gt;|&lt;language name&gt;
     /// </summary>
     /// <param name="webPageGUID"></param>
     /// <param name="languageName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPage(Guid webPageGUID, string languageName);
+    public ICacheDependencyKeysBuilder WebPage(Guid webPageGUID, string languageName);
     /// <summary>
     /// webpageItem|byguid|&lt;web page guid&gt;|&lt;language name&gt;
     /// </summary>
     /// <param name="webPageGUID"></param>
     /// <param name="languageName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPage(Maybe<Guid> webPageGUID, string languageName);
+    public ICacheDependencyKeysBuilder WebPage(Maybe<Guid> webPageGUID, string languageName);
 
     /// <summary>
     /// webpageItem|byid|&lt;web page id&gt;
     /// </summary>
     /// <param name="pages"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPages(IEnumerable<IWebPageFieldsSource> pages);
+    public ICacheDependencyKeysBuilder WebPages(IEnumerable<IWebPageFieldsSource> pages);
     /// <summary>
     /// webpageItem|byid|&lt;web page id&gt;
     /// </summary>
     /// <param name="webPageID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPages(IEnumerable<int> webPageID);
+    public ICacheDependencyKeysBuilder WebPages(IEnumerable<int> webPageID);
     /// <summary>
     /// webpageItem|byid|&lt;web page id&gt;
     /// </summary>
     /// <param name="webPageID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPages(IEnumerable<Maybe<int>> webPageID);
+    public ICacheDependencyKeysBuilder WebPages(IEnumerable<Maybe<int>> webPageID);
 
     /// <summary>
     /// webpageItem|bychannel|&lt;channel name&gt;|bycontenttype|&lt;content type name&gt;
@@ -235,7 +234,7 @@ public interface ICacheDependencyKeysBuilder
     /// <param name="contentTypeName"></param>
     /// <param name="channelName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPageType(string contentTypeName, string channelName);
+    public ICacheDependencyKeysBuilder WebPageType(string contentTypeName, string channelName);
     /// <summary>
     /// webpageItem|bychannel|&lt;channel name&gt;|bycontenttype|&lt;content type name&gt;|&lt;language name&gt;
     /// </summary>
@@ -243,7 +242,7 @@ public interface ICacheDependencyKeysBuilder
     /// <param name="channelName"></param>
     /// <param name="languageName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPageType(string contentTypeName, string channelName, string languageName);
+    public ICacheDependencyKeysBuilder WebPageType(string contentTypeName, string channelName, string languageName);
 
     /// <summary>
     /// webpageitem|bychannel|&lt;channel name&gt;|bypath|&lt;path&gt;
@@ -251,8 +250,8 @@ public interface ICacheDependencyKeysBuilder
     /// <param name="path"></param>
     /// <param name="channelName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPageByPath(string path, string channelName);
-    ICacheDependencyKeysBuilder WebPageByPath(Maybe<string> path, string channelName);
+    public ICacheDependencyKeysBuilder WebPageByPath(string path, string channelName);
+    public ICacheDependencyKeysBuilder WebPageByPath(Maybe<string> path, string channelName);
     /// <summary>
     /// webpageitem|bychannel|&lt;channel name&gt;|bypath|&lt;path&gt|&lt;language name&gt;
     /// </summary>
@@ -260,8 +259,8 @@ public interface ICacheDependencyKeysBuilder
     /// <param name="channelName"></param>
     /// <param name="languageName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPageByPath(string path, string channelName, string languageName);
-    ICacheDependencyKeysBuilder WebPageByPath(Maybe<string> path, string channelName, string languageName);
+    public ICacheDependencyKeysBuilder WebPageByPath(string path, string channelName, string languageName);
+    public ICacheDependencyKeysBuilder WebPageByPath(Maybe<string> path, string channelName, string languageName);
 
     /// <summary>
     /// webpageitem|bychannel|&lt;channel name&gt;|childrenofpath|&lt;path&gt;
@@ -269,8 +268,8 @@ public interface ICacheDependencyKeysBuilder
     /// <param name="path"></param>
     /// <param name="channelName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPageChildrenByPath(string path, string channelName);
-    ICacheDependencyKeysBuilder WebPageChildrenByPath(Maybe<string> path, string channelName);
+    public ICacheDependencyKeysBuilder WebPageChildrenByPath(string path, string channelName);
+    public ICacheDependencyKeysBuilder WebPageChildrenByPath(Maybe<string> path, string channelName);
     /// <summary>
     /// webpageitem|bychannel|&lt;channel name&gt;|childrenofpath|&lt;path&gt|&lt;language name&gt;
     /// </summary>
@@ -278,89 +277,89 @@ public interface ICacheDependencyKeysBuilder
     /// <param name="channelName"></param>
     /// <param name="languageName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder WebPageChildrenByPath(string path, string channelName, string languageName);
-    ICacheDependencyKeysBuilder WebPageChildrenByPath(Maybe<string> path, string channelName, string languageName);
+    public ICacheDependencyKeysBuilder WebPageChildrenByPath(string path, string channelName, string languageName);
+    public ICacheDependencyKeysBuilder WebPageChildrenByPath(Maybe<string> path, string channelName, string languageName);
 
     /// <summary>
     /// &lt;object type&gt;|all
     /// </summary>
     /// <param name="typeName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder AllObjects(string typeName);
+    public ICacheDependencyKeysBuilder AllObjects(string typeName);
     /// <summary>
     /// &lt;object type&gt;|byid|&lt;id&gt;
     /// </summary>
     /// <param name="objectType"></param>
     /// <param name="objectID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder Object(string objectType, int objectID);
+    public ICacheDependencyKeysBuilder Object(string objectType, int objectID);
     /// <summary>
     /// &lt;object type&gt;|byid|&lt;id&gt;
     /// </summary>
     /// <param name="objectType"></param>
     /// <param name="objectID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder Object(string objectType, Maybe<int> objectID);
+    public ICacheDependencyKeysBuilder Object(string objectType, Maybe<int> objectID);
     /// <summary>
     /// &lt;object type&gt;|byname|&lt;object code name&gt;
     /// </summary>
     /// <param name="objectType"></param>
     /// <param name="objectCodeName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder Object(string objectType, string objectCodeName);
+    public ICacheDependencyKeysBuilder Object(string objectType, string objectCodeName);
     /// <summary>
     /// &lt;object type&gt;|byname|&lt;object code name&gt;
     /// </summary>
     /// <param name="objectType"></param>
     /// <param name="objectCodeName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder Object(string objectType, Maybe<string> objectCodeName);
+    public ICacheDependencyKeysBuilder Object(string objectType, Maybe<string> objectCodeName);
     /// <summary>
     /// &lt;object type&gt;|byguid|&lt;id&gt;
     /// </summary>
     /// <param name="objectType"></param>
     /// <param name="objectGUID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder Object(string objectType, Guid objectGUID);
+    public ICacheDependencyKeysBuilder Object(string objectType, Guid objectGUID);
     /// <summary>
     /// &lt;object type&gt;|byguid|&lt;id&gt;
     /// </summary>
     /// <param name="objectType"></param>
     /// <param name="objectGUID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder Object(string objectType, Maybe<Guid> objectGUID);
+    public ICacheDependencyKeysBuilder Object(string objectType, Maybe<Guid> objectGUID);
     /// <summary>
     /// &lt;object type&gt;|byid|&lt;id&gt;
     /// </summary>
     /// <param name="objects"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder Objects(IEnumerable<BaseInfo> objects);
+    public ICacheDependencyKeysBuilder Objects(IEnumerable<BaseInfo> objects);
 
     /// <summary>
     /// &lt;cms.settingskey|key name&gt;
     /// </summary>
     /// <param name="keyName"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder SettingsKey(string keyName);
+    public ICacheDependencyKeysBuilder SettingsKey(string keyName);
 
     /// <summary>
     /// mediafile|&lt;guid&gt;
     /// </summary>
     /// <param name="mediaFileGUID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder Media(Guid mediaFileGUID);
+    public ICacheDependencyKeysBuilder Media(Guid mediaFileGUID);
     /// <summary>
     /// mediafile|&lt;guid&gt;
     /// </summary>
     /// <param name="mediaFileGUID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder Media(AssetRelatedItem asset);
+    public ICacheDependencyKeysBuilder Media(AssetRelatedItem asset);
     /// <summary>
     /// mediafile|&lt;guid&gt;
     /// </summary>
     /// <param name="mediaFileGUID"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder Media(Maybe<Guid> mediaFileGUID);
+    public ICacheDependencyKeysBuilder Media(Maybe<Guid> mediaFileGUID);
 
     /// <summary>
     /// Executes the <paramref name="action"/> on each item in the collectio <paramref name="items"/>
@@ -374,7 +373,7 @@ public interface ICacheDependencyKeysBuilder
     /// 
     /// builder.Collection(items, (i, b) => b.Node(i));
     /// </example>
-    ICacheDependencyKeysBuilder Collection<T>(IEnumerable<T>? items, Action<T, ICacheDependencyKeysBuilder> action);
+    public ICacheDependencyKeysBuilder Collection<T>(IEnumerable<T>? items, Action<T, ICacheDependencyKeysBuilder> action);
     /// <summary>
     /// Executes the <paramref name="action"/> on each item in the collectio <paramref name="items"/>
     /// </summary>
@@ -387,7 +386,7 @@ public interface ICacheDependencyKeysBuilder
     /// 
     /// builder.Collection(items, (i, b) => b.Node(i));
     /// </example>
-    ICacheDependencyKeysBuilder Collection<T>(IEnumerable<Maybe<T>> items, Action<T, ICacheDependencyKeysBuilder> action);
+    public ICacheDependencyKeysBuilder Collection<T>(IEnumerable<Maybe<T>> items, Action<T, ICacheDependencyKeysBuilder> action);
     /// <summary>
     /// Executes the <paramref name="action"/> on each item in the collectio <paramref name="items"/>
     /// </summary>
@@ -400,7 +399,7 @@ public interface ICacheDependencyKeysBuilder
     /// 
     /// builder.Collection(items, (i) => builder.Node(i));
     /// </example>
-    ICacheDependencyKeysBuilder Collection<T>(IEnumerable<T> items, Action<T> action);
+    public ICacheDependencyKeysBuilder Collection<T>(IEnumerable<T> items, Action<T> action);
     /// <summary>
     /// Executes the <paramref name="action"/> on each item in the collectio <paramref name="items"/>
     /// </summary>
@@ -413,19 +412,19 @@ public interface ICacheDependencyKeysBuilder
     /// 
     /// builder.Collection(items, (i) => builder.Node(i));
     /// </example>
-    ICacheDependencyKeysBuilder Collection<T>(IEnumerable<Maybe<T>> items, Action<T> action);
+    public ICacheDependencyKeysBuilder Collection<T>(IEnumerable<Maybe<T>> items, Action<T> action);
     /// <summary>
     /// Can be used to add any custom key to the builder
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder CustomKey(string key);
+    public ICacheDependencyKeysBuilder CustomKey(string key);
     /// <summary>
     /// Can be used to add any custom keys to the builder
     /// </summary>
     /// <param name="keys"></param>
     /// <returns></returns>
-    ICacheDependencyKeysBuilder CustomKeys(IEnumerable<string> keys);
+    public ICacheDependencyKeysBuilder CustomKeys(IEnumerable<string> keys);
 }
 
 public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder

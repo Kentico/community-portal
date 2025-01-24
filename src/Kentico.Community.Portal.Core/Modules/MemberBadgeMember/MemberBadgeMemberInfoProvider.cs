@@ -7,8 +7,8 @@ namespace Kentico.Community.Portal.Core.Modules;
 
 public interface IMemberBadgeMemberInfoProvider : IInfoProvider<MemberBadgeMemberInfo>, IBulkInfoProvider<MemberBadgeMemberInfo>
 {
-    Task<MemberBadgeRelationshipDictionary> GetAllMemberBadgeRelationshipsCached();
-    Task<ImmutableList<MemberBadgeMemberInfo>> GetAllMemberBadgesForMemberCached(int memberID);
+    public Task<MemberBadgeRelationshipDictionary> GetAllMemberBadgeRelationshipsCached();
+    public Task<ImmutableList<MemberBadgeMemberInfo>> GetAllMemberBadgesForMemberCached(int memberID);
 }
 
 public class MemberBadgeMemberInfoProvider(IProgressiveCache cache, IInfoProvider<MemberBadgeMemberInfo> infoProvider) : IMemberBadgeMemberInfoProvider
@@ -19,6 +19,8 @@ public class MemberBadgeMemberInfoProvider(IProgressiveCache cache, IInfoProvide
     public ObjectQuery<MemberBadgeMemberInfo> Get() => infoProvider.Get();
     public void Delete(MemberBadgeMemberInfo info) => infoProvider.Delete(info);
     public void Set(MemberBadgeMemberInfo info) => infoProvider.Set(info);
+    public Task DeleteAsync(MemberBadgeMemberInfo info) => infoProvider.DeleteAsync(info);
+    public Task SetAsync(MemberBadgeMemberInfo info) => infoProvider.SetAsync(info);
 
     public async Task<ImmutableList<MemberBadgeMemberInfo>> GetAllMemberBadgesForMemberCached(int memberID)
     {
@@ -31,7 +33,7 @@ public class MemberBadgeMemberInfoProvider(IProgressiveCache cache, IInfoProvide
                 .GetEnumerableTypedResultAsync();
         }, new CacheSettings(120, [nameof(MemberBadgeMemberInfo), "bymemberid", memberID]));
 
-        return badges.ToImmutableList();
+        return [.. badges];
     }
 
     public Task<MemberBadgeRelationshipDictionary> GetAllMemberBadgeRelationshipsCached() =>

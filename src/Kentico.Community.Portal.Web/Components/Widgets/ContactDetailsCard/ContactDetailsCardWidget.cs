@@ -1,5 +1,6 @@
 using CMS.ContentEngine;
 using Kentico.Community.Portal.Core.Operations;
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.ContactDetailsCard;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
@@ -13,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
     viewComponentType: typeof(ContactDetailsCardWidget),
     propertiesType: typeof(ContactDetailsCardWidgetProperties),
     Description = "Card sourcing contact details from the Content hub",
-    IconClass = "icon-rectangle-a")]
+    IconClass = KenticoIcons.MAP_MARKER)]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.ContactDetailsCard;
 
@@ -89,7 +90,7 @@ public class ContactDetailsContentQueryHandler(ContentItemQueryTools tools) : Co
 
         var contents = await Executor.GetMappedResult<ContactDetailsContent>(b, DefaultQueryOptions, cancellationToken);
 
-        return new(contents.ToList());
+        return new([.. contents]);
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(ContactDetailsContentsQuery query, ContactDetailsContentsQueryResponse result, ICacheDependencyKeysBuilder builder) =>

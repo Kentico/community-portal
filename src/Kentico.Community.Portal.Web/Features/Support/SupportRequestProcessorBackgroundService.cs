@@ -94,7 +94,7 @@ public class SupportRequestProcessorBackgroundService : ApplicationBackgroundSer
 
             _ = await queueClientPrimary.DeleteMessageAsync(dequeueResponse.Value.MessageId, dequeueResponse.Value.PopReceipt, cancellationToken);
             _ = await containerClientPrimary.DeleteBlobAsync(supportRequest.BlobName, cancellationToken: cancellationToken);
-            eventProvider.Set(new SupportRequestProcessingEventInfo
+            await eventProvider.SetAsync(new SupportRequestProcessingEventInfo
             {
                 SupportRequestProcessingEventStatus = SupportRequestProcessingEventInfo.Statuses.SUCCESS.ToString(),
                 SupportRequestProcessingEventMessage = supportRequest.Subject,
@@ -118,7 +118,7 @@ public class SupportRequestProcessorBackgroundService : ApplicationBackgroundSer
                 await MoveBlobToDeadLetter(processEx.QueueMessage.BlobName);
             }
 
-            eventProvider.Set(new SupportRequestProcessingEventInfo
+            await eventProvider.SetAsync(new SupportRequestProcessingEventInfo
             {
                 SupportRequestProcessingEventStatus = SupportRequestProcessingEventInfo.Statuses.FAILURE.ToString(),
                 SupportRequestProcessingEventMessage = ex.ToString(),

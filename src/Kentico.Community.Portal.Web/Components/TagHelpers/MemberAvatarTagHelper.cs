@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Kentico.Community.Portal.Web.Components.TagHelpers;
 
-[HtmlTargetElement("img", Attributes = "xpc-member-avatar", TagStructure = TagStructure.WithoutEndTag)]
+[HtmlTargetElement(ELEMENT_NAME, Attributes = ATTRIBUTE_NAME, TagStructure = TagStructure.WithoutEndTag)]
 public class MemberAvatarTagHelper(IWebHostEnvironment webHostEnvironment, LinkGenerator linkGenerator, IHttpContextAccessor contextAccessor) : TagHelper
 {
-    [HtmlAttributeName("xpc-member-avatar")]
+    public const string ELEMENT_NAME = "img";
+    public const string ATTRIBUTE_NAME = "xpc-member-avatar";
+
+    [HtmlAttributeName(ATTRIBUTE_NAME)]
     public int MemberID { get; set; }
 
     private readonly IWebHostEnvironment webHostEnvironment = webHostEnvironment;

@@ -1,4 +1,5 @@
 ﻿using CMS.MediaLibrary;
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.PageBuilder.Web.Mvc;
@@ -11,7 +12,7 @@ using Newtonsoft.Json;
     viewComponentType: typeof(LicensesWidget),
     name: "3rd party licenses",
     propertiesType: typeof(LicensesWidgetProperties),
-    IconClass = "icon-kentico")]
+    IconClass = KenticoIcons.KENTICO)]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.Licenses;
 

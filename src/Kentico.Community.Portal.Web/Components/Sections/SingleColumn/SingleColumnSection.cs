@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Sections.SingleColumn;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
@@ -10,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
     name: "1 column",
     propertiesType: typeof(SingleColumnSectionProperties),
     Description = "Single-column section with one full-width zone.",
-    IconClass = "icon-square")]
+    IconClass = KenticoIcons.SQUARE)]
 
 namespace Kentico.Community.Portal.Web.Components.Sections.SingleColumn;
 

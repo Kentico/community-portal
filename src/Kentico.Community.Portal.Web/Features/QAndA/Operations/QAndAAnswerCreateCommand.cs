@@ -23,7 +23,7 @@ public class QAndAAnswerCreateCommandHandler(
     private readonly ISystemClock clock = clock;
     private readonly IInfoProvider<QAndAAnswerDataInfo> provider = provider;
 
-    public override Task<Result<int>> Handle(QAndAAnswerCreateCommand request, CancellationToken cancellationToken)
+    public override async Task<Result<int>> Handle(QAndAAnswerCreateCommand request, CancellationToken cancellationToken)
     {
         string filteredContent = QandAContentParser.Alphanumeric(request.AnswerContent);
         string uniqueID = Guid.NewGuid().ToString("N");
@@ -44,13 +44,13 @@ public class QAndAAnswerCreateCommandHandler(
 
         try
         {
-            provider.Set(answer);
+            await provider.SetAsync(answer);
         }
         catch (Exception ex)
         {
-            return Task.FromResult(Result.Failure<int>($"Could not save answer for question [{request.ParentQuestion.SystemFields.WebPageItemTreePath}]: {ex}"));
+            return Result.Failure<int>($"Could not save answer for question [{request.ParentQuestion.SystemFields.WebPageItemTreePath}]: {ex}");
         }
 
-        return Task.FromResult(Result.Success(answer.QAndAAnswerDataID));
+        return Result.Success(answer.QAndAAnswerDataID);
     }
 }

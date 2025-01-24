@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using CMS.ContentEngine;
 using Kentico.Community.Portal.Core.Operations;
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.LinkList;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
@@ -14,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
     name: LinkListWidget.NAME,
     propertiesType: typeof(LinkListWidgetProperties),
     Description = "A list of labeled URL links",
-    IconClass = "icon-dialog-window-cogwheel")]
+    IconClass = KenticoIcons.DIALOG_WINDOW_COGWHEEL)]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.LinkList;
 

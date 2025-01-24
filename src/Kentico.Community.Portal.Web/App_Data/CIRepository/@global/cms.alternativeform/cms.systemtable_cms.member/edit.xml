@@ -91,17 +91,6 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberIsMVP" enabled="true" guid="8f355bba-35eb-4798-9858-7deeeb1d9e0b" visible="true">
-        <settings>
-          <controlname>Kentico.Administration.Checkbox</controlname>
-        </settings>
-        <properties>
-          <defaultvalue>False</defaultvalue>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Is MVP?</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-      </field>
       <field column="MemberAvatarFileExtension" guid="295972d6-2114-46d3-9703-066154c1fb17" visible="true" enabled="">
         <settings>
           <controlname>Kentico.Administration.TextWithLabel</controlname>
@@ -125,6 +114,81 @@
           </explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Administrator notes</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberModerationStatus" enabled="true" guid="5fe75ef9-0e15-4d2d-a4ab-1e186d1861c6" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+None
+Spam
+Flagged
+Archived
+]]>
+          </Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
+        <properties>
+          <explanationtext>
+            <![CDATA[Used to indicate a member is not enabled due to an administration or moderation action. "None" represents the member has normal access.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Moderations status</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberEmployerLink" enabled="true" guid="b832e3a2-04c2-40c8-8c29-ed4f5bd736ee" visible="true">
+        <settings>
+          <controlname>Kentico.Community.Portal.Admin.FormComponent.Link</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Employer link</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberJobTitle" enabled="true" guid="55ab4c14-3279-4126-9066-4b8c270176d9" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Job title</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberTimeZone" enabled="true" guid="0bb26afb-8926-485a-8043-804d98220d72" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Time zone</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberCountry" enabled="true" guid="6a6c1d8a-04c9-4827-b1b2-e31e2ba0d24d" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Country</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberBio" enabled="true" guid="0da3128f-f405-4dee-976a-1619ff66e597" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Bio</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>

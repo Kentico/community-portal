@@ -1,3 +1,4 @@
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.PageHeading;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
     name: "Page Heading",
     propertiesType: typeof(PageHeadingWidgetProperties),
     Description = "Text to appear at the top of a Page",
-    IconClass = "icon-t",
+    IconClass = KenticoIcons.T,
     AllowCache = true
 )]
 

@@ -15,7 +15,7 @@ public class QAndAAnswerUpdateCommandHandler(
     private readonly ISystemClock clock = clock;
     private readonly IInfoProvider<QAndAAnswerDataInfo> provider = provider;
 
-    public override Task<Result> Handle(QAndAAnswerUpdateCommand request, CancellationToken cancellationToken)
+    public override async Task<Result> Handle(QAndAAnswerUpdateCommand request, CancellationToken cancellationToken)
     {
         var answer = request.Answer;
 
@@ -31,13 +31,13 @@ public class QAndAAnswerUpdateCommandHandler(
 
         try
         {
-            provider.Set(answer);
+            await provider.SetAsync(answer);
         }
         catch (Exception ex)
         {
-            return Task.FromResult(Result.Failure($"Could not update answer [{request.Answer.QAndAAnswerDataGUID}]: {ex}"));
+            return Result.Failure($"Could not update answer [{request.Answer.QAndAAnswerDataGUID}]: {ex}");
         }
 
-        return Task.FromResult(Result.Success());
+        return Result.Success();
     }
 }

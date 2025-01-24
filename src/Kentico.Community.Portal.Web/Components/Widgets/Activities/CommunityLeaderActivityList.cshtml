@@ -1,0 +1,46 @@
+@model Kentico.Community.Portal.Web.Components.Widgets.CommunityLeaderActivityList.CommunityLeaderActivityListWidgetViewModel
+
+<table class="table table-bordered table-striped table-hover align-middle">
+    <caption class="text-center">All activities for the Year</caption>
+    <thead class="table-secondary">
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Type</th>
+            <th scope="col">URL</th>
+            <th scope="col">Short description</th>
+            <th scope="col">Impact</th>
+            <th scope="col">Effort</th>
+            <th scope="col">Satisfaction</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.ActivityDate.ToString("yyyy/MM/dd")</td>
+                <td>
+                    @(Model.ActivitTypesMap.TryGetValue(item.ActivityType, out string? typeVal) ? typeVal :
+                        item.ActivityType)
+                </td>
+                <td>@item.URL</td>
+                <td>@item.ShortDescription</td>
+                <td>
+                    @(Model.ImpactMap.TryGetValue(item.Impact, out string? impact) ? impact : item.Impact)
+                </td>
+                <td>
+                    @(Model.EfforMap.TryGetValue(item.Effort, out string? effort) ? effort : item.Effort)
+                </td>
+                <td>
+                    @(Model.SatisfactionMap.TryGetValue(item.Satisfaction, out string? Satisfaction)
+                        ? Satisfaction : item.Satisfaction)
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr class="fw-bold">
+            <td colspan="6" class="text-end">Total activities</td>
+            <td>@Model.Items.Count</td>
+        </tr>
+    </tfoot>
+</table>

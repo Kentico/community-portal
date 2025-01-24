@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.formclass>
+  <ClassContactMapping>
+    <form />
+  </ClassContactMapping>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Community program interest</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="Form_2025_01_23_08_38ID" columntype="integer" enabled="true" guid="06940f0b-ae57-469c-b4bc-33ae83b34bfe" isPK="true" />
+      <field column="FormInserted" columnprecision="7" columntype="datetime" enabled="true" guid="75851c26-32c6-421b-81f5-64c1883c8530" system="true">
+        <properties>
+          <fieldcaption>Form inserted</fieldcaption>
+        </properties>
+      </field>
+      <field column="FormUpdated" columnprecision="7" columntype="datetime" enabled="true" guid="0789d683-0675-4161-b417-6a7dbbc23c45" system="true">
+        <properties>
+          <fieldcaption>Form updated</fieldcaption>
+        </properties>
+      </field>
+      <field allowempty="true" column="MemberID" columntype="integer" enabled="true" guid="2fe56559-6f03-4fd3-b466-6abe75b250e0" visible="true">
+        <properties>
+          <fieldcaption>Member ID</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberID</componentidentifier>
+        </settings>
+      </field>
+      <field column="Program" columnsize="200" columntype="text" enabled="true" guid="63439fd5-26c3-4bc9-b191-fc5318d9d8f1" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[Which program are you interested learning more about?]]>
+          </explanationtext>
+          <fieldcaption>Program</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.DropDown</componentidentifier>
+          <DataSource>
+<![CDATA[
+MVP;Kentico MVPs
+CommunityLeader;Kentico Community Leaders
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+      <field allowempty="true" column="Motivation" columntype="longtext" enabled="true" guid="00912325-bb74-4990-99c0-30b9a8872598" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[Help us understand your interest in Kentico's community programs.]]>
+          </explanationtext>
+          <fieldcaption>Motivation</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.TextArea</componentidentifier>
+        </settings>
+      </field>
+      <field allowempty="true" column="ActivityExamples" columntype="longtext" enabled="true" guid="7608f02a-ff8f-436a-83dc-2a9fa8fb069e" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[Share some of your activities promoting or sharing about Kentico.]]>
+          </explanationtext>
+          <fieldcaption>Examples of activity</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.TextArea</componentidentifier>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>5d770e0d-1e24-42c0-a530-bb6c5dd99a81</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>BizForm.CommunityProgramInterest</ClassName>
+  <ClassTableName>Form_Form_2025_01_23_08_38</ClassTableName>
+  <ClassType>Form</ClassType>
+  <ClassXmlSchema>
+<![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Form_Form_2025_01_23_08_38">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Form_2025_01_23_08_38ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+              <xs:element name="FormInserted" type="xs:dateTime" />
+              <xs:element name="FormUpdated" type="xs:dateTime" />
+              <xs:element name="MemberID" type="xs:int" minOccurs="0" />
+              <xs:element name="Program">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Motivation" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ActivityExamples" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Form_Form_2025_01_23_08_38" />
+      <xs:field xpath="Form_2025_01_23_08_38ID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
+]]>
+  </ClassXmlSchema>
+</cms.formclass>

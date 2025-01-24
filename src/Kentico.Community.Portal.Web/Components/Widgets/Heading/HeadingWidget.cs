@@ -1,3 +1,4 @@
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.Heading;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
@@ -10,7 +11,7 @@ using Slugify;
     name: "Heading",
     propertiesType: typeof(HeadingWidgetProperties),
     Description = "Displays a heading in the page.",
-    IconClass = "icon-l-header-text",
+    IconClass = KenticoIcons.L_HEADER_TEXT,
     AllowCache = true)]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.Heading;

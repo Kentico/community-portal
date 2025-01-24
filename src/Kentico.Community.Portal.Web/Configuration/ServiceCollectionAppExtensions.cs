@@ -73,7 +73,8 @@ public static class ServiceCollectionAppExtensions
             .AddScoped<ViewService>()
             .AddScoped<AvatarImageService>()
             .AddScoped<ClientAssets>()
-            .AddScoped<IJSEncoder, JSEncoder>();
+            .AddScoped<IJSEncoder, JSEncoder>()
+            .AddScoped<IFormBuilderContext, FormBuilderContext>();
 
     private static IServiceCollection AddSEO(this IServiceCollection services) =>
         services

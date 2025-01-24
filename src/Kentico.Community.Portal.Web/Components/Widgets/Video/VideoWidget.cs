@@ -1,4 +1,5 @@
 using CMS.ContentEngine;
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.Video;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
@@ -11,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
     name: VideoWidget.NAME,
     propertiesType: typeof(VideoWidgetProperties),
     Description = "Adds a video to the page",
-    IconClass = "icon-camera")]
+    IconClass = KenticoIcons.TRIANGLE_RIGHT)]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.Video;
 

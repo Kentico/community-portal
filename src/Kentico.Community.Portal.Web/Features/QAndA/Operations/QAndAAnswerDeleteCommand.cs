@@ -12,17 +12,17 @@ public class QAndAAnswerDeleteCommandHandler(
 {
     private readonly IInfoProvider<QAndAAnswerDataInfo> provider = provider;
 
-    public override Task<Result> Handle(QAndAAnswerDeleteCommand request, CancellationToken cancellationToken)
+    public override async Task<Result> Handle(QAndAAnswerDeleteCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            provider.Delete(request.Answer);
+            await provider.DeleteAsync(request.Answer);
         }
         catch (Exception ex)
         {
-            return Task.FromResult(Result.Failure($"Could not delete answer [{request.Answer.QAndAAnswerDataGUID}]: {ex}"));
+            return Result.Failure($"Could not delete answer [{request.Answer.QAndAAnswerDataGUID}]: {ex}");
         }
 
-        return Task.FromResult(Result.Success());
+        return Result.Success();
     }
 }

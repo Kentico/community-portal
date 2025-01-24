@@ -1,17 +1,29 @@
 @using Kentico.Community.Portal.Web.Features.Members
 
-@model List<MemberBadgeViewModel>
+@model MemberBadgesViewModel
 
-@if (Model.Count == 0)
-{
-    return;
+@{
+    if (Model.Badges.Count == 0)
+    {
+        return;
+    }
+
+    string badgeClasses = Model.DisplayStyle switch
+    {
+        BadgeDisplayStyle.Full => "badge rounded-pill text-dark bg-purple-300 d-flex align-items-center gap-1 fw-medium px-2",
+        BadgeDisplayStyle.IconOnly or _ => "",
+    };
 }
 
-<span class="d-inline-flex gap-1 mt-1">
-    @foreach (var badge in Model)
+<span class="d-inline-flex wrap gap-1 mt-1 flex-wrap">
+    @foreach (var badge in Model.Badges)
     {
-        <span title="@badge.MemberBadgeDescription">
-            <badge-image badge="@badge" />
+        <span class="@badgeClasses" title="@badge.MemberBadgeDescription">
+            <img xpc-badge="@badge" />
+            @if (Model.DisplayStyle == BadgeDisplayStyle.Full)
+            {
+                <span>@badge.MemberBadgeDisplayName</span>
+            }
         </span>
     }
 </span>

@@ -39,8 +39,10 @@ export const MarkdownFormComponent = (props: FormComponentProps) => {
     }
   }, 250);
 
-  const updatedContent = (oldValue: string, newValue: string) => {
-    props?.onChange(newValue);
+  const updatedContent = (oldValue?: string, newValue?: string) => {
+    if (props.onChange && newValue) {
+      props?.onChange(newValue);
+    }
   };
 
   return (
@@ -77,10 +79,17 @@ export const MarkdownFormComponent = (props: FormComponentProps) => {
                 {...{
                   defaultValue,
                   UpdateContent: updateContentDebounced,
+                  mode: 'edit',
                 }}
               />
             ) : (
-              <MilkdownEditorReadOnly {...{ defaultValue }} />
+              <MilkdownEditorReadOnly
+                {...{
+                  defaultValue,
+                  UpdateContent: updateContentDebounced,
+                  mode: 'readonly',
+                }}
+              />
             )}
           </MilkdownProvider>
         )}
@@ -227,7 +236,7 @@ function debounce(
   func: (...args: unknown[]) => void,
   delay: number,
 ): (...args: unknown[]) => void {
-  let timeoutId: string | undefined;
+  let timeoutId: NodeJS.Timeout | undefined;
 
   return (...args) => {
     clearTimeout(timeoutId);

@@ -14,7 +14,7 @@ public class MemberContactManager(
     private readonly IContactMergeService contactMerge = contactMerge;
     private readonly IContactCreator contactCreator = contactCreator;
 
-    public ContactInfo? SetMemberAsCurrentContact(CommunityMember member)
+    public async Task<ContactInfo?> SetMemberAsCurrentContact(CommunityMember member)
     {
         var contact = currentContactProvider.GetCurrentContact();
 
@@ -39,7 +39,7 @@ public class MemberContactManager(
             currentContactProvider.SetCurrentContact(contact);
         }
 
-        contactProvider.Set(contact);
+        await contactProvider.SetAsync(contact);
 
         return contact;
     }

@@ -4,6 +4,7 @@
   <ClassFormDefinition>
     <form>
       <field column="WebPageFormerUrlPathID" columntype="integer" enabled="true" guid="30caa1c4-ded0-434b-86c7-c74e254a3ba4" isPK="true" system="true" />
+      <field column="WebPageFormerUrlPathGUID" columnprecision="0" columntype="guid" enabled="true" guid="f57106e4-3233-4360-aa38-e5f6d7212d3b" system="true" />
       <field column="WebPageFormerUrlPath" columnprecision="0" columnsize="2000" columntype="text" enabled="true" guid="ece9439b-9780-4e00-9b3d-aa03b7027cb6" system="true" />
       <field column="WebPageFormerUrlPathHash" columnprecision="0" columnsize="64" columntype="text" enabled="true" guid="baae69fb-4526-4629-a813-a45c51abe070" system="true" />
       <field column="WebPageFormerUrlPathContentLanguageID" columnprecision="0" columntype="integer" enabled="true" guid="e993e41a-273b-48b1-b561-9db382a230fc" refobjtype="cms.contentlanguage" reftype="Required" system="true">
@@ -22,6 +23,9 @@
         </properties>
       </field>
       <field column="WebPageFormerUrlPathLastModified" columnprecision="7" columntype="datetime" enabled="true" guid="56a5dcc9-6cb7-4ac8-b7c5-0c9b23d7a5ef" system="true" />
+      <field allowempty="true" column="WebPageFormerUrlPathSourceWebPageItemID" columnprecision="0" columntype="integer" enabled="true" guid="3ad45196-ff55-419a-84d1-6a7e6f731eed" refobjtype="cms.webpageitem" reftype="NotRequired" system="true" />
+      <field column="WebPageFormerUrlPathIsRedirect" columnprecision="0" columntype="boolean" enabled="true" guid="837140db-e634-489e-9982-fe749c210c09" system="true" />
+      <field column="WebPageFormerUrlPathIsRedirectScheduled" columnprecision="0" columntype="boolean" enabled="true" guid="c54a89ed-1975-452d-b21f-2c677e37b0bb" system="true" />
     </form>
   </ClassFormDefinition>
   <ClassGUID>27b484b0-dbce-4598-bb51-a578246996c0</ClassGUID>

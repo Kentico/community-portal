@@ -2,6 +2,7 @@ using System.ComponentModel;
 using CMS.ContentEngine;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.Embed;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
@@ -15,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
     viewComponentType: typeof(EmbedWidget),
     propertiesType: typeof(EmbedWidgetProperties),
     Description = "Adds an HTML embed to the web page from an Embed Content item.",
-    IconClass = "icon-xml-tag",
+    IconClass = KenticoIcons.XML_TAG,
     AllowCache = true)]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.Embed;

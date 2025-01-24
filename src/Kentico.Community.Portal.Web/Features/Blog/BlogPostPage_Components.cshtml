@@ -15,10 +15,7 @@
                     <div class="template-banner__bg">
                         @if (post.Teaser.TryGetValue(out var teaser))
                         {
-                            <img class="t-article_hero-picture img-fluid" src="@teaser.URL"
-                                alt="@teaser.AltText" title="@teaser.Title"
-                                width="@teaser.Width"
-                                height="@teaser.Height" />
+                            <img class="t-article_hero-picture img-fluid" xpc-image="teaser" />
                         }
                         else
                         {
@@ -64,8 +61,7 @@
 
             <section class="c-section default">
                 <div role="main" class="t-article_body">
-                    <editable-area area-identifier="main"
-                        area-options-default-section-identifier="@SI.SingleColumn"
+                    <editable-area area-identifier="main" area-options-default-section-identifier="@SI.SingleColumn"
                         area-options-allowed-sections="
                         [
                             SI.Grid,
@@ -79,9 +75,10 @@
                             WI.LinkList,
                             WI.Markdown,
                             WI.Video,
-                            WI.Embed
-                        ]"
-                        allow-widget-output-cache="View.CacheEnabled"
+                            WI.ProfileCard,
+                            WI.Embed,
+                            WI.FallbackForm
+                        ]" allow-widget-output-cache="View.CacheEnabled"
                         widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
                 </div>
 

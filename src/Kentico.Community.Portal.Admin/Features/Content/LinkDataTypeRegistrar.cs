@@ -29,7 +29,6 @@ public static class LinkDataTypeRegistrar
                 textSerializer: new DefaultDataTypeTextSerializer(LinkDataType.FIELD_TYPE_LIST))
             {
                 TypeAlias = "string",
-                TypeGroup = "String",
                 SqlValueFormat = DataTypeManager.UNICODE,
                 DbType = SqlDbType.NVarChar,
                 DefaultValueCode = "[]",
@@ -54,7 +53,6 @@ public static class LinkDataTypeRegistrar
                 textSerializer: new DefaultDataTypeTextSerializer(LinkDataType.FIELD_TYPE))
             {
                 TypeAlias = "string",
-                TypeGroup = "String",
                 SqlValueFormat = DataTypeManager.UNICODE,
                 DbType = SqlDbType.NVarChar,
                 DefaultValueCode = "{ }",

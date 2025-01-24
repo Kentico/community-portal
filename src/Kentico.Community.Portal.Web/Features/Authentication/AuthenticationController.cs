@@ -56,6 +56,10 @@ public class AuthenticationController(
             {
                 signInResult = SignInResult.Failed;
             }
+            else if (member.IsUnderModeration())
+            {
+                return View("~/Features/Registration/_ModerationStatus.cshtml");
+            }
             else if (!member.Enabled)
             {
                 var emailConfirmationModel = new EmailConfirmationViewModel()
@@ -75,7 +79,7 @@ public class AuthenticationController(
 
             if (signInResult.Succeeded && member is not null)
             {
-                _ = contactManager.SetMemberAsCurrentContact(member);
+                _ = await contactManager.SetMemberAsCurrentContact(member);
             }
         }
         catch (Exception ex)
@@ -107,7 +111,6 @@ public class AuthenticationController(
         async Task<CommunityMember?> GetMember()
         {
             var member = await userManager.FindByNameAsync(model.UserNameOrEmail);
-
             if (member is not null)
             {
                 return member;

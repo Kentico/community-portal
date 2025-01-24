@@ -5,8 +5,16 @@ namespace Kentico.Community.Portal.Web.Features.Members;
 
 public class MemberBadgesViewComponent : ViewComponent
 {
-    public IViewComponentResult Invoke(IReadOnlyList<MemberBadgeViewModel> badges) =>
-        View("~/Features/Members/Components/MemberBadge/MemberBadges.cshtml", badges);
+    public IViewComponentResult Invoke(
+        IReadOnlyList<MemberBadgeViewModel> badges,
+        BadgeDisplayStyle displayStyle = BadgeDisplayStyle.IconOnly) =>
+        View("~/Features/Members/Components/MemberBadge/MemberBadges.cshtml", new MemberBadgesViewModel(badges, displayStyle));
+}
+
+public enum BadgeDisplayStyle
+{
+    IconOnly,
+    Full
 }
 
 public class MemberBadgeViewModel
@@ -35,3 +43,5 @@ public class MemberBadgeViewModel
         IsSelected = aggregate.IsSelected;
     }
 }
+
+public record MemberBadgesViewModel(IReadOnlyList<MemberBadgeViewModel> Badges, BadgeDisplayStyle DisplayStyle);

@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.CTAButton;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
@@ -11,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
     viewComponentType: typeof(CTAButtonWidget),
     propertiesType: typeof(CTAButtonWidgetProperties),
     Description = "Call to action button with configurable target page.",
-    IconClass = "icon-rectangle-a",
+    IconClass = KenticoIcons.RECTANGLE_A,
     AllowCache = true)]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.CTAButton;

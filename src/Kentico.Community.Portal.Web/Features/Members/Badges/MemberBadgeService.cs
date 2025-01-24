@@ -20,18 +20,14 @@ public class MemberBadgeService(
     {
         var badgeInfos = await GetMemberBadgesWithMediaAssets();
         var badgeDtos = await GetAllBadgesForMember(memberId, badgeInfos, true);
-        return badgeDtos
-            .Select(a => MemberBadgeViewModel.Create(a, true))
-            .ToList();
+        return [.. badgeDtos.Select(a => MemberBadgeViewModel.Create(a, true))];
     }
 
     public async Task<IReadOnlyList<MemberBadgeViewModel>> GetAllBadgesFor(int memberId)
     {
         var badgeInfos = await GetMemberBadgesWithMediaAssets();
         var badgeDtos = await GetAllBadgesForMember(memberId, badgeInfos, false);
-        return badgeDtos
-            .Select(MemberBadgeViewModel.Create)
-            .ToList();
+        return [.. badgeDtos.Select(MemberBadgeViewModel.Create)];
     }
 
     public async Task<List<QAndAPostViewModel>> AddSelectedBadgesToQAndA(List<QAndAPostViewModel> models)
@@ -42,9 +38,7 @@ public class MemberBadgeService(
         foreach (var model in models)
         {
             var badgeDtos = await GetAllBadgesForMember(model.Author.ID, badgeInfos, true);
-            model.Author.SelectedBadges = badgeDtos
-                .Select(a => MemberBadgeViewModel.Create(a, true))
-                .ToList();
+            model.Author.SelectedBadges = [.. badgeDtos.Select(a => MemberBadgeViewModel.Create(a, true))];
         }
 
         return models;

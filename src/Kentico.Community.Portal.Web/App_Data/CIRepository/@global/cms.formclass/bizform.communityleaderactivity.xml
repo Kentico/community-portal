@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.formclass>
+  <ClassContactMapping>
+    <form />
+  </ClassContactMapping>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Community Leaders activity</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="Form_2025_01_11_11_56ID" columntype="integer" enabled="true" guid="5e809333-7c5a-41ca-ac37-16b790b0b5f6" isPK="true" />
+      <field column="FormInserted" columnprecision="7" columntype="datetime" enabled="true" guid="cf93cf9c-5c1c-422a-bfa2-863513d889b8" system="true">
+        <properties>
+          <fieldcaption>Form inserted</fieldcaption>
+        </properties>
+      </field>
+      <field column="FormUpdated" columnprecision="7" columntype="datetime" enabled="true" guid="bea8bf9a-88a5-4f77-9dca-cee271569bcf" system="true">
+        <properties>
+          <fieldcaption>Form updated</fieldcaption>
+        </properties>
+      </field>
+      <field allowempty="true" column="MemberID" columntype="integer" enabled="true" guid="65ac9875-f0f6-4bfa-9f91-9e0590010565" visible="true">
+        <properties>
+          <fieldcaption>Member ID</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberID</componentidentifier>
+        </settings>
+      </field>
+      <field column="ActivityDate" columnprecision="7" columntype="datetime" enabled="true" guid="59771f9d-e2eb-46c1-85a9-fd16928571f4" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[When a social post was made, a presentation was given, or a blog post was published.]]>
+          </explanationtext>
+          <fieldcaption>Date</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.DateInput</componentidentifier>
+          <UseCurrentDateAsDefault>True</UseCurrentDateAsDefault>
+        </settings>
+      </field>
+      <field column="ActivityType" columnsize="200" columntype="text" enabled="true" guid="3fa543c6-4955-4f7f-9c3d-bd180e7fec50" visible="true">
+        <properties>
+          <defaultvalue>Social</defaultvalue>
+          <explanationtext>
+            <![CDATA[Type of the activity. Select "Other" if none of the other options are appropriate.]]>
+          </explanationtext>
+          <fieldcaption>Type</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.DropDown</componentidentifier>
+          <DataSource>
+<![CDATA[
+Social
+BlogPostcastVideo;Blog, Podcast, Video
+VirtualEvent;Virtual event
+InPersonEvent;In-person event
+OpenSourceSoftware;Open-source software
+KenticoFeedback;Feedback or collaboration with Kentico internal teams
+Other
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+          <OptionLabel>(select)</OptionLabel>
+        </settings>
+      </field>
+      <field allowempty="true" column="URL" columnsize="500" columntype="text" enabled="true" guid="7e2c191c-8410-4f13-a88e-6caaa549a02e" visible="true">
+        <properties>
+          <explanationtext>URL for the activity, if applicable.</explanationtext>
+          <fieldcaption>URL</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.TextInput</componentidentifier>
+          <Placeholder>https://www.linkedin.com/posts/...</Placeholder>
+        </settings>
+      </field>
+      <field allowempty="true" column="ShortDescription" columntype="longtext" enabled="true" guid="74ac3145-1709-4e9c-945e-4b22367f2b93" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[1-2 short sentences to explain the context of the activity.]]>
+          </explanationtext>
+          <fieldcaption>Short description</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.TextArea</componentidentifier>
+          <Placeholder>
+            <![CDATA[ex: New blog post about latest Xperience by Kentico Refresh...]]>
+          </Placeholder>
+        </settings>
+      </field>
+      <field column="Impact" columnsize="200" columntype="text" enabled="true" guid="48fec671-3fc3-41bf-b0a4-8987c78cfbe6" visible="true">
+        <properties>
+          <defaultvalue>3</defaultvalue>
+          <explanationtext>
+            <![CDATA[How impactful do you think the activity was? 1 lowest - 5 highest.]]>
+          </explanationtext>
+          <fieldcaption>Impact</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.DropDown</componentidentifier>
+          <DataSource>
+<![CDATA[
+5;5 -⭐⭐⭐⭐⭐⭐
+4;4 -⭐⭐⭐⭐⭐
+3;3 -⭐⭐⭐
+2;2 -⭐⭐
+1;1 - ⭐
+
+
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+      <field column="Effort" columnsize="200" columntype="text" enabled="true" guid="e4620340-6974-4477-8de9-4f9f8aca883b" visible="true">
+        <properties>
+          <defaultvalue>2</defaultvalue>
+          <explanationtext>
+            <![CDATA[How much effort did this activity require? 1 lowest - 5 highest.]]>
+          </explanationtext>
+          <fieldcaption>Effort</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.DropDown</componentidentifier>
+          <DataSource>
+<![CDATA[
+1; 1 - 🤗
+2;2 - 😅
+3;3 - 😓
+4;4 - 😰
+5;5 - 🥵
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+      <field column="Satisfaction" columnsize="200" columntype="text" enabled="true" guid="45ed4279-b125-4680-b0c6-412367e0b632" visible="true">
+        <properties>
+          <defaultvalue>3</defaultvalue>
+          <explanationtext>
+            <![CDATA[How satisfied do you feel with your impact vs effort? 1 lowest - 5 highest.]]>
+          </explanationtext>
+          <fieldcaption>Satisfaction</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.DropDown</componentidentifier>
+          <DataSource>
+<![CDATA[
+5;5 - 🤩
+4;4 - 😊
+3;3 - 🙃
+2;2 - 🫤
+1; 1 - 😑
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>638c0ad3-a9a5-4e50-aa38-f4ad2601907c</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>BizForm.CommunityLeaderActivity</ClassName>
+  <ClassTableName>Form_Form_2025_01_11_11_56</ClassTableName>
+  <ClassType>Form</ClassType>
+  <ClassXmlSchema>
+<![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Form_Form_2025_01_11_11_56">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Form_2025_01_11_11_56ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+              <xs:element name="FormInserted" type="xs:dateTime" />
+              <xs:element name="FormUpdated" type="xs:dateTime" />
+              <xs:element name="ActivityDate" type="xs:dateTime" />
+              <xs:element name="ActivityType">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="URL" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ShortDescription" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Impact">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Effort">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Satisfaction">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MemberID" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Form_Form_2025_01_11_11_56" />
+      <xs:field xpath="Form_2025_01_11_11_56ID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
+]]>
+  </ClassXmlSchema>
+</cms.formclass>

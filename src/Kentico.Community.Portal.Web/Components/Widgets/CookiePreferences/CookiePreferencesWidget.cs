@@ -1,4 +1,5 @@
 using CMS.Helpers;
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.CookiePreferences;
 using Kentico.Community.Portal.Web.Features.DataCollection;
 using Kentico.PageBuilder.Web.Mvc;
@@ -13,7 +14,7 @@ using Microsoft.AspNetCore.Mvc.ViewComponents;
     name: "Cookie preferences",
     propertiesType: typeof(CookiePreferencesWidgetProperties),
     Description = "Displays a cookie preferences.",
-    IconClass = "icon-cookie")]
+    IconClass = KenticoIcons.COOKIE)]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.CookiePreferences;
 

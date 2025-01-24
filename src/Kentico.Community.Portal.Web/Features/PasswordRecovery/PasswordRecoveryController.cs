@@ -3,29 +3,20 @@ using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Registration;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
-using Kentico.Community.Portal.Web.Resources;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
 
 namespace Kentico.Community.Portal.Web.Features.PasswordRecovery;
 
 [Route("[controller]/[action]")]
 public class PasswordRecoveryController(
     UserManager<CommunityMember> userManager,
-    SignInManager<CommunityMember> signInManager,
-    IStringLocalizer<SharedResources> localizer,
     WebPageMetaService metaService,
     IMemberEmailService emailService) : Controller
 {
-    /**
-     * TODO: update View Location Expander to find this via conventions
-     */
     private const string VIEW_PATH_ERROR = "~/Features/PasswordRecovery/ResetPasswordError.cshtml";
 
-    private readonly IStringLocalizer<SharedResources> localizer = localizer;
     private readonly UserManager<CommunityMember> userManager = userManager;
-    private readonly SignInManager<CommunityMember> signInManager = signInManager;
     private readonly WebPageMetaService metaService = metaService;
     private readonly IMemberEmailService emailService = emailService;
 
@@ -60,7 +51,10 @@ public class PasswordRecoveryController(
         {
             return PartialView("~/Features/PasswordRecovery/_RequestRecoveryEmailForm.cshtml", new RequestRecoveryEmailViewModel());
         }
-
+        if (member.IsUnderModeration())
+        {
+            return View("~/Features/Registration/_ModerationStatus.cshtml");
+        }
         if (!member.Enabled)
         {
             return PartialView("~/Features/Registration/EmailConfirmation.cshtml", new EmailConfirmationViewModel
@@ -117,18 +111,21 @@ public class PasswordRecoveryController(
             return View(VIEW_PATH_ERROR);
         }
 
-        var user = await userManager.FindByIdAsync(userId?.ToString() ?? "");
-
-        if (user is null)
+        var member = await userManager.FindByIdAsync(userId?.ToString() ?? "");
+        if (member is null)
         {
             ModelState.AddModelError(nameof(userId), "No matching user could be found.");
 
             return View(VIEW_PATH_ERROR);
         }
+        if (member.IsUnderModeration())
+        {
+            return View("~/Features/Registration/_ModerationStatus.cshtml");
+        }
 
         try
         {
-            bool verificationResult = await userManager.VerifyUserTokenAsync(user,
+            bool verificationResult = await userManager.VerifyUserTokenAsync(member,
                 userManager.Options.Tokens.PasswordResetTokenProvider,
                 UserManager<CommunityMember>.ResetPasswordTokenPurpose,
                 HttpUtility.UrlDecode(token));
@@ -168,16 +165,19 @@ public class PasswordRecoveryController(
             return PartialView("~/Features/PasswordRecovery/_SetNewPasswordForm.cshtml", model);
         }
 
-        var user = await userManager.FindByIdAsync(model.UserId.ToString());
-
-        if (user is null)
+        var member = await userManager.FindByIdAsync(model.UserId.ToString());
+        if (member is null)
         {
             ModelState.AddModelError(nameof(model.UserId), "No matching user could be found.");
 
             return PartialView("~/Features/PasswordRecovery/_SetNewPasswordForm.cshtml", model);
         }
+        if (member.IsUnderModeration())
+        {
+            return View("~/Features/Registration/_ModerationStatus.cshtml");
+        }
 
-        var result = await userManager.ResetPasswordAsync(user, HttpUtility.UrlDecode(model.Token), model.Password);
+        var result = await userManager.ResetPasswordAsync(member, HttpUtility.UrlDecode(model.Token), model.Password);
 
         if (!result.Succeeded)
         {

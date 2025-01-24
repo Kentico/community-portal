@@ -4,7 +4,11 @@ using CMS.Core;
 using CMS.DataEngine;
 using CMS.EmailLibrary;
 using CMS.EmailLibrary.Internal;
+using CMS.Helpers;
+using CMS.OnlineForms;
+using Kentico.Community.Portal.Core.Forms;
 using Kentico.Community.Portal.Core.Modules;
+using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Configuration;
 using Kentico.Community.Portal.Web.Features.Blog.Events;
 using Kentico.Community.Portal.Web.Features.Members;
@@ -46,6 +50,7 @@ internal class GlobalEventsModule : Module
         TaxonomyInfo.TYPEINFO.Events.Delete.Before += Taxonomy_DeleteBefore;
         TagInfo.TYPEINFO.Events.Update.Before += Tag_ModifyBefore;
         TagInfo.TYPEINFO.Events.Delete.Before += Tag_DeleteBefore;
+        BizFormItemEvents.Insert.After += FormItem_InsertAfter;
 
         EmailContentFilterRegister.Instance
             .Register(
@@ -297,6 +302,21 @@ internal class GlobalEventsModule : Module
             args.Cancel();
 
             throw new Exception($"Cannot delete required tag '{tag.TagTitle}'");
+        }
+    }
+
+    private void FormItem_InsertAfter(object? sender, BizFormItemEventArgs e)
+    {
+        if (e.Item is null or not (MVPActivityItem or CommunityLeaderActivityItem))
+        {
+            return;
+        }
+
+        var builder = new CacheDependencyKeysBuilder();
+        builder.AllObjects(e.Item.BizFormClassName);
+        foreach (string key in builder.GetKeys())
+        {
+            CacheHelper.TouchKey(key);
         }
     }
 }

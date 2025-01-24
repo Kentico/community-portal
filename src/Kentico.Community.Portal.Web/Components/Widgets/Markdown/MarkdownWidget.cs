@@ -1,4 +1,5 @@
 using Kentico.Community.Portal.Admin;
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.Markdown;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.PageBuilder.Web.Mvc;
@@ -13,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
     propertiesType: typeof(MarkdownWidgetProperties),
     Description = "Renders the markdown content provided.",
     // https://devnet.kentico.com/docs/icon-list/index.html
-    IconClass = "icon-rectangle-a",
+    IconClass = KenticoIcons.I,
     AllowCache = true)]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.Markdown;

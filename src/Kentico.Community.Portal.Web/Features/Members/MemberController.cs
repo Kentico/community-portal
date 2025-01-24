@@ -31,7 +31,6 @@ public class MemberController(
     public async Task<IActionResult> MemberDetail(int memberID)
     {
         var memberInfo = await mediator.Send(new MemberByIDQuery(memberID));
-
         if (memberInfo is null)
         {
             return NotFound();
@@ -39,7 +38,7 @@ public class MemberController(
 
         var member = memberInfo.AsCommunityMember();
 
-        metaService.SetMeta(new($"Member Profile - {member.UserName}", $"Learn about {member.UserName} and their contributions to the Kentico Community"));
+        metaService.SetMeta(new($"Community member profile - {member.UserName}", $"Learn about {member.UserName} and their contributions to the Kentico Community"));
 
         var blogResult = search.SearchBlog(new BlogSearchRequest("publishdate", 50)
         {
@@ -55,6 +54,7 @@ public class MemberController(
 
         var model = new MemberDetailViewModel(member)
         {
+            Page = new UnmanagedPage("Community member profile", $"Learn about {member.UserName} and their contributions to the Kentico Community"),
             BlogPostLinks = blogResult.Hits.Select(h => new BlogPostLink(h.Url, h.Title, h.PublishedDate, h.BlogType)).ToList(),
             QuestionsAsked = qandaResult.Hits.Select(h => new Link(h.Url, h.Title, h.PublishedDate)).ToList(),
             MemberBadges = badges
@@ -98,6 +98,7 @@ public class MemberController(
 
 public class MemberDetailViewModel(CommunityMember member)
 {
+    public required IPortalPage Page { get; init; }
     public CommunityMember Member { get; init; } = member;
     public IReadOnlyList<Link> QuestionsAsked { get; init; } = [];
     public IReadOnlyList<BlogPostLink> BlogPostLinks { get; init; } = [];

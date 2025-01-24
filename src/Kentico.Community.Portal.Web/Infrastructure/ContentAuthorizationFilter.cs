@@ -29,13 +29,17 @@ public class ContentAuthorizationFilter(
     IContentQueryExecutor executor,
     IProgressiveCache cache,
     IWebPageDataContextRetriever dataContextRetriever,
-    UserManager<CommunityMember> userManager)
+    UserManager<CommunityMember> userManager,
+    IMemberBadgeInfoProvider memberBadgeProvider,
+    IMemberBadgeMemberInfoProvider memberBadgeMemberProvider)
     : IAsyncAuthorizationFilter
 {
     private readonly IContentQueryExecutor executor = executor;
     private readonly IProgressiveCache cache = cache;
     private readonly IWebPageDataContextRetriever dataContextRetriever = dataContextRetriever;
     private readonly UserManager<CommunityMember> userManager = userManager;
+    private readonly IMemberBadgeInfoProvider memberBadgeProvider = memberBadgeProvider;
+    private readonly IMemberBadgeMemberInfoProvider memberBadgeMemberProvider = memberBadgeMemberProvider;
 
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
@@ -88,10 +92,15 @@ public class ContentAuthorizationFilter(
 
         /*
          * Access check business logic is manual since we don't have a role/permission system for members
-         *
-         * We'll implement other tags (e.g. internal employee, community leader) in the future when member data represents the statuses
          */
-        if (tags.Any(t => t.Identifier.Equals(SystemTaxonomies.ContentAuthorizationTaxonomy.MVPTag.GUID)) && member.IsMVP)
+        if (tags.Any(t => t.Identifier.Equals(SystemTaxonomies.ContentAuthorizationTaxonomy.MVPTag.GUID)) &&
+            await IsAuthorizedByBadge(member, "KenticoMVP"))
+        {
+            return;
+        }
+
+        if (tags.Any(t => t.Identifier.Equals(SystemTaxonomies.ContentAuthorizationTaxonomy.CommunityLeaderTag.GUID)) &&
+            await IsAuthorizedByBadge(member, "KenticoCommunityLeader"))
         {
             return;
         }
@@ -105,6 +114,18 @@ public class ContentAuthorizationFilter(
         return;
     }
 
+    private async Task<bool> IsAuthorizedByBadge(CommunityMember member, string badgeName)
+    {
+        var badges = await memberBadgeProvider.GetAllMemberBadgesCached();
+        int mvpBadgeID = badges
+            .TryFirst(badge => string.Equals(badge.MemberBadgeCodeName, badgeName, StringComparison.OrdinalIgnoreCase))
+            .Map(b => b.MemberBadgeID)
+            .GetValueOrDefault();
+        var badgeRelationships = await memberBadgeMemberProvider.GetAllMemberBadgeRelationshipsCached();
+
+        return badgeRelationships.HasEntry(member.Id, mvpBadgeID);
+    }
+
     private async Task<ImmutableList<TagReference>> GetWebPageContentAuthorizationTags(RoutedWebPage page)
     {
         var tags = await cache.LoadAsync(async cs =>
@@ -115,9 +136,9 @@ public class ContentAuthorizationFilter(
             }
 
             var query = new ContentItemQueryBuilder()
-            .ForContentTypes(q => q
-                .OfReusableSchema(IContentAuthorization.REUSABLE_FIELD_SCHEMA_NAME)
-                .ForWebsite([page.WebPageItemID]));
+                .ForContentTypes(q => q
+                    .OfReusableSchema(IContentAuthorization.REUSABLE_FIELD_SCHEMA_NAME)
+                    .ForWebsite([page.WebPageItemID]));
 
             var pages = await executor.GetMappedWebPageResult<IContentAuthorization>(query, new ContentQueryExecutionOptions { ForPreview = false, IncludeSecuredItems = true });
             return pages

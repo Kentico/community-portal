@@ -1,4 +1,5 @@
 using CMS.ContentEngine;
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.Image;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.PageBuilder.Web.Mvc;
@@ -12,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
     name: ImageWidget.NAME,
     propertiesType: typeof(ImageWidgetProperties),
     Description = "A simple image Widget",
-    IconClass = "icon-camera")]
+    IconClass = KenticoIcons.CAMERA)]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.Image;
 

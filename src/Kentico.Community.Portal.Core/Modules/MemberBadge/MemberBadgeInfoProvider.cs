@@ -5,7 +5,7 @@ namespace Kentico.Community.Portal.Core.Modules;
 
 public interface IMemberBadgeInfoProvider : IInfoProvider<MemberBadgeInfo>
 {
-    Task<IReadOnlyList<MemberBadgeInfo>> GetAllMemberBadgesCached();
+    public Task<IReadOnlyList<MemberBadgeInfo>> GetAllMemberBadgesCached();
 }
 
 public class MemberBadgeInfoProvider(IProgressiveCache cache, IInfoProvider<MemberBadgeInfo> infoProvider) : IMemberBadgeInfoProvider
@@ -16,6 +16,8 @@ public class MemberBadgeInfoProvider(IProgressiveCache cache, IInfoProvider<Memb
     public ObjectQuery<MemberBadgeInfo> Get() => infoProvider.Get();
     public void Delete(MemberBadgeInfo info) => infoProvider.Delete(info);
     public void Set(MemberBadgeInfo info) => infoProvider.Set(info);
+    public Task DeleteAsync(MemberBadgeInfo info) => infoProvider.DeleteAsync(info);
+    public Task SetAsync(MemberBadgeInfo info) => infoProvider.SetAsync(info);
 
     public async Task<IReadOnlyList<MemberBadgeInfo>> GetAllMemberBadgesCached()
     {

@@ -4,6 +4,7 @@ using System.Globalization;
 using CMS.ContentEngine;
 using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core.Modules;
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.BlogPostList;
 using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Rendering;
@@ -20,7 +21,7 @@ using Microsoft.AspNetCore.Mvc;
     name: BlogPostListWidget.NAME,
     propertiesType: typeof(BlogPostListWidgetProperties),
     Description = "Displays a list of blog posts based on the widget properties.",
-    IconClass = "icon-paragraph")]
+    IconClass = KenticoIcons.PARAGRAPH)]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.BlogPostList;
 

@@ -29,7 +29,7 @@ public class MemberEmailConfiguration
 
 public interface IMemberEmailService
 {
-    Task SendEmail(CommunityMember member, MemberEmailConfiguration configuration);
+    public Task SendEmail(CommunityMember member, MemberEmailConfiguration configuration);
 }
 
 public class MemberEmailService(

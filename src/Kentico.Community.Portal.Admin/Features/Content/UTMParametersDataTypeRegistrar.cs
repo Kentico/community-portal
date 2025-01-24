@@ -32,7 +32,6 @@ public static class UTMParametersDataTypeRegistrar
                 textSerializer: new DefaultDataTypeTextSerializer(UTMParametersDataType.FIELD_TYPE))
             {
                 TypeAlias = "string",
-                TypeGroup = "String",
                 SqlValueFormat = DataTypeManager.UNICODE,
                 DbType = SqlDbType.NVarChar,
                 DefaultValueCode = JsonConvert.SerializeObject(new UTMParametersDataType()),

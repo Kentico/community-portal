@@ -5,6 +5,7 @@ using CMS.Core;
 using CMS.FormEngine;
 using CMS.Helpers;
 using CMS.Helpers.Internal;
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.FormComponents.ReCaptcha;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Forms.Web.Mvc;
@@ -15,7 +16,7 @@ using Microsoft.Extensions.Options;
     formComponentType: typeof(CommunityReCaptchaFormComponent),
     name: "Community ReCaptcha",
     Description = "{$kentico.formbuilder.component.recaptcha.description$}",
-    IconClass = "icon-recaptcha",
+    IconClass = KenticoIcons.RECAPTCHA,
     ViewName = "~/Components/FormComponents/ReCaptcha/CommunityReCaptcha.cshtml",
     IsMappableToContactFields = false)]
 

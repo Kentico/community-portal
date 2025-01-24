@@ -2,7 +2,7 @@
 @using Kentico.Community.Portal.Web.Features.Accounts
 @using Newtonsoft.Json
 
-@model List<MemberBadgeViewModel>
+@model MyAccountViewModel
 
 <div class="d-flex justify-content-center mb-3">
     <span class="flex-item">Select up to 3 badges which will be shown next to your name in the portal</span>
@@ -11,25 +11,27 @@
 <form id="badgesUpdateForm" method="post" asp-controller="Account" enctype="multipart/form-data"
       asp-action="UpdateSelectedBadges" test-id="badgesUpdate" 
       class="mb-3"
-      x-data="{ count: @JSEncoder.EncodeToJson(Model.Count(x => x.IsSelected))}">
+      x-data="{ count: @JSEncoder.EncodeToJson(Model.EarnedBadges.Count(x => x.IsSelected))}">
     <div class="form-horizontal">
        
         <span class="d-flex flex-wrap gap-3 justify-content-center">
-            @for (int i = 0; i < Model.Count; i++)
+            @for (int i = 0; i < Model.EarnedBadges.Count; i++)
             {
-                <span class="@(i != Model.Count - 1 ? "me-3 d-flex" : "d-flex") page-myaccount__badges-clickable">
-                    <span x-data="{ selected: @JSEncoder.EncodeToJson(Model[i].IsSelected)}"
+                var badge = Model.EarnedBadges[i];
+
+                <span class="@(i != Model.EarnedBadges.Count - 1 ? "me-3 d-flex" : "d-flex") page-myaccount__badges-clickable">
+                    <span x-data="{ selected: @JSEncoder.EncodeToJson(badge.IsSelected)}"
                         :class="selected ? 'badge rounded-pill text-bg-secondary' : 'badge rounded-pill text-bg-purple-300'"
                         :title="selected ? 'This badge is selected' : 'This badge is not selected'"
                         @@click="selected = ! selected; count += selected ? 1 : -1">
                         
-                        <input type="hidden" value="@Model[i].BadgeId" asp-for="@Model[i].BadgeId"/>
-                        <input type="hidden" x-model="selected" asp-for="@Model[i].IsSelected"/>
-                        @if (Model[i].BadgeImageUrl.TryGetValue(out string? url))
+                        <input type="hidden" value="@badge.BadgeId" asp-for="@badge.BadgeId"/>
+                        <input type="hidden" x-model="selected" asp-for="@badge.IsSelected"/>
+                        @if (badge.BadgeImageUrl.TryGetValue(out string? url))
                         {
                             <img src="@url" class="c-tag_icon" />
                         }
-                        @Model[i].MemberBadgeDisplayName
+                        @badge.MemberBadgeDisplayName
                     </span>
                 </span>
             }

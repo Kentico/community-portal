@@ -1,3 +1,4 @@
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Sections.Unstyled;
 using Kentico.PageBuilder.Web.Mvc;
 
@@ -7,7 +8,7 @@ using Kentico.PageBuilder.Web.Mvc;
     propertiesType: null,
     customViewName: "~/Components/Sections/Unstyled/Unstyled.cshtml",
     Description = "A completely unstyled section with a single Widget Zone. Can be used as a placeholder section.",
-    IconClass = "icon-rectangle-o-h"
+    IconClass = KenticoIcons.RECTANGLE_O_H
 )]
 
 namespace Kentico.Community.Portal.Web.Components.Sections.Unstyled;

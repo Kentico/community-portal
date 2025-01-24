@@ -118,7 +118,7 @@ public sealed class FormInternalAutoresponderTab(
         {
             formSettings.BizFormSettingsDateCreated = clock.Now;
         }
-        bizFormSettingsProvider.Set(formSettings);
+        await bizFormSettingsProvider.SetAsync(formSettings);
 
         return await base.ProcessFormData(model, formItems);
     }

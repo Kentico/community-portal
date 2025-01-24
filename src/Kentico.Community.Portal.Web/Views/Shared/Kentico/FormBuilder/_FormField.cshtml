@@ -1,0 +1,66 @@
+@using Kentico.Community.Portal.Web.Components.FormComponents
+@using Kentico.Forms.Web.Mvc
+@using Microsoft.AspNetCore.Html
+@using Kentico.Forms.Web.Mvc.Internal
+@using Kentico.Community.Portal.Web.Infrastructure
+
+@model Kentico.Forms.Web.Mvc.FormComponent
+
+@inject IFormBuilderContext FormBuilderContext
+
+@{
+    var formConfiguration = ViewData.Kentico().GetFormFieldRenderingConfiguration();
+    bool isVisible = Model is not IHiddenComponent
+    || FormBuilderContext.Mode != FormBuilderMode.Live;
+}
+
+@if (isVisible)
+{
+    @Html.Kentico().BeginWrappingElement(formConfiguration.RootConfiguration)
+}
+
+@if (isVisible && formConfiguration.ShowSmartFieldIcon)
+{
+    @Html.Kentico().BeginWrappingElement(formConfiguration.SmartFieldIconWrapperConfiguration)
+    @Html.Kentico().SmartFieldIcon(Model, formConfiguration.SmartFieldIconHtmlAttributes)
+    @Html.Kentico().EndWrappingElement(formConfiguration.SmartFieldIconWrapperConfiguration)
+}
+
+@Html.Kentico().BeginWrappingElement(formConfiguration.LabelWrapperConfiguration)
+
+@if (isVisible)
+{
+    @Html.Kentico().Label(Model, formConfiguration.LabelHtmlAttributes, formConfiguration.ColonAfterLabel)
+}
+@Html.Kentico().EndWrappingElement(formConfiguration.LabelWrapperConfiguration)
+
+@Html.Kentico().BeginWrappingElement(formConfiguration.EditorWrapperConfiguration)
+
+@Html.Kentico().BeginWrappingElement(formConfiguration.ComponentWrapperConfiguration)
+
+@{
+    IHtmlContent editorHtml = HtmlString.Empty;
+
+    editorHtml = await Html.Kentico().EditorAsync(Model, formConfiguration.EditorHtmlAttributes);
+}
+
+@editorHtml
+
+@if (isVisible)
+{
+    @Html.Kentico().ValidationMessage(Model, formConfiguration.SuppressValidationMessages)
+}
+@Html.Kentico().EndWrappingElement(formConfiguration.ComponentWrapperConfiguration)
+
+@if (isVisible)
+{
+    @Html.Kentico().WrappedExplanationText(Model.BaseProperties.ExplanationText,
+        formConfiguration.ExplanationTextWrapperConfiguration)
+}
+
+@Html.Kentico().EndWrappingElement(formConfiguration.EditorWrapperConfiguration)
+
+@if (isVisible)
+{
+    @Html.Kentico().EndWrappingElement(formConfiguration.RootConfiguration)
+}

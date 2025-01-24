@@ -1,0 +1,38 @@
+@using Kentico.Forms.Web.Mvc
+@using Kentico.Forms.Web.Mvc.Internal
+@using Kentico.Community.Portal.Web.Components.FormComponents
+
+@model HiddenMemberIDComponent
+
+@using Kentico.Community.Portal.Web.Infrastructure
+
+@{
+    var htmlAttributes = ViewData.Kentico().GetEditorHtmlAttributes();
+}
+
+@if (Model.FormBuilderMode == FormBuilderMode.Live)
+{
+    @Html.HiddenFor(m => m.Value, htmlAttributes)
+
+    return;
+}
+
+@{
+    htmlAttributes["disabled"] = "disabled";
+}
+@Html.TextBoxFor(x => x.Value, null, htmlAttributes)
+
+@if (Model.FormBuilderMode == FormBuilderMode.BuilderEditor)
+{
+    <div class="ktc-explanation-text">This is a hidden field on the live website.</div>
+}
+
+@if (Model.FormBuilderMode == FormBuilderMode.ValueEditor)
+{
+    var memberName = await Model.GetMemberName();
+
+    @if (memberName.TryGetValue(out string? name))
+    {
+        <div class="ktc-explanation-text">@name</div>
+    }
+}

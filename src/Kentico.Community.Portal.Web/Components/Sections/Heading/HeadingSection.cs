@@ -1,3 +1,4 @@
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Sections.Heading;
 using Kentico.PageBuilder.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
     name: "Heading",
     propertiesType: typeof(HeadingSectionProperties),
     Description = "Heading Section to be used at the top of a page",
-    IconClass = "icon-i"
+    IconClass = KenticoIcons.I
 )]
 
 namespace Kentico.Community.Portal.Web.Components.Sections.Heading;

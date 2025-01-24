@@ -15,7 +15,7 @@ public class HttpErrorsController(WebPageMetaService metaService) : Controller
         {
             metaService.SetMeta(new("Error", "There was a problem handling your request."));
 
-            return StatusCode(code);
+            return View("~/Features/Errors/Exception.cshtml", new ErrorPageViewModel { StatusCode = code });
         }
 
         metaService.SetMeta(new("Not Found", "The page you requested could not be found."));

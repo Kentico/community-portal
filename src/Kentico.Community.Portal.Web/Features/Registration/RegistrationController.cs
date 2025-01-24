@@ -12,7 +12,6 @@ namespace Kentico.Community.Portal.Web.Features.Registration;
 [Route("[controller]/[action]")]
 public class RegistrationController(
     WebPageMetaService metaService,
-    SignInManager<CommunityMember> signInManager,
     UserManager<CommunityMember> userManager,
     CaptchaValidator captchaValidator,
     IStringLocalizer<SharedResources> localizer,
@@ -21,7 +20,6 @@ public class RegistrationController(
     ConsentManager consentManager) : Controller
 {
     private readonly WebPageMetaService metaService = metaService;
-    private readonly SignInManager<CommunityMember> signInManager = signInManager;
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly CaptchaValidator captchaValidator = captchaValidator;
     private readonly IStringLocalizer<SharedResources> localizer = localizer;
@@ -59,7 +57,8 @@ public class RegistrationController(
             UserName = model.UserName,
             Email = model.Email,
             //We need to set Enabled to false because kentico uses enabled to set email confirmation (not .EmailConfirmed)
-            Enabled = false
+            Enabled = false,
+            ModerationStatus = ModerationStatuses.None
         };
 
         var registerResult = IdentityResult.Failed();
@@ -99,9 +98,8 @@ public class RegistrationController(
     {
         IdentityResult confirmResult;
 
-        var user = await userManager.FindByEmailAsync(memberEmail);
-
-        if (user is null)
+        var member = await userManager.FindByEmailAsync(memberEmail);
+        if (member is null)
         {
             return View("~/Features/Registration/EmailConfirmation.cshtml", new EmailConfirmationViewModel()
             {
@@ -112,7 +110,12 @@ public class RegistrationController(
             });
         }
 
-        if (user.Enabled)
+        if (member.IsUnderModeration())
+        {
+            return View("~/Features/Registration/_ModerationStatus.cshtml");
+        }
+
+        if (member.Enabled)
         {
             return View("~/Features/Registration/EmailConfirmation.cshtml", new EmailConfirmationViewModel
             {
@@ -124,7 +127,7 @@ public class RegistrationController(
         try
         {
             //Changes Enabled property of the user
-            confirmResult = await userManager.ConfirmEmailAsync(user, confirmToken);
+            confirmResult = await userManager.ConfirmEmailAsync(member, confirmToken);
         }
         catch (InvalidOperationException)
         {
@@ -145,7 +148,7 @@ public class RegistrationController(
             State = EmailConfirmationState.Failure_ConfirmationFailed,
             Message = localizer["Email Confirmation failed"],
             SendButtonText = localizer["Send Again"],
-            Username = user.UserName!
+            Username = member.UserName!
         });
     }
 

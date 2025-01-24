@@ -59,3 +59,17 @@ li,
 figcaption {
   text-wrap: pretty;
 }
+
+dl.grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5em 1em;
+
+  dt {
+    text-align: right;
+  }
+}
+
+dt {
+  font-weight: 500;
+}

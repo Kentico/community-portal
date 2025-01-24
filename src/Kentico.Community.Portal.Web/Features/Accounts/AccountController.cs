@@ -90,7 +90,7 @@ public class AccountController(
 
         _ = await userManager.UpdateAsync(member);
 
-        _ = contactManager.SetMemberAsCurrentContact(member);
+        _ = await contactManager.SetMemberAsCurrentContact(member);
 
         return PartialView("~/Features/Accounts/_ProfileForm.cshtml", new ProfileViewModel
         {

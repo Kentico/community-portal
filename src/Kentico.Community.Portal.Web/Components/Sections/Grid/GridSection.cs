@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Sections.Grid;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
@@ -11,7 +12,7 @@ using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
     name: "Grid",
     propertiesType: typeof(GridSectionProperties),
     Description = "A customizable Grid Section.",
-    IconClass = "icon-l-header-list-img")]
+    IconClass = KenticoIcons.L_HEADER_LIST_IMG)]
 
 namespace Kentico.Community.Portal.Web.Components.Sections.Grid;
 

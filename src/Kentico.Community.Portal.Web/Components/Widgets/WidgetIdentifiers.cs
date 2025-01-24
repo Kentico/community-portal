@@ -3,12 +3,14 @@ using Kentico.Community.Portal.Web.Components.Widgets.ContactDetailsCard;
 using Kentico.Community.Portal.Web.Components.Widgets.CookiePreferences;
 using Kentico.Community.Portal.Web.Components.Widgets.CTAButton;
 using Kentico.Community.Portal.Web.Components.Widgets.Embed;
+using Kentico.Community.Portal.Web.Components.Widgets.FallbackForm;
 using Kentico.Community.Portal.Web.Components.Widgets.Heading;
 using Kentico.Community.Portal.Web.Components.Widgets.Image;
 using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
 using Kentico.Community.Portal.Web.Components.Widgets.LinkList;
 using Kentico.Community.Portal.Web.Components.Widgets.Markdown;
 using Kentico.Community.Portal.Web.Components.Widgets.PageHeading;
+using Kentico.Community.Portal.Web.Components.Widgets.ProfileCard;
 using Kentico.Community.Portal.Web.Components.Widgets.Video;
 
 namespace Kentico.Community.Portal.Web.Components.Widgets;
@@ -25,6 +27,8 @@ public static class WidgetIdentifiers
     public const string LinkList = LinkListWidget.IDENTIFIER;
     public const string Markdown = MarkdownWidget.IDENTIFIER;
     public const string PageHeading = PageHeadingWidget.IDENTIFIER;
+    public const string ProfileCard = ProfileCardWidget.IDENTIFIER;
     public const string Video = VideoWidget.IDENTIFIER;
     public const string Embed = EmbedWidget.IDENTIFIER;
+    public const string FallbackForm = FallbackFormWidget.IDENTIFIER;
 }

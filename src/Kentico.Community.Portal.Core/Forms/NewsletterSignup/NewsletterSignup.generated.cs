@@ -68,6 +68,17 @@ namespace Kentico.Community.Portal.Core.Forms
 
 
 		/// <summary>
+		/// Recaptcha_FormComponent.
+		/// </summary>
+		[DatabaseField]
+		public string Recaptcha_FormComponent
+		{
+			get => ValidationHelper.GetString(GetValue(nameof(Recaptcha_FormComponent)), @"");
+			set => SetValue(nameof(Recaptcha_FormComponent), value);
+		}
+
+
+		/// <summary>
 		/// Gets an object that provides extended API for working with NewsletterSignupItem fields.
 		/// </summary>
 		[RegisterProperty]
@@ -116,6 +127,16 @@ namespace Kentico.Community.Portal.Core.Forms
 			{
 				get => mInstance.ConsentAgreement;
 				set => mInstance.ConsentAgreement = value;
+			}
+
+
+			/// <summary>
+			/// Recaptcha_FormComponent.
+			/// </summary>
+			public string Recaptcha_FormComponent
+			{
+				get => mInstance.Recaptcha_FormComponent;
+				set => mInstance.Recaptcha_FormComponent = value;
 			}
 		}
 

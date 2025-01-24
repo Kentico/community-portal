@@ -1,3 +1,4 @@
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Sections.TwoColumn;
 using Kentico.PageBuilder.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
     name: "2 column - 25/75",
     propertiesType: typeof(TwoColumnSectionProperties),
     Description = "Two-column section with columns of different sizes, split 25/75.",
-    IconClass = "icon-l-cols-30-70")]
+    IconClass = KenticoIcons.L_COLS_30_70)]
 
 namespace Kentico.Community.Portal.Web.Components.Sections.TwoColumn;
 

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>Member Profile Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="b9a67ba8-eaad-4fe6-8012-d052b667acfd" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="4c2d0ddf-1b71-4ba9-8272-ff6da0e7b41e" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="443dd8d3-8f37-4623-8638-714236688c49" isunique="true" system="true" />
+      <field column="MemberProfileContentFullName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="cd5938b9-c995-4b76-9660-e36851ed4816" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Full name</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="MemberProfileContentPhotoImageContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="56aab8e5-d071-4371-a678-3cd7bfb55f5b" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Image</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["40334c2a-0969-4e68-96eb-e0fb8d89b37e"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>1</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+      </field>
+      <field column="MemberProfileContentMemberID" columnprecision="0" columntype="integer" enabled="true" guid="893cbc96-8685-4110-b94e-7d3a508a3419" visible="true">
+        <properties>
+          <explanationtext>Optional</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Member</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>CMS.Member</ObjectType>
+          <Placeholder>0</Placeholder>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>9ea92c93-6707-4209-b045-7ae2ccf885b6</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-id-card</ClassIconClass>
+  <ClassName>KenticoCommunity.MemberProfileContent</ClassName>
+  <ClassShortName>KenticoCommunityMemberProfileContent</ClassShortName>
+  <ClassTableName>KenticoCommunity_MemberProfileContent</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>
