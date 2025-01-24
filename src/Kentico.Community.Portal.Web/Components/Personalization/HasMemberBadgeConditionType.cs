@@ -29,6 +29,7 @@ public class HasMemberBadgeConditionType(
     [ObjectSelectorComponent(
         MemberBadgeInfo.OBJECT_TYPE,
         Label = "Member badges",
+        ExplanationText = "Members only need to have at least 1 of the selected badges.",
         Order = 0,
         MaximumItems = 0)]
     public IEnumerable<ObjectRelatedItem> SelectedMemberBadges { get; set; } = [];
@@ -47,7 +48,7 @@ public class HasMemberBadgeConditionType(
 
         var identity = context.User.Identity;
 
-        if (identity is null || identity.IsAuthenticated)
+        if (identity is null || !identity.IsAuthenticated)
         {
             return false;
         }

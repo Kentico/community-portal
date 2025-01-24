@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <cms.query>
   <ClassID>
-    <CodeName>cms.ScheduledTask</CodeName>
+    <CodeName>cms.ScheduledTaskConfiguration</CodeName>
     <GUID>57b78754-4137-4220-b736-8c16cbbe6c87</GUID>
     <ObjectType>cms.class</ObjectType>
   </ClassID>
@@ -10,6 +10,8 @@
   <QueryIsCustom>False</QueryIsCustom>
   <QueryName>fetchtaskstorun</QueryName>
   <QueryRequiresTransaction>False</QueryRequiresTransaction>
-  <QueryText>Proc_CMS_ScheduledTask_FetchTasksToRun</QueryText>
+  <QueryText>
+    <![CDATA[Proc_CMS_ScheduledTaskConfiguration_FetchTasksToRun]]>
+  </QueryText>
   <QueryTypeID>1</QueryTypeID>
 </cms.query>
