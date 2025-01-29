@@ -2,45 +2,57 @@
 @using Kentico.Community.Portal.Web.Features.Accounts
 @using Newtonsoft.Json
 
-@model MyAccountViewModel
+@model BadgesFormViewModel
 
-<div class="d-flex justify-content-center mb-3">
-    <span class="flex-item">Select up to 3 badges which will be shown next to your name in the portal</span>
-</div>
+@{
+    int maxBadges = BadgesFormViewModel.MAX_SELECTED_BADGES;
+    var badges = Model.Badges;
+}
 
-<form id="badgesUpdateForm" method="post" asp-controller="Account" enctype="multipart/form-data"
-      asp-action="UpdateSelectedBadges" test-id="badgesUpdate" 
-      class="mb-3"
-      x-data="{ count: @JSEncoder.EncodeToJson(Model.EarnedBadges.Count(x => x.IsSelected))}">
-    <div class="form-horizontal">
-       
-        <span class="d-flex flex-wrap gap-3 justify-content-center">
-            @for (int i = 0; i < Model.EarnedBadges.Count; i++)
+<form id="badgesUpdateForm" method="post" hx-post hx-controller="Account" hx-action="UpdateSelectedBadges"
+    hx-swap="outerHTML"
+    x-data="{ selectedCount: @JSEncoder.EncodeToJson(badges.Count(x => x.IsSelected)), maxBadges: @maxBadges }">
+
+    <h5>My badges</h5>
+    <div class="form-group">
+        <span class="d-inline-flex wrap gap-2 mt-1 flex-wrap">
+            @for (int i = 0; i < badges.Count; i++)
             {
-                var badge = Model.EarnedBadges[i];
+                var badge = badges[i];
 
-                <span class="@(i != Model.EarnedBadges.Count - 1 ? "me-3 d-flex" : "d-flex") page-myaccount__badges-clickable">
-                    <span x-data="{ selected: @JSEncoder.EncodeToJson(badge.IsSelected)}"
-                        :class="selected ? 'badge rounded-pill text-bg-secondary' : 'badge rounded-pill text-bg-purple-300'"
-                        :title="selected ? 'This badge is selected' : 'This badge is not selected'"
-                        @@click="selected = ! selected; count += selected ? 1 : -1">
-                        
-                        <input type="hidden" value="@badge.BadgeId" asp-for="@badge.BadgeId"/>
-                        <input type="hidden" x-model="selected" asp-for="@badge.IsSelected"/>
-                        @if (badge.BadgeImageUrl.TryGetValue(out string? url))
-                        {
-                            <img src="@url" class="c-tag_icon" />
-                        }
-                        @badge.MemberBadgeDisplayName
-                    </span>
-                </span>
+                <button id="badgeButton_@i" type="button"
+                    class="badge text-bg-purple-300 d-flex align-items-center gap-1 fw-medium px-2 border-secondary @(badge.IsSelected ? "text-bg-purple-300 bg-purple-300" : "text-bg-white bg-white")"
+                    style="@(badge.IsSelected ? "" : "--bs-border-opacity: .5;")"
+                    x-data="{ selected: @JSEncoder.EncodeToJson(badge.IsSelected) }"
+                    :class="selected ? { 'text-bg-purple-300': true, 'bg-purple-300': true, 'text-bg-white': false, 'bg-white': false } : 'text-bg-white bg-white'"
+                    :style="selected ? '' : '--bs-border-opacity: .5;'"
+                    :title="selected ? 'This badge is selected' : 'This badge is not selected'"
+                    @@click="selected = !selected; selectedCount += selected ? 1 : -1">
+
+                    <img xpc-badge="@badge" />
+
+                    @badge.MemberBadgeDisplayName
+                    <input type="hidden" id="Badges_@(i)__BadgeId" name="Badges[@i].BadgeId" value="@badge.BadgeId" />
+                    <input type="hidden" x-model="selected" id="Badges_@(i)__IsSelected" name="Badges[@i].IsSelected"
+                        value="@badge.IsSelected" />
+                </button>
             }
         </span>
-
-        <div class="text-center">
-            <div class="text-danger" x-show="count > 3">Too many badges selected</div>
-            <button id="updateBadges" type="submit" :class="count > 3 ? 'btn btn-sm btn-primary mt-3 disabled' : 'btn btn-sm btn-primary mt-3'">@HtmlLocalizer["Update Badges"]</button>
-        </div>
-       
+        <span class="text-danger field-validation-error field-validation-valid" x-show="selectedCount > maxBadges"
+            x-cloak>
+            Too many badges selected
+        </span>
     </div>
+
+    <p class="d-flex justify-content-between mt-3 align-items-center gap-3">
+        <button id="updateBadges" type="submit" class="btn btn-primary" :disabled="selectedCount > maxBadges">Update
+            badges</button>
+
+        <small>Select up to @maxBadges badges which will be shown next to your name in the portal.</small>
+    </p>
+
+    @if (Model.State == UpdateState.Updated)
+    {
+        <vc:dismissable-alert message="Selected badges updated." />
+    }
 </form>

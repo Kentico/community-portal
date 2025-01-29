@@ -27,3 +27,11 @@
 .border-purple-100 {
   border-color: var(--bs-purple-100);
 }
+
+/*
+ * Hides Alpine components with visibility that can be toggled
+ * https://alpinejs.dev/directives/cloak
+ */
+[x-cloak] {
+  display: none !important;
+}

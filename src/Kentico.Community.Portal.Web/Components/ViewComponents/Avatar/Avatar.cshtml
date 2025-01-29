@@ -1,0 +1,22 @@
+@using Kentico.Community.Portal.Web.Components.ViewComponents.Avatar
+
+@model AvatarViewModel
+
+@{
+    string avatarClasses = Model.Size switch
+    {
+        AvatarSize.Small => "border-1",
+        AvatarSize.Normal or _ => "border-5"
+    };
+
+    string avatarSize = Model.Size switch
+    {
+        AvatarSize.Small => "2rem",
+        AvatarSize.Normal or _ => "10rem"
+    };
+}
+
+<div class="@avatarClasses border border-purple-300 d-flex justify-content-center align-items-center rounded-circle overflow-hidden"
+    style="--avatar-size: @avatarSize; width: var(--avatar-size); height: var(--avatar-size);">
+    <img src="" class="img-fluid" xpc-member-avatar="@Model.MemberID" alt="Avatar Image" />
+</div>

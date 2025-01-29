@@ -4,11 +4,9 @@
 
 @if (Model.ID == 0)
 {
-    <div class="page-QandA__author-container">
-        <div class="page-QandA__author">
-            <div class="page-QandA__avatar-image-sm-div">
-                <img class="page-QandA__avatar-image-sm img-fluid" xpc-member-avatar="@Model.ID" />
-            </div>
+    <div class="d-flex justify-content-start align-items-start">
+        <div class="d-flex align-items-center">
+            <vc:avatar member-id="Model.ID" size="Small" />
             <span class="ms-1">
                 @Model.FormattedName
             </span>
@@ -19,11 +17,10 @@
 }
 
 <div>
-    <div class="page-QandA__author-container">
-        <a class="page-QandA__author" asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@Model.ID">
-            <div class="page-QandA__avatar-image-sm-div">
-                <img class="page-QandA__avatar-image-sm img-fluid" xpc-member-avatar="@Model.ID" />
-            </div>
+    <div class="d-flex justify-content-start align-items-start">
+        <a class="d-flex align-items-center" asp-controller="Member" asp-action="MemberDetail"
+            asp-route-memberID="@Model.ID">
+            <vc:avatar member-id="Model.ID" size="Small" />
             <span class="ms-1">
                 @Model.FormattedName
             </span>

@@ -4,96 +4,99 @@
 
 <main>
     <div class="c-section pb-6">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="c-card article p-3 page-member__avatar-container">
-                        <div class="d-flex gap-3 flex-column align-center">
-                            <div class="page-member__avatar-image-div">
-                               <img class="page-member__avatar-image img-fluid"
-                                        xpc-member-avatar="@Model.Member.Id" alt="Avatar Image" />
-                            </div>
+        <div class="container grid gap-3">
+            <div
+                class="g-col-12 g-col-lg-6 d-flex justify-content-center align-items-center c-card bg-purple-100 rounded p-3">
 
-                            <h3 class="text-center">
-                                @if (!string.IsNullOrWhiteSpace(Model.Member.FullName))
-                                {
-                                    @Model.Member.FullName
-                                }
-                                else
-                                {
-                                    @Model.Member.UserName
-                                }
-                            </h3>
-                        </div>
-                    </div>
+                <div class="d-flex gap-3 flex-column align-items-center justify-content-center">
+                    <vc:avatar member-id="Model.Member.Id" />
+
+                    <h3 class="text-center">
+                        @if (!string.IsNullOrWhiteSpace(Model.Member.FullName))
+                        {
+                            @Model.Member.FullName
+                        }
+                        else
+                        {
+                            @Model.Member.UserName
+                        }
+                    </h3>
                 </div>
-                <div class="col-md-6">
-                    <div class="c-card article nopic bg-white border border-3 border-purple-100">
-                        <div class="c-card_inner d-grid">
-                            <h5>About me</h5>
 
-                            @{
-                                var member = Model.Member;
+            </div>
+            <div class="g-col-12 g-col-lg-6 c-card bg-white border border-3 rounded border-purple-100">
+                <div class="c-card_inner">
+                    <h5>About me</h5>
+
+                    @{
+                        var member = Model.Member;
+                    }
+
+                    <div class="c-card_content">
+                        <dl class="grid">
+                            <dt>Username:</dt>
+                            <dd>@member.UserName</dd>
+
+                            @if (!string.IsNullOrWhiteSpace(member.FullName))
+                            {
+                                <dt>Name:</dt>
+                                <dd>@member.FullName</dd>
                             }
 
-                            <div class="c-card_content">
-                                <dl class="grid">
-                                    <dt>Username:</dt>
-                                    <dd>@member.UserName</dd>
+                            <dt>Joined:</dt>
+                            <dd>@member.Created.ToString("d", View.Culture)</dd>
 
-                                    @if (!string.IsNullOrWhiteSpace(member.FullName))
-                                    {
-                                        <dt>Name:</dt>
-                                        <dd>@member.FullName</dd>
-                                    }
+                            @if (!string.IsNullOrWhiteSpace(member.EmployerLink.Label))
+                            {
+                                <dt>Employer:</dt>
+                                <dd>
+                                    @member.EmployerLink.Label
+                                </dd>
+                            }
 
-                                    <dt>Joined:</dt>
-                                    <dd>@member.Created.ToString("d", View.Culture)</dd>
+                            @if (!string.IsNullOrWhiteSpace(member.EmployerLink.URL))
+                            {
+                                <dt>Employer website:</dt>
+                                <dd>
+                                    <a href="@member.EmployerLink.URL" rel="noopener nofollow">
+                                        @member.EmployerLink.URL
+                                    </a>
+                                </dd>
+                            }
 
-                                    @if (member.EmployerLink.HasValue)
-                                    {
-                                        <dt>Employer:</dt>
-                                        <dd>
-                                            <a href="@member.EmployerLink.URL"
-                                                rel="noopener nofollow">
-                                                @member.EmployerLink.Label
-                                            </a>
-                                        </dd>
-                                    }
+                            @if (!string.IsNullOrWhiteSpace(member.JobTitle))
+                            {
+                                <dt>Job title:</dt>
+                                <dd>@member.JobTitle</dd>
+                            }
 
-                                    @if (!string.IsNullOrWhiteSpace(member.JobTitle))
-                                    {
-                                        <dt>Job title:</dt>
-                                        <dd>@member.JobTitle</dd>
-                                    }
-
-                                    @if (!string.IsNullOrWhiteSpace(member.LinkedInIdentifier))
-                                    {
-                                        <dt>LinkedIn:</dt>
-                                        <dd>
-                                            <a href="https://www.linkedin.com/in/@member.LinkedInIdentifier"
-                                                rel="noopener nofollow">
-                                                https://www.linkedin.com/in/@member.LinkedInIdentifier
-                                            </a>
-                                        </dd>
-                                    }
-                                </dl>
-                                <div>
-                                    <h5>My badges</h5>
-                                    <div class="d-flex c-card_content">
-                                        <vc:member-badges badges="@Model.MemberBadges" display-style="Full" />
-                                    </div>
-                                </div>
+                            @if (!string.IsNullOrWhiteSpace(member.LinkedInIdentifier))
+                            {
+                                <dt>LinkedIn:</dt>
+                                <dd>
+                                    <a href="https://www.linkedin.com/in/@member.LinkedInIdentifier"
+                                        rel="noopener nofollow">
+                                        https://www.linkedin.com/in/@member.LinkedInIdentifier
+                                    </a>
+                                </dd>
+                            }
+                        </dl>
+                        <div>
+                            <h5>My badges</h5>
+                            <div class="d-flex c-card_content">
+                                <vc:member-badges badges="@Model.MemberBadges" display-style="Full" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row mt-5">
-                <div class="col">
-                    <h2 class="h1 text-center k-dot">Community member activities</h2>
-                </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col">
+                <h2 class="h1 text-center k-dot">Community member activities</h2>
             </div>
+        </div>
+        <div class="container">
             <div class="row mt-5">
                 <div class="col-md-6">
                     <h3>Blog Posts</h3>
@@ -151,5 +154,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </main>

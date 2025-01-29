@@ -22,7 +22,8 @@ public class AccountController(
     MemberContactManager contactManager,
     MemberBadgeService memberBadgeService,
     AvatarImageService avatarImageService,
-    IEventLogService log) : Controller
+    IEventLogService log,
+    LinkGenerator linkGenerator) : Controller
 {
     private readonly WebPageMetaService metaService = metaService;
     private readonly UserManager<CommunityMember> userManager = userManager;
@@ -31,6 +32,7 @@ public class AccountController(
     private readonly MemberBadgeService memberBadgeService = memberBadgeService;
     private readonly AvatarImageService avatarImageService = avatarImageService;
     private readonly IEventLogService log = log;
+    private readonly LinkGenerator linkGenerator = linkGenerator;
 
     [HttpGet]
     public async Task<ActionResult> MyAccount()
@@ -49,19 +51,25 @@ public class AccountController(
             MemberID = member.Id,
             Username = member.UserName ?? "",
             Email = member.Email ?? "",
+            ProfileLinkURL = linkGenerator.GetUriByAction(HttpContext, nameof(MemberController.MemberDetail), "Member", new { memberID = member.Id }) ?? "",
             Profile = new()
             {
                 FirstName = member.FirstName,
                 LastName = member.LastName,
                 LinkedInIdentifier = member.LinkedInIdentifier,
+                JobTitle = member.JobTitle,
+                EmployerName = member.EmployerLink.Label,
+                EmployerWebsiteURL = member.EmployerLink.URL,
             },
             DateCreated = member.Created,
             AvatarForm = new()
             {
-                MemberID = member.Id,
-                ShowForm = false
+                MemberID = member.Id
             },
-            EarnedBadges = await memberBadgeService.GetAllBadgesFor(member.Id)
+            BadgesForm = new()
+            {
+                Badges = await memberBadgeService.GetAllBadgesFor(member.Id)
+            }
         };
 
         return View("~/Features/Accounts/MyAccount.cshtml", vm);
@@ -87,6 +95,9 @@ public class AccountController(
         member.FirstName = model.FirstName ?? "";
         member.LastName = model.LastName ?? "";
         member.LinkedInIdentifier = model.LinkedInIdentifier ?? "";
+        member.JobTitle = model.JobTitle ?? "";
+        member.EmployerLink.Label = model.EmployerName ?? "";
+        member.EmployerLink.URL = model.EmployerWebsiteURL ?? "";
 
         _ = await userManager.UpdateAsync(member);
 
@@ -151,7 +162,6 @@ public class AccountController(
             return Unauthorized();
         }
 
-        model.ShowForm = true;
         model.MemberID = member.Id;
 
         if (!ModelState.IsValid)
@@ -177,30 +187,47 @@ public class AccountController(
             return PartialView("~/Features/Accounts/_AvatarForm.cshtml", model);
         }
 
-        model.ShowForm = false;
+        model.State = UpdateState.Updated;
         return PartialView("~/Features/Accounts/_AvatarForm.cshtml", model);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> UpdateSelectedBadges(List<SelectedBadgeViewModel> badges)
+    public async Task<ActionResult> UpdateSelectedBadges(UpdateBadgesRequest request)
     {
-        var user = await userManager.GetUserAsync(User);
+        var member = await userManager.GetUserAsync(User);
 
-        if (user is null)
+        if (member is null)
         {
             return Unauthorized();
         }
 
-        if (badges.Count(x => x.IsSelected) > 3)
+        if (request.Badges.Count(x => x.IsSelected) > BadgesFormViewModel.MAX_SELECTED_BADGES)
         {
             return ValidationProblem();
         }
 
-        await memberBadgeService.UpdateSelectedBadgesFor(badges, user.Id);
+        await memberBadgeService.UpdateSelectedBadgesFor(request.Badges, member.Id);
+        var badges = await memberBadgeService.GetAllBadgesFor(member.Id);
 
-        return RedirectToAction(nameof(MyAccount));
+        return PartialView("~/Features/Accounts/_BadgesForm.cshtml", new BadgesFormViewModel
+        {
+            Badges = badges,
+            State = UpdateState.Updated
+        });
     }
+}
+
+public record UpdateBadgesRequest(List<SelectedBadgeViewModel> Badges);
+
+public class BadgesFormViewModel
+{
+    public const int MAX_SELECTED_BADGES = 4;
+
+    [BindNever]
+    public UpdateState State { get; set; } = UpdateState.Unmodified;
+
+    public IReadOnlyList<MemberBadgeViewModel> Badges { get; set; } = [];
 }
 
 public class SelectedBadgeViewModel
@@ -214,8 +241,9 @@ public class MyAccountViewModel : IPortalPage
     public int MemberID { get; set; }
     public string Username { get; set; } = "";
     public string Email { get; set; } = "";
+    public string ProfileLinkURL { get; set; } = "";
     public ProfileViewModel Profile { get; set; } = new();
-    public IReadOnlyList<MemberBadgeViewModel> EarnedBadges { get; set; } = [];
+    public BadgesFormViewModel BadgesForm { get; set; } = new();
     public DateTime DateCreated { get; set; }
     public UpdatePasswordViewModel PasswordInfo { get; set; } = new();
     public string Title => "My Account";
@@ -228,12 +256,12 @@ public class ProfileViewModel
 {
     [DataType(DataType.Text)]
     [DisplayName("First name")]
-    [MaxLength(40, ErrorMessage = "First Name be longer than 40 characters.")]
+    [MaxLength(40, ErrorMessage = "First name cannot be longer than 40 characters.")]
     public string? FirstName { get; set; } = "";
 
     [DataType(DataType.Text)]
-    [DisplayName("Last Name")]
-    [MaxLength(40, ErrorMessage = "Last Name be longer than 40 characters.")]
+    [DisplayName("Last name")]
+    [MaxLength(40, ErrorMessage = "Last Name cannot be longer than 40 characters.")]
     public string? LastName { get; set; } = "";
 
     [DataType(DataType.Text)]
@@ -241,6 +269,22 @@ public class ProfileViewModel
     [MaxLength(40, ErrorMessage = "The LinkedIn Identifier cannot be longer than 40 characters")]
     [RegularExpression(@"^(?!.*https:\/\/www\.linkedin\.com\/).*$", ErrorMessage = "The value cannot contain the LinkedIn URL.")]
     public string? LinkedInIdentifier { get; set; } = "";
+
+    [DataType(DataType.Text)]
+    [DisplayName("Job title")]
+    [MaxLength(40, ErrorMessage = "Job title cannot be longer than 40 characters.")]
+    public string? JobTitle { get; set; } = "";
+
+    [DataType(DataType.Text)]
+    [DisplayName("Employer name")]
+    [MaxLength(40, ErrorMessage = "Employer name cannot be longer than 40 characters.")]
+    public string? EmployerName { get; set; } = "";
+
+    [DataType(DataType.Text)]
+    [DisplayName("Employer website URL")]
+    [MaxLength(40, ErrorMessage = "Employer website URL cannot be longer than 40 characters.")]
+    [Url(ErrorMessage = "Must be a valid URL")]
+    public string? EmployerWebsiteURL { get; set; } = "";
 
     public UpdateState State { get; set; } = UpdateState.Unmodified;
 }
@@ -277,16 +321,20 @@ public class UpdatePasswordViewModel
 
 public class AvatarFormViewModel
 {
-    [BindNever]
-    public int MemberID { get; set; }
+    public const int MAX_FILE_SIZE = 102_400;
+    public static string[] ALLOWED_EXTENSIONS { get; } = [".jpg", ".jpeg", ".png", ".webp"];
+    public static string ALLOWED_EXTENSIONS_JOINED { get; } = string.Join(", ", ALLOWED_EXTENSIONS);
 
     [BindNever]
-    public bool ShowForm { get; set; }
+    public UpdateState State { get; set; } = UpdateState.Unmodified;
+
+    [BindNever]
+    public int MemberID { get; set; }
 
     [Required]
     [DisplayName("Avatar Image")]
     [AllowedExtensions(extensions: [".jpg", ".jpeg", ".png", ".webp"])]
     // 100 kb
-    [MaxFileSize(102_400)]
+    [MaxFileSize(MAX_FILE_SIZE)]
     public IFormFile? AvatarImageFileAttachment { get; set; }
 }

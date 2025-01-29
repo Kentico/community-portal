@@ -52,12 +52,12 @@ public class MemberBadgeService(
 
         foreach (var badge in badges)
         {
-            badgesInDb
+            await badgesInDb
                 .TryFirst(x => x.MemberBadgeMemberMemberBadgeId == badge.BadgeId)
-                .Execute(b =>
+                .Execute(async b =>
                 {
                     b.MemberBadgeMemberIsSelected = badge.IsSelected;
-                    b.Update();
+                    await memberBadgeMemberInfoProvider.SetAsync(b);
                 });
         }
     }

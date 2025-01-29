@@ -3,47 +3,48 @@
 <vc:page-heading page="Model" />
 
 <main>
-    <partial name="~/Features/Accounts/_AvatarForm.cshtml" model="Model.AvatarForm" />
-
-    <div class="c-section default">
+    <div class="c-section pb-6">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <partial name="~/Features/Accounts/_BadgesForm.cshtml" model="Model" />
-                    <div class="c-card article nopic">
-                        <div class="c-card_inner d-grid">
-                            <div class="c-card_title">
-                                <h4>
-                                    Profile Information
-                                </h4>
-                            </div>
+            <div class="grid gap-3">
+                <div class="g-col-12 g-col-lg-6 c-card bg-purple-100 rounded p-3">
+                    <partial name="~/Features/Accounts/_AvatarForm.cshtml" model="Model.AvatarForm" />
+                </div>
 
-                            <div class="c-card_content">
-                                <p>
-                                    Username: @Model.Username
-                                </p>
-                                <p>
-                                    Email: @Model.Email
-                                </p>
-                                <p>
-                                    Joined: @Model.DateCreated.ToShortDateString()
-                                </p>
-                                <p>
-                                    View <a asp-controller="Member" asp-action="MemberDetail"
-                                        asp-route-memberID="@Model.MemberID">your public profile</a>
-                                </p>
-                            </div>
+                <div
+                    class="g-col-12 g-col-lg-6 c-card rounded bg-white border border-3 border-purple-100 d-flex flex-column gap-3 c-card nopic">
+                    <div class="c-card_inner">
+                        <h5>
+                            Profile Information
+                        </h5>
+
+                        <div class="c-card_content">
+                            <dl class="grid">
+                                <dt>Username:</dt>
+                                <dd>@Model.Username</dd>
+
+                                <dt>Email:</dt>
+                                <dd>@Model.Email</dd>
+
+                                <dt>Joined:</dt>
+                                <dd>@Model.DateCreated.ToString("d", View.Culture)</dd>
+
+                                <dt>Public profile:</dt>
+                                <dd>
+                                    <a href="@Model.ProfileLinkURL">
+                                        @Model.ProfileLinkURL
+                                    </a>
+                                </dd>
+                            </dl>
                         </div>
                     </div>
+                    <partial name="~/Features/Accounts/_BadgesForm.cshtml" model="Model.BadgesForm" />
                 </div>
-            </div>
 
-            <div class="row justify-content-center">
-                <div class="col-md-6 p-4">
+                <div class="g-col-12 g-col-lg-6">
                     <partial name="~/Features/Accounts/_ProfileForm.cshtml" model="Model.Profile" />
                 </div>
 
-                <div class="col-md-6 p-4">
+                <div class="g-col-12 g-col-lg-6">
                     <partial name="~/Features/Accounts/_PasswordForm.cshtml" model="Model.PasswordInfo" />
                 </div>
             </div>
