@@ -23,12 +23,4 @@ public class SetNewPasswordViewModel
     [MaxLength(100, ErrorMessage = "The password cannot be longer than 100 characters.")]
     [Compare(nameof(Password), ErrorMessage = "The entered passwords do not match.")]
     public string PasswordConfirmation { get; set; } = "";
-
-    public State SubmissionState { get; set; } = State.Not_Reset;
-}
-
-public enum State
-{
-    Not_Reset,
-    Reset,
 }

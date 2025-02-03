@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
     name: MarkdownWidget.NAME,
     propertiesType: typeof(MarkdownWidgetProperties),
     Description = "Renders the markdown content provided.",
-    // https://devnet.kentico.com/docs/icon-list/index.html
     IconClass = KenticoIcons.I,
     AllowCache = true)]
 

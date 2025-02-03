@@ -2,7 +2,7 @@
 
 @model NotificationTrayViewModel
 
-<div class="notification-tray" id="notificationTray">
+<div id="notificationTray" class="notification-tray" notification-total="@Model.Messages.Count">
     <div class="notification-tray-header">
         <h5 class="mb-0">Notifications</h5>
         <button id="notificationsClose" class="btn-close btn-close-dark" type="button" aria-label="Close"
@@ -31,24 +31,3 @@
         }
     </div>
 </div>
-
-<script type="module">
-    const notificationCount = @Model.Messages.Count;
-    if (notificationCount > 0) {
-        /** 
-          * @@type { HTMLButtonElement[] } 
-          */
-        const notificationBellEls = [document.getElementById('notificationBell'), document.querySelector('#notificationBellMobile')];
-        /** 
-          * @@type { HTMLSpanElement } 
-          */
-        const notificationCountEls = document.querySelectorAll('[notification-count]');
-        for (const countEl of notificationCountEls) {
-            countEl.innerHTML = notificationCount;
-            countEl.classList.remove('d-none');
-            for (const bellEl of notificationBellEls) {
-                bellEl.classList.add('btn-outline-secondary');
-            }
-        }
-    }
-</script>

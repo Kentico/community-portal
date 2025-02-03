@@ -50,18 +50,30 @@
                                     @item.Type.Title
                                 </small>
                             </p>
-                            <p class="mt-2">by
-                                <small>
-                                    @if (item.AuthorURL.TryGetValue(out string? authorURL))
-                                    {
-                                        <a href="@authorURL">@item.AuthorName</a>
-                                    }
-                                    else
-                                    {
-                                        @item.AuthorName
-                                    }
-                                </small>
-                            </p>
+
+                            @if (item.AuthorLink.TryGetValue(out var link))
+                            {
+                                <p class="mt-2">by
+                                    <small>
+                                        <a href="@link.URL">@link.Label</a>
+
+                                        @if (item.Business.TryGetValue(out var business))
+                                        {
+                                            <text>from</text>
+
+                                            @if (business.URL.TryGetValue(out string? url))
+                                            {
+                                                <a href="@url">@business.Label</a>
+                                            }
+                                            else
+                                            {
+                                                <text>@business.Label</text>
+                                            }
+                                        }
+                                    </small>
+                                </p>
+                            }
+
                             <p class="mt-2">@item.ShortDescription</p>
 
                             <div class="d-flex justify-content-around mt-3">

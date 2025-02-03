@@ -24,17 +24,20 @@ public class BlogPostAuthorMemberBadgeAssignmentRule(IContentQueryExecutor conte
                     .Columns(nameof(AuthorContent.AuthorContentMemberID)));
 
         var authors = await contentQueryExecutor.GetMappedResult<AuthorContent>(b, options: null, cancellationToken: cancellationToken);
+        var authorMemberIDs = authors
+            .Select(a => a.AuthorContentMemberID)
+            .Distinct();
 
         var results = new List<NewMemberBadgeRelationship>();
 
-        foreach (var author in authors)
+        foreach (int memberID in authorMemberIDs)
         {
-            if (memberBadgeRelationships.HasEntry(author.AuthorContentMemberID, memberBadge.MemberBadgeID))
+            if (memberBadgeRelationships.HasEntry(memberID, memberBadge.MemberBadgeID))
             {
                 continue;
             }
 
-            results.Add(new NewMemberBadgeRelationship(author.AuthorContentMemberID, memberBadge.MemberBadgeID));
+            results.Add(new NewMemberBadgeRelationship(memberID, memberBadge.MemberBadgeID));
         }
 
         return results;

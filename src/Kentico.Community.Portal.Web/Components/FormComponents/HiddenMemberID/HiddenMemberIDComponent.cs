@@ -68,6 +68,6 @@ public class HiddenMemberIDComponent(
 
         return user is null
             ? "Unknown"
-            : user.Email ?? user.UserName ?? user.FullName;
+            : $"{user.DisplayName} ({user.Email})";
     }
 }

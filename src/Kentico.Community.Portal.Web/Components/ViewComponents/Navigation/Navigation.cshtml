@@ -74,7 +74,8 @@
                                     <use xlink:href="/img/icons.svg#chevron-down" asp-append-version></use>
                                 </svg>
                             </button>
-                            <ul class="dropdown-menu gap-3 flex-row flex-md-column justify-content-around">
+                            <ul
+                                class="dropdown-menu gap-3 flex-row flex-md-column justify-content-around border border-1 bg-white">
                                 <li class="nav-item">
                                     <a asp-controller="Account" asp-action="MyAccount"
                                         class="btn btn-primary text-uppercase">My
@@ -122,33 +123,13 @@
             }
             else
             {
-                <li class="nav-item dropdown">
-                    <span class="nav-link active">
-                        <span test-id="usernameMobile">@User.Identity.Name</span>
-                        <svg class="c-icon d-none d-md-block">
-                            <use xlink:href="/img/icons.svg#chevron-down" asp-append-version></use>
-                        </svg>
-                    </span>
-
-                    <button type="button" class="btn dropdown-toggle d-md-none" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <svg class="c-icon ">
-                            <use xlink:href="/img/icons.svg#chevron-down" asp-append-version></use>
-                        </svg>
-                    </button>
-                    <ul class="dropdown-menu gap-3 flex-row flex-md-column justify-content-around"
-                        style="transform: none; position: initial">
-                        <li class="nav-item">
-                            <a asp-controller="Account" asp-action="MyAccount" class="btn btn-primary text-uppercase">My
-                                Account</a>
-                        </li>
-                        <li class="nav-item w-md-100">
-                            <form asp-controller="Authentication" asp-action="Logout" method="post">
-                                <button class="btn btn-outline-secondary text-uppercase w-100" type="submit"
-                                    test-id="logoutMobile">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
+                <li class="nav-item d-flex justify-content-around py-3">
+                    <a asp-controller="Account" asp-action="MyAccount" class="btn btn-primary text-uppercase">My
+                        Account</a>
+                    <form asp-controller="Authentication" asp-action="Logout" method="post">
+                        <button class="btn btn-outline-secondary text-uppercase w-100" type="submit"
+                            test-id="logoutMobile">Logout</button>
+                    </form>
                 </li>
             }
         </ul>
@@ -157,28 +138,3 @@
     <vc:notification-tray />
 
 </header>
-
-<script>
-    const notificationBellEls = [document.getElementById('notificationBell'), document.querySelector('#notificationBellMobile')];
-    const notificationTray = document.getElementById('notificationTray');
-    const closeTray = document.getElementById('notificationsClose');
-    /** 
-     * @@type { HTMLSpanElement } 
-     */
-    const notificationCountEls = document.querySelectorAll('[notification-count]');
-
-    for (const bellEl of notificationBellEls) {
-        bellEl.addEventListener('click', () => {
-            notificationTray.classList.toggle('open');
-            for (const countEl of notificationCountEls) {
-                countEl.classList.add('d-none');
-                countEl.innerHTML = '';
-                bellEl.classList.remove('btn-outline-secondary')
-            }
-        });
-    }
-
-    closeTray.addEventListener('click', () => {
-        notificationTray.classList.remove('open');
-    });
-</script>

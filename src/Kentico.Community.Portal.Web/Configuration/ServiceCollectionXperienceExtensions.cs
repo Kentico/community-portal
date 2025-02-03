@@ -40,6 +40,7 @@ public static class ServiceCollectionXperienceExtensions
                         BlogLandingPage.CONTENT_TYPE_NAME,
                         BlogPostPage.CONTENT_TYPE_NAME,
                         CommunityLandingPage.CONTENT_TYPE_NAME,
+                        CommunityLinksPage.CONTENT_TYPE_NAME,
                         SupportPage.CONTENT_TYPE_NAME,
                         IntegrationsLandingPage.CONTENT_TYPE_NAME,
                         LandingPage.CONTENT_TYPE_NAME

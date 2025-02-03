@@ -90,7 +90,7 @@ public class RegistrationController(
             await consentManager.AgreeToMarketingConsent();
         }
 
-        return PartialView("~/Features/Registration/_VerifyEmail.cshtml");
+        return PartialView("~/Features/Registration/_RegisterForm.cshtml", model);
     }
 
     [HttpGet]
@@ -104,8 +104,8 @@ public class RegistrationController(
             return View("~/Features/Registration/EmailConfirmation.cshtml", new EmailConfirmationViewModel()
             {
                 State = EmailConfirmationState.Failure_ConfirmationFailed,
-                Message = localizer["Email Confirmation failed"],
-                SendButtonText = localizer["Send Again"],
+                Message = localizer["Email confirmation failed"],
+                SendButtonText = localizer["Send again"],
                 Username = ""
             });
         }
@@ -139,15 +139,15 @@ public class RegistrationController(
             return View("~/Features/Registration/EmailConfirmation.cshtml", new EmailConfirmationViewModel
             {
                 State = EmailConfirmationState.Success_Confirmed,
-                Message = localizer["Email Confirmed"]
+                Message = localizer["Email confirmed"]
             });
         }
 
         return View("~/Features/Registration/EmailConfirmation.cshtml", new EmailConfirmationViewModel()
         {
             State = EmailConfirmationState.Failure_ConfirmationFailed,
-            Message = localizer["Email Confirmation failed"],
-            SendButtonText = localizer["Send Again"],
+            Message = localizer["Email confirmation failed"],
+            SendButtonText = localizer["Send again"],
             Username = member.UserName!
         });
     }

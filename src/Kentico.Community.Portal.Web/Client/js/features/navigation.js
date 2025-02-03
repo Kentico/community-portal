@@ -1,5 +1,7 @@
 export default function setup() {
   stickyHeader();
+  initializeNavbar();
+  initializeNotifications();
   initialiseCookiesBar();
   initialiseCookiePreferences();
 
@@ -9,7 +11,9 @@ export default function setup() {
   window.onscroll = () => {
     stickyHeader();
   };
+}
 
+function initializeNavbar() {
   document.querySelectorAll(".navbar-nav .nav-item.dropdown").forEach((el) => {
     el.addEventListener("mouseenter", (event) => moveHeaderDropdownBg(event));
     el.addEventListener("mouseleave", () => hideHeaderDropdownBg());
@@ -142,4 +146,49 @@ function changeRange() {
   if (percent < 5) percent += 5;
 
   rangeFill.style.width = percent + "%";
+}
+
+function initializeNotifications() {
+  const notificationBellEls = [
+    document.getElementById("notificationBell"),
+    document.getElementById("notificationBellMobile"),
+  ];
+  const notificationTrayEl = document.getElementById("notificationTray");
+  const closeTrayEl = document.getElementById("notificationsClose");
+  /**
+   * @type { HTMLSpanElement }
+   */
+  const notificationCountEls = document.querySelectorAll(
+    "[notification-count]",
+  );
+
+  for (const bellEl of notificationBellEls) {
+    bellEl.addEventListener("click", () => {
+      notificationTrayEl.classList.toggle("open");
+      for (const countEl of notificationCountEls) {
+        countEl.classList.add("d-none");
+        countEl.innerHTML = "";
+        bellEl.classList.remove("btn-outline-secondary");
+      }
+    });
+  }
+
+  closeTrayEl.addEventListener("click", () => {
+    notificationTrayEl.classList.remove("open");
+  });
+
+  const notificationCount = parseInt(
+    notificationTrayEl.getAttribute("notification-total"),
+    0,
+  );
+
+  if (notificationCount > 0) {
+    for (const countEl of notificationCountEls) {
+      countEl.innerHTML = notificationCount;
+      countEl.classList.remove("d-none");
+      for (const bellEl of notificationBellEls) {
+        bellEl.classList.add("btn-outline-secondary");
+      }
+    }
+  }
 }

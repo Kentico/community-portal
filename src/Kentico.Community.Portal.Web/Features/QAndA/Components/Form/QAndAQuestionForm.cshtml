@@ -1,11 +1,11 @@
 @model Kentico.Community.Portal.Web.Features.QAndA.QAndAQuestionFormViewModel
 
 @{
-    var id = $"{(Model.EditedObjectID ?? Guid.NewGuid()):N}";
-    var formId = $"questionForm_{id}";
-    var rootElId = $"questionFormRoot_{id}";
-    var editormdId = $"editormd_{id}";
-    string action = Model.EditedObjectID is null ? "CreateQuestion" : "UpdateQuestion";
+    string id = $"{(Model.EditedObjectID ?? Guid.NewGuid()):N}";
+    string rootElId = $"questionFormRoot_{id}";
+    string rootElIdSelector = $"#{rootElId}";
+    string editorID = $"editormd_{id}";
+    string editorFieldID = $"{editorID}_field";
 }
 
 <div id="@rootElId" class="mb-5">
@@ -22,8 +22,10 @@
                 }
             </h2>
 
-            <form id="@formId" method="post" hx-post hx-controller="QAndAQuestion" hx-action="@action"
-                hx-swap="outerHTML" hx-target="#@rootElId" hx-trigger="submitReady" class="d-flex flex-column">
+            <form method="post" hx-post hx-controller="QAndAQuestion"
+                hx-action="@(Model.EditedObjectID is null ? "CreateQuestion" : "UpdateQuestion")" hx-swap="outerHTML"
+                hx-target="@rootElIdSelector" hx-trigger="submitReady" hx-disabled-elt="find fieldset"
+                class="d-flex flex-column">
                 <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
 
                 <div class="row mb-5">
@@ -39,51 +41,61 @@
                     @Model.FormHelpMessageHTML
                 </div>
 
-                <div id="@editormdId" class="border border-1 border-dark-subtle rounded-2 milkdown-container">
-                    <textarea class="form-control d-none field-sizing-content h-100 border-0" asp-for="@Model.Content"
-                        style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;" name="Content"
-                        placeholder="Your full question description goes here" value="@Model.Content"></textarea>
-                </div>
+                <fieldset hx-indicator="this">
+                    <label for="@editorFieldID" class="form-label">
+                        <span class="text-secondary fw-bold">
+                            @User.Identity!.Name
+                        </span>
+                        would ask</label>
+                    <div id="@editorID" class="border border-1 border-dark-subtle rounded-2 milkdown-container">
+                        <textarea class="form-control d-none field-sizing-content h-100 border-0"
+                            asp-for="@Model.Content"
+                            style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;" name="Content"
+                            placeholder="Your full question description goes here" value="@Model.Content"></textarea>
+                    </div>
 
-                <div class="form-check form-switch align-self-end" x-data="{ mode: 'editor' }">
-                    <input class="form-check-input" type="checkbox" role="switch" id="viewMarkdown" @@change="toggleEditor">
-                    <label class="form-check-label" for="viewMarkdown">View markdown</label>
-                </div>
+                    <div class="form-check form-switch align-self-end" x-data="{ mode: 'editor' }">
+                        <input class="form-check-input" type="checkbox" role="switch" id="viewMarkdown"
+                            @@change="toggleEditor">
+                        <label class="form-check-label" for="viewMarkdown">View markdown</label>
+                    </div>
 
-                <div class="d-grid">
-                    <input asp-for="EditedObjectID">
-                    <button type="submit" class="btn btn-primary btn-lighter px-5 mt-4">                    
-                        @if (Model.EditedObjectID is Guid)
-                        {
-                            <text>Update your question</text>
-                        }
-                        else
-                        {
-                            <text>Submit your question</text>
-                        }
-                    </button>
-
-                    @if (Model.EditedObjectID is Guid questionID)
-                    {
-                        <button type="button" class="btn btn-outline-warning px-5 mt-4" hx-get hx-controller="QAndAQuestionPage"
-                            hx-action="DisplayQuestionDetail" hx-route-questionID="@questionID" hx-swap="outerHTML"
-                            hx-target="#@rootElId" hx-trigger="cancelReady" cancel-button>
-                            Cancel
+                    <div class="d-grid">
+                        <input asp-for="EditedObjectID">
+                        <button type="submit" class="btn btn-primary btn-lighter px-5 mt-4" xpc-loading-button>
+                            @if (Model.EditedObjectID is Guid)
+                            {
+                                <text>Update your question</text>
+                            }
+                            else
+                            {
+                                <text>Submit your question</text>
+                            }
                         </button>
-                    }
-                </div>
-            </form>
 
-            <script type="module">
-                asyncReady(async () => {
-                    const qanda = await import('@ClientAssets.ViteAssetPath("js/q-and-a.js")');
+                        @if (Model.EditedObjectID is Guid questionID)
+                        {
+                            <button type="button" class="btn btn-outline-warning px-5 mt-4" hx-get
+                                hx-controller="QAndAQuestionPage" hx-action="DisplayQuestionDetail"
+                                hx-route-questionID="@questionID" hx-swap="outerHTML" hx-target="@rootElIdSelector"
+                                hx-trigger="cancelReady" hx-disabled-elt="closest fieldset" cancel-button>
+                                Cancel
+                            </button>
+                        }
+                    </div>
+                </fieldset>
 
-                    qanda.initQAndA({
-                        editorElemID: '@editormdId',
-                        formType: 'Question'
+                <script type="module">
+                    asyncReady(async () => {
+                        const qanda = await import('@ClientAssets.ViteAssetPath("js/q-and-a.js")');
+
+                        qanda.initQAndA({
+                            editorElemID: '@editorID',
+                            formType: 'Question'
+                        });
                     });
-                });
-            </script>
+                </script>
+            </form>
         </div>
     </div>
 </div>

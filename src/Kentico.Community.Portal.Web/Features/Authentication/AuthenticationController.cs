@@ -65,8 +65,8 @@ public class AuthenticationController(
                 var emailConfirmationModel = new EmailConfirmationViewModel()
                 {
                     State = EmailConfirmationState.Failure_NotYetConfirmed,
-                    Message = localizer["This Email Is Not Verified Yet"],
-                    SendButtonText = localizer["Send Verification Email"],
+                    Message = localizer["Your email has not been verified"],
+                    SendButtonText = localizer["Send verification email"],
                     Username = member.UserName!
                 };
 

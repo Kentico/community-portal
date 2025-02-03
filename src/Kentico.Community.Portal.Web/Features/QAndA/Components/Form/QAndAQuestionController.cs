@@ -9,7 +9,6 @@ using Kentico.Content.Web.Mvc;
 using Kentico.Xperience.Admin.Base;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -104,7 +103,6 @@ public class QAndAQuestionController(
     public async Task<IActionResult> DisplayEditQuestionForm(Guid questionID)
     {
         var member = await userManager.CurrentUser(HttpContext);
-
         if (member is null)
         {
             return Unauthorized();

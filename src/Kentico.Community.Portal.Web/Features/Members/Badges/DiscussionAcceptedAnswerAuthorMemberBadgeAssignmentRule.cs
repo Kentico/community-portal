@@ -20,6 +20,7 @@ public class DiscussionAcceptedAnswerAuthorMemberBadgeAssignmentRule(IInfoProvid
             .Get()
             .Source(s => s.Join("KenticoCommunity_QAndAQuestionPage", nameof(QAndAAnswerDataInfo.QAndAAnswerDataGUID), nameof(QAndAQuestionPage.QAndAQuestionPageAcceptedAnswerDataGUID)))
             .Columns(nameof(QAndAAnswerDataInfo.QAndAAnswerDataAuthorMemberID))
+            .WhereGreaterThan(nameof(QAndAAnswerDataInfo.QAndAAnswerDataAuthorMemberID), 0)
             .Distinct()
             .GetEnumerableTypedResultAsync();
 

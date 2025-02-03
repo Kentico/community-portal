@@ -1,0 +1,35 @@
+@using Kentico.Community.Portal.Web.Features.Blog.Search
+
+@model BlogSearchViewModel
+
+<div class="category-filters d-none d-lg-block g-col-3">
+    <div class="mb-5">
+        <h4>Type @(Model.BlogTypesSelected > 0 ? $"({Model.BlogTypesSelected})" : "")</h4>
+        @foreach (var blogType in Model.BlogTypes)
+        {
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="blogTypes" xpc-facet-field="blogType" />
+                <label class="form-check-label" for="blogTypes-@blogType.Value">@blogType.Label (@blogType.Count)</label>
+            </div>
+        }
+    </div>
+
+    <div class="mb-5">
+        <h4>Topic @(Model.DXTopicsSelected > 0 ? $"({Model.DXTopicsSelected})" : "")</h4>
+        @foreach (var topic in Model.DXTopics)
+        {
+            <div class="mb-2">
+                <h5>@topic.Label @(topic.Count > 0 ? $"({topic.Count})" : "")</h5>
+                <div class="p-2">
+                    @foreach (var child in topic.Facets)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="dxTopics" xpc-facet-field="child" />
+                            <label class="form-check-label" for="dxTopics-@child.Value">@child.Label (@child.Count)</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

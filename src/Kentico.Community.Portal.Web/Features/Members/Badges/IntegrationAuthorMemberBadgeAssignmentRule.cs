@@ -24,17 +24,20 @@ public class IntegrationAuthorMemberBadgeAssignmentRule(IContentQueryExecutor co
                     .Columns(nameof(IntegrationContent.IntegrationContentAuthorMemberID)));
 
         var integrations = await contentQueryExecutor.GetMappedResult<IntegrationContent>(b, options: null, cancellationToken: cancellationToken);
+        var integrationMemberIDs = integrations
+            .Select(i => i.IntegrationContentAuthorMemberID)
+            .Distinct();
 
         var results = new List<NewMemberBadgeRelationship>();
 
-        foreach (var integration in integrations)
+        foreach (int memberID in integrationMemberIDs)
         {
-            if (memberBadgeRelationships.HasEntry(integration.IntegrationContentAuthorMemberID, memberBadge.MemberBadgeID))
+            if (memberBadgeRelationships.HasEntry(memberID, memberBadge.MemberBadgeID))
             {
                 continue;
             }
 
-            results.Add(new NewMemberBadgeRelationship(integration.IntegrationContentAuthorMemberID, memberBadge.MemberBadgeID));
+            results.Add(new NewMemberBadgeRelationship(memberID, memberBadge.MemberBadgeID));
         }
 
         return results;

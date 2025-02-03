@@ -20,6 +20,7 @@ public class DiscussionParticipantMemberBadgeAssignmentRule(
         var answers = await answerDataProvider
             .Get()
             .Columns(nameof(QAndAAnswerDataInfo.QAndAAnswerDataAuthorMemberID))
+            .WhereGreaterThan(nameof(QAndAAnswerDataInfo.QAndAAnswerDataAuthorMemberID), 0)
             .Distinct()
             .GetEnumerableTypedResultAsync();
 

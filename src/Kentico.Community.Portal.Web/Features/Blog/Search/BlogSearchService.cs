@@ -198,19 +198,28 @@ public class BlogSearchService(
 
         if (!string.IsNullOrWhiteSpace(searchText))
         {
+            var (slop, term) = searchText switch
+            {
+                ['"', .., '"'] => (0, searchText.Trim('"')),
+                _ => (PHRASE_SLOP, searchText)
+            };
+
             var analyzer = new StandardAnalyzer(LuceneVersion.LUCENE_48);
             var queryBuilder = new QueryBuilder(analyzer);
-            var titleQuery = queryBuilder.CreatePhraseQuery(nameof(BlogSearchIndexModel.Title), searchText, PHRASE_SLOP);
+            var titleQuery = queryBuilder.CreatePhraseQuery(nameof(BlogSearchIndexModel.Title), term, slop);
             booleanQuery = AddToTermQuery(booleanQuery, titleQuery, 5);
 
-            var contentQuery = queryBuilder.CreatePhraseQuery(nameof(BlogSearchIndexModel.Content), searchText, PHRASE_SLOP);
+            var contentQuery = queryBuilder.CreatePhraseQuery(nameof(BlogSearchIndexModel.Content), term, slop);
             booleanQuery = AddToTermQuery(booleanQuery, contentQuery, 1);
 
-            var titleShould = queryBuilder.CreateBooleanQuery(nameof(BlogSearchIndexModel.Title), searchText, Occur.SHOULD);
-            booleanQuery = AddToTermQuery(booleanQuery, titleShould, 0.5f);
+            if (slop > 0)
+            {
+                var titleShould = queryBuilder.CreateBooleanQuery(nameof(BlogSearchIndexModel.Title), term, Occur.SHOULD);
+                booleanQuery = AddToTermQuery(booleanQuery, titleShould, 0.5f);
 
-            var contentShould = queryBuilder.CreateBooleanQuery(nameof(BlogSearchIndexModel.Content), searchText, Occur.SHOULD);
-            booleanQuery = AddToTermQuery(booleanQuery, contentShould, 0.1f);
+                var contentShould = queryBuilder.CreateBooleanQuery(nameof(BlogSearchIndexModel.Content), term, Occur.SHOULD);
+                booleanQuery = AddToTermQuery(booleanQuery, contentShould, 0.1f);
+            }
         }
 
         return booleanQuery;

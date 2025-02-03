@@ -1,5 +1,7 @@
 using CMS.Helpers;
 using Kentico.Community.Portal.Web.Features.Blog.Search;
+using Kentico.Community.Portal.Web.Features.Community;
+using Kentico.Community.Portal.Web.Features.Integrations;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Features.QAndA.Search;
 using Kentico.Community.Portal.Web.Infrastructure;
@@ -51,13 +53,17 @@ public class MemberController(
         });
 
         var badges = await memberBadgeService.GetAllBadgesFor(member.Id);
+        var integrationsResp = await mediator.Send(new IntegrationContentsByMemberIDQuery(member.Id));
+        var contributionsResp = await mediator.Send(new LinkContentsByMemberIDQuery(member.Id));
 
         var model = new MemberDetailViewModel(member)
         {
             Page = new UnmanagedPage("Community member profile", $"Learn about {member.UserName} and their contributions to the Kentico Community"),
-            BlogPostLinks = blogResult.Hits.Select(h => new BlogPostLink(h.Url, h.Title, h.PublishedDate, h.BlogType)).ToList(),
-            QuestionsAsked = qandaResult.Hits.Select(h => new Link(h.Url, h.Title, h.PublishedDate)).ToList(),
-            MemberBadges = badges
+            BlogPostLinks = [.. blogResult.Hits.Select(h => new BlogPostLink(h.Url, h.Title, h.PublishedDate, h.BlogType))],
+            QuestionsAsked = [.. qandaResult.Hits.Select(h => new Link(h.Url, h.Title, h.PublishedDate))],
+            MemberBadges = badges,
+            Contributions = [.. contributionsResp.Items.Select(c => new Link(c.LinkContentPathOrURL, c.LinkContentLabel, c.LinkContentPublishedDate))],
+            Integrations = [.. integrationsResp.Items.Select(i => new Link(i.IntegrationContentRepositoryLinkURL, i.ListableItemTitle, i.IntegrationContentPublishedDate))],
         };
 
         return View("~/Features/Members/MemberDetail.cshtml", model);
@@ -102,6 +108,8 @@ public class MemberDetailViewModel(CommunityMember member)
     public CommunityMember Member { get; init; } = member;
     public IReadOnlyList<Link> QuestionsAsked { get; init; } = [];
     public IReadOnlyList<BlogPostLink> BlogPostLinks { get; init; } = [];
+    public IReadOnlyList<Link> Contributions { get; init; } = [];
+    public IReadOnlyList<Link> Integrations { get; init; } = [];
     public MemberAvatarViewModel MemberAvatar { get; set; } = new(member);
     public IReadOnlyList<MemberBadgeViewModel> MemberBadges = [];
 }

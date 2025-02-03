@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.workflowtransition>
+  <Parent>
+    <CodeName>start</CodeName>
+    <GUID>c6907cd1-f851-4c64-9c96-5dc7dad980ef</GUID>
+    <ObjectType>ma.automationstep</ObjectType>
+    <Parent>
+      <CodeName>SendAutoresponderEmail.CommunityLeaderActivity</CodeName>
+      <GUID>8585ccd8-4050-4f3d-b507-3f0f1aafcc11</GUID>
+      <ObjectType>ma.automationprocess</ObjectType>
+    </Parent>
+  </Parent>
+  <Bindings>
+    <Binding id="ma.automationstep_SendAutoresponderEmail_ma.automationprocess_SendAutoresponderEmail.CommunityLeaderActivity-ma.automationstep_SendAutoresponderEmail_ma.automationprocess_SendAutoresponderEmail.CommunityLeaderActivity">
+      <TransitionEndStepID>
+        <CodeName>SendAutoresponderEmail</CodeName>
+        <GUID>bdbcadc4-7b57-440d-9dd3-5d93c20ceeac</GUID>
+        <ObjectType>ma.automationstep</ObjectType>
+        <Parent>
+          <CodeName>SendAutoresponderEmail.CommunityLeaderActivity</CodeName>
+          <GUID>8585ccd8-4050-4f3d-b507-3f0f1aafcc11</GUID>
+          <ObjectType>ma.automationprocess</ObjectType>
+        </Parent>
+      </TransitionEndStepID>
+      <TransitionSourcePointGUID>f9c59312-3e49-4423-abd3-4ae0c0ded09b</TransitionSourcePointGUID>
+      <TransitionType>1</TransitionType>
+      <TransitionWorkflowID>
+        <CodeName>SendAutoresponderEmail.CommunityLeaderActivity</CodeName>
+        <GUID>8585ccd8-4050-4f3d-b507-3f0f1aafcc11</GUID>
+        <ObjectType>ma.automationprocess</ObjectType>
+      </TransitionWorkflowID>
+    </Binding>
+  </Bindings>
+</cms.workflowtransition>

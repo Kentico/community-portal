@@ -9,5 +9,5 @@ public class LinkDataType
     public string Label { get; set; } = "";
     public string URL { get; set; } = "";
 
-    public bool HasValue => !(string.IsNullOrWhiteSpace(Label) || string.IsNullOrWhiteSpace(URL));
+    public bool HasValue => !string.IsNullOrWhiteSpace(Label) && !string.IsNullOrWhiteSpace(URL);
 }

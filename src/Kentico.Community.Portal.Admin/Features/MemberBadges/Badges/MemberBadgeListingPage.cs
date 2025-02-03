@@ -41,19 +41,19 @@ public class MemberBadgeListingPage(
             .AddColumn(nameof(MemberBadgeInfo.MemberBadgeDisplayName),
                 "Display Name",
                 searchable: true,
-                maxWidth: 75)
+                minWidth: 30)
             .AddColumn(nameof(MemberBadgeInfo.MemberBadgeCodeName),
                 "Code Name",
                 searchable: true,
-                maxWidth: 75)
+                maxWidth: 100)
             .AddColumn(nameof(MemberBadgeInfo.MemberBadgeShortDescription),
                 "Description",
                 searchable: true,
-                minWidth: 110)
+                minWidth: 50)
             .AddColumn(nameof(MemberBadgeInfo.MemberBadgeDateCreated),
                 "Created",
                 sortable: true,
-                maxWidth: 5,
+                maxWidth: 20,
                 defaultSortDirection: SortTypeEnum.Desc);
     }
 

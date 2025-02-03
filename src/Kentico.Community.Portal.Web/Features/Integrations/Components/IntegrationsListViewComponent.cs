@@ -49,11 +49,11 @@ public class IntegrationItemViewModel
     public Maybe<string> RepositoryURL { get; }
     public Maybe<string> LibraryURL { get; }
     public IntegrationTypeViewModel Type { get; }
-    public string AuthorName { get; }
-    public Maybe<string> AuthorURL { get; }
+    public Maybe<IntegrationAuthorLink> AuthorLink { get; }
+    public Maybe<IntegrationBusiness> Business { get; }
     public IHtmlContent MetadataJSON { get; }
 
-    public IntegrationItemViewModel(IntegrationContent content, TaxonomyData taxonomy, Maybe<CommunityMember> author, LinkGenerator linkGenerator, IJSEncoder jsEncoder)
+    public IntegrationItemViewModel(IntegrationContent content, TaxonomyData taxonomy, Maybe<CommunityMember> member, LinkGenerator linkGenerator, IJSEncoder jsEncoder)
     {
         Title = content.ListableItemTitle;
         Logo = content.ToImageViewModel();
@@ -61,9 +61,10 @@ public class IntegrationItemViewModel
         RepositoryURL = Maybe.From(content.IntegrationContentRepositoryLinkURL).MapNullOrWhiteSpaceAsNone();
         LibraryURL = Maybe.From(content.IntegrationContentLibraryLinkURL).MapNullOrWhiteSpaceAsNone();
 
-        AuthorName = author
-            .Map(a => a.FullName)
-            .GetValueOrDefault(content.IntegrationContentAuthorName);
+        AuthorLink = GetMemberLink();
+        Business = Maybe.From(content.IntegrationContentAuthorName)
+            .MapNullOrWhiteSpaceAsNone()
+            .Map(name => new IntegrationBusiness(name, Maybe.From(content.IntegrationContentAuthorLinkURL).MapNullOrWhiteSpaceAsNone()));
 
         Type = content.IntegrationContentIntegrationType
             .TryFirst()
@@ -71,19 +72,29 @@ public class IntegrationItemViewModel
             .Map(t => new IntegrationTypeViewModel(t.Name, t.Title))
             .GetValueOrDefault(IntegrationTypeViewModel.Default);
 
-        AuthorURL = author
-            .Map(a => linkGenerator.GetPathByAction(nameof(MemberController.MemberDetail), "Member", new { memberID = a.Id }))
-            .Match(_ => _, () => Maybe.From(content.IntegrationContentAuthorLinkURL).MapNullOrWhiteSpaceAsNone());
-
         MetadataJSON = jsEncoder.EncodeToJson(new
         {
             title = Title.ToLowerInvariant(),
             description = ShortDescription.ToLowerInvariant(),
             type = Type.CodeName
         });
+
+        Maybe<IntegrationAuthorLink> GetMemberLink()
+        {
+            if (!member.TryGetValue(out var m))
+            {
+                return Maybe<IntegrationAuthorLink>.None;
+            }
+
+            string memberURL = linkGenerator.GetPathByAction(nameof(MemberController.MemberDetail), "Member", new { memberID = m.Id }) ?? "";
+
+            return new IntegrationAuthorLink(m.FullName, memberURL);
+        }
     }
 }
 
+public record IntegrationAuthorLink(string Label, string URL);
+public record IntegrationBusiness(string Label, Maybe<string> URL);
 public record IntegrationTypeViewModel(string CodeName, string Title)
 {
     public static IntegrationTypeViewModel Default { get; } = new("", "");

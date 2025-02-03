@@ -30,7 +30,7 @@ public class EmailMacroMethods : MacroMethodContainer
                 return ReplaceUtmParametersInternal(inputUrl, utmParameter, newUtmValue);
             default:
                 throw new NotSupportedException();
-        };
+        }
     }
 
     [MacroMethod(typeof(string), "Replaces utm parameters in the given URL's query string. Can accept 2 sets of UTM parameters with the second set overwriting values from the first.", 3)]
@@ -51,7 +51,7 @@ public class EmailMacroMethods : MacroMethodContainer
                 return ReplaceUtmParametersInternal(inputUrl, utmParameters1, utmParameters2);
             default:
                 throw new NotSupportedException();
-        };
+        }
     }
 
     private static string ReplaceUtmParametersInternal(string inputUrl, UTMParametersDataType parameters1, UTMParametersDataType parameters2)

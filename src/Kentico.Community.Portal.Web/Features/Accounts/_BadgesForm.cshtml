@@ -10,49 +10,55 @@
 }
 
 <form id="badgesUpdateForm" method="post" hx-post hx-controller="Account" hx-action="UpdateSelectedBadges"
-    hx-swap="outerHTML"
+    hx-swap="outerHTML" hx-disabled-elt="find fieldset"
     x-data="{ selectedCount: @JSEncoder.EncodeToJson(badges.Count(x => x.IsSelected)), maxBadges: @maxBadges }">
 
-    <h5>My badges</h5>
-    <div class="form-group">
-        <span class="d-inline-flex wrap gap-2 mt-1 flex-wrap">
-            @for (int i = 0; i < badges.Count; i++)
-            {
-                var badge = badges[i];
+    <fieldset hx-indicator="this">
+        <h5>My badges</h5>
+        <div class="form-group">
+            <span class="d-inline-flex wrap gap-2 mt-1 flex-wrap">
+                @for (int i = 0; i < badges.Count; i++)
+                {
+                    var badge = badges[i];
 
-                <button id="badgeButton_@i" type="button"
-                    class="badge text-bg-purple-300 d-flex align-items-center gap-1 fw-medium px-2 border-secondary @(badge.IsSelected ? "text-bg-purple-300 bg-purple-300" : "text-bg-white bg-white")"
-                    style="@(badge.IsSelected ? "" : "--bs-border-opacity: .5;")"
-                    x-data="{ selected: @JSEncoder.EncodeToJson(badge.IsSelected) }"
-                    :class="selected ? { 'text-bg-purple-300': true, 'bg-purple-300': true, 'text-bg-white': false, 'bg-white': false } : 'text-bg-white bg-white'"
-                    :style="selected ? '' : '--bs-border-opacity: .5;'"
-                    :title="selected ? 'This badge is selected' : 'This badge is not selected'"
-                    @@click="selected = !selected; selectedCount += selected ? 1 : -1">
+                    <button id="badgeButton_@i" type="button"
+                        class="badge text-bg-purple-300 d-flex align-items-center gap-1 fw-medium px-2 border-secondary @(badge.IsSelected ? "text-bg-purple-300 bg-purple-300" : "text-bg-white bg-white")"
+                        style="@(badge.IsSelected ? "" : "--bs-border-opacity: .5;")"
+                        x-data="{ selected: @JSEncoder.EncodeToJson(badge.IsSelected) }"
+                        :class="selected ? { 'text-bg-purple-300': true, 'bg-purple-300': true, 'text-bg-white': false, 'bg-white': false } : 'text-bg-white bg-white'"
+                        :style="selected ? '' : '--bs-border-opacity: .5;'"
+                        :title="selected ? 'This badge is selected' : 'This badge is not selected'"
+                        @@click="selected = !selected; selectedCount += selected ? 1 : -1">
 
-                    <img xpc-badge="@badge" />
+                        <img xpc-badge="@badge" />
 
-                    @badge.MemberBadgeDisplayName
-                    <input type="hidden" id="Badges_@(i)__BadgeId" name="Badges[@i].BadgeId" value="@badge.BadgeId" />
-                    <input type="hidden" x-model="selected" id="Badges_@(i)__IsSelected" name="Badges[@i].IsSelected"
-                        value="@badge.IsSelected" />
-                </button>
-            }
-        </span>
-        <span class="text-danger field-validation-error field-validation-valid" x-show="selectedCount > maxBadges"
-            x-cloak>
-            Too many badges selected
-        </span>
-    </div>
+                        @badge.MemberBadgeDisplayName
+                        <input type="hidden" id="Badges_@(i)__BadgeId" name="Badges[@i].BadgeId" value="@badge.BadgeId" />
+                        <input type="hidden" x-model="selected" id="Badges_@(i)__IsSelected" name="Badges[@i].IsSelected"
+                            value="@badge.IsSelected" />
+                    </button>
+                }
+            </span>
+            <span class="text-danger field-validation-error field-validation-valid" x-show="selectedCount > maxBadges"
+                x-cloak>
+                Too many badges selected
+            </span>
+        </div>
 
-    <p class="d-flex justify-content-between mt-3 align-items-center gap-3">
-        <button id="updateBadges" type="submit" class="btn btn-primary" :disabled="selectedCount > maxBadges">Update
-            badges</button>
+        <p class="d-flex justify-content-between mt-3 align-items-center gap-3">
+            <button id="updateBadges" type="submit" class="btn btn-primary" :disabled="selectedCount > maxBadges"
+                xpc-loading-button>
+                Update badges
+            </button>
 
-        <small>Select up to @maxBadges badges which will be shown next to your name in the portal.</small>
-    </p>
+            <small>Select up to @maxBadges badges which will be shown next to your name in the portal.</small>
+        </p>
+    </fieldset>
 
-    @if (Model.State == UpdateState.Updated)
+    @if (Context.Request.IsHtmx() && ViewContext.ModelState.IsValid)
     {
-        <vc:dismissable-alert message="Selected badges updated." />
+        <xpc-alert dismissable="true">
+            Selected badges updated.
+        </xpc-alert>
     }
 </form>

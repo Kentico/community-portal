@@ -113,6 +113,7 @@ public class QAndASearchIndexModel
 public class QAndASearchIndexingStrategy(
     IContentQueryExecutor executor,
     WebScraperHtmlSanitizer htmlSanitizer,
+    WebCrawlerService webCrawler,
     IInfoProvider<MemberInfo> memberProvider,
     IInfoProvider<QAndAAnswerDataInfo> answerProvider,
     IMediator mediator) : DefaultLuceneIndexingStrategy
@@ -121,6 +122,7 @@ public class QAndASearchIndexingStrategy(
 
     private readonly IContentQueryExecutor executor = executor;
     private readonly WebScraperHtmlSanitizer htmlSanitizer = htmlSanitizer;
+    private readonly WebCrawlerService webCrawler = webCrawler;
     private readonly IInfoProvider<MemberInfo> memberProvider = memberProvider;
     private readonly IInfoProvider<QAndAAnswerDataInfo> answerProvider = answerProvider;
     private readonly IMediator mediator = mediator;
@@ -153,7 +155,8 @@ public class QAndASearchIndexingStrategy(
         indexModel.AuthorMemberID = author.MemberID;
         indexModel.AuthorAttributes = author.AuthorAttributes;
 
-        indexModel.Content = htmlSanitizer.SanitizeHtmlDocument(page.QAndAQuestionPageContent);
+        string content = await webCrawler.CrawlWebPage(page);
+        indexModel.Content = htmlSanitizer.SanitizeHtmlDocument(content);
         indexModel.PublishedDate = page.QAndAQuestionPageDateCreated != default
             ? page.QAndAQuestionPageDateCreated
             : DateTime.MinValue;

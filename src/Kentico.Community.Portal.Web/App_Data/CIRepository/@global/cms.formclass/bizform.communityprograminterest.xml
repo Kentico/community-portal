@@ -27,6 +27,15 @@
           <componentidentifier>CommunityPortal.FormComponent.HiddenMemberID</componentidentifier>
         </settings>
       </field>
+      <field allowempty="true" column="MemberEmail" columnsize="500" columntype="text" enabled="true" guid="31865491-fd74-4c38-bcd5-9fc51ff6ce80" visible="true">
+        <properties>
+          <fieldcaption>Member Email</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberEmail</componentidentifier>
+        </settings>
+      </field>
       <field column="Program" columnsize="200" columntype="text" enabled="true" guid="63439fd5-26c3-4bc9-b191-fc5318d9d8f1" visible="true">
         <properties>
           <explanationtext>
@@ -109,6 +118,13 @@ CommunityLeader;Kentico Community Leaders
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MemberEmail" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

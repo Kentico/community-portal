@@ -50,5 +50,29 @@ namespace Kentico.Community.Portal.Core.Content
 		/// LinkContentShortDescription.
 		/// </summary>
 		public string LinkContentShortDescription { get; set; }
+
+
+		/// <summary>
+		/// LinkContentPublishedDate.
+		/// </summary>
+		public DateTime LinkContentPublishedDate { get; set; }
+
+
+		/// <summary>
+		/// LinkContentLinkType.
+		/// </summary>
+		public string LinkContentLinkType { get; set; }
+
+
+		/// <summary>
+		/// LinkContentDXTopics.
+		/// </summary>
+		public IEnumerable<TagReference> LinkContentDXTopics { get; set; }
+
+
+		/// <summary>
+		/// LinkContentMemberID.
+		/// </summary>
+		public int LinkContentMemberID { get; set; }
 	}
 }

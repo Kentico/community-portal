@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <cms.formclass>
   <ClassContactMapping>
-    <form />
+    <form>
+      <field column="ContactEmail" enabled="true" guid="6cd930d1-f709-4a02-aaf3-df3a8ebdb4de" mappedtofield="memberemail" visible="true" />
+      <field column="ContactLastFormSubmissionDate" enabled="true" guid="560afba1-cc94-4a37-a1f2-133293a836f0" mappedtofield="activitydate" visible="true" />
+    </form>
   </ClassContactMapping>
   <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
   <ClassDisplayName>MVP activity</ClassDisplayName>
@@ -25,6 +28,15 @@
         </properties>
         <settings>
           <componentidentifier>CommunityPortal.FormComponent.HiddenMemberID</componentidentifier>
+        </settings>
+      </field>
+      <field allowempty="true" column="MemberEmail" columnsize="500" columntype="text" enabled="true" guid="1f7df913-91c4-4a08-9a14-344926c9773d" visible="true">
+        <properties>
+          <fieldcaption>Member email</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberEmail</componentidentifier>
         </settings>
       </field>
       <field column="ActivityDate" columnprecision="7" columntype="datetime" enabled="true" guid="f73f126a-6ee9-4bc8-9966-2cd58b9aba32" visible="true">
@@ -251,6 +263,13 @@ Other
               </xs:element>
               <xs:element name="ActivityDate" type="xs:dateTime" />
               <xs:element name="MemberID" type="xs:int" minOccurs="0" />
+              <xs:element name="MemberEmail" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

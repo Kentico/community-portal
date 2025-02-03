@@ -172,13 +172,13 @@ public class PasswordRecoveryController(
 
             return PartialView("~/Features/PasswordRecovery/_SetNewPasswordForm.cshtml", model);
         }
+
         if (member.IsUnderModeration())
         {
             return View("~/Features/Registration/_ModerationStatus.cshtml");
         }
 
         var result = await userManager.ResetPasswordAsync(member, HttpUtility.UrlDecode(model.Token), model.Password);
-
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
@@ -189,9 +189,6 @@ public class PasswordRecoveryController(
             return PartialView("~/Features/PasswordRecovery/_SetNewPasswordForm.cshtml", model);
         }
 
-        return PartialView("~/Features/PasswordRecovery/_SetNewPasswordForm.cshtml", new SetNewPasswordViewModel
-        {
-            SubmissionState = State.Reset
-        });
+        return PartialView("~/Features/PasswordRecovery/_SetNewPasswordForm.cshtml", new SetNewPasswordViewModel());
     }
 }

@@ -37,10 +37,9 @@ public class AccountController(
     [HttpGet]
     public async Task<ActionResult> MyAccount()
     {
-        metaService.SetMeta(new("My Account", "Manage your Community Portal account."));
+        metaService.SetMeta(new("My Account", "Manage your member account."));
 
         var member = await userManager.GetUserAsync(User);
-
         if (member is null)
         {
             return Unauthorized();
@@ -66,10 +65,7 @@ public class AccountController(
             {
                 MemberID = member.Id
             },
-            BadgesForm = new()
-            {
-                Badges = await memberBadgeService.GetAllBadgesFor(member.Id)
-            }
+            BadgesForm = new(await memberBadgeService.GetAllBadgesFor(member.Id))
         };
 
         return View("~/Features/Accounts/MyAccount.cshtml", vm);
@@ -81,12 +77,10 @@ public class AccountController(
     {
         if (!ModelState.IsValid)
         {
-            model.State = UpdateState.Error;
             return PartialView("~/Features/Accounts/_ProfileForm.cshtml", model);
         }
 
         var member = await userManager.GetUserAsync(User);
-
         if (member is null)
         {
             return Unauthorized();
@@ -108,7 +102,6 @@ public class AccountController(
             FirstName = member.FirstName,
             LastName = member.LastName,
             LinkedInIdentifier = member.LinkedInIdentifier,
-            State = UpdateState.Updated,
         });
     }
 
@@ -118,19 +111,16 @@ public class AccountController(
     {
         if (!ModelState.IsValid)
         {
-            model.State = UpdateState.Error;
             return PartialView("~/Features/Accounts/_PasswordForm.cshtml", model);
         }
 
-        var user = await userManager.GetUserAsync(User);
-
-        if (user is null)
+        var member = await userManager.GetUserAsync(User);
+        if (member is null)
         {
             return Unauthorized();
         }
 
-        var result = await userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
-
+        var result = await userManager.ChangePasswordAsync(member, model.CurrentPassword, model.NewPassword);
         if (!result.Succeeded)
         {
             foreach (var error in result.Errors)
@@ -138,17 +128,13 @@ public class AccountController(
                 ModelState.AddModelError("", error.Description);
             }
 
-            model.State = UpdateState.Error;
             return PartialView("~/Features/Accounts/_PasswordForm.cshtml", model);
         }
 
         // Reauthenticate the user because the security stamp has changed
-        await signInManager.SignInAsync(user, isPersistent: false);
+        await signInManager.SignInAsync(member, isPersistent: false);
 
-        return PartialView("~/Features/Accounts/_PasswordForm.cshtml", new UpdatePasswordViewModel
-        {
-            State = UpdateState.Updated
-        });
+        return PartialView("~/Features/Accounts/_PasswordForm.cshtml", new UpdatePasswordViewModel());
     }
 
     [HttpPost]
@@ -156,7 +142,6 @@ public class AccountController(
     public async Task<ActionResult> UpdateAvatarImage(AvatarFormViewModel model)
     {
         var member = await userManager.GetUserAsync(User);
-
         if (member is null)
         {
             return Unauthorized();
@@ -187,7 +172,6 @@ public class AccountController(
             return PartialView("~/Features/Accounts/_AvatarForm.cshtml", model);
         }
 
-        model.State = UpdateState.Updated;
         return PartialView("~/Features/Accounts/_AvatarForm.cshtml", model);
     }
 
@@ -196,7 +180,6 @@ public class AccountController(
     public async Task<ActionResult> UpdateSelectedBadges(UpdateBadgesRequest request)
     {
         var member = await userManager.GetUserAsync(User);
-
         if (member is null)
         {
             return Unauthorized();
@@ -210,24 +193,15 @@ public class AccountController(
         await memberBadgeService.UpdateSelectedBadgesFor(request.Badges, member.Id);
         var badges = await memberBadgeService.GetAllBadgesFor(member.Id);
 
-        return PartialView("~/Features/Accounts/_BadgesForm.cshtml", new BadgesFormViewModel
-        {
-            Badges = badges,
-            State = UpdateState.Updated
-        });
+        return PartialView("~/Features/Accounts/_BadgesForm.cshtml", new BadgesFormViewModel(badges));
     }
 }
 
 public record UpdateBadgesRequest(List<SelectedBadgeViewModel> Badges);
 
-public class BadgesFormViewModel
+public record BadgesFormViewModel(IReadOnlyList<MemberBadgeViewModel> Badges)
 {
-    public const int MAX_SELECTED_BADGES = 4;
-
-    [BindNever]
-    public UpdateState State { get; set; } = UpdateState.Unmodified;
-
-    public IReadOnlyList<MemberBadgeViewModel> Badges { get; set; } = [];
+    public const int MAX_SELECTED_BADGES = 5;
 }
 
 public class SelectedBadgeViewModel
@@ -243,7 +217,7 @@ public class MyAccountViewModel : IPortalPage
     public string Email { get; set; } = "";
     public string ProfileLinkURL { get; set; } = "";
     public ProfileViewModel Profile { get; set; } = new();
-    public BadgesFormViewModel BadgesForm { get; set; } = new();
+    public BadgesFormViewModel BadgesForm { get; set; } = new([]);
     public DateTime DateCreated { get; set; }
     public UpdatePasswordViewModel PasswordInfo { get; set; } = new();
     public string Title => "My Account";
@@ -285,21 +259,10 @@ public class ProfileViewModel
     [MaxLength(40, ErrorMessage = "Employer website URL cannot be longer than 40 characters.")]
     [Url(ErrorMessage = "Must be a valid URL")]
     public string? EmployerWebsiteURL { get; set; } = "";
-
-    public UpdateState State { get; set; } = UpdateState.Unmodified;
-}
-
-public enum UpdateState
-{
-    Unmodified,
-    Error,
-    Updated
 }
 
 public class UpdatePasswordViewModel
 {
-    public UpdateState State { get; set; } = UpdateState.Unmodified;
-
     [DataType(DataType.Password)]
     [Required(ErrorMessage = "The current password cannot be empty.")]
     [DisplayName("Current Password")]
@@ -324,9 +287,6 @@ public class AvatarFormViewModel
     public const int MAX_FILE_SIZE = 102_400;
     public static string[] ALLOWED_EXTENSIONS { get; } = [".jpg", ".jpeg", ".png", ".webp"];
     public static string ALLOWED_EXTENSIONS_JOINED { get; } = string.Join(", ", ALLOWED_EXTENSIONS);
-
-    [BindNever]
-    public UpdateState State { get; set; } = UpdateState.Unmodified;
 
     [BindNever]
     public int MemberID { get; set; }

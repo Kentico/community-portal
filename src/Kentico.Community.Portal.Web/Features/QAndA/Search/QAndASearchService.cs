@@ -194,17 +194,26 @@ public class QAndASearchService(
         var queryBuilder = new QueryBuilder(analyzer);
         if (!string.IsNullOrWhiteSpace(searchText))
         {
-            var titleQuery = queryBuilder.CreatePhraseQuery(nameof(QAndASearchIndexModel.Title), searchText, PHRASE_SLOP);
+            var (slop, term) = searchText switch
+            {
+                ['"', .., '"'] => (0, searchText.Trim('"')),
+                _ => (PHRASE_SLOP, searchText)
+            };
+
+            var titleQuery = queryBuilder.CreatePhraseQuery(nameof(QAndASearchIndexModel.Title), term, slop);
             booleanQuery = AddToTermQuery(booleanQuery, titleQuery, 5);
 
-            var contentQuery = queryBuilder.CreatePhraseQuery(nameof(QAndASearchIndexModel.Content), searchText, PHRASE_SLOP);
+            var contentQuery = queryBuilder.CreatePhraseQuery(nameof(QAndASearchIndexModel.Content), term, slop);
             booleanQuery = AddToTermQuery(booleanQuery, contentQuery, 1);
 
-            var titleShould = queryBuilder.CreateBooleanQuery(nameof(QAndASearchIndexModel.Title), searchText, Occur.SHOULD);
-            booleanQuery = AddToTermQuery(booleanQuery, titleShould, 0.5f);
+            if (slop > 0)
+            {
+                var titleShould = queryBuilder.CreateBooleanQuery(nameof(QAndASearchIndexModel.Title), term, Occur.SHOULD);
+                booleanQuery = AddToTermQuery(booleanQuery, titleShould, 0.5f);
 
-            var contentShould = queryBuilder.CreateBooleanQuery(nameof(QAndASearchIndexModel.Content), searchText, Occur.SHOULD);
-            booleanQuery = AddToTermQuery(booleanQuery, contentShould, 0.1f);
+                var contentShould = queryBuilder.CreateBooleanQuery(nameof(QAndASearchIndexModel.Content), term, Occur.SHOULD);
+                booleanQuery = AddToTermQuery(booleanQuery, contentShould, 0.1f);
+            }
         }
 
         return booleanQuery;

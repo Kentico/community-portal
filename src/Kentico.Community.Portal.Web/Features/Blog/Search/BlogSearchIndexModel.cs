@@ -225,12 +225,8 @@ public partial class BlogSearchIndexingStrategy(
 
         string content = await webCrawler.CrawlWebPage(page);
         indexModel.Content = htmlSanitizer.SanitizeHtmlDocument(content);
-        indexModel.Title = string.IsNullOrWhiteSpace(blogPost.ListableItemTitle)
-            ? blogPost.ListableItemTitle
-            : blogPost.ListableItemTitle;
-        indexModel.ShortDescription = string.IsNullOrWhiteSpace(blogPost.ListableItemShortDescription)
-            ? blogPost.ListableItemShortDescription
-            : blogPost.ListableItemShortDescription;
+        indexModel.Title = blogPost.ListableItemTitle;
+        indexModel.ShortDescription = blogPost.ListableItemShortDescription;
         indexModel.PublishedDate = blogPost.BlogPostContentPublishedDate != default
             ? blogPost.BlogPostContentPublishedDate
             : DateTime.MinValue;

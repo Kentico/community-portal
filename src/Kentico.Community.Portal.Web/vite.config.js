@@ -86,6 +86,7 @@ export default defineConfig(async ({ mode }) => {
            */
           "Client/js/main.js",
           "Client/js/q-and-a.js",
+          "Client/js/search.js",
           "Client/js/recaptcha.js",
           "Client/styles/style.scss",
         ],

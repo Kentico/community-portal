@@ -24,17 +24,20 @@ public class DiscussionAuthorMemberBadgeAssignmentRule(IContentQueryExecutor con
                     .Columns(nameof(QAndAQuestionPage.QAndAQuestionPageAuthorMemberID)));
 
         var questions = await contentQueryExecutor.GetMappedResult<QAndAQuestionPage>(b, options: null, cancellationToken: cancellationToken);
+        var questionMemberIDs = questions
+            .Select(q => q.QAndAQuestionPageAuthorMemberID)
+            .Distinct();
 
         var results = new List<NewMemberBadgeRelationship>();
 
-        foreach (var question in questions.DistinctBy(q => q.QAndAQuestionPageAuthorMemberID))
+        foreach (int memberID in questionMemberIDs)
         {
-            if (memberBadgeRelationships.HasEntry(question.QAndAQuestionPageAuthorMemberID, memberBadge.MemberBadgeID))
+            if (memberBadgeRelationships.HasEntry(memberID, memberBadge.MemberBadgeID))
             {
                 continue;
             }
 
-            results.Add(new NewMemberBadgeRelationship(question.QAndAQuestionPageAuthorMemberID, memberBadge.MemberBadgeID));
+            results.Add(new NewMemberBadgeRelationship(memberID, memberBadge.MemberBadgeID));
         }
 
         return results;

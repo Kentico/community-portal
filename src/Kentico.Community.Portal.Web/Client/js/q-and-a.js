@@ -131,30 +131,8 @@ export async function initQAndA({ editorElemID, formType = "" }) {
    */
   function cleanupCrepe(customEvent) {
     return async (event) => {
-      if (event instanceof SubmitEvent) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      if (
-        !(event.target instanceof HTMLButtonElement) &&
-        !(event.target instanceof HTMLFormElement) &&
-        !(event.target instanceof HTMLInputElement)
-      ) {
-        return;
-      }
-
-      /** Code language bug: https://github.com/Milkdown/milkdown/issues/1521 */
-      if (event.target.classList.contains("language-button")) {
-        return;
-      }
-      if (
-        event instanceof SubmitEvent &&
-        event.submitter instanceof HTMLButtonElement &&
-        (event.submitter.classList.contains("language-button") ||
-          event.submitter.classList.contains("toolbar-item"))
-      ) {
-        return;
-      }
+      event.preventDefault();
+      event.stopPropagation();
 
       if (crepeEditor) {
         await crepeEditor.destroy();

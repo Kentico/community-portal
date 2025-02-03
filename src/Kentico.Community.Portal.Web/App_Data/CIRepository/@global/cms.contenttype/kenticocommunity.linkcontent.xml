@@ -41,6 +41,71 @@
           <MinRowsNumber>3</MinRowsNumber>
         </settings>
       </field>
+      <field column="LinkContentPublishedDate" columnprecision="0" columntype="date" enabled="true" guid="8d28ce86-b292-4058-8234-276ea3162e64" visible="true">
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Published</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DateInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="LinkContentLinkType" columnprecision="0" columnsize="30" columntype="text" enabled="true" guid="fa27bee9-a069-4d86-85c0-8478d5cdd40c" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Type</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+CommunityContribution;Community contribution
+PortalResource;Community Portal resource
+IndustryResource;Industry resource
+]]>
+          </Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
+      </field>
+      <field allowempty="true" column="LinkContentDXTopics" columnprecision="0" columntype="taxonomy" enabled="true" guid="6e9163a8-d817-4112-aa83-35d327bf9d7d" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>DX Topics</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TagSelector</controlname>
+          <MaxSelectedTagsCount>4</MaxSelectedTagsCount>
+          <MinSelectedTagsCount>1</MinSelectedTagsCount>
+          <TaxonomyGroup>
+            <![CDATA[["72f39193-9dee-45df-9138-730ed4445858"]]]>
+          </TaxonomyGroup>
+        </settings>
+      </field>
+      <field allowempty="true" column="LinkContentMemberID" columnprecision="0" columntype="integer" enabled="true" guid="93ae11ba-ebbc-4d0d-aff2-47f97e126fec" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Member</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>CMS.Member</ObjectType>
+        </settings>
+        <visibilityconditiondata>
+          <VisibilityConditionConfiguration>
+            <Identifier>Kentico.Administration.IsEqualToString</Identifier>
+            <Properties>
+              <PropertyName>LinkContentLinkType</PropertyName>
+              <Value>CommunityContribution</Value>
+              <CaseSensitive>true</CaseSensitive>
+            </Properties>
+          </VisibilityConditionConfiguration>
+        </visibilityconditiondata>
+      </field>
     </form>
   </ClassFormDefinition>
   <ClassGUID>05bcb412-2000-455b-95fd-74dad14fbdae</ClassGUID>

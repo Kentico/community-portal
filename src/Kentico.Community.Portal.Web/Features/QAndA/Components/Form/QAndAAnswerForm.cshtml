@@ -2,93 +2,102 @@
 
 @{
     int id = Model.EditedObjectID ?? 0;
-    var formId = $"answerForm_{id}";
-    var rootElId = $"answerFormRoot_{id}";
-    var editorID = $"milkdown_{id}";
-    var editorFieldID = $"{editorID}_field";
+    string rootElId = $"answerFormRoot_{id}";
+    string rootElSelector = $"#{rootElId}";
+    string editorID = $"milkdown_{id}";
+    string editorFieldID = $"{editorID}_field";
     string action = Model.EditedObjectID is null ? "CreateAnswer" : "UpdateAnswer";
     string qAndAAssetPath = ClientAssets.ViteAssetPath("js/q-and-a.js");
 }
 
-<div id="@rootElId">
-    @if (User.Identity?.IsAuthenticated == true)
-    {
-        <form id="@formId" method="post" hx-post hx-controller="QAndAAnswer" hx-action="@action" hx-swap="outerHTML"
-            hx-target="#@rootElId" hx-trigger="submitReady" class="d-flex flex-column">
-            <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
+@if (!(User.Identity?.IsAuthenticated ?? false))
+{
+    @Unauthenticated()
 
-            <div class="mt-6">
-                @Model.FormHelpMessageHTML
-            </div>
+    return;
+}
 
-            <label for="@editorFieldID" class="form-label"><span class="text-secondary fw-bold">@User.Identity.Name</span>
-                would answer</label>
-            <div id="@editorID" class="border border-1 border-dark-subtle rounded-2 milkdown-container">
-                <textarea id="@editorFieldID" class="form-control d-none field-sizing-content h-100 border-0"
-                    asp-for="@Model.Content" name="Content" placeholder="Your full question description goes here"
-                    value="@Model.Content"></textarea>
-            </div>
+<form id="@rootElId" method="post" hx-post hx-controller="QAndAAnswer" hx-action="@action" hx-swap="outerHTML"
+    hx-trigger="submitReady" hx-disabled-elt="find fieldset" class="d-flex flex-column">
+    <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
 
-            <div class="form-check form-switch align-self-end" x-data="{ mode: 'editor' }">
-                <input class="form-check-input" type="checkbox" role="switch" id="viewMarkdown" @@change="toggleEditor">
-                <label class="form-check-label" for="viewMarkdown">View markdown</label>
-            </div>
+    <div class="mt-6">
+        @Model.FormHelpMessageHTML
+    </div>
 
-            <div class="d-grid">
-                <input asp-for="EditedObjectID">
-                <input asp-for="ParentQuestionID">
-                <button type="submit" class="btn btn-primary btn-lighter px-5 mt-4">
-                    @if (Model.EditedObjectID is int)
-                    {
-                        <text>Update your answer</text>
-                    }
-                    else
-                    {
-                        <text>Submit your answer</text>
-                    }
-                </button>
+    <fieldset hx-indicator="this">
+        <label for="@editorFieldID" class="form-label"><span class="text-secondary fw-bold">@User.Identity.Name</span>
+            would answer</label>
+        <div id="@editorID" class="border border-1 border-dark-subtle rounded-2 milkdown-container">
+            <textarea id="@editorFieldID" class="form-control d-none field-sizing-content h-100 border-0"
+                asp-for="@Model.Content" name="Content" placeholder="Your full question description goes here"
+                value="@Model.Content"></textarea>
+        </div>
 
-                @if (Model.EditedObjectID is int answerID)
+        <div class="form-check form-switch align-self-end" x-data="{ mode: 'editor' }">
+            <input class="form-check-input" type="checkbox" role="switch" id="viewMarkdown" @@change="toggleEditor">
+            <label class="form-check-label" for="viewMarkdown">View markdown</label>
+        </div>
+
+        <div class="d-grid">
+            <input asp-for="EditedObjectID">
+            <input asp-for="ParentQuestionID">
+            <button type="submit" class="btn btn-primary btn-lighter px-5 mt-4" xpc-loading-button>
+                @if (Model.EditedObjectID is int)
                 {
-                    <button hx-get hx-controller="QAndAQuestionPage" hx-action="DisplayAnswerDetail"
-                        hx-route-questionID="@Model.ParentQuestionID" hx-route-answerID="@answerID" hx-swap="outerHTML"
-                        type="button" hx-trigger="cancelReady" hx-target="#@rootElId" class="btn btn-outline-warning px-5 mt-4"
-                        cancel-button>
-                        Cancel
-                    </button>
+                    <text>Update your answer</text>
                 }
                 else
                 {
-                    <button hx-get hx-controller="QAndAQuestionPage" hx-action="DisplayAnswerButton" hx-trigger="cancelReady"
-                        type="button" hx-route-questionID="@Model.ParentQuestionID" hx-swap="outerHTML" hx-target="#@rootElId"
-                        class="btn btn-outline-warning px-5 mt-4" cancel-button>
-                        Cancel
-                    </button>
+                    <text>Submit your answer</text>
                 }
-            </div>
-        </form>
+            </button>
 
-        <script type="module">
-            asyncReady(async () => {
-                const path = @JSEncoder.EncodeToJson(qAndAAssetPath);
-                const qanda = await import(path);
+            @if (Model.EditedObjectID is int answerID)
+            {
+                <button hx-get hx-controller="QAndAQuestionPage" hx-action="DisplayAnswerDetail"
+                    hx-route-questionID="@Model.ParentQuestionID" hx-route-answerID="@answerID" hx-swap="outerHTML"
+                    type="button" hx-trigger="cancelReady" hx-target="@rootElSelector" hx-disabled-elt="closest fieldset"
+                    class="btn btn-outline-warning px-5 mt-4" cancel-button>
+                    Cancel
+                </button>
+            }
+            else
+            {
+                <button hx-get hx-controller="QAndAQuestionPage" hx-action="DisplayAnswerButton" hx-trigger="cancelReady"
+                    type="button" hx-route-questionID="@Model.ParentQuestionID" hx-swap="outerHTML"
+                    hx-disabled-elt="closest fieldset" hx-target="@rootElSelector" class="btn btn-outline-warning px-5 mt-4"
+                    cancel-button>
+                    Cancel
+                </button>
+            }
+        </div>
+    </fieldset>
 
-                qanda.initQAndA({
-                    editorElemID: '@editorID',
-                    formType: 'Answer'
-                });
+    <script type="module">
+        asyncReady(async () => {
+            const path = @JSEncoder.EncodeToJson(qAndAAssetPath);
+            const qanda = await import(path);
+
+            qanda.initQAndA({
+                editorElemID: '@editorID',
+                formType: 'Answer'
             });
-        </script>
-    }
-    else
+        });
+    </script>
+</form>
+
+@{
+    async Task Unauthenticated()
     {
         <div class="mt-6">
             <h2 class="text-center k-dot">Please login</h2>
             <p class="text-center mt-3">
                 To post new answer, you have to
-                <a asp-controller="Authentication" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">login
-                    first</a>.
+                <a asp-controller="Authentication" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">
+                    login first
+                </a>.
             </p>
         </div>
     }
-</div>
+}

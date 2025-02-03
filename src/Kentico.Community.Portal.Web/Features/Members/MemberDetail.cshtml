@@ -99,7 +99,61 @@
         <div class="container">
             <div class="row mt-5">
                 <div class="col-md-6">
-                    <h3>Blog Posts</h3>
+                    <h3>Community contributions</h3>
+                    <div class="mb-3">
+                        <small>Content about Kentico or digital marketing outside the Kentico Community Portal from this
+                            member.</small>
+                    </div>
+                    @if (Model.Contributions.Count == 0)
+                    {
+                        <p>This member has not shared any <a href="/blog">contributions</a>.</p>
+                    }
+
+                    @foreach (var link in Model.Contributions)
+                    {
+                        <div class="c-card article nopic mt-3">
+                            <div class="c-card_inner d-grid">
+                                <div class="c-card_title d-flex justify-content-between">
+                                    <h4>
+                                        <a class="slash" href="@link.Path">@link.Label</a>
+                                    </h4>
+                                    <small class="me-1">@link.Date.ToString("d", View.Culture)</small>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-6">
+                    <h3>Integrations</h3>
+                    <div class="mb-3">
+                        <small>Open-source Xperience by Kentico integration libraries authored by this member.</small>
+                    </div>
+                    @if (Model.Integrations.Count == 0)
+                    {
+                        <p>This member has not authored any <a href="/blog">integrations</a>.</p>
+                    }
+
+                    @foreach (var link in Model.Integrations)
+                    {
+                        <div class="c-card article nopic mt-3">
+                            <div class="c-card_inner d-grid">
+                                <div class="c-card_title d-flex justify-content-between">
+                                    <h4>
+                                        <a class="slash" href="@link.Path">@link.Label</a>
+                                    </h4>
+                                    <small class="me-1">@link.Date.ToString("d", View.Culture)</small>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <h3>Community blog posts</h3>
+                    <div class="mb-3">
+                        <small>Blog posts on the Kentico Community Portal authored by this member.</small>
+                    </div>
                     @if (Model.BlogPostLinks.Count == 0)
                     {
                         <p>This member has not authored any <a href="/blog">blog posts</a>.</p>
@@ -109,15 +163,11 @@
                     {
                         <div class="c-card article nopic mt-3">
                             <div class="c-card_inner d-grid">
-                                <div class="c-card_title">
+                                <div class="c-card_title d-flex justify-content-between">
                                     <h4>
                                         <a class="slash" href="@link.Path">@link.Title</a>
                                     </h4>
-                                </div>
-                                <div class="c-card_footer">
-                                    <small class="me-1">
-                                        Written on @link.PublishedDate.ToString("d", View.Culture)
-                                    </small>
+                                    <small class="me-1">@link.PublishedDate.ToString("d", View.Culture)</small>
                                 </div>
                                 <div class="c-card_tags">
                                     <div class="c-group tags">
@@ -130,23 +180,24 @@
                 </div>
 
                 <div class="col-md-6">
-                    <h3>Q&A Questions</h3>
+                    <h3>Q&A discussions</h3>
+                    <div class="mb-3">
+                        <small>Q&A discussions started by this member.</small>
+                    </div>
 
                     @if (Model.QuestionsAsked.Count == 0)
                     {
-                        <p>This member has not asked any <a href="/q-and-a">questions</a>.</p>
+                        <p>This member has not started any <a href="/q-and-a">discussions</a>.</p>
                     }
                     @foreach (var link in Model.QuestionsAsked)
                     {
                         <div class="c-card article nopic mt-3">
-                            <div class="c-card_inner d-grid">
-                                <div class="c-card_title">
+                            <div class="c-card_inner">
+                                <div class="c-card_title d-flex justify-content-between">
                                     <h4>
                                         <a class="slash" href="@link.Path">@link.Label</a>
                                     </h4>
-                                </div>
-                                <div class="c-card_footer">
-                                    <small class="me-1">Written on @link.Date.ToString("d", View.Culture)</small>
+                                    <small class="me-1">@link.Date.ToString("d", View.Culture)</small>
                                 </div>
                             </div>
                         </div>

@@ -124,6 +124,12 @@ public static class ServiceCollectionAppExtensions
             .AddTransient<IMemberBadgeAssignmentRule, DiscussionAcceptedAnswerAuthorMemberBadgeAssignmentRule>()
             .AddTransient<IMemberBadgeAssignmentRule, KenticoEmployeeMemberBadgeAssignmentRule>()
             .AddTransient<IMemberBadgeAssignmentRule, IntegrationAuthorMemberBadgeAssignmentRule>()
+            .AddTransient<IMemberBadgeAssignmentRule, MemberProfileLevel1BadgeAssignmentRule>()
+            .AddTransient<IMemberBadgeAssignmentRule, CommunityContentContributorMemberBadgeAssignmentRule>()
+            .AddTransient<IMemberBadgeAssignmentRule, MemberProfileLevel1BadgeAssignmentRule>()
+            .AddTransient<IMemberBadgeAssignmentRule, MemberAnniversary1YearMemberBadgeAssignmentRule>()
+            .AddTransient<IMemberBadgeAssignmentRule, MemberAnniversary2YearMemberBadgeAssignmentRule>()
+            .AddTransient<IMemberBadgeAssignmentRule, MemberAnniversary3YearMemberBadgeAssignmentRule>()
             .AddHostedService<MemberBadgeAssignmentApplicationBackgroundService>();
 
     private static IServiceCollection AddClosedGenericTypes(

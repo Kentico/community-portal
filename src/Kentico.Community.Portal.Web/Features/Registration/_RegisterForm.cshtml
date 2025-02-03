@@ -1,9 +1,18 @@
 @model Kentico.Community.Portal.Web.Features.Registration.RegisterViewModel
 
+@if (Context.Request.IsHtmx() && ViewContext.ModelState.IsValid)
+{
+    <partial name="~/Features/Registration/_VerifyEmail.cshtml" />
+
+    return;
+}
+
+
 <form id="registerForm" method="post" hx-swap="outerHTML" hx-post hx-controller="Registration" hx-action="Register"
-    test-id="register" hx-trigger="captchaReady">
-    <div class="form-horizontal">
+    hx-trigger="captchaReady" hx-disabled-elt="find fieldset" test-id="register">
+    <fieldset hx-indicator="this">
         <div asp-validation-summary="ModelOnly" class="text-danger field-validation-error"></div>
+
         <div class="form-group">
             <div class="editing-form-label-cell">
                 <label asp-for="UserName" class="control-label form-label mt-3"></label>
@@ -45,7 +54,6 @@
         </div>
 
         <div class="form-group mt-3">
-
             <div class="editing-form-value-cell">
                 <input class="form-check-input" asp-for="ConsentAgreement" test-id="consentAgreement">
                 <label class="form-check-label" asp-for="ConsentAgreement">
@@ -56,16 +64,18 @@
         </div>
 
         <input asp-for="CaptchaToken">
-        <button id="register" type="submit" class="btn btn-primary mt-3">@HtmlLocalizer["Register"]</button>
-    </div>
-</form>
+        <button id="register" type="submit" class="btn btn-primary mt-3" xpc-loading-button>
+            Register
+        </button>
+    </fieldset>
 
-<script type="module">
-    asyncReady(async () => {
-        const recaptcha = await import('@ClientAssets.ViteAssetPath("js/recaptcha.js")');
+    <script type="module">
+        asyncReady(async () => {
+            const recaptcha = await import('@ClientAssets.ViteAssetPath("js/recaptcha.js")');
 
-        recaptcha.initCaptcha({
-            formElemID: 'registerForm'
+            recaptcha.initCaptcha({
+                formElemID: 'registerForm'
+            });
         });
-    });
-</script>
+    </script>
+</form>

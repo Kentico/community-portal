@@ -28,6 +28,6 @@ public static class SystemEmails
 
 public interface ISystemEmailConfiguration
 {
-    Guid EmailConfigurationGUID { get; }
-    string EmailConfigurationName { get; }
+    public Guid EmailConfigurationGUID { get; }
+    public string EmailConfigurationName { get; }
 }

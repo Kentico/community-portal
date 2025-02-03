@@ -51,15 +51,13 @@ public class ContactDetailsCardWidget(IMediator mediator) : ViewComponent
 
 public class ContactDetailsCardWidgetProperties : BaseWidgetProperties
 {
-    /// <summary>
-    /// Button text.
-    /// </summary>
     [ContentItemSelectorComponent(
         contentTypeName: ContactDetailsContent.CONTENT_TYPE_NAME,
         Label = "Contact Details",
         AllowContentItemCreation = true,
+        MinimumItems = 1,
+        MaximumItems = 1,
         DefaultViewMode = ContentItemSelectorViewMode.List,
-        ExplanationText = "Only the first selected item will be used.",
         Order = 1)]
     public IEnumerable<ContentItemReference> ContactDetails { get; set; } = [];
 }

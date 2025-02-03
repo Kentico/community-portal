@@ -184,5 +184,4 @@ public static class CookieNames
 
     // Essential cookies
     public const string COOKIE_ACCEPTANCE = "kenticocommunityportal.cookielevelselection";
-    public const string ALERTBOX_CLOSED = "kenticocommunityportal.alertboxclosed";
 }

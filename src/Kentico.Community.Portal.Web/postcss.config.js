@@ -7,7 +7,7 @@ const config = ({ env }) => ({
     // https://purgecss.com/configuration.html
     env === "production" &&
       purgeCSSPlugin({
-        content: ["./**/*.cshtml"],
+        content: ["./**/*.cshtml", "./**/TagHelpers/*.cs"],
 
         safelist: {
           standard: [
@@ -22,6 +22,8 @@ const config = ({ env }) => ({
             "figure",
             // For custom 404 content
             "error-hero",
+            // HTMX dynamic classes
+            "htmx-request",
             // Member badges tag helper
             "c-tag_badge",
             "rounded-circle",

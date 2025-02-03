@@ -1,0 +1,49 @@
+@using Kentico.Community.Portal.Web.Features.Community
+
+@model TemplateViewModel<CommunityLinksPageTemplateProperties>
+
+@{
+    var templateModel = Model.GetTemplateModel<CommunityLinksPageViewModel>();
+}
+
+<vc:page-heading page="templateModel.Page" />
+
+<main>
+    <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"
+        widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
+
+    <div class="c-section pb-7">
+        <div class="container">
+            <div class="row gx-lg-6 gx-xxl-7 mt-sm-n2 mt-lg-n4">
+                @foreach (var link in templateModel.Links)
+                {
+                    <div class="col-sm-6 col-lg-4 mt-3 mt-sm-5 mt-lg-6">
+                        <div class="c-card widget default-border ">
+                            <div class="c-card_inner">
+                                <h4 class="h4 mt-2 pt-1">
+                                    <a href="@link.Content.LinkContentPathOrURL">
+                                        @link.Content.LinkContentLabel
+                                    </a>
+                                </h4>
+                                <div class="d-flex justify-content-between">
+                                    <small>@link.Content.LinkContentPublishedDate.ToString("d", View.Culture)</small>
+                                    @if (link.Member.TryGetValue(out var member))
+                                    {
+                                        <small>by
+                                            <a asp-controller="Member" asp-action="MemberDetail"
+                                                asp-route-memberID="@member.Id">@member.FullName</a>
+                                        </small>
+                                    }
+                                </div>
+
+                                <p class="mt-2">
+                                    @link.Content.LinkContentShortDescription
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>

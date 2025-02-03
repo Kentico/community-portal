@@ -1,0 +1,72 @@
+@using EnumsNET
+@using Kentico.Community.Portal.Web.Features.QAndA.Search
+
+@model QAndASearchViewModel
+
+@foreach (var question in Model.Questions)
+{
+    <div class="c-card question default-border overflow-y-auto d-grid @(question.HasAcceptedResponse ? "success" : "")">
+        <div class="c-card_content">
+            @if (question.HasAcceptedResponse)
+            {
+                <div class="fs-sm-4 text-success mb-1">
+                    <svg class="c-icon mt-1 me-2 ">
+                        <use xlink:href="/img/icons.svg#check" asp-append-version></use>
+                    </svg><small><b>Has Accepted Response</b></small>
+                </div>
+            }
+            <div class="c-card_title">
+                <h3 class="h3 mb-1">
+                    <a href="@question.LinkPath" rel="nofollow">@question.Title</a>
+                </h3>
+            </div>
+
+            <div class="mb-2 d-none d-sm-block">
+                <vc:author author="question.Author" />
+                <small>Discussion created<br> @question.DateCreated.ToString("d", View.Culture)
+                    @question.DateCreated.ToString("t")<br></small>
+            </div>
+        </div>
+        <div class="c-card_footer">
+            <div class="mb-2 d-sm-none">
+                <vc:author author="question.Author" />
+                <small>Discussion created<br> @question.DateCreated.ToString("d", View.Culture)
+                    @question.DateCreated.ToString("t")<br></small>
+            </div>
+            <div class="text-end text-sm-center">
+                <span class="fs-4 fs-sm-1 text-secondary fw-bold lh-sm">@question.ResponseCount</span>
+                <br class="d-none d-sm-block">
+                <span class="fs-4 fs-sm-6">
+                    @{
+                        string text = question.ResponseCount switch
+                        {
+                            0 or > 1 => "Responses",
+                            1 => "Response",
+                            _ => ""
+                        };
+                        <text>@text</text>
+                    }
+                </span>
+
+                @if (question.ResponseCount > 0)
+                {
+                    <div>
+                        <small>Latest response
+                            <br>@question.LatestResponseDate.ToString("d", View.Culture)
+                            @question.LatestResponseDate.ToString("t")
+                        </small>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.Questions.Count == 0 && Model.TotalPages == 0)
+{
+    <div>
+        <p>No results could be found.</p>
+    </div>
+}
+
+<vc:pagination model="Model" />

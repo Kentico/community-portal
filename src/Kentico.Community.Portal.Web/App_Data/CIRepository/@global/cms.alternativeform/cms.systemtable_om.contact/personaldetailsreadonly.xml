@@ -169,6 +169,17 @@
       <field column="ContactSalesForceLeadReplicationSuspensionDateTime" guid="d4655c8b-f017-45d4-863d-5f9283acd11d" order="32" />
       <field column="ContactSalesForceLeadReplicationRequired" guid="ed635ea1-58a9-40af-8429-501b10fe6f71" order="33" />
       <field column="ContactGender" guid="6eb0cdc8-d4f1-433c-a39d-9fef3487d29e" order="34" />
+      <field column="ContactLastFormSubmissionDate" guid="07feb536-fd59-43f8-8c4b-66c47bb5ed08" visible="true" enabled="" order="35">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY hh:mm AM/PM</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Last form submission</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
     </form>
   </FormDefinition>
   <FormDisplayName>Personal details - read only</FormDisplayName>

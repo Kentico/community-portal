@@ -1,0 +1,63 @@
+@using Kentico.Community.Portal.Web.Features.Blog.Search
+
+@model BlogSearchViewModel
+
+@foreach (var post in Model.BlogPosts)
+{
+    <div class="c-card article nopic">
+        <div class="c-card_inner d-grid">
+            <div class="c-card_title d-flex justify-content-between">
+                <div>
+                    <h3 class="me-2">
+                        <a class="slash" href="@post.LinkPath">@post.Title</a>
+                    </h3>
+                    <small class="me-1">@post.Date.ToString("d", View.Culture)</small>
+                </div>
+                <div class="c-card_tags p-0">
+                    <div class="c-group tags justify-content-end">
+                        <span class="c-tag secondary" title="Blog type - @post.BlogType">@post.BlogType</span>
+                    </div>
+                </div>
+            </div>
+            <div class="c-card_footer d-flex flex-sm-column align-items-end">
+                @if (post.Author.ID > 0)
+                {
+                    <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
+                        class="c-tag secondary invert user">
+                        <img xpc-image="post.Author.Photo" style="max-width: 24px" class="c-tag_icon me-1" />
+                        <span>@post.Author.Name</span>
+                    </a>
+                }
+                else
+                {
+                    <div>
+                        <img xpc-image="post.Author.Photo" style="max-width: 24px" class="c-tag_icon me-1" />
+                        <span>@post.Author.Name</span>
+                    </div>
+                }
+            </div>
+            <div class="c-card_content">
+                <p>@post.ShortDescription</p>
+            </div>
+
+            <div class="c-card_tags d-flex align-items-end">
+                <div class="c-group tags">
+                    @foreach (string topic in post.DXTopics)
+                    {
+                        <span class="c-tag secondary invert" title="Topic - @topic">@topic</span>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+@if (Model.BlogPosts.Count == 0 && Model.TotalPages == 0)
+{
+    <div>
+        <p>No results could be found.</p>
+    </div>
+}
+
+<vc:pagination model="Model" />

@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <cms.formclass>
   <ClassContactMapping>
-    <form />
+    <form>
+      <field column="ContactEmail" enabled="true" guid="2a03704d-6915-4512-8a2e-3d8eadefc33d" mappedtofield="memberemail" visible="true" />
+      <field column="ContactLastFormSubmissionDate" enabled="true" guid="88b0ce1d-bc64-4f5a-9692-a7986452dde2" mappedtofield="activitydate" visible="true" />
+    </form>
   </ClassContactMapping>
   <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
   <ClassDisplayName>Community Leaders activity</ClassDisplayName>
@@ -21,6 +24,24 @@
       <field allowempty="true" column="MemberID" columntype="integer" enabled="true" guid="65ac9875-f0f6-4bfa-9f91-9e0590010565" visible="true">
         <properties>
           <fieldcaption>Member ID</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberID</componentidentifier>
+        </settings>
+      </field>
+      <field allowempty="true" column="MemberEmail" columnsize="500" columntype="text" enabled="true" guid="881ac458-ef09-4941-b628-4e18be120ada" visible="true">
+        <properties>
+          <fieldcaption>Member Email</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberEmail</componentidentifier>
+        </settings>
+      </field>
+      <field allowempty="true" column="HiddenMemberID" columntype="integer" enabled="true" guid="ad921e61-deff-44b0-a235-a389dc0b9deb" visible="true">
+        <properties>
+          <fieldcaption>Hidden member ID</fieldcaption>
           <smart>False</smart>
         </properties>
         <settings>
@@ -227,6 +248,14 @@ Other
                 </xs:simpleType>
               </xs:element>
               <xs:element name="MemberID" type="xs:int" minOccurs="0" />
+              <xs:element name="HiddenMemberID" type="xs:int" minOccurs="0" />
+              <xs:element name="MemberEmail" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

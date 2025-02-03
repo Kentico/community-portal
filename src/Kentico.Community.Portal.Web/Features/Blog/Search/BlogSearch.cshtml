@@ -2,168 +2,35 @@
 
 @model BlogSearchViewModel
 
+@{
+    string formID = "blogSearchForm";
+}
+
 <div class="c-section">
     <div class="container">
 
-        <form method="get" id="blogSearchForm" class="grid">
-            <div class="category-filters d-none d-lg-block g-col-3">
+        <form id="@formID" method="get" hx-get="/blog" hx-swap="outerHTML" hx-select="#@formID" hx-push-url="true"
+            hx-trigger="change from:input[type='checkbox'], change from:select, submit">
+            <fieldset class="grid">
+                <partial name="~/Features/Blog/Search/_Filters.cshtml" model="Model" />
 
-                <div class="mb-5">
-                    <h4>Type @(Model.BlogTypesSelected > 0 ? $"({Model.BlogTypesSelected})": "")</h4>
-                    @foreach (var blogType in Model.BlogTypes)
-                    {
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="blogTypes" value="@blogType.Value" id="Type-@blogType.Value"
-                                facet-field @(blogType.Count == 0 ? "disabled" : "") @(blogType.IsSelected ? "checked" : "")>
-                            <label class="form-check-label" for="Type-@blogType.Value">@blogType.Label (@blogType.Count)</label>
-                        </div>
-                    }
+                <div class="g-col-12 g-col-lg-9 d-flex gap-3 flex-column">
+                    <partial name="~/Features/Blog/Search/_FiltersMobile.cshtml" model="Model" />
+
+                    <partial name="~/Features/Blog/Search/_Results.cshtml" model="Model" />
                 </div>
+            </fieldset>
 
-                <div class="mb-5">
-                    <h4>Topic @(Model.DXTopicsSelected > 0 ? $"({Model.DXTopicsSelected})": "")</h4>
-                        @foreach (var topic in Model.DXTopics)
-                        {
-                            <div class="mb-2">
-                                <h5>@topic.Label @(topic.Count > 0 ? $"({topic.Count})": "")</h5>
-                                <div class="p-2">
-                                    @foreach (var child in topic.Facets)
-                                    {
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="dxTopics" value="@child.Value" id="Topic-@child.Value"
-                                                facet-field @(child.Count == 0 ? "disabled" : "") @(child.IsSelected ? "checked" : "")>
-                                            <label class="form-check-label" for="Topic-@child.Value">@child.Label (@child.Count)</label>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        }
-                </div>
-            </div>
+            <script type="module">
+                asyncReady(async () => {
+                    const path = @JSEncoder.EncodeToJson(ClientAssets.ViteAssetPath("js/search.js"));
+                    const search = await import(path);
 
-            <div class="g-col-12 g-col-lg-9 d-flex gap-3 flex-column">
-                <div class="d-flex justify-content-md-end justify-content-center align-items-center gap-3 flex-wrap flex-lg-nowrap">
-                    <div class="input-group">
-                        <input asp-for="@Model.Query" type="text" class="form-control search rounded-pill"
-                            placeholder="Search by tag, name or phrase" aria-label="Search"
-                            aria-describedby="submitSearch">
-                        <button class="btn btn-primary focus-ring text-uppercase" type="submit"
-                            id="submitSearch">Search</button>
-                    </div>
-                    <div class="justify-content-between d-flex gap-3 flex-grow-1">
-                        <button class="btn btn-white align-self-center d-lg-none text-primary text-uppercase" 
-                            type="button" 
-                            data-bs-toggle="collapse" 
-                            data-bs-target="#categoryFilters" 
-                            aria-expanded="true" 
-                            aria-controls="categoryFilters">
-                            Select filters @(Model.TotalAppliedFilters > 0 ? $"({Model.TotalAppliedFilters})" : "")
-                        </button>
-                        <div>
-                            <label asp-for="@Model.SortBy" class="form-label text-nowrap mb-0">Sort by</label>
-                            <select asp-for="@Model.SortBy" class="form-select form-select-sm w-auto" search-sort-by>
-                                <option value="relevance">Relevance</option>
-                                <option value="publishdate">Date Published</option>
-                            </select>
-                            <input asp-for="@Model.Page" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="category-filters d-lg-none collapse" id="categoryFilters">
-
-                    <div class="mb-5">
-                        <h4>Type</h4>
-                        @foreach (var blogType in Model.BlogTypes)
-                        {
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="blogTypes" value="@blogType.Value" id="TypeM-@blogType.Value"
-                                    facet-field facet-mobile @(blogType.Count == 0 ? "disabled" : "") @(blogType.IsSelected ? "checked" : "")>
-                                <label class="form-check-label" for="TypeM-@blogType.Value">@blogType.Label (@blogType.Count)</label>
-                            </div>
-                        }
-                    </div>
-
-                    <div>
-                        <h4>Topic</h4>
-                        @foreach (var topic in Model.DXTopics)
-                        {
-                            <div class="mb-2">
-                                <h5>@topic.Label</h5>
-                                @foreach (var child in topic.Facets)
-                                {
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="dxTopics" value="@child.Value" id="TopicM-@child.Value"
-                                            facet-field facet-mobile @(child.Count == 0 ? "disabled" : "") @(child.IsSelected ? "checked" : "")>
-                                        <label class="form-check-label" for="TopicM-@child.Value">@child.Label (@child.Count)</label>
-                                    </div>
-                                }
-                            </div>
-                        }
-                    </div>
-                </div>
-
-                @if (Model.BlogPosts.Count == 0 && Model.TotalPages == 0)
-                {
-                    <div>
-                        <p>No results could be found.</p>
-                    </div>
-                }
-
-                @foreach (var post in Model.BlogPosts)
-                {
-                    <div class="c-card article nopic">
-                        <div class="c-card_inner d-grid">
-                            <div class="c-card_title d-flex justify-content-between">
-                                <div>
-                                    <h3 class="me-2">
-                                        <a class="slash" href="@post.LinkPath">@post.Title</a>
-                                    </h3>
-                                    <small class="me-1">@post.Date.ToString("d", View.Culture)</small>
-                                </div>
-                                <div class="c-card_tags p-0">
-                                    <div class="c-group tags justify-content-end">
-                                        <span class="c-tag secondary" title="Blog type - @post.BlogType">@post.BlogType</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="c-card_footer d-flex flex-sm-column align-items-end">
-                                @if (post.Author.ID > 0)
-                                {
-                                    <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
-                                        class="c-tag secondary invert user">
-                                        <img xpc-image="post.Author.Photo" style="max-width: 24px" class="c-tag_icon me-1" />
-                                        <span>@post.Author.Name</span>
-                                    </a>
-                                }
-                                else
-                                {
-                                    <div>
-                                        <img xpc-image="post.Author.Photo" style="max-width: 24px" class="c-tag_icon me-1" />
-                                        <span>@post.Author.Name</span>
-                                    </div>
-                                }
-                            </div>
-                            <div class="c-card_content">
-                                <p>@post.ShortDescription</p>
-                            </div>
-                        
-                            <div class="c-card_tags d-flex align-items-end">
-                                <div class="c-group tags">
-                                    @foreach(string topic in post.DXTopics)
-                                    {
-                                        <span class="c-tag secondary invert" title="Topic - @topic">@topic</span>
-                                    }
-                                </div>
-                            </div>
-                        
-                        </div>
-                    </div>
-                }
-
-                <vc:pagination model="Model" />
-
-            </div>
+                    search.initSearch({
+                        formElemID: '@formID'
+                    });
+                });
+            </script>
         </form>
     </div>
 </div>

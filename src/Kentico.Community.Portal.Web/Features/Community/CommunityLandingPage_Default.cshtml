@@ -8,49 +8,6 @@
 
 <vc:page-heading page="templateModel.Page" />
 
-<div class="c-section pb-7">
-    <div class="container">
-        <div class="row gx-lg-6 gx-xxl-7 mt-sm-n2 mt-lg-n4">
-            <h2>Community Groups</h2>
-
-            @foreach (var item in templateModel.Groups)
-            {
-                <div class="col-sm-6 col-lg-4 mt-3 mt-sm-5 mt-lg-6">
-                    <div class="c-card widget default-border ">
-                        <div class="c-card_inner">
-                            <img xpc-image="item.Banner" class="card-img-top" />
-                            <h3 class="h3 mt-2 pt-1">
-                                @if (item.URL.TryGetValue(out string? url))
-                                {
-                                    <a href="@url">@item.Title</a>
-                                }
-                                else
-                                {
-                                    <text>@item.Title</text>
-                                }
-                            </h3>
-                            <p class="mt-2">
-                                <small>
-                                    @if (item.Address.StateOrProvince.TryGetValue(out string? stateOrProvince))
-                                    {
-                                        <text>@item.Address.City, @stateOrProvince,</text>
-                                    }
-                                    else
-                                    {
-                                        <text>@item.Address.City,</text>
-                                    }
-                                    @item.Address.Country
-                                </small>
-                            </p>
-                            <p class="mt-2">@item.Description</p>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-</div>
-
 <main>
     <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"
         widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
