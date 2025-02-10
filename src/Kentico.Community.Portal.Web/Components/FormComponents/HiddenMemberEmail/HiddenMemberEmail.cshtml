@@ -21,8 +21,3 @@
     htmlAttributes["disabled"] = "disabled";
 }
 @Html.TextBoxFor(x => x.Value, null, htmlAttributes)
-
-@if (Model.FormBuilderMode == FormBuilderMode.BuilderEditor)
-{
-    <div class="ktc-explanation-text">This is a hidden field on the live website.</div>
-}

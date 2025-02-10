@@ -14,10 +14,7 @@ using Kentico.Community.Portal.Web.Components;
 
 namespace Kentico.Community.Portal.Web.Components.FormComponents;
 
-/// <summary>
-/// Represents a single line input form component.
-/// </summary>
-public class DateInputComponent(TimeProvider timeProvider) : FormComponent<DateInputProperties, DateTime?>
+public class DateInputComponent(TimeProvider timeProvider) : FormComponent<DateInputProperties, DateTime?>, IHideableComponent
 {
     private string valueInternal = "";
 
@@ -51,6 +48,8 @@ public class DateInputComponent(TimeProvider timeProvider) : FormComponent<DateI
 
     public override string LabelForPropertyName => nameof(Value);
 
+    public bool IsHidden => Properties.IsHidden;
+
     public override DateTime? GetValue() => DateTime.TryParse(Value, out var date) ? date : DateTime.MinValue;
 
     public override void SetValue(DateTime? value) => Value = value?.Date.ToString("yyyy-MM-dd") ?? "";
@@ -63,8 +62,16 @@ public class DateInputProperties : FormComponentProperties<DateTime?>
     [CheckBoxComponent(
         Label = "Use current date as default",
         ExplanationText = "Populates the date field with the current date when the form is rendered",
-        Order = 100)]
+        Order = 99)]
     public bool UseCurrentDateAsDefault { get; set; } = true;
+
+    [CheckBoxComponent(
+        Label = "Is hidden?",
+        ExplanationText = "If true, this field will not be rendered in the form. It must not be marked as <strong>required</strong>.",
+        ExplanationTextAsHtml = true,
+        Order = 100
+    )]
+    public bool IsHidden { get; set; } = false;
 
     public DateInputProperties()
         : base(FieldDataType.DateTime)

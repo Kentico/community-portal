@@ -1,44 +1,47 @@
 @model Kentico.Community.Portal.Web.Components.Widgets.ProfileCard.ProfileCardWidgetViewModel
 
-<div class="card mb-3" xpc-preview-outline="@Model.ComponentName">
-  <div class="row g-0">
-    <div class="col-lg-6 p-3">
-      <picture>
-        @if (Model.Photo.TryGetValue(out var photo))
-        {
-          <img src="" class="rounded-circle" xpc-image="photo">
-        }
-        else if (Model.Member.TryGetValue(out var member))
-        {
-          <img src="" class="rounded-circle" xpc-member-avatar="member.Id" alt="@member.DisplayName">
-        }
-      </picture>
-    </div>
-
-    <div class="col-lg-6 p-3">
-      <h3 class="mt-0 mt-lg-5 k-dot">@Model.DisplayName</h3>
-      @if (Model.ProfileHTML.TryGetValue(out var html))
-      {
-        @html
-      }
-      else if (Model.Member.TryGetValue(out var member2))
-      {
-        <p>@member2.JobTitle
-          @if (member2.EmployerLink.HasValue)
+<div class="d-flex justify-content-center" xpc-preview-outline="@Model.ComponentName">
+  <div class="card mb-3" style="max-width: 500px;">
+    <div class="row g-0">
+      <div class="col-lg-6 p-3">
+        <picture class="d-flex justify-content-center">
+          @if (Model.Photo.TryGetValue(out var photo))
           {
-            <text>at</text> <a rel="noopener nofollow" href="@member2.EmployerLink.URL">@member2.EmployerLink.Label</a>
+            <img src="" class="rounded-circle my-0 my-lg-5" style="max-width: 250px;" xpc-image="photo">
           }
-          — @member2.Country
-        </p>
-        <p>See @member2.FirstName's <a href="/member/@member2.Id">Community Portal profile</a>.</p>
+          else if (Model.Member.TryGetValue(out var member))
+          {
+            <img src="" class="rounded-circle my-0 my-lg-5" style="max-width: 250px;" xpc-member-avatar="member.Id"
+              alt="@member.DisplayName">
+          }
+        </picture>
+      </div>
 
-        <a href="https://www.linkedin.com/in/@member2.LinkedInIdentifier" rel="noopener nofollow">
-          Connect with @member2.FirstName on LinkedIn
-          <svg class="c-icon chevron align-middle">
-            <use xlink:href="/img/icons.svg?v=MrkwDrpM0yc17CqTKHkD9XFWN8orQZpYepsot8OuKJ4#chevron-right"></use>
-          </svg>
-        </a>
-      }
+      <div class="col-lg-6 p-3">
+        <h3 class="mt-0 mt-lg-5 k-dot">@Model.DisplayName</h3>
+        @if (Model.ProfileHTML.TryGetValue(out var html))
+        {
+          @html
+        }
+        else if (Model.Member.TryGetValue(out var member2))
+        {
+          <p>@member2.JobTitle
+            @if (member2.EmployerLink.HasValue)
+            {
+              <text>at</text> <a rel="noopener nofollow" href="@member2.EmployerLink.URL">@member2.EmployerLink.Label</a>
+            }
+            — @member2.Country
+          </p>
+          <p>See @member2.FirstName's <a href="/member/@member2.Id">Community Portal profile</a>.</p>
+
+          <a href="https://www.linkedin.com/in/@member2.LinkedInIdentifier" rel="noopener nofollow">
+            Connect with @member2.FirstName on LinkedIn
+            <svg class="c-icon chevron align-middle">
+              <use xlink:href="/img/icons.svg?v=MrkwDrpM0yc17CqTKHkD9XFWN8orQZpYepsot8OuKJ4#chevron-right"></use>
+            </svg>
+          </a>
+        }
+      </div>
     </div>
   </div>
 </div>

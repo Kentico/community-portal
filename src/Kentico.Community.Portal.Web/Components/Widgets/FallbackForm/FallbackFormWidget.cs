@@ -4,6 +4,7 @@ using Kentico.Community.Portal.Web.Components.Widgets.FallbackForm;
 using Kentico.Forms.Web.Mvc.Widgets;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 [assembly: RegisterWidget(
     FallbackFormWidget.IDENTIFIER,
@@ -18,6 +19,20 @@ public class FallbackFormWidget
 {
     public const string IDENTIFIER = "CommunityPortal.FallbackFormWidget";
     public const string WIDGET_NAME = "Fallback form";
+
+    public static bool GetIsFormHidden<T>(ViewDataDictionary<T> viewData) =>
+        viewData.TryGetValue($"{IDENTIFIER}_IS_HIDDEN", out object? isHiddenObj) && isHiddenObj is bool isHidden && isHidden;
+
+    /// <summary>
+    /// Stores the state of the <see cref="FallbackFormWidget"/> in <see cref="ViewDataDictionary{TModel}"/>
+    /// for child widgets and form components
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="viewData"></param>
+    /// <param name="props"></param>
+    public static void SetIsFormHidden<T>(ViewDataDictionary<T> viewData, FallbackFormWidgetProperties props) =>
+        viewData.Add($"{IDENTIFIER}_IS_HIDDEN", props.IsHidden);
+
 }
 
 public class FallbackFormWidgetProperties : FormWidgetProperties

@@ -27,7 +27,7 @@ public class HiddenInputComponent(
     IWebPageDataContextRetriever contextRetriever,
     IWebsiteChannelContext websiteChannelContext,
     IHttpContextAccessor httpContextAccessor,
-    ICookieAccessor cookieAccessor) : FormComponent<HiddenInputProperties, string?>, IHiddenComponent
+    ICookieAccessor cookieAccessor) : FormComponent<HiddenInputProperties, string?>, IHiddenInputComponent
 {
     public const string IDENTIFIER = "CommunityPortal.FormComponent.HiddenInput";
 

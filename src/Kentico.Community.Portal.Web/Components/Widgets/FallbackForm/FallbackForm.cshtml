@@ -9,66 +9,46 @@
 @model ComponentViewModel<FallbackFormWidgetProperties>
 
 @{
-    var mode = ContextRetriever.Retrieve().GetMode();
     bool isPreview = Context.Kentico().Preview().Enabled;
-    bool hasFallbackContext = !string.IsNullOrWhiteSpace(Model.Properties.FallbackMarkdown);
+    bool hasFallbackContent = !string.IsNullOrWhiteSpace(Model.Properties.FallbackMarkdown);
+
+    if (Model.Properties.IsHidden && !isPreview && !hasFallbackContent)
+    {
+        return;
+    }
+
+    FallbackFormWidget.SetIsFormHidden(ViewData, Model.Properties);
 }
 
-<div class="display" xpc-preview-outline="@FallbackFormWidget.WIDGET_NAME Widget"
-    xpc-preview-outline-remove-element="true">
-    @if (!Model.Properties.IsHidden)
-    {
-        @await Html.Kentico().RenderNestedWidgetAsync(SystemComponentIdentifiers.FORM_WIDGET_IDENTIFIER, Model.Properties)
-    }
-    else if (Model.Properties.IsHidden && isPreview)
-    {
-        <style>
-            .hidden-form-widget-container {
-                position: relative;
-                max-height: 250px;
-                overflow: hidden;
-            }
+<div xpc-preview-outline="@FallbackFormWidget.WIDGET_NAME Widget" xpc-preview-outline-remove-element="true">
+    <div class="fallback-form-widget" @(Model.Properties.IsHidden ? "overlay" : "")>
 
-            .hidden-form-widget {
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+        @await Html.Kentico().RenderNestedWidgetAsync(
+        SystemComponentIdentifiers.FORM_WIDGET_IDENTIFIER,
+                Model.Properties)
 
-                -webkit-mask-image: linear-gradient(to top, transparent, black);
-                mask-image: linear-gradient(to top, transparent, black);
-
-                -webkit-mask-size: 100% 100%;
-                mask-size: auto 180px;
-
-                -webkit-mask-repeat: no-repeat;
-                mask-repeat: no-repeat;
-            }
-
-            .hidden-form-widget-fallback {
-                position: absolute;
-                top: 80%;
-            }
-        </style>
-
-        <div class="hidden-form-widget-container">
-            <div class="hidden-form-widget">
-                @await Html.Kentico().RenderNestedWidgetAsync(SystemComponentIdentifiers.FORM_WIDGET_IDENTIFIER,
-                         Model.Properties)
-            </div>
-            <div class="hidden-form-widget-fallback text-center w-100">
-                <small>This form will be hidden on the live website.</small>
-                @if (hasFallbackContext)
+        @if (Model.Properties.IsHidden)
+        {
+            <div
+                class="fallback-content d-flex justify-content-center align-items-center flex-column position-absolute w-100 h-100">
+                @if (isPreview)
                 {
-                    <br>
-                    <small>The following fallback content will be displayed instead.</small>
+                    <div class="mb-3">
+                        <small>This form will be hidden on the live website.</small>
+                        @if (hasFallbackContent)
+                        {
+                            <br>
+                            <small>The following fallback content will be displayed instead.</small>
+                        }
+                    </div>
+                }
+                @if (hasFallbackContent)
+                {
+                    <div class="py-1 px-3 bg-purple-100 rounded">
+                        @Renderer.RenderUnsafe(Model.Properties.FallbackMarkdown)
+                    </div>
                 }
             </div>
-        </div>
-    }
-    @if (Model.Properties.IsHidden && hasFallbackContext)
-    {
-        @Renderer.RenderUnsafe(Model.Properties.FallbackMarkdown)
-    }
+        }
+    </div>
 </div>

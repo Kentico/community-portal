@@ -19,7 +19,7 @@ namespace Kentico.Community.Portal.Web.Components.FormComponents;
 public class HiddenMemberIDComponent(
     UserManager<CommunityMember> userManager,
     IHttpContextAccessor contextAccessor,
-    IFormBuilderContext formBuilderContext) : FormComponent<IntInputProperties, int?>, IHiddenComponent
+    IFormBuilderContext formBuilderContext) : FormComponent<IntInputProperties, int?>, IHiddenInputComponent
 {
     public const string IDENTIFIER = "CommunityPortal.FormComponent.HiddenMemberID";
 
@@ -64,7 +64,12 @@ public class HiddenMemberIDComponent(
             return "";
         }
 
-        var user = await userManager.FindByIdAsync(Value ?? "");
+        if (string.IsNullOrWhiteSpace(Value))
+        {
+            return "";
+        }
+
+        var user = await userManager.FindByIdAsync(Value);
 
         return user is null
             ? "Unknown"

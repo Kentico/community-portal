@@ -19,7 +19,7 @@ namespace Kentico.Community.Portal.Web.Components.FormComponents;
 public class HiddenMemberEmailComponent(
     UserManager<CommunityMember> userManager,
     IHttpContextAccessor contextAccessor,
-    IFormBuilderContext formBuilderContext) : FormComponent<TextInputProperties, string?>, IHiddenComponent
+    IFormBuilderContext formBuilderContext) : FormComponent<TextInputProperties, string?>, IHiddenInputComponent
 {
     public const string IDENTIFIER = "CommunityPortal.FormComponent.HiddenMemberEmail";
 
