@@ -15,7 +15,9 @@ param (
     [ValidateSet("Create", "CreateUpdate")]
     [String]$StorageAssetsDeploymentMode = "CreateUpdate",
 
-    [bool]$CompressPackage = $true
+    [bool]$CompressPackage = $true,
+
+    [bool]$DeployStorageAssets = $false
 )
 $ErrorActionPreference = "Stop"
 
@@ -114,9 +116,9 @@ Copy-Item -Force -Recurse "$ProjectCDRepositoryPath/*" -Destination $OutputCDRep
 
 # Get storage assets paths
 $LocalStorageAssetsPath = Join-Path $projectPath $StorageAssetsFolderName
-$OutputStorageAssetsPath = Join-Path $OutputFolderPath $StorageAssetsFolderName
 
-if (Test-Path $LocalStorageAssetsPath) {
+if ($DeployStorageAssets -and (Test-Path $LocalStorageAssetsPath)) {
+    $OutputStorageAssetsPath = Join-Path $OutputFolderPath $StorageAssetsFolderName
     # Check if storage asset top-level directories have valid names
     Get-ChildItem -Path $LocalStorageAssetsPath | ForEach-Object {
         if ($_.Name -cnotmatch "^[a-z0-9](?!.*--)[a-z0-9-]{1,61}[a-z0-9]$") {
@@ -136,18 +138,18 @@ if (Test-Path $LocalStorageAssetsPath) {
             Rename-Item -Force "$($_.FullName).tmp" $lowercasedAssetName
         }
     }
+
+    # Add necessary metadata if storage assets folder has been exported as well
+    if (Test-Path $OutputStorageAssetsPath) {
+        $PackageMetadata.Add("StorageAssetsDirectory", $StorageAssetsFolderName)
+        $PackageMetadata.Add("StorageAssetsDeploymentMode", $StorageAssetsDeploymentMode)
+    }
 }
 
 $AssemblyPath = Join-Path $OutputFolderPath "$AssemblyName.dll" -Resolve
 $PackageMetadata = @{
     AssemblyName = $AssemblyName
     Version      = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($AssemblyPath).ProductVersion
-}
-
-# Add necessary metadata if storage assets folder has been exported as well
-if (Test-Path $OutputStorageAssetsPath) {
-    $PackageMetadata.Add("StorageAssetsDirectory", $StorageAssetsFolderName)
-    $PackageMetadata.Add("StorageAssetsDeploymentMode", $StorageAssetsDeploymentMode)
 }
 
 # Create all necessary metadata for cloud-based package deployment

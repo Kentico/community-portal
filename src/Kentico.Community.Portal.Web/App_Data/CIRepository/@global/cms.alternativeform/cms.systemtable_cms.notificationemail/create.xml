@@ -36,7 +36,82 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="NotificationEmailNotificationEmailTemplateID" enabled="true" guid="8a1fa75a-8eae-4364-a85c-d9f78086087b" visible="true" refobjtype="" reftype="" order="8">
+      <field column="NotificationEmailEventType" enabled="true" guid="cb7b2454-a82f-4fbf-a136-35b60f7083e1" visible="true" order="8">
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.notifications.list.eventtype$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="NotificationEmailFormSubmissionEventTypeForms" columnprecision="0" columntype="objectids" dummy="altform" enabled="true" guid="4187a2d5-9911-4706-bfa4-cc1a2c7c0c56" system="true" visible="true" order="9">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$base.notifications.emails.formsubmission.forms.label$}]]>
+          </fieldcaption>
+          <fielddescription>
+            <![CDATA[{$base.notifications.emails.formsubmission.forms.tooltip$}]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectIdSelector</controlname>
+          <MaximumItems>0</MaximumItems>
+          <ObjectType>cms.form</ObjectType>
+        </settings>
+      </field>
+      <category name="Delivery" order="10">
+        <properties>
+          <caption>{$base.notifications.emails.edit.delivery$}</caption>
+          <visible>true</visible>
+        </properties>
+      </category>
+      <field allowempty="true" column="NotificationEmailSystemEventTypeRecipients" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="25c74aaa-6bcd-4009-8e1e-1e241380f6ef" system="true" visible="true" order="11">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$base.notifications.emails.system.recipients.label$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="NotificationEmailCustomEventTypeRecipients" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="bbde90e2-3b10-4bbf-acb6-5e1d9570f218" system="true" visible="true" order="12">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$base.notifications.emails.custom.recipients.label$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+      <field column="NotificationEmailFormSubmissionEventTypeRecipients" columnprecision="0" columntype="objectids" dummy="altform" enabled="true" guid="2d4f1dd5-5612-4fe5-b0da-f2baa24b82ca" system="true" visible="true" order="13">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$base.notifications.emails.formsubmission.recipients.label$}]]>
+          </fieldcaption>
+          <fielddescription>
+            <![CDATA[{$base.notifications.emails.formsubmission.recipients.tooltip$}]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectIdSelector</controlname>
+          <MaximumItems>0</MaximumItems>
+          <ObjectType>cms.user</ObjectType>
+        </settings>
+      </field>
+      <field column="NotificationEmailNotificationEmailTemplateID" enabled="true" guid="8a1fa75a-8eae-4364-a85c-d9f78086087b" visible="true" refobjtype="" reftype="" order="14">
         <settings>
           <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
           <ObjectType>cms.notificationemailtemplate</ObjectType>
@@ -51,7 +126,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="NotificationEmailSenderEmailAddress" columnprecision="0" columnsize="254" columntype="text" dummy="altform" enabled="true" guid="cb78854e-fcf7-4e83-9272-7febcf7293c7" system="true" visible="true" order="9">
+      <field column="NotificationEmailSenderEmailAddress" columnprecision="0" columnsize="254" columntype="text" dummy="altform" enabled="true" guid="cb78854e-fcf7-4e83-9272-7febcf7293c7" system="true" visible="true" order="15">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$base.notifications.emails.edit.sender$}</fieldcaption>
@@ -70,7 +145,8 @@
           </ValidationRuleConfiguration>
         </validationrulesdata>
       </field>
-      <field column="NotificationEmailSender" guid="55219f6e-cbdf-40b2-bb5c-487d8382d0c2" enabled="" order="10" />
+      <field column="NotificationEmailSender" guid="55219f6e-cbdf-40b2-bb5c-487d8382d0c2" enabled="" order="16" />
+      <field column="NotificationEmailPreviewText" guid="4b7f93b4-f9d8-44bb-b806-8206178b0599" enabled="" order="17" />
     </form>
   </FormDefinition>
   <FormDisplayName>Create</FormDisplayName>

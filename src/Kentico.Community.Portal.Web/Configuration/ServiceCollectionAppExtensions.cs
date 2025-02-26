@@ -1,9 +1,11 @@
 using System.Reflection;
+using CMS.OnlineForms;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Infrastructure;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components.ViewComponents.Navigation;
+using Kentico.Community.Portal.Web.Components.Widgets.Forms;
 using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
 using Kentico.Community.Portal.Web.Features.Blog.Events;
 using Kentico.Community.Portal.Web.Features.DataCollection;
@@ -37,7 +39,8 @@ public static class ServiceCollectionAppExtensions
             .AddSupport(config)
             .AddQAndA()
             .AddBlogs()
-            .AddMemberBadges();
+            .AddMemberBadges()
+            .AddNotifications();
 
     private static IServiceCollection AddOperations(this IServiceCollection services, IConfiguration config) =>
         services
@@ -85,7 +88,8 @@ public static class ServiceCollectionAppExtensions
     private static IServiceCollection AddForms(this IServiceCollection services, IConfiguration config) =>
         services
             .AddSingleton<FormInternalAutoresponderEmailSender>()
-            .Configure<SystemDomainOptions>(config.GetSection("SystemDomains"));
+            .Configure<SystemDomainOptions>(config.GetSection("SystemDomains"))
+            .AddScoped<IFormMemberEngagementRetriever, FormMemberEngagementRetriever>();
 
     private static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config) =>
         services
@@ -131,6 +135,9 @@ public static class ServiceCollectionAppExtensions
             .AddTransient<IMemberBadgeAssignmentRule, MemberAnniversary2YearMemberBadgeAssignmentRule>()
             .AddTransient<IMemberBadgeAssignmentRule, MemberAnniversary3YearMemberBadgeAssignmentRule>()
             .AddHostedService<MemberBadgeAssignmentApplicationBackgroundService>();
+
+    private static IServiceCollection AddNotifications(this IServiceCollection services) =>
+        services;
 
     private static IServiceCollection AddClosedGenericTypes(
         this IServiceCollection services,

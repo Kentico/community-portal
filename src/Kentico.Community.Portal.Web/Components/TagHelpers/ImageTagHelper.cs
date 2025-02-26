@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Kentico.Community.Portal.Web.Components.TagHelpers;
 
-[HtmlTargetElement(ELEMENT_TAG, TagStructure = TagStructure.WithoutEndTag, Attributes = ATTRIBUTE)]
+[HtmlTargetElement(ELEMENT_TAG, TagStructure = TagStructure.WithoutEndTag, Attributes = ATTRIBUTE_IMAGE)]
 public class ImageTagHelper : TagHelper
 {
     public const string ELEMENT_TAG = "img";
-    public const string ATTRIBUTE = "xpc-image";
+    public const string ATTRIBUTE_IMAGE = "xpc-image";
 
-    [HtmlAttributeName(ATTRIBUTE)]
+    [HtmlAttributeName(ATTRIBUTE_IMAGE)]
     public Maybe<ImageViewModel> Image { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)

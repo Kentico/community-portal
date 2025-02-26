@@ -11,7 +11,8 @@ public static class ServiceCollectionSaaSExtensions
             _ = services
                 .AddKenticoCloud(config)
                 .AddXperienceCloudSendGrid(config)
-                .AddXperienceCloudApplicationInsights(config);
+                .AddXperienceCloudApplicationInsights(config)
+                .AddXperienceCloudDataProtection(config);
         }
 
         return services;

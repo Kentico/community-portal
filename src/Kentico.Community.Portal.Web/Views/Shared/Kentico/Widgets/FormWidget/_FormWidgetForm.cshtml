@@ -1,4 +1,4 @@
-@using Kentico.Community.Portal.Web.Components.Widgets.FallbackForm
+@using Kentico.Community.Portal.Web.Components.Widgets.Forms
 @using Kentico.Forms.Web.Mvc;
 @using Kentico.Forms.Web.Mvc.Widgets.Internal
 
@@ -12,7 +12,7 @@
 }
 
 @* We replace the <form> with a <div> to prevent spam submissions of the programmatically functional form *@
-@if (Model.FormConfiguration is not null && FallbackFormWidget.GetIsFormHidden(ViewData))
+@if (Model.FormConfiguration is not null && FormState.GetIsFormHidden(ViewData))
 {
     <div class="fallback-form">
         @{

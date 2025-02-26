@@ -24,14 +24,15 @@ const config = ({ env }) => ({
             "error-hero",
             // HTMX dynamic classes
             "htmx-request",
-            // Member badges tag helper
-            "c-tag_badge",
-            "rounded-circle",
-            "border",
-            "align-text-top",
-            "border-1",
           ],
-          greedy: [/form-/, /milkdown/, /ProseMirror/],
+          greedy: [
+            // Bootstrap forms
+            /form-/,
+            // Milkdown editor
+            /milkdown/,
+            // Syntax highlighting in Milkdown editor
+            /ProseMirror/,
+          ],
         },
       }),
     // https://www.npmjs.com/package/postcss-preset-env

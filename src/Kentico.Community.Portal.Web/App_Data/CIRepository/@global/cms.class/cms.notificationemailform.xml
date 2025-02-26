@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Notification email form</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="NotificationEmailFormID" columntype="integer" enabled="true" guid="e84fc8ae-2b45-4462-85b4-56fce837ea9a" isPK="true" system="true" />
+      <field column="NotificationEmailFormNotificationEmailID" columnprecision="0" columntype="integer" enabled="true" guid="d792c5c9-a3ed-4986-9d52-1b2fdf478183" refobjtype="cms.notificationemail" reftype="Binding" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="NotificationEmailFormFormID" columnprecision="0" columntype="integer" enabled="true" guid="f8f824c2-77e6-4efc-93b5-ba6469f56511" refobjtype="cms.form" reftype="Binding" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>8ebd26d0-7d44-452b-a761-891f75072a53</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.NotificationEmailForm</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Notifications</CodeName>
+    <GUID>82db1a57-847d-4087-ba71-a62a627ea907</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_NotificationEmailForm</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

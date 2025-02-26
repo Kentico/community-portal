@@ -1,14 +1,15 @@
-using System.Security.Claims;
+using System.Collections.Immutable;
 using CMS.DataEngine;
+using CMS.Membership;
 using CMS.OnlineForms;
 using Kentico.Community.Portal.Core.Forms;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.CommunityLeaderActivityList;
+using Kentico.Community.Portal.Web.Components.Widgets.Forms;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.PageBuilder.Web.Mvc;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 [assembly: RegisterWidget(
@@ -16,117 +17,113 @@ using Microsoft.AspNetCore.Mvc;
     name: CommunityLeaderActivityListWidget.NAME,
     viewComponentType: typeof(CommunityLeaderActivityListWidget),
     propertiesType: typeof(CommunityLeaderActivityListWidgetProperties),
-    Description = "Lists all Community Leader activities submitted for the current member",
+    Description = "Lists all Community Leader activities",
     IconClass = KenticoIcons.CHECKLIST)]
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.CommunityLeaderActivityList;
 
-public class CommunityLeaderActivityListWidget(IMediator mediator, UserManager<CommunityMember> userManager) : ViewComponent
+public class CommunityLeaderActivityListWidget(IMediator mediator) : ViewComponent
 {
     public const string IDENTIFIER = "CommunityPortal.Widget.CommunityLeaderActivityList";
     public const string NAME = "CL activity list";
 
     private readonly IMediator mediator = mediator;
-    private readonly UserManager<CommunityMember> userManager = userManager;
 
     public async Task<IViewComponentResult> InvokeAsync(ComponentViewModel<CommunityLeaderActivityListWidgetProperties> _)
     {
-        string? memberIDStr = User is ClaimsPrincipal user
-            ? userManager.GetUserId(user)
-            : null;
-        int memberID = int.TryParse(memberIDStr, out int id)
-            ? id
-            : 0;
-        var resp = await mediator.Send(new CommunityLeaderActivitiesQuery(memberID));
+        var communityMemberID = CommunityMember.GetMemberIDFromClaim(HttpContext);
+        var resp = await mediator.Send(new CommunityLeaderActivitiesQuery());
 
-        var dataClass = DataClassInfoProvider.GetDataClassInfo(CommunityLeaderActivityItem.CLASS_NAME);
-        var form = BizFormInfoProvider.GetBizFormInfoForClass(dataClass.ClassID);
+        var bizForm = FormParser.GetFormByClassName(FormClassName.From(CommunityLeaderActivityItem.CLASS_NAME));
 
-        return Validate(
-            resp,
-            ParseFieldDataSource(form, nameof(CommunityLeaderActivityItem.ActivityType)),
-            ParseFieldDataSource(form, nameof(CommunityLeaderActivityItem.Impact)),
-            ParseFieldDataSource(form, nameof(CommunityLeaderActivityItem.Effort)),
-            ParseFieldDataSource(form, nameof(CommunityLeaderActivityItem.Satisfaction)))
-            .Match(
-                vm => View("~/Components/Widgets/Activities/CommunityLeaderActivityList.cshtml", vm),
-                vm => View("~/Components/ComponentError.cshtml", vm)
-            );
-    }
-
-    private static Result<CommunityLeaderActivityListWidgetViewModel, ComponentErrorViewModel> Validate(
-        CommunityLeaderActivitiesQueryResponse resp,
-        IReadOnlyDictionary<string, string> activitTypesMap,
-        IReadOnlyDictionary<string, string> impactMap,
-        IReadOnlyDictionary<string, string> effortMap,
-        IReadOnlyDictionary<string, string> satisfactionMap) =>
-        new CommunityLeaderActivityListWidgetViewModel(resp.Items)
+        if (!bizForm.TryGetValue(out var form))
         {
-            ActivitTypesMap = activitTypesMap,
-            ImpactMap = impactMap,
-            EfforMap = effortMap,
-            SatisfactionMap = satisfactionMap
-        };
-
-    private static Dictionary<string, string> ParseFieldDataSource(BizFormInfo form, string fieldName)
-    {
-        object? dataSource = form.Form.GetFormField(fieldName).Settings["DataSource"];
-
-        if (dataSource is not string srcString || string.IsNullOrWhiteSpace(srcString))
-        {
-            return [];
+            return View("~/Components/ComponentError.cshtml");
         }
 
-        var lookup = new Dictionary<string, string>();
-        string[] lines = srcString.Split(['\n'], StringSplitOptions.RemoveEmptyEntries);
-
-        foreach (string line in lines)
-        {
-            string[] parts = line.Split(';');
-            if (parts.Length == 2)
+        return View("~/Components/Widgets/Activities/CommunityLeaderActivityList.cshtml",
+            new CommunityLeaderActivityListWidgetViewModel(resp, communityMemberID.Value)
             {
-                string key = parts[0].Trim();
-                string value = parts[1].Trim();
-                lookup[key] = value;
-            }
-        }
-
-        return lookup;
+                ActivitTypesMap = FormParser.GetFormFieldOptions(form, nameof(CommunityLeaderActivityItem.ActivityType)),
+                ImpactMap = FormParser.GetFormFieldOptions(form, nameof(CommunityLeaderActivityItem.Impact)),
+                EfforMap = FormParser.GetFormFieldOptions(form, nameof(CommunityLeaderActivityItem.Effort)),
+                SatisfactionMap = FormParser.GetFormFieldOptions(form, nameof(CommunityLeaderActivityItem.Satisfaction))
+            });
     }
 }
 
 public class CommunityLeaderActivityListWidgetProperties : BaseWidgetProperties { }
 
-public class CommunityLeaderActivityListWidgetViewModel(IReadOnlyList<CommunityLeaderActivityItem> items) : BaseWidgetViewModel
+public class CommunityLeaderActivityListWidgetViewModel : BaseWidgetViewModel
 {
+    public CommunityLeaderActivityListWidgetViewModel(CommunityLeaderActivitiesQueryResponse resp, int currentMemberID)
+    {
+        MyActivities = resp.ActivitiesByMember.TryGetValue(currentMemberID, out var myActivities)
+            ? myActivities
+            : [];
+        AllActivities = resp.AllActivities;
+        MemberNames = resp.MemberNames;
+    }
+
     protected override string WidgetName { get; } = CommunityLeaderActivityListWidget.NAME;
 
-    public IReadOnlyList<CommunityLeaderActivityItem> Items { get; } = items;
+    public IReadOnlyList<CommunityLeaderActivityItem> AllActivities { get; }
+    public IReadOnlyList<CommunityLeaderActivityItem> MyActivities { get; }
+    public Dictionary<int, string> MemberNames { get; }
     public required IReadOnlyDictionary<string, string> ActivitTypesMap { get; init; }
     public required IReadOnlyDictionary<string, string> ImpactMap { get; init; }
     public required IReadOnlyDictionary<string, string> EfforMap { get; init; }
     public required IReadOnlyDictionary<string, string> SatisfactionMap { get; init; }
+
+    public string ActivityType(CommunityLeaderActivityItem item) =>
+        ActivitTypesMap.TryGetValue(item.ActivityType, out string? typeVal)
+            ? typeVal
+            : item.ActivityType;
+    public string Impact(CommunityLeaderActivityItem item) =>
+        ImpactMap.TryGetValue(item.Impact, out string? impact) ? impact : item.Impact;
+
+    public string Effort(CommunityLeaderActivityItem item) =>
+        EfforMap.TryGetValue(item.Effort, out string? effort) ? effort : item.Effort;
+
+    public string Satisfaction(CommunityLeaderActivityItem item) =>
+        SatisfactionMap.TryGetValue(item.Satisfaction, out string? Satisfaction)
+            ? Satisfaction
+            : item.Satisfaction;
+
+    public string MemberName(CommunityLeaderActivityItem item) =>
+        MemberNames.TryGetValue(item.MemberID, out string? name) ? name : "";
 }
 
-public record CommunityLeaderActivitiesQuery(int MemberID) : IQuery<CommunityLeaderActivitiesQueryResponse>, ICacheByValueQuery
-{
-    public string CacheValueKey => MemberID.ToString();
-}
-
-public record CommunityLeaderActivitiesQueryResponse(IReadOnlyList<CommunityLeaderActivityItem> Items);
-public class CommunityLeaderActivitiesQueryHandler(DataItemQueryTools tools, TimeProvider time) : DataItemQueryHandler<CommunityLeaderActivitiesQuery, CommunityLeaderActivitiesQueryResponse>(tools)
+public record CommunityLeaderActivitiesQuery : IQuery<CommunityLeaderActivitiesQueryResponse>;
+public record CommunityLeaderActivitiesQueryResponse(
+    Dictionary<int, ImmutableList<CommunityLeaderActivityItem>> ActivitiesByMember,
+    ImmutableList<CommunityLeaderActivityItem> AllActivities,
+    Dictionary<int, string> MemberNames);
+public class CommunityLeaderActivitiesQueryHandler(
+    DataItemQueryTools tools,
+    TimeProvider time,
+    IInfoProvider<MemberInfo> memberProvider) : DataItemQueryHandler<CommunityLeaderActivitiesQuery, CommunityLeaderActivitiesQueryResponse>(tools)
 {
     private readonly TimeProvider time = time;
+    private readonly IInfoProvider<MemberInfo> memberProvider = memberProvider;
 
     public override async Task<CommunityLeaderActivitiesQueryResponse> Handle(CommunityLeaderActivitiesQuery request, CancellationToken cancellationToken = default)
     {
         var items = await BizFormItemProvider.GetItems<CommunityLeaderActivityItem>()
-            .WhereEquals(nameof(CommunityLeaderActivityItem.MemberID), request.MemberID)
             .WhereGreaterOrEquals(nameof(CommunityLeaderActivityItem.ActivityDate), new DateTime(time.GetLocalNow().Year, 1, 1))
             .OrderByDescending(nameof(CommunityLeaderActivityItem.ActivityDate))
             .GetEnumerableTypedResultAsync();
 
-        return new([.. items]);
+        var members = await memberProvider.Get()
+            .WhereIn(nameof(MemberInfo.MemberID), items.Select(i => i.MemberID).Distinct())
+            .GetEnumerableTypedResultAsync();
+
+        var memberNames = members.Select(m => m.AsCommunityMember()).ToDictionary(m => m.Id, m => m.DisplayName);
+
+        return new(
+            items.GroupBy(i => i.MemberID).ToDictionary(g => g.Key, g => g.ToImmutableList()),
+            [.. items],
+            memberNames);
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(CommunityLeaderActivitiesQuery query, CommunityLeaderActivitiesQueryResponse result, ICacheDependencyKeysBuilder builder) =>

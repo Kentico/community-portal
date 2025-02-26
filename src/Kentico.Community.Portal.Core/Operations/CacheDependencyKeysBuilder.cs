@@ -1,5 +1,6 @@
 using CMS.DataEngine;
 using CMS.MediaLibrary;
+using CMS.OnlineForms;
 using CMS.Websites;
 
 namespace Kentico.Community.Portal.Core.Operations;
@@ -341,6 +342,14 @@ public interface ICacheDependencyKeysBuilder
     /// <param name="keyName"></param>
     /// <returns></returns>
     public ICacheDependencyKeysBuilder SettingsKey(string keyName);
+
+    /// <summary>
+    /// &lt;bizform.formName|all&gt;
+    /// </summary>
+    /// <param name="keyName"></param>
+    /// <returns></returns>
+
+    public ICacheDependencyKeysBuilder BizFormItems(string formName);
 
     /// <summary>
     /// mediafile|&lt;guid&gt;
@@ -762,6 +771,18 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
         }
 
         _ = dependencyKeys.Add($"cms.settingskey|{keyName}");
+
+        return this;
+    }
+
+    public ICacheDependencyKeysBuilder BizFormItems(string formName)
+    {
+        if (string.IsNullOrWhiteSpace(formName))
+        {
+            return this;
+        }
+
+        _ = dependencyKeys.Add($"{BizFormInfo.BIZFORM_PREFIX}{formName}|all");
 
         return this;
     }

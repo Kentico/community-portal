@@ -102,7 +102,7 @@ public class QAndASearchViewModel : IPagedViewModel
             })
             .OrderBy(f => f.Label)];
         DiscussionTypesSelected = DiscussionTypes.Count(t => t.IsSelected);
-        DiscussionStates = [..Enums.GetMembers<DiscussionStates>()
+        DiscussionStates = [.. Enums.GetMembers<DiscussionStates>()
             .Select(m => new FacetOption()
             {
                 Label = m.AsString(EnumFormat.Description) ?? "",

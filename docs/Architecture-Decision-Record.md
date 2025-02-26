@@ -1,5 +1,105 @@
 # Architecture Decision Record
 
+## 2025-02-13 - Polls
+
+To make the Kentico Community Portal more interactive and informative, we want
+to introduce a poll solution.
+
+Polls would allow visitors to quickly and easily share their response to a
+simple question. Once the question is answered, the results to the poll should
+be visible so the user can see how others answered.
+
+Ideally these polls could be embedded in various places across the portal and if
+a visitor answered a poll they would not be able to answer that poll again (to
+prevent manipulating results and prevent repeated content annoyance).
+
+Historical poll results would also be valuable for Kentico and the community
+over time because the results could show trends in adoption of product features
+or interests in digital experience topics, informing everyone what time of
+content or Q&A discussion questions to author.
+
+If polls are accessible to anonymous visitors they will need to have an
+anti-spam capability.
+
+### 3rd party poll embed
+
+Products like <https://www.poll-maker.com/>,
+<https://www.mentimeter.com/features/live-polling>,
+<https://www.slido.com/features-live-polling>,
+<https://www.surveymonkey.com/mp/online-polls/> , and
+<https://www.jotform.com/poll-maker/> all have the features needed for an
+effective portal poll experience. However, they also have permanently recurring
+costs (subscriptions) or significant limitations on free tiers
+(users/views/submissions).
+
+Most of these solutions will have an anti-spam solution and a good UX (once the
+JS is loaded).
+
+Polls would have to be embedded and rendered client-side which means
+[layout shift](https://web.dev/articles/cls) could become a problem.
+
+Upfront investment in time with this option is low but cost is high.
+
+### Custom application and object type
+
+Xperience by Kentico's extremely
+[flexible and powerful administration customization capabilities](https://docs.kentico.com/x/yASiCQ)
+means we could build a poll management solution from scratch, giving marketers
+using the portal a simple UI to author new polls, poll questions, and view the
+results or trends of poll engagement with graphs.
+
+Polls could embedded into website experiences with widgets and follow any
+business rules to ensure a high quality poll result and good visitor experience.
+
+We would have to design an anti-spam solution, a poll content or object model,
+and a way to display results (with a graph or table).
+
+This option would require a significant amount of up-front time investment. Cost
+is "free" because we'd only use Xperience's native features.
+
+### Form Builder
+
+A single radio button field Form Builder form is effectively a poll and the
+Kentico Community Portal already has multiple form widgets (native Form Widget,
+Fallback form widget) that display forms.
+
+However, each Form Builder form is a unique object so this approach would need a
+way to display form results dynamically.
+
+This option has similar requirements to the _Custom application and object type_
+option above, but it would not need a content model or widget since the Form
+Builder dynamically creates content models with each form.
+
+The upfront time cost would be medium, assuming technology challenges can be
+resolved.
+
+### Solution - Polls
+
+We selected using the Form Builder for several reasons.
+
+1. Existing widgets/patterns make it easy to start
+1. Customizing forms in Xperience, while not supported, has been shown to be
+   possible with the MVP/CL Activity and Fallback form widgets
+1. We can restrict poll access to members only (using the widget personalization
+   technique or explicit business logic) which avoids the spam problem
+1. If polls because popular we can transition to a custom application and object
+   type and even migrate data if necessary
+
+Polls built with the Form Builder will require several "conventions" to work
+correctly
+
+1. All poll forms will need a "Hidden Member ID" field named `MemberID`
+1. All poll forms will need a "Radio button" field named `Question`
+1. Polls will need to be displayed with new Poll widget which has similar
+   features to the Fallback form, except it uses business logic for visibility
+   (we'll never want to display polls to non-members)
+1. We add a new client-side js library <https://www.chartjs.org/> to the
+   solution to render simple charts for poll results. Chartjs is loaded
+   asynchronously, on demand as an es module (similar to Q&A and search
+   modules).
+1. We have a new `PollContent` reusable content type which references the Form
+   and includes other content fields to improve the form experience for members.
+
 ## 2024-11-15 - Faceted search
 
 The blog and Q&A search experiences have been updated with faceted searching

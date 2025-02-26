@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using Kentico.Community.Portal.Web.Components.ViewComponents.Navigation;
 using Kentico.Community.Portal.Web.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Html;

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.notificationemail>
+  <NotificationEmailContent>
+    <![CDATA[<p>Below is the submission details.</p><p>Form: {{FormName}}</p><p>Link: <a href="{{FormLink}}">View submission</a></p><p>Data:</p><div>{{FormData}}</div>]]>
+  </NotificationEmailContent>
+  <NotificationEmailDisplayName>Community program activity</NotificationEmailDisplayName>
+  <NotificationEmailEventType>Form submission</NotificationEmailEventType>
+  <NotificationEmailGUID>18ab34e4-b849-485d-91c3-51ab7a5b3c6c</NotificationEmailGUID>
+  <NotificationEmailName>CommunityProgramActivity</NotificationEmailName>
+  <NotificationEmailNotificationEmailTemplateID>
+    <CodeName>Kentico.General</CodeName>
+    <GUID>fd1107c3-3b5d-4372-972e-5e4890f12f71</GUID>
+    <ObjectType>cms.notificationemailtemplate</ObjectType>
+  </NotificationEmailNotificationEmailTemplateID>
+  <NotificationEmailPreviewText>
+    <![CDATA[A form was submitted on the Kentico Community Portal]]>
+  </NotificationEmailPreviewText>
+  <NotificationEmailSender>no-reply</NotificationEmailSender>
+  <NotificationEmailSubject>Form submission - {{FormName}}</NotificationEmailSubject>
+</cms.notificationemail>

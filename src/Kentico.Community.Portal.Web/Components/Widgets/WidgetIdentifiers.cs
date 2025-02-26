@@ -10,6 +10,7 @@ using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
 using Kentico.Community.Portal.Web.Components.Widgets.LinkList;
 using Kentico.Community.Portal.Web.Components.Widgets.Markdown;
 using Kentico.Community.Portal.Web.Components.Widgets.PageHeading;
+using Kentico.Community.Portal.Web.Components.Widgets.PollForm;
 using Kentico.Community.Portal.Web.Components.Widgets.ProfileCard;
 using Kentico.Community.Portal.Web.Components.Widgets.Video;
 
@@ -31,4 +32,5 @@ public static class WidgetIdentifiers
     public const string Video = VideoWidget.IDENTIFIER;
     public const string Embed = EmbedWidget.IDENTIFIER;
     public const string FallbackForm = FallbackFormWidget.IDENTIFIER;
+    public const string Poll = PollWidget.IDENTIFIER;
 }

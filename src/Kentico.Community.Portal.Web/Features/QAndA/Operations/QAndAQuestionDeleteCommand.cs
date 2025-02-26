@@ -25,6 +25,8 @@ public class QAndAQuestionDeleteCommandHandler(WebPageCommandTools tools, IInfoP
             provider.BulkDelete(new WhereCondition().WhereEquals(nameof(QAndAAnswerDataInfo.QAndAAnswerDataQuestionWebPageItemID), request.Question.SystemFields.WebPageItemID));
 
             await webPageManager.Delete(request.Question.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
+
+            transaction.Commit();
         }
         catch (Exception ex)
         {

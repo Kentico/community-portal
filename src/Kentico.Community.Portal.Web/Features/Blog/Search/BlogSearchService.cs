@@ -227,6 +227,11 @@ public class BlogSearchService(
 
     private static BooleanQuery AddToTermQuery(BooleanQuery query, Query textQueryPart, float boost)
     {
+        if (textQueryPart is null)
+        {
+            return query;
+        }
+
         textQueryPart.Boost = boost;
         query.Add(textQueryPart, Occur.SHOULD);
 

@@ -3,7 +3,7 @@
   <EmailTemplateCode>
 <![CDATA[
 <!DOCTYPE html>
-{% emailDefaults = EmailDefaults[0].Data; "" |(identity)GlobalAdministrator|(hash)63d0142b46f8268f81c0c2ca85c1d298d04236b4bd64a7e19a42c0d39befad7e%}
+{% emailDefaults = EmailDefaults[0].Data; "" |(user)SeanW@kentico.com|(hash)af7fd582af63b7f7f164ed73f609687efad3f0890fab5aca12dfaa6dded5971d%}
 {% emailTitle = NewsletterEmailTitle + " #" + NewsletterEmailIssueNumber; "" %}
 <html lang="en">
   <head>
@@ -17,7 +17,7 @@
     <meta name="supported-color-schemes" content="light dark" />
     <!-- ios -->
     <style type="text/css">
-      {% emailDefaults.EmailDefaultsContentHTMLStyles |(identity)GlobalAdministrator|(hash)3a197aecaf95f54ce13312e718e2fee6a9455801efedae8b6bfac7e683932d19%}
+      {% emailDefaults.EmailDefaultsContentHTMLStyles |(user)SeanW@kentico.com|(hash)0d35013c14304635cf2904f7367f5a2c89e434fab53fc75751c28c320ac4c923%}
     </style>
   </head>
   <body style="margin: 0; padding: 0; height: 100%; width: 100%">
@@ -92,18 +92,17 @@
                     class="logo"
                   >
                     <a
-                      href="{% emailDefaults.EmailDefaultsContentHeaderLinkURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) |(identity)GlobalAdministrator|(hash)42b1cf5b3cd74db7340993cfa3ce06bd670d3fe11846a111dfc3577c46cf4bce%}"
-                      title="{% emailDefaults.EmailDefaultsContentHeaderLinkURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) |(identity)GlobalAdministrator|(hash)42b1cf5b3cd74db7340993cfa3ce06bd670d3fe11846a111dfc3577c46cf4bce%}"
+                      href="{% emailDefaults.EmailDefaultsContentHeaderLinkURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) |(user)SeanW@kentico.com|(hash)27b2aa8ce96f2e3802404093ffacf7b0d37b511dd50c01b51c374a5d2f44f6e9%}"
                       style="width: 101px; height: 101px; display: inline-block"
                       target="_blank"
                     >
-                      {% headerLogo = emailDefaults.EmailDefaultsContentHeaderLogoImageContent[0].Data; "" |(identity)GlobalAdministrator|(hash)bbb51fd9d36bf0b298b532645d59168fe614f174354064632d6cb323b1a37e93%}
+                      {% headerLogo = emailDefaults.EmailDefaultsContentHeaderLogoImageContent[0].Data; "" |(user)SeanW@kentico.com|(hash)4cd7ac5dbd201787e446f7fdfb9fa94b2d0827d34bb396dae54309abfbfab3fc%}
                       <img
                         class="light-img"
-                        src="{% headerLogo.ImageContentAsset.Url |(identity)GlobalAdministrator|(hash)03545d4c175c7e2c9fa6edbd360696d29a652247306ace01d966b4dbdf8ad80a%}"
-                        alt="{% HTMLEncode(headerLogo.MediaItemTitle) |(identity)GlobalAdministrator|(hash)45f68cad0cb3f3b6cdecf800d15bbb70df1745cab36f86b9152982a77c37023e%}"
-                        width="{% headerLogo.MediaItemAssetWidth |(identity)GlobalAdministrator|(hash)c27357c81322ac3267f5e940c5b95aecef2a89c0a00ae9c1f8cae4492b7eb56f%}"
-                        height="{% headerLogo.MediaItemAssetHeight |(identity)GlobalAdministrator|(hash)9f4ea849dd6f6b515f998c959d86b999b29e373273d1f6840e5dbd1768bd3129%}"
+                        src="{% headerLogo.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)e4d87320865da5b224b877264039c16bd236caebd3ba0bf5e1f4d34ffc5195d4%}"
+                        alt="{% HTMLEncode(headerLogo.MediaItemTitle) |(user)SeanW@kentico.com|(hash)4851518c1dd0ab034b7f7d8e3773ed3d9e8f77aa81ce003b0c926f85c44a3729%}"
+                        width="{% headerLogo.MediaItemAssetWidth |(user)SeanW@kentico.com|(hash)4b55b66bbbe63dc90b2d1c26d1fee72dc592793cc04ce541bb01a1ef324428db%}"
+                        height="{% headerLogo.MediaItemAssetHeight |(user)SeanW@kentico.com|(hash)dd17f05a1e98ab48108d8f84a106082b7019a2b3ae1db8e1f8f1550baade4d90%}"
                         style="width: 101px;"
                       />
                       <div
@@ -120,10 +119,10 @@
                         "
                       >
                         <img
-                          src="{% headerLogo.ImageContentAsset.Url |(identity)GlobalAdministrator|(hash)03545d4c175c7e2c9fa6edbd360696d29a652247306ace01d966b4dbdf8ad80a%}"
-                          alt="{% HTMLEncode(headerLogo.MediaItemTitle) |(identity)GlobalAdministrator|(hash)45f68cad0cb3f3b6cdecf800d15bbb70df1745cab36f86b9152982a77c37023e%}"
-                          width="{% headerLogo.MediaItemAssetWidth |(identity)GlobalAdministrator|(hash)c27357c81322ac3267f5e940c5b95aecef2a89c0a00ae9c1f8cae4492b7eb56f%}"
-                          height="{% headerLogo.MediaItemAssetHeight |(identity)GlobalAdministrator|(hash)9f4ea849dd6f6b515f998c959d86b999b29e373273d1f6840e5dbd1768bd3129%}"
+                          src="{% headerLogo.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)e4d87320865da5b224b877264039c16bd236caebd3ba0bf5e1f4d34ffc5195d4%}"
+                          alt="{% HTMLEncode(headerLogo.MediaItemTitle) |(user)SeanW@kentico.com|(hash)4851518c1dd0ab034b7f7d8e3773ed3d9e8f77aa81ce003b0c926f85c44a3729%}"
+                          width="{% headerLogo.MediaItemAssetWidth |(user)SeanW@kentico.com|(hash)4b55b66bbbe63dc90b2d1c26d1fee72dc592793cc04ce541bb01a1ef324428db%}"
+                          height="{% headerLogo.MediaItemAssetHeight |(user)SeanW@kentico.com|(hash)dd17f05a1e98ab48108d8f84a106082b7019a2b3ae1db8e1f8f1550baade4d90%}"
                           style="width: 101px;"
                         />
                       </div>
@@ -209,17 +208,16 @@
             </tr>
             </table>
             <![endif]-->
-          {% foreach (card in NewsletterEmailCardContents) { %}
+          {% foreach (page in NewsletterEmailBlogPostPages) { %}
           <div class="card card--no-image" style="padding-top: 60px;">
-            {% cardContent = card.Data.CardContentListableItem[0]; "" %}
-            {% cardTitle = ""; cardDescription = ""; cardImage = null; "" %}
+            {% blogTitle = ""; blogDescription = ""; "" %}
             {% blogContent = null; blogAuthor = null; blogAuthorName = ""; "" %}
-            {% if (cardContent.Type == "KenticoCommunity.BlogPostContent") { %}
-              {% blogContent = card.Data.CardContentListableItem[0].Data; "" %}
+            {% if (page.Type == "KenticoCommunity.BlogPostPage") { %}
+              {% blogContent = page.Data.BlogPostPageBlogPostContent[0].Data; "" %}
               {% blogAuthor = blogContent.BlogPostContentAuthor[0].Data; "" %}
               {% blogAuthorName = blogAuthor.AuthorContentFirstName + " " + blogAuthor.AuthorContentSurname; "" %}
-              {% cardTitle = blogContent.ListableItemTitle; "" %}
-              {% cardDescription = blogContent.ListableItemShortDescription; "" %}
+              {% blogTitle = blogContent.ListableItemTitle; "" %}
+              {% blogDescription = blogContent.ListableItemShortDescription; "" %}
             {% } %}
             <!-- Outlook above-content wrapper -->
             <!--[if (gte mso 9)|(IE)]>
@@ -309,10 +307,10 @@
                 class="card__heading"
                 style="font-size: 32px; line-height: 40px; margin: 0 0 20px 0"
               >
-                {% HTMLEncode(cardTitle) %}<span class="orange-char" style="color: #f05a22">.</span>
+                {% HTMLEncode(blogTitle) %}<span class="orange-char" style="color: #f05a22">.</span>
               </h2>
               <p class="card__text" style="margin: 20px 0 20px 0">
-                {% HTMLEncode(cardDescription) %}
+                {% HTMLEncode(blogDescription) %}
               </p>
 
               <div class="card__bottom card__bottom--blog">
@@ -348,7 +346,6 @@
                     {% if (blogAuthor.AuthorContentMemberID > 0) { %}
                     <a
                       href="{% emailDefaults.EmailDefaultsContentDefaultURL %}members/{% blogAuthor.AuthorContentMemberID %}"
-                      title="{% emailDefaults.EmailDefaultsContentDefaultURL %}members/{% blogAuthor.AuthorContentMemberID %}"
                       style="color: #272223"
                       target="_blank"
                       >{% blogAuthorName %}</a
@@ -362,12 +359,10 @@
             </td></tr></table>
             <![endif]-->
               </div>
-              {% cardUrl = card.Data.CardContentWebPage[0].Url.ReplaceUtmParameters(NewsletterEmailUTMParameters, card.Data.CardContentUTMParameters); "" %}
-              
+              {% pageURL = page.Url.ReplaceUtmParameters(NewsletterEmailUTMParameters); "" %}
               <a
                 class="card__cta brand-link"
-                href="{% cardUrl %}"
-                title="{% HTMLEncode(cardUrl) %}"
+                href="{% pageURL %}"
                 target="_blank"
                 style="
                   color: #3d5dc0;
@@ -378,7 +373,7 @@
                   padding-top: 2rem;
                   display: inline-block;
                 "
-                >{% HTMLEncode(card.Data.CardContentLabel ?? "Read more") %}<span
+                >Read more<span
                   class="card__cta-arrow"
                   style="
                     font-size: 22px;
@@ -403,7 +398,7 @@
     </td></tr></table>
     </td></tr></table>
     <![endif]-->
-          {% } |(identity)GlobalAdministrator|(hash)69f65c957b1fb4abb08735312b79286cd6ccd31d26d8fa1205ae9a60222774f2%}
+          {% } |(user)SeanW@kentico.com|(hash)df9a279913ebb67d0a10f45456443d54e8bc4ef699e15c903873af19e8f89e01%}
           </div>
 
           <div class="links" style="padding-top: 40px">
@@ -442,7 +437,6 @@
                 <li style="color: #3d5dc0; font-size: 22px; line-height: 22px; margin-bottom: 0.5rem">
                   <a
                     href='{% emailLink.Data.LinkContentPathOrURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) %}'
-                    title='{% HTMLEncode(emailLink.Data.LinkContentPathOrURL.ReplaceUtmParameters(NewsletterEmailUTMParameters)) %}'
                     target="_blank"
                     style="color: #3d5dc0;"
                   >
@@ -461,7 +455,7 @@
                 <!--[if (gte mso 9)|(IE)]>
                         </td></tr><tr><td>
                         <![endif]-->
-                {% } |(identity)GlobalAdministrator|(hash)ea81aaf9b0dac8c9a6d4be910e5a048aae859605956ba5ad99b2303cc19e6958%}
+                {% } |(user)SeanW@kentico.com|(hash)e526a73d3ae200c8d5bb166f95026363b9abbe31a12adcac995dfa3624126fd8%}
                 <!-- List item end -->
                 <!--[if (gte mso 9)|(IE)]>
                         </td></tr>
@@ -578,7 +572,6 @@
                   >
                     <a
                       href="{% link.Data.SocialLinkContentURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) %}"
-                      title="{% HTMLEncode(link.Data.SocialLinkContentURL.ReplaceUtmParameters(NewsletterEmailUTMParameters)) %}"
                       target="_blank"
                       style="
                         display: inline-block;
@@ -625,7 +618,7 @@
                       </div>
                     </a>
                   </td>
-                 {% } |(identity)GlobalAdministrator|(hash)53fdefa50663d90442ef9b4627b839dccd1034b323c9032b28b6f28861e1b816%}
+                 {% } |(user)SeanW@kentico.com|(hash)dce9f70fc9cb73c5c206bf1327f2e64bbedb9dbd4a6a685b595f9e24a505d13f%}
                 </tr>
               </tbody>
             </table>
@@ -678,11 +671,10 @@
             Kentico software s.r.o., Nove sady 25, 602 00 Brno, Czech Republic.
             <br />
             <a
-              href="{% emailDefaults.EmailDefaultsContentDefaultURL |(identity)GlobalAdministrator|(hash)270e7e796ca7da195eb2d3f8b19fa025b7c7fec9d721c469ac524bdca8caa43f%}"
-              title="{% emailDefaults.EmailDefaultsContentDefaultURL |(identity)GlobalAdministrator|(hash)270e7e796ca7da195eb2d3f8b19fa025b7c7fec9d721c469ac524bdca8caa43f%}"
+              href="{% emailDefaults.EmailDefaultsContentDefaultURL |(user)SeanW@kentico.com|(hash)2a49fb04fd9fccd67f154cde1b0fef721e7e5782a70dcb993c1cbbc5d29d0a0d%}"
               style="color: #4f4c4d; text-decoration: none"
               target="_blank"
-              >{% emailDefaults.EmailDefaultsContentDefaultURL |(identity)GlobalAdministrator|(hash)270e7e796ca7da195eb2d3f8b19fa025b7c7fec9d721c469ac524bdca8caa43f%}</a
+              >{% emailDefaults.EmailDefaultsContentDefaultURL |(user)SeanW@kentico.com|(hash)2a49fb04fd9fccd67f154cde1b0fef721e7e5782a70dcb993c1cbbc5d29d0a0d%}</a
             >
           </p>
           <div
@@ -695,18 +687,17 @@
             class="footer__logo"
           >
             <a
-              href="{% emailDefaults.EmailDefaultsContentFooterLinkURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) |(identity)GlobalAdministrator|(hash)de845bb2d0f36a6b7bd93f4667eb9cb3ddb85c25edd43e6536f2f3ffdaa32f9b%}"
-              title="{% HTMLEncode(emailDefaults.EmailDefaultsContentFooterLinkURL.ReplaceUtmParameters(NewsletterEmailUTMParameters)) |(identity)GlobalAdministrator|(hash)0a37b9cb38d08ab750fd3cc43b29342ff09f3c9fb2c9dbe8e728d6cff443f63d%}"
+              href="{% emailDefaults.EmailDefaultsContentFooterLinkURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) |(user)SeanW@kentico.com|(hash)3610f975dbf4f5e3c231810262eaca4ea474de19fd350e18f251f6354c86350e%}"
               style="width: 101px; height: 101px; display: inline-block"
               target="_blank"
             >
-              {% footerLogo = emailDefaults.EmailDefaultsContentFooterLogoImageContent[0].Data; "" |(identity)GlobalAdministrator|(hash)42dc73505b09896f87091def82e9f8ab98014cc8193a3ac55c26df760847f620%}
+              {% footerLogo = emailDefaults.EmailDefaultsContentFooterLogoImageContent[0].Data; "" |(user)SeanW@kentico.com|(hash)690505af8fcad0cc0401a695c4614ba36f2e171df9aa6a68d73195354af431d6%}
               <img
                 class="light-img"
-                src="{% footerLogo.ImageContentAsset.Url |(identity)GlobalAdministrator|(hash)2fbfd0d40e0855b41ac45efd469ccf11634876e95f4da4d681e51dd00575a138%}"
-                alt="{% HTMLEncode(footerLogo.MediaItemTitle) |(identity)GlobalAdministrator|(hash)1b64222ab4dccffc3c5f661a8c3ce6a778105198b70054616d6405386b1be63d%}"
-                width="{% footerLogo.MediaItemAssetWidth |(identity)GlobalAdministrator|(hash)d6d2fcd270cf779ddc84fde30697d2a7b99cba10591535f7302856a8c13df8dc%}"
-                height="{% footerLogo.MediaItemAssetHeight |(identity)GlobalAdministrator|(hash)4f56c99b51e29dda33236841b24c911abec81f823b5618f634e5d87bd4a093f2%}"
+                src="{% footerLogo.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)dd0a3dd40e4600d7c4bf8ff1b57025faec249f23c87dcb8f5e8c2856fb666288%}"
+                alt="{% HTMLEncode(footerLogo.MediaItemTitle) |(user)SeanW@kentico.com|(hash)4ea6a2695648396b1a4e317437cfa13adde985db51a910c54135ca6a5cbcf74d%}"
+                width="{% footerLogo.MediaItemAssetWidth |(user)SeanW@kentico.com|(hash)56644b07d3a71e7187051f34a9221369c7fab1ba6ed133c0e7d86e1506a7bddf%}"
+                height="{% footerLogo.MediaItemAssetHeight |(user)SeanW@kentico.com|(hash)3c2b29f358ae5e40ac2e658215e01950d23dfc853a010fa7958f7e557ca0b875%}"
                 style="width: 101px;"
               />
               <div
@@ -723,10 +714,10 @@
                 "
               >
                 <img
-                  src="{% footerLogo.ImageContentAsset.Url |(identity)GlobalAdministrator|(hash)2fbfd0d40e0855b41ac45efd469ccf11634876e95f4da4d681e51dd00575a138%}"
-                  alt="{% HTMLEncode(footerLogo.MediaItemTitle) |(identity)GlobalAdministrator|(hash)1b64222ab4dccffc3c5f661a8c3ce6a778105198b70054616d6405386b1be63d%}"
-                  width="{% footerLogo.MediaItemAssetWidth |(identity)GlobalAdministrator|(hash)d6d2fcd270cf779ddc84fde30697d2a7b99cba10591535f7302856a8c13df8dc%}"
-                  height="{% footerLogo.MediaItemAssetHeight |(identity)GlobalAdministrator|(hash)4f56c99b51e29dda33236841b24c911abec81f823b5618f634e5d87bd4a093f2%}"
+                  src="{% footerLogo.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)dd0a3dd40e4600d7c4bf8ff1b57025faec249f23c87dcb8f5e8c2856fb666288%}"
+                  alt="{% HTMLEncode(footerLogo.MediaItemTitle) |(user)SeanW@kentico.com|(hash)4ea6a2695648396b1a4e317437cfa13adde985db51a910c54135ca6a5cbcf74d%}"
+                  width="{% footerLogo.MediaItemAssetWidth |(user)SeanW@kentico.com|(hash)56644b07d3a71e7187051f34a9221369c7fab1ba6ed133c0e7d86e1506a7bddf%}"
+                  height="{% footerLogo.MediaItemAssetHeight |(user)SeanW@kentico.com|(hash)3c2b29f358ae5e40ac2e658215e01950d23dfc853a010fa7958f7e557ca0b875%}"
                   style="width: 101px;"
                 />
               </div>

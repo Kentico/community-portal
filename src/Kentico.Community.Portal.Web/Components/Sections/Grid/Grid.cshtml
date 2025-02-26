@@ -23,12 +23,12 @@
     Alignments.Left or _ => "",
   };
 
-  string backgroundColorClass = Model.BackgroundColor switch
+  var (backgroundColorClass, backgroundColorProperty) = Model.BackgroundColor switch
   {
-    BackgroundColors.Dark => "bg-light-subtle",
-    BackgroundColors.Secondary_Light => "bg-purple-100",
-    BackgroundColors.Light => "bg-light",
-    BackgroundColors.White or _ => "",
+    BackgroundColors.Dark => ("bg-light-subtle", "--bs-light-bg-subtle"),
+    BackgroundColors.Secondary_Light => ("bg-purple-100", "--bs-purple-100-rgb"),
+    BackgroundColors.Light => ("bg-light", "--bs-light-rgb"),
+    BackgroundColors.White or _ => ("", ""),
   };
 
   string paddingTopClass = Model.PaddingTop switch
@@ -48,7 +48,8 @@
   };
 }
 
-<div class="c-section @paddingTopClass @paddingBottomClass @backgroundColorClass" xpc-preview-outline="Grid Section">
+<div class="c-section @paddingTopClass @paddingBottomClass @backgroundColorClass"
+  style="--section-bg-color: rgb(var(@backgroundColorProperty))" xpc-preview-outline="Grid Section">
   <div class="@containerClass">
     @if (!string.IsNullOrWhiteSpace(Model.Heading))
     {

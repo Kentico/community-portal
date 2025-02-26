@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>
+    <![CDATA[Allowed child content type]]>
+  </ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="AllowedChildContentTypeID" columntype="integer" enabled="true" guid="ede9df6c-c4ba-49fa-b2e7-16ca91e92109" isPK="true" system="true" />
+      <field column="AllowedChildContentTypeParentID" columnprecision="0" columntype="integer" enabled="true" guid="95a4e50c-79b0-40c7-bc41-b055a0f88a1c" refobjtype="cms.contenttype" reftype="Binding" system="true" />
+      <field column="AllowedChildContentTypeChildID" columnprecision="0" columntype="integer" enabled="true" guid="a770b3d4-fb4e-41b0-a091-96b02d4b47d0" refobjtype="cms.contenttype" reftype="Binding" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>9ab4060a-9f98-4de3-953c-7903c81b665b</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.AllowedChildContentType</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentEngine</CodeName>
+    <GUID>eb76ebd1-752f-4969-a5b6-1fb984cae224</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_AllowedChildContentType</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

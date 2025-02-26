@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.formclass>
+  <ClassContactMapping>
+    <form />
+  </ClassContactMapping>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Poll 2025-02-12 - Favorite feature</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="Form_2025_02_12_17_27ID" columntype="integer" enabled="true" guid="c989e9b3-f56e-4bd2-b171-2072ad0195f3" isPK="true" />
+      <field column="FormInserted" columnprecision="7" columntype="datetime" enabled="true" guid="0b3c7932-fdb5-4696-b5f6-3526192aa51a" system="true">
+        <properties>
+          <fieldcaption>Form inserted</fieldcaption>
+        </properties>
+      </field>
+      <field column="FormUpdated" columnprecision="7" columntype="datetime" enabled="true" guid="8091892a-244d-451f-b015-538d9e552abc" system="true">
+        <properties>
+          <fieldcaption>Form updated</fieldcaption>
+        </properties>
+      </field>
+      <field allowempty="true" column="MemberID" columntype="integer" enabled="true" guid="a9692c9d-a59a-4af3-be66-e303f860aae6" visible="true">
+        <properties>
+          <fieldcaption>Member ID</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberID</componentidentifier>
+        </settings>
+      </field>
+      <field column="Question" columnsize="200" columntype="text" enabled="true" guid="ede74d63-5689-4571-b790-adc52002ef03" visible="true">
+        <properties>
+          <fieldcaption>
+            <![CDATA[What is the next Xperience by Kentico feature you want to learn?]]>
+          </fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.RadioButtons</componentidentifier>
+          <DataSource>
+<![CDATA[
+Automation
+Personalization
+Headless channels
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>7e495c6f-b79c-4d84-9417-713caee08fb0</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>BizForm.Poll_20250212_FavoriteFeature</ClassName>
+  <ClassTableName>Form_Form_2025_02_12_17_27</ClassTableName>
+  <ClassType>Form</ClassType>
+  <ClassXmlSchema>
+<![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Form_Form_2025_02_12_17_27">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Form_2025_02_12_17_27ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+              <xs:element name="FormInserted" type="xs:dateTime" />
+              <xs:element name="FormUpdated" type="xs:dateTime" />
+              <xs:element name="Question">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MemberID" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Form_Form_2025_02_12_17_27" />
+      <xs:field xpath="Form_2025_02_12_17_27ID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
+]]>
+  </ClassXmlSchema>
+</cms.formclass>

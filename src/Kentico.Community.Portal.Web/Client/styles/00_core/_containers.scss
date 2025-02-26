@@ -1,0 +1,15 @@
+.container-inline-size {
+  container-type: inline-size;
+}
+
+.clamp-width {
+  --internal-clamp-width-size-min: var(--size-min, 300px);
+  --internal-clamp-width-size-preferred: var(--size-preferred, max(50cqi, 50%));
+  --internal-clamp-width-size-max: var(--size-max, max(100cqi, 100%));
+
+  width: clamp(
+    var(--internal-clamp-width-size-min),
+    var(--internal-clamp-width-size-preferred),
+    var(--internal-clamp-width-size-max)
+  );
+}

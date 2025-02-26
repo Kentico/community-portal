@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.formclass>
+  <ClassContactMapping>
+    <form />
+  </ClassContactMapping>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Poll 2025-02-12 - Most difficult project step</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="Form_2025_02_12_20_39ID" columntype="integer" enabled="true" guid="9e71d216-d278-40a6-aed1-8fac19520452" isPK="true" />
+      <field column="FormInserted" columnprecision="7" columntype="datetime" enabled="true" guid="ef8ec806-55ff-4b4a-afdf-f647fc4c565f" system="true">
+        <properties>
+          <fieldcaption>Form inserted</fieldcaption>
+        </properties>
+      </field>
+      <field column="FormUpdated" columnprecision="7" columntype="datetime" enabled="true" guid="bedc868c-3fa3-4b10-ab60-c18ec2ef69ad" system="true">
+        <properties>
+          <fieldcaption>Form updated</fieldcaption>
+        </properties>
+      </field>
+      <field allowempty="true" column="MemberID" columntype="integer" enabled="true" guid="a1c92d63-d9d8-4790-9427-89b551147f14" visible="true">
+        <properties>
+          <fieldcaption>Member ID</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberID</componentidentifier>
+        </settings>
+      </field>
+      <field column="Question" columnsize="200" columntype="text" enabled="true" guid="9f98090d-74a4-44cc-9632-d82711c9159e" visible="true">
+        <properties>
+          <fieldcaption>
+            <![CDATA[What's the most difficult step of a DXP project?]]>
+          </fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.RadioButtons</componentidentifier>
+          <DataSource>
+<![CDATA[
+Goals;Defining project goals
+ContentModeling;Content modeling
+3rdPartyIntegrations;3rd party integrations
+DataMigration;Data migration
+ContentAuthoring;Form submission admin notifications
+UserExperience;UX
+GoLive;Go-live
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>7e860b79-0254-4da7-8667-0e1842ea4278</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>BizForm.Poll_20250212_MostDifficultProjectStep</ClassName>
+  <ClassTableName>Form_Form_2025_02_12_20_39</ClassTableName>
+  <ClassType>Form</ClassType>
+  <ClassXmlSchema>
+<![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Form_Form_2025_02_12_20_39">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Form_2025_02_12_20_39ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+              <xs:element name="FormInserted" type="xs:dateTime" />
+              <xs:element name="FormUpdated" type="xs:dateTime" />
+              <xs:element name="Question">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MemberID" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Form_Form_2025_02_12_20_39" />
+      <xs:field xpath="Form_2025_02_12_20_39ID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
+]]>
+  </ClassXmlSchema>
+</cms.formclass>

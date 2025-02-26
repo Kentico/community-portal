@@ -68,7 +68,8 @@ public static class ServiceCollectionXperienceExtensions
             .IfDevelopment(env, c =>
             {
                 _ = c.Configure<SmtpOptions>(config.GetSection("SmtpOptions"))
-                    .AddXperienceSmtp();
+                    .AddXperienceSmtp()
+                    .Configure<SystemEmailOptions>(config.GetSection("SystemEmailOptions"));
 
                 if (config.GetSection("Kentico.Xperience.MiniProfiler.Custom").GetValue<bool>("IsEnabled"))
                 {

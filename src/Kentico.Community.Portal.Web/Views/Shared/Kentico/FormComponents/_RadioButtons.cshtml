@@ -1,0 +1,19 @@
+@using Kentico.Forms.Web.Mvc
+
+@model RadioButtonsComponent
+
+@{
+    var htmlAttributes = ViewData.Kentico().GetEditorHtmlAttributes();
+}
+
+@foreach (var item in Model.HtmlOptions)
+{
+    var id = ViewData.TemplateInfo.HtmlFieldPrefix + Guid.NewGuid().ToString("N");
+    htmlAttributes["id"] = id;
+    htmlAttributes["class"] = "form-check-input";
+
+    <div class="form-check">
+        @Html.RadioButtonFor(x => x.SelectedValue, item.Value, htmlAttributes)
+        @Html.LabelFor(x => x.SelectedValue, item.Text, new { @for = id, @class = "form-check-label" })
+    </div>
+}

@@ -1,0 +1,11 @@
+.grid-auto-fill {
+  --internal-size-grid-min-col: var(--grid-min-col-size, 275px);
+  --internal-size-grid-gap: var(--grid-gap-size, 1rem);
+
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(var(--internal-size-grid-min-col), 100%), 1fr)
+  );
+
+  gap: var(--internal-size-grid-gap);
+}

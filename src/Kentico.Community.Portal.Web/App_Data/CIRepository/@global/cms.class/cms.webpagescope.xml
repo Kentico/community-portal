@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Web page scope</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="WebPageScopeID" columntype="integer" enabled="true" guid="948db3d7-ceb7-478c-9063-1827fd0aa63a" isPK="true" system="true" />
+      <field column="WebPageScopeWebsiteChannelID" columnprecision="0" columntype="integer" enabled="true" guid="06244b02-bf64-414b-bb28-2e888a1cc412" refobjtype="cms.websitechannel" reftype="Required" system="true" />
+      <field allowempty="true" column="WebPageScopeWebPageItemID" columnprecision="0" columntype="integer" enabled="true" guid="92a4e94d-493f-4b7d-ab48-918b372d5674" system="true" />
+      <field column="WebPageScopeIncludeChildren" columnprecision="0" columntype="boolean" enabled="true" guid="7a2a7992-a52b-4bda-acf4-3ae50f0ffe6c" system="true" />
+      <field column="WebPageScopeGUID" columnprecision="0" columntype="guid" enabled="true" guid="dd27095f-70a2-48eb-8137-914d8ca7186b" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>3e61ac86-ee07-47ac-83d4-9bd71ae49004</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.WebPageScope</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Websites</CodeName>
+    <GUID>87975c89-f788-4e6c-a91f-08f38097cc32</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_WebPageScope</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

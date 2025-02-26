@@ -1,6 +1,6 @@
+using Kentico.Builder.Web.Mvc;
 using Kentico.Community.Portal.Web.Components.Sections;
 using Kentico.Community.Portal.Web.Components.Widgets;
-using Kentico.PageBuilder.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Components;

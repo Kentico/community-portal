@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Membership;
@@ -52,6 +53,7 @@ public class HasMemberBadgeConditionType(
         {
             return false;
         }
+        var id = identity as ClaimsIdentity;
 
         var member = userManager
             .GetUserAsync(context.User)

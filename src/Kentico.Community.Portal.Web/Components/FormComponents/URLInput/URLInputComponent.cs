@@ -1,6 +1,6 @@
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.FormComponents;
 using Kentico.Forms.Web.Mvc;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 
 [assembly: RegisterFormComponent(

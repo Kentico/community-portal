@@ -56,7 +56,7 @@ export const MarkdownFormComponent = (props: FormComponentProps) => {
       />
 
       <FormItemWrapper
-        label={'Markdown'}
+        {...props}
         childrenWrapperClassnames={
           mode === 'readonly'
             ? 'markdown-editor-form-item disabled'
@@ -277,6 +277,10 @@ const customStyles = `
               color: var(--color-text-disabled);
               background-color: var(--color-background-disabled);
           }
+
+          .raw-editor {
+            border: none;
+          }
       }
 
       .raw-editor {
@@ -288,6 +292,8 @@ const customStyles = `
           width: 100%;
           resize: none;
           overflow: auto;
+
+          
       }
 
       .milkdown {

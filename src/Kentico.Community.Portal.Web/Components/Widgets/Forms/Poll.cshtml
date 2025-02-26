@@ -1,0 +1,76 @@
+@using Kentico.Content.Web.Mvc
+@using Kentico.PageBuilder.Web.Mvc
+@using Kentico.Web.Mvc
+@using Kentico.Community.Portal.Web.Components.Widgets.PollForm
+@using Kentico.Community.Portal.Web.Components.Widgets.Forms
+
+@model PollWidgetViewModel
+
+@{
+    bool isPreview = Context.Kentico().Preview().Enabled;
+    bool showPoll = Model.IsHidden || (Model.IsPollActive && !Model.HasVisitorAnsweredPoll);
+    var showDisabled = JSEncoder.EncodeToJson(Model.IsHidden);
+    string overlayAttr = Model.IsHidden ? "overlay" : "";
+
+    var (backgroundColorClass, backgroundColorProperty) = Model.BackgroundColor switch
+    {
+        BackgroundColors.Dark => ("bg-light-subtle", "rgb(var(--bs-light-bg-subtle))"),
+        BackgroundColors.Secondary_Light => ("bg-purple-100", "rgb(var(--bs-purple-100-rgb))"),
+        BackgroundColors.Light => ("bg-light", "rgb(var(--bs-light-rgb))"),
+        BackgroundColors.White or _ => ("bg-white", "var(--bs-white)"),
+    };
+
+    FormState.SetIsFormHidden(ViewData, Model);
+}
+
+<div xpc-preview-outline="@PollWidget.NAME Widget" x-data="{ showDisabled: @showDisabled }">
+    <div class="hideable-form poll-widget p-4 @backgroundColorClass rounded"
+        style="--fallback-form-bg-color: @backgroundColorProperty" @overlayAttr :overlay="showDisabled">
+        @if (showPoll)
+        {
+            @if (Model.Description.TryGetValue(out var description))
+            {
+                <div class="mb-3">@description</div>
+            }
+
+            var form = await Html.Kentico().RenderNestedWidgetAsync(SystemComponentIdentifiers.FORM_WIDGET_IDENTIFIER,
+            Model.ToFormWidgetProperties());
+            @form
+
+            <p class="mb-0 mt-3">
+                <small>Open until: @Model.OpenUntilDate.ToString("d", View.Culture)</small>
+            </p>
+
+            @if (Model.IsHidden || isPreview)
+            {
+                <div class="fallback-content justify-content-center align-items-center flex-column position-absolute w-100 h-100"
+                    x-cloak :class="{ 'd-flex': showDisabled, 'd-none': !showDisabled }">
+                    <div class="p-3 bg-white rounded text-center border border-2 border-gray-100"
+                        style="background-color: var(--section-bg-color, --bs-light-rgb)">
+                        <p>Please login to answer this poll.</p>
+                        <a class="btn btn-primary btn-sm" asp-controller="Authentication" asp-action="Login"
+                            asp-route-returnURL="@Context.Request.Path">
+                            Login
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <vc:poll-form-results props="Model.ToPollResultsProperties()" />
+        }
+    </div>
+    @if (isPreview && showPoll)
+    {
+        <div class="d-flex justify-content-end pt-2">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="pollShowDisabled"
+                    x-on:click="showDisabled = !showDisabled" :checked="showDisabled">
+                <label class="form-check-label" for="pollShowDisabled">
+                    Show disabled
+                </label>
+            </div>
+        </div>
+    }
+</div>

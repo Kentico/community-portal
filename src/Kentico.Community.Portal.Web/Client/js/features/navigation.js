@@ -53,7 +53,11 @@ const moveHeaderDropdownBg = (e) => {
   dropdownBg.style.height = `${currentDropdown.clientHeight}px`;
 };
 const hideHeaderDropdownBg = () => {
-  document.querySelector(".c-navbar-dropdown-bg").style.opacity = 0;
+  let dropdownBg = document.querySelector(".c-navbar-dropdown-bg");
+  if (!dropdownBg) {
+    return;
+  }
+  dropdownBg.style.opacity = 0;
 };
 
 const stickyHeader = () => {

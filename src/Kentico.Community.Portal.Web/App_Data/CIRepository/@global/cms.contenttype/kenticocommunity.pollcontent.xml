@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>Poll Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="90943eb9-b23a-4e9b-b662-16b7ee0214dd" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="93e13c68-bf02-4eae-a737-23cb688a7930" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="bed567a5-4a4d-4d42-9135-2d889f6f1b09" isunique="true" system="true" />
+      <field column="PollContentForm" columnprecision="0" columntype="objectcodenames" enabled="true" guid="daa93a85-896d-441b-8a64-061110a17355" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Form</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectCodeNameSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <ObjectType>cms.form</ObjectType>
+        </settings>
+      </field>
+      <field allowempty="true" column="PollContentDescriptionMarkdown" columnprecision="0" columntype="longtext" enabled="true" guid="0d276b38-519e-46c6-b5a6-dacc64c79552" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Description</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Community.FormComponent.Markdown</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="PollContentDXTopics" columnprecision="0" columntype="taxonomy" enabled="true" guid="858b6753-060f-4d9c-a536-96cd531994b8" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>DX Topics</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TagSelector</controlname>
+          <MaxSelectedTagsCount>4</MaxSelectedTagsCount>
+          <MinSelectedTagsCount>0</MinSelectedTagsCount>
+          <TaxonomyGroup>
+            <![CDATA[["72f39193-9dee-45df-9138-730ed4445858"]]]>
+          </TaxonomyGroup>
+        </settings>
+      </field>
+      <field column="PollContentPublishedDate" columnprecision="0" columntype="date" enabled="true" guid="3bea888d-2262-48be-98b5-404c161677cc" visible="true">
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Published</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DateInput</controlname>
+        </settings>
+      </field>
+      <field column="PollContentOpenUntilDate" columnprecision="0" columntype="date" enabled="true" guid="0b3b0ba2-95ec-4a78-8f7e-53cff2c21ab4" visible="true">
+        <properties>
+          <explanationtext>Enter a date: MM/DD/YYYY</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Open until</fieldcaption>
+          <fielddescription>
+            <![CDATA[The poll will be open until the date selected (server time).]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DateInput</controlname>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>9908d383-382a-4b80-8713-1b7073050142</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-list-bullets</ClassIconClass>
+  <ClassName>KenticoCommunity.PollContent</ClassName>
+  <ClassShortName>KenticoCommunityPollContent</ClassShortName>
+  <ClassTableName>KenticoCommunity_PollContent</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

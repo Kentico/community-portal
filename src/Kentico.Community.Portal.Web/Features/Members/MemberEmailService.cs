@@ -36,7 +36,7 @@ public class MemberEmailService(
     IInfoProvider<EmailConfigurationInfo> emailConfigurationProvider,
     IEmailContentResolver emailContentResolver,
     IEmailService emailService,
-    IEmailTemplateMergeService mergeService,
+    ITemplateDrivenEmailComposer composer,
     IEmailChannelLanguageRetriever languageRetriever,
     IContentItemDataInfoRetriever dataRetriever,
     IEmailChannelSenderEmailProvider senderInfoProvider,
@@ -48,7 +48,7 @@ public class MemberEmailService(
     private readonly IInfoProvider<EmailConfigurationInfo> emailConfigurationProvider = emailConfigurationProvider;
     private readonly IEmailContentResolver emailContentResolver = emailContentResolver;
     private readonly IEmailService emailService = emailService;
-    private readonly IEmailTemplateMergeService mergeService = mergeService;
+    private readonly ITemplateDrivenEmailComposer composer = composer;
     private readonly IEmailChannelLanguageRetriever languageRetriever = languageRetriever;
     private readonly IContentItemDataInfoRetriever dataRetriever = dataRetriever;
     private readonly IEmailChannelSenderEmailProvider senderInfoProvider = senderInfoProvider;
@@ -74,8 +74,8 @@ public class MemberEmailService(
         var emailConfig = await emailConfigurationProvider
             .GetAsync(configuration.EmailConfigurationName);
 
-        string mergedTemplate = await mergeService
-            .GetMergedTemplateWithEmailData(emailConfig, false);
+        string mergedTemplate = await composer
+            .Compose(emailConfig, false);
 
         string emailBody = await emailContentResolver.Resolve(
             emailConfig,

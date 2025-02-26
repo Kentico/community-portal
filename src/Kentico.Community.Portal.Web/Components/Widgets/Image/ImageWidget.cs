@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using CMS.ContentEngine;
 using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.Image;
@@ -37,7 +38,7 @@ public class ImageWidget(IMediator mediator) : ViewComponent
                 vm => View("~/Components/ComponentError.cshtml", vm));
     }
 
-    private Result<ImageWidgetViewModel, ComponentErrorViewModel> Validate(ImageWidgetProperties props, Maybe<ImageContent> image)
+    private static Result<ImageWidgetViewModel, ComponentErrorViewModel> Validate(ImageWidgetProperties props, Maybe<ImageContent> image)
     {
         if (props.SelectedImages.FirstOrDefault() is null)
         {
@@ -49,10 +50,12 @@ public class ImageWidget(IMediator mediator) : ViewComponent
             return Result.Failure<ImageWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "The selected content item or image file no longer exists."));
         }
 
-        return new ImageWidgetViewModel(ImageViewModel.Create(img), props);
+        return new ImageWidgetViewModel(ImageAssetViewModel.Create(img), props);
     }
 }
 
+[FormCategory(Label = "Content", Order = 1)]
+[FormCategory(Label = "Display", Order = 3)]
 public class ImageWidgetProperties : BaseWidgetProperties
 {
     [ContentItemSelectorComponent(
@@ -62,20 +65,40 @@ public class ImageWidgetProperties : BaseWidgetProperties
         MaximumItems = 1,
         DefaultViewMode = Xperience.Admin.Base.Forms.ContentItemSelectorViewMode.Grid,
         AllowContentItemCreation = true,
-        Order = 1)]
+        Order = 2)]
     public IEnumerable<ContentItemReference> SelectedImages { get; set; } = [];
+
+    [DropDownComponent(
+        Label = "Image Alignment",
+        ExplanationText = "The alignment of the image",
+        Tooltip = "Select an alignment",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<ImageAlignments>),
+        Order = 4
+    )]
+    public string Alignment { get; set; } = nameof(ImageAlignments.Left);
+    public ImageAlignments AlignmentParsed => EnumDropDownOptionsProvider<ImageAlignments>.Parse(Alignment, ImageAlignments.Left);
+
+    [DropDownComponent(
+        Label = "Image Size",
+        ExplanationText = "The size of the image",
+        Tooltip = "Select an size",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<ImageSizes>),
+        Order = 5
+    )]
+    public string Size { get; set; } = nameof(ImageSizes.Full_Width);
+    public ImageSizes SizeParsed => EnumDropDownOptionsProvider<ImageSizes>.Parse(Size, ImageSizes.Full_Width);
 
     [CheckBoxComponent(
         Label = "Show description as caption?",
         ExplanationText = "If true, a caption will appear below the image, populated by the image's description field.",
-        Order = 2
+        Order = 6
     )]
     public bool ShowDescriptionAsCaption { get; set; } = false;
 
     [CheckBoxComponent(
         Label = "Link image to full size file?",
         ExplanationText = "If true, the image will be linked to a full resolution version of the image.",
-        Order = 3)]
+        Order = 7)]
     public bool LinkToFullsizeImage { get; set; } = true;
 }
 
@@ -83,14 +106,40 @@ public class ImageWidgetViewModel : BaseWidgetViewModel
 {
     protected override string WidgetName { get; } = ImageWidget.NAME;
 
-    public ImageViewModel Image { get; }
+    public ImageAssetViewModel Image { get; }
     public bool ShowDescriptionAsCaption { get; }
     public bool LinkToFullsizeImage { get; }
+    public ImageAlignments Alignment { get; }
+    public ImageSizes Size { get; }
 
-    public ImageWidgetViewModel(ImageViewModel image, ImageWidgetProperties props)
+    public ImageWidgetViewModel(ImageAssetViewModel image, ImageWidgetProperties props)
     {
         Image = image;
         ShowDescriptionAsCaption = props.ShowDescriptionAsCaption;
         LinkToFullsizeImage = props.LinkToFullsizeImage;
+        Alignment = props.AlignmentParsed;
+        Size = props.SizeParsed;
     }
+}
+
+public enum ImageAlignments
+{
+    [Description("Left")]
+    Left,
+    [Description("Center")]
+    Center,
+    [Description("Right")]
+    Right
+}
+
+public enum ImageSizes
+{
+    [Description("Small")]
+    Small,
+    [Description("Medium")]
+    Medium,
+    [Description("Large")]
+    Large,
+    [Description("Full width")]
+    Full_Width,
 }

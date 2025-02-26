@@ -1,7 +1,9 @@
 using System.Globalization;
+using System.Security.Claims;
 using CMS.DataEngine.Internal;
 using CMS.Membership;
 using Kentico.Membership;
+using Vogen;
 
 namespace Kentico.Community.Portal.Web.Membership;
 
@@ -90,7 +92,26 @@ public class CommunityMember : ApplicationUser
 
         return communityMember;
     }
+
+    public static CommunityMemberID GetMemberIDFromClaim(HttpContext? ctx)
+    {
+        var identity = ctx?.User.Identity;
+        if (ctx is null
+            || ctx.User.Identity is not ClaimsIdentity claimsIdentity
+            || !claimsIdentity.IsAuthenticated
+            || claimsIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier) is not Claim idClaim
+            || !int.TryParse(idClaim.Value, out int id))
+        {
+            return CommunityMemberID.Anonymous;
+        }
+
+        return CommunityMemberID.From(id);
+    }
 }
+
+[ValueObject<int>]
+[Instance("Anonymous", 0)]
+public readonly partial struct CommunityMemberID;
 
 public static class MemberInfoExtensions
 {

@@ -48,7 +48,8 @@
         }
         @if (Model.Permissions.CanDelete)
         {
-            <form hx-delete hx-controller="QAndAQuestion" hx-action="DeleteQuestion" hx-route-questionID="@Model.ID">
+            <form method="post" hx-post hx-controller="QAndAQuestion" hx-action="DeleteQuestion"
+                hx-route-questionID="@Model.ID">
                 <button type="submit" class="btn btn-sm btn-outline-danger">
                     Delete
                 </button>
@@ -57,12 +58,10 @@
     </div>
 </div>
 
-@{
-    if (Context.Request.IsHtmx())
-    {
-        <script type="module">
-            const el = document.querySelector('#@wrapperElId');
-            window.Prism.highlightAllUnder(el);
-        </script>
-    }
+@if (Context.Request.IsHtmx())
+{
+    <script type="module">
+        const el = document.querySelector('#@wrapperElId');
+        window.Prism.highlightAllUnder(el);
+    </script>
 }

@@ -126,7 +126,7 @@ public class QAndAQuestionController(
 
 
     [ValidateAntiForgeryToken]
-    [HttpDelete]
+    [HttpPost]
     public async Task<IActionResult> DeleteQuestion(Guid questionID)
     {
         /**
@@ -145,7 +145,15 @@ public class QAndAQuestionController(
             return NotFound();
         }
 
+        var questionsParent = await mediator.Send(new QAndAQuestionsRootPageQuery(channelContext.WebsiteChannelName));
+        string path = (await urlRetriever.Retrieve(questionsParent)).RelativePathTrimmed();
+
         return await mediator.Send(new QAndAQuestionDeleteCommand(questionPage, channelContext.WebsiteChannelID))
-            .Match(Ok, LogAndReturnError("QUESTION_DELETE"));
+            .Match(() =>
+            {
+                Response.Htmx(h => h.Redirect(path));
+                return Ok();
+            },
+            LogAndReturnError("QUESTION_DELETE"));
     }
 }

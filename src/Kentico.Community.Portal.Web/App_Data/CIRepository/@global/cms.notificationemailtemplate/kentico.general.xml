@@ -3,12 +3,752 @@
   <NotificationEmailTemplateCode>
 <![CDATA[
 <!DOCTYPE html>
-<html>
-  <head></head>
-  <body>
-    {%notificationemailcontent%}
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="color-scheme" content="light dark" />
+    <!-- ios -->
+    <meta name="supported-color-schemes" content="light dark" />
+    <!-- ios -->
+    <style type="text/css">
+      /* CLIENT-SPECIFIC STYLES */
+      body,
+      table,
+      td,
+      a,
+      p,
+      .paragraph {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        font-family: Arial, "Avenir Next", -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, Helvetica, sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol" !important;
+      }
+      table,
+      td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        border-collapse: collapse;
+      }
+      img {
+        -ms-interpolation-mode: bicubic;
+      }
+
+      /* RESET STYLES */
+      img {
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+      }
+      table {
+        border-collapse: collapse !important;
+      }
+      body {
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        background-color: #d3d2d2 !important;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin: 0;
+      }
+      h2 {
+        margin: 30px 0 20px 0;
+      }
+      p,
+      .paragraph {
+        font-size: 18px !important;
+        line-height: 24px !important;
+        margin: 20px 0;
+      }
+
+      /* iOS blue links */
+      a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+      }
+
+      /* Gmail blue links */
+      u + #body a {
+        color: inherit;
+        text-decoration: none;
+        font-size: inherit;
+        font-family: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+      }
+
+      /* Samsung */
+      /* Samsung full width */
+      #MessageViewBody,
+      #MessageWebViewDiv {
+        width: 100% !important;
+      }
+      /* Samsung blue links */
+      #MessageViewBody,
+      #MessageWebViewDiv a {
+        color: inherit;
+        text-decoration: none;
+        font-size: inherit;
+        font-family: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+      }
+
+      /* Links */
+      a {
+        color: #000000;
+        text-decoration: underline;
+        transition: 0.35s ease-in-out;
+        font-family: Arial, "Avenir Next", -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, Helvetica, sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        cursor: pointer !important;
+      }
+      a:hover {
+        text-decoration: underline !important;
+      }
+
+      .view-online__cta:hover {
+        text-decoration: underline !important;
+      }
+
+      /* Images */
+      .light-img {
+        display: block !important;
+        overflow: visible !important;
+        float: none !important;
+        max-height: inherit !important;
+        max-width: inherit !important;
+        margin-top: 0px !important;
+        visibility: inherit !important;
+      }
+
+      .dark-img {
+        display: none;
+        display: none !important;
+      }
+
+      /* Card */
+      .card--featured .card__cta:hover {
+        color: #ffffff !important;
+      }
+      .card__cta:hover .card__cta-arrow {
+        padding-left: 8px !important;
+      }
+
+      /* Media Queries */
+      /* Desktop first bacause of Gmail - its styles are inlined */
+      @media screen and (max-width: 620px) {
+      }
+      /* Media Queries */
+      /* Desktop first bacause of Gmail - its styles are inlined */
+      @media screen and (max-width: 620px) {
+        .paragraph,
+        p,
+        a,
+        .links__list-item {
+          font-size: 16px !important;
+        }
+        .body-bg {
+          padding: 16px !important;
+        }
+        .salutation {
+          font-size: 32px !important;
+          line-height: 40px !important;
+          margin-bottom: 24px !important;
+        }
+        .height-fix {
+          height: auto !important;
+          max-height: inherit !important;
+        }
+        .card--featured h2.card__heading {
+          font-size: 32px !important;
+          line-height: 40px !important;
+        }
+        .card__heading,
+        .card__highlight {
+          font-size: 22px !important;
+          line-height: 26px !important;
+        }
+        .card__bottom--award .card__bottom-details {
+          max-width: initial !important;
+        }
+        .card__bottom--blog .card__bottom-details-firstline {
+          font-size: 18px !important;
+          line-height: 24px !important;
+        }
+        .card__bottom--award .card__bottom-details-firstline,
+        .card__bottom--award .card__bottom-details-secondline,
+        .card__bottom--award .card__bottom-details-secondline a {
+          font-size: 14px !important;
+        }
+        .logo {
+          display: inline-block;
+          max-width: 100px !important;
+          min-width: auto !important;
+        }
+        .view-online {
+          display: inline-block;
+          max-width: 50% !important;
+          min-width: auto !important;
+        }
+        .footer {
+          max-width: 572px !important;
+        } /* in 600px width restriction */
+        .footer .footer__heading {
+          font-size: 18px !important;
+        }
+        .card--partner .card__partner-logo {
+          display: block !important;
+          width: 100% !important;
+          border-bottom: 1px solid #e3e3e3;
+        }
+        .card--partner .card__partner-details {
+          width: 190px !important;
+        }
+        .card__content,
+        .card__above-content {
+          margin-top: -44px !important;
+          padding: 30px 20px 40px 20px !important;
+        }
+        .card__no-image-wrapper .card__above-content {
+          padding: 0 !important;
+          margin-top: -36px !important;
+        }
+        .card--featured .card__content {
+          margin-top: -30px !important;
+        }
+        .card--gradient .card__content,
+        .card--no-image .card__content,
+        .card--partner .card__content,
+        .card--cta-list .card__content {
+          margin-top: 0 !important;
+        }
+        .card--gradient .card__above-content {
+          margin-top: -120px !important;
+          padding-bottom: 0 !important;
+        }
+        .card--gradient .card__heading,
+        .card--gradient .card__text {
+          max-width: 100% !important;
+        }
+        .card--featured .card__image {
+          width: calc(100% - 20px) !important;
+          height: auto !important;
+        }
+        .card--featured .card__content-table tr td {
+          padding-left: 20px !important;
+        }
+        .card__award {
+          max-width: 100%;
+          margin-right: 20px !important;
+        }
+        .card--highlight .card__content {
+          margin-top: -30px !important;
+          padding-top: 20px !important;
+        }
+        .card--highlight .card__above-content {
+          box-sizing: border-box;
+          margin-top: -48px !important;
+          padding-top: 30px !important;
+        } /* 30px top padding because of ios Outlook app */
+        .card--highlight .card__above-content .card__highlight {
+          padding-top: 20px !important;
+          padding-bottom: 10px !important;
+          margin-bottom: 0 !important;
+        }
+        .card--highlight .card__text {
+          margin-top: 0 !important;
+        }
+        .card__bottom-image {
+          margin-top: 0 !important;
+        }
+      }
+
+      /* Desktop first bacause of Gmail - its styles are inlined */
+      @media screen and (max-width: 435px) {
+        .body-gap {
+          height: 0 !important;
+        }
+        .card--gradient .card__bottom-details {
+          margin-top: 20px !important;
+        }
+        .card--partner .card__partner-details {
+          width: 150px !important;
+        }
+      }
+
+      /* Desktop first bacause of Gmail - its styles are inlined */
+      @media screen and (max-width: 374px) {
+        .logo,
+        .view-online,
+        .view-online table tr td {
+          display: block !important;
+          text-align: left !important;
+        }
+        .view-online {
+          margin-top: 10px !important;
+        }
+        .card--partner .card__partner-details,
+        .card--partner .card__partner-awards {
+          width: 100% !important;
+        }
+      }
+
+      /* Dark mode styling */
+      @media (prefers-color-scheme: dark) {
+        /* Shows Dark Mode-Only image */
+        .dark-img {
+          display: block !important;
+          overflow: visible !important;
+          float: none !important;
+          max-height: inherit !important;
+          max-width: inherit !important;
+          margin-top: 0px !important;
+          visibility: inherit !important;
+        }
+
+        /* Hides Light Mode-Only image */
+        .light-img {
+          display: none !important;
+        }
+
+        h1,
+        h2,
+        h3,
+        p,
+        span,
+        a,
+        b,
+        .paragraph,
+        .salutation {
+          color: #f6f6f6 !important;
+        }
+        .brand-link a {
+          color: rgba(255, 129, 70, 1) !important;
+        }
+        body, /* ios13 needs explicit bg color to be set */
+    .body, /* outlook365 and yahoo body element fix */
+    .body-gap {
+          background-color: #363a3b !important;
+        } /* ios13 needs explicit bg color to be set */
+        .footer {
+          background-color: #231f20 !important;
+          background-image: none !important;
+        } /* ios13 needs explicit bg color to be set */
+        .footer__logo {
+          max-width: 100px !important;
+          min-width: auto !important;
+          background-color: #231f20 !important;
+        }
+        .orange-char {
+          color: #f05a22 !important;
+        }
+        /* Doesn't work in outlook and gmail */
+        .body-bg {
+          background-image: none !important;
+          background-color: #333333 !important;
+        } /* ios13 needs explicit bg color to be set */
+        /* win 10 mail doesn't care */
+        .view-online__cta {
+          color: #f6f6f6 !important;
+        }
+        /* win 10 mail doesn't care */
+        .card__content {
+          background-color: #231f20 !important;
+          border: none !important;
+        }
+        .card__above-content,
+        .card__no-image-wrapper {
+          background-color: #231f20 !important;
+        }
+        .card__no-image-wrapper .card__above-content {
+          background: none !important;
+        }
+        .card__highlight,
+        .card__above-content--highlight {
+          background-color: #403b3c !important;
+        }
+        .tag--black {
+          background-color: #f6f6f6 !important;
+          color: #231f20 !important;
+        }
+        .links__list li {
+          color: #918f8f !important;
+        }
+        .card__bottom-details {
+          color: #f6f6f6 !important;
+        }
+        .card__cta,
+        .card__cta-arrow {
+          color: #3d5dc0 !important;
+        }
+      }
+
+      /* OUTLOOK dark mode | [data-ogsb] == background; [data-ogsc] == color */
+      /* Shows Dark Mode-Only Images */
+      [data-ogsb] .dark-img {
+        display: block !important;
+        overflow: visible !important;
+        float: none !important;
+        max-height: inherit !important;
+        max-width: inherit !important;
+        margin-top: 0px !important;
+        visibility: inherit !important;
+      }
+
+      /* Hides Light Mode-Only Images */
+      [data-ogsb] .light-img {
+        display: none !important;
+      }
+
+      [data-ogsc] h1,
+      [data-ogsc] h2,
+      [data-ogsc] h3,
+      [data-ogsc] p,
+      [data-ogsc] a,
+      [data-ogsc] b,
+      [data-ogsc] .paragraph,
+      [data-ogsc] .salutation {
+        color: #ffffff !important;
+      }
+      [data-ogsc] .brand-link a {
+        color: rgba(255, 129, 70, 1) !important;
+      }
+      [data-ogsb] body,
+      [data-ogsb] .body,
+      [data-ogsb] .body-gap {
+        background-color: #363a3b !important;
+      }
+      [data-ogsb] .body-bg {
+        background-image: none !important;
+      }
+      [data-ogsb] .footer {
+        background-color: #231f20 !important;
+        background-image: none !important;
+      }
+      [data-ogsb] .footer__logo {
+        background-color: #231f20 !important;
+      }
+      [data-ogsc] .orange-char {
+        color: #f05a22 !important;
+      }
+      [data-ogsc] .view-online__cta {
+        color: #ffffff !important;
+      }
+      [data-ogsb] .card__content {
+        background-color: #231f20 !important;
+        border: none !important;
+      }
+      [data-ogsb] .card__above-content,
+      [data-ogsb] .card__no-image-wrapper {
+        background-color: #231f20 !important;
+      }
+      [data-ogsb] .card__no-image-wrapper .card__above-content {
+        background: none !important;
+      }
+      [data-ogsb] .card__highlight,
+      [data-ogsb] .card__above-content--highlight {
+        background-color: #403b3c !important;
+      }
+      [data-ogsb] .card__highlight {
+        background-color: #403b3c !important;
+      }
+      [data-ogsb] .tag--black {
+        background-color: #f6f6f6 !important;
+        color: #231f20 !important;
+      }
+      [data-ogsc] .links__list li {
+        color: #918f8f !important;
+      }
+      [data-ogsc] .card__bottom-details {
+        color: #f6f6f6 !important;
+      }
+      [data-ogsc] .card__cta,
+      [data-ogsc] .card__cta-arrow {
+        color: #3d5dc0 !important;
+      }
+    </style>
+  </head>
+  <body style="margin: 0; padding: 0; height: 100%; width: 100%">
+    <div class="body" style="background-color: #d3d2d2">
+      <span
+        class="preheader"
+        style="font-size: 1px; color: #ffffff; display: none"
+        >{% NotificationEmailPreviewText %}</span
+      >
+      <!-- Outlook main content wrapper. The role attribute is set to presentation to prevent it from being read by screenreaders. -->
+      <!--[if (gte mso 9)|(IE)]>
+    <table cellspacing="0" cellpadding="0" border="0" width="100%" height="100%" align="center" role="presentation" bgcolor="#D3D2D2"><tr><td>
+    <![endif]-->
+      <!-- Outlook main content -->
+      <!--[if (gte mso 9)|(IE)]>
+    <table cellspacing="0" cellpadding="0" border="0" width="600" align="center" role="presentation" bgcolor="#ffffff"><tr><td style="padding-bottom:30px;">
+    <![endif]-->
+      <!-- **** The role and aria-label attributes are added to wrap the email content as an article for screen readers. Some of them will read out the aria-label as the title of the document. -->
+      <!-- Main content top indent - not needed in Outlook - therefore no table here -->
+      <div
+        style="background-color: #d3d2d2; height: 66px"
+        class="body-gap"
+      ></div>
+
+      <div
+        role="article"
+        aria-label="{% emailTitle %}"
+        class="body-bg"
+        lang="en"
+        style="
+          background-color: #ffffff;
+          color: #2b2b2b;
+          font-family: Arial, 'Avenir Next', -apple-system, BlinkMacSystemFont,
+            'Segoe UI', Roboto, Helvetica, sans-serif, 'Apple Color Emoji',
+            'Segoe UI Emoji', 'Segoe UI Symbol';
+          font-size: 18px;
+          font-weight: 400;
+          line-height: 28px;
+          margin: 0 auto;
+          max-width: 540px;
+          padding: 30px;
+          background-image: url('https://www.kentico.com/getmedia/e00e369a-77ec-40a3-a605-4337d73919bd/dots-header.png');
+          background-size: 318px 248px;
+          background-position: top right;
+          background-repeat: no-repeat;
+        "
+      >
+        <header>
+          <table
+            role="presentation"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            width="100%"
+            style="margin: auto"
+          >
+            <!-- Email Header -->
+            <tbody>
+              <tr>
+                <td align="left" valign="top" style="font-size: 0; padding: 0">
+                  <!--[if (gte mso 9)|(IE)]>
+	                        <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="600">
+	                        <tr>
+	                        <td valign="top" width="300" style="padding-left:30px;padding-top:30px;">
+	                        <![endif]-->
+                  <div
+                    style="
+                      display: inline-block;
+                      margin: 0;
+                      width: 100%;
+                      min-width: 200px;
+                      max-width: 270px;
+                      vertical-align: bottom;
+                    "
+                    class="logo"
+                  >
+                    <a
+                      href="https://community.kentico.com/"
+                      style="width: 50px; height: 40px; display: inline-block"
+                      target="_blank"
+                    >
+                      <img
+                        class="light-img"
+                        src="https://community.kentico.com/getContentAsset/1d5b3de5-250d-4051-8871-513082fcd968/f6c98f2d-65fc-44ba-9351-3f0beda8e921/Kentico-shortcut-color-positive-rgb.png?language=en-US"
+                        style="width: 101px"
+                      />
+                      <div
+                        class="dark-img"
+                        style="
+                          display: none;
+                          overflow: hidden;
+                          float: left;
+                          width: 0px;
+                          max-height: 0px;
+                          max-width: 0px;
+                          line-height: 0px;
+                          visibility: hidden;
+                        "
+                      >
+                        <img
+                          src="https://community.kentico.com/getContentAsset/1d5b3de5-250d-4051-8871-513082fcd968/f6c98f2d-65fc-44ba-9351-3f0beda8e921/Kentico-shortcut-color-positive-rgb.png?language=en-US"
+                          style="width: 101px"
+                        />
+                      </div>
+                    </a>
+                  </div>
+                  <!--[if (gte mso 9)|(IE)]>
+	                        </td></tr></table>
+	                        <![endif]-->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </header>
+
+        <main>
+          <!--[if (gte mso 9)|(IE)]>
+            <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="540">
+            <tr>
+            <td valign="top" width="600" style="padding-left:30px;padding-right:30px;padding-bottom:30px;">
+            <![endif]-->
+          <div class="paragraph" style="color: #4f4c4d">
+            {% notificationemailcontent %}
+          </div>
+          <!--[if mso]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+        </main>
+      </div>
+      <div
+        class="footer"
+        style="
+          background-color: #f4f4f4;
+          margin: 0 auto;
+          max-width: 600px;
+          font-family: Arial, 'Avenir Next', -apple-system, BlinkMacSystemFont,
+            'Segoe UI', Roboto, Helvetica, sans-serif, 'Apple Color Emoji',
+            'Segoe UI Emoji', 'Segoe UI Symbol';
+          background-image: url('https://www.kentico.com/getmedia/58ad5643-8464-4e02-996f-761e53ae1669/dots-footer.png');
+          background-position: top right;
+          background-size: 196px 155px;
+          background-repeat: no-repeat;
+        "
+      >
+        <footer style="margin: 0; padding: 0">
+          <!-- Footer -->
+          <!--[if (gte mso 9)|(IE)]>
+        <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="600">
+        <tr><td valign="top" width="600" style="background-color:#F4F4F4;padding: 56px 40px 20px 40px;">
+        <![endif]-->
+
+          <!--[if (gte mso 9)|(IE)]>
+            <table role="presentation" border="0" cellspacing="0" cellpadding="0">
+            <tr><td valign="top" style="text-align:left;padding-top:20px;padding-bottom:30px;color:#333333;">
+            <![endif]-->
+
+          <!--[if (gte mso 9)|(IE)]>
+            </td></tr></table>
+            <![endif]-->
+          <!-- Footer line -->
+          <!--[if (gte mso 9)|(IE)]>
+            <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="100%" height="1px" bgcolor="#B2B2B2">
+            <tr><td style="background-color:#B2B2B2;height:1px;">
+            <![endif]-->
+          <div style="padding: 0 40px">
+            <div
+              style="background-color: #b2b2b2; height: 1px; padding: 0"
+            ></div>
+          </div>
+          <!--[if (gte mso 9)|(IE)]>
+            </td></tr></table>
+            <![endif]-->
+          <!-- Gap below the line -->
+          <!--[if (gte mso 9)|(IE)]>
+            <table
+              role="presentation"
+              border="0"
+              cellspacing="0"
+              cellpadding="0"
+              width="100%"
+            >
+              <tr>
+                <td style="padding-bottom: 20px"></td>
+              </tr>
+            </table>
+          <![endif]-->
+          <p
+            style="
+              color: #4f4c4d;
+              font-size: 16px;
+              font-weight: 400;
+              line-height: 24px;
+              padding: 40px 40px;
+              margin-top: 0;
+              text-align: left;
+              display: inline-block;
+            "
+          >
+            <a
+              href="https://community.kentico.com"
+              style="color: #4f4c4d; text-decoration: none"
+              >Kentico software s.r.o.</a
+            >, Nove sady 25, 602 00 Brno, Czech Republic.
+          </p>
+          <div
+            style="
+              padding: 0 40px 40px 40px;
+              text-align: left;
+              display: block;
+              background-color: #f4f4f4;
+            "
+            class="footer__logo"
+          >
+            <a
+              href="https://community.kentico.com"
+              style="width: 50px; height: 40px; display: inline-block"
+              target="_blank"
+            >
+              <img
+                class="light-img"
+                src="https://community.kentico.com/getContentAsset/1d5b3de5-250d-4051-8871-513082fcd968/f6c98f2d-65fc-44ba-9351-3f0beda8e921/Kentico-shortcut-color-positive-rgb.png?language=en-US"
+                style="width: 101px"
+              />
+              <div
+                class="dark-img"
+                style="
+                  display: none;
+                  overflow: hidden;
+                  float: left;
+                  width: 0px;
+                  max-height: 0px;
+                  max-width: 0px;
+                  line-height: 0px;
+                  visibility: hidden;
+                "
+              >
+                <img
+                  src="https://community.kentico.com/getContentAsset/1d5b3de5-250d-4051-8871-513082fcd968/f6c98f2d-65fc-44ba-9351-3f0beda8e921/Kentico-shortcut-color-positive-rgb.png?language=en-US"
+                  style="width: 101px"
+                />
+              </div>
+            </a>
+          </div>
+          <!-- Footer end -->
+          <!--[if (gte mso 9)|(IE)]>
+        </td></tr></table>
+        <![endif]-->
+        </footer>
+      </div>
+      <!-- Footer wrapper end -->
+      <!--[if (gte mso 9)|(IE)]>
+    </td></tr></table>
+    <![endif]-->
+      <!-- Outlook main content wrapper end -->
+      <!--[if (gte mso 9)|(IE)]>
+    </td></tr></table>
+    <![endif]-->
+    </div>
+    <!-- Main content bottom indent -->
+    <div
+      style="background-color: #d3d2d2; height: 30px; border: none"
+      class="body-gap"
+    ></div>
   </body>
 </html>
+
 ]]>
   </NotificationEmailTemplateCode>
   <NotificationEmailTemplateDescription>

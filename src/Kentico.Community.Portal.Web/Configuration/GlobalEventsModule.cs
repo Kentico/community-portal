@@ -6,7 +6,6 @@ using CMS.EmailLibrary;
 using CMS.EmailLibrary.Internal;
 using CMS.Helpers;
 using CMS.OnlineForms;
-using Kentico.Community.Portal.Core.Forms;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Configuration;
@@ -51,6 +50,8 @@ internal class GlobalEventsModule : Module
         TagInfo.TYPEINFO.Events.Update.Before += Tag_ModifyBefore;
         TagInfo.TYPEINFO.Events.Delete.Before += Tag_DeleteBefore;
         BizFormItemEvents.Insert.After += FormItem_InsertAfter;
+        BizFormItemEvents.Update.After += FormItem_UpdateAfter;
+        BizFormItemEvents.Delete.After += FormItem_DeleteAfter;
 
         EmailContentFilterRegister.Instance
             .Register(
@@ -305,15 +306,22 @@ internal class GlobalEventsModule : Module
         }
     }
 
-    private void FormItem_InsertAfter(object? sender, BizFormItemEventArgs e)
+    private void FormItem_InsertAfter(object? sender, BizFormItemEventArgs e) =>
+        ClearFormItemsCache(e.Item);
+    private void FormItem_DeleteAfter(object? sender, BizFormItemEventArgs e) =>
+        ClearFormItemsCache(e.Item);
+    private void FormItem_UpdateAfter(object? sender, BizFormItemEventArgs e) =>
+        ClearFormItemsCache(e.Item);
+
+    private static void ClearFormItemsCache(BizFormItem item)
     {
-        if (e.Item is null or not (MVPActivityItem or CommunityLeaderActivityItem))
+        if (item is null)
         {
             return;
         }
 
         var builder = new CacheDependencyKeysBuilder();
-        builder.AllObjects(e.Item.BizFormClassName);
+        _ = builder.AllObjects(item.BizFormClassName);
         foreach (string key in builder.GetKeys())
         {
             CacheHelper.TouchKey(key);

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Web page scope content type</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="WebPageScopeContentTypeID" columntype="integer" enabled="true" guid="f9074ea8-60b2-4cb1-b582-ef28a80cfe0b" isPK="true" system="true" />
+      <field column="WebPageScopeContentTypeWebPageScopeID" columnprecision="0" columntype="integer" enabled="true" guid="b2388ab5-7300-4221-8c9e-2811866cf94e" refobjtype="cms.webpagescope" reftype="Binding" system="true" />
+      <field column="WebPageScopeContentTypeContentTypeID" columnprecision="0" columntype="integer" enabled="true" guid="4e95c44a-bc9b-44de-952a-3445d9e8797d" refobjtype="cms.contenttype" reftype="Binding" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>2ed4ace4-c2a1-4bfa-84eb-6bc5192dda4b</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.WebPageScopeContentType</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Websites</CodeName>
+    <GUID>87975c89-f788-4e6c-a91f-08f38097cc32</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_WebPageScopeContentType</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

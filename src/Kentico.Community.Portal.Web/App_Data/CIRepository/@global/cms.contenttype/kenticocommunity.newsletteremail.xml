@@ -8,7 +8,7 @@
       <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="6492f3f0-ae8f-4d4d-ad93-d25212e0b81e" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
       <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="ec0fd2e1-b758-4517-a46f-21dd35a1b70d" isunique="true" system="true" />
       <field allowempty="true" column="EmailSenderID" columntype="integer" enabled="true" guid="95b24a7b-ac2e-4afc-9170-9d7a31db4f6f" refobjtype="emaillibrary.emailchannelsender" reftype="NotRequired" system="true" />
-      <field column="EmailTemplateID" columntype="integer" enabled="true" guid="a4a0250a-1f5b-4334-ae64-99af68a0c83b" refobjtype="emaillibrary.emailtemplate" reftype="Required" system="true" />
+      <field allowempty="true" column="EmailTemplateID" columntype="integer" enabled="true" guid="a4a0250a-1f5b-4334-ae64-99af68a0c83b" refobjtype="emaillibrary.emailtemplate" reftype="NotRequired" system="true" />
       <field allowempty="true" column="EmailPlainText" columntype="longtext" enabled="true" guid="e6888a1b-c4f6-4ee8-905d-922a676b327c" system="true" />
       <field allowempty="true" column="EmailSubject" columnsize="450" columntype="text" enabled="true" guid="64a926d0-3dad-40ac-9d82-869b72724971" visible="true">
         <properties>
@@ -66,7 +66,7 @@
           <controlname>Kentico.Administration.DateInput</controlname>
         </settings>
       </field>
-      <field column="NewsletterEmailIntroContent" columnprecision="0" columntype="longtext" enabled="true" guid="4ea49558-4614-43cc-87ea-75c093619de0" visible="true">
+      <field column="NewsletterEmailIntroContent" columnprecision="0" columntype="richtexthtml" enabled="true" guid="4ea49558-4614-43cc-87ea-75c093619de0" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Content</fieldcaption>
@@ -77,15 +77,15 @@
           <controlname>Kentico.Administration.RichTextEditor</controlname>
         </settings>
       </field>
-      <field allowempty="true" column="NewsletterEmailCardContents" columnprecision="0" columntype="contentitemreference" enabled="true" guid="f137084c-77f7-4f84-994f-6ff88912fd6a" visible="true">
+      <field allowempty="true" column="NewsletterEmailBlogPostPages" columnprecision="0" columntype="contentitemreference" enabled="true" guid="f137084c-77f7-4f84-994f-6ff88912fd6a" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Cards</fieldcaption>
+          <fieldcaption>Blogs</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
           <AllowedContentItemTypeIdentifiers>
-            <![CDATA[["365594a6-f443-49d8-9213-a1ad74d613dd"]]]>
+            <![CDATA[["a0450c6e-a032-40cb-893f-ce121cb22c0e"]]]>
           </AllowedContentItemTypeIdentifiers>
           <controlname>Kentico.Administration.ContentItemSelector</controlname>
           <MaximumItems>5</MaximumItems>
@@ -108,7 +108,7 @@
           <SelectionType>contentTypes</SelectionType>
         </settings>
       </field>
-      <field column="NewsletterEmailOutroContent" columnprecision="0" columntype="longtext" enabled="true" guid="a3d5d40d-9309-4367-a6ca-eee5fa8190f8" visible="true">
+      <field column="NewsletterEmailOutroContent" columnprecision="0" columntype="richtexthtml" enabled="true" guid="a3d5d40d-9309-4367-a6ca-eee5fa8190f8" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Outro Content</fieldcaption>

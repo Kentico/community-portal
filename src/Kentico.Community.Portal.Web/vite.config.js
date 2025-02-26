@@ -85,6 +85,7 @@ export default defineConfig(async ({ mode }) => {
            * (FOUC) on page navigations. See: https://github.com/Eptagone/Vite.AspNetCore/issues/50
            */
           "Client/js/main.js",
+          "Client/js/polls.js",
           "Client/js/q-and-a.js",
           "Client/js/search.js",
           "Client/js/recaptcha.js",

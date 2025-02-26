@@ -41,12 +41,12 @@ public class CommunityLinksPageTemplateController(
     IMediator mediator,
     WebPageMetaService metaService,
     IWebPageDataContextRetriever contextRetriever,
-    IPageTemplatePropertiesRetriever propertiesRetriever) : Controller
+    IPageBuilderTemplatePropertiesRetriever propertiesRetriever) : Controller
 {
     private readonly IMediator mediator = mediator;
     private readonly WebPageMetaService metaService = metaService;
     private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
-    private readonly IPageTemplatePropertiesRetriever propertiesRetriever = propertiesRetriever;
+    private readonly IPageBuilderTemplatePropertiesRetriever propertiesRetriever = propertiesRetriever;
 
     public async Task<ActionResult> Index()
     {

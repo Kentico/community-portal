@@ -8,6 +8,7 @@ import Collapse from "bootstrap/js/dist/collapse";
 import Dropdown from "bootstrap/js/dist/dropdown";
 import Toast from "bootstrap/js/dist/toast";
 import Alert from "bootstrap/js/dist/alert";
+import Tab from "bootstrap/js/dist/tab";
 
 export default function setup() {
   document
@@ -21,6 +22,10 @@ export default function setup() {
   document
     .querySelectorAll("[data-bs-toggle='dropdown']")
     .forEach((el) => new Dropdown(el));
+
+  document
+    .querySelectorAll("[data-bs-toggle='tab']")
+    .forEach((el) => new Tab(el));
 
   document.querySelectorAll(".alert").forEach((el) => new Alert(el));
 

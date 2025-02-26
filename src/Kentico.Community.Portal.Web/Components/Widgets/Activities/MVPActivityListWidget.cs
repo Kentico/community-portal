@@ -1,14 +1,15 @@
-using System.Security.Claims;
+using System.Collections.Immutable;
 using CMS.DataEngine;
+using CMS.Membership;
 using CMS.OnlineForms;
 using Kentico.Community.Portal.Core.Forms;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components;
+using Kentico.Community.Portal.Web.Components.Widgets.Forms;
 using Kentico.Community.Portal.Web.Components.Widgets.MVPActivityList;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.PageBuilder.Web.Mvc;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 [assembly: RegisterWidget(
@@ -21,112 +22,107 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Components.Widgets.MVPActivityList;
 
-public class MVPActivityListWidget(IMediator mediator, UserManager<CommunityMember> userManager) : ViewComponent
+public class MVPActivityListWidget(IMediator mediator) : ViewComponent
 {
     public const string IDENTIFIER = "CommunityPortal.Widget.MVPActivityList";
     public const string NAME = "MVP activity list";
 
     private readonly IMediator mediator = mediator;
-    private readonly UserManager<CommunityMember> userManager = userManager;
 
     public async Task<IViewComponentResult> InvokeAsync(ComponentViewModel<MVPActivityListWidgetProperties> _)
     {
-        string? memberIDStr = User is ClaimsPrincipal user
-            ? userManager.GetUserId(user)
-            : null;
-        int memberID = int.TryParse(memberIDStr, out int id)
-            ? id
-            : 0;
-        var resp = await mediator.Send(new MVPActivitiesQuery(memberID));
-
-        var dataClass = DataClassInfoProvider.GetDataClassInfo(MVPActivityItem.CLASS_NAME);
-        var form = BizFormInfoProvider.GetBizFormInfoForClass(dataClass.ClassID);
-
-        return Validate(
-            resp,
-            ParseFieldDataSource(form, nameof(MVPActivityItem.ActivityType)),
-            ParseFieldDataSource(form, nameof(MVPActivityItem.Impact)),
-            ParseFieldDataSource(form, nameof(MVPActivityItem.Effort)),
-            ParseFieldDataSource(form, nameof(MVPActivityItem.Satisfaction)))
-            .Match(
-                vm => View("~/Components/Widgets/Activities/MVPActivityList.cshtml", vm),
-                vm => View("~/Components/ComponentError.cshtml", vm)
-            );
-    }
-
-    private static Result<MVPActivityListWidgetViewModel, ComponentErrorViewModel> Validate(
-        MVPActivitiesQueryResponse resp,
-        IReadOnlyDictionary<string, string> activitTypesMap,
-        IReadOnlyDictionary<string, string> impactMap,
-        IReadOnlyDictionary<string, string> effortMap,
-        IReadOnlyDictionary<string, string> satisfactionMap) =>
-        new MVPActivityListWidgetViewModel(resp.Items)
+        var communityMemberID = CommunityMember.GetMemberIDFromClaim(HttpContext);
+        var resp = await mediator.Send(new MVPActivitiesQuery());
+        var bizForm = FormParser.GetFormByClassName(FormClassName.From(MVPActivityItem.CLASS_NAME));
+        if (!bizForm.TryGetValue(out var form))
         {
-            ActivitTypesMap = activitTypesMap,
-            ImpactMap = impactMap,
-            EfforMap = effortMap,
-            SatisfactionMap = satisfactionMap
-        };
-
-    private static Dictionary<string, string> ParseFieldDataSource(BizFormInfo form, string fieldName)
-    {
-        object? dataSource = form.Form.GetFormField(fieldName).Settings["DataSource"];
-
-        if (dataSource is not string srcString || string.IsNullOrWhiteSpace(srcString))
-        {
-            return [];
+            return View("~/Components/ComponentError.cshtml");
         }
 
-        var lookup = new Dictionary<string, string>();
-        string[] lines = srcString.Split(['\n'], StringSplitOptions.RemoveEmptyEntries);
-
-        foreach (string line in lines)
+        return View("~/Components/Widgets/Activities/MVPActivityList.cshtml", new MVPActivityListWidgetViewModel(resp, communityMemberID.Value)
         {
-            string[] parts = line.Split(';');
-            if (parts.Length == 2)
-            {
-                string key = parts[0].Trim();
-                string value = parts[1].Trim();
-                lookup[key] = value;
-            }
-        }
-
-        return lookup;
+            ActivitTypesMap = FormParser.GetFormFieldOptions(form, nameof(MVPActivityItem.ActivityType)),
+            ImpactMap = FormParser.GetFormFieldOptions(form, nameof(MVPActivityItem.Impact)),
+            EfforMap = FormParser.GetFormFieldOptions(form, nameof(MVPActivityItem.Effort)),
+            SatisfactionMap = FormParser.GetFormFieldOptions(form, nameof(MVPActivityItem.Satisfaction))
+        });
     }
 }
 
 public class MVPActivityListWidgetProperties : BaseWidgetProperties { }
 
-public class MVPActivityListWidgetViewModel(IReadOnlyList<MVPActivityItem> items) : BaseWidgetViewModel
+public class MVPActivityListWidgetViewModel : BaseWidgetViewModel
 {
+    public MVPActivityListWidgetViewModel(MVPActivitiesQueryResponse resp, int currentMemberID)
+    {
+        MyActivities = resp.ActivitiesByMember.TryGetValue(currentMemberID, out var myActivities)
+            ? myActivities
+            : [];
+        AllActivities = resp.AllActivities;
+        MemberNames = resp.MemberNames;
+    }
+
     protected override string WidgetName { get; } = MVPActivityListWidget.NAME;
 
-    public IReadOnlyList<MVPActivityItem> Items { get; } = items;
+    public IReadOnlyList<MVPActivityItem> AllActivities { get; }
+    public IReadOnlyList<MVPActivityItem> MyActivities { get; }
+    public Dictionary<int, string> MemberNames { get; }
     public required IReadOnlyDictionary<string, string> ActivitTypesMap { get; init; }
     public required IReadOnlyDictionary<string, string> ImpactMap { get; init; }
     public required IReadOnlyDictionary<string, string> EfforMap { get; init; }
     public required IReadOnlyDictionary<string, string> SatisfactionMap { get; init; }
+
+    public string ActivityType(MVPActivityItem item) =>
+    ActivitTypesMap.TryGetValue(item.ActivityType, out string? typeVal)
+        ? typeVal
+        : item.ActivityType;
+    public string Impact(MVPActivityItem item) =>
+        ImpactMap.TryGetValue(item.Impact, out string? impact) ? impact : item.Impact;
+
+    public string Effort(MVPActivityItem item) =>
+        EfforMap.TryGetValue(item.Effort, out string? effort) ? effort : item.Effort;
+
+    public string Satisfaction(MVPActivityItem item) =>
+        SatisfactionMap.TryGetValue(item.Satisfaction, out string? Satisfaction)
+            ? Satisfaction
+            : item.Satisfaction;
+
+    public string MemberName(MVPActivityItem item) =>
+        MemberNames.TryGetValue(item.MemberID, out string? name) ? name : "";
 }
 
-public record MVPActivitiesQuery(int MemberID) : IQuery<MVPActivitiesQueryResponse>, ICacheByValueQuery
-{
-    public string CacheValueKey => MemberID.ToString();
-}
-
-public record MVPActivitiesQueryResponse(IReadOnlyList<MVPActivityItem> Items);
-public class MVPActivitiesQueryQueryHandler(DataItemQueryTools tools, TimeProvider time) : DataItemQueryHandler<MVPActivitiesQuery, MVPActivitiesQueryResponse>(tools)
+public record MVPActivitiesQuery : IQuery<MVPActivitiesQueryResponse>;
+public record MVPActivitiesQueryResponse(
+    Dictionary<int, ImmutableList<MVPActivityItem>> ActivitiesByMember,
+    ImmutableList<MVPActivityItem> AllActivities,
+    Dictionary<int, string> MemberNames
+);
+public class MVPActivitiesQueryHandler(
+    DataItemQueryTools tools,
+    TimeProvider time,
+    IInfoProvider<MemberInfo> memberProvider) : DataItemQueryHandler<MVPActivitiesQuery, MVPActivitiesQueryResponse>(tools)
 {
     private readonly TimeProvider time = time;
+    private readonly IInfoProvider<MemberInfo> memberProvider = memberProvider;
 
     public override async Task<MVPActivitiesQueryResponse> Handle(MVPActivitiesQuery request, CancellationToken cancellationToken = default)
     {
         var items = await BizFormItemProvider.GetItems<MVPActivityItem>()
-            .WhereEquals(nameof(MVPActivityItem.MemberID), request.MemberID)
             .WhereGreaterOrEquals(nameof(MVPActivityItem.ActivityDate), new DateTime(time.GetLocalNow().Year, 1, 1))
             .OrderByDescending(nameof(MVPActivityItem.ActivityDate))
             .GetEnumerableTypedResultAsync();
 
-        return new([.. items]);
+        var members = await memberProvider.Get()
+            .WhereIn(nameof(MemberInfo.MemberID), items.Select(i => i.MemberID).Distinct())
+            .GetEnumerableTypedResultAsync();
+
+        var memberNames = members.Select(m => m.AsCommunityMember()).ToDictionary(m => m.Id, m => m.DisplayName);
+
+        return new(
+            items.GroupBy(i => i.MemberID).ToDictionary(g => g.Key, g => g.ToImmutableList()),
+            [.. items],
+            memberNames
+        );
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(MVPActivitiesQuery query, MVPActivitiesQueryResponse result, ICacheDependencyKeysBuilder builder) =>
