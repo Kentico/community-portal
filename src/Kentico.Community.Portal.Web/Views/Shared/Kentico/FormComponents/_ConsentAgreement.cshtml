@@ -4,9 +4,14 @@
 
 @{
     var htmlAttributes = ViewData.Kentico().GetEditorHtmlAttributes();
+
     string spanTitle = htmlAttributes.TryGetValue("title", out object? title)
     ? title?.ToString() ?? ""
     : String.Empty;
+
+    var content = string.IsNullOrWhiteSpace(Model.Properties.ConsentText)
+    ? Html.Raw("&nbsp;")
+    : new HtmlString(Model.Properties.ConsentText);
 
     if (!Model.CheckboxEnabled)
     {
@@ -16,12 +21,10 @@
     htmlAttributes["class"] = htmlAttributes["class"] + " form-check-input";
 }
 
-<div title="@spanTitle">
+<div title="@spanTitle" aria-label="@spanTitle">
     @Html.CheckBoxFor(m => m.ConsentChecked, htmlAttributes)
 
     <label for="@Html.IdFor(x => x.ConsentChecked)" class="form-check-label">
-        @(String.IsNullOrWhiteSpace(Model.Properties.ConsentText)
-            ? Html.Raw("&nbsp;")
-            : new HtmlString(Model.Properties.ConsentText))
+        @content
     </label>
 </div>

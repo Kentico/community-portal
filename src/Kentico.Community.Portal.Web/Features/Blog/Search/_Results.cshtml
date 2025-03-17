@@ -15,7 +15,10 @@
                 </div>
                 <div class="c-card_tags p-0">
                     <div class="c-group tags justify-content-end">
-                        <span class="c-tag secondary" title="Blog type - @post.BlogType">@post.BlogType</span>
+                        <span class="c-tag secondary" title="Blog type - @post.BlogType"
+                            aria-label="Blog type - @post.BlogType">
+                            @post.BlogType
+                        </span>
                     </div>
                 </div>
             </div>
@@ -44,7 +47,9 @@
                 <div class="c-group tags">
                     @foreach (string topic in post.DXTopics)
                     {
-                        <span class="c-tag secondary invert" title="Topic - @topic">@topic</span>
+                        <span class="c-tag secondary invert" title="Topic - @topic" aria-label="Topic - @topic">
+                            @topic
+                        </span>
                     }
                 </div>
             </div>

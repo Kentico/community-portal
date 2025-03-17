@@ -2,7 +2,6 @@ using System.ComponentModel;
 using CMS.ContentEngine;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components;
-using Kentico.Community.Portal.Web.Components.ViewComponents.PollFormResults;
 using Kentico.Community.Portal.Web.Components.Widgets.Forms;
 using Kentico.Community.Portal.Web.Components.Widgets.PollForm;
 using Kentico.Community.Portal.Web.Rendering;

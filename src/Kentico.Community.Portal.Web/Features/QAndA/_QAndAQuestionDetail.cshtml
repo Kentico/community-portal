@@ -28,7 +28,9 @@
                         <div class="c-group tags">
                             @foreach (string topic in Model.DXTopics)
                             {
-                                <span class="c-tag secondary invert" title="Topic - @topic">@topic</span>
+                                <span class="c-tag secondary invert" title="Topic - @topic" aria-label="Topic - @topic">
+                                    @topic
+                                </span>
                             }
                         </div>
                     </div>

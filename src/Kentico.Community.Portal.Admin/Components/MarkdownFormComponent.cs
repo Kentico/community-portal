@@ -2,9 +2,10 @@ using Kentico.Community.Portal.Admin;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Kentico.Xperience.Admin.Base.Forms;
 
-[assembly: RegisterFormComponent(MarkdownFormComponent.IDENTIFIER,
-                                 typeof(MarkdownFormComponent),
-                                 "Markdown")]
+[assembly: RegisterFormComponent(
+   identifier: MarkdownFormComponent.IDENTIFIER,
+   componentType: typeof(MarkdownFormComponent),
+   name: "Markdown")]
 
 namespace Kentico.Community.Portal.Admin;
 

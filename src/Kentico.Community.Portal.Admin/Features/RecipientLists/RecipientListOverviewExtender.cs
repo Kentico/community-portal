@@ -17,6 +17,8 @@ public class RecipientListOverviewExtender(
     IInfoProvider<ContactGroupMemberInfo> groupMemberProvider,
     IInfoProvider<ContactGroupInfo> contactGroupProvider) : PageExtender<RecipientListOverview>
 {
+    public const string EXPORT_COMMAND = "EXPORT";
+
     private readonly IInfoProvider<ContactGroupMemberInfo> groupMemberProvider = groupMemberProvider;
     private readonly IInfoProvider<ContactGroupInfo> contactGroupProvider = contactGroupProvider;
 
@@ -30,7 +32,8 @@ public class RecipientListOverviewExtender(
         {
             Properties = new DataExportProperties
             {
-                FileNamePrefix = recipientList.ContactGroupName
+                FileNamePrefix = recipientList.ContactGroupName,
+                CommandName = EXPORT_COMMAND
             }
         };
 
@@ -62,7 +65,7 @@ public class RecipientListOverviewExtender(
             .Add(group);
     }
 
-    [PageCommand(CommandName = "EXPORT_LIST")]
+    [PageCommand(CommandName = EXPORT_COMMAND)]
     public async Task<ICommandResponse> PageCommandHandler(CancellationToken cancellationToken = default)
     {
         var results = await groupMemberProvider.Get()
@@ -94,7 +97,7 @@ public class RecipientListOverviewExtender(
         writer.Flush();
         ms.Position = 0;
 
-        return ResponseFrom(new { file = Convert.ToBase64String(ms.ToArray()) });
+        return ResponseFrom(DataExportResponse.Data(Convert.ToBase64String(ms.ToArray())));
     }
 
     public override async Task<TemplateClientProperties> ConfigureTemplateProperties(TemplateClientProperties properties)
@@ -103,28 +106,6 @@ public class RecipientListOverviewExtender(
 
         return props;
     }
-}
-
-public class DataExportComponent : ActionComponent<DataExportProperties, DataExportClientProperties>
-{
-    public override string ClientComponentName => "@kentico-community/portal-web-admin/DataExport";
-
-    protected override Task ConfigureClientProperties(DataExportClientProperties clientProperties)
-    {
-        clientProperties.FileNamePrefix = Properties.FileNamePrefix;
-
-        return base.ConfigureClientProperties(clientProperties);
-    }
-}
-public class DataExportProperties : IActionComponentProperties
-{
-    public string FileNamePrefix { get; set; } = "";
-}
-public class DataExportClientProperties : IActionComponentClientProperties
-{
-    public string ComponentName { get; init; } = "";
-
-    public string FileNamePrefix { get; set; } = "";
 }
 
 public record Item(int ContactID, string ContactEmail, DateTime ConfirmedDate);

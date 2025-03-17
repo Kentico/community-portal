@@ -6,7 +6,8 @@
     string slug = View.SlugHelper.GenerateSlug($"linkList-{Model.Label}");
 
     <h3 id="@slug" class="heading">
-      @Model.Label <a title="Copy link to heading" class="heading-link" href="#@(slug)"></a>
+      @Model.Label <a title="Navigate to this heading" aria-label="Navigate to this heading" class="heading-link"
+        href="#@(slug)"></a>
     </h3>
   }
 

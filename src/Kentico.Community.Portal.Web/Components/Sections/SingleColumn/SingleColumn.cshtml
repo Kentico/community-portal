@@ -17,7 +17,7 @@
         VerticalPaddings.None or _ => "",
     };
 
-    string paddingBottomClasses = Model.PaddingTop switch
+    string paddingBottomClasses = Model.PaddingBottom switch
     {
         VerticalPaddings.Small => "pb-1",
         VerticalPaddings.Medium => "pb-2",
@@ -28,7 +28,7 @@
     string backgroundColorClases = Model.BackgroundColor switch
     {
         BackgroundColors.Dark => "bg-dark",
-        BackgroundColors.Secondary_Light => "bg-secondary",
+        BackgroundColors.Secondary_Light => "bg-secondary-light",
         BackgroundColors.Light => "bg-light",
         BackgroundColors.White or _ => "",
     };

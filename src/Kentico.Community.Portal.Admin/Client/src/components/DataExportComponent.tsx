@@ -1,92 +1,114 @@
-/* eslint-disable no-console */
 import {
-  FormComponentProps,
+  ActionComponentProps,
   usePageCommand,
 } from '@kentico/xperience-admin-base';
 import { ProgressBar } from '@kentico/xperience-admin-components';
 import React, { useEffect, useState } from 'react';
 
-interface SubscriberExportResult {
-  file: string;
-}
+type ExportResultFailure = { errorMessage: string; fileData: null };
+type ExportResultSuccess = { fileData: string; errorMessage: null };
+type ExportResult = ExportResultSuccess | ExportResultFailure;
 
-type ExportStatus = 'INACTIVE' | 'EXPORTING' | 'COMPLETE' | 'FAILURE';
+type ExportStatus = 'EXPORTING' | 'COMPLETE' | 'FAILURE';
 type ComponentState = {
   status: ExportStatus;
   percentComplete: number;
+  errorMessage: string;
 };
 
-interface DataExportComponentProps extends FormComponentProps {
+interface DataExportComponentProps extends ActionComponentProps {
   fileNamePrefix: string;
+  commandName: string;
 }
 
 export const DataExportComponent = (props: DataExportComponentProps) => {
   const [state, setState] = useState<ComponentState>({
-    status: 'INACTIVE',
+    status: 'EXPORTING',
     percentComplete: 0,
+    errorMessage: '',
   });
 
   useEffect(() => {
-    setState((s) => ({ ...s, status: 'EXPORTING' }));
-    dataExport()
-      .then(() => setState((s) => ({ ...s, status: 'COMPLETE' })))
-      .catch((err) => {
-        console.error(err);
-        setState((s) => ({ ...s, status: 'FAILURE' }));
-      });
-
-    let current = 0;
+    let currentProgress = 0;
     const target = 100;
-    const interval = 500; // 500 ms (half-second intervals)
+    const interval = 500;
 
     const intervalId = setInterval(() => {
-      // Calculate the next increment as a percentage of the remaining distance to target
-      const increment = (target - current) * 0.1;
-      current += increment;
-
-      // Ensure we don’t go beyond the target due to floating-point inaccuracies
-      if (current >= target - 0.01) {
-        // Tolerance for floating-point
-        current = target;
+      // End if we've reached the limit
+      if (
+        currentProgress >= target - 0.01 ||
+        state.status === 'FAILURE' ||
+        state.status === 'COMPLETE'
+      ) {
+        currentProgress = target;
         clearInterval(intervalId);
+        props.onActionExecuted();
+
+        if (state.status !== 'FAILURE') {
+          props.unloadComponent();
+        }
+
+        return;
       }
 
-      setState((s) => ({ ...s, percentComplete: current.toFixed(2) }));
+      // Calculate the next increment as a percentage of the remaining distance to target
+      const increment = (target - currentProgress) * 0.1;
+      currentProgress += increment;
+
+      setState((s) => ({
+        ...s,
+        percentComplete: currentProgress.toFixed(2),
+      }));
     }, interval);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [state.status]);
 
-  const { execute: dataExport } = usePageCommand<SubscriberExportResult>(
-    'EXPORT_LIST',
-    {
-      after: (resp) => {
-        if (!resp) {
-          return;
-        }
+  usePageCommand<ExportResult>(props.commandName, {
+    executeOnMount: true,
+    after: (resp) => {
+      if (!resp) {
+        return;
+      }
 
-        const binaryString = atob(resp.file);
-        const binaryLength = binaryString.length;
-        const bytes = new Uint8Array(binaryLength);
-        for (let i = 0; i < binaryLength; i++) {
-          bytes[i] = binaryString.charCodeAt(i);
-        }
+      if (('error' in resp && resp.errorMessage) || !resp.fileData) {
+        setState((s) => ({
+          ...s,
+          status: 'FAILURE',
+          errorMessage: resp.errorMessage,
+        }));
 
-        // Create a Blob from the binary data
-        const blob = new Blob([bytes], { type: 'application/octet-stream' }); // Change MIME type if necessary
+        return;
+      }
 
-        // Create a download link
-        const downloadUrl = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.download = `${props.fileNamePrefix}_${getDashCaseDateSuffix()}.csv`; // Set the desired file name and extension here
-        link.click();
+      setState((s) => ({
+        ...s,
+        status: 'COMPLETE',
+        percentComplete: 100,
+        errorMessage: '',
+      }));
 
-        // Clean up the URL object
-        URL.revokeObjectURL(downloadUrl);
-      },
+      const binaryString = atob(resp.fileData);
+      const binaryLength = binaryString.length;
+      const bytes = new Uint8Array(binaryLength);
+      for (let i = 0; i < binaryLength; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+
+      // Create a Blob from the binary data
+      const blob = new Blob([bytes], { type: 'application/octet-stream' }); // Change MIME type if necessary
+
+      // Create a download link
+      const downloadUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = `${props.fileNamePrefix}_${getDashCaseDateSuffix()}.csv`; // Set the desired file name and extension here
+      link.click();
+
+      // Clean up the URL object
+      URL.revokeObjectURL(downloadUrl);
     },
-  );
+  });
 
   return (
     <div
@@ -96,14 +118,10 @@ export const DataExportComponent = (props: DataExportComponentProps) => {
         color: 'var(--color-text-default-on-light)',
       }}
     >
-      {state.status === 'INACTIVE' ? (
-        <></>
-      ) : state.status === 'EXPORTING' ? (
+      {showProgressBar(state) ? (
         <ProgressBar completed={state.percentComplete} />
-      ) : state.status === 'COMPLETE' ? (
-        <span>Complete</span>
       ) : (
-        <span>Failure</span>
+        <span>Failure: {state.errorMessage}</span>
       )}
     </div>
   );
@@ -116,4 +134,8 @@ function getDashCaseDateSuffix() {
   const day = String(date.getDate()).padStart(2, '0');
 
   return `${year}-${month}-${day}`;
+}
+
+function showProgressBar(state: ComponentState) {
+  return state.status === 'EXPORTING' || state.status === 'COMPLETE';
 }

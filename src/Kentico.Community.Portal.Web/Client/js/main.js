@@ -1,7 +1,7 @@
 import "htmx.org";
 import Alpine from "alpinejs";
-import setupBootstrap from "./features/bootstrap-customization";
-import setupNavigation from "./features/navigation";
+import setupBootstrap from "./bootstrap-customization";
+import setupNavigation from "./navigation";
 import { registerAnswerListComponent } from "../../Features/QAndA/answerListComponent";
 
 window.asyncReady(() => {

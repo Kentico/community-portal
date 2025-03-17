@@ -26,17 +26,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="NotificationEmailPreviewText" enabled="true" guid="4b7f93b4-f9d8-44bb-b806-8206178b0599" visible="true" order="9">
-        <settings>
-          <controlname>Kentico.Administration.TextInput</controlname>
-        </settings>
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Preview text</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-      </field>
-      <field column="NotificationEmailContent" enabled="true" guid="a33d488a-190b-4f63-aa43-f44e6a573649" visible="true" allowempty="" order="10">
+      <field column="NotificationEmailContent" enabled="true" guid="a33d488a-190b-4f63-aa43-f44e6a573649" visible="true" allowempty="">
         <settings>
           <ConfigurationName>Kentico.Administration.EmailNotificationContent</ConfigurationName>
           <controlname>Kentico.Administration.RichTextEditor</controlname>
@@ -47,7 +37,17 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="NotificationEmailEventType" guid="cb7b2454-a82f-4fbf-a136-35b60f7083e1" enabled="" order="11" />
+      <field column="NotificationEmailEventType" guid="cb7b2454-a82f-4fbf-a136-35b60f7083e1" enabled="" />
+      <field column="NotificationEmailPreviewText" enabled="true" guid="4b7f93b4-f9d8-44bb-b806-8206178b0599" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Preview text</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
     </form>
   </FormDefinition>
   <FormDisplayName>Content</FormDisplayName>

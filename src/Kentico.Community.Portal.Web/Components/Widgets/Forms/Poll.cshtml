@@ -8,9 +8,9 @@
 
 @{
     bool isPreview = Context.Kentico().Preview().Enabled;
-    bool showPoll = Model.IsHidden || (Model.IsPollActive && !Model.HasVisitorAnsweredPoll);
-    var showDisabled = JSEncoder.EncodeToJson(Model.IsHidden);
-    string overlayAttr = Model.IsHidden ? "overlay" : "";
+    bool showPoll = Model.IsPollActive && !Model.HasVisitorAnsweredPoll;
+    var showDisabled = JSEncoder.EncodeToJson(Model.IsHidden && showPoll);
+    string overlayAttr = Model.IsHidden && showPoll ? "overlay" : "";
 
     var (backgroundColorClass, backgroundColorProperty) = Model.BackgroundColor switch
     {

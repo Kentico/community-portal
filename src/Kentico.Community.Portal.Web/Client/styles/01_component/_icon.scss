@@ -1,26 +1,28 @@
 .c-icon {
-    display: inline-block;
-    height: 1em;
-    width: 1em;
-    vertical-align: top;
+  --internal-font-size: var(--icon-font-size, 1em);
 
-    &.chevron {
-        margin-top:-2px;
-    }
+  display: inline-block;
+  height: var(--internal-font-size);
+  width: var(--internal-font-size);
+  vertical-align: top;
 
-    .btn & {
-        font-size: 1.25rem;
-        margin-top: -3px;
-    }
+  &.chevron {
+    margin-top: -2px;
+  }
 
-    .btn-lg & {
-        font-size: 1.375rem;
-        margin-right: .25rem;
-        margin-top: 0;
-    }
+  .btn & {
+    font-size: 1.25rem;
+    margin-top: -3px;
+  }
 
-    .btn-social & {
-        font-size: 1.5rem;
-        margin-top: 0;
-    }
+  .btn-lg & {
+    font-size: 1.375rem;
+    margin-right: 0.25rem;
+    margin-top: 0;
+  }
+
+  .btn-social & {
+    font-size: 1.5rem;
+    margin-top: 0;
+  }
 }

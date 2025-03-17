@@ -163,7 +163,7 @@ export async function initQAndA({ editorElemID, formType = "" }) {
 ---
 
 **Environment**
-- Xperience by Kentico version: [30.2.0]
+- Xperience by Kentico version: [30.2.2]
 - .NET version: [8|9]
 - Execution environment: [SaaS|Private cloud (Azure/AWS/Virtual machine)]
 - Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)`

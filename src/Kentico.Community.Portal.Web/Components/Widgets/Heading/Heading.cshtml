@@ -29,7 +29,7 @@
         @Model.HeadingText
         if (Model.HeadingAnchorSlug.TryGetValue(out string? slug))
         {
-            <a title="Copy link to heading" class="heading-link" href="#@(slug)"></a>
+            <a title="Navigate to this heading" aria-label="Navigate to this heading" class="heading-link" href="#@(slug)"></a>
         }
     }
     @Html.Raw(close)

@@ -18,7 +18,7 @@
 <span class="d-inline-flex wrap gap-1 mt-1 flex-wrap">
     @foreach (var badge in Model.Badges)
     {
-        <span class="@badgeClasses" title="@badge.MemberBadgeDescription">
+        <span class="@badgeClasses" title="@badge.MemberBadgeDescription" aria-label="@badge.MemberBadgeDescription">
             <img xpc-badge="@badge" />
             @if (Model.DisplayStyle == BadgeDisplayStyle.Full)
             {

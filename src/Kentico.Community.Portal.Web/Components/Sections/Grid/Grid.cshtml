@@ -64,7 +64,8 @@
       <h2 id="@slug" class="heading @alignmentClass">@Model.Heading
         @if (Model.IsHeadingAnchorLinkVisible)
         {
-          <a title="Copy link to heading" class="heading-link" href="#@(slug)"></a>
+          <a title="Navigate to this heading" aria-label="Navigate to this heading" class="heading-link"
+            href="#@(slug)"></a>
         }
       </h2>
     }

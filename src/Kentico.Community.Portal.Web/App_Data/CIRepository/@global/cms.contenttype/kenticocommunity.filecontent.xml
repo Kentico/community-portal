@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>File Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="8ae72caa-ef97-49bd-b932-9b3155e66d31" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="bb9d3be0-df1a-4867-b26b-dcbcf57a4e5f" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="ecd8c468-61c3-44e7-a5ba-5bf48c9b0a6d" isunique="true" system="true" />
+      <schema guid="6fb07931-f628-4227-82c0-1038378360a1" name="6fb07931-f628-4227-82c0-1038378360a1">
+        <properties />
+      </schema>
+      <field allowempty="true" column="FileContentAsset" columnprecision="0" columntype="contentitemasset" enabled="true" guid="ee2f97b6-5b37-4bc0-8b92-c487e5ad8d06" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Asset</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedExtensions>mp3;mp4;txt;pdf;docx;pptx;xlsx;json</AllowedExtensions>
+          <controlname>Kentico.Administration.ContentItemAssetUploader</controlname>
+          <IsFormatConversionEnabled>False</IsFormatConversionEnabled>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>2b024b78-f2bf-48e6-a75a-1ca2a6120862</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-file</ClassIconClass>
+  <ClassName>KenticoCommunity.FileContent</ClassName>
+  <ClassShortName>KenticoCommunityFileContent</ClassShortName>
+  <ClassTableName>KenticoCommunity_FileContent</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

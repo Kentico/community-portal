@@ -24,7 +24,7 @@
                     <div>
                         <span class="text-nowrap">@Model.DateCreated.ToString("yyyy/MM/dd")
                             @Model.DateCreated.ToString("t") <a href="#@wrapperElId" class="answer-link"
-                                title="Link to this answer"></a></span>
+                                title="Navigate to this answer" aria-label="Navigate to this answer"></a></span>
 
                         @if (Model.IsAcceptedAnswer)
                         {

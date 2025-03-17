@@ -28,7 +28,6 @@ public class RSSFeedController(
     IMediator mediator,
     IWebPageDataContextRetriever webPageDataContextRetriever,
     IWebPageUrlRetriever webPageUrlRetriever,
-    AssetItemService assetService,
     ISystemClock clock,
     IProgressiveCache cache,
     ICacheDependencyKeysBuilder keysBuilder,
@@ -37,7 +36,6 @@ public class RSSFeedController(
     private readonly IMediator mediator = mediator;
     private readonly IWebPageDataContextRetriever webPageDataContextRetriever = webPageDataContextRetriever;
     private readonly IWebPageUrlRetriever webPageUrlRetriever = webPageUrlRetriever;
-    private readonly AssetItemService assetService = assetService;
     private readonly ISystemClock clock = clock;
     private readonly IProgressiveCache cache = cache;
     private readonly ICacheDependencyKeysBuilder keysBuilder = keysBuilder;

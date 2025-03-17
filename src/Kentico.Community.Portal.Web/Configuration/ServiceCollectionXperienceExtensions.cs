@@ -91,7 +91,10 @@ public static class ServiceCollectionXperienceExtensions
             })
             .Configure<FileUploadOptions>(options =>
             {
-                // No customization atm
+                // 500 MB
+                options.MaxFileSize = 524_288_000L;
+                // 20 MB
+                options.ChunkSize = 20_971_520;
             })
             .AddSingleton<IContentItemReferenceExtractor, MarkdownContentItemReferenceExtractor>()
             .AddSingleton<IEmailActivityTrackingEvaluator, ConsentEmailActivityTrackingEvaluator>()

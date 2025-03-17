@@ -1,4 +1,3 @@
-using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Content.Web.Mvc;
 using MediatR;
 
@@ -6,11 +5,9 @@ namespace Kentico.Community.Portal.Web.Infrastructure;
 
 public class WebPageMetaService(
     IMediator mediator,
-    AssetItemService assetItemService,
     IHttpContextAccessor contextAccessor)
 {
     private readonly IMediator mediator = mediator;
-    private readonly AssetItemService assetItemService = assetItemService;
     private readonly IHttpContextAccessor contextAccessor = contextAccessor;
     private WebpageMeta meta = new("", "");
 

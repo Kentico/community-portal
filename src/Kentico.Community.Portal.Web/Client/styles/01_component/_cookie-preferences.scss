@@ -20,11 +20,6 @@ $cursor-border: $background-color;
   &__levels {
     display: flex;
     flex-direction: column;
-    min-height: 400px;
-
-    @include media-breakpoint-down(sm) {
-      min-height: 350px;
-    }
   }
 
   &__options {
@@ -37,7 +32,6 @@ $cursor-border: $background-color;
     margin-left: -16px;
 
     .cookie-preferences__option {
-      position: absolute;
       color: $color-option-text;
       font-size: 14px;
       cursor: pointer;
@@ -129,6 +123,7 @@ $cursor-border: $background-color;
     top: 0;
     left: 0px;
     -webkit-appearance: none;
+    appearance: none;
     width: $width;
     height: $height;
     background: transparent;
@@ -138,14 +133,6 @@ $cursor-border: $background-color;
 
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
-    }
-
-    &::-ms-track {
-      width: $width;
-      cursor: pointer;
-      background: transparent;
-      border-color: transparent;
-      color: transparent;
     }
 
     &:focus {
@@ -195,51 +182,7 @@ $cursor-border: $background-color;
       background: $bar-color;
     }
   }
-  // Internet Explorer
-  &__range-fill {
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      display: none;
-    }
-  }
 
-  &__range-slider {
-    &::-ms-thumb {
-      box-shadow: 0 0 0 $cursor-border-size $cursor-border;
-      height: $cursor-size;
-      width: $cursor-size;
-      border-radius: 50%;
-      background: $cursor-color;
-      cursor: pointer;
-      margin-top: 2px;
-      box-sizing: border-box;
-      border: 0;
-    }
-
-    &:focus::-ms-thumb {
-      border: 0;
-    }
-
-    &::-ms-track {
-      width: $width;
-      height: $bar-height;
-      cursor: pointer;
-      background: $bar-color;
-      color: transparent;
-      box-sizing: border-box;
-    }
-
-    &::-ms-fill-lower {
-      background: $bar-fill;
-    }
-
-    &::-ms-fill-upper {
-      background: $bar-color;
-    }
-
-    &::-ms-tooltip {
-      display: none;
-    }
-  }
   // Message
   &__message {
     margin-top: 16px;

@@ -15,10 +15,7 @@
                     <div class="template-banner__bg">
                         @if (post.Teaser.TryGetValue(out var teaser))
                         {
-                            <img class="t-article_hero-picture img-fluid" src="@teaser.URL"
-                                alt="@teaser.AltText" title="@teaser.Title"
-                                width="@teaser.Width"
-                                height="@teaser.Height" />
+                            <img class="t-article_hero-picture img-fluid" xpc-image="teaser" />
                         }
                         else
                         {
