@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Customer Journeys - Customer journey stage</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="CustomerJourneyStageID" columntype="integer" enabled="true" guid="1b77eb6d-924d-46ca-980d-b5d5cc09d5e0" isPK="true" system="true" />
+      <field column="CustomerJourneyStageCustomerJourneyID" columnprecision="0" columntype="integer" enabled="true" guid="b14d6da9-2490-4cef-9663-85d75a2a1f48" system="true" />
+      <field column="CustomerJourneyStageName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="667d9671-f018-4674-940d-b997789b11d3" system="true" />
+      <field column="CustomerJourneyStageDisplayName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="00b027cb-6563-420f-b35a-e82968569834" system="true" />
+      <field column="CustomerJourneyStageGUID" columnprecision="0" columntype="guid" enabled="true" guid="18d99a5b-8a6b-47a7-b9d8-1bfbe3d9dc37" system="true" />
+      <field column="CustomerJourneyStageLastModified" columnprecision="7" columntype="datetime" enabled="true" guid="044ecb9e-2020-4bfd-a34a-492e0ba4a07d" system="true" />
+      <field column="CustomerJourneyStageDynamicCondition" columnprecision="0" columntype="longtext" enabled="true" guid="5cb0b29e-890f-47ea-a61f-44942981788c" system="true" />
+      <field allowempty="true" column="CustomerJourneyStageKPI" columnprecision="0" columntype="integer" enabled="true" guid="255d17c0-805a-4e87-bece-e6ec7a7a384e" system="true" />
+      <field column="CustomerJourneyStageOrder" columnprecision="0" columntype="integer" enabled="true" guid="6bdb1b4a-5e48-4cfe-99ce-b1eecbce07af" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>2ebf30a3-b15f-48a6-a7c7-680619dee48a</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.CustomerJourneyStage</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.CustomerJourneys</CodeName>
+    <GUID>1165aec3-7ac9-4896-8f13-7d1a62406069</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>OM_CustomerJourneyStage</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

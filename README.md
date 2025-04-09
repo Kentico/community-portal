@@ -9,7 +9,7 @@ Xperience by Kentico solution for the Kentico managed SaaS hosted Kentico
 Community website.
 
 This project is using Xperience by Kentico
-[v30.2.2](https://docs.kentico.com/changelog#hotfix-march-6-2025).
+[v30.3.2](https://docs.kentico.com/changelog#hotfix-april-3-2025).
 
 ## Screenshots
 
@@ -50,22 +50,22 @@ This project is using Xperience by Kentico
   </a>
 </div>
 
-## Site Info
+## Environment info
 
-| Environment | URL                                                                                     |
-| ----------- | --------------------------------------------------------------------------------------- |
-| Local       | <https://localhost:45039> (community portal website), <https://localhost:45040> (admin) |
-| Prod        | <https://community.kentico.com>                                                         |
+| Environment      | URL                                                                                     |
+| ---------------- | --------------------------------------------------------------------------------------- |
+| Local            | <https://localhost:45039> (community portal website), <https://localhost:45040> (admin) |
+| Prod (XbyK SaaS) | <https://community.kentico.com>                                                         |
 
 ## Project Setup
 
-- [Required Software](./docs/Required-Software.md)
-- [Environment Setup](./docs/Environment-Setup.md)
-- [Development](./docs/Development.md)
-- [Contributing](./docs/Contributing.md)
-- [Run Tests](./docs/Run-Tests.md)
-- [Architecture](./docs/Architecture.md)
-- [Architecture Decision Record](./docs/Architecture-Decision-Record.md)
+1. [Required Software](./docs/Required-Software.md)
+1. [Environment Setup](./docs/Environment-Setup.md)
+1. [Development](./docs/Development.md)
+1. [Contributing](./docs/Contributing.md)
+1. [Run Tests](./docs//Run-Tests.md)
+1. [Architecture](./docs/Architecture.md)
+1. [Architecture Decision Record](./docs/Architecture-Decision-Record.md)
 
 ## Contributing
 

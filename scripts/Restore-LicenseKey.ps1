@@ -1,7 +1,7 @@
 <#
 .Synopsis
-    Updates the local database with all the objects in the CI repository.
-    You can provide the $LicenseKey or the $LicenseFilePath
+    Updates the local database with the provided $LicenseKey or the key
+    found in the file at the $LicenseFilePath
 #>
 [CmdletBinding()]
 param (

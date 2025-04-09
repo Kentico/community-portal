@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Customer journeys - Customer journey</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="CustomerJourneyID" columntype="integer" enabled="true" guid="1c5f6c44-2d8f-46e0-bcfa-535f319c727d" isPK="true" system="true" />
+      <field allowempty="true" column="CustomerJourneyStageConditionContactHistoryClassID" columnprecision="0" columntype="integer" enabled="true" guid="085cfd5f-f654-476d-9d2f-2fd9356f869e" system="true" />
+      <field allowempty="true" column="CustomerJourneyStageContactHistoryClassID" columnprecision="0" columntype="integer" enabled="true" guid="15fb03b4-b5fe-413b-b037-9ee0cbc984f4" system="true" />
+      <field column="CustomerJourneyName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="d356e651-6752-4732-9628-fd2574233b7b" system="true" />
+      <field column="CustomerJourneyDisplayName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="a78ca9ea-edb0-4414-9c88-928f17c9574e" system="true" />
+      <field column="CustomerJourneyGUID" columnprecision="0" columntype="guid" enabled="true" guid="fbe5d2bb-1283-4a16-bb22-3f1e1ea857d1" system="true" />
+      <field column="CustomerJourneyLastModified" columnprecision="7" columntype="datetime" enabled="true" guid="ad1c0704-170f-4cff-bc97-b4d4ba4300fa" system="true" />
+      <field allowempty="true" column="CustomerJourneyLastRecalculation" columnprecision="7" columntype="datetime" enabled="true" guid="169ce320-e362-4b70-b4dd-cc055082c254" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>4f956ca7-5ccf-43d3-9987-edea213cad22</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.CustomerJourney</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.CustomerJourneys</CodeName>
+    <GUID>1165aec3-7ac9-4896-8f13-7d1a62406069</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>OM_CustomerJourney</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

@@ -110,8 +110,7 @@ public static class ServiceCollectionAppExtensions
 
     private static IServiceCollection AddQAndA(this IServiceCollection services) =>
         services
-            .AddTransient<QAndAAnswerCreateSearchIndexTaskHandler>()
-            .AddTransient<QAndAAnswerDeleteSearchIndexTaskHandler>();
+            .AddTransient<QAndAAnswerSearchIndexTaskHandler>();
     private static IServiceCollection AddBlogs(this IServiceCollection services) =>
         services.AddTransient<BlogPostPublishCreateQAndAQuestionHandler>();
 

@@ -3,11 +3,6 @@
     Generates a .bak of the database
 #>
 
-param (
-    [string]$backupFolderPath = "",
-    [string]$mappedBackupFolderPath = ""
-)
-
 Import-Module (Resolve-Path Utilities) `
     -Function Get-SolutionFolder, `
     Get-ConnectionString, `
@@ -15,18 +10,21 @@ Import-Module (Resolve-Path Utilities) `
     Invoke-SQLQuery, `
     Write-Status, `
     Write-Notification, `
+    Get-ScriptConfig, `
     Write-Error `
     -Force
+
+$scriptConfig = Get-ScriptConfig
 
 $licenseQuery = "SELECT KeyValue FROM CMS_SettingsKey WHERE KeyName = 'CMSLicenseKey'"
 $licenseKeyValue = Invoke-SQLQuery -query $licenseQuery
 
 if (-not $licenseKeyValue) {
-    Write-Error "License key not found!"
-    exit 1
+    Write-Warning "No license key found in the database"
 }
-
-Write-Status "License key found: $licenseKeyValue"
+else {
+    Write-Status "License key found: $licenseKeyValue"
+}
 
 $versionQuery = "SELECT KeyValue FROM CMS_SettingsKey WHERE KeyName = 'CMSDBVersion'"
 $cmsDbVersion = Invoke-SQLQuery -query $versionQuery
@@ -40,48 +38,49 @@ Write-Status "CMSDBVersion found: $cmsDbVersion"
 
 $currentDate = Get-Date -Format "yyyy-MM-dd"
 $backupFileName = "Kentico.Community-$cmsDbVersion-$currentDate.bak"
-if ([string]::IsNullOrWhiteSpace($backupFolderPath)) {
-    $backupFilePath = Join-Path $(Get-SolutionFolder) 'database' $backupFileName
-    $outputPath = $backupFilePath
-}
-else {
-    $backupFilePath = Join-Path $backupFolderPath $backupFileName
-    $outputPath = Join-Path $mappedBackupFolderPath $backupFileName
-}
 
-Write-Status "Backup file will be saved as: $outputPath"
+$backupSourceFilePath = "$($scriptConfig.BackupSourceFolderPath)$($scriptConfig.BackupSourcePathSeparator)$backupFileName"
+# $backupSourceFilePath = $backupSourceFilePath -replace [regex]::Escape([IO.Path]::DirectorySeparatorChar), $pathSeparator
+$backupHostSourceFilePath = Join-Path $scriptConfig.BackupHostSourceFolderPath $backupFileName
+$backupDestinationFilePath = Join-Path $scriptConfig.BackupDestinationFolderPath $backupFileName
 
 $setEmptyKeyQuery = "UPDATE CMS_SettingsKey SET KeyValue = NULL WHERE KeyName = 'CMSLicenseKey'"
 Invoke-SQLQuery -query $setEmptyKeyQuery
 Write-Notification "License key cleared."
 
 $backupQuery = @"
-BACKUP DATABASE [Kentico.Community] TO DISK = N'$backupFilePath' WITH NOFORMAT, NOINIT, NAME = N'Kentico.Community', SKIP, NOREWIND, NOUNLOAD, STATS = 10;
+BACKUP DATABASE [Kentico.Community] 
+TO DISK = N'$backupSourceFilePath'
+WITH NOFORMAT, 
+    NOINIT, 
+    NAME = N'Kentico.Community', 
+    SKIP, 
+    NOREWIND, 
+    NOUNLOAD, 
+    STATS = 10;
 "@
 $backupResult = Invoke-Sqlcmd -ConnectionString $(Get-ConnectionString) -Query $backupQuery -ErrorAction Stop
 
-Write-Notification "Result $backupResult"
+if (-not [string]::IsNullOrWhiteSpace($backupResult)) {
+    Write-Notification "Backup query result: $backupResult"
+}
 
-while (!(Test-Path $outputPath)) {
-    Write-Warning "Waiting for backup to be created at $outputPath"
+while (!(Test-Path $backupHostSourceFilePath)) {
+    Write-Warning "Waiting for backup to be created: $backupHostSourceFilePath"
     Start-Sleep -Seconds 1
 }
-Write-Notification "Database backup created at $outputPath"
+Write-Notification "Database backup file created: $backupHostSourceFilePath"
 
 $restoreKeyQuery = "UPDATE CMS_SettingsKey SET KeyValue = '$licenseKeyValue' WHERE KeyName = 'CMSLicenseKey'"
 Invoke-SQLQuery -query $restoreKeyQuery
 Write-Notification "License key restored."
 
-if (![string]::IsNullOrWhiteSpace($backupFolderPath)) {
-    $backupFilePath = (Join-Path $(Get-SolutionFolder) 'database' $backupFileName)
-    Copy-Item $outputPath $backupFilePath
-}
-$zipFilePath = "$backupFilePath.zip"
-Compress-Archive -Path $backupFilePath -DestinationPath $zipFilePath -Force
-Remove-Item $backupFilePath
-Write-Notification "Backup file zipped at $zipFilePath"
+Copy-Item $backupHostSourceFilePath $backupDestinationFilePath
+Write-Notification "Backup file copied: $($backupHostSourceFilePath) => $backupDestinationFilePath"
 
-Set-Content -Path (Join-Path $(Get-SolutionFolder) 'database' "backups.txt") -Value $backupFileName
-Write-Status "backups.txt updated."
+$zipFilePath = Join-Path $scriptConfig.BackupDestinationFolderPath "$backupFileName.zip"
+Compress-Archive -Path $backupDestinationFilePath -DestinationPath $zipFilePath -Force
+Remove-Item $backupDestinationFilePath
+Write-Notification "Backup file zipped to: $zipFilePath"
 
 Write-Status "Process completed."

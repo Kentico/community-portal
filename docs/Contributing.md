@@ -1,5 +1,9 @@
 # Contributing
 
+To ensure schema and data updates to the application are synchronized with the
+code, follow the guidance in the Xperience docs for
+[Continuous Integration](https://docs.kentico.com/x/YAaiCQ).
+
 ## Workflow
 
 1. Create a new branch with one of the following prefixes

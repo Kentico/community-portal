@@ -15,8 +15,6 @@ param (
     [ValidateSet("Create", "CreateUpdate")]
     [String]$StorageAssetsDeploymentMode = "CreateUpdate",
 
-    [bool]$CompressPackage = $true,
-
     [bool]$DeployStorageAssets = $false
 )
 $ErrorActionPreference = "Stop"
@@ -28,13 +26,18 @@ Import-Module (Resolve-Path Utilities) `
     Get-WebProjectPath, `
     Get-ScriptConfig, `
     Write-Status, `
+    Get-ScriptConfig, `
     Write-Notification `
     -Force
+
+
+$scriptConfig = Get-ScriptConfig
+$CompressPackage = $scriptConfig.CompressDeploymentPackage
 
 $projectPath = Get-WebProjectPath
 $configuration = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Release" : "Debug"
 $launchProfile = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Portal.WebCI" : "Portal.Web"
-$AssemblyName = $(Get-ScriptConfig).AssemblyName
+$AssemblyName = $(Get-ScriptConfig).WebProjectAssemblyName
 
 $OutputFolderPath = "../bin/CloudDeployment/"
 $MetadataFilePath = Join-Path $OutputFolderPath "cloud-metadata.json"

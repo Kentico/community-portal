@@ -1,6 +1,88 @@
 # Environment Setup
 
-## .NET Dev Certs
+## Restore the database backup
+
+The latest local development database backup `.bak` (data + full transaction
+logs) is included in the `.\database` folder as a `.zip`.
+
+- SQL Server with Docker
+
+  For details on using Docker for Xperience by Kentico's SQL Server database see
+  [Environment-Setup.md](/docs/Environment-Setup.md).
+
+  1. Extract the `.bak` from the `.zip`
+  1. Copy the `.bak` into the Docker container file system (see
+     `.github\workflows\ci.yml` for an example) at
+     `/var/backups/Kentico.Community.bak`
+  1. Run `.\database\backup-restore.sql` in VS Code to restore the database to
+     the Docker container as a new database named `Kentico.Community`
+
+- (**alternative**) Restore a SQL Server `.bak` with SQL Server Management
+  Studio (SSMS)
+
+  See
+  [Quickstart: Backup and restore a SQL Server database with SSMS](https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/quickstart-backup-restore-database?view=sql-server-ver16&tabs=ssms)
+  for details on using SSMS to restore a database `.bak`.
+
+  1. Launch SSMS
+  1. Extract `.bak` file from `.zip` in `.\database\`
+  1. Restore database
+
+     - Right click on 'Databases'
+     - 'Restore Database'
+     - Select source 'Device' -> ...-> 'Add'
+     - Select `.bak` from `.\database\<database-backup.bak>` -> OKF
+
+## Configure the application
+
+1. Open `.\Kentico.Community.Portal.sln` OR open the repository's root folder
+   directly from VS Code.
+
+   If using VS Code, install all recommended extensions
+
+1. Set your database Connection String and
+   [Hash salt](https://docs.kentico.com/x/EwiiCQ) in your local
+   [User Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets)
+
+   If using VS Code, use the
+   [User Secrets extension](https://marketplace.visualstudio.com/items?itemName=Reptarsrage.vscode-manage-user-secrets)
+   to make secrets management easier.
+
+1. Build the application
+
+   - Use the included
+     [VS Code task](https://code.visualstudio.com/docs/debugtest/tasks)
+     `.NET: build (Solution)`
+   - (**alternative**) Right click on the `Kentico.Community.Portal` solution in
+     the Solution Explorer in VS or VS Code (using the
+     [C# Dev Kit](https://code.visualstudio.com/docs/csharp/cs-dev-kit-faq))
+   - (**alternative**) Run `dotnet build` at the command line from the
+     repository root
+
+1. [Resign macro signatures](https://docs.kentico.com/developers-and-admins/configuration/macro-expressions/macro-signatures#re-sign-macros)
+
+   > dotnet run --no-build -- --kxp-resign-macros ...
+
+## Configure project PowerShell settings
+
+The project has some customizable settings you can adjust for your local
+environment. These are stored in `.\scripts\Utilities\settings.local.json` which
+is ignored by source control. If you do not yet have this file in your project
+you can copy `settings.template.json` to a new `settings.local.json` file and
+change the values.
+
+## Restore Xperience CI
+
+Run the CI Restore PowerShell script to populate the database with changes from
+the CI Repository
+
+- Use the VS Code task `Xperience: CI Restore`
+- (**alternative**) Use the script directly
+
+  1. `cd scripts`
+  1. `.\Restore-CI.ps1`
+
+## Setup .NET Dev Certs
 
 This project runs over https which can be configured locally
 [using the .NET SDK](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-dev-certs):
@@ -9,9 +91,9 @@ This project runs over https which can be configured locally
 dotnet dev-certs https --trust
 ```
 
-### Troubleshooting
+## Troubleshooting
 
-#### Long paths on Windows
+### Long paths on Windows
 
 When you clone the repository from Git and you are using Windows you might run
 into a problem that Git cannot create files that have really long paths. This
@@ -24,7 +106,7 @@ To fix this issue, enable long path support in Windows with
 or
 [with Group Policy or a registry key change](https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation?tabs=registry#registry-setting-to-enable-long-paths).
 
-#### ASP.NET Core Dev Certs
+### ASP.NET Core Dev Certs
 
 If you have issues with the Admin client Webpack dev server using the ASP.NET
 Core dev cert, you might have a cert on the filesystem being used by the webpack
@@ -51,108 +133,3 @@ dotnet dev-certs https --format pem --no-password -ep $HOME/.aspnet/https/kentic
 These are the commands that are automatically executed for you if no local certs
 exist when starting up the Admin local dev Node.js script (details in
 `~\src\Kentico.Community.Portal.Admin\Client\webpack.config.js`).
-
-## Restore Database
-
-- Database backups are located in the `.\database` folder
-
-  - `.bacpac` (database snapshot archive)
-  - `.bak` (data + full transaction logs)
-
-  - **Note**: The database backup listed on the first line of the
-    `.\database\backups.txt` file is the most recent backup and should be used
-    as a starting point for a newly set up project.
-
-- PowerShell
-
-  1. Use the `Restore-Database.ps1` script (`.bacpac` files only)
-
-     ```powershell
-     cd .\scripts
-
-     .\Restore-Database.ps1 `
-     -ServerName "<server name>" `
-     -DatabaseName "<database name>" `
-     -BacpacFile "<filename.bacpac>" `
-     -WorkspaceFolder $PWD
-     ```
-
-- (**alternative**) Azure Data Studio
-
-  1. [Restore a .bacpac file](https://learn.microsoft.com/en-us/sql/azure-data-studio/extensions/sql-server-dacpac-extension)
-     (data + schema)
-  1. [Restore a .bak file](https://learn.microsoft.com/en-us/sql/azure-data-studio/tutorial-backup-restore-sql-server?view=sql-server-ver16#restore-a-database-from-a-backup-file)
-
-- (**alternative**) Add database in SQL Server Management Studio
-
-  - [Restore a .bacpac file](https://learn.microsoft.com/en-us/sql/relational-databases/data-tier-applications/import-a-bacpac-file-to-create-a-new-user-database)
-
-  - (**alternative**) Restore a .bak file
-
-    1. Launch SQL SSMS
-
-    1. Extract backup file might require from .zip
-
-       - `.\database\<database-backup.zip>`
-
-    1. Restore database
-
-       - Right click on 'Databases'
-       - 'Restore Database'
-       - Select source 'Device' -> ...-> 'Add'
-       - Select `.bak` from `.\database\<database-backup.bak>` -> OK
-
-    1. Add User mapping
-
-       - 'Security' -> 'Logins'
-       - Right click on your account
-       - 'Properties' -> 'User Mapping' -> tick `Kentico.Community` -> tick 'db
-         owner' -> OK
-
-- (**alternative**) Using MacOS/Linux
-
-  1. Use [Docker Desktop](https://docs.docker.com/desktop/install/mac-install/)
-     to setup a MS SQL Server docker container
-     [to run the Xperience by Kentico database](https://community.kentico.com/blog/developing-with-xperience-by-kentico-on-macos)
-
-     ```powershell
-     docker run + `
-      --name mssql2022 + `
-      --hostname=localhost + `
-      --user=mssql + `
-      --env=ACCEPT_EULA=Y + `
-      --env=MSSQL_SA_PASSWORD=Pass@12345 + `
-      -p 1433:1433 + `
-      -d mcr.microsoft.com/mssql/server:2022-latest
-     ```
-
-  1. Unzip the `.bak.zip` in `./database`
-
-     ```powershell
-     Expand-Archive -Path ./database/Kentico.Community-29.0.3-2024-05-14.bak.zip -DestinationPath ./database
-     ```
-
-  1. Copy the unzip'd `.bak` file into your docker container (using the correct
-     file path)
-
-     ```powershell
-     docker cp ./database/Kentico.Community-29.0.3-2024-05-14.bak mssql2022:/var/opt/mssql/data
-     ```
-
-  1. Use
-     [Azure Data Studio](https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio)
-     to restore the `.bak` -> command click "Databases" node under SQL Server ->
-     Restore
-
-## Configure Application
-
-1. Open `.\Kentico.Community.Portal.sln` OR open folder directly from VS Code.
-
-   > If using VS Code, install all recommended extensions
-
-1. Set your database Connection String in your local
-   [User Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets)
-
-1. Disable ReCaptcha validation in your local User Secrets (see settings for
-   ReCaptcha in `appsettings.CI.json`) or supply a `localhost` ReCaptcha v3
-   key/secret

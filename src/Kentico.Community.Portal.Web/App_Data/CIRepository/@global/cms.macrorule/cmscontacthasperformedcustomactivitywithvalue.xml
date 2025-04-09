@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[Contact.DidActivityWithValue("{activity}", "{op}", "{value}")]]>
+  </MacroRuleCondition>
+  <MacroRuleDisplayName>Contact has performed custom activity with value</MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>39e0418f-c051-4af9-bf34-4b02154407d9</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactHasPerformedCustomActivityWithValue</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="activity" columnprecision="0" columntype="objectcodenames" guid="a5b9ea11-0a66-475a-97b8-381559da87b7" visible="true">
+        <properties>
+          <fieldcaption>activity</fieldcaption>
+        </properties>
+        <settings>
+          <configuratorfulltype>
+            <![CDATA[Kentico.Administration.CustomActivityFieldConfigurator]]>
+          </configuratorfulltype>
+          <controlname>Kentico.Administration.ObjectCodeNameSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <ObjectType>om.activitytype</ObjectType>
+          <Placeholder>select activity</Placeholder>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field column="op" columnsize="100" columntype="text" guid="1648d5c4-e794-4ee2-9eae-dc02b2ed455f" visible="true">
+        <properties>
+          <defaultvalue>Contains;contains</defaultvalue>
+          <fieldcaption>select operator</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <EditText>False</EditText>
+          <Options>
+<![CDATA[
+Contains;contains
+NotContains;does not contain
+StartsWith;starts with
+EndsWith;ends with
+Equals;is equal to
+NotEquals;is not equal to
+]]>
+          </Options>
+        </settings>
+      </field>
+      <field allowempty="true" column="value" columnsize="200" columntype="text" guid="fe24cfa1-6879-4175-8de5-53c008e8e3c6" visible="true">
+        <properties>
+          <fieldcaption>enter value</fieldcaption>
+        </properties>
+        <settings>
+          <AutoCompleteEnableCaching>False</AutoCompleteEnableCaching>
+          <AutoCompleteFirstRowSelected>False</AutoCompleteFirstRowSelected>
+          <AutoCompleteShowOnlyCurrentWordInCompletionListItem>False</AutoCompleteShowOnlyCurrentWordInCompletionListItem>
+          <controlname>Kentico.Administration.TextInput</controlname>
+          <FilterMode>False</FilterMode>
+          <Trim>False</Trim>
+          <WatermarkText>enter value</WatermarkText>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>
+    <![CDATA[Contact has performed custom activity {activity} with value that {op} {value}]]>
+  </MacroRuleText>
+  <MacroRuleUsageLocation>4</MacroRuleUsageLocation>
+</cms.macrorule>

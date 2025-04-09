@@ -2,24 +2,24 @@
 
 ## .NET Runtime
 
-.NET 9.0 SDK or newer
+.NET 8.0 SDK or newer
 
-- <https://dotnet.microsoft.com/en-us/download/dotnet/9.0>
-- See `global.json` file for specific SDK requirements
+- <https://dotnet.microsoft.com/en-us/download/dotnet/8.0>
+  - See `global.json` file for specific SDK requirements
 
 ## Node.js Runtime
 
-- [Node.js](https://nodejs.org/en/download/package-manager) 20.16.0 or newer
+- [Node.js](https://nodejs.org/en/download/package-manager) 22.0.0 or newer
 - [NVM for Windows](https://github.com/coreybutler/nvm-windows) to manage
-  multiple installed versions of Node.js
-- See `engines` in the solution's `package.json` files for specific version
-  requirements
+  multiple installed versions of Node.js (recommended)
+  - See `engines` in the solution's `package.json` files for specific version
+    requirements
 
 ## PowerShell
 
 - [PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7.3)
-  v7.3 or newer
-  - Note: You cannot use
+  v7.3 (cross-platform)
+  - Note: You **cannot** use
     [Windows PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/what-is-windows-powershell)
     with this project. Windows PowerShell is an older, Windows-only, version of
     PowerShell. This project requires the modern, cross-platform version of
@@ -27,7 +27,7 @@
 
 ## C# Editor
 
-- VS Code (cross-platform, preferred)
+- [VS Code](https://code.visualstudio.com) (cross-platform, preferred)
 - (**alternative**) Visual Studio (Windows only)
 - (**alternative**) Rider (cross-platform)
 
@@ -35,20 +35,31 @@
 
 - SQL Server 2019 or newer compatible database
 
-  - <https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-setup?view=sql-server-ver15>
-  - <https://community.kentico.com/blog/developing-with-xperience-by-kentico-on-macos>
-  - <https://www.milanlund.com/knowledge-base/setting-up-a-solution-for-integrating-custom-code-in-xperience-by-kentico-on-macos>
+  - [SQL Server 2022 on Docker](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-setup?view=sql-server-ver15)
+    (cross-platform, preferred)
+    - <https://community.kentico.com/blog/developing-with-xperience-by-kentico-on-macos>
+    - <https://www.milanlund.com/knowledge-base/setting-up-a-solution-for-integrating-custom-code-in-xperience-by-kentico-on-macos>
+    - <https://konabos.com/blog/set-up-xperience-by-kentico-on-docker-in-minutes>
+  - [SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+    (Windows only)
 
 ## SQL Editor
 
-- Azure Data Studio (preferred)
-- (**alternative**) MS SQL Server Management Studio
+- VS Code with
+  [SQL Server extension](https://marketplace.visualstudio.com/items/?itemName=ms-mssql.mssql)
+  (preferred, cross-platform)
+- (**alternative**)
+  [SQL Server Management Studio](https://learn.microsoft.com/en-us/ssms/download-sql-server-management-studio-ssms)
+  (Windows only)
 
 ## Azure Storage
 
-Azure storage is used locally for data storage and background job processing
+Azure storage is used locally for data storage and background job processing.
 
 - [Azurite](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio%2Cblob-storage)
+  local install
+- (**alternative**)
+  [Azurite on Docker](https://github.com/Azure/Azurite?tab=readme-ov-file#dockerhub)
 - [Azure Storage Explorer](https://azure.microsoft.com/en-us/products/storage/storage-explorer/)
 
 ## Email SMTP Server

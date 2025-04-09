@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Content item version</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemVersionID" columntype="integer" enabled="true" guid="824161a1-3246-4b46-a00e-456eaf8edb4b" isPK="true" system="true" />
+      <field allowempty="true" column="ContentItemVersionData" columnprecision="0" columntype="longtext" enabled="true" guid="d8440066-8521-4236-bc12-a27924b10780" system="true" />
+      <field allowempty="true" column="ContentItemVersionCreatedByUserID" columnprecision="0" columntype="integer" enabled="true" guid="274c9b47-3fbd-4dc7-a350-ea4a48f07591" refobjtype="cms.user" reftype="NotRequired" system="true" />
+      <field column="ContentItemVersionCreatedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="81214eb0-0650-4f8b-a539-f94973dc5967" system="true" />
+      <field column="ContentItemVersionContentItemID" columnprecision="0" columntype="integer" enabled="true" guid="34bb5332-29d2-4c82-ae60-c7398ba92286" refobjtype="cms.contentitem" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="ContentItemVersionContentLanguageID" columnprecision="0" columntype="integer" enabled="true" guid="28eb25a5-de40-4098-a658-9d515dc16564" refobjtype="cms.contentlanguage" reftype="Required" system="true" />
+      <field column="ContentItemVersionAction" columnprecision="0" columntype="integer" enabled="true" guid="cf9a9510-7a68-4283-8abf-f058cd6b8a4b" system="true" />
+      <field allowempty="true" column="ContentItemVersionActionScheduledWhen" columnprecision="7" columntype="datetime" enabled="true" guid="60447cf1-206e-410e-beea-5e28f90353a7" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>df1f313c-ce43-4e06-a70c-e6292f25936e</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ContentItemVersion</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentEngine</CodeName>
+    <GUID>eb76ebd1-752f-4969-a5b6-1fb984cae224</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ContentItemVersion</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

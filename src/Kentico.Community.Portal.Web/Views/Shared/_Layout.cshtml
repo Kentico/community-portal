@@ -37,19 +37,13 @@
 <body>
     <vc:navigation />
 
-    <div id="overlay">
-        <div class="overlay__inner">
-            <div class="overlay__content"><span class="spinner"></span></div>
-        </div>
-    </div>
-
     <div id="pageContent">
         @RenderBody()
     </div>
 
     <vc:footer />
 
-    <div class="bottom-0 p-3 position-absolute end-0 toast-container">
+    <div class="bottom-0 p-3 position-absolute end-0 toast-container" data-ktc-search-exclude>
         <div class="toast bg-warning-subtle" role="alert" aria-live="assertive" aria-atomic="true" data-error-toast>
             <div class="toast-header">
                 <strong class="me-auto">Error</strong>

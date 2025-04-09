@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[Contact.SubmittedForm("{form}")]]>
+  </MacroRuleCondition>
+  <MacroRuleDisplayName>Contact has submitted form</MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>cada7e97-be70-4383-a2fd-e02bd31e4af5</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactHasSubmittedForm</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="form" columnprecision="0" columntype="objectcodenames" guid="1fb936a4-fa02-40b1-a5ad-8f765b2eac68" visible="true">
+        <properties>
+          <fieldcaption>form</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectCodeNameSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <ObjectType>cms.form</ObjectType>
+          <Placeholder>select form</Placeholder>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>Contact has submitted form {form}</MacroRuleText>
+  <MacroRuleUsageLocation>4</MacroRuleUsageLocation>
+</cms.macrorule>

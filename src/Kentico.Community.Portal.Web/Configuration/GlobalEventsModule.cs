@@ -39,6 +39,7 @@ internal class GlobalEventsModule : Module
         }
 
         QAndAAnswerDataInfo.TYPEINFO.Events.Insert.After += QAndAAnswerDataInfo_InsertAfter;
+        QAndAAnswerDataInfo.TYPEINFO.Events.Update.After += QAndAAnswerDataInfo_UpdateAfter;
         QAndAAnswerDataInfo.TYPEINFO.Events.Delete.After += QAndAAnswerDataInfo_DeleteAfter;
         WebPageEvents.Publish.Execute += WebPage_PublishExecute;
         ChannelInfo.TYPEINFO.Events.Update.Before += Channel_ModifyBefore;
@@ -101,7 +102,19 @@ internal class GlobalEventsModule : Module
             return;
         }
 
-        services.GetRequiredService<QAndAAnswerCreateSearchIndexTaskHandler>().Handle(answer)
+        services.GetRequiredService<QAndAAnswerSearchIndexTaskHandler>().Handle(answer)
+            .GetAwaiter()
+            .GetResult();
+    }
+
+    private void QAndAAnswerDataInfo_UpdateAfter(object? sender, ObjectEventArgs e)
+    {
+        if (e.Object is not QAndAAnswerDataInfo answer)
+        {
+            return;
+        }
+
+        services.GetRequiredService<QAndAAnswerSearchIndexTaskHandler>().Handle(answer)
             .GetAwaiter()
             .GetResult();
     }
@@ -113,7 +126,7 @@ internal class GlobalEventsModule : Module
             return;
         }
 
-        services.GetRequiredService<QAndAAnswerDeleteSearchIndexTaskHandler>().Handle(answer)
+        services.GetRequiredService<QAndAAnswerSearchIndexTaskHandler>().Handle(answer)
             .GetAwaiter()
             .GetResult();
     }

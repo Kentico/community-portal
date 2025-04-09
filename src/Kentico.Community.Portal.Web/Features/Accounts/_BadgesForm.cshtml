@@ -26,21 +26,21 @@
 
                     <button id="badgeButton_@i" type="button"
                         class="badge text-bg-purple-300 d-flex align-items-center gap-1 fw-medium px-2 border-secondary @classes"
-                        style="@style" x-data="@alpineState"
+                        style='@style' x-data='@alpineState'
                         :class="selected ? { 'text-bg-purple-300': true, 'bg-purple-300': true, 'text-bg-white': false, 'bg-white': false } : 'text-bg-white bg-white'"
                         :style="selected ? '' : '--bs-border-opacity: .5;'"
                         :title="selected ? 'This badge is selected' : 'This badge is not selected'"
                         :aria-label="selected ? 'This badge is selected' : 'This badge is not selected'"
                         @@click = "selected = !selected; selectedCount += selected ? 1 : -1" >
 
-                    <img xpc-badge="@badge" />
+                        <img xpc-badge="@badge" />
 
                         @badge.MemberBadgeDisplayName
                         <input type="hidden" id="Badges_@(i)__BadgeId" name="Badges[@i].BadgeId" value="@badge.BadgeId" />
                         <input type="hidden" x-model="selected" id="Badges_@(i)__IsSelected" name="Badges[@i].IsSelected"
                             value="@badge.IsSelected" />
                     </button>
-                                }
+                }
             </span>
             <span class="text-danger field-validation-error field-validation-valid" x-show="selectedCount > maxBadges"
                 x-cloak>

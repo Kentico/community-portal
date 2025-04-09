@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[Contact.VisitedPage("{page}")]]>
+  </MacroRuleCondition>
+  <MacroRuleDisplayName>Contact has visited page</MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>4d4cced9-998b-4fd3-9305-a7ca69742847</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactHasVisitedPage</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="page" columnprecision="0" columntype="pages" guid="dd36c899-8968-4b4e-861f-1daba97a39cb" visible="true">
+        <properties>
+          <fieldcaption>select page</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.WebPageSelector</controlname>
+          <MaximumPages>1</MaximumPages>
+          <Sortable>False</Sortable>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>Contact has visited page {page}</MacroRuleText>
+  <MacroRuleUsageLocation>4</MacroRuleUsageLocation>
+</cms.macrorule>

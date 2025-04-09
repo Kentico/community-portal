@@ -19,6 +19,7 @@
         <div>
             <label asp-for="@Model.SortBy" class="form-label text-nowrap mb-0">Sort by</label>
             <select asp-for="@Model.SortBy" class="form-select form-select-sm w-auto" search-sort-by>
+                <option value="activitydate">Latest activity</option>
                 <option value="relevance">Relevance</option>
                 <option value="publishdate">Latest question</option>
                 <option value="responsedate">Latest response</option>

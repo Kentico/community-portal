@@ -4,7 +4,7 @@
 #>
 
 param (
-    [string[]]$Types = ''
+    [string[]]$Types = $null
 )
 
 Import-Module (Resolve-Path Utilities) `
@@ -12,11 +12,16 @@ Import-Module (Resolve-Path Utilities) `
     Get-WebProjectPath, `
     Get-CoreProjectPath, `
     Invoke-ExpressionWithException, `
+    Get-ScriptConfig, `
     Write-Status `
     -Force
 
 $webProjectPath = Get-WebProjectPath
 $coreProjectPath = Get-CoreProjectPath
+
+$scriptConfig = Get-ScriptConfig
+
+$Types = if ($null -eq $Types) { $scriptConfig.CodeGenerationTypes } else { $Types }
 
 function Get-AppendedCorePath {
     param(

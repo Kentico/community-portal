@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.macrorule>
+  <MacroRuleCondition>
+    <![CDATA[Contact.ClickedOnSpecificLinkInEmail("{email}", "{op}", "{value}")]]>
+  </MacroRuleCondition>
+  <MacroRuleDisplayName>Contact has clicked on email with specific URL</MacroRuleDisplayName>
+  <MacroRuleEnabled>True</MacroRuleEnabled>
+  <MacroRuleGUID>b2041a65-a82e-4a44-8ed5-df2e88d4f7a0</MacroRuleGUID>
+  <MacroRuleIsCustom>False</MacroRuleIsCustom>
+  <MacroRuleName>CMSContactHasClickedOnSpecificEmailUrl</MacroRuleName>
+  <MacroRuleParameters>
+    <form>
+      <field column="op" columnsize="100" columntype="text" guid="3e3cdc8f-80bf-433d-7533-eca902c26e09" visible="true">
+        <properties>
+          <defaultvalue>Contains;contains</defaultvalue>
+          <fieldcaption>select operator</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <EditText>False</EditText>
+          <Options>
+<![CDATA[
+Contains;contains
+NotContains;does not contain
+StartsWith;starts with
+EndsWith;ends with
+Equals;is equal to
+NotEquals;is not equal to
+]]>
+          </Options>
+        </settings>
+      </field>
+      <field column="value" columnsize="200" columntype="text" guid="77f9a4de-978a-40a2-ad33-a3823bfbc70c" visible="true">
+        <properties>
+          <fieldcaption>enter value</fieldcaption>
+        </properties>
+        <settings>
+          <AutoCompleteEnableCaching>False</AutoCompleteEnableCaching>
+          <AutoCompleteFirstRowSelected>False</AutoCompleteFirstRowSelected>
+          <AutoCompleteShowOnlyCurrentWordInCompletionListItem>False</AutoCompleteShowOnlyCurrentWordInCompletionListItem>
+          <controlname>Kentico.Administration.TextInput</controlname>
+          <FilterMode>False</FilterMode>
+          <Trim>False</Trim>
+          <WatermarkText>enter value</WatermarkText>
+        </settings>
+      </field>
+      <field column="email" columnprecision="0" columntype="emails" guid="aa412d03-d907-465f-bde7-d66e59cff6d4" visible="true">
+        <properties>
+          <fieldcaption>select email</fieldcaption>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.EmailSelector</controlname>
+          <ForPreview>True</ForPreview>
+          <MaximumEmails>1</MaximumEmails>
+          <Sortable>False</Sortable>
+        </settings>
+      </field>
+    </form>
+  </MacroRuleParameters>
+  <MacroRuleText>
+    <![CDATA[Contact has clicked on a link with a URL that {op} {value} in email {email}]]>
+  </MacroRuleText>
+  <MacroRuleUsageLocation>4</MacroRuleUsageLocation>
+</cms.macrorule>

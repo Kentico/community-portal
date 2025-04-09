@@ -54,7 +54,7 @@ jobs:
 
       - name: Get Database Backup Name
         run: |
-          $latestBackup = Get-Content -Path "./database/backups.txt" -TotalCount 1
+          $latestBackup = Get-ChildItem -Path "./database" -Filter "*.zip" | Select-Object -ExpandProperty BaseName
           "DATABASE_BACKUP_FILENAME=$latestBackup" >> $env:GITHUB_ENV
 
       - name: Extract Database Backup
@@ -72,10 +72,9 @@ jobs:
 
       - name: Restore Database .bak
         run: |
-          docker exec sql mkdir /var/opt/mssql/backup
-          docker cp "./database/${{ env.DATABASE_BACKUP_FILENAME }}" sql:/var/opt/mssql/backup
-          docker exec -u root sql bash -c "chown mssql:mssql /var/opt/mssql/backup/${{ env.DATABASE_BACKUP_FILENAME }}"
-          docker exec -u root sql bash -c "chmod 644 /var/opt/mssql/backup/${{ env.DATABASE_BACKUP_FILENAME }}"
+          docker cp "./database/${{ env.DATABASE_BACKUP_FILENAME }}" sql:/var/backups/Kentico.Community.bak
+          docker exec -u root sql bash -c "chown mssql:mssql /var/backups/Kentico.Community.bak"
+          docker exec -u root sql bash -c "chmod 644 /var/backups/Kentico.Community.bak"
 
           sqlcmd `
             -S localhost `
@@ -84,20 +83,7 @@ jobs:
             -P "Pass@12345" `
             -N o `
             -C `
-            -Q "RESTORE DATABASE [Kentico.Community] FROM DISK='/var/opt/mssql/backup/${{ env.DATABASE_BACKUP_FILENAME }}' WITH MOVE 'Kentico.Community' TO '/var/opt/mssql/data/Kentico.Community.mdf', MOVE 'Kentico.Community_log' TO '/var/opt/mssql/data/Kentico.Community_log.ldf'"
-        if: endsWith(env.DATABASE_BACKUP_FILENAME, '.bak')
-
-      - name: Restore Database .bacpac
-        run: |
-          sqlpackage `
-            /a:Import `
-            /tsn:localhost `
-            /tdn:Kentico.Community `
-            /tu:sa `
-            /tp:Pass@12345 `
-            /sf:"./database/${{ env.DATABASE_BACKUP_FILENAME }}" `
-            /tec:False
-        if: endsWith(env.DATABASE_BACKUP_FILENAME, '.bacpac')
+            -i ./database/backup-restore.sql
 
       - name: Restore License Key
         working-directory: "./scripts"

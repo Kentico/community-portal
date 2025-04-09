@@ -1,9 +1,31 @@
-# Utilities
+# Utilities for other scripts
 
 $scriptConfig = @{}
 $scriptConfig.WorkspaceFolder = ".."
 $scriptConfig.SolutionFileName = "Kentico.Community.Portal.sln"
-$scriptConfig.AssemblyName = "Kentico.Community.Portal.Web"
+$scriptConfig.WebProjectAssemblyName = "Kentico.Community.Portal.Web"
+$scriptConfig.BackupSourceFolderPath = "/var/backups"
+$scriptConfig.BackupSourcePathSeparator = "/"
+$scriptConfig.BackupHostSourceFolderPath = "~/backups"
+$scriptConfig.BackupDestinationFolderPath = Join-Path $scriptConfig.WorkspaceFolder "database"
+$scriptConfig.CodeGenerationTypes = $("Reusable", "Pages", "Forms")
+$scriptConfig.CompressDeploymentPackage = $False
+
+# Local settings can be defined by copying settings.template.json to settings.local.json
+$settingsLocalFilePath = Join-Path $scriptConfig.WorkspaceFolder "scripts" "Utilities" "settings.local.json"
+
+if (Test-Path $settingsLocalFilePath) {
+    $localConfig = Get-Content -Path $settingsLocalFilePath -Raw | ConvertFrom-Json
+
+    $scriptConfig.BackupSourceFolderPath = $localConfig.BackupSourceFolderPath 
+    $scriptConfig.BackupSourcePathSeparator = $localConfig.BackupSourcePathSeparator 
+    $scriptConfig.BackupHostSourceFolderPath = $localConfig.BackupHostSourceFolderPath 
+    $scriptConfig.CodeGenerationTypes = $localConfig.CodeGenerationTypes 
+    $scriptConfig.CompressDeploymentPackage = $localConfig.CompressDeploymentPackage 
+}
+else {
+    Write-Information "Local settings file not found. Using default settings."
+}
 
 <#
     .DESCRIPTION
@@ -69,24 +91,16 @@ function Get-CoreProjectPath {
 function Get-ConnectionString {
     $projectPath = Get-WebProjectPath
 
-    # Try to get the connection string from user secrets first
-    Write-Host "Checking for a connection string user secrets for project: $projectPath"
-
     $connectionString = dotnet user-secrets list --project $projectPath `
     | Select-String -Pattern "ConnectionStrings:" `
     | ForEach-Object { $_.Line -replace '^ConnectionStrings:CMSConnectionString \= ', '' }
 
     if (-not [string]::IsNullOrEmpty($connectionString)) {
-        Write-Host 'Using ConnectionString from user-secrets'
-
         return $connectionString
     }
 
     $appSettingFileName = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? 'appsettings.CI.json' : 'appsettings.json'
-    
     $jsonFilePath = Join-Path $projectPath $appSettingFileName
-
-    Write-Host "Using settings from $jsonFilePath"
     
     if (!(Test-Path $jsonFilePath)) {
         throw "Could not find file $jsonFilePath"

@@ -34,9 +34,9 @@ public interface IMemberEmailService
 
 public class MemberEmailService(
     IInfoProvider<EmailConfigurationInfo> emailConfigurationProvider,
-    IEmailContentResolver emailContentResolver,
+    IEmailContentResolverFactory emailContentResolverFactory,
     IEmailService emailService,
-    ITemplateDrivenEmailComposer composer,
+    IEmailMarkupBuilderFactory markupBuilderFactory,
     IEmailChannelLanguageRetriever languageRetriever,
     IContentItemDataInfoRetriever dataRetriever,
     IEmailChannelSenderEmailProvider senderInfoProvider,
@@ -46,9 +46,9 @@ public class MemberEmailService(
 ) : IMemberEmailService
 {
     private readonly IInfoProvider<EmailConfigurationInfo> emailConfigurationProvider = emailConfigurationProvider;
-    private readonly IEmailContentResolver emailContentResolver = emailContentResolver;
+    private readonly IEmailContentResolverFactory emailContentResolverFactory = emailContentResolverFactory;
     private readonly IEmailService emailService = emailService;
-    private readonly ITemplateDrivenEmailComposer composer = composer;
+    private readonly IEmailMarkupBuilderFactory markupBuilderFactory = markupBuilderFactory;
     private readonly IEmailChannelLanguageRetriever languageRetriever = languageRetriever;
     private readonly IContentItemDataInfoRetriever dataRetriever = dataRetriever;
     private readonly IEmailChannelSenderEmailProvider senderInfoProvider = senderInfoProvider;
@@ -74,10 +74,12 @@ public class MemberEmailService(
         var emailConfig = await emailConfigurationProvider
             .GetAsync(configuration.EmailConfigurationName);
 
-        string mergedTemplate = await composer
-            .Compose(emailConfig, false);
+        var markupBuilder = await markupBuilderFactory.Create(emailConfig);
+        string mergedTemplate = await markupBuilder
+            .BuildEmailForSending(emailConfig);
 
-        string emailBody = await emailContentResolver.Resolve(
+        var contentResolver = await emailContentResolverFactory.Create(emailConfig, default);
+        string emailBody = await contentResolver.Resolve(
             emailConfig,
             mergedTemplate,
             EmailContentFilterType.Sending,

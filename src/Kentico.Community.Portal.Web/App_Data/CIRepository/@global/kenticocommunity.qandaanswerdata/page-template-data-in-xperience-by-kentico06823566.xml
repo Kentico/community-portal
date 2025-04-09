@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Page-template-data-in-Xperience-by-Kentico06823566</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Page template data in Xperience by Kentico is stored in the database in `CMS_ContentItemCommonData.ContentItemCommonDataVisualBuilderTemplateConfiguration`.
+
+Returning to the Community Portal example, a blog post page would have the following JSON in this column.
+
+The Kentico Community Portal uses separate templates for each web page content type so that these can evolve independently of each other, but it does have [a general "Landing Page" catch-all content type with templates](https://github.com/Kentico/community-portal/tree/v30.2.2.1/src/Kentico.Community.Portal.Web/Features/LandingPages) which is used for basic content pages.
+
+You can see that [Page Templates are registered with an attribute](https://github.com/Kentico/community-portal/blob/v30.2.2.1/src/Kentico.Community.Portal.Web/Features/LandingPages/LandingPageTemplates.cs#L9) and one of the attribute properties is an array of content types that can use the registered template.
+
+```CSharp
+[assembly: RegisterPageTemplate(
+    identifier: "KenticoCommunity.LandingPage_Default",
+    name: "Landing Page - Default",
+    propertiesType: typeof(LandingPageDefaultTemplateProperties),
+    customViewName: "/Features/LandingPages/LandingPage_Default.cshtml",
+    ContentTypeNames = [LandingPage.CONTENT_TYPE_NAME],
+    Description = "Default Landing Page template with a heading",
+    IconClass = "xp-l-header-text"
+)]
+
+```
+
+If you want the template to be available to more than one content type then populate the `ContentTypeNames` array with multiple content type names - nothing magic here!
+
+You can also use the older approach of [defining and registering](https://docs.kentico.com/x/ionWCQ) an `IPageTemplateFilter`, but I find `ContentTypeNames` handles all the filtering I need.
+
+CMS\_ContentItemCommonData.ContentItemCommonDataVisualBuilderTemplateConfiguration
+
+CMS\_ContentItemCommonData
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-19 20:03:09Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>1cef929b-ca6a-4ed8-8744-c80682733279</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-good-is-Xperience-by-Kentico--92b86df3-t4mr7onp-localtest</CodeName>
+    <GUID>cb903ba2-cd6f-4cbd-af66-7c61e959152a</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

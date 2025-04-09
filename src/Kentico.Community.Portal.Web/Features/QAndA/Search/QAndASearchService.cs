@@ -32,7 +32,7 @@ public class QAndASearchRequest
             : "";
         SortBy = query.TryGetValue("sortBy", out var sortByValues)
             ? sortByValues.ToString()
-            : "publishdate";
+            : "activitydate";
         PageNumber = query.TryGetValue("page", out var pageValues)
             ? int.TryParse(pageValues, out int p)
                 ? p
@@ -109,16 +109,18 @@ public class QAndASearchResult
         PageSize = pageSize;
         TotalPages = topDocs.TotalHits <= 0 ? 0 : ((topDocs.TotalHits - 1) / pageSize) + 1;
         TotalHits = topDocs.TotalHits;
-        Hits = topDocs.ScoreDocs
+        Hits = [.. topDocs.ScoreDocs
             .Skip(offset)
             .Take(limit)
-            .Select(d => QAndASearchIndexModel.FromDocument(retrieveDoc(d)))
-            .ToList();
-        DiscussionTypes = facets.GetTopChildren(2, nameof(QAndASearchIndexModel.DiscussionTypeFacet), [])?.LabelValues.ToArray() ?? [];
-        DiscussionStates = facets.GetTopChildren(2, nameof(QAndASearchIndexModel.DiscussionStatesFacet), [])?.LabelValues.ToArray() ?? [];
-        DXTopics = facets.GetTopChildren(100, nameof(QAndASearchIndexModel.DXTopicsFacet), [])?.LabelValues.ToArray() ?? [];
+            .Select(d => QAndASearchIndexModel.FromDocument(retrieveDoc(d)))];
+        DiscussionTypes = GetLabelValues(2, nameof(QAndASearchIndexModel.DiscussionTypeFacet), facets);
+        DiscussionStates = GetLabelValues(2, nameof(QAndASearchIndexModel.DiscussionStatesFacet), facets);
+        DXTopics = GetLabelValues(100, nameof(QAndASearchIndexModel.DXTopicsFacet), facets);
         SortBy = request.SortBy;
     }
+
+    private static LabelAndValue[] GetLabelValues(int topN, string fieldName, MultiFacets facets) =>
+        facets.GetTopChildren(topN, fieldName, [])?.LabelValues.ToArray() ?? [];
 
     private QAndASearchResult() { }
 }
@@ -262,6 +264,7 @@ public class QAndASearchService(
     private static SortField? GetSortOption(string? sortBy = null) =>
         sortBy switch
         {
+            "activitydate" => new SortField(nameof(QAndASearchIndexModel.ActivityDate), FieldCache.NUMERIC_UTILS_INT64_PARSER, true),
             "publishdate" => new SortField(nameof(QAndASearchIndexModel.PublishedDate), FieldCache.NUMERIC_UTILS_INT64_PARSER, true),
             "responsedate" => new SortField(nameof(QAndASearchIndexModel.LatestResponseDate), FieldCache.NUMERIC_UTILS_INT64_PARSER, true),
             _ => null,

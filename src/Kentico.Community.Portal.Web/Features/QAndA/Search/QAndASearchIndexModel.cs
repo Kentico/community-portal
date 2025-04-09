@@ -30,6 +30,7 @@ public class QAndASearchIndexModel
     public string Content { get; set; } = "";
     public DateTime PublishedDate { get; set; }
     public DateTime LatestResponseDate { get; set; }
+    public DateTime ActivityDate { get; set; }
     public int AuthorMemberID { get; set; }
     public string AuthorUsername { get; set; } = "";
     public string AuthorFullName { get; set; } = "";
@@ -51,6 +52,7 @@ public class QAndASearchIndexModel
             new TextField(nameof(Content), Content, Field.Store.NO),
             new Int64Field(nameof(PublishedDate), DateTools.TicksToUnixTimeMilliseconds(PublishedDate.Ticks), Field.Store.YES),
             new Int64Field(nameof(LatestResponseDate), DateTools.TicksToUnixTimeMilliseconds(LatestResponseDate.Ticks), Field.Store.YES),
+            new Int64Field(nameof(ActivityDate), DateTools.TicksToUnixTimeMilliseconds(ActivityDate.Ticks), Field.Store.YES),
             new TextField(nameof(AuthorAttributes), JsonConvert.SerializeObject(AuthorAttributes), Field.Store.YES),
             new Int32Field(nameof(AuthorMemberID), AuthorMemberID, Field.Store.YES),
             new TextField(nameof(AuthorUsername), AuthorUsername, Field.Store.YES),
@@ -101,9 +103,13 @@ public class QAndASearchIndexModel
                 DateTools.UnixTimeMillisecondsToTicks(
                     long.TryParse(doc.Get(nameof(LatestResponseDate)), out long responseVal) ? responseVal : DateTools.TicksToUnixTimeMilliseconds(DefaultTime.Ticks)
                 )),
+            ActivityDate = new DateTime(
+                DateTools.UnixTimeMillisecondsToTicks(
+                    long.TryParse(doc.Get(nameof(ActivityDate)), out long activityVal) ? activityVal : DateTools.TicksToUnixTimeMilliseconds(DefaultTime.Ticks)
+                )),
             DiscussionType = doc.Get(nameof(DiscussionType)) ?? "",
             DiscussionState = doc.Get(nameof(DiscussionState)) ?? "",
-            DXTopics = doc.Get(nameof(DXTopics)).Split(";").WhereNotNullOrWhiteSpace().ToList(),
+            DXTopics = [.. doc.Get(nameof(DXTopics)).Split(";").WhereNotNullOrWhiteSpace()],
         };
 
         return model;
@@ -159,7 +165,7 @@ public class QAndASearchIndexingStrategy(
         indexModel.Content = htmlSanitizer.SanitizeHtmlDocument(content);
         indexModel.PublishedDate = page.QAndAQuestionPageDateCreated != default
             ? page.QAndAQuestionPageDateCreated
-            : DateTime.MinValue;
+            : QAndASearchIndexModel.DefaultTime;
         indexModel.DiscussionStatesFacet = page.QAndAQuestionPageAcceptedAnswerDataGUID switch
         {
             var g when g == default => Enums.AsString(DiscussionStates.NoAcceptedAnswer, EnumFormat.Name)?.ToLowerInvariant() ?? "",
@@ -195,13 +201,20 @@ public class QAndASearchIndexingStrategy(
             .Get()
             .WhereEquals(nameof(QAndAAnswerDataInfo.QAndAAnswerDataQuestionWebPageItemID), page.SystemFields.WebPageItemID)
             .Columns(nameof(QAndAAnswerDataInfo.QAndAAnswerDataID), nameof(QAndAAnswerDataInfo.QAndAAnswerDataDateCreated))
+            .OrderByDescending(nameof(QAndAAnswerDataInfo.QAndAAnswerDataDateCreated))
+            .TopN(1)
             .GetEnumerableTypedResultAsync())
             .ToList();
 
         indexModel.ResponseCount = answers.Count;
-        indexModel.LatestResponseDate = answers.Count > 0
-            ? answers.Max(a => a.QAndAAnswerDataDateCreated)
-            : QAndASearchIndexModel.DefaultTime;
+        indexModel.LatestResponseDate = answers
+            .Select(a => a.QAndAAnswerDataDateCreated)
+            .TryFirst()
+            .GetValueOrDefault(QAndASearchIndexModel.DefaultTime);
+
+        indexModel.ActivityDate = indexModel.LatestResponseDate > indexModel.PublishedDate
+            ? indexModel.LatestResponseDate
+            : indexModel.PublishedDate;
 
         return indexModel.ToDocument();
     }

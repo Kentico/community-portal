@@ -5,7 +5,7 @@ namespace Kentico.Community.Portal.Web.Infrastructure.Search;
 
 public static partial class WebScraperHtmlSanitizerParser
 {
-    [GeneratedRegex(@"\\s+")]
+    [GeneratedRegex(@"\s+")]
     public static partial Regex WhiteSpace();
 }
 

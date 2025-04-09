@@ -9,6 +9,7 @@ import {
 import { html } from "@milkdown/kit/component";
 import { Crepe } from "@milkdown/crepe";
 import { listener, listenerCtx } from "@milkdown/kit/plugin/listener";
+import { remarkPreserveEmptyLinePlugin } from "@milkdown/preset-commonmark";
 
 export async function initQAndA({ editorElemID, formType = "" }) {
   /**
@@ -112,6 +113,7 @@ export async function initQAndA({ editorElemID, formType = "" }) {
         list.markdownUpdated(updateField);
       })
       .use(listener);
+    crepeEditor.editor.remove(remarkPreserveEmptyLinePlugin);
 
     await crepeEditor.create();
 
@@ -163,7 +165,7 @@ export async function initQAndA({ editorElemID, formType = "" }) {
 ---
 
 **Environment**
-- Xperience by Kentico version: [30.2.2]
+- Xperience by Kentico version: [30.3.1]
 - .NET version: [8|9]
 - Execution environment: [SaaS|Private cloud (Azure/AWS/Virtual machine)]
 - Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)`
