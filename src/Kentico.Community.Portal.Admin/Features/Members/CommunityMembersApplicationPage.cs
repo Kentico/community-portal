@@ -15,6 +15,7 @@ using Kentico.Xperience.Admin.Base;
 namespace Kentico.Community.Portal.Admin.Features.Members;
 
 [UIPermission(SystemPermissions.VIEW)]
+[UIPermission(SystemPermissions.UPDATE)]
 public class CommunityMembersApplicationPage : ApplicationPage
 {
     public const string IDENTIFIER = "community-members-app";

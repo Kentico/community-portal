@@ -202,14 +202,13 @@ public class QAndASearchIndexingStrategy(
             .WhereEquals(nameof(QAndAAnswerDataInfo.QAndAAnswerDataQuestionWebPageItemID), page.SystemFields.WebPageItemID)
             .Columns(nameof(QAndAAnswerDataInfo.QAndAAnswerDataID), nameof(QAndAAnswerDataInfo.QAndAAnswerDataDateCreated))
             .OrderByDescending(nameof(QAndAAnswerDataInfo.QAndAAnswerDataDateCreated))
-            .TopN(1)
             .GetEnumerableTypedResultAsync())
             .ToList();
 
         indexModel.ResponseCount = answers.Count;
         indexModel.LatestResponseDate = answers
-            .Select(a => a.QAndAAnswerDataDateCreated)
             .TryFirst()
+            .Map(a => a.QAndAAnswerDataDateCreated)
             .GetValueOrDefault(QAndASearchIndexModel.DefaultTime);
 
         indexModel.ActivityDate = indexModel.LatestResponseDate > indexModel.PublishedDate

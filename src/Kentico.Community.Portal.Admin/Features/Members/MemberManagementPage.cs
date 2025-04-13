@@ -1,4 +1,5 @@
 using CMS.IO;
+using CMS.Membership;
 using Kentico.Community.Portal.Admin.Features.Members;
 using Kentico.Community.Portal.Core.Infrastructure;
 using Kentico.Xperience.Admin.Base;
@@ -18,8 +19,6 @@ namespace Kentico.Community.Portal.Admin.Features.Members;
 
 public class MemberManagementPage(IStoragePathService storagePathService) : Page<MemberManagementPageClientProperties>
 {
-    public const string IDENTIFIER = "management";
-
     private readonly IStoragePathService storagePathService = storagePathService;
 
     public override async Task<MemberManagementPageClientProperties> ConfigureTemplateProperties(MemberManagementPageClientProperties properties)
@@ -43,7 +42,7 @@ public class MemberManagementPage(IStoragePathService storagePathService) : Page
         return properties;
     }
 
-    [PageCommand]
+    [PageCommand(Permission = SystemPermissions.UPDATE)]
     public async Task<ICommandResponse> MigrateOldAvatarPaths()
     {
         var result = new AvatarPathMigrationResult([]);

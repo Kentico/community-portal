@@ -1,5 +1,5 @@
 using System.Reflection;
-using CMS.OnlineForms;
+using Kentico.Community.Portal.Admin.Features.Migrations;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Infrastructure;
 using Kentico.Community.Portal.Core.Modules;
@@ -40,7 +40,8 @@ public static class ServiceCollectionAppExtensions
             .AddQAndA()
             .AddBlogs()
             .AddMemberBadges()
-            .AddNotifications();
+            .AddNotifications()
+            .AddMigrations();
 
     private static IServiceCollection AddOperations(this IServiceCollection services, IConfiguration config) =>
         services
@@ -137,6 +138,9 @@ public static class ServiceCollectionAppExtensions
 
     private static IServiceCollection AddNotifications(this IServiceCollection services) =>
         services;
+
+    private static IServiceCollection AddMigrations(this IServiceCollection services) =>
+        services.AddTransient<IDataMigrator, BlogPostPageMigrator>();
 
     private static IServiceCollection AddClosedGenericTypes(
         this IServiceCollection services,

@@ -36,15 +36,45 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
+		/// BlogPostPageAuthorContent.
+		/// </summary>
+		public IEnumerable<AuthorContent> BlogPostPageAuthorContent { get; set; }
+
+
+		/// <summary>
+		/// BlogPostPagePublishedDate.
+		/// </summary>
+		public DateTime BlogPostPagePublishedDate { get; set; }
+
+
+		/// <summary>
 		/// BlogPostPageBlogPostContent.
 		/// </summary>
 		public IEnumerable<BlogPostContent> BlogPostPageBlogPostContent { get; set; }
 
 
 		/// <summary>
+		/// BlogPostPageBlogType.
+		/// </summary>
+		public IEnumerable<TagReference> BlogPostPageBlogType { get; set; }
+
+
+		/// <summary>
+		/// BlogPostPageDXTopics.
+		/// </summary>
+		public IEnumerable<TagReference> BlogPostPageDXTopics { get; set; }
+
+
+		/// <summary>
 		/// BlogPostPageQAndADiscussionPage.
 		/// </summary>
 		public IEnumerable<WebPageRelatedItem> BlogPostPageQAndADiscussionPage { get; set; }
+
+
+		/// <summary>
+		/// BlogPostPageIsContentMigrated.
+		/// </summary>
+		public bool BlogPostPageIsContentMigrated { get; set; }
 
 
 		/// <summary>

@@ -8,6 +8,33 @@
       <field column="ContentItemDataID" columntype="integer" enabled="true" guid="9b592252-3b7a-4c7f-a217-3fb5c1ab04c3" isPK="true" />
       <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="72bf100d-ed6c-4711-aa11-fc61e4aef0f5" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
       <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="5a089cd6-5d33-4cbe-bc26-23e1c7296726" isunique="true" system="true" />
+      <field allowempty="true" column="BlogPostPageAuthorContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="baef8e96-a792-478c-a9dc-1929378ccbac" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Author</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["8033c6de-9e47-4618-ac1a-25fd361c6ac8"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>1</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+      </field>
+      <field column="BlogPostPagePublishedDate" columnprecision="2" columntype="datetime" enabled="true" guid="0fb6604d-5170-44dc-b52d-8c858411ed11" visible="true">
+        <properties>
+          <explanationtext>{$base.forms.datetimeinput.explanation$}</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Published Date</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+      </field>
       <field allowempty="true" column="BlogPostPageBlogPostContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="9a93d64c-5cc7-47f0-94e8-f7b3cc48946e" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
@@ -27,6 +54,35 @@
           </ValidationRuleConfiguration>
         </validationrulesdata>
       </field>
+      <field allowempty="true" column="BlogPostPageBlogType" columnprecision="0" columntype="taxonomy" enabled="true" guid="a2a65c26-7b23-4098-9342-797342254ec6" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Type</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TagSelector</controlname>
+          <MaxSelectedTagsCount>1</MaxSelectedTagsCount>
+          <MinSelectedTagsCount>1</MinSelectedTagsCount>
+          <TaxonomyGroup>
+            <![CDATA[["8419874e-3ec4-4da4-8a32-263f7ba5b864"]]]>
+          </TaxonomyGroup>
+        </settings>
+      </field>
+      <field allowempty="true" column="BlogPostPageDXTopics" columnprecision="0" columntype="taxonomy" enabled="true" guid="42629067-337e-4056-a161-1b70cdcdd03c" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>DX topics</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TagSelector</controlname>
+          <MaxSelectedTagsCount>8</MaxSelectedTagsCount>
+          <TaxonomyGroup>
+            <![CDATA[["72f39193-9dee-45df-9138-730ed4445858"]]]>
+          </TaxonomyGroup>
+        </settings>
+      </field>
       <field allowempty="true" column="BlogPostPageQAndADiscussionPage" columnprecision="0" columntype="webpages" enabled="true" guid="67a969a4-4f8a-42d2-a39f-991c81cadce5" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
@@ -42,6 +98,7 @@
           <TreePath>/Q-and-A/Questions</TreePath>
         </settings>
       </field>
+      <field allowempty="true" column="BlogPostPageIsContentMigrated" columnprecision="0" columntype="boolean" enabled="true" guid="57d6841e-fb18-41ad-81b8-57c7a3d82db9" />
       <schema guid="19eeca92-ebc9-4489-ad27-3d51bd2d2622" name="19eeca92-ebc9-4489-ad27-3d51bd2d2622">
         <properties>
           <kxp.code.name>WebPageMeta</kxp.code.name>

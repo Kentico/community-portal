@@ -9,7 +9,7 @@ $scriptConfig.BackupSourcePathSeparator = "/"
 $scriptConfig.BackupHostSourceFolderPath = "~/backups"
 $scriptConfig.BackupDestinationFolderPath = Join-Path $scriptConfig.WorkspaceFolder "database"
 $scriptConfig.CodeGenerationTypes = $("Reusable", "Pages", "Forms")
-$scriptConfig.CompressDeploymentPackage = $False
+$scriptConfig.CompressDeploymentPackage = $True
 
 # Local settings can be defined by copying settings.template.json to settings.local.json
 $settingsLocalFilePath = Join-Path $scriptConfig.WorkspaceFolder "scripts" "Utilities" "settings.local.json"
