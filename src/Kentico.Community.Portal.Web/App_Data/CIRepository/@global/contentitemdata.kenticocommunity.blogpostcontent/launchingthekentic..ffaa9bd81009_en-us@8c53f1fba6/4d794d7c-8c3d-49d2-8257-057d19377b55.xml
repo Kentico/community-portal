@@ -1,83 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentitemdata.kenticocommunity.blogpostcontent>
-  <BlogPostContentAuthor>
-    <![CDATA[[{"Identifier":"f9ac36a5-e1a6-4d21-9cb7-beb385d0fea0"}]]]>
-  </BlogPostContentAuthor>
   <BlogPostContentBlogType>
     <![CDATA[[{"Identifier":"23549e28-5004-4376-bfa0-074f16d1b1a9"}]]]>
   </BlogPostContentBlogType>
-  <BlogPostContentContentMarkdown>
-<![CDATA[
-We recently launched 🚀 the Kentico Community Newsletter, sending the first email to subscribers. This has been a year in the making, with the original goal conceived last year when I joined Kentico and took over responsibilities for the Kentico Community Portal. It's evolved as other things have evolved - the Kentico community, our strategy for supporting all of you, and Xperience by Kentico as a product.
-
-Let's briefly look at our marketing goals for the newsletter, then review some of the tactical details of how we deliver it with Xperience by Kentico, and finally our future plans and ways you can help shape our message to you.
-
-## What is a newsletter?
-
-The Kentico Community Newsletter is a digital channel - and one of the two primary channels managed in the Xperience by Kentico solution driving the Kentico Community Portal.
-
-If you've heard that email is a legacy channel and not worth investing in, here's [some food for thought from HubSpot](https://blog.hubspot.com/marketing/benefits-of-email-marketing).
-
-> 40 percent of B2B marketers say email newsletters are most critical to their content marketing success, and 73% of millennials prefer communications from businesses to come via email.
->
-> Furthermore, 99% of consumers check their email every day and it is by far the preferred way to receive updates from brands.
-
-Those numbers 📈 are pretty compelling! People have high engagement with email and we think it's a good way to reach and enable all of you - the Kentico community.
-
-An email newsletter is an ongoing series of emails, regularly delivered to a group of subscribers, covering a theme or topic relevant to them and their interests.
-
-The Kentico Community Newsletter is exactly that, with the theme and topics being Kentico (the company), Xperience by Kentico (the product), digital experience, digital marketing, marketing technology (martech), and of course, the Kentico community itself.
-
-We want to make it easy for you to stay up to date on all the things we're doing here at Kentico to support and help anyone interested in or currently working with Kentico's products and technologies. Are you a marketer, digital strategist, end-client, partner, software developer, solutions architect, SEO specialist, webmaster (is anyone still a webmaster!??) We want to send you a quick digest of all the things you need to know about the intersection of Kentico and digital marketing.
-
-This information includes posts published on our blog here, content authored by members in the community, discussions and thoughts on social media, software development or marketing tools and technologies, and any other relevant media or content. Most of the newsletter will be about Kentico things, but that's not a requirement and we think sharing news about the broader world of digital marketing and web technologies is also valuable.
-
-## Authoring emails in Xperience by Kentico
-
-So now that we know what the goal of the newsletter is and what type of content we want to feature in it, let's look at the tactics of how this works in Xperience by Kentico!
-
-In case you missed the first email, here's a preview of it inside the Kentico Community Portal email channel.
-
-[![Newsletter preview in Xperience Emails application](/getmedia/21fd415f-dcd4-414d-92e6-86e0f4d24e4c/kentico-community-newsletter-001-preview.webp)](/getmedia/21fd415f-dcd4-414d-92e6-86e0f4d24e4c/kentico-community-newsletter-001-preview.webp)
-
-You can see it uses Kentico's brand and it features content published here on the blog. The branding comes from an [HTML email template](https://docs.kentico.com/x/eRT_Cw) we use within Kentico that has been adapted from Kentico Xperience 13 to work in Xperience by Kentico.
-
-The code is pretty gnarly (as all email HTML is 😅) but we're using [some clever tricks with K# macros](https://github.com/Kentico/community-portal/blob/v29.0.3.2/src/Kentico.Community.Portal.Web/App_Data/CIRepository/%40global/emaillibrary.emailtemplate/communitynewsletter.xml#L217) to make it easier to author and maintain (we'll cover all the marketing and technical details of content modeling and template authoring in future posts).
-
-[![Newsletter email template code](/getmedia/94754e66-2a6d-4a84-be96-5a7d08a9a8ec/kentico-community-newsletter-001-email-template.webp)](/getmedia/94754e66-2a6d-4a84-be96-5a7d08a9a8ec/kentico-community-newsletter-001-email-template.webp)
-
-We're using Xperience by Kentico's Content hub and reusing the "reusable" blog post content that is displayed in the website channel. We have some intermediary content types to help compose multiple pieces of content together for emails, but the "inline" (slide out panel) content creation and authoring UX in Xperience by Kentico has been amazing for this - and I'm speaking now as a marketer, not as a software developer.
-
-[![Newsletter content form](/getmedia/6a312a5f-9e60-4b48-bc82-bab0e8cf5b94/kentico-community-newsletter-001-content-model_1.webp)](/getmedia/6a312a5f-9e60-4b48-bc82-bab0e8cf5b94/kentico-community-newsletter-001-content-model_1.webp)
-
-The [structured content approach of emails](https://docs.kentico.com/x/IaDWCQ) in Xperience today isn't as flexible as our drag-and-drop Page Builder for website channels, but for a newsletter ... I kinda prefer it?
-
-I want consistent presentation of information in each email to make it easier for readers. I also want to quickly author and switch out content when I clone a previous email to create the next one. I don't want to have to worry about breaking a template because I rearranged things and angered the ancient gods of email design 👹 (testing email designs is _hard enough_ 😫).
-
-We are working on [delivering an Email Builder](https://roadmap.kentico.com/c/142-create-emails-using-an-email-builder) in Xperience by Kentico, so I don't want to sound like I'm not excited for that feature, but sometimes less flexibility means less responsibility!
-
-After sending the first newsletter (to the few subscribers who signed-up), I started seeing deliverability metrics. This was very exciting! Click rate and open rate are above industry averages, which is not surprising given the audience 😅.
-
-[![Newsletter #1 deliverability statistics](/getmedia/e22b18e8-123b-431d-9338-4a14c06b8c78/kentico-community-newsletter-001-deliverability-stats.webp)](/getmedia/e22b18e8-123b-431d-9338-4a14c06b8c78/kentico-community-newsletter-001-deliverability-stats.webp)
-
-I hope to see the number of subscribers go up, because that means I get paid more 💰💰 ... 😆 ok, jokes aside, I want to see more subscribers because that means we're getting helpful information to more members of the community and enabling them to do more!
-
-## Community
-
-This is where you come in. Is there a type of content you'd really like to see in the newsletter? Have you authored something about Kentico you'd like to share? Because, I'd love to promote it!
-
-If authoring content or [giving feedback](https://community.kentico.com/#gridsection-feedback) feels like too big of a step right now, maybe just sign up for the newsletter (it's free!). It can help you spend less time searching for all the Kentico community news yourself by packaging 🎁 it up in a regularly delivered email, direct to your inbox.
-
-Go ahead and [sign up now](https://community.kentico.com/#gridsection-community-newsletter) if you haven't already so you don't miss out on the next Kentico Community Newsletter!
-
-For more in-depth guides on using Xperience by Kentico's email features, check back for future blog posts - or ... you know ... subscribe to the newsletter (see 👀 what I did there?)
-]]>
-  </BlogPostContentContentMarkdown>
   <BlogPostContentDXTopics>
     <![CDATA[[{"Identifier":"b492b56d-3869-4f3e-bda5-cf8dd6588291"},{"Identifier":"6ad7092e-2b5b-4dc6-a89c-37d4c38df71e"},{"Identifier":"e3623da6-d90c-4089-9fd0-25df6c30bee8"},{"Identifier":"803ca767-e932-4db9-a6bb-cb1393bfd255"},{"Identifier":"b472ef75-6ca8-427e-a791-e72dd830465d"}]]]>
   </BlogPostContentDXTopics>
-  <BlogPostContentPublishedDate>2024-05-15 18:01:00Z</BlogPostContentPublishedDate>
-  <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
   <ContentItemDataCommonDataID>
     <GUID>ba42c622-2481-4ce1-a92d-ffaa9bd81009</GUID>
     <ObjectType>cms.contentitemcommondata</ObjectType>

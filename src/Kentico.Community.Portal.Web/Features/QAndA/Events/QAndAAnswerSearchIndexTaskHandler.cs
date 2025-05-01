@@ -1,6 +1,5 @@
 using CMS.ContentEngine;
 using CMS.Core;
-using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Lucene.Core.Indexing;
@@ -13,25 +12,18 @@ namespace Kentico.Community.Portal.Web.Features.QAndA.Events;
 /// integration doesn't yet track object graphs
 /// </summary>
 public class QAndAAnswerSearchIndexTaskHandler(
-    IHttpContextAccessor accessor,
-    IWebsiteChannelContext channelContext,
+    IChannelDataProvider channelProvider,
     IContentQueryExecutor executor,
     IEventLogService log,
     ILuceneTaskLogger taskLogger)
 {
-    private readonly IHttpContextAccessor accessor = accessor;
-    private readonly IWebsiteChannelContext channelContext = channelContext;
+    private readonly IChannelDataProvider channelProvider = channelProvider;
     private readonly IContentQueryExecutor executor = executor;
     private readonly IEventLogService log = log;
     private readonly ILuceneTaskLogger taskLogger = taskLogger;
 
     public async Task Handle(QAndAAnswerDataInfo answer)
     {
-        if (accessor.HttpContext is null || string.IsNullOrWhiteSpace(channelContext.WebsiteChannelName))
-        {
-            return;
-        }
-
         int questionWebPageID = answer.QAndAAnswerDataQuestionWebPageItemID;
 
         var b = new ContentItemQueryBuilder()
@@ -50,6 +42,17 @@ public class QAndAAnswerSearchIndexTaskHandler(
             return;
         }
 
+        string? channelName = await channelProvider.GetChannelNameByWebsiteChannelID(page.SystemFields.WebPageItemWebsiteChannelId);
+        if (channelName is null)
+        {
+            log.LogWarning(
+                source: nameof(QAndAAnswerSearchIndexTaskHandler),
+                eventCode: "INVALID_CHANNEL",
+                eventDescription: $"Could not retrieve a channel name for website channel [{page.SystemFields.WebPageItemWebsiteChannelId}] for answer [{answer.QAndAAnswerDataGUID}].{Environment.NewLine}Skipping search index update.");
+
+            return;
+        }
+
         var model = new IndexEventWebPageItemModel(
             page.SystemFields.WebPageItemID,
             page.SystemFields.WebPageItemGUID,
@@ -59,7 +62,7 @@ public class QAndAAnswerSearchIndexTaskHandler(
             page.SystemFields.ContentItemIsSecured,
             page.SystemFields.ContentItemContentTypeID,
             page.SystemFields.ContentItemCommonDataContentLanguageID,
-            channelContext.WebsiteChannelName,
+            channelName,
             page.SystemFields.WebPageItemTreePath,
             page.SystemFields.WebPageItemParentID,
             page.SystemFields.WebPageItemOrder);

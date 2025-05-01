@@ -1,7 +1,6 @@
 using System.ServiceModel.Syndication;
 using System.Text;
 using System.Xml;
-using System.Xml.Linq;
 using CMS.Helpers;
 using CMS.Membership;
 using CMS.Websites.Routing;
@@ -11,7 +10,6 @@ using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Features.SEO;
-using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Content.Web.Mvc;
 using Kentico.Content.Web.Mvc.Routing;
 using MediatR;
@@ -134,30 +132,24 @@ public class RSSFeedController(
     {
         var postPagesResult = await mediator.Send(new BlogPostPagesLatestQuery(feedPage.RSSFeedPageItemsLimit, channelContext.WebsiteChannelName));
         var items = new List<SyndicationItem>();
-        foreach (var postPage in postPagesResult.Items)
+        foreach (var page in postPagesResult.Items)
         {
-            if (postPage.BlogPostPageBlogPostContent.FirstOrDefault() is not BlogPostContent post)
+            if (page.BlogPostPageBlogPostContent.FirstOrDefault() is not BlogPostContent post)
             {
                 continue;
             }
 
-            var postURL = await webPageUrlRetriever.Retrieve(postPage);
-            string title = postPage.BlogPostPageBlogPostContent
-                .TryFirst()
-                .Map(c => c.ListableItemTitle)
-                .GetValueOrDefault("");
-            string description = postPage.BlogPostPageBlogPostContent
-                .TryFirst()
-                .Map(c => c.ListableItemShortDescription)
-                .GetValueOrDefault("");
+            var postURL = await webPageUrlRetriever.Retrieve(page);
+            string title = page.WebPageMetaTitle;
+            string description = page.WebPageMetaDescription;
             var absoluteURI = new Uri(postURL.WebPageAbsoluteURL(Request));
-            string pageID = postPage.SystemFields.WebPageItemGUID.ToString("N");
-            var item = new SyndicationItem(title, description, absoluteURI, pageID, post.BlogPostContentPublishedDate)
+            string pageID = page.SystemFields.WebPageItemGUID.ToString("N");
+            var item = new SyndicationItem(title, description, absoluteURI, pageID, new(page.SystemFields.ContentItemCommonDataLastPublishedWhen ?? page.BlogPostPagePublishedDate))
             {
-                PublishDate = post.BlogPostContentPublishedDate
+                PublishDate = page.BlogPostPagePublishedDate
             };
 
-            post.BlogPostContentAuthor
+            page.BlogPostPageAuthorContent
                 .TryFirst()
                 .Execute(author =>
                 {
@@ -168,9 +160,6 @@ public class RSSFeedController(
                 .TryFirst()
                 .Bind(tr => blogTags.Types.TryFirst(i => i.Guid == tr.Identifier))
                 .Execute(tag => item.Categories.Add(new SyndicationCategory(tag.DisplayName)));
-
-            post.ToImageViewModel()
-                .Execute(image => item.ElementExtensions.Add(new XElement("image", image.URL.RelativePathToAbsoluteURL(Request))));
 
             items.Add(item);
         }

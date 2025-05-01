@@ -21,8 +21,6 @@ public class BlogPostsBySmartFolderQueryHandler(WebPageQueryTools tools) : WebPa
                 .InSmartFolder(request.FolderIdentifier)
                 .WithContentTypeFields())
         .Parameters(q => q
-            .OrderBy([new OrderByColumn(nameof(BlogPostContent.BlogPostContentPublishedDate), OrderDirection.Descending)])
-            .TopN(request.Limit)
             .Columns(nameof(BlogPostContent.SystemFields.ContentItemID)));
 
         var contentItemIDs = (await Executor.GetResult(contentsQuery, c => c.ContentItemID, DefaultQueryOptions, cancellationToken)).ToList();
@@ -33,13 +31,15 @@ public class BlogPostsBySmartFolderQueryHandler(WebPageQueryTools tools) : WebPa
         }
 
         // Full query to retrieve entire content graph
-        var postsQuery = new ContentItemQueryBuilder().ForContentType(BlogPostPage.CONTENT_TYPE_NAME, queryParams =>
-        {
-            _ = queryParams
+        var postsQuery = new ContentItemQueryBuilder()
+            .ForContentType(
+                BlogPostPage.CONTENT_TYPE_NAME,
+                q => q
                 .ForWebsite(request.ChannelName)
                 .Linking(nameof(BlogPostPage.BlogPostPageBlogPostContent), contentItemIDs)
-                .WithLinkedItems(3);
-        });
+                .OrderBy([new OrderByColumn(nameof(BlogPostPage.BlogPostPagePublishedDate), OrderDirection.Descending)])
+                .TopN(request.Limit)
+                .WithLinkedItems(BlogPostPage.FullQueryDepth));
 
         var pages = await Executor.GetMappedWebPageResult<BlogPostPage>(postsQuery, DefaultQueryOptions, cancellationToken);
 
@@ -57,7 +57,7 @@ public class BlogPostsBySmartFolderQueryHandler(WebPageQueryTools tools) : WebPa
                     .WebPage(page.SystemFields.WebPageItemID)
                     // Add related content dependencies
                     .Collection(
-                        page.BlogPostPageBlogPostContent.SelectMany(c => c.BlogPostContentAuthor),
+                        page.BlogPostPageAuthorContent,
                         (author, builder) => builder
                             .ContentItem(author)
                             .Collection(

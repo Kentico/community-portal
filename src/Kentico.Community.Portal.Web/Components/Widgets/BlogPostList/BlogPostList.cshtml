@@ -4,7 +4,7 @@
 @model BlogPostListWidgetViewModel
 
 <div xpc-preview-outline="@Model.ComponentName">
-    @if (Model.Heading is string heading)
+    @if (Model.Heading.TryGetValue(out string? heading))
     {
         <h3>@heading</h3>
     }
@@ -21,7 +21,7 @@
                         </h4>
                     </div>
                     <div class="c-card_footer d-flex">
-                        <small class="me-1">Written on @post.Date.ToString("d", View.Culture) by</small>
+                        <small class="me-1">Written on @post.PublishedDate.ToString("d", View.Culture) by</small>
                         @if (post.Author.ID > 0)
                         {
                             <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
@@ -44,7 +44,7 @@
                             @post.ShortDescription
                         </p>
                     </div>
-                    @if (post.Taxonomy is string taxonomy)
+                    @if (post.Taxonomy.TryGetValue(out string? taxonomy))
                     {
                         <div class="c-card_tags">
                             <div class="c-group tags">
@@ -59,12 +59,12 @@
         {
             <div class="c-card_inner">
                 <div class="c-card_icon">
-                    <img xpc-image="post.TeaserImage" />
+                    <partial name="~/Features/Blog/_BlogHero.cshtml" />
                 </div>
                 <h3 class="h3 mt-2 pt-1">@post.Title</h3>
                 <p class="m-0">
                     <small>
-                        @post.Date.ToString("d", View.Culture)
+                        @post.PublishedDate.ToString("d", View.Culture)
                     </small>
                 </p>
                 <p>

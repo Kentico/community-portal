@@ -31,16 +31,12 @@ public class BlogPostPagesByWebPageGUIDQueryHandler(ContentItemQueryTools tools)
             (page, builder) => builder
                 .WebPage(page)
                 .Collection(
-                    page.BlogPostPageBlogPostContent,
-                    (content, builder) => builder
-                        .ContentItem(content)
+                    page.BlogPostPageAuthorContent,
+                    (author, builder) => builder.ContentItem(author)
                         .Collection(
-                            content.BlogPostContentAuthor,
-                            (author, builder) => builder.ContentItem(author)
-                                .Collection(
-                                    author.AuthorContentPhotoImageContent,
-                                    (image, builder) => builder.ContentItem(image)
-                                ))));
+                            author.AuthorContentPhotoImageContent,
+                            (image, builder) => builder.ContentItem(image)
+                        )));
 }
 
 public record BlogPostPagesByWebPageIDQuery(int[] WebPageIDs, string ChannelName) : IQuery<BlogPostPagesQueryResponse>, ICacheByValueQuery, IChannelContentQuery
@@ -70,14 +66,10 @@ public class BlogPostPagesByWebPageIDQueryHandler(ContentItemQueryTools tools) :
             (page, builder) => builder
                 .WebPage(page)
                 .Collection(
-                    page.BlogPostPageBlogPostContent,
-                    (content, builder) => builder
-                        .ContentItem(content)
+                    page.BlogPostPageAuthorContent,
+                    (author, builder) => builder.ContentItem(author)
                         .Collection(
-                            content.BlogPostContentAuthor,
-                            (author, builder) => builder.ContentItem(author)
-                                .Collection(
-                                    author.AuthorContentPhotoImageContent,
-                                    (image, builder) => builder.ContentItem(image)
-                                ))));
+                            author.AuthorContentPhotoImageContent,
+                            (image, builder) => builder.ContentItem(image)
+                        )));
 }

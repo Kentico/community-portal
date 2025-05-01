@@ -7,6 +7,7 @@ using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.BlogPostList;
 using Kentico.Community.Portal.Web.Features.Blog;
+using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
@@ -113,28 +114,20 @@ public class BlogPostListWidget(
             }
 
             var url = await urlRetriever.Retrieve(page);
-            var author = await GetAuthor(post);
-            string? taxonomy = await GetTaxonomyName(props);
+            var author = await GetAuthor(page);
+            var taxonomy = await GetTaxonomyName(props);
 
             var authorViewModel = new BlogPostAuthorViewModel(author);
 
-            vms.Add(new BlogPostViewModel(authorViewModel)
-            {
-                Title = post.ListableItemTitle,
-                Date = post.BlogPostContentPublishedDate,
-                LinkPath = url.RelativePath,
-                ShortDescription = post.ListableItemShortDescription,
-                TeaserImage = post.ToImageViewModel(),
-                Taxonomy = taxonomy
-            });
+            vms.Add(new BlogPostViewModel(page, authorViewModel, url, taxonomy));
         }
 
         return vms;
     }
 
-    private async Task<AuthorContent> GetAuthor(BlogPostContent post)
+    private async Task<AuthorContent> GetAuthor(BlogPostPage page)
     {
-        var author = post.BlogPostContentAuthor.FirstOrDefault();
+        var author = page.BlogPostPageAuthorContent.FirstOrDefault();
 
         if (author is not null)
         {
@@ -168,21 +161,21 @@ public class BlogPostListWidget(
         return new BlogPostListWidgetViewModel(props, posts);
     }
 
-    private async Task<string?> GetTaxonomyName(BlogPostListWidgetProperties props)
+    private async Task<Maybe<string>> GetTaxonomyName(BlogPostListWidgetProperties props)
     {
         if (props.BlogPostSourceParsed == BlogPostSources.Post_Taxonomy)
         {
-            return null;
+            return Maybe<string>.None;
         }
 
         if (props.TagReferences.FirstOrDefault() is { } tagReference)
         {
             var tags = await taxonomyRetriever.RetrieveTags([tagReference.Identifier], CultureInfo.CurrentCulture.Name);
 
-            return tags.Select(t => t.Title).FirstOrDefault();
+            return tags.TryFirst().Map(t => t.Title);
         }
 
-        return null;
+        return Maybe<string>.None;
     }
 }
 
@@ -294,28 +287,57 @@ public class BlogPostListWidgetViewModel : BaseWidgetViewModel
 {
     protected override string WidgetName { get; } = BlogPostListWidget.NAME;
 
-    public string? Heading { get; } = "";
+    public Maybe<string> Heading { get; } = "";
     public IReadOnlyList<BlogPostViewModel> BlogPosts { get; set; } = [];
     public ItemLayout Layout { get; set; } = ItemLayout.Minimal;
     public string BlogType { get; set; } = "";
 
-    public BlogPostListWidgetViewModel(BlogPostListWidgetProperties props, IEnumerable<BlogPostViewModel> posts)
+    public BlogPostListWidgetViewModel(BlogPostListWidgetProperties props, IReadOnlyList<BlogPostViewModel> posts)
     {
-        Heading = string.IsNullOrWhiteSpace(props.Heading) ? null : props.Heading;
-        BlogPosts = posts.ToList();
+        Heading = Maybe.From(props.Heading).MapNullOrWhiteSpaceAsNone();
+        BlogPosts = posts;
         Layout = props.ItemLayoutSourceParsed;
     }
 }
 
-public class BlogPostViewModel(BlogPostAuthorViewModel author)
+
+public class BlogPostViewModel
 {
-    public string Title { get; init; } = "";
-    public DateTime Date { get; init; }
-    public Maybe<ImageViewModel> TeaserImage { get; init; }
-    public BlogPostAuthorViewModel Author { get; init; } = author;
-    public string ShortDescription { get; init; } = "";
-    public string LinkPath { get; init; } = "";
-    public string? Taxonomy { get; set; } = "";
+    public string Title { get; } = "";
+    public DateTime PublishedDate { get; }
+    public BlogPostAuthorViewModel Author { get; }
+    public string ShortDescription { get; }
+    public string LinkPath { get; }
+    public Maybe<string> Taxonomy { get; }
+
+    public BlogPostViewModel(BlogPostPage page, BlogPostAuthorViewModel author, WebPageUrl url, Maybe<string> taxonomy)
+    {
+        Title = page.WebPageMetaTitle;
+        ShortDescription = page.WebPageMetaDescription;
+        PublishedDate = page.BlogPostPagePublishedDate;
+        Author = author;
+        LinkPath = url.RelativePath;
+        Taxonomy = taxonomy;
+    }
+}
+
+public class AuthorViewModel
+{
+    public string Name { get; init; } = "";
+    public Maybe<string> Title { get; init; }
+    public Maybe<ImageViewModel> Photo { get; init; }
+    public Maybe<string> LinkProfilePath { get; init; }
+
+    public AuthorViewModel(AuthorContent author, IUrlHelper urlHelper)
+    {
+        Name = author.FullName;
+        Photo = author.AuthorContentPhotoImageContent
+            .TryFirst()
+            .Map(ImageViewModel.Create);
+        LinkProfilePath = author.AuthorContentMemberID == 0
+            ? Maybe<string>.None
+            : urlHelper.Action(nameof(MemberController.MemberDetail), "Member", new { memberID = author.AuthorContentMemberID });
+    }
 }
 
 public class BlogPostContentFilter : IContentTypesNameFilter

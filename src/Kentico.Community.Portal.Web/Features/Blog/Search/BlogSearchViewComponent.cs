@@ -2,7 +2,6 @@ using System.Collections.Immutable;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Components.ViewComponents.Pagination;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
-using Kentico.Community.Portal.Web.Rendering;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -128,7 +127,6 @@ public class BlogPostSearchResultViewModel
 {
     public string Title { get; } = "";
     public DateTime Date { get; }
-    public Maybe<ImageViewModel> TeaserImage { get; }
     public BlogPostAuthorViewModel Author { get; }
     public string ShortDescription { get; } = "";
     public string LinkPath { get; } = "";
@@ -148,7 +146,6 @@ public class BlogPostSearchResultViewModel
         Date = model.PublishedDate;
         LinkPath = model.Url;
         ShortDescription = model.ShortDescription;
-        TeaserImage = Maybe.From(model.TeaserImage!).Map(i => i.ToImageViewModel());
         BlogType = model.BlogType;
         DXTopics = model.DXTopics;
     }

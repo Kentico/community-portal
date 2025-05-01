@@ -17,17 +17,11 @@ public partial class BlogPostPage
         string metaTitle = Maybe
             .From(WebPageMetaTitle)
             .MapNullOrWhiteSpaceAsNone()
-            .IfNoValue(BlogPostPageBlogPostContent
-                .TryFirst()
-                .Bind(c => Maybe.From(c.ListableItemTitle).MapNullOrWhiteSpaceAsNone()))
             .GetValueOrDefault("");
 
         string metaDescription = Maybe
             .From(WebPageMetaDescription)
             .MapNullOrWhiteSpaceAsNone()
-            .IfNoValue(BlogPostPageBlogPostContent
-                .TryFirst()
-                .Bind(c => Maybe.From(c.ListableItemShortDescription).MapNullOrWhiteSpaceAsNone()))
             .GetValueOrDefault("");
 
         return new WebpageMeta(metaTitle, metaDescription)

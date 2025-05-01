@@ -22,15 +22,11 @@ public class BlogPostPageQueryHandler(WebPageQueryTools tools) : WebPageQueryHan
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(BlogPostPageQuery query, BlogPostPage result, ICacheDependencyKeysBuilder builder) =>
         base.AddDependencyKeys(query, result, builder)
             .Collection(
-                result.BlogPostPageBlogPostContent,
-                (content, builder) => builder
-                    .ContentItem(content)
+                result.BlogPostPageAuthorContent,
+                (author, builder) => builder
+                    .ContentItem(author)
                     .Collection(
-                        content.BlogPostContentAuthor,
-                        (author, builder) => builder
-                            .ContentItem(author)
-                            .Collection(
-                                author.AuthorContentPhotoImageContent,
-                                (image, builder) => builder.ContentItem(image)
-                            )));
+                        author.AuthorContentPhotoImageContent,
+                        (image, builder) => builder.ContentItem(image)
+            ));
 }

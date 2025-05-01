@@ -34,13 +34,15 @@ internal class GlobalEventsModule : Module
          */
         if (env.IsDevelopment())
         {
-            WebPageEvents.Create.Before += EnsureLocalCodeNames;
-            ContentItemEvents.Create.Before += EnsureLocalCodeNames;
+            WebPageEvents.Create.Before += WebPage_CreateBefore_Local;
+            ContentItemEvents.Create.Before += ContentItem_CreateBefore_Local;
         }
 
         QAndAAnswerDataInfo.TYPEINFO.Events.Insert.After += QAndAAnswerDataInfo_InsertAfter;
         QAndAAnswerDataInfo.TYPEINFO.Events.Update.After += QAndAAnswerDataInfo_UpdateAfter;
         QAndAAnswerDataInfo.TYPEINFO.Events.Delete.After += QAndAAnswerDataInfo_DeleteAfter;
+        WebPageEvents.Create.Before += WebPage_CreateBefore;
+        WebPageEvents.UpdateDraft.Before += WebPage_UpdateBefore;
         WebPageEvents.Publish.Execute += WebPage_PublishExecute;
         ChannelInfo.TYPEINFO.Events.Update.Before += Channel_ModifyBefore;
         ChannelInfo.TYPEINFO.Events.Delete.Before += Channel_DeleteBefore;
@@ -69,28 +71,54 @@ internal class GlobalEventsModule : Module
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void EnsureLocalCodeNames(object? sender, CreateWebPageEventArgs e)
+    private void WebPage_CreateBefore_Local(object? sender, CreateWebPageEventArgs e)
     {
-        if (string.Equals(e.ContentTypeName, BlogPostPage.CONTENT_TYPE_NAME)
-            || string.Equals(e.ContentTypeName, QAndAQuestionPage.CONTENT_TYPE_NAME))
+        if ((string.Equals(e.ContentTypeName, BlogPostPage.CONTENT_TYPE_NAME)
+                || string.Equals(e.ContentTypeName, QAndAQuestionPage.CONTENT_TYPE_NAME))
+            && !e.Name.EndsWith("-localtest", StringComparison.OrdinalIgnoreCase))
         {
-            if (e.Name.EndsWith("-localtest"))
-            {
-                return;
-            }
-
             e.Name = e.Name[..Math.Min(90, e.Name.Length)] + "-localtest";
         }
     }
-    private void EnsureLocalCodeNames(object? sender, CreateContentItemEventArgs e)
+    private void WebPage_CreateBefore(object? sender, CreateWebPageEventArgs e)
     {
-        if (string.Equals(e.ContentTypeName, BlogPostContent.CONTENT_TYPE_NAME))
+        if (string.Equals(e.ContentTypeName, BlogPostPage.CONTENT_TYPE_NAME, StringComparison.OrdinalIgnoreCase))
         {
-            if (e.Name.EndsWith("-localtest"))
-            {
-                return;
-            }
+            // create linked content item automatically
+            /*
+             * Create a new lifetime scope because we can only access
+             * Transient and Singleton registered services in Modules
+             * and this handler uses "Scoped" services
+             */
+            using var scope = services.CreateScope();
+            scope.ServiceProvider.GetRequiredService<BlogPostContentAutoPopulateHandler>().Handle(e)
+                .GetAwaiter()
+                .GetResult();
+        }
+    }
+    private void WebPage_UpdateBefore(object? sender, UpdateWebPageDraftEventArgs e)
+    {
+        if (string.Equals(e.ContentTypeName, BlogPostPage.CONTENT_TYPE_NAME, StringComparison.OrdinalIgnoreCase))
+        {
+            // update linked content item automatically
+            /*
+             * Create a new lifetime scope because we can only access
+             * Transient and Singleton registered services in Modules
+             * and this handler uses "Scoped" services
+             */
+            using var scope = services.CreateScope();
+            scope.ServiceProvider.GetRequiredService<BlogPostContentAutoPopulateHandler>().Handle(e)
+                .GetAwaiter()
+                .GetResult();
+        }
+    }
 
+
+    private void ContentItem_CreateBefore_Local(object? sender, CreateContentItemEventArgs e)
+    {
+        if (string.Equals(e.ContentTypeName, BlogPostContent.CONTENT_TYPE_NAME)
+            && !e.Name.EndsWith("-localtest", StringComparison.OrdinalIgnoreCase))
+        {
             e.Name = e.Name[..Math.Min(90, e.Name.Length)] + "-localtest";
         }
     }

@@ -35,25 +35,6 @@
           <controlname>Kentico.Administration.DateTimeInput</controlname>
         </settings>
       </field>
-      <field allowempty="true" column="BlogPostPageBlogPostContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="9a93d64c-5cc7-47f0-94e8-f7b3cc48946e" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Blog Post Content</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <AllowedContentItemTypeIdentifiers>
-            <![CDATA[["2e7c68a6-f9c7-450a-9acb-a71db270ff71"]]]>
-          </AllowedContentItemTypeIdentifiers>
-          <controlname>Kentico.Administration.ContentItemSelector</controlname>
-        </settings>
-        <validationrulesdata>
-          <ValidationRuleConfiguration>
-            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
-            <RuleValues />
-          </ValidationRuleConfiguration>
-        </validationrulesdata>
-      </field>
       <field allowempty="true" column="BlogPostPageBlogType" columnprecision="0" columntype="taxonomy" enabled="true" guid="a2a65c26-7b23-4098-9342-797342254ec6" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
@@ -98,12 +79,26 @@
           <TreePath>/Q-and-A/Questions</TreePath>
         </settings>
       </field>
-      <field allowempty="true" column="BlogPostPageIsContentMigrated" columnprecision="0" columntype="boolean" enabled="true" guid="57d6841e-fb18-41ad-81b8-57c7a3d82db9" />
       <schema guid="19eeca92-ebc9-4489-ad27-3d51bd2d2622" name="19eeca92-ebc9-4489-ad27-3d51bd2d2622">
         <properties>
           <kxp.code.name>WebPageMeta</kxp.code.name>
         </properties>
       </schema>
+      <field allowempty="true" column="BlogPostPageBlogPostContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="9a93d64c-5cc7-47f0-94e8-f7b3cc48946e" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Blog Post Content</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["2e7c68a6-f9c7-450a-9acb-a71db270ff71"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+      </field>
     </form>
   </ClassFormDefinition>
   <ClassGUID>a0450c6e-a032-40cb-893f-ce121cb22c0e</ClassGUID>

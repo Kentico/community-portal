@@ -1,8 +1,6 @@
 ﻿using System.Text.Json;
 using CMS.ContentEngine;
-using CMS.Core;
 using CMS.MediaLibrary;
-using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Xperience.Lucene.Core.Indexing;
@@ -26,7 +24,6 @@ public class BlogSearchIndexModel
     public string BlogTypeFacet { get; set; } = "";
     public string BlogType { get; set; } = "";
     public string ShortDescription { get; set; } = "";
-    public ImageAssetViewModelSerializable? TeaserImage { get; set; } = null;
     public int AuthorMemberID { get; set; }
     public string AuthorName { get; set; } = "";
     public ImageAssetViewModelSerializable? AuthorAvatarImage { get; set; } = null;
@@ -41,7 +38,6 @@ public class BlogSearchIndexModel
             new TextField(nameof(DXTopics), string.Join(";", DXTopics), Field.Store.YES),
             new TextField(nameof(BlogType), BlogType, Field.Store.YES),
             new TextField(nameof(ShortDescription), ShortDescription, Field.Store.YES),
-            new TextField(nameof(TeaserImage), JsonSerializer.Serialize(TeaserImage), Field.Store.YES),
             new Int32Field(nameof(AuthorMemberID), AuthorMemberID, Field.Store.YES),
             new TextField(nameof(AuthorName), AuthorName, Field.Store.YES),
             new TextField(nameof(AuthorAvatarImage), JsonSerializer.Serialize(AuthorAvatarImage), Field.Store.YES),
@@ -62,7 +58,6 @@ public class BlogSearchIndexModel
 
     public static BlogSearchIndexModel FromDocument(Document doc)
     {
-        var teaserImage = JsonSerializer.Deserialize<ImageAssetViewModelSerializable>(doc.Get(nameof(TeaserImage)) ?? "{ }");
         var authorImage = JsonSerializer.Deserialize<ImageAssetViewModelSerializable>(doc.Get(nameof(AuthorAvatarImage)) ?? "{ }");
 
         var model = new BlogSearchIndexModel
@@ -72,7 +67,6 @@ public class BlogSearchIndexModel
             ShortDescription = doc.Get(nameof(ShortDescription)),
             DXTopics = doc.Get(nameof(DXTopics)).Split(";").WhereNotNullOrWhiteSpace().ToList(),
             BlogType = doc.Get(nameof(BlogType)),
-            TeaserImage = teaserImage,
             AuthorMemberID = int.TryParse(doc.Get(nameof(AuthorMemberID)), out int authorMemberID)
                 ? authorMemberID
                 : 0,
@@ -92,69 +86,20 @@ public partial class BlogSearchIndexingStrategy(
     IContentQueryExecutor executor,
     WebScraperHtmlSanitizer htmlSanitizer,
     WebCrawlerService webCrawler,
-    IChannelDataProvider channelDataProvider,
-    IMediator mediator,
-    IEventLogService log) : DefaultLuceneIndexingStrategy
+    IMediator mediator) : DefaultLuceneIndexingStrategy
 {
     public const string IDENTIFIER = "BLOG_SEARCH";
 
     private readonly IContentQueryExecutor executor = executor;
     private readonly WebScraperHtmlSanitizer htmlSanitizer = htmlSanitizer;
     private readonly WebCrawlerService webCrawler = webCrawler;
-    private readonly IChannelDataProvider channelDataProvider = channelDataProvider;
     private readonly IMediator mediator = mediator;
-    private readonly IEventLogService log = log;
 
-    public override async Task<IEnumerable<IIndexEventItemModel>> FindItemsToReindex(IndexEventWebPageItemModel changedItem) => await Task.FromResult<List<IIndexEventItemModel>>([changedItem]);
+    public override Task<IEnumerable<IIndexEventItemModel>> FindItemsToReindex(IndexEventWebPageItemModel changedItem) =>
+         Task.FromResult<IEnumerable<IIndexEventItemModel>>([changedItem]);
 
-    public override async Task<IEnumerable<IIndexEventItemModel>> FindItemsToReindex(IndexEventReusableItemModel changedItem)
-    {
-        if (string.Equals(changedItem.ContentTypeName, BlogPostContent.CONTENT_TYPE_NAME))
-        {
-            var reindexable = new List<IIndexEventItemModel>();
-
-            /*
-            * We only need the values required for the IndexedItemModel, which come
-            * from the BlogPostPage web page item that links to the updated BlogPostContent content item
-            */
-            var b = new ContentItemQueryBuilder()
-                .ForContentTypes(q =>
-                    q.OfContentType(BlogPostPage.CONTENT_TYPE_NAME)
-                        .ForWebsite(true)
-                        .Linking(BlogPostPage.CONTENT_TYPE_NAME, nameof(BlogPostPage.BlogPostPageBlogPostContent), [changedItem.ItemID]));
-
-            var page = (await executor.GetMappedWebPageResult<IWebPageFieldsSource>(b)).FirstOrDefault();
-            if (page is null)
-            {
-                log.LogWarning(
-                    source: nameof(FindItemsToReindex),
-                    eventCode: "MISSING_BLOGPOSTPAGE",
-                    eventDescription: $"Could not find blog web site page for blog content [{changedItem.ItemID}].{Environment.NewLine}Skipping search indexing.");
-
-                return reindexable;
-            }
-
-            string channelName = await channelDataProvider.GetChannelNameByWebsiteChannelID(page.SystemFields.WebPageItemWebsiteChannelId) ?? "";
-
-            reindexable.Add(new IndexEventWebPageItemModel(
-                page.SystemFields.WebPageItemID,
-                page.SystemFields.WebPageItemGUID,
-                changedItem.LanguageName,
-                BlogPostPage.CONTENT_TYPE_NAME,
-                page.SystemFields.WebPageItemName,
-                page.SystemFields.ContentItemIsSecured,
-                page.SystemFields.ContentItemContentTypeID,
-                page.SystemFields.ContentItemCommonDataContentLanguageID,
-                channelName,
-                page.SystemFields.WebPageItemTreePath,
-                page.SystemFields.WebPageItemParentID,
-                page.SystemFields.WebPageItemOrder));
-
-            return reindexable;
-        }
-
-        return [];
-    }
+    public override Task<IEnumerable<IIndexEventItemModel>> FindItemsToReindex(IndexEventReusableItemModel changedItem) =>
+        Task.FromResult<IEnumerable<IIndexEventItemModel>>([changedItem]);
 
     public override async Task<Document?> MapToLuceneDocumentOrNull(IIndexEventItemModel item)
     {
@@ -174,15 +119,11 @@ public partial class BlogSearchIndexingStrategy(
         {
             return null;
         }
-        if (page.BlogPostPageBlogPostContent.FirstOrDefault() is not BlogPostContent blogPost)
-        {
-            return null;
-        }
 
         var indexModel = new BlogSearchIndexModel();
 
-        blogPost
-            .BlogPostContentAuthor
+        page
+            .BlogPostPageAuthorContent
             .TryFirst()
             .Execute(author =>
             {
@@ -194,14 +135,9 @@ public partial class BlogSearchIndexingStrategy(
                     .Execute(i => indexModel.AuthorAvatarImage = i);
             });
 
-        blogPost.ListableItemFeaturedImageContent
-            .TryFirst()
-            .Map(i => new ImageAssetViewModelSerializable(i))
-            .Execute(i => indexModel.TeaserImage = i);
-
         var taxonomies = await mediator.Send(new BlogPostTaxonomiesQuery());
 
-        blogPost.BlogPostContentBlogType
+        page.BlogPostPageBlogType
             .TryFirst()
             .Map(t => t.Identifier)
             .Bind(id => taxonomies.Types
@@ -211,8 +147,8 @@ public partial class BlogSearchIndexingStrategy(
                 indexModel.BlogType = tag.DisplayName;
                 indexModel.BlogTypeFacet = tag.NormalizedName;
             });
-        var dxTopics = blogPost
-            .BlogPostContentDXTopics
+        var dxTopics = page
+            .BlogPostPageDXTopics
             .Select(tagRef => taxonomies.DXTopicsAll
                 .FirstOrDefault(t => tagRef.Identifier == t.Guid))
             .WhereNotNull();
@@ -225,10 +161,10 @@ public partial class BlogSearchIndexingStrategy(
 
         string content = await webCrawler.CrawlWebPage(page);
         indexModel.Content = htmlSanitizer.SanitizeHtmlDocument(content);
-        indexModel.Title = blogPost.ListableItemTitle;
-        indexModel.ShortDescription = blogPost.ListableItemShortDescription;
-        indexModel.PublishedDate = blogPost.BlogPostContentPublishedDate != default
-            ? blogPost.BlogPostContentPublishedDate
+        indexModel.Title = page.WebPageMetaTitle;
+        indexModel.ShortDescription = page.WebPageMetaDescription;
+        indexModel.PublishedDate = page.BlogPostPagePublishedDate != default
+            ? page.BlogPostPagePublishedDate
             : DateTime.MinValue;
 
         return indexModel.ToDocument();

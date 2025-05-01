@@ -13,34 +13,20 @@ public class BlogPostPagesLatestQueryHandler(WebPageQueryTools tools) : WebPageQ
 {
     public override async Task<BlogPostPagesLatestQueryResponse> Handle(BlogPostPagesLatestQuery request, CancellationToken cancellationToken = default)
     {
-        // Optimized query to find content item identifiers
-        var idsQuery = new ContentItemQueryBuilder()
-            .ForContentType(
-                BlogPostContent.CONTENT_TYPE_NAME,
-                q => q
-                .OrderBy(new[] { new OrderByColumn(nameof(BlogPostContent.BlogPostContentPublishedDate), OrderDirection.Descending) })
-                .TopN(request.Count)
-                .Columns(nameof(BlogPostContent.SystemFields.ContentItemID)));
-
-        var contentItemIDs = (await Executor.GetResult(idsQuery, c => c.ContentItemID, DefaultQueryOptions, cancellationToken)).ToList();
-
-        if (contentItemIDs.Count == 0)
-        {
-            return new([]);
-        }
 
         // Full query to retrieve entire content graph
-        var postsQuery = new ContentItemQueryBuilder().ForContentType(BlogPostPage.CONTENT_TYPE_NAME, queryParams =>
-        {
-            _ = queryParams
-                .ForWebsite(request.ChannelName)
-                .Linking(nameof(BlogPostPage.BlogPostPageBlogPostContent), contentItemIDs)
-                .WithLinkedItems(3);
-        });
+        var postsQuery = new ContentItemQueryBuilder()
+            .ForContentType(
+                BlogPostPage.CONTENT_TYPE_NAME,
+                q => q
+                    .ForWebsite(request.ChannelName)
+                    .OrderBy([new OrderByColumn(nameof(BlogPostPage.BlogPostPagePublishedDate), OrderDirection.Descending)])
+                    .TopN(request.Count)
+                    .WithLinkedItems(BlogPostPage.FullQueryDepth));
 
         var pages = await Executor.GetMappedWebPageResult<BlogPostPage>(postsQuery, DefaultQueryOptions, cancellationToken);
 
-        return new([.. pages.OrderBy(p => contentItemIDs.IndexOf(p.BlogPostPageBlogPostContent.FirstOrDefault()?.SystemFields.ContentItemID ?? 0))]);
+        return new([.. pages]);
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(BlogPostPagesLatestQuery query, BlogPostPagesLatestQueryResponse result, ICacheDependencyKeysBuilder builder) =>
@@ -54,7 +40,7 @@ public class BlogPostPagesLatestQueryHandler(WebPageQueryTools tools) : WebPageQ
                     .WebPage(page.SystemFields.WebPageItemID)
                     // Add related content dependencies
                     .Collection(
-                        page.BlogPostPageBlogPostContent.SelectMany(c => c.BlogPostContentAuthor),
+                        page.BlogPostPageAuthorContent,
                         (author, builder) => builder
                             .ContentItem(author)
                             .Collection(

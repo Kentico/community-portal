@@ -14,14 +14,12 @@ namespace Kentico.Community.Portal.Web.Features.Blog.Events;
 /// used for discussion of a blog post when a <see cref="BlogPostPage"/> is published
 /// </summary>
 public class BlogPostPublishCreateQAndAQuestionHandler(
-    IHttpContextAccessor accessor,
     IMediator mediator,
     IContentQueryExecutor queryExecutor,
     IWebPageUrlRetriever pageUrlRetriever,
     ISystemClock clock,
     IEventLogService log)
 {
-    private readonly IHttpContextAccessor accessor = accessor;
     private readonly IMediator mediator = mediator;
     private readonly IContentQueryExecutor queryExecutor = queryExecutor;
     private readonly IWebPageUrlRetriever pageUrlRetriever = pageUrlRetriever;
@@ -30,14 +28,6 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
 
     public async Task Handle(PublishWebPageEventArgs args)
     {
-        /*
-         * Only perform search indexing when a request is available (eg not during CI restore)
-         */
-        if (accessor.HttpContext is null)
-        {
-            return;
-        }
-
         /*
          * We aren't using mediator for this query because it will return the cached page 
          * which will result in an infinite loop for the check below ... ask me how I know 😅😅
@@ -67,10 +57,7 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
         var questionMonthFolder = await mediator.Send(new QAndAMonthFolderQuery(rootQuestionPage, args.WebsiteChannelName, now.Year, now.Month, args.WebsiteChannelID));
 
         var url = await pageUrlRetriever.Retrieve(page);
-        string postTitle = page.BlogPostPageBlogPostContent
-            .TryFirst()
-            .Map(b => b.ListableItemTitle)
-            .GetValueOrDefault("");
+        string postTitle = page.WebPageMetaTitle;
         string questionTitle = $"Blog Discussion: {postTitle}";
         string questionContent = $"""
             Blog Post: [{postTitle}]({url.RelativePathTrimmed()})

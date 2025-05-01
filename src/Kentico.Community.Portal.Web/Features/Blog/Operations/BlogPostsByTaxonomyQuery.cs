@@ -14,35 +14,20 @@ public class BlogPostsByTaxonomyQueryHandler(WebPageQueryTools tools) : WebPageQ
 {
     public override async Task<BlogPostsByTaxonomyQueryResponse> Handle(BlogPostsByTaxonomyQuery request, CancellationToken cancellationToken = default)
     {
-        // Optimized query to return only content item identifiers
-        var contentsQuery = new ContentItemQueryBuilder().ForContentType(BlogPostContent.CONTENT_TYPE_NAME, queryParams =>
-        {
-            _ = queryParams
-                .Where(w => w.WhereContainsTags(nameof(BlogPostContent.BlogPostContentBlogType), request.TagIdentifiers))
-                .OrderBy(new[] { new OrderByColumn(nameof(BlogPostContent.BlogPostContentPublishedDate), OrderDirection.Descending) })
-                .TopN(request.Limit)
-                .Columns(nameof(BlogPostContent.SystemFields.ContentItemID));
-        });
-
-        var contentItemIDs = (await Executor.GetResult(contentsQuery, c => c.ContentItemID, DefaultQueryOptions, cancellationToken)).ToList();
-
-        if (contentItemIDs.Count == 0)
-        {
-            return new([]);
-        }
-
         // Full query to retrieve entire content graph
-        var postsQuery = new ContentItemQueryBuilder().ForContentType(BlogPostPage.CONTENT_TYPE_NAME, queryParams =>
-        {
-            _ = queryParams
-                .ForWebsite(request.ChannelName)
-                .Linking(nameof(BlogPostPage.BlogPostPageBlogPostContent), contentItemIDs)
-                .WithLinkedItems(3);
-        });
+        var postsQuery = new ContentItemQueryBuilder()
+            .ForContentType(
+                BlogPostPage.CONTENT_TYPE_NAME,
+                q => q
+                    .ForWebsite(request.ChannelName)
+                    .Where(w => w.WhereContainsTags(nameof(BlogPostPage.BlogPostPageBlogType), request.TagIdentifiers))
+                    .OrderBy([new OrderByColumn(nameof(BlogPostPage.BlogPostPagePublishedDate), OrderDirection.Descending)])
+                    .TopN(request.Limit)
+                    .WithLinkedItems(3));
 
         var pages = await Executor.GetMappedWebPageResult<BlogPostPage>(postsQuery, DefaultQueryOptions, cancellationToken);
 
-        return new([.. pages.OrderBy(p => contentItemIDs.IndexOf(p.BlogPostPageBlogPostContent.FirstOrDefault()?.SystemFields.ContentItemID ?? 0))]);
+        return new([.. pages]);
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(BlogPostsByTaxonomyQuery query, BlogPostsByTaxonomyQueryResponse result, ICacheDependencyKeysBuilder builder) =>
@@ -56,7 +41,7 @@ public class BlogPostsByTaxonomyQueryHandler(WebPageQueryTools tools) : WebPageQ
                     .WebPage(page.SystemFields.WebPageItemID)
                     // Add related content dependencies
                     .Collection(
-                        page.BlogPostPageBlogPostContent.SelectMany(c => c.BlogPostContentAuthor),
+                        page.BlogPostPageAuthorContent,
                         (author, builder) => builder
                             .ContentItem(author)
                             .Collection(

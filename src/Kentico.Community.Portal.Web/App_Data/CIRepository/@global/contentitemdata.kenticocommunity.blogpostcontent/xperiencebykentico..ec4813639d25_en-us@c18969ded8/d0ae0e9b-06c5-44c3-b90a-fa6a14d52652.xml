@@ -1,105 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentitemdata.kenticocommunity.blogpostcontent>
-  <BlogPostContentAuthor>
-    <![CDATA[[{"Identifier":"2dce9183-2830-4794-ad72-edd6bd9dc5c3"}]]]>
-  </BlogPostContentAuthor>
   <BlogPostContentBlogType>
     <![CDATA[[{"Identifier":"0865e8f6-2568-425e-94d8-2bf53adcdd57"}]]]>
   </BlogPostContentBlogType>
-  <BlogPostContentContentMarkdown>
-<![CDATA[
-## Headless Channels
-
-Way back in November, 2022 we released an Xperience by Kentico Refresh (v23.0.0). It included [a small preview feature we were calling "Headless API"](https://docs.xperience.io/xp/changelog#Changelog-Refresh(November7,2022)), which enabled developers to retrieve content from the Content hub over an auto-generated GraphQL API.
-
-That preview feature stuck around until our October 2023 Refresh (v27.0.0) when we brough it back into the product shop to tune it up 🛠️, based on all the feedback we received from partners and customers.
-
-Today, that Headless API [is rolling out for everyone to see](https://docs.xperience.io/xp/changelog#Changelog-Refresh(December14,2023)), as a [fully production ready Headless channel capability](https://docs.xperience.io/x/nYWOD), reinforcing our multiexperience story with Xperience by Kentico.
-
-Take a look 👀 at [the Changelog](https://docs.xperience.io/xp/changelog#Changelog-Refresh(December14,2023)) for the full details of the Refresh.
-
-### Dynamic headless channels
-
-Marketers can now dynamically create headless channels, model content, and deliver it over an auto-generated API.
-
-<video controls class="w-100">
-  <source src="/getmedia/f6b16b5a-420b-452d-a095-589497f5d93e/v28-01-create-headless-channel.mp4" type="video/mp4" />
-</video>
-
-Once created, the headless channels can be queried immediately and are not dependent on the other types of channels - websites and emails - in Xperience by Kentico 👏.
-
-You might ask, "Can I create an Xperience by Kentico solution with only headless channels?" The answer is yes, but we think they show their greatest value when paired with website and email channels 💪.
-
-[![Xperience by Kentico dashboard with a headless channel](/getmedia/c225d86a-abd4-4354-a528-edefae0a67da/v28-01-dashboard-with-headless-channel.jpg)](/getmedia/c225d86a-abd4-4354-a528-edefae0a67da/v28-01-dashboard-with-headless-channel.jpg)
-
-The API [can be queried](https://docs.xperience.io/x/34VwCg) using [an assortment of tools](https://studio.apollographql.com/sandbox/), including [Banana Cake Pop](https://chillicream.com/products/bananacakepop/), a standalone desktop application which can also be exposed as part of an Xperience by Kentico solution (we recommend disabling this feature for production deployments).
-
-### Headless items
-
-Headless items act as a new foundational channel-specific content type, similar to web pages and emails.
-
-[![Creating a new headless item content type](/getmedia/7b8065f3-4ab3-4572-ad20-cf85625f9c5b/v28-01-new-headless-item.jpg)](/getmedia/7b8065f3-4ab3-4572-ad20-cf85625f9c5b/v28-01-new-headless-item.jpg)
-
-They support the same kind of content modeling features that those other channel-specific content types do (web pages and emails), but are represented as a flat list in their headless channel, instead of a tree like website channels.
-
-[![Authoring content for a headless item](/getmedia/4e1fe196-0bec-41c8-b56e-5e33d837b264/v28-01-headless-item-form.jpg)](/getmedia/4e1fe196-0bec-41c8-b56e-5e33d837b264/v28-01-headless-item-form.jpg)
-
-These headless items form the entrypoint to a new auto-generated GraphQL API that truly reflects the content modeling and authoring decisions of marketing teams.
-
-### Headless channel security
-
-All headless API channels are protected behind [token based security](https://docs.xperience.io/xp/developers-and-admins/configuration/headless-channel-management#Headlesschannelmanagement-ManageAPIkeys), meaning these GraphQL API endpoints are not exposed to the open internet and instead can only be accessed by users or applications with authorized security tokens.
-
-[![Headless channel API tokens management](/getmedia/485c3ef3-7753-4260-afbe-ecbc8b12d94b/v28-01-headless-api-keys.jpg)](/getmedia/485c3ef3-7753-4260-afbe-ecbc8b12d94b/v28-01-headless-api-keys.jpg)
-
-The data served from the GraphQL API is also dynamically cached, improving the performance of additional requests, controlling hardware infrastructure costs, and requiring no developer customization 😁.
-
-### Use cases
-
-We've designed the headless channel feature to support a large variety of external channels - native mobile applications, marketing tools and micro-apps, content delivery to external systems and services, or even digital billboards - really, anything that can consume a GraphQL API.
-
-What started out as a pathfinder that enabled developers has been enhanced to give marketers control. This means marketers can multiply the impact of their content investments, delivering to more channels, and engaging with an even wider audience of customers 🤩.
-
-## Cascade publishing
-
-While it might be a little less exciting, sitting in the shadow of headless channels, we think [the new cacade publishing feature](https://docs.xperience.io/xp/business-users/content-hub#Contenthub-Cascadepublishing) in this month's Refresh will bring a smile 😊 to each marketer that works with a rich content graph.
-
-Now, when publishing content that has fields of related reusable content items (items stored in the Content hub), Xperience will check to see if any of those items and any of their related items (traversing the entire content graph) are unpublished.
-
-Xperience also checks any reusable content items referenced in Page Builder widgets when publishing a web page in a website channel. Pretty cool 😲!
-
-All unpublished items will be displayed in a slide out tray for marketers to review and select for inclusion in a cascade publish operation which will publish all selected items together.
-
-<video controls class="w-100">
-  <source src="/getmedia/0fe1cbeb-d565-441f-9afc-c1f5a81a5c9b/v28-01-cascade-publishing-page-builder.mp4" type="video/mp4" />
-</video>
-
-This feature improves the marketer's workflow in Xperience by Kentico by both increasing their efficiency 👍🏽 and giving them confidence in the product, whether they're working in the rich content models of complex websites or quickly authoring simple content in microsites.
-
-## Other improvements
-
-We've also included a few improvements for developers that will make their code easier to work with and maintain.
-
-First, the `IContentItemFieldsSource` is now included in generated code files and represents the core content item fields of reusable content items.
-
-Web page URLs are now accessible in email templates for pages linked in emails.
-
-There are also [new data querying APIs](https://docs.xperience.io/xp/developers-and-admins/api/content-item-api/reference-content-item-query#ReferenceContentitemquery-Contentqueryparameterization) and [new Azure regions and project tiers](https://docs.xperience.io/xp/changelog#Changelog-Newfeatures) along with [improved backup downloading](https://docs.xperience.io/xp/developers-and-admins/deployment/deploy-to-the-saas-environment/manage-saas-deployments) in our SaaS environment 🥳.
-
-## What's next?
-
-We hope these new capabilities, features, and UX improvements unlock solutions for you and your clients. Try them out, let us know 👋 what you think.
-
-For [the next Refresh](https://roadmap.kentico.com/tabs/6-next-refreshes), you can expect some bulk item actions in the Content hub, several new open source integrations and updates to others, and - of course - other quality of life improvements.
-
-Check back next month for another Xperience by Kentico Refresh review!
-]]>
-  </BlogPostContentContentMarkdown>
   <BlogPostContentDXTopics>
     <![CDATA[[{"Identifier":"57224794-f403-47a4-995c-7c748dbd6524"},{"Identifier":"1a2a8dca-bfab-4c00-ac5d-898d0a08d5e4"},{"Identifier":"427bcd78-d1db-4d80-8abc-d1ffc1a25d8e"},{"Identifier":"b492b56d-3869-4f3e-bda5-cf8dd6588291"}]]]>
   </BlogPostContentDXTopics>
-  <BlogPostContentPublishedDate>2023-12-15 16:33:00Z</BlogPostContentPublishedDate>
-  <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
   <ContentItemDataCommonDataID>
     <GUID>a89da96e-49e1-41e6-b4a9-ec4813639d25</GUID>
     <ObjectType>cms.contentitemcommondata</ObjectType>

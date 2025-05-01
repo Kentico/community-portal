@@ -1,5 +1,4 @@
 using System.Reflection;
-using Kentico.Community.Portal.Admin.Features.Migrations;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Infrastructure;
 using Kentico.Community.Portal.Core.Modules;
@@ -113,7 +112,9 @@ public static class ServiceCollectionAppExtensions
         services
             .AddTransient<QAndAAnswerSearchIndexTaskHandler>();
     private static IServiceCollection AddBlogs(this IServiceCollection services) =>
-        services.AddTransient<BlogPostPublishCreateQAndAQuestionHandler>();
+        services
+            .AddTransient<BlogPostPublishCreateQAndAQuestionHandler>()
+            .AddTransient<BlogPostContentAutoPopulateHandler>();
 
     private static IServiceCollection AddMemberBadges(this IServiceCollection services) =>
         services
@@ -140,7 +141,7 @@ public static class ServiceCollectionAppExtensions
         services;
 
     private static IServiceCollection AddMigrations(this IServiceCollection services) =>
-        services.AddTransient<IDataMigrator, BlogPostPageMigrator>();
+        services;
 
     private static IServiceCollection AddClosedGenericTypes(
         this IServiceCollection services,

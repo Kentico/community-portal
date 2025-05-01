@@ -48,12 +48,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// BlogPostPageBlogPostContent.
-		/// </summary>
-		public IEnumerable<BlogPostContent> BlogPostPageBlogPostContent { get; set; }
-
-
-		/// <summary>
 		/// BlogPostPageBlogType.
 		/// </summary>
 		public IEnumerable<TagReference> BlogPostPageBlogType { get; set; }
@@ -72,9 +66,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// BlogPostPageIsContentMigrated.
+		/// BlogPostPageBlogPostContent.
 		/// </summary>
-		public bool BlogPostPageIsContentMigrated { get; set; }
+		public IEnumerable<BlogPostContent> BlogPostPageBlogPostContent { get; set; }
 
 
 		/// <summary>

@@ -1,102 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentitemdata.kenticocommunity.blogpostcontent>
-  <BlogPostContentAuthor>
-    <![CDATA[[{"Identifier":"f9ac36a5-e1a6-4d21-9cb7-beb385d0fea0"}]]]>
-  </BlogPostContentAuthor>
   <BlogPostContentBlogType>
     <![CDATA[[{"Identifier":"0cb21dda-384b-4792-8e1b-41034f113d28"}]]]>
   </BlogPostContentBlogType>
-  <BlogPostContentContentMarkdown>
-<![CDATA[
-10 years ago, many CMS products used rich text to give content marketers full control over the presentation of information. With the rise of the headless CMS we realized we couldn't maintain that control over presentation and rich text limited where content could be used. So, how important are rich text authoring experiences in 2024?
-
-## When rich text ruled the world
-
-As an example of how things used to be, let's review some screenshots of the rich text editor from Kentico 11, which was released [at the end of 2017](https://www.kentico.com/platforms/kentico-xperience-13/roadmap/version-history).
-
-[![Rich text editor content and toolbar in Kentico 11](/getContentAsset/d7d9d549-9641-4d41-afa8-fe4b2f704276/62da2f74-2484-4f51-9c27-93fdd8db50f9/kentico-11-portal-engine-rich-text-edit.webp?language=en-US)](/getContentAsset/d7d9d549-9641-4d41-afa8-fe4b2f704276/62da2f74-2484-4f51-9c27-93fdd8db50f9/kentico-11-portal-engine-rich-text-edit.webp?language=en-US)
-
-First, we have the rich text editor interface itself. A large menu of tools to customize the visual presentation of the content and also insert things like links or media. This is all pretty standard stuff from the era. But, what about those black and white squares with the Kentico logo?
-
-[![Inline widget selector modal for rich text widgets](/getContentAsset/894abeb0-df34-42fa-800c-0df36d58b328/62da2f74-2484-4f51-9c27-93fdd8db50f9/kentico-11-portal-engine-rich-text-edit-select-widget.webp?language=en-US)](/getContentAsset/894abeb0-df34-42fa-800c-0df36d58b328/62da2f74-2484-4f51-9c27-93fdd8db50f9/kentico-11-portal-engine-rich-text-edit-select-widget.webp?language=en-US)
-
-Those are [inline widgets](https://docs.kentico.com/x/KQYbB). Kind of like widgets Xperience's Page Builder, but without an editor preview and built to embed even more content and design configuration into HTML. They were really cool and powerful, but also a little dangerous because they're embedded in HTML.
-
-[![Preview of rich text authored content with my fonts and colors](/getContentAsset/7a5dcc79-fa07-4659-a9e4-638151f32ec8/62da2f74-2484-4f51-9c27-93fdd8db50f9/kentico-11-portal-engine-rich-text-preview.webp?language=en-US)](/getContentAsset/7a5dcc79-fa07-4659-a9e4-638151f32ec8/62da2f74-2484-4f51-9c27-93fdd8db50f9/kentico-11-portal-engine-rich-text-preview.webp?language=en-US)
-
-When we switch over to the preview of the page, we can see the rich text rendered with the site's styles - oh, yes, your rich text preview while editing might not exactly match up with how it appears on the website. The preview also renders the inline widgets, sometimes in surprising ways if the rich text surround them impacts their HTML or design.
-
-We have different fonts, colors, and rich text widgets embedded in the HTML. Everything is HTML, even content and widget configuration! Content authors have full control - even if we remove toolbars the raw HTML can be edited and content can be copied from Word or other sources of rich text with many more formatting options.
-
-Structured content did exist, but I think it's safe to say that the marketer's primary content authoring experience was rich text. It was the answer to "no developer required". Notice that I did not say rich text was or is "no-code" because there is plenty of code behind the thin veil of the rich text authoring UI. And, if that rich text editor experience has some hiccup or the content marketer selects the wrong toolbar option they risk negatively impacting both the content **and** the design.
-
-But, it can't be all bad right? Rich text ruled for a reason!
-
-This is also true. Rich text was often quick to author, gave immediate visual feedback, and didn't require much planning or structure. You could build out an entire page in rich text (and some CMS products still rely heavily on this approach) without a developer and then rearrange everything, add bulleted lists, insert images, and tables. Just publish and you're done!
-
-## The challenge of content + design
-
-Of course, this requires the rich text editor UI to be pretty advanced with features to make sure whatever the marketer creates produces accessible HTML that renders correctly on desktop and all the other devices a web page might be viewed on. That's quite a requirement.
-
-Oh, and that brings up another point - web. Rich text was designed at a time when marketers were authoring primarily for the web and desktop display viewports. Can you take that rich text authored for the web and drop it into an email? What about a native mobile app? Or a different web page or web site? That fast feedback and authoring experience of rich text comes from embedding content in design. Unraveling them is very difficult.
-
-:::note
-WordPress' Gutenberg authoring experience does exactly this unraveling of HTML from metadata and content every time an author edits a page of blocks. It's convenient and didn't require re-architecting WordPress but that presentation independent content isn't easily accessible for use elsewhere.
-
-It's a far better authoring experience than older rich text editors, but the idea behind is very similar.
-:::
-
-One additional and very relevant point in the context of Xperience by Kentico is that evolving content embedded in rich text is very difficult if not impossible. Converting from rich text to a component based Page Builder experience is a challenge and changing the content embedded in rich text to have different attributes and presentation across an entire website required some very complex SQL scripts or a website rewrite.
-
-A specific example would be making sure addresses use the [&lt;address&gt;](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/address) HTML element or annotating them with [microdata or microformats](https://softwareengineering.stackexchange.com/a/166669). If those are embedded in rich text throughout a website, good luck, but it's [very doable with structured content](https://community.kentico.com/blog/embedded-structured-content-and-the-power-of-custom-data-types)!
-
-## Why use structured content?
-
-Let's return to the world of structured content that was popularized by headless CMS products. Instead of gluing content to design, your content is stored in a structured format with some metadata. What's the big deal? What's the value?
-
-With structured content, when it needs to be displayed to an audience some hydration happens and the content is combined with a presentation template or it's handed off to some other technology to figure out the best way for a user to access it (would you consider displaying content on a smart watch to be "templating"?)
-
-Since the content data structure is defined by the editing experience, it can be tailored to include things like validation rules, references to other structured content, editing permissions, ect...
-
-By [delaying the combination of content with presentation](https://www.youtube.com/watch?v=b7cYeIL1ZcU) as long as possible, content authors gain the benefits of reusability, governance, variations in presentation for [experimentation and personalization](https://docs.kentico.com/x/p4PWCQ), and [different communication channels](https://www.kentico.com/solutions/easy-content-management).
-
-And, of course, we get the benefit of being able to [evolve our content model over time](https://community.kentico.com/blog/safely-evolving-a-content-model-with-expand-and-contract) - something we can't really do with rich text.
-
-## Rich text isn't dead
-
-Although the limitations of rich text are clear, it's definitely not dead. In fact, Xperience by Kentico includes rich text as a content authoring approach because it still has some appropriate use cases. Marketers don't want to construct a paragraph of links, italicized text, and a few headings as a many separate structured fields. Even though separating a bulleted list of links _could_ be accomplished with a structured collection of URLs and labels, it's unquestionable that the initial authoring experience of that content is easier in most rich text editors.
-
-Additionally, the benefits and drawbacks of rich text and structured content are all tradeoffs based on what you are trying to accomplish.
-
-Should every letter in a sentence be a separate field? No, it's not worth the authoring pain even if would give you pixel perfect control over presentation in any presentation technology. Should the home page of a website be a giant block of rich text? Even popular my-first-website builder products don't take this approach anymore and a marketing team that wants to meet accessibility requirements, guarantee brand and design standards, and reuse content across channels would never dream of it.
-
-There's a limit of diminishing returns for the benefits of structured content vs rich content because the authoring experience becomes burdensome. I don't think our goal should be to completely replace rich text but maybe instead we can focus on the content authoring experience of structured content. I feel Xperience by Kentico really excels in this area.
-
-## Inspiration
-
-Where did this post come from? Well, the blog posts on the Kentico Community Portal [are authored as giant blocks of Markdown](https://github.com/Kentico/community-portal/blob/v29.3.3.0/src/Kentico.Community.Portal.Web/App_Data/CIRepository/%40global/contentitemdata.kenticocommunity.blogpostcontent/diagnosingxperienc..de9ba59418e2_en-us%40a7c7c19a7c/d476978f-7ba6-4e08-bb1a-771e077e2462.xml#L9). [Markdown](https://en.wikipedia.org/wiki/Markdown) isn't rich text and at least removes the design aspect of rich text from the content, but it still makes content reuse and governance more difficult than using structured content.
-
-What if this blog was instead authored as widgets similar to [WordPress' blocks](https://wordpress.org/gutenberg/)? Thanks to Xperience by Kentico's architecture the content and metadata would still be separate from the design and not stored in HTML like WordPress' approach.
-
-It's true the Page Builder (component) configuration is  only be useable in a website channel, but that's not an unsolvable problem and one that Kentico might explore further into the future (no promises!)
-
-But, for now it would help with content reuse and governance while also producing more interesting blog authoring and visitor reading experiences. I can still author the raw content in Markdown for paragraphs and lists, but images and videos can be structured and I can begin to leverage the growing library of content in this Xperience by Kentico solution.
-
-I've thought about this approach for 3-4 years but never had an opportunity to see it through. I think I might try it now.
-
-I'd love to hear all of your thoughts on the following, both from the developer and content marketer perspectives:
-
-- Is rich text dead or does it still have place in content management?
-- Do you wish to go back to 7 years ago when rich text ruled the world?
-- Can articles or blogs be authored with the Page Builder or is there something important I'm missing?
-- How are you taking advantage of Xperience by Kentico's support of structured content?
-]]>
-  </BlogPostContentContentMarkdown>
   <BlogPostContentDXTopics>
     <![CDATA[[{"Identifier":"1a2a8dca-bfab-4c00-ac5d-898d0a08d5e4"},{"Identifier":"e3623da6-d90c-4089-9fd0-25df6c30bee8"},{"Identifier":"577d5787-5562-4e9a-8ad6-044fdfa6ac31"},{"Identifier":"b492b56d-3869-4f3e-bda5-cf8dd6588291"},{"Identifier":"aa57c06d-5738-4fdb-ab10-08b42fc6c9c2"},{"Identifier":"79fe8557-f24c-4fd9-ba03-3be795855e15"}]]]>
   </BlogPostContentDXTopics>
-  <BlogPostContentPublishedDate>2024-08-29 01:00:00Z</BlogPostContentPublishedDate>
-  <BlogPostContentSourceType>markdown</BlogPostContentSourceType>
   <ContentItemDataCommonDataID>
     <GUID>438965e6-3d99-4639-b480-ee4e2777d861</GUID>
     <ObjectType>cms.contentitemcommondata</ObjectType>

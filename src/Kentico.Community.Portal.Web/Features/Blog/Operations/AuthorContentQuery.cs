@@ -13,10 +13,12 @@ public class AuthorContentQueryHandler(ContentItemQueryTools tools) : ContentIte
 {
     public override async Task<AuthorContentQueryResponse> Handle(AuthorContentQuery request, CancellationToken cancellationToken = default)
     {
-        var b = new ContentItemQueryBuilder().ForContentType(AuthorContent.CONTENT_TYPE_NAME, queryParams =>
-        {
-            _ = queryParams.Where(w => w.WhereEquals(nameof(AuthorContent.AuthorContentCodeName), request.AuthorCodeName));
-        });
+        var b = new ContentItemQueryBuilder()
+            .ForContentType(
+                AuthorContent.CONTENT_TYPE_NAME,
+                q => q
+                    .Where(w => w.WhereEquals(nameof(AuthorContent.AuthorContentCodeName), request.AuthorCodeName))
+                    .WithLinkedItems(2));
 
         var r = await Executor.GetMappedResult<AuthorContent>(b, DefaultQueryOptions, cancellationToken);
 
