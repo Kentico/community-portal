@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassDisplayName>CustomerAddress</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="CustomerAddressID" columntype="integer" enabled="true" guid="3dc10a41-a42c-4ea1-96ef-47e4d3cae570" isPK="true" system="true" />
+      <field column="CustomerAddressGUID" columnprecision="0" columntype="guid" enabled="true" guid="f186e206-4b13-4f43-8fdb-be63b8f2d890" system="true" />
+      <field column="CustomerAddressCustomerID" columnprecision="0" columntype="integer" enabled="true" guid="26156969-9a8d-4232-8c40-5cfaf74db2a7" refobjtype="commerce.customer" reftype="Required" system="true" />
+      <field allowempty="true" column="CustomerAddressFirstName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="ace34826-940b-4ec0-8da7-ef8afc2084b9" system="true" />
+      <field allowempty="true" column="CustomerAddressLastName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="2c7dfdfc-f11c-445e-a114-50ae56b0907f" system="true" />
+      <field allowempty="true" column="CustomerAddressCompany" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="97cf1894-c0b2-4870-83a4-f018bf29a36f" system="true" />
+      <field column="CustomerAddressEmail" columnprecision="0" columnsize="255" columntype="text" enabled="true" guid="1a1b7a43-52b9-4b23-b5b7-e50d5f582213" system="true" />
+      <field allowempty="true" column="CustomerAddressPhone" columnprecision="0" columnsize="30" columntype="text" enabled="true" guid="ff6e8f34-d4dd-43fe-a147-b84c8321e3fa" system="true" />
+      <field allowempty="true" column="CustomerAddressLine1" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="53a5d48f-5d22-4ab7-81ab-8c8dccd7d749" system="true" />
+      <field allowempty="true" column="CustomerAddressLine2" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="f464613b-8f45-4efd-9459-ca2e103d5ad1" system="true" />
+      <field allowempty="true" column="CustomerAddressCity" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="a42f4012-baad-4997-9920-5be65fda86bb" system="true" />
+      <field allowempty="true" column="CustomerAddressZip" columnprecision="0" columnsize="10" columntype="text" enabled="true" guid="d315134a-e9a5-42e3-a841-8331e3774545" system="true" />
+      <field allowempty="true" column="CustomerAddressCountryID" columnprecision="0" columntype="integer" enabled="true" guid="bee5deff-8392-4585-b0fa-4a4c7e581e9d" refobjtype="cms.country" reftype="NotRequired" system="true" />
+      <field allowempty="true" column="CustomerAddressStateID" columnprecision="0" columntype="integer" enabled="true" guid="edbbedb8-dbd9-46d1-b2c3-848cfe98e43c" refobjtype="cms.state" reftype="NotRequired" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>25d8f5e2-c41b-4db4-9e02-e8dfdb2bf838</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>Commerce.CustomerAddress</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Commerce</CodeName>
+    <GUID>4975d347-eb67-4a9c-a5d6-76997340b8ac</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Commerce_CustomerAddress</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>

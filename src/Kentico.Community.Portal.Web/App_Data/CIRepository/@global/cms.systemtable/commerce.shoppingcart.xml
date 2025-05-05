@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassDisplayName>ShoppingCart</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ShoppingCartID" columntype="integer" enabled="true" guid="72e27872-0743-46ea-9958-df0b6deedc5e" isPK="true" system="true" />
+      <field column="ShoppingCartGUID" columnprecision="0" columntype="guid" enabled="true" guid="e7b7b527-4bb9-45c5-bf2b-55ac79bddf1d" system="true" />
+      <field column="ShoppingCartUniqueIdentifier" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="70d6627d-29bf-4079-950c-2b86ccea401f" system="true" />
+      <field column="ShoppingCartModifiedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="e512244b-44ff-423e-b788-d672469d0bdc" system="true" />
+      <field allowempty="true" column="ShoppingCartMemberID" columnprecision="0" columntype="integer" enabled="true" guid="4a881ee9-8562-44ff-8a36-c3dbb6ba54bd" refobjtype="cms.member" reftype="NotRequired" system="true" />
+      <field allowempty="true" column="ShoppingCartData" columnprecision="0" columnsize="2000" columntype="text" enabled="true" guid="65474536-618a-41a7-9bed-58eaf8d7f4ac" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>943572e3-3f7d-424e-9606-0580c0ed6957</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>Commerce.ShoppingCart</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Commerce</CodeName>
+    <GUID>4975d347-eb67-4a9c-a5d6-76997340b8ac</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Commerce_ShoppingCart</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>

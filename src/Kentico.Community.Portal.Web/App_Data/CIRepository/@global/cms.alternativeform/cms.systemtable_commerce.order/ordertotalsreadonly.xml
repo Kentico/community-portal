@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>Commerce.Order</CodeName>
+    <GUID>b6396a17-3291-4640-8aee-736713f86728</GUID>
+    <ObjectType>cms.systemtable</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="OrderID" guid="ece42504-a84b-4275-b734-6d5c6d3fd642" enabled="" />
+      <field column="OrderGUID" guid="fffdbeb2-cd6a-41f4-8939-383eccba985f" enabled="" />
+      <field column="OrderNumber" guid="259c6ec0-f9bf-4557-bbad-3cc63e04c64c" enabled="" />
+      <field column="OrderCreatedWhen" guid="32fbc894-b48e-458f-b028-242835d09cfa" enabled="" />
+      <field column="OrderModifiedWhen" guid="4e51993d-3f97-41d8-89c0-e4f9930f938c" enabled="" />
+      <field column="OrderStatus" guid="ab9d49d0-b305-4e82-a687-4984cb1ec917" enabled="" />
+      <field column="OrderTotalPrice" guid="7b42d452-65d3-4611-940f-152f9339cb33" enabled="" />
+      <field column="OrderTotalShipping" guid="d3406338-30b7-458f-925d-889ce635c616" enabled="" />
+      <field column="OrderTotalTax" guid="cac55cde-cb20-41e7-8a16-0fc1bf3df0b9" enabled="" />
+      <field column="OrderGrandTotal" guid="e3ff8f61-61d2-4b27-afb3-4b4e160bedb7" enabled="" />
+      <field column="OrderCustomerID" guid="95833ce0-b784-42a4-a586-83f27bbbc30e" enabled="" />
+      <field column="OrderTotalPriceText" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="3d7a6876-583b-49e6-ab80-2fafb2952946" system="true" visible="true" order="11">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalcommerce.order.ordertotals.subtotal$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+      <field column="OrderTotalTaxText" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="7e6a6cff-1948-45de-b7d4-3fbc4b059249" system="true" visible="true" order="12">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalcommerce.order.ordertotals.tax$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+      <field column="OrderTotalShippingText" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="7b925825-9953-42f2-aeea-31a9428fe35f" system="true" visible="true" order="13">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalcommerce.order.ordertotals.shipping$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+      <field column="OrderGrandTotalText" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="9c66a6ed-3f35-406c-85ac-f246936cfdb2" system="true" visible="true" order="14">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalcommerce.order.ordertotals.total$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Order totals</FormDisplayName>
+  <FormGUID>6b070716-9154-4511-a1c8-e3e02fd775fc</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>OrderTotalsReadOnly</FormName>
+</cms.alternativeform>

@@ -147,6 +147,6 @@ public class BlogPostSearchResultViewModel
         LinkPath = model.Url;
         ShortDescription = model.ShortDescription;
         BlogType = model.BlogType;
-        DXTopics = model.DXTopics;
+        DXTopics = model.DXTopics.OrderByDescending(t => t, StringComparer.OrdinalIgnoreCase);
     }
 }

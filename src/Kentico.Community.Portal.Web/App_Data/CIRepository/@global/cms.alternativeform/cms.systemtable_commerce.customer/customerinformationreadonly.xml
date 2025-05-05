@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>Commerce.Customer</CodeName>
+    <GUID>0a78cbff-e781-4bf2-b09e-ee8f2f31c5c1</GUID>
+    <ObjectType>cms.systemtable</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="CustomerID" guid="118c720b-3603-4f1e-a78f-759dce25992d" enabled="" />
+      <field column="CustomerCreatedWhen" guid="c10560bb-319e-440c-898b-298c53011d34" enabled="" order="1" />
+      <field column="CustomerGUID" guid="8e1d929f-2908-449a-a8f4-2f4f86227b89" enabled="" order="2" />
+      <field column="CustomerIsMember" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="b34ffadd-eda4-49b2-bd2a-204410a942be" system="true" visible="true" order="3">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalcommerce.customer.overview.member$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+      <category name="Info" order="4">
+        <properties>
+          <caption>
+            <![CDATA[{$digitalcommerce.customer.overview.contact.caption$}]]>
+          </caption>
+          <visible>true</visible>
+        </properties>
+      </category>
+      <field column="CustomerFirstName" columnsize="300" dummy="altform" enabled="true" guid="7a6e3278-3d77-487c-ba20-93526ae2fbb0" visible="true" order="5">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalcommerce.customer.overview.firstname$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="CustomerLastName" columnsize="300" dummy="altform" enabled="true" guid="b3152857-d119-4bdb-841f-5d4cc795e51f" visible="true" order="6">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalcommerce.customer.overview.lastname$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="CustomerEmail" columnsize="300" dummy="altform" enabled="true" guid="559bbe79-7d78-4d86-9ae6-bd149686db22" visible="true" order="7">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalcommerce.customer.overview.email$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="CustomerPhone" columnsize="300" dummy="altform" enabled="true" guid="7c4bf368-1f4f-4e9d-883c-048bb8eb8999" visible="true" order="8">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalcommerce.customer.overview.phone$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="CustomerMemberID" guid="8f5b3bf5-0e34-41c8-84ef-7b4f9e285c9a" enabled="" order="9" />
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Customer information</FormDisplayName>
+  <FormGUID>d125d8c9-a0a4-44d3-937a-93a3942ae839</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>CustomerInformationReadOnly</FormName>
+</cms.alternativeform>

@@ -6,7 +6,6 @@ import {
   LanguageSupport,
   StreamLanguage,
 } from "@codemirror/language";
-import { html } from "@milkdown/kit/component";
 import { Crepe } from "@milkdown/crepe";
 import { listener, listenerCtx } from "@milkdown/kit/plugin/listener";
 import { remarkPreserveEmptyLinePlugin } from "@milkdown/preset-commonmark";
@@ -80,17 +79,7 @@ export async function initQAndA({ editorElemID, formType = "" }) {
             const displayName =
               language.toLowerCase() === "csharp" ? "C#" : language;
 
-            return html`
-              <li
-                class="language-list-item"
-                role="listitem"
-                tabindex="0"
-                aria-selected="${selected ? "true" : "false"}"
-                data-language="${language}"
-              >
-                ${displayName} ${selected ? "✅" : ""}
-              </li>
-            `;
+            return `${displayName} ${selected ? "✅" : ""}`;
           },
         },
         placeholder: {
@@ -165,7 +154,7 @@ export async function initQAndA({ editorElemID, formType = "" }) {
 ---
 
 **Environment**
-- Xperience by Kentico version: [30.3.1]
+- Xperience by Kentico version: [30.4.1]
 - .NET version: [8|9]
 - Execution environment: [SaaS|Private cloud (Azure/AWS/Virtual machine)]
 - Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)`

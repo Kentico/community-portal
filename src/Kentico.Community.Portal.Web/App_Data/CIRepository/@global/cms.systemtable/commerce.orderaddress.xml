@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassDisplayName>Order address</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="OrderAddressID" columntype="integer" enabled="true" guid="dc1785d2-04ae-4a28-97fb-47ee8182b892" isPK="true" system="true" />
+      <field column="OrderAddressGUID" columnprecision="0" columntype="guid" enabled="true" guid="5be0f232-aed6-4a40-a345-3d39f32fcf5d" system="true" />
+      <field column="OrderAddressOrderID" columnprecision="0" columntype="integer" enabled="true" guid="16919438-9fd6-43f6-af59-ddcfa3a6cb67" refobjtype="commerce.order" reftype="Required" system="true" />
+      <field allowempty="true" column="OrderAddressType" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="7a89ef1a-1c08-4a17-9231-8161b86d4444" system="true" />
+      <field allowempty="true" column="OrderAddressFirstName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="f960fbc1-3e7d-473f-94ac-3113cba69901" system="true" />
+      <field allowempty="true" column="OrderAddressLastName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="a6071edf-9ad2-467e-b6ce-3e089043b19f" system="true" />
+      <field allowempty="true" column="OrderAddressCompany" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="bb13e990-a9d1-47a2-8443-4299b4232334" system="true" />
+      <field allowempty="true" column="OrderAddressEmail" columnprecision="0" columnsize="255" columntype="text" enabled="true" guid="68a90285-f715-4534-b562-48b33a367a22" system="true" />
+      <field allowempty="true" column="OrderAddressPhone" columnprecision="0" columnsize="30" columntype="text" enabled="true" guid="67217742-0457-4623-a815-a5f6500ded24" system="true" />
+      <field allowempty="true" column="OrderAddressLine1" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="7ebc4ca2-6227-4913-9f79-d5bb55662310" system="true" />
+      <field allowempty="true" column="OrderAddressLine2" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="715a714e-b613-4568-8e5e-d64827e11def" system="true" />
+      <field allowempty="true" column="OrderAddressCity" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="b58b64d9-eaf0-498a-99f0-107fbf0d210b" system="true" />
+      <field allowempty="true" column="OrderAddressZip" columnprecision="0" columnsize="10" columntype="text" enabled="true" guid="e7590e5d-3e4c-4c69-9375-0a983edc20bc" system="true" />
+      <field allowempty="true" column="OrderAddressCountryID" columnprecision="0" columntype="integer" enabled="true" guid="707ec9db-5c67-4bb6-9b38-b468833fb0b1" refobjtype="cms.country" reftype="NotRequired" system="true" />
+      <field allowempty="true" column="OrderAddressStateID" columnprecision="0" columntype="integer" enabled="true" guid="682b5ce0-5339-41c2-8043-4767a95d4ab4" refobjtype="cms.state" reftype="NotRequired" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>55c9e22c-324a-4043-bb79-8201d1784cea</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>Commerce.OrderAddress</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Commerce</CodeName>
+    <GUID>4975d347-eb67-4a9c-a5d6-76997340b8ac</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Commerce_OrderAddress</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>Commerce.Order</CodeName>
+    <GUID>b6396a17-3291-4640-8aee-736713f86728</GUID>
+    <ObjectType>cms.systemtable</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="OrderID" guid="ece42504-a84b-4275-b734-6d5c6d3fd642" enabled="" />
+      <field column="OrderGUID" guid="fffdbeb2-cd6a-41f4-8939-383eccba985f" enabled="" />
+      <field column="OrderNumber" guid="259c6ec0-f9bf-4557-bbad-3cc63e04c64c" enabled="" />
+      <field column="OrderModifiedWhen" guid="4e51993d-3f97-41d8-89c0-e4f9930f938c" enabled="" order="3" />
+      <field column="OrderTotalPrice" guid="7b42d452-65d3-4611-940f-152f9339cb33" enabled="" order="4" />
+      <field column="OrderTotalShipping" guid="d3406338-30b7-458f-925d-889ce635c616" enabled="" order="5" />
+      <field column="OrderTotalTax" guid="cac55cde-cb20-41e7-8a16-0fc1bf3df0b9" enabled="" order="6" />
+      <field column="OrderGrandTotal" guid="e3ff8f61-61d2-4b27-afb3-4b4e160bedb7" enabled="" order="7" />
+      <field column="OrderCustomerID" guid="95833ce0-b784-42a4-a586-83f27bbbc30e" enabled="" order="8" />
+      <field allowempty="true" column="OrderCreatedWhenText" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="68d58198-27bb-4285-9a5a-b4b3a57c13c8" system="true" visible="true" order="9">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalcommerce.order.orderdetail.created$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+      <field column="OrderStatus" enabled="true" guid="ab9d49d0-b305-4e82-a687-4984cb1ec917" visible="true" order="10">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalcommerce.order.orderdetail.status$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="OrderCreatedWhen" guid="32fbc894-b48e-458f-b028-242835d09cfa" enabled="" order="11" />
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Order detail</FormDisplayName>
+  <FormGUID>ff5003a9-f3fc-44f0-9bc5-7195f97a4e30</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>OrderDetailReadOnly</FormName>
+</cms.alternativeform>

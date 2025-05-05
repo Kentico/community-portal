@@ -33,12 +33,12 @@ small {
 }
 
 /* For paragraphs inside blockquotes. The blockquote already has padding. */
-blockquote {
+blockquote.blockquote {
+  background-color: var(--bs-gray-100);
   border-left: 4px solid var(--bs-gray-600);
   padding: 1rem;
   margin: 1rem 0;
   font-style: italic;
-  background-color: initial;
   font-size: 1rem;
 
   > :first-child {

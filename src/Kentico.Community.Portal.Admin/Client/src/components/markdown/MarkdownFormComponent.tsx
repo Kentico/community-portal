@@ -297,7 +297,7 @@ const customStyles = `
       }
 
       .milkdown {
-          milkdown-block-handle {
+          .milkdown-block-handle {
               left: -4px !important;
           }
           .ProseMirror.editor {
@@ -306,7 +306,7 @@ const customStyles = `
           }
       }
 
-      milkdown-slash-menu {
+      .milkdown-slash-menu {
         z-index: 1;
       }
   }   

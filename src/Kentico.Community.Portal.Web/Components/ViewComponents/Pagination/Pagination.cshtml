@@ -2,37 +2,82 @@
 
 <nav aria-label="pagination" class="mt-4">
     <ul class="pagination justify-content-center">
-
         @if (Model.Page > 1)
         {
             <li class="page-item">
                 <a class="page-link" href='@Model.PageLinkPath(1, Context.Request)' aria-label="First">
-                    <svg class="c-icon  ">
+                    <svg class="c-icon">
                         <use xlink:href="/img/icons.svg#pagination-left-end" asp-append-version></use>
                     </svg>
                 </a>
             </li>
             <li class="page-item">
                 <a class="page-link" href='@Model.PageLinkPath(Model.Page - 1, Context.Request)' aria-label="Previous">
-                    <svg class="c-icon  ">
+                    <svg class="c-icon">
                         <use xlink:href="/img/icons.svg#pagination-left" asp-append-version></use>
                     </svg>
                 </a>
             </li>
         }
 
-        @for (int pageNumber = 1; pageNumber <= Model.TotalPages; pageNumber++)
+        @{
+            const int maxVisiblePages = 6;
+            const int edgePages = 2;
+            var showEllipsis = Model.TotalPages > maxVisiblePages;
+        }
+
+        @if (!showEllipsis)
         {
-            if (pageNumber == Model.Page)
+            @for (int pageNumber = 1; pageNumber <= Model.TotalPages; pageNumber++)
             {
-                <li class="page-item active">
-                    <a href="#" class="page-link">@pageNumber</a>
+                if (pageNumber == Model.Page)
+                {
+                    <li class="page-item active">
+                        <a href="#" class="page-link">@pageNumber</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" href='@Model.PageLinkPath(pageNumber, Context.Request)'>@pageNumber</a>
+                    </li>
+                }
+            }
+        }
+        else
+        {
+            @for (int pageNumber = 1; pageNumber <= edgePages && pageNumber <= Model.TotalPages; pageNumber++)
+            {
+                <li class="page-item @(pageNumber == Model.Page ? "active" : "")">
+                    <a class="page-link" href='@(pageNumber == Model.Page ? "#" : Model.PageLinkPath(pageNumber, Context.Request))'>@pageNumber</a>
                 </li>
             }
-            else
+
+            @if (Model.Page > edgePages + 1)
             {
-                <li class="page-item">
-                    <a class="page-link" href='@Model.PageLinkPath(pageNumber, Context.Request)'>@pageNumber</a>
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            }
+
+            @if (Model.Page > edgePages && Model.Page < Model.TotalPages - edgePages + 1)
+            {
+                <li class="page-item active">
+                    <a href="#" class="page-link">@Model.Page</a>
+                </li>
+            }
+
+            @if (Model.Page < Model.TotalPages - edgePages)
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            }
+
+            @for (int pageNumber = Math.Max(Model.TotalPages - edgePages + 1, edgePages + 1); pageNumber <= Model.TotalPages; pageNumber++)
+            {
+                <li class="page-item @(pageNumber == Model.Page ? "active" : "")">
+                    <a class="page-link" href='@(pageNumber == Model.Page ? "#" : Model.PageLinkPath(pageNumber, Context.Request))'>@pageNumber</a>
                 </li>
             }
         }
@@ -41,14 +86,14 @@
         {
             <li class="page-item">
                 <a class="page-link" href='@Model.PageLinkPath(Model.Page + 1, Context.Request)' aria-label="Next">
-                    <svg class="c-icon  ">
+                    <svg class="c-icon">
                         <use xlink:href="/img/icons.svg#pagination-right" asp-append-version></use>
                     </svg>
                 </a>
             </li>
             <li class="page-item">
-                <a href='@Model.PageLinkPath(Model.TotalPages, Context.Request)' class="page-link" aria-label=" Last">
-                    <svg class="c-icon  ">
+                <a href='@Model.PageLinkPath(Model.TotalPages, Context.Request)' class="page-link" aria-label="Last">
+                    <svg class="c-icon">
                         <use xlink:href="/img/icons.svg#pagination-right-end" asp-append-version></use>
                     </svg>
                 </a>

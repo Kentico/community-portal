@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassDisplayName>Customer</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="CustomerID" columntype="integer" enabled="true" guid="118c720b-3603-4f1e-a78f-759dce25992d" isPK="true" system="true" />
+      <field column="CustomerGUID" columnprecision="0" columntype="guid" enabled="true" guid="8e1d929f-2908-449a-a8f4-2f4f86227b89" system="true" />
+      <field allowempty="true" column="CustomerMemberID" columnprecision="0" columntype="integer" enabled="true" guid="8f5b3bf5-0e34-41c8-84ef-7b4f9e285c9a" refobjtype="cms.member" reftype="NotRequired" system="true" />
+      <field column="CustomerCreatedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="c10560bb-319e-440c-898b-298c53011d34" system="true" />
+      <field allowempty="true" column="CustomerFirstName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="7a6e3278-3d77-487c-ba20-93526ae2fbb0" system="true" />
+      <field allowempty="true" column="CustomerLastName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="b3152857-d119-4bdb-841f-5d4cc795e51f" system="true" />
+      <field allowempty="true" column="CustomerEmail" columnprecision="0" columnsize="255" columntype="text" enabled="true" guid="559bbe79-7d78-4d86-9ae6-bd149686db22" system="true" />
+      <field allowempty="true" column="CustomerPhone" columnprecision="0" columnsize="30" columntype="text" enabled="true" guid="7c4bf368-1f4f-4e9d-883c-048bb8eb8999" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>0a78cbff-e781-4bf2-b09e-ee8f2f31c5c1</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>Commerce.Customer</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Commerce</CodeName>
+    <GUID>4975d347-eb67-4a9c-a5d6-76997340b8ac</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Commerce_Customer</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>
