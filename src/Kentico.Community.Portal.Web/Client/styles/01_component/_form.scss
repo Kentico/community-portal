@@ -54,8 +54,10 @@ textarea.form-control {
   font-size: var(--fs-5);
 
   ul {
-    padding: 0;
     margin: 0;
+  }
+  &.is-valid {
+    display: none;
   }
 }
 

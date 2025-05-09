@@ -110,15 +110,15 @@ public class CommunityStatsPage(ISystemClock clock) : Page<StatsLayoutClientProp
     {
         string query = $"""
         SELECT 
-            FORMAT([BlogPostContentPublishedDate], 'yyyy') AS Year,
-            FORMAT([BlogPostContentPublishedDate], 'MM') AS Month,
+            FORMAT([BlogPostPagePublishedDate], 'yyyy') AS Year,
+            FORMAT([BlogPostPagePublishedDate], 'MM') AS Month,
             COUNT(*) AS Count
-        FROM KenticoCommunity_BlogPostContent
+        FROM KenticoCommunity_BlogPostPage
         WHERE 
-            [BlogPostContentPublishedDate] >= @StartDate
+            [BlogPostPagePublishedDate] >= @StartDate
         GROUP BY 
-            FORMAT([BlogPostContentPublishedDate], 'yyyy'),
-            FORMAT([BlogPostContentPublishedDate], 'MM')
+            FORMAT([BlogPostPagePublishedDate], 'yyyy'),
+            FORMAT([BlogPostPagePublishedDate], 'MM')
         ORDER BY 
             Year ASC,
             Month ASC;

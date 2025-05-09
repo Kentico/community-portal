@@ -26,6 +26,8 @@
     </div>
 
     <fieldset hx-indicator="this">
+        <div asp-validation-summary="All" class="alert alert-danger validation-summary"></div>
+
         <label for="@editorFieldID" class="form-label"><span class="text-secondary fw-bold">@User.Identity.Name</span>
             would answer</label>
         <div id="@editorID" class="border border-1 border-dark-subtle rounded-2 milkdown-container">

@@ -35,10 +35,11 @@ public class FacetFieldTagHelper : TagHelper
                 output.Attributes.Add("id", id);
             });
 
-        string facetAttribute = !(Mobile ?? false)
-            ? "facet-field"
-            : "facet-field-mobile";
-        output.Attributes.Add(facetAttribute, "");
+        output.Attributes.Add("facet-field", "");
+        if (Mobile ?? false)
+        {
+            output.Attributes.Add("facet-field-mobile", "");
+        }
         output.Attributes.Add("value", Facet.Value);
 
         if (Facet.Count == 0)

@@ -53,7 +53,7 @@ export async function initQAndA({ editorElemID, formType = "" }) {
     if (this.mode === "editor") {
       await initialize(elements);
     } else {
-      cleanupCrepe("toggleEditor")(event);
+      cleanupCrepe("toggleEditor", true)(event);
       event.target.innerText = "View editor";
     }
 
@@ -106,10 +106,15 @@ export async function initQAndA({ editorElemID, formType = "" }) {
 
     await crepeEditor.create();
 
-    formEl.addEventListener("submit", cleanupCrepe("submitReady"));
+    formEl.addEventListener("submit", cleanupCrepe("submitReady", false));
+
+    document.body.addEventListener(
+      "cleanupEditor",
+      cleanupCrepe("submitted", true),
+    );
 
     for (const buttonEl of cancelButtonEls) {
-      buttonEl.addEventListener("click", cleanupCrepe("cancelReady"));
+      buttonEl.addEventListener("click", cleanupCrepe("cancelReady", true));
     }
 
     return crepeEditor;
@@ -117,15 +122,16 @@ export async function initQAndA({ editorElemID, formType = "" }) {
 
   /**
    * Cleans up the generated Crepe instance and emits the given custom event when complete
-   * @param {'submitReady' | 'cancelReady' | 'toggleEditor'} customEvent
+   * @param {'submitReady' | 'cancelReady' | 'toggleEditor' | 'submitted'} customEvent
+   * @param {boolean} cleanup
    * @returns {(event: SubmitEvent | MouseEvent | Event ) => void}
    */
-  function cleanupCrepe(customEvent) {
+  function cleanupCrepe(customEvent, cleanup) {
     return async (event) => {
       event.preventDefault();
       event.stopPropagation();
 
-      if (crepeEditor) {
+      if (crepeEditor && cleanup) {
         await crepeEditor.destroy();
         crepeEditor = undefined;
         console.log("editor destroyed");

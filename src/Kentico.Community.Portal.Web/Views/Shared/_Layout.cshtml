@@ -43,14 +43,11 @@
 
     <vc:footer />
 
-    <div class="bottom-0 p-3 position-absolute end-0 toast-container" data-ktc-search-exclude>
-        <div class="toast bg-warning-subtle" role="alert" aria-live="assertive" aria-atomic="true" data-error-toast>
-            <div class="toast-header">
-                <strong class="me-auto">Error</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                There was a problem handling your request.
+    <div id="toastContainer" class="fixed-bottom d-flex flex-column align-items-end p-3" data-ktc-search-exclude>
+        <div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true" toast>
+            <div class="d-flex">
+                <div class="toast-body" toast-message></div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
     </div>

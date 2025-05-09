@@ -2,7 +2,6 @@
 using CMS.Membership;
 using CMS.Websites.Routing;
 using Htmx;
-using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Content.Web.Mvc;
@@ -22,7 +21,7 @@ public class QAndAQuestionController(
     IMediator mediator,
     IWebPageUrlRetriever urlRetriever,
     IWebsiteChannelContext channelContext,
-    ISystemClock clock,
+    TimeProvider clock,
     IEventLogService log) : PortalHandlerController(log)
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
@@ -30,7 +29,7 @@ public class QAndAQuestionController(
     private readonly IMediator mediator = mediator;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
     private readonly IWebsiteChannelContext channelContext = channelContext;
-    private readonly ISystemClock clock = clock;
+    private readonly TimeProvider clock = clock;
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -38,19 +37,19 @@ public class QAndAQuestionController(
     {
         if (!ModelState.IsValid)
         {
-            return ViewComponent(typeof(QAndAQuestionFormViewComponent));
+            return ViewComponent(typeof(QAndAQuestionFormViewComponent), new { submission = requestModel });
         }
 
         var member = await userManager.CurrentUser(HttpContext);
-
         if (member is null)
         {
             return Unauthorized();
         }
 
-        var now = clock.Now;
+        var now = clock.GetLocalNow();
         var questionsParent = await mediator.Send(new QAndAQuestionsRootPageQuery(channelContext.WebsiteChannelName));
         var questionMonthFolder = await mediator.Send(new QAndAMonthFolderQuery(questionsParent, channelContext.WebsiteChannelName, now.Year, now.Month, channelContext.WebsiteChannelID));
+
 
         return await mediator.Send(new QAndAQuestionCreateCommand(
             member,
@@ -59,10 +58,15 @@ public class QAndAQuestionController(
             requestModel.Title,
             requestModel.Content,
             SystemTaxonomies.QAndADiscussionTypeTaxonomy.QuestionTag.GUID,
-            [],
+            requestModel.SelectedTags,
             Maybe<BlogPostPage>.None))
             .Match(
-                _ => PartialView("~/Features/QAndA/Components/Form/QAndAQuestionFormConfirmation.cshtml") as IActionResult,
+                _ =>
+                {
+                    Response.Htmx(headers => headers.WithTrigger("cleanupEditor"));
+
+                    return PartialView("~/Features/QAndA/Components/Form/QAndAQuestionFormConfirmation.cshtml") as IActionResult;
+                },
                 LogAndReturnError("CREATE_QUESTION"));
     }
 
@@ -70,9 +74,15 @@ public class QAndAQuestionController(
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> UpdateQuestion(QAndAQuestionFormSubmissionViewModel requestModel)
     {
+        var member = await userManager.CurrentUser(HttpContext);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
         if (!ModelState.IsValid)
         {
-            return ViewComponent(typeof(QAndAQuestionFormViewComponent), new { questionID = requestModel.EditedObjectID });
+            return ViewComponent(typeof(QAndAQuestionFormViewComponent), new { questionID = requestModel.EditedObjectID, submission = requestModel });
         }
 
         if (requestModel.EditedObjectID is not Guid questionID)
@@ -80,22 +90,26 @@ public class QAndAQuestionController(
             return NotFound();
         }
 
-        var user = await userManager.CurrentUser(HttpContext)!;
-
         var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
         if (!questionResp.TryGetValue(out var questionPage))
         {
             return NotFound();
         }
 
-        return await mediator.Send(new QAndAQuestionUpdateCommand(questionPage, requestModel.Title, requestModel.Content, requestModel.DXTopics, channelContext.WebsiteChannelID))
-            .Match<StatusCodeResult>(async () =>
+        bool canManageContent = await userManager.CanManageContent(member, userInfoProvider);
+        if (questionPage.QAndAQuestionPageAuthorMemberID != member.Id && !canManageContent)
+        {
+            return Forbid();
+        }
+
+        return await mediator
+            .Send(new QAndAQuestionUpdateCommand(questionPage, requestModel.Title, requestModel.Content, requestModel.SelectedTags, channelContext.WebsiteChannelID))
+            .Match(async () =>
             {
                 string redirectURL = (await urlRetriever.Retrieve(questionPage)).RelativePathTrimmed();
-
                 Response.Htmx(h => h.Redirect(redirectURL));
 
-                return Ok();
+                return Ok().AsStatusCodeResult();
             }, LogAndReturnErrorAsync("QUESTION_UPDATE"));
     }
 
@@ -115,7 +129,6 @@ public class QAndAQuestionController(
         }
 
         bool canManageContent = await userManager.CanManageContent(member, userInfoProvider);
-
         if (questionPage.QAndAQuestionPageAuthorMemberID != member.Id && !canManageContent)
         {
             return Forbid();
@@ -133,7 +146,6 @@ public class QAndAQuestionController(
          * For now, only content managers can delete questions
          */
         bool canManageContent = await userManager.CanManageContent(HttpContext, userInfoProvider);
-
         if (!canManageContent)
         {
             return Forbid();
@@ -146,14 +158,14 @@ public class QAndAQuestionController(
         }
 
         var questionsParent = await mediator.Send(new QAndAQuestionsRootPageQuery(channelContext.WebsiteChannelName));
-        string path = (await urlRetriever.Retrieve(questionsParent)).RelativePathTrimmed();
-
         return await mediator.Send(new QAndAQuestionDeleteCommand(questionPage, channelContext.WebsiteChannelID))
-            .Match(() =>
+            .Match(async () =>
             {
+                string path = (await urlRetriever.Retrieve(questionsParent)).RelativePathTrimmed();
                 Response.Htmx(h => h.Redirect(path));
-                return Ok();
+
+                return Ok().AsStatusCodeResult();
             },
-            LogAndReturnError("QUESTION_DELETE"));
+            LogAndReturnErrorAsync("QUESTION_DELETE"));
     }
 }

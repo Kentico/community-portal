@@ -1,0 +1,62 @@
+@model Kentico.Community.Portal.Web.Features.QAndA.QAndAQuestionFormViewModel
+
+<span class="form-label">Selected tags</span>
+<div class="mb-2 d-flex align-items-center flex-wrap gap-2">
+    <span class="text-muted small">
+        <span x-text="maxTags - selectedTags.length"></span> tags remaining
+    </span>
+    <template x-for="tag in selectedTags" :key="tag.value">
+        <span class="badge bg-primary d-inline-flex align-items-center">
+            <span x-text="tag.label"></span>
+            <button type="button" class="btn-close btn-close-white ms-2" aria-label="Remove tag"
+                @@click="selectedTags = selectedTags.filter(t => t.value !== tag.value)"></button>
+            <input type="hidden" name="SelectedTags[]" x-bind:value="tag.value">
+        </span>
+    </template>
+</div>
+
+<input type="text" name="tagSearch" class="form-control mb-3" placeholder="Search tags..." x-model="searchTerm">
+<div style="max-height: 300px; overflow-y: auto;">
+    <template x-for="(tags, group) in groupedFilteredTags(searchTerm, allTags)" :key="group">
+        <div class="mb-3">
+            <div class="fw-bold text-secondary mb-3" x-text="group"></div>
+            <div class="d-grid gap-2" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+                <template x-for="tag in tags" :key="tag.value">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" :id="`tag-${tag.value}`"
+                            :name="`tag-${tag.value}`" :value="tag.value"
+                            x-bind:checked="selectedTags.some(t => t.value === tag.value)"
+                            x-bind:disabled="selectedTags.length >= maxTags && !selectedTags.some(t => t.value === tag.value)"
+                            @@change="selectedTags = toggleSelectedTag($event.target.checked, tag, selectedTags)">
+                        <label class="form-check-label" :for="`tag-${tag.value}`" x-text="tag.label">
+                        </label>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </template>
+    <template x-if="Object.values(groupedFilteredTags(searchTerm, allTags)).flat().length === 0">
+        <div class="text-muted small mt-2">No tags found.</div>
+    </template>
+</div>
+
+<script>
+    window.groupedFilteredTags = function (searchTerm, allTags) {
+        return allTags.reduce((acc, tag) => {
+            if (!searchTerm || tag.label.toLowerCase().includes(searchTerm.toLowerCase())) {
+                if (!acc[tag.group]) {
+                    acc[tag.group] = [];
+                }
+                acc[tag.group].push(tag);
+            }
+            return acc;
+        }, {});
+    };
+    window.toggleSelectedTag = function (checked, tag, selectedTags) {
+        if (checked) {
+            return [...selectedTags, { value: tag.value, label: tag.label }];
+        } else {
+            return selectedTags.filter(t => t.value !== tag.value)
+        }
+    };
+</script>

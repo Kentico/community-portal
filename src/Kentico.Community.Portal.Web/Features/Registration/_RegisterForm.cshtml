@@ -3,68 +3,50 @@
 @if (Context.Request.IsHtmx() && ViewContext.ModelState.IsValid)
 {
     <partial name="~/Features/Registration/_VerifyEmail.cshtml" />
-
     return;
 }
 
-
-<form id="registerForm" method="post" hx-swap="outerHTML" hx-post hx-controller="Registration" hx-action="Register"
-    hx-trigger="captchaReady" hx-disabled-elt="find fieldset" test-id="register">
+<form id="registerForm" method="post" class="needs-validation" hx-swap="outerHTML" hx-post hx-controller="Registration"
+    hx-action="Register" hx-trigger="captchaReady" hx-disabled-elt="find fieldset" test-id="register">
     <fieldset hx-indicator="this">
-        <div asp-validation-summary="ModelOnly" class="text-danger field-validation-error"></div>
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger validation-summary"></div>
 
-        <div class="form-group">
-            <div class="editing-form-label-cell">
-                <label asp-for="UserName" class="control-label form-label mt-3"></label>
-            </div>
-            <div class="editing-form-value-cell">
-                <input asp-for="UserName" class="form-control" test-id="userName">
-                <span asp-validation-for="UserName" class="text-danger field-validation-error"></span>
-            </div>
+        <div class="mb-4">
+            <label asp-for="UserName" class="form-label"></label>
+            <input asp-for="UserName" class="form-control rounded-4" test-id="userName">
+            <span asp-validation-for="UserName" class="invalid-feedback"></span>
         </div>
 
-        <div class="form-group">
-            <div class="editing-form-label-cell">
-                <label asp-for="Email" class="control-label form-label mt-3"></label>
-            </div>
-            <div class="editing-form-value-cell">
-                <input asp-for="Email" class="form-control" test-id="email">
-                <span asp-validation-for="Email" class="text-danger field-validation-error"></span>
-            </div>
+        <div class="mb-4">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control rounded-4" test-id="email">
+            <span asp-validation-for="Email" class="invalid-feedback"></span>
         </div>
 
-        <div class="form-group">
-            <div class="editing-form-label-cell">
-                <label asp-for="Password" class="control-label form-label mt-3"></label>
-            </div>
-            <div class="editing-form-value-cell">
-                <input asp-for="Password" class="form-control" test-id="password">
-                <span asp-validation-for="Password" class="text-danger field-validation-error"></span>
-            </div>
+        <div class="mb-4">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control rounded-4" test-id="password">
+            <span asp-validation-for="Password" class="invalid-feedback"></span>
         </div>
 
-        <div class="form-group">
-            <div class="editing-form-label-cell">
-                <label asp-for="PasswordConfirmation" class="control-label form-label mt-3"></label>
-            </div>
-            <div class="editing-form-value-cell">
-                <input asp-for="PasswordConfirmation" class="form-control" test-id="passwordConfirmation">
-                <span asp-validation-for="PasswordConfirmation" class="text-danger field-validation-error"></span>
-            </div>
+        <div class="mb-4">
+            <label asp-for="PasswordConfirmation" class="form-label"></label>
+            <input asp-for="PasswordConfirmation" class="form-control rounded-4" test-id="passwordConfirmation">
+            <span asp-validation-for="PasswordConfirmation" class="invalid-feedback"></span>
         </div>
 
-        <div class="form-group mt-3">
-            <div class="editing-form-value-cell">
+        <div class="mb-4">
+            <div class="form-check">
                 <input class="form-check-input" asp-for="ConsentAgreement" test-id="consentAgreement">
                 <label class="form-check-label" asp-for="ConsentAgreement">
                     <vc:consent consent-name="KenticoCommunityPortalTracking" />
                 </label>
-                <span asp-validation-for="ConsentAgreement" class="text-danger field-validation-error"></span>
+                <span asp-validation-for="ConsentAgreement" class="invalid-feedback"></span>
             </div>
         </div>
 
         <input asp-for="CaptchaToken">
-        <button id="register" type="submit" class="btn btn-primary mt-3" xpc-loading-button>
+        <button id="register" type="submit" class="btn btn-primary w-100" xpc-loading-button>
             Register
         </button>
     </fieldset>

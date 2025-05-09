@@ -1,3 +1,4 @@
+using System.Text.Json;
 using CMS.ContentEngine;
 using CMS.DataEngine;
 using CMS.Membership;
@@ -12,7 +13,7 @@ public record QAndAQuestionUpdateCommand(
     QAndAQuestionPage Question,
     string UpdatedQuestionTitle,
     string UpdatedQuestionContent,
-    IReadOnlyList<string> DXTopics,
+    IReadOnlyList<Guid> DXTopics,
     int ChannelID) : ICommand<Result>;
 public class QAndAQuestionUpdateCommandHandler(
     WebPageCommandTools tools,
@@ -33,7 +34,7 @@ public class QAndAQuestionUpdateCommandHandler(
         var dxTaxonomy = await taxonomyRetriever.RetrieveTaxonomy(SystemTaxonomies.DXTopicTaxonomy.CodeName, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
         var validTags = dxTaxonomy
             .Tags
-            .Where(t => request.DXTopics.Contains(t.Name, StringComparer.OrdinalIgnoreCase))
+            .Where(t => request.DXTopics.Contains(t.Identifier))
             .Select(t => new TagReference() { Identifier = t.Identifier })
             .ToList();
 
@@ -68,7 +69,7 @@ public class QAndAQuestionUpdateCommandHandler(
             { nameof(QAndAQuestionPage.QAndAQuestionPageTitle), request.UpdatedQuestionTitle },
             // Content is not sanitized because it can include fenced code blocks.
             { nameof(QAndAQuestionPage.QAndAQuestionPageContent), request.UpdatedQuestionContent },
-            { nameof(QAndAQuestionPage.QAndAQuestionPageDXTopics), validTags }
+            { nameof(QAndAQuestionPage.QAndAQuestionPageDXTopics), JsonSerializer.Serialize(validTags) }
         });
         var draftData = new UpdateDraftData(itemData);
         bool update = await webPageManager.TryUpdateDraft(question.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, draftData, cancellationToken);

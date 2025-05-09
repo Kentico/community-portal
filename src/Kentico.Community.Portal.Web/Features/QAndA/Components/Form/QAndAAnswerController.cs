@@ -32,7 +32,6 @@ public class QAndAAnswerController(
     public async Task<ActionResult> CreateAnswer(QAndAAnsweredViewModel requestModel)
     {
         var questionID = requestModel.ParentQuestionID;
-
         if (!ModelState.IsValid)
         {
             return ViewComponent(typeof(QAndAAnswerFormViewComponent), new { questionID });
@@ -47,17 +46,16 @@ public class QAndAAnswerController(
         }
 
         var member = await userManager.CurrentUser(HttpContext);
-
         if (member is null)
         {
             return Unauthorized();
         }
 
-        return await mediator.Send(new QAndAAnswerCreateCommand(member, requestModel.Content, parentQuestionPage, channelContext))
+        return await mediator
+            .Send(new QAndAAnswerCreateCommand(member, requestModel.Content, parentQuestionPage, channelContext))
             .Match(async id =>
             {
                 string questionPath = (await urlRetriever.Retrieve(parentQuestionPage)).RelativePathTrimmed();
-
                 Response.Htmx(h => h.Redirect(questionPath));
 
                 return Ok().AsStatusCodeResult();
@@ -89,20 +87,33 @@ public class QAndAAnswerController(
             return ViewComponent(typeof(QAndAAnswerFormViewComponent), new { questionID, answerID });
         }
 
-        var user = await userManager.CurrentUser(HttpContext)!;
+        var member = await userManager.CurrentUser(HttpContext);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
         var answer = await mediator.Send(new QAndAAnswerDataByIDQuery(answerID));
         if (answer is null)
         {
             return NotFound();
         }
 
-        _ = await mediator.Send(new QAndAAnswerUpdateCommand(answer, requestModel.Content));
+        bool canManageContent = await userManager.CanManageContent(member, userInfoProvider);
+        if (answer.QAndAAnswerDataAuthorMemberID != member.Id && !canManageContent)
+        {
+            return Forbid();
+        }
 
-        string questionPath = (await urlRetriever.Retrieve(parentQuestionPage)).RelativePathTrimmed();
+        return await mediator
+            .Send(new QAndAAnswerUpdateCommand(answer, requestModel.Content))
+            .Match(async () =>
+            {
+                string questionPath = (await urlRetriever.Retrieve(parentQuestionPage)).RelativePathTrimmed();
+                Response.Htmx(h => h.Redirect(questionPath));
 
-        Response.Htmx(h => h.Redirect(questionPath));
-
-        return Ok();
+                return Ok().AsStatusCodeResult();
+            }, LogAndReturnErrorAsync("ANSWSER_UPDATE"));
     }
 
     [HttpGet]
@@ -162,13 +173,16 @@ public class QAndAAnswerController(
 
         var answer = await mediator.Send(new QAndAAnswerDataByIDQuery(answerID));
 
-        _ = await mediator.Send(new QAndAQuestionMarkAnsweredCommand(parentQuestionPage, answer, channelContext.WebsiteChannelID));
+        return await mediator
+            .Send(new QAndAQuestionMarkAnsweredCommand(parentQuestionPage, answer, channelContext.WebsiteChannelID))
+            .Match(async () =>
+            {
+                string questionPath = (await urlRetriever.Retrieve(parentQuestionPage)).RelativePathTrimmed();
 
-        string questionPath = (await urlRetriever.Retrieve(parentQuestionPage)).RelativePathTrimmed();
+                Response.Htmx(h => h.Redirect(questionPath));
 
-        Response.Htmx(h => h.Redirect(questionPath));
-
-        return Ok();
+                return Ok().AsStatusCodeResult();
+            }, LogAndReturnErrorAsync("ANSWER_APPROVED"));
     }
 
     [HttpPost]
@@ -193,8 +207,12 @@ public class QAndAAnswerController(
             return Forbid();
         }
 
-        _ = await mediator.Send(new QAndAAnswerDeleteCommand(answer));
-
-        return Ok();
+        return await mediator
+            .Send(new QAndAAnswerDeleteCommand(answer))
+            .Match(() =>
+            {
+                Response.Htmx(h => h.WithToastSuccess("Answer successfully deleted."));
+                return Ok().AsStatusCodeResult();
+            }, LogAndReturnError("ANSWER_DELETE"));
     }
 }

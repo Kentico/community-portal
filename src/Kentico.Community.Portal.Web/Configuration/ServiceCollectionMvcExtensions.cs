@@ -1,7 +1,9 @@
 using Kentico.Community.Portal.Web.Features.Errors;
+using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Resources;
 using Lucene.Net.Util;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Vite.AspNetCore;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -93,6 +95,7 @@ public static class ServiceCollectionMvcExtensions
                     (type, factory) => factory.Create(typeof(SharedResources));
             })
             .Services
+            .AddSingleton<IHtmlGenerator, BootstrapHTMLGenerator>()
             .AddHttpContextAccessor()
             .AddHttpClient()
             .AddViteServices()

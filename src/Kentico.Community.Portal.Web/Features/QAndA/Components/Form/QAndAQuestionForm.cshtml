@@ -1,4 +1,6 @@
-@model Kentico.Community.Portal.Web.Features.QAndA.QAndAQuestionFormViewModel
+@using Kentico.Community.Portal.Web.Features.QAndA
+
+@model QAndAQuestionFormViewModel
 
 @{
     string id = $"{(Model.EditedObjectID ?? Guid.NewGuid()):N}";
@@ -6,96 +8,112 @@
     string rootElIdSelector = $"#{rootElId}";
     string editorID = $"editormd_{id}";
     string editorFieldID = $"{editorID}_field";
+
+    var selected = Model.TagGroups
+    .SelectMany(tg => tg.Facets)
+    .Where(t => t.IsSelected)
+    .ToList();
+
+    var model = new
+    {
+        allTags = new List<string>(),
+        maxTags = QAndAQuestionFormSubmissionViewModel.MAX_TAGS,
+        searchTerm = "",
+        selectedTags = selected
+    };
+
+    var allTags = Model.TagGroups
+    .SelectMany(g => g.Facets)
+    .ToList();
 }
 
 <div id="@rootElId" class="mb-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <h2>
-                @if (Model.EditedObjectID is null)
-                {
-                    <text>Create new question</text>
-                }
-                else
-                {
-                    <text>Edit question "@Model.Title"</text>
-                }
-            </h2>
+    <form method="post" hx-post hx-controller="QAndAQuestion"
+        hx-action="@(Model.EditedObjectID is null ? "CreateQuestion" : "UpdateQuestion")" hx-swap="outerHTML"
+        hx-target="@rootElIdSelector" hx-trigger="submitReady" hx-disabled-elt="find fieldset"
+        class="d-flex flex-column">
+        <fieldset hx-indicator="this">
 
-            <form method="post" hx-post hx-controller="QAndAQuestion"
-                hx-action="@(Model.EditedObjectID is null ? "CreateQuestion" : "UpdateQuestion")" hx-swap="outerHTML"
-                hx-target="@rootElIdSelector" hx-trigger="submitReady" hx-disabled-elt="find fieldset"
-                class="d-flex flex-column">
-                <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
+            <div asp-validation-summary="All" class="alert alert-danger validation-summary"></div>
 
-                <div class="row mb-5">
-                    <div class="col-12">
-                        <label asp-for="Title" class="form-label mt-3"></label>
-                        <input type="text" class="form-control" asp-for="@Model.Title" />
-                        <p class="small mt-1 text-muted">Enter a short title to describe your question.</p>
-                        <span asp-validation-for="@Model.Title" class="error"></span>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    @Model.FormHelpMessageHTML
-                </div>
-
-                <fieldset hx-indicator="this">
-                    <label for="@editorFieldID" class="form-label">
-                        <span class="text-secondary fw-bold">
-                            @User.Identity!.Name
-                        </span>
-                        would ask</label>
-                    <div id="@editorID" class="border border-1 border-dark-subtle rounded-2 milkdown-container">
-                        <textarea class="form-control d-none field-sizing-content h-100 border-0"
-                            asp-for="@Model.Content"
-                            style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;" name="Content"
-                            placeholder="Your full question description goes here" value="@Model.Content"></textarea>
-                    </div>
-
-                    <div class="form-check form-switch align-self-end" x-data="{ mode: 'editor' }">
-                        <input class="form-check-input" type="checkbox" role="switch" id="viewMarkdown"
-                            @@change="toggleEditor">
-                        <label class="form-check-label" for="viewMarkdown">View markdown</label>
-                    </div>
-
-                    <div class="d-grid">
-                        <input asp-for="EditedObjectID">
-                        <button type="submit" class="btn btn-primary btn-lighter px-5 mt-4" xpc-loading-button>
-                            @if (Model.EditedObjectID is Guid)
-                            {
-                                <text>Update your question</text>
-                            }
-                            else
-                            {
-                                <text>Submit your question</text>
-                            }
+            <div class="accordion mb-2" id="questionFormAccordion" x-data='@JSEncoder.EncodeToJson(model)'
+                x-init="allTags = window.allTags">
+                <div class="accordion-item">
+                    <span class="accordion-header" id="headingTags">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTags" aria-expanded="false" aria-controls="collapseTags">
+                            Tags (<span x-text="selectedTags.length">@Model.SelectedTagsCount</span>)
                         </button>
-
-                        @if (Model.EditedObjectID is Guid questionID)
-                        {
-                            <button type="button" class="btn btn-outline-warning px-5 mt-4" hx-get
-                                hx-controller="QAndAQuestionPage" hx-action="DisplayQuestionDetail"
-                                hx-route-questionID="@questionID" hx-swap="outerHTML" hx-target="@rootElIdSelector"
-                                hx-trigger="cancelReady" hx-disabled-elt="closest fieldset" cancel-button>
-                                Cancel
-                            </button>
-                        }
+                    </span>
+                    <div id="collapseTags" class="accordion-collapse collapse" aria-labelledby="headingTags"
+                        data-bs-parent="#questionFormAccordion">
+                        <div class="accordion-body"
+                            style="--bs-accordion-body-padding-x: 1rem; --bs-accordion-body-padding-y: 1rem;">
+                            <partial name="~/Features/QAndA/Components/Form/_Tags.cshtml" model="@Model" />
+                        </div>
                     </div>
-                </fieldset>
+                </div>
+            </div>
 
-                <script type="module">
-                    asyncReady(async () => {
-                        const qanda = await import('@ClientAssets.ViteAssetPath("js/q-and-a.js")');
+            <div class="row mb-3">
+                <div class="col-12">
+                    <label asp-for="Title" class="form-label mt-3"></label>
+                    <input type="text" class="form-control" asp-for="Title"
+                        placeholder="Enter a short title to describe your question." />
+                </div>
+            </div>
+            <label asp-for="Content" class="form-label"></label>
+            <div id="@editorID" class="border border-1 border-dark-subtle rounded-2 milkdown-container mb-2">
+                <textarea class="form-control d-none field-sizing-content h-100 border-0" asp-for="Content"
+                    style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;" name="Content"
+                    placeholder="Your full question description goes here"></textarea>
+            </div>
+            <div class="row">
+                @Model.FormHelpMessageHTML
+            </div>
+            <div class="form-check form-switch align-self-end" x-data="{ mode: 'editor' }">
+                <input class="form-check-input" type="checkbox" role="switch" id="viewMarkdown" @@change="toggleEditor">
+                <label class="form-check-label" for="viewMarkdown">View markdown</label>
+            </div>
 
-                        qanda.initQAndA({
-                            editorElemID: '@editorID',
-                            formType: 'Question'
-                        });
-                    });
-                </script>
-            </form>
-        </div>
-    </div>
+            <div class="d-grid">
+                <input asp-for="EditedObjectID">
+                <button type="submit" class="btn btn-primary btn-lighter px-5 mt-4" xpc-loading-button>
+                    @if (Model.EditedObjectID is Guid)
+                    {
+                        <text>Update your question</text>
+                    }
+                    else
+                    {
+                        <text>Submit your question</text>
+                    }
+                </button>
+
+                @if (Model.EditedObjectID is Guid questionID)
+                {
+                    <button type="button" class="btn btn-outline-warning px-5 mt-4" hx-get hx-controller="QAndAQuestionPage"
+                        hx-action="DisplayQuestionDetail" hx-route-questionID="@questionID" hx-swap="outerHTML"
+                        hx-target="@rootElIdSelector" hx-trigger="cancelReady" hx-disabled-elt="closest fieldset"
+                        cancel-button>
+                        Cancel
+                    </button>
+                }
+            </div>
+        </fieldset>
+
+        <script>
+            window.allTags = @JSEncoder.EncodeToJson(allTags);
+        </script>
+
+        <script type="module">
+            asyncReady(async () => {
+                const qanda = await import('@ClientAssets.ViteAssetPath("js/q-and-a.js")');
+
+                qanda.initQAndA({
+                    editorElemID: '@editorID',
+                    formType: 'Question'
+                });
+            });
+        </script>
+    </form>
 </div>

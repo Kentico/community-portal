@@ -11,13 +11,18 @@ import Alert from "bootstrap/js/dist/alert";
 import Tab from "bootstrap/js/dist/tab";
 
 export default function setup() {
+  bindBootstrapComponents();
+  bindToastComponent();
+}
+
+function bindBootstrapComponents() {
   document
     .querySelectorAll("[data-bs-toggle='tooltip']")
     .forEach((el) => new Tooltip(el));
 
   document
-    .querySelectorAll("[data-bs-toggle='collapse']")
-    .forEach((el) => new Collapse(el));
+    .querySelectorAll("[data-bs-toggle-collapse]")
+    .forEach((el) => new Collapse(el, { toggle: false }));
 
   document
     .querySelectorAll("[data-bs-toggle='dropdown']")
@@ -28,21 +33,58 @@ export default function setup() {
     .forEach((el) => new Tab(el));
 
   document.querySelectorAll(".alert").forEach((el) => new Alert(el));
+}
 
-  const toastEl = document.querySelector("[data-error-toast]");
+function bindToastComponent() {
+  document
+    .querySelectorAll(".toast")
+    .forEach((toastEl) => new Toast(toastEl, { autohide: true, delay: 1000 }));
 
-  if (toastEl) {
-    const toast = new Toast(toastEl);
+  document.body.addEventListener("showToast", function (evt) {
+    if (!(evt.target instanceof HTMLElement)) {
+      return;
+    }
 
-    document.addEventListener("htmx:beforeSwap", function (evt) {
-      if (evt.detail.xhr.status === 500) {
-        evt.detail.shouldSwap = false;
-        evt.detail.isError = true;
-      }
+    const toastContainerEl = document.querySelector("#toastContainer");
+    if (!(toastContainerEl instanceof HTMLElement)) {
+      return;
+    }
+
+    const toastEl = toastContainerEl.querySelector("[toast]");
+    if (!(toastEl instanceof HTMLElement)) {
+      return;
+    }
+
+    const toastCloneEl = toastEl.cloneNode(true);
+    if (!(toastCloneEl instanceof HTMLElement)) {
+      return;
+    }
+
+    const messageEl = toastCloneEl.querySelector("[toast-message]");
+    if (!(messageEl instanceof HTMLElement)) {
+      return;
+    }
+
+    messageEl.innerText = evt.detail.message;
+    toastCloneEl.classList.add(
+      evt.detail.status === "failure" ? "text-bg-danger" : "text-bg-success",
+    );
+    const toast = new Toast(toastCloneEl, {});
+    toast.show();
+    toastContainerEl.insertAdjacentElement("beforeend", toastCloneEl);
+    toastCloneEl.addEventListener("hidden.bs.toast", (e) => {
+      toastCloneEl.remove();
     });
+  });
 
-    document.addEventListener("htmx:responseError", function handleError(e) {
-      toast.show();
-    });
-  }
+  document.addEventListener("htmx:responseError", function handleError(e) {
+    document.body.dispatchEvent(
+      new CustomEvent("showToast", {
+        detail: {
+          message: "There was an error processing your request",
+          status: "failure",
+        },
+      }),
+    );
+  });
 }

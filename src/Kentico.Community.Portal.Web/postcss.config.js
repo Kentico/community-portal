@@ -24,6 +24,9 @@ const config = ({ env }) => ({
             "error-hero",
             // HTMX dynamic classes
             "htmx-request",
+            // bootstrap form validation
+            "is-valid",
+            "is-invalid",
           ],
           greedy: [
             // Bootstrap forms

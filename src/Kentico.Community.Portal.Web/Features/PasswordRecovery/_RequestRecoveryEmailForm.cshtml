@@ -1,21 +1,19 @@
 @model Kentico.Community.Portal.Web.Features.PasswordRecovery.RequestRecoveryEmailViewModel
 
-<form id="RequestRecoveryEmail" method="post" hx-swap="outerHTML" hx-post hx-controller="PasswordRecovery"
-    hx-action="RequestRecoveryEmail" hx-disabled-elt="find fieldset" test-id="RequestRecoveryEmail">
+<form id="RequestRecoveryEmail" method="post" class="needs-validation" hx-swap="outerHTML" hx-post
+    hx-controller="PasswordRecovery" hx-action="RequestRecoveryEmail" hx-disabled-elt="find fieldset"
+    test-id="RequestRecoveryEmail">
     <fieldset hx-indicator="this">
-        <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger validation-summary"></div>
 
-        <div class="form-group">
-            <div class="editing-form-label-cell">
-                <label asp-for="Email" class="control-label form-label mt-3"></label>
-            </div>
-            <div class="editing-form-value-cell">
-                <input asp-for="Email" class="form-control" test-id="email">
-                <span asp-validation-for="Email" class="text-danger field-validation-error"></span>
-            </div>
+        <div class="mb-4">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control rounded-4" test-id="email">
+            <span asp-validation-for="Email" class="invalid-feedback"></span>
         </div>
-        <button type="submit" class="btn btn-primary mt-3" xpc-loading-button>
-            Send password recovery email
+
+        <button type="submit" class="btn btn-primary w-100" xpc-loading-button>
+            Reset password
         </button>
     </fieldset>
 

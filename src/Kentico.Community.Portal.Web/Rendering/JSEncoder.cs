@@ -23,7 +23,7 @@ public interface IJSEncoder
     ///     item: '@JSEncoder.Encode("item's")'
     /// };
     /// </example>
-    string Encode(string value);
+    public string Encode(string value);
 
     /// <summary>
     /// Encodes and serializes the given value to a valid JSON value
@@ -41,7 +41,7 @@ public interface IJSEncoder
     /// 
     /// &lt;div class='@JSEncoder.LocalizeToJson("CLASS")'&gt;...&lt;/div&gt;
     /// </example>
-    IHtmlContent EncodeToJson(object value);
+    public IHtmlContent EncodeToJson(object value);
 }
 
 public class JSEncoder(IJsonHelper helper) : IJSEncoder

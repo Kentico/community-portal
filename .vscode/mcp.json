@@ -1,17 +1,3 @@
 {
-  "servers": {
-    "mssql-mcp-node": {
-      "command": "npx",
-      "args": ["-y", "mssql-mcp-node"],
-      "env": {
-        "MSSQL_SERVER": "localhost",
-        "MSSQL_PORT": "1433",
-        "MSSQL_USER": "sa",
-        "MSSQL_PASSWORD": "Pass@12345",
-        "MSSQL_DATABASE": "Kentico.Community",
-        "MSSQL_ENCRYPT": "false",
-        "MSSQL_TRUST_SERVER_CERTIFICATE": "true"
-      }
-    }
-  }
+  "servers": {}
 }

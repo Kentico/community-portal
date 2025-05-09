@@ -134,8 +134,9 @@ $container-max-widths: (
 $border-radius: 1rem !default;
 $border-radius-lg: 1.5rem !default;
 
-$font-family-sans-serif: "GT Walsheim Pro", Roboto, "Helvetica Neue", Arial,
-  "Noto Sans", "Liberation Sans", sans-serif !default;
+$font-family-sans-serif:
+  "GT Walsheim Pro", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+  "Liberation Sans", sans-serif !default;
 
 $font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
 
@@ -282,6 +283,9 @@ $accordion-border-color: $gray-200 !default;
 
 $accordion-button-color: inherit !default;
 $accordion-button-bg: $accordion-bg !default;
+
+$accordion-button-padding-y: 0.5rem;
+$accordion-button-padding-x: 1.5rem;
 
 $accordion-button-active-bg: $accordion-bg !default;
 $accordion-button-active-color: inherit !default;

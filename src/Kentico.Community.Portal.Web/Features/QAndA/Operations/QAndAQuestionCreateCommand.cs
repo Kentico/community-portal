@@ -3,6 +3,7 @@ using CMS.ContentEngine;
 using CMS.DataEngine;
 using CMS.Membership;
 using Kentico.Community.Portal.Core;
+using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
@@ -16,14 +17,16 @@ public record QAndAQuestionCreateCommand(
     string QuestionTitle,
     string QuestionContent,
     Guid DiscussionTypeTagIdentifier,
-    IEnumerable<TagReference> DXTopics,
+    IEnumerable<Guid> DXTopics,
     Maybe<BlogPostPage> LinkedBlogPost) : ICommand<Result<int>>;
 public class QAndAQuestionCreateCommandHandler(
     WebPageCommandTools tools,
     IInfoProvider<UserInfo> users,
+    ITaxonomyRetriever taxonomyRetriever,
     ISystemClock clock) : WebPageCommandHandler<QAndAQuestionCreateCommand, Result<int>>(tools)
 {
     private readonly IInfoProvider<UserInfo> users = users;
+    private readonly ITaxonomyRetriever taxonomyRetriever = taxonomyRetriever;
     private readonly ISystemClock clock = clock;
 
     public override async Task<Result<int>> Handle(QAndAQuestionCreateCommand request, CancellationToken cancellationToken)
@@ -35,6 +38,12 @@ public class QAndAQuestionCreateCommandHandler(
         string filteredTitle = QandAContentParser.Alphanumeric(request.QuestionTitle);
         string uniqueID = Guid.NewGuid().ToString("N");
         string displayName = $"{filteredTitle[..Math.Min(91, filteredTitle.Length)]}-{uniqueID[..8]}";
+        var dxTaxonomy = await taxonomyRetriever.RetrieveTaxonomy(SystemTaxonomies.DXTopicTaxonomy.CodeName, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
+        var validTags = dxTaxonomy
+            .Tags
+            .Where(t => request.DXTopics.Contains(t.Identifier))
+            .Select(t => new TagReference() { Identifier = t.Identifier })
+            .ToList();
         var now = clock.UtcNow;
 
         var itemData = new ContentItemData(new Dictionary<string, object>
@@ -50,9 +59,7 @@ public class QAndAQuestionCreateCommandHandler(
                 nameof(QAndAQuestionPage.QAndAQuestionPageDiscussionType),
                 JsonSerializer.Serialize<IEnumerable<TagReference>>([new() { Identifier = request.DiscussionTypeTagIdentifier }])
             },
-            {
-                nameof(QAndAQuestionPage.QAndAQuestionPageDXTopics), JsonSerializer.Serialize(request.DXTopics)
-            }
+            { nameof(QAndAQuestionPage.QAndAQuestionPageDXTopics), JsonSerializer.Serialize(validTags) }
         });
         request.LinkedBlogPost
             .Execute(post =>

@@ -6,44 +6,47 @@
     var templateModel = Model.GetTemplateModel<QAndANewQuestionPage>();
 }
 
-@if (User.Identity is { IsAuthenticated: true })
-{
-    <vc:page-heading page="templateModel" />
-}
-else
-{
-    <div class="c-section default">
-        <div class="container">
-            <h1 class="text-center">Want to ask or answer a question?</h1>
-            <h2 class="text-center">Please login</h2>
-            <p class="text-center mt-5">
-                To post new question, you have to
-                <a asp-controller="Authentication" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">login
-                    first</a>.
-            </p>
-        </div>
-    </div>
-}
-
-<main>
+<main class="py-4 py-md-5">
     <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"
         widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
-
+    
     @if (User.Identity is { IsAuthenticated: true })
     {
-        <section class="c-section">
+        <vc:page-heading page="templateModel" />
+        
+        <section>
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-xl-10 col-xxl-9">
-                        <div role="main">
-
-                            <vc:q-and-a-question-form />
-
-                        </div>
+                        <vc:q-and-a-question-form />
                     </div>
                 </div>
             </div>
         </section>
+    }
+    else
+    {
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-10 col-xxl-9">
+                    <header class="text-center mb-4">
+                        <h1 class="k-dot">Want to ask or answer a question?</h1>
+                    </header>
+
+                    <div class="row g-0 border rounded-4 overflow-hidden">
+                        <div class="col-md-6 mx-auto">
+                            <div class="p-4 p-lg-5 text-center">
+                                <h2 class="mb-4">Please sign in</h2>
+                                <p class="mb-4">To post a new question, you need to sign in to your account first.</p>
+                                <a asp-controller="Authentication" asp-action="Login" 
+                                   asp-route-returnUrl="@Context.Request.Path" 
+                                   class="btn btn-primary">Sign in</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
 
     <editable-area area-identifier="bottom" allow-widget-output-cache="View.CacheEnabled"
