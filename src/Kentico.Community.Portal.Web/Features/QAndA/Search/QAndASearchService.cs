@@ -31,7 +31,9 @@ public class QAndASearchRequest
             ? queryValues.ToString()
             : "";
         SortBy = query.TryGetValue("sortBy", out var sortByValues)
-            ? sortByValues.ToString()
+            ? sortByValues.TryFirst().TryGetValue(out string? sortBy)
+                ? sortBy
+                : "activitydate"
             : "activitydate";
         PageNumber = query.TryGetValue("page", out var pageValues)
             ? int.TryParse(pageValues, out int p)

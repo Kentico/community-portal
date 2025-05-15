@@ -3,11 +3,11 @@
 
 @model QAndASearchViewModel
 
-@foreach (var question in Model.Questions)
+@foreach (var discussion in Model.Discussions)
 {
-    <div class="c-card question default-border overflow-y-auto d-grid @(question.HasAcceptedResponse ? "success" : "")">
+    <div class="c-card question default-border overflow-y-auto d-grid @(discussion.HasAcceptedResponse ? "success" : "")">
         <div class="c-card_content">
-            @if (question.HasAcceptedResponse)
+            @if (discussion.HasAcceptedResponse)
             {
                 <div class="fs-sm-4 text-success mb-1">
                     <svg class="c-icon mt-1 me-2 ">
@@ -17,28 +17,42 @@
             }
             <div class="c-card_title">
                 <h3 class="h3 mb-1">
-                    <a href="@question.LinkPath" rel="nofollow">@question.Title</a>
+                    <a href="@discussion.LinkPath" rel="nofollow">@discussion.Title</a>
                 </h3>
             </div>
 
             <div class="mb-2 d-none d-sm-block">
-                <vc:author author="question.Author" />
-                <small>Discussion created<br> @question.DateCreated.ToString("d", View.Culture)
-                    @question.DateCreated.ToString("t")<br></small>
+                <vc:author author="discussion.Author" />
+                <small>Discussion created<br> @discussion.DateCreated.ToString("d", View.Culture)
+                    @discussion.DateCreated.ToString("t")<br></small>
             </div>
+
+            @if (discussion.Tags.Count > 0)
+            {
+                <div class="c-card_tags d-flex align-items-end mt-2">
+                    <div class="c-group tags">
+                        @foreach (string tag in discussion.Tags)
+                        {
+                            <span class="c-tag secondary invert" title="Topic - @tag" aria-label="Topic - @tag">
+                                @tag
+                            </span>
+                        }
+                    </div>
+                </div>
+            }
         </div>
         <div class="c-card_footer">
             <div class="mb-2 d-sm-none">
-                <vc:author author="question.Author" />
-                <small>Discussion created<br> @question.DateCreated.ToString("d", View.Culture)
-                    @question.DateCreated.ToString("t")<br></small>
+                <vc:author author="discussion.Author" />
+                <small>Discussion created<br> @discussion.DateCreated.ToString("d", View.Culture)
+                    @discussion.DateCreated.ToString("t")<br></small>
             </div>
             <div class="text-end text-sm-center">
-                <span class="fs-4 fs-sm-1 text-secondary fw-bold lh-sm">@question.ResponseCount</span>
+                <span class="fs-4 fs-sm-1 text-secondary fw-bold lh-sm">@discussion.ResponseCount</span>
                 <br class="d-none d-sm-block">
                 <span class="fs-4 fs-sm-6">
                     @{
-                        string text = question.ResponseCount switch
+                        string text = discussion.ResponseCount switch
                         {
                             0 or > 1 => "Responses",
                             1 => "Response",
@@ -48,12 +62,12 @@
                     }
                 </span>
 
-                @if (question.ResponseCount > 0)
+                @if (discussion.ResponseCount > 0)
                 {
                     <div>
                         <small>Latest response
-                            <br>@question.LatestResponseDate.ToString("d", View.Culture)
-                            @question.LatestResponseDate.ToString("t")
+                            <br>@discussion.LatestResponseDate.ToString("d", View.Culture)
+                            @discussion.LatestResponseDate.ToString("t")
                         </small>
                     </div>
                 }
@@ -62,11 +76,22 @@
     </div>
 }
 
-@if (Model.Questions.Count == 0 && Model.TotalPages == 0)
+@if (Model.Discussions.Count == 0 && Model.TotalPages == 0)
 {
-    <div>
+    <div class="d-flex justify-content-center mt-5">
         <p>No results could be found.</p>
     </div>
 }
 
 <vc:pagination model="Model" />
+
+<script type="module">
+    asyncReady(async () => {
+        const path = @JSEncoder.EncodeToJson(ClientAssets.ViteAssetPath("js/search.js"));
+        const search = await import(path);
+
+        search.initSearch({
+            formElemID: 'search'
+        });
+    });
+</script>

@@ -19,7 +19,12 @@ public class TaxonomyTag
         NormalizedName = RegexTools.AlphanumericRegex().Replace(tag.Name, "").ToLowerInvariant();
         DisplayName = tag.Title;
         Children = tagsByParentID.TryGetValue(tag.ID, out var children)
-            ? children.Select(t => new TaxonomyTag(t, tagsByParentID)).OrderBy(t => t.DisplayName).ToList()
+            ? children
+                .Select(t => new TaxonomyTag(t, tagsByParentID))
+                .If(string.Equals(tag.Name, "Refreshes", StringComparison.OrdinalIgnoreCase),
+                    tags => tags.OrderByDescending(x => x.DisplayName),
+                    tags => tags.OrderBy(t => t.DisplayName))
+                .ToList()
             : [];
     }
 }

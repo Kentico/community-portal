@@ -45,4 +45,39 @@ export function initSearch({ formElemID }) {
       }
     });
   }
+
+  const selectEls = [...formEl.querySelectorAll(`[select-field]`)];
+  for (const selectEl of selectEls) {
+    selectEl.addEventListener("change", (e) => {
+      if (!(e.target instanceof HTMLSelectElement)) {
+        return;
+      }
+
+      const name = e.target.name;
+
+      if (e.target.hasAttribute("select-field-mobile")) {
+        /**
+         * @type {HTMLSelectElement}
+         */
+        const el = document.querySelector(
+          `[name="${name}"]:not([select-field-mobile])`,
+        );
+        if (el instanceof HTMLSelectElement) {
+          /** disable unused field to prevent double field submission */
+          el.disabled = true;
+        }
+      } else {
+        /**
+         * @type {HTMLSelectElement}
+         */
+        const el = document.querySelector(
+          `[name=${name}][select-field-mobile]`,
+        );
+        if (el instanceof HTMLSelectElement) {
+          /** disable unused field to prevent double field submission */
+          el.disabled = true;
+        }
+      }
+    });
+  }
 }

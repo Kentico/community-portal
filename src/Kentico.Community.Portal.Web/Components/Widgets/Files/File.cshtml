@@ -29,8 +29,8 @@
 }
 
 <div class="d-flex @paddingClasses @alignmentClasses" xpc-preview-outline="@Model.ComponentName">
-    <a href="@Model.File.FileContentAsset.Url" id="@Model.AnchorSlug" class="d-flex align-items-center @linkClasses"
-        aria-label="@Model.File.MediaItemShortDescription">
+    <a href="@Model.Asset.Url" id="@Model.AnchorSlug" class="d-flex align-items-center @linkClasses"
+        aria-label="@Model.ShortDescription">
         @if (Model.Design == LinkDesigns.Image)
         {
             <div class="d-flex flex-column align-items-center">

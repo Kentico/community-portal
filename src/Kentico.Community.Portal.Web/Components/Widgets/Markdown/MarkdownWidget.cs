@@ -68,21 +68,31 @@ public class MarkdownWidget(MarkdownRenderer markdownRenderer) : ViewComponent
     }
 }
 
+[FormCategory(Label = "Content", Order = 1)]
+[FormCategory(Label = "Display", Order = 3)]
 public class MarkdownWidgetProperties : BaseWidgetProperties
 {
     [MarkdownComponent(
         Label = "Markdown",
         ExplanationText = "Markdown content that will be rendered on the page as HTML",
-        Order = 1)]
+        Order = 2)]
     [TrackContentItemReference(typeof(MarkdownContentItemReferenceExtractor))]
     public string Markdown { get; set; } = "";
 
     [DropDownComponent(
         Label = "Style",
-        ExplanationText = "Sets the style of the rendered Markdown",
+        ExplanationText = """
+        <p>Sets the style of the rendered Markdown</p>
+        <ul>
+            <li>Standard - normal markdown (default)</li>
+            <li>Note - a presentational callout with special colors, size, or layout</li>
+            <li>Code - content is wrapped in a code block (deprecated - use /code tool in editor)</li>
+        </ul>
+        """,
+        ExplanationTextAsHtml = true,
         Tooltip = "Select a style",
         DataProviderType = typeof(EnumDropDownOptionsProvider<MarkdownStyles>),
-        Order = 2
+        Order = 3
     )]
     public string MarkdownStyle { get; set; } = nameof(MarkdownStyles.Standard);
     public MarkdownStyles MarkdownStyleParsed => EnumDropDownOptionsProvider<MarkdownStyles>.Parse(MarkdownStyle, MarkdownStyles.Standard);
@@ -90,7 +100,7 @@ public class MarkdownWidgetProperties : BaseWidgetProperties
     [TextInputComponent(
         Label = "Code language",
         ExplanationText = "Example: csharp, sql, html, css, typescript",
-        Order = 3)]
+        Order = 4)]
     [VisibleIfEqualTo(nameof(MarkdownStyle), nameof(MarkdownStyles.Code))]
     public string MarkdownCodeLanguage { get; set; } = "";
 }

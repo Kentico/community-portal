@@ -19,67 +19,64 @@
                 </a>
             </li>
         }
-
-        @{
-            const int maxVisiblePages = 6;
-            const int edgePages = 2;
-            var showEllipsis = Model.TotalPages > maxVisiblePages;
+ @{
+            // Always show: first, prev, current, next, last
+            var showLeftEllipsis = Model.Page > 3;
+            var showRightEllipsis = Model.Page < Model.TotalPages - 2;
         }
 
-        @if (!showEllipsis)
+        @* First Page *@
+        <li class="page-item @(Model.Page == 1 ? "active" : "")">
+            <a class="page-link" href='@(Model.Page == 1 ? "#" : Model.PageLinkPath(1, Context.Request))'>1</a>
+        </li>
+
+        @* Left ellipsis if needed *@
+        @if (showLeftEllipsis)
         {
-            @for (int pageNumber = 1; pageNumber <= Model.TotalPages; pageNumber++)
-            {
-                if (pageNumber == Model.Page)
-                {
-                    <li class="page-item active">
-                        <a href="#" class="page-link">@pageNumber</a>
-                    </li>
-                }
-                else
-                {
-                    <li class="page-item">
-                        <a class="page-link" href='@Model.PageLinkPath(pageNumber, Context.Request)'>@pageNumber</a>
-                    </li>
-                }
-            }
+            <li class="page-item disabled">
+                <span class="page-link">...</span>
+            </li>
         }
-        else
+
+        @* Previous page if not showing first page *@
+        @if (Model.Page > 2)
         {
-            @for (int pageNumber = 1; pageNumber <= edgePages && pageNumber <= Model.TotalPages; pageNumber++)
-            {
-                <li class="page-item @(pageNumber == Model.Page ? "active" : "")">
-                    <a class="page-link" href='@(pageNumber == Model.Page ? "#" : Model.PageLinkPath(pageNumber, Context.Request))'>@pageNumber</a>
-                </li>
-            }
+            <li class="page-item">
+                <a class="page-link" href='@Model.PageLinkPath(Model.Page - 1, Context.Request)'>@(Model.Page - 1)</a>
+            </li>
+        }
 
-            @if (Model.Page > edgePages + 1)
-            {
-                <li class="page-item disabled">
-                    <span class="page-link">...</span>
-                </li>
-            }
+        @* Current page (if not first or last) *@
+        @if (Model.Page > 1 && Model.Page < Model.TotalPages)
+        {
+            <li class="page-item active">
+                <a class="page-link" href="#">@Model.Page</a>
+            </li>
+        }
 
-            @if (Model.Page > edgePages && Model.Page < Model.TotalPages - edgePages + 1)
-            {
-                <li class="page-item active">
-                    <a href="#" class="page-link">@Model.Page</a>
-                </li>
-            }
+        @* Next page if not showing last page *@
+        @if (Model.Page < Model.TotalPages - 1)
+        {
+            <li class="page-item">
+                <a class="page-link" href='@Model.PageLinkPath(Model.Page + 1, Context.Request)'>@(Model.Page + 1)</a>
+            </li>
+        }
 
-            @if (Model.Page < Model.TotalPages - edgePages)
-            {
-                <li class="page-item disabled">
-                    <span class="page-link">...</span>
-                </li>
-            }
+        @* Right ellipsis if needed *@
+        @if (showRightEllipsis)
+        {
+            <li class="page-item disabled">
+                <span class="page-link">...</span>
+            </li>
+        }
 
-            @for (int pageNumber = Math.Max(Model.TotalPages - edgePages + 1, edgePages + 1); pageNumber <= Model.TotalPages; pageNumber++)
-            {
-                <li class="page-item @(pageNumber == Model.Page ? "active" : "")">
-                    <a class="page-link" href='@(pageNumber == Model.Page ? "#" : Model.PageLinkPath(pageNumber, Context.Request))'>@pageNumber</a>
-                </li>
-            }
+        @* Last Page *@
+        @if (Model.TotalPages > 1)
+        {
+            <li class="page-item @(Model.Page == Model.TotalPages ? "active" : "")">
+                <a class="page-link"
+                    href='@(Model.Page == Model.TotalPages ? "#" : Model.PageLinkPath(Model.TotalPages, Context.Request))'>@Model.TotalPages</a>
+            </li>
         }
 
         @if (Model.Page < Model.TotalPages)

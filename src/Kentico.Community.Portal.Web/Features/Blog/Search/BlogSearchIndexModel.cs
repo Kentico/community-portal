@@ -15,6 +15,7 @@ public class BlogSearchIndexModel
 {
     public const string IndexName = "BLOG_SEARCH";
 
+    public string ID { get; set; } = "";
     public string Url { get; set; } = "";
     public string Title { get; set; } = "";
     public string Content { get; set; } = "";
@@ -32,6 +33,7 @@ public class BlogSearchIndexModel
     {
         var indexDocument = new Document()
         {
+            new TextField(nameof(ID), ID, Field.Store.YES),
             new TextField(nameof(Title), Title, Field.Store.YES),
             new TextField(nameof(Content), Content, Field.Store.NO),
             new Int64Field(nameof(PublishedDate), DateTools.TicksToUnixTimeMilliseconds(PublishedDate.Ticks), Field.Store.YES),
@@ -62,6 +64,7 @@ public class BlogSearchIndexModel
 
         var model = new BlogSearchIndexModel
         {
+            ID = doc.Get(nameof(ID)),
             Url = doc.Get(nameof(Url)),
             Title = doc.Get(nameof(Title)),
             ShortDescription = doc.Get(nameof(ShortDescription)),
@@ -120,8 +123,10 @@ public partial class BlogSearchIndexingStrategy(
             return null;
         }
 
-        var indexModel = new BlogSearchIndexModel();
-
+        var indexModel = new BlogSearchIndexModel
+        {
+            ID = page.SystemFields.WebPageItemGUID.ToString("N")
+        };
         page
             .BlogPostPageAuthorContent
             .TryFirst()

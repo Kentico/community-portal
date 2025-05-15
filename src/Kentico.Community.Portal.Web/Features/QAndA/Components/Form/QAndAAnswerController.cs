@@ -166,7 +166,7 @@ public class QAndAAnswerController(
             return Forbid();
         }
 
-        if (parentQuestionPage.QAndAQuestionPageAcceptedAnswerDataGUID != default)
+        if (!(parentQuestionPage.QAndAQuestionPageAcceptedAnswerDataGUID == default || canManageContent))
         {
             return Forbid();
         }

@@ -1,5 +1,4 @@
 ﻿using CMS.ContentEngine;
-using CMS.Core;
 using CMS.Helpers;
 using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core;
@@ -13,14 +12,12 @@ public class SitemapRetriever(
     IWebPageUrlRetriever urlRetriever,
     IWebsiteChannelContext website,
     IContentQueryExecutor executor,
-    IConversionService conversion,
     ISystemClock clock)
 {
     private readonly IProgressiveCache cache = cache;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
     private readonly IWebsiteChannelContext website = website;
     private readonly IContentQueryExecutor executor = executor;
-    private readonly IConversionService conversion = conversion;
     private readonly ISystemClock clock = clock;
 
     private static readonly string[] contentTypeDependencies =

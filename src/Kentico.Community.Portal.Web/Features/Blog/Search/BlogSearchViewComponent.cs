@@ -29,7 +29,7 @@ public class BlogSearchViewModel : IPagedViewModel
     public string? Query { get; }
     public string SortBy { get; }
     public IReadOnlyList<FacetGroup> DXTopics { get; }
-    public int DXTopicsSelected { get; }
+    public int DXTopicsSelectedCount { get; }
     public IReadOnlyList<FacetOption> BlogTypes { get; }
     public int BlogTypesSelected { get; }
     public int TotalAppliedFilters { get; }
@@ -89,7 +89,7 @@ public class BlogSearchViewModel : IPagedViewModel
             .OrderBy(f => f.Label)];
         BlogTypesSelected = BlogTypes.Count(t => t.IsSelected);
         DXTopics = BuildGroups(taxonomies.DXTopicsHierarchy, result, request).ToList();
-        DXTopicsSelected = DXTopics.Sum(g => g.Count);
+        DXTopicsSelectedCount = DXTopics.Sum(g => g.Count);
         TotalAppliedFilters = BlogTypes.Count(t => t.IsSelected) + DXTopics.Sum(t => t.Count);
         TotalPages = result?.TotalPages ?? 0;
 
@@ -115,8 +115,7 @@ public class BlogSearchViewModel : IPagedViewModel
                             IsSelected = request
                                 .DXTopics
                                 .Contains(x.NormalizedName, StringComparer.OrdinalIgnoreCase)
-                        })
-                        .If(string.Equals(parent.NormalizedName, "Refreshes", StringComparison.OrdinalIgnoreCase), fs => fs.OrderByDescending(x => x.Label))],
+                        })]
                 };
             }
         }
@@ -125,6 +124,7 @@ public class BlogSearchViewModel : IPagedViewModel
 
 public class BlogPostSearchResultViewModel
 {
+    public string ID { get; }
     public string Title { get; } = "";
     public DateTime Date { get; }
     public BlogPostAuthorViewModel Author { get; }
@@ -142,6 +142,7 @@ public class BlogPostSearchResultViewModel
             Photo = Maybe.From(model.AuthorAvatarImage!).Map(i => i.ToImageViewModel()),
         };
 
+        ID = model.ID;
         Title = model.Title;
         Date = model.PublishedDate;
         LinkPath = model.Url;

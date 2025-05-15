@@ -4,6 +4,7 @@ using Kentico.Community.Portal.Web.Components.Widgets.CookiePreferences;
 using Kentico.Community.Portal.Web.Components.Widgets.CTAButton;
 using Kentico.Community.Portal.Web.Components.Widgets.Embed;
 using Kentico.Community.Portal.Web.Components.Widgets.FallbackForm;
+using Kentico.Community.Portal.Web.Components.Widgets.Files;
 using Kentico.Community.Portal.Web.Components.Widgets.Heading;
 using Kentico.Community.Portal.Web.Components.Widgets.Image;
 using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
@@ -22,6 +23,7 @@ public static class WidgetIdentifiers
     public const string ContactDetailsCard = ContactDetailsCardWidget.IDENTIFIER;
     public const string CookiePreferences = CookiePreferencesWidget.IDENTIFIER;
     public const string CTAButton = CTAButtonWidget.IDENTIFIER;
+    public const string File = FileWidget.IDENTIFIER;
     public const string Heading = HeadingWidget.IDENTIFIER;
     public const string Image = ImageWidget.IDENTIFIER;
     public const string Licenses = LicensesWidget.IDENTIFIER;

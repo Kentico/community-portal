@@ -3,45 +3,37 @@
 
 @model QAndASearchViewModel
 
-@{
-    string formID = "qAndASearchForm";
-}
+<div class="container mb-5">
+    <form id="search" method="get" hx-get="/q-and-a" hx-swap="outerHTML" hx-select="#results" hx-target="#results"
+        hx-push-url="true" hx-trigger="submit" hx-select-oob="#filters">
+        <fieldset class="grid">
+            <input asp-for="@Model.Page" />
+            <partial name="~/Features/QAndA/Search/_Filters.cshtml" model="Model" />
 
-<section class="c-section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-sm-6 col-md-4">
-                <a href="/q-and-a/new-question" rel="nofollow" class="btn btn-outline-primary w-100 d-inline-block">
-                    <svg class="c-icon me-1">
-                        <use xlink:href="/img/icons.svg#plus-circle" asp-append-version></use>
-                    </svg>
-                    <span class="text-uppercase">New question</span>
-                </a>
-            </div>
-        </div>
+            <section id="results" class="g-col-12 g-col-lg-9 d-flex flex-column gap-4">
+                <div class="d-flex align-items-center gap-4 flex-wrap flex-lg-nowrap">
+                    <div class="d-lg-none w-100">
+                        <a href="/q-and-a/new-question" rel="nofollow"
+                            class="btn btn-outline-primary w-100 d-inline-block">
+                            <svg class="c-icon me-1">
+                                <use xlink:href="/img/icons.svg#plus-circle" asp-append-version></use>
+                            </svg>
+                            <span class="text-uppercase">New discussion</span>
+                        </a>
+                    </div>
 
-        <form id="@formID" class="mt-3" method="get" hx-get="/q-and-a" hx-swap="outerHTML" hx-select="#@formID"
-            hx-push-url="true" hx-trigger="change from:input[type='checkbox'], change from:select, submit">
-            <fieldset class="grid">
-                <partial name="~/Features/QAndA/Search/_Filters.cshtml" model="Model" />
+                    <div class="d-flex flex-lg-row flex-column gap-2 w-100">
+                        <input asp-for="Query" type="search" class="form-control search rounded-pill flex-grow-1"
+                            placeholder="Search by tag, name or phrase" aria-label="Search"
+                            aria-describedby="submitSearch">
+                        <button class="btn btn-primary text-uppercase" type="submit" id="submitSearch">Search</button>
+                    </div>
 
-                <div class="g-col-12 g-col-lg-9 d-flex flex-column gap-2">
                     <partial name="~/Features/QAndA/Search/_FiltersMobile.cshtml" model="Model" />
-
-                    <partial name="~/Features/QAndA/Search/_Results.cshtml" model="Model" />
                 </div>
-            </fieldset>
 
-            <script type="module">
-                asyncReady(async () => {
-                    const path = @JSEncoder.EncodeToJson(ClientAssets.ViteAssetPath("js/search.js"));
-                    const search = await import(path);
-
-                    search.initSearch({
-                        formElemID: '@formID'
-                    });
-                });
-            </script>
-        </form>
-    </div>
-</section>
+                <partial name="~/Features/QAndA/Search/_Results.cshtml" model="Model" />
+            </section>
+        </fieldset>
+    </form>
+</div>

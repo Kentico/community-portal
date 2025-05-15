@@ -27,7 +27,9 @@ public class BlogSearchRequest
             ? queryValues.ToString()
             : "";
         SortBy = query.TryGetValue("sortBy", out var sortByValues)
-            ? sortByValues.ToString()
+            ? sortByValues.TryFirst().TryGetValue(out string? sortBy)
+                ? sortBy
+                : "publishdate"
             : "publishdate";
         PageNumber = query.TryGetValue("page", out var pageValues)
             ? int.TryParse(pageValues, out int p)

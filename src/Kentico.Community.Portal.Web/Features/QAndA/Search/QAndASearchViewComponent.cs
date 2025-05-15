@@ -23,12 +23,12 @@ public class QAndASearchViewComponent(
         var request = new QAndASearchRequest(HttpContext.Request);
 
         var searchResult = searchService.SearchQAndA(request);
-        var viewModels = searchResult.Hits.Select(QAndAPostViewModel.GetModel).ToList();
         var taxonomies = await mediator.Send(new QAndATaxonomiesQuery());
+        var discussions = searchResult.Hits.Select(h => new QAndADiscussionViewModel(h)).ToList();
 
-        viewModels = await memberBadgeService.AddSelectedBadgesToQAndA(viewModels);
+        discussions = await memberBadgeService.AddSelectedBadgesToQAndA(discussions);
 
-        var vm = new QAndASearchViewModel(request, searchResult, viewModels, taxonomies);
+        var vm = new QAndASearchViewModel(request, searchResult, discussions, taxonomies);
 
         return View("~/Features/QAndA/Search/QAndASearch.cshtml", vm);
     }
@@ -38,14 +38,13 @@ public class QAndASearchViewModel : IPagedViewModel
 {
     public string Query { get; } = "";
     public string SortBy { get; } = "";
-    public IReadOnlyList<QAndAPostViewModel> Questions { get; }
+    public IReadOnlyList<QAndADiscussionViewModel> Discussions { get; }
     public IReadOnlyList<FacetOption> DiscussionTypes { get; }
     public int DiscussionTypesSelected { get; }
     public IReadOnlyList<FacetGroup> DXTopics { get; }
-    public int DXTopicsSelected { get; }
+    public int DXTopicsSelectedCount { get; }
     public IReadOnlyList<FacetOption> DiscussionStates { get; }
     public int DiscussionStatesSelected { get; }
-    public DiscussionStates DiscussionState { get; }
     public int TotalAppliedFilters { get; }
     public int TotalPages { get; set; }
     [HiddenInput]
@@ -78,15 +77,17 @@ public class QAndASearchViewModel : IPagedViewModel
         return routeData;
     }
 
-    public QAndASearchViewModel(QAndASearchRequest request, QAndASearchResult result, List<QAndAPostViewModel> viewModels, QAndATaxonomiesQueryResponse taxonomies)
+    public QAndASearchViewModel(QAndASearchRequest request, QAndASearchResult result, List<QAndADiscussionViewModel> discussions, QAndATaxonomiesQueryResponse taxonomies)
     {
-        Questions = viewModels;
+        Discussions = discussions;
         Page = request.PageNumber;
         SortBy = request.SortBy;
         Query = request.SearchText;
         TotalPages = result.TotalPages;
-        DXTopics = BuildGroups(taxonomies.DXTopicsHierarchy, result, request).ToList();
-        DXTopicsSelected = DXTopics.Sum(g => g.Count);
+
+        DXTopics = [.. BuildGroups(taxonomies.DXTopicsHierarchy, result, request)];
+        DXTopicsSelectedCount = DXTopics.TryFirst().Map(t => t.Facets.Count).GetValueOrDefault();
+
         DiscussionTypes = [.. taxonomies.Types
             .Select(x => new FacetOption()
             {
@@ -115,60 +116,89 @@ public class QAndASearchViewModel : IPagedViewModel
             })
             .OrderBy(f => f.Label)];
         DiscussionStatesSelected = DiscussionStates.Count(t => t.IsSelected);
-        TotalAppliedFilters = DXTopics.Sum(t => t.Count) + DiscussionTypes.Count(t => t.IsSelected);
+        TotalAppliedFilters = DXTopicsSelectedCount + DiscussionTypes.Count(t => t.IsSelected);
 
         IEnumerable<FacetGroup> BuildGroups(IReadOnlyList<TaxonomyTag> parentTags, QAndASearchResult results, QAndASearchRequest request)
         {
+            // First, create a group for selected topics
+            var selectedTopics = parentTags
+                .SelectMany(p => p.Children)
+                .Where(c => request.DXTopics.Contains(c.NormalizedName, StringComparer.OrdinalIgnoreCase))
+                .Select(x => new FacetOption()
+                {
+                    Label = x.DisplayName,
+                    Value = x.NormalizedName,
+                    Count = (int)Math.Round(result.DXTopics
+                        .FirstOrDefault(t => t.Label.Equals(x.NormalizedName, StringComparison.InvariantCultureIgnoreCase))
+                        ?.Value ?? 0),
+                    IsSelected = true
+                })
+                .ToList();
+
+            // Always yield the selected topics group, even if empty
+            yield return new FacetGroup()
+            {
+                Label = "Selected Topics",
+                Value = "selected-topics",
+                Count = selectedTopics.Count,
+                Facets = selectedTopics
+            };
+
+            // Then return the regular groups with unselected topics
             foreach (var parent in parentTags)
             {
-                yield return new FacetGroup()
+                var unselectedTopics = parent.Children
+                    .Where(c => !request.DXTopics.Contains(c.NormalizedName, StringComparer.OrdinalIgnoreCase))
+                    .Select(x => new FacetOption()
+                    {
+                        Label = x.DisplayName,
+                        Value = x.NormalizedName,
+                        Count = (int)Math.Round(result.DXTopics
+                            .FirstOrDefault(t => t.Label.Equals(x.NormalizedName, StringComparison.InvariantCultureIgnoreCase))
+                            ?.Value ?? 0),
+                        IsSelected = false
+                    })
+                    .ToList();
+
+                if (unselectedTopics.Count > 0)
                 {
-                    Label = parent.DisplayName,
-                    Value = parent.NormalizedName,
-                    Count = parent.Children.Count(c => request
-                        .DXTopics
-                        .Contains(c.NormalizedName, StringComparer.OrdinalIgnoreCase)),
-                    Facets = [.. parent.Children
-                        .Select(x => new FacetOption()
-                        {
-                            Label = x.DisplayName,
-                            Value = x.NormalizedName,
-                            Count = (int)Math.Round(result
-                                .DXTopics
-                                .FirstOrDefault(t => t.Label.Equals(x.NormalizedName, StringComparison.InvariantCultureIgnoreCase))?.Value ?? 0),
-                            IsSelected = request
-                                .DXTopics
-                                .Contains(x.NormalizedName, StringComparer.OrdinalIgnoreCase)
-                        })
-                        .If(string.Equals(parent.NormalizedName, "Refreshes", StringComparison.OrdinalIgnoreCase), fs => fs.OrderByDescending(x => x.Label))],
-                };
+                    yield return new FacetGroup()
+                    {
+                        Label = parent.DisplayName,
+                        Value = parent.NormalizedName,
+                        Count = 0, // Since selected topics are in their own group
+                        Facets = unselectedTopics
+                    };
+                }
             }
         }
     }
 }
 
-public class QAndAPostViewModel
+public class QAndADiscussionViewModel
 {
-    public int ID { get; set; }
-    public string Title { get; set; } = "";
-    public string LinkPath { get; set; } = "";
-    public DateTime DateCreated { get; set; }
-    public int ResponseCount { get; set; }
-    public DateTime LatestResponseDate { get; set; }
-    public bool HasAcceptedResponse { get; set; }
-    public QAndAAuthorViewModel Author { get; set; } = new();
+    public int ID { get; }
+    public string Title { get; } = "";
+    public string LinkPath { get; } = "";
+    public DateTime DateCreated { get; }
+    public int ResponseCount { get; }
+    public DateTime LatestResponseDate { get; }
+    public bool HasAcceptedResponse { get; }
+    public QAndAAuthorViewModel Author { get; } = new();
+    public IReadOnlyList<string> Tags { get; }
 
-    public static QAndAPostViewModel GetModel(QAndASearchIndexModel result) => new()
+    public QAndADiscussionViewModel(QAndASearchIndexModel result)
     {
-        Title = result.Title,
-        DateCreated = result.PublishedDate,
-        ResponseCount = result.ResponseCount,
-        LatestResponseDate = result.LatestResponseDate,
+        Title = result.Title;
+        DateCreated = result.PublishedDate;
+        ResponseCount = result.ResponseCount;
+        LatestResponseDate = result.LatestResponseDate;
         HasAcceptedResponse = Enums.TryParse<DiscussionStates>(result.DiscussionState, true, out var state)
-            && state == DiscussionStates.HasAcceptedAnswer,
-        Author = new(result.AuthorMemberID, result.AuthorFullName, result.AuthorUsername, result.AuthorAttributes),
-        LinkPath = result.Url,
-        ID = result.ID
-    };
+            && state == DiscussionStates.HasAcceptedAnswer;
+        Author = new(result.AuthorMemberID, result.AuthorFullName, result.AuthorUsername, result.AuthorAttributes);
+        LinkPath = result.Url;
+        ID = result.ID;
+        Tags = result.DXTopics;
+    }
 }
 

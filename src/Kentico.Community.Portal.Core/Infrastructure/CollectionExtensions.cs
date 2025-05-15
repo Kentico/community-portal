@@ -17,10 +17,14 @@ public static class CollectionExtensions
         enumerable.Where(e => e.HasValue).Select(e => e!.Value);
 
     [Pure]
-    public static IEnumerable<T> If<T>(this IEnumerable<T> o, bool condition, Func<IEnumerable<T>, IEnumerable<T>> projection) =>
+    public static IEnumerable<T> If<T>(this IEnumerable<T> items, bool condition,
+        Func<IEnumerable<T>, IEnumerable<T>> projectionIf,
+        Func<IEnumerable<T>, IEnumerable<T>>? projectionElse) =>
         condition
-            ? projection(o)
-            : o;
+            ? projectionIf(items)
+            : projectionElse is not null
+                ? projectionElse(items)
+                : items;
 
     [Pure]
     public static IEnumerable<T> OrderByDirection<T>(this IEnumerable<T> o, Func<T, string> keySelector, OrderByDirections orderByDirection) =>

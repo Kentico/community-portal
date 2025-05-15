@@ -2,35 +2,28 @@
 
 @model BlogSearchViewModel
 
-@{
-    string formID = "blogSearchForm";
-}
+<div class="container mb-5">
+    <form id="search" method="get" hx-get="/blog" hx-swap="outerHTML" hx-select="#results" hx-target="#results"
+        hx-push-url="true" hx-trigger="submit" hx-select-oob="#filters">
+        <fieldset class="grid">
+            <input asp-for="@Model.Page" />
+            <partial name="~/Features/Blog/Search/_Filters.cshtml" model="Model" />
 
-<div class="c-section">
-    <div class="container">
+            <section id="results" class="g-col-12 g-col-lg-9 d-flex gap-4 flex-column">
+                <div class="d-flex align-items-center gap-3 flex-wrap flex-lg-nowrap">
 
-        <form id="@formID" method="get" hx-get="/blog" hx-swap="outerHTML" hx-select="#@formID" hx-push-url="true"
-            hx-trigger="change from:input[type='checkbox'], change from:select, submit">
-            <fieldset class="grid">
-                <partial name="~/Features/Blog/Search/_Filters.cshtml" model="Model" />
+                    <div class="d-flex flex-lg-row flex-column gap-2 w-100">
+                        <input asp-for="Query" type="search" class="form-control search rounded-pill flex-grow-1"
+                            placeholder="Search by tag, name or phrase" aria-label="Search"
+                            aria-describedby="submitSearch">
+                        <button class="btn btn-primary text-uppercase" type="submit" id="submitSearch">Search</button>
+                    </div>
 
-                <div class="g-col-12 g-col-lg-9 d-flex gap-3 flex-column">
                     <partial name="~/Features/Blog/Search/_FiltersMobile.cshtml" model="Model" />
-
-                    <partial name="~/Features/Blog/Search/_Results.cshtml" model="Model" />
                 </div>
-            </fieldset>
 
-            <script type="module">
-                asyncReady(async () => {
-                    const path = @JSEncoder.EncodeToJson(ClientAssets.ViteAssetPath("js/search.js"));
-                    const search = await import(path);
-
-                    search.initSearch({
-                        formElemID: '@formID'
-                    });
-                });
-            </script>
-        </form>
-    </div>
+                <partial name="~/Features/Blog/Search/_Results.cshtml" model="Model" />
+            </section>
+        </fieldset>
+    </form>
 </div>

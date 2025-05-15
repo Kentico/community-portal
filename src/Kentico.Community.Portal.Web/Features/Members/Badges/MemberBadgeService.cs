@@ -30,7 +30,7 @@ public class MemberBadgeService(
         return [.. badgeDtos.Select(MemberBadgeViewModel.Create)];
     }
 
-    public async Task<List<QAndAPostViewModel>> AddSelectedBadgesToQAndA(List<QAndAPostViewModel> models)
+    public async Task<List<QAndADiscussionViewModel>> AddSelectedBadgesToQAndA(List<QAndADiscussionViewModel> models)
     {
         var authorIds = models.Select(x => x.Author.ID).DistinctBy(x => x);
         var badgeInfos = await GetMemberBadgesWithMediaAssets();

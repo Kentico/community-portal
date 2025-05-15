@@ -4,7 +4,7 @@
 
 @foreach (var post in Model.BlogPosts)
 {
-    <div class="c-card article nopic">
+    <div id="post-@(post.ID)" class="c-card article nopic">
         <div class="c-card_inner d-grid">
             <div class="c-card_title d-flex justify-content-between">
                 <div>
@@ -45,10 +45,10 @@
 
             <div class="c-card_tags d-flex align-items-end">
                 <div class="c-group tags">
-                    @foreach (string topic in post.DXTopics)
+                    @foreach (string tag in post.DXTopics)
                     {
-                        <span class="c-tag secondary invert" title="Topic - @topic" aria-label="Topic - @topic">
-                            @topic
+                        <span class="c-tag secondary invert" title="Topic - @tag" aria-label="Topic - @tag">
+                            @tag
                         </span>
                     }
                 </div>
@@ -60,9 +60,20 @@
 
 @if (Model.BlogPosts.Count == 0 && Model.TotalPages == 0)
 {
-    <div>
+    <div class="d-flex justify-content-center mt-5">
         <p>No results could be found.</p>
     </div>
 }
 
 <vc:pagination model="Model" />
+
+<script type="module">
+    asyncReady(async () => {
+        const path = @JSEncoder.EncodeToJson(ClientAssets.ViteAssetPath("js/search.js"));
+        const search = await import(path);
+
+        search.initSearch({
+            formElemID: 'search'
+        });
+    });
+</script>

@@ -145,8 +145,9 @@ public class QAndAQuestionPageController(
             CanDelete = canManageContent,
             CanEdit = question.QAndAQuestionPageAcceptedAnswerDataGUID != answer.QAndAAnswerDataGUID
                 && (canManageContent || currentMember?.Id == answer.QAndAAnswerDataAuthorMemberID),
-            CanMarkAnswered = (canManageContent || currentMember?.Id == question.QAndAQuestionPageAuthorMemberID)
-                && question.QAndAQuestionPageAcceptedAnswerDataGUID == default,
+            CanMarkAnswered = canManageContent ||
+                (currentMember?.Id == question.QAndAQuestionPageAuthorMemberID
+                    && question.QAndAQuestionPageAcceptedAnswerDataGUID == default),
             CanAnswer = currentMember is not null
         };
 

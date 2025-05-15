@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using CMS.ContentEngine;
 using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.Widgets.Video;
@@ -52,28 +53,44 @@ public class VideoWidget(IMediator mediator) : ViewComponent
     }
 }
 
+[FormCategory(Label = "Content", Order = 1)]
+[FormCategory(Label = "Display", Order = 3)]
 public class VideoWidgetProperties : BaseWidgetProperties
 {
     [ContentItemSelectorComponent(
         VideoContent.CONTENT_TYPE_NAME,
         Label = "Selected video",
-        Order = 1)]
+        MinimumItems = 1,
+        MaximumItems = 1,
+        AllowContentItemCreation = true,
+        Order = 2)]
     public IEnumerable<ContentItemReference> SelectedVideos { get; set; } = [];
 
     [DropDownComponent(
-        Label = "Video Alignment",
+        Label = "Alignment",
         ExplanationText = "The alignment of the video",
         Tooltip = "Select an alignment",
-        DataProviderType = typeof(EnumDropDownOptionsProvider<Alignments>),
-        Order = 2
+        DataProviderType = typeof(EnumDropDownOptionsProvider<VideoAlignments>),
+        Order = 4
     )]
-    public string VideoAlignment { get; set; } = nameof(Alignments.Left);
-    public Alignments VideoAlignmentParsed => EnumDropDownOptionsProvider<Alignments>.Parse(VideoAlignment, Alignments.Left);
+    public string VideoAlignment { get; set; } = nameof(VideoAlignments.Center);
+    public VideoAlignments VideoAlignmentParsed => EnumDropDownOptionsProvider<VideoAlignments>.Parse(VideoAlignment, VideoAlignments.Center);
+
+    [DropDownComponent(
+        Label = "Size",
+        ExplanationText = "The size of the video",
+        Tooltip = "Select a size",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<VideoSizes>),
+        Order = 5
+    )]
+    public string Size { get; set; } = nameof(VideoSizes.Full_Width);
+    public VideoSizes SizeParsed => EnumDropDownOptionsProvider<VideoSizes>.Parse(Size, VideoSizes.Full_Width);
+
 
     [CheckBoxComponent(
         Label = "Show description as caption?",
         ExplanationText = "If true, a caption will appear below the video, populated by the video's description field.",
-        Order = 3
+        Order = 6
     )]
     public bool ShowDescriptionAsCaption { get; set; } = false;
 }
@@ -83,19 +100,34 @@ public class VideoWidgetViewModel : BaseWidgetViewModel
     protected override string WidgetName { get; } = VideoWidget.NAME;
 
     public VideoContent Video { get; }
-    public Alignments Alignment { get; }
+    public VideoAlignments Alignment { get; }
+    public VideoSizes Size { get; }
     public bool ShowDescriptionAsCaption { get; }
 
     public VideoWidgetViewModel(VideoContent video, VideoWidgetProperties props)
     {
         Video = video;
         Alignment = props.VideoAlignmentParsed;
+        Size = props.SizeParsed;
         ShowDescriptionAsCaption = props.ShowDescriptionAsCaption;
     }
 };
 
-public enum Alignments
+public enum VideoAlignments
 {
     Left,
-    Center
+    Center,
+    Right
+}
+
+public enum VideoSizes
+{
+    [Description("Small")]
+    Small,
+    [Description("Medium")]
+    Medium,
+    [Description("Large")]
+    Large,
+    [Description("Full width")]
+    Full_Width,
 }

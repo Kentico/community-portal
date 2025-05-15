@@ -75,13 +75,13 @@ public class ImageWidgetProperties : BaseWidgetProperties
         DataProviderType = typeof(EnumDropDownOptionsProvider<ImageAlignments>),
         Order = 4
     )]
-    public string Alignment { get; set; } = nameof(ImageAlignments.Left);
-    public ImageAlignments AlignmentParsed => EnumDropDownOptionsProvider<ImageAlignments>.Parse(Alignment, ImageAlignments.Left);
+    public string Alignment { get; set; } = nameof(ImageAlignments.Center);
+    public ImageAlignments AlignmentParsed => EnumDropDownOptionsProvider<ImageAlignments>.Parse(Alignment, ImageAlignments.Center);
 
     [DropDownComponent(
         Label = "Image Size",
         ExplanationText = "The size of the image",
-        Tooltip = "Select an size",
+        Tooltip = "Select a size",
         DataProviderType = typeof(EnumDropDownOptionsProvider<ImageSizes>),
         Order = 5
     )]

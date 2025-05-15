@@ -3,34 +3,25 @@
 
 @model QAndASearchViewModel
 
-<div class="d-flex justify-content-md-end align-items-center gap-4 flex-wrap flex-lg-nowrap mb-3">
-    <div class="input-group">
-        <input asp-for="Query" type="text" class="form-control search rounded-pill"
-            placeholder="Search by tag, name or phrase" aria-label="Search" aria-describedby="submitSearch">
-        <button class="btn btn-primary text-uppercase" type="submit" id="submitSearch">Search</button>
-    </div>
+<button class="btn btn-outline-primary align-self-center d-lg-none text-uppercase w-100" type="button"
+    data-bs-toggle="collapse" data-bs-target="#searchFilters" aria-expanded="true" aria-controls="searchFilters">
+    Show filters @(Model.TotalAppliedFilters > 0 ? $"({Model.TotalAppliedFilters})" : "")
+</button>
 
-    <div class="justify-content-between d-flex gap-3 flex-grow-1">
-        <button class="btn btn-white align-self-center d-lg-none text-primary text-uppercase" type="button"
-            data-bs-toggle="collapse" data-bs-target="#categoryFilters" aria-expanded="true"
-            aria-controls="categoryFilters">
-            Select filters @(Model.TotalAppliedFilters > 0 ? $"({Model.TotalAppliedFilters})" : "")
-        </button>
+<div class="d-lg-none collapse w-100" id="searchFilters" data-bs-toggle-collapse>
+    <div class="d-flex flex-column gap-4">
         <div>
-            <label asp-for="@Model.SortBy" class="form-label text-nowrap mb-0">Sort by</label>
-            <select asp-for="@Model.SortBy" class="form-select form-select-sm w-auto" search-sort-by>
+            <label asp-for="@Model.SortBy" for="SortBy-mobile" class="form-label text-nowrap mb-0">Sort by</label>
+            <select asp-for="@Model.SortBy" id="SortBy-mobile" class="form-select form-select-sm w-auto" select-field
+                select-field-mobile>
                 <option value="activitydate">Latest activity</option>
                 <option value="relevance">Relevance</option>
                 <option value="publishdate">Latest question</option>
                 <option value="responsedate">Latest response</option>
             </select>
-            <input asp-for="@Model.Page" />
         </div>
-    </div>
 
-    <div class="category-filters d-lg-none collapse w-100" id="categoryFilters" data-bs-toggle-collapse>
-
-        <div class="mb-5">
+        <div>
             <h4>Type @(Model.DiscussionTypesSelected > 0 ? $"({Model.DiscussionTypesSelected})" : "")</h4>
             @foreach (var discussionType in Model.DiscussionTypes)
             {
@@ -43,20 +34,21 @@
             }
         </div>
 
-        <div class="mb-5">
+        <div>
             <h4>Answers @(Model.DiscussionStatesSelected > 0 ? $"({Model.DiscussionStatesSelected})" : "")</h4>
             @foreach (var state in Model.DiscussionStates)
             {
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="discussionStates" xpc-facet-field="state"
                         xpc-facet-field-mobile="true" />
-                    <label class="form-check-label" for="discussionStatesM-@state.Value">@state.Label (@state.Count)</label>
+                    <label class="form-check-label" for="discussionStatesM-@state.Value">@state.Label
+                        (@state.Count)</label>
                 </div>
             }
         </div>
 
         <div>
-            <h4>Topic @(Model.DXTopicsSelected > 0 ? $"({Model.DXTopicsSelected})" : "")</h4>
+            <h4>Topic @(Model.DXTopicsSelectedCount > 0 ? $"({Model.DXTopicsSelectedCount})" : "")</h4>
             @foreach (var topic in Model.DXTopics)
             {
                 <div class="mb-2">
