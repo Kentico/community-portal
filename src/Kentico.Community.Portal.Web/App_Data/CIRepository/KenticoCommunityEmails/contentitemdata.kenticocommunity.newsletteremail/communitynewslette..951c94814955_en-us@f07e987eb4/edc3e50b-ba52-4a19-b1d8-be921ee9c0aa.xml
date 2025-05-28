@@ -14,11 +14,28 @@
   <EmailPreviewText>
     <![CDATA[Check out the latest news 📰 from the Kentico community!]]>
   </EmailPreviewText>
-  <EmailSenderID>1</EmailSenderID>
+  <EmailSenderID>
+    <CodeName>no-reply</CodeName>
+    <GUID>24520bc4-cdda-401d-812a-e5a73699edac</GUID>
+    <ObjectType>emaillibrary.emailchannelsender</ObjectType>
+    <Parent>
+      <GUID>2b0fe19c-6251-455f-8233-407a1303b541</GUID>
+      <ObjectType>emaillibrary.emailchannel</ObjectType>
+      <Parent>
+        <CodeName>KenticoCommunityEmails</CodeName>
+        <GUID>1b41b848-ddd2-4a8d-9bc7-850a93e147c4</GUID>
+        <ObjectType>cms.channel</ObjectType>
+      </Parent>
+    </Parent>
+  </EmailSenderID>
   <EmailSubject>
     <![CDATA[Should you adopt AI 😇 or block it 😈? And some awesome contributions from the Kentico community]]>
   </EmailSubject>
-  <EmailTemplateID>2</EmailTemplateID>
+  <EmailTemplateID>
+    <CodeName>CommunityNewsletter</CodeName>
+    <GUID>08c12650-a0f3-4e35-ab81-fe5d5b0c51b6</GUID>
+    <ObjectType>emaillibrary.emailtemplate</ObjectType>
+  </EmailTemplateID>
   <NewsletterEmailBlogPostPages>
     <![CDATA[[{"Identifier":"923010ec-5518-4582-ac32-30b5b19950dc"},{"Identifier":"d3acf4da-ee91-4c0c-9eaa-1826d56a9988"},{"Identifier":"5778a2b1-66af-4869-807d-83c3e2082570"},{"Identifier":"c38e209a-6c60-41ca-80e1-766fad20a14b"}]]]>
   </NewsletterEmailBlogPostPages>

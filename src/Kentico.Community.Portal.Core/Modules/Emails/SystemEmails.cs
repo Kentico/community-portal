@@ -6,10 +6,14 @@ namespace Kentico.Community.Portal.Core.Modules;
 public static class SystemEmails
 {
     public static SupportRequestConfirmationEmail SupportRequestConfirmation { get; } = new();
+    public static PasswordRecoveryConfirmationEmail PasswordRecoveryConfirmation { get; } = new();
+    public static RegistrationConfirmationEmail RegistrationConfirmation { get; } = new();
 
     public static readonly ImmutableList<ISystemEmailConfiguration> ProtectedEmails =
     [
         SupportRequestConfirmation,
+        PasswordRecoveryConfirmation,
+        RegistrationConfirmation
     ];
 
     public static bool Includes(EmailConfigurationInfo config) =>
@@ -17,8 +21,28 @@ public static class SystemEmails
 
     public record SupportRequestConfirmationEmail : ISystemEmailConfiguration
     {
-        public static Guid GUID { get; } = new Guid("f8ea991c-f960-40cc-81d7-1137505c2287");
-        public const string CodeName = "SupportRequestConfirmation-qsfk6uj0";
+        public static Guid GUID { get; } = new Guid("57d3ca11-3fa9-49ab-b48e-26e7c856b33e");
+        public const string CodeName = "SupportRequestConfirmation-pu4fmsre";
+
+        public Guid EmailConfigurationGUID => GUID;
+
+        public string EmailConfigurationName => CodeName;
+    }
+
+    public record PasswordRecoveryConfirmationEmail : ISystemEmailConfiguration
+    {
+        public static Guid GUID { get; } = new Guid("5e227217-ca57-4c64-90ae-c227d8919776");
+        public const string CodeName = "MemberResetPasswordConfirmation-edclynqe";
+
+        public Guid EmailConfigurationGUID => GUID;
+
+        public string EmailConfigurationName => CodeName;
+    }
+
+    public record RegistrationConfirmationEmail : ISystemEmailConfiguration
+    {
+        public static Guid GUID { get; } = new Guid("225d32b8-7089-4c24-8f7f-177ca9f27317");
+        public const string CodeName = "MemberRegistrationEmailConfirmation-qz9jyy5q";
 
         public Guid EmailConfigurationGUID => GUID;
 

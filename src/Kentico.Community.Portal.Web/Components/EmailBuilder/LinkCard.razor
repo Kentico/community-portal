@@ -1,0 +1,45 @@
+@using CMS.ContentEngine
+@using CMS.DataEngine
+@using CMS.Membership
+@using Kentico.Community.Portal.Web.Membership
+@using static Kentico.Community.Portal.Web.Components.EmailBuilder.Card
+
+<Card Tag="@("Contribution")" TagColor="@TagColors.Secondary" Heading="@Model.LinkContentLabel"
+    BodyContent="Model.LinkContentShortDescription" Topics="Topics" LinkURL="@Model.LinkContentPathOrURL">
+
+    <Byline>
+        @if (MemberName.TryGetValue(out string? name2)
+                && MemberProfileLinkURL.TryGetValue(out var path))
+        {
+            <text>by <a href="@path">@name2</a></text>
+        }
+    </Byline>
+</Card>
+
+@code {
+    [Parameter] public required LinkContent Model { get; set; }
+    [Parameter] public required Dictionary<Guid, Tag> DXTopics { get; set; } = [];
+    [Parameter] public required Dictionary<int, CommunityMember> Members { get; set; } = [];
+
+    public IReadOnlyList<string> Topics { get; set; } = [];
+    public Maybe<string> MemberName { get; set; } = "";
+    public Maybe<string> MemberProfileLinkURL { get; set; } = "";
+
+    protected override Task OnInitializedAsync()
+    {
+        Topics = Model.LinkContentDXTopics
+        .Select(t => DXTopics.TryGetValue(t.Identifier, out var tag) ? tag.Title : "")
+        .Where(t => !string.IsNullOrWhiteSpace(t))
+        .ToList();
+
+        MemberName = Members.TryGetValue(Model.LinkContentMemberID, out var member)
+        ? member.FullName
+        : Maybe<string>.None;
+
+        MemberProfileLinkURL = Model.LinkContentMemberID > 0
+        ? $"/member/{Model.LinkContentMemberID}"
+        : Maybe<string>.None;
+
+        return Task.CompletedTask;
+    }
+}

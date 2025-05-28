@@ -10,6 +10,7 @@ public static partial class SystemTaxonomies
     public static IntegrationTypeTaxonomy IntegrationType { get; } = new();
     public static ContentAuthorizationTaxonomy ContentAuthorization { get; } = new();
     public static EmbedTypeTaxonomy EmbedType { get; } = new();
+    public static DXTopicTaxonomy DXTopic { get; } = new();
 
     public static readonly IReadOnlyList<ISystemTaxonomy> ProtectedTaxonomies =
     [
@@ -17,7 +18,8 @@ public static partial class SystemTaxonomies
         QAndADiscussionType,
         IntegrationType,
         ContentAuthorization,
-        EmbedType
+        EmbedType,
+        DXTopic
     ];
 
     public static bool Includes(TaxonomyInfo taxonomy) =>

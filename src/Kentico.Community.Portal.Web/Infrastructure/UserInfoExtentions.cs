@@ -6,9 +6,10 @@ namespace Kentico.Community.Portal.Web.Infrastructure;
 public static class UserInfoExtensions
 {
     /// <summary>
-    /// Represents a non-human user used for automated content creation tasks
+    /// Represents a non-human user used for automated content creation tasks.
+    /// See: https://docs.kentico.com/changelog#refresh-may-19-2025
     /// </summary>
-    public const string CONTENT_AUTHOR_USERNAME = "membership_author";
+    public const string CONTENT_AUTHOR_USERNAME = "kentico-system-service";
 
     /// <summary>
     /// Returns the user associated with <see cref="CONTENT_AUTHOR_USERNAME"/>

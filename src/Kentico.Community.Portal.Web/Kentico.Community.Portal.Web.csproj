@@ -1,9 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup Label="Globals">
-    <PackageId>Kentico.Community.Portal.Web</PackageId>
+  <PropertyGroup>
     <UserSecretsId>3df470e6-54c4-41d8-b8f0-36955d9433d2</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="App_Data\CMSModules\WebFarm\webfarm.sync" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Enums.NET" />
@@ -14,6 +17,7 @@
     <PackageReference Include="Kentico.Xperience.AzureStorage" />
     <PackageReference Include="Kentico.Xperience.Cloud" />
     <PackageReference Include="Kentico.Xperience.ImageProcessing" />
+    <PackageReference Include="Kentico.Xperience.Mjml" />
     <PackageReference Include="Kentico.Xperience.Lucene" />
     <PackageReference Include="Kentico.Xperience.MiniProfiler" />
     <PackageReference Include="Kentico.Xperience.SendGrid" />

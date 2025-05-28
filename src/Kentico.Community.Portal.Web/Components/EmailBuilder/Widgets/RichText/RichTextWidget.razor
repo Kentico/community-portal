@@ -1,0 +1,19 @@
+@using Kentico.EmailBuilder.Web.Mvc
+@using Kentico.Xperience.Admin.Base.ContentEngine
+
+@if (EmailContext.BuilderMode == EmailBuilderMode.Edit)
+{
+    <mj-section padding="0">
+        <mj-column>
+            <mj-text>
+                <RichTextInlineEditor PropertyName=@nameof(Properties.Text) />
+            </mj-text>
+        </mj-column>
+    </mj-section>
+}
+else
+{
+    <mj-text>
+        @RenderedText
+    </mj-text>
+}

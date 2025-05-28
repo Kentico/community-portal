@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Synchronization</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="SynchronizationID" columntype="integer" enabled="true" guid="4e8e97b6-bd24-4c61-8032-3a92134a6d32" isPK="true" system="true" />
+      <field column="SynchronizationGUID" columnprecision="0" columntype="guid" enabled="true" guid="1c1a6c93-ceba-47a0-aae4-e980d62f1f89" system="true" />
+      <field column="SynchronizationCreatedByUserID" columnprecision="0" columntype="integer" enabled="true" guid="f1e84246-63cc-4b3c-8278-a39ce9fc8662" refobjtype="cms.user" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="SynchronizationUserName" columnprecision="0" columnsize="254" columntype="text" enabled="true" guid="cdb623ad-8e7e-4a44-afaa-db20865562e1" system="true" />
+      <field column="SynchronizationCreatedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="221653df-2f3c-410c-b17b-59d3470bb17f" system="true" />
+      <field column="SynchronizationLastModified" columnprecision="7" columntype="datetime" enabled="true" guid="76143b7f-c5ee-40c3-bc45-ad055f561025" system="true" />
+      <field allowempty="true" column="SynchronizationScheduledTime" columnprecision="7" columntype="datetime" enabled="true" guid="dabcfc19-5e53-44f9-b239-65088c5b0e26" system="true" />
+      <field column="SynchronizationStatus" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="c9ea9640-d86b-4af8-b6eb-0a218f5bf7f4" system="true" />
+      <field column="SynchronizationDirection" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="deaa9681-f67b-4187-a6ae-016d7a2f2167" system="true" />
+      <field allowempty="true" column="SynchronizationResult" columnprecision="0" columntype="longtext" enabled="true" guid="6e4856aa-5e16-4acb-b789-e48b2028d09d" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>2d3527b4-de94-43a1-8750-831f0ebc7997</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.Synchronization</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentSynchronization</CodeName>
+    <GUID>857ccc0e-fbea-4f18-997b-b1a417579de3</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_Synchronization</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

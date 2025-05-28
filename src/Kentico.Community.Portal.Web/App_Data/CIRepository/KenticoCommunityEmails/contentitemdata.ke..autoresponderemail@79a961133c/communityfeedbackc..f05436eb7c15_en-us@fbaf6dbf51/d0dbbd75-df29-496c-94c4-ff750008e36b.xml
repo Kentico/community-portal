@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.autoresponderemail>
+  <AutoresponderEmailBodyContent>
+    <![CDATA[<p>{!ResolveDynamicText("Recipient.FirstName","Hey friend")!},</p><p>We appreciate you providing feedback to us at the Kentico Community Portal. We'll be sure to follow up if we need additional details from you.</p>]]>
+  </AutoresponderEmailBodyContent>
+  <AutoresponderEmailTitle>Thanks for your feedback</AutoresponderEmailTitle>
+  <AutoresponderEmailUTMParameters>
+    <![CDATA[{"ID":"8150a798-fd1a-4fd2-aca9-c86737d86b05","Source":"community","Medium":"email","Campaign":"feedback-autoresponder","Content":"","Term":""}]]>
+  </AutoresponderEmailUTMParameters>
+  <ContentItemDataCommonDataID>
+    <GUID>6d07e128-4d05-4d5b-a04e-f05436eb7c15</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>CommunityFeedbackConfirmation-ej7hdh6q</CodeName>
+      <GUID>0ca6a0a8-2f23-4ee6-96c6-3cac98d21600</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>d0dbbd75-df29-496c-94c4-ff750008e36b</ContentItemDataGUID>
+  <EmailPlainText />
+  <EmailPreviewText>
+    <![CDATA[📢]]>
+  </EmailPreviewText>
+  <EmailSenderID>
+    <CodeName>no-reply</CodeName>
+    <GUID>24520bc4-cdda-401d-812a-e5a73699edac</GUID>
+    <ObjectType>emaillibrary.emailchannelsender</ObjectType>
+    <Parent>
+      <GUID>2b0fe19c-6251-455f-8233-407a1303b541</GUID>
+      <ObjectType>emaillibrary.emailchannel</ObjectType>
+      <Parent>
+        <CodeName>KenticoCommunityEmails</CodeName>
+        <GUID>1b41b848-ddd2-4a8d-9bc7-850a93e147c4</GUID>
+        <ObjectType>cms.channel</ObjectType>
+      </Parent>
+    </Parent>
+  </EmailSenderID>
+  <EmailSubject>Thanks for your feedback</EmailSubject>
+  <EmailTemplateID>0</EmailTemplateID>
+</contentitemdata.kenticocommunity.autoresponderemail>

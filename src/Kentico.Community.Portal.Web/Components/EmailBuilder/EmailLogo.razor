@@ -1,0 +1,13 @@
+<mj-image href="@LinkURL" align="left" css-class="light-img" src="@ImageLight.ImageContentAsset.Url"
+  alt="@ImageLight.MediaItemShortDescription" width="150px" />
+
+<mj-image href="@LinkURL" align="left" css-class="dark-img" src="@ImageDark.ImageContentAsset.Url"
+  alt="@ImageDark.MediaItemShortDescription" width="150px"
+  style="display:none; overflow:hidden; float:left; width:0px; max-height:0px; max-width:0px; line-height:0px; visibility:hidden;" />
+
+
+@code {
+  [Parameter] public required ImageContent ImageLight { get; set; }
+  [Parameter] public required ImageContent ImageDark { get; set; }
+  [Parameter] public string LinkURL { get; set; } = "";
+}

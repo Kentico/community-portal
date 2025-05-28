@@ -1,0 +1,406 @@
+<style>
+    /*──────────────────────────────────────────────────────────────────────────*/
+    /* CLIENT-SPECIFIC & COLOR SCHEME */
+    /*──────────────────────────────────────────────────────────────────────────*/
+    :root {
+        color-scheme: light dark;
+        supported-color-schemes: light dark;
+    }
+
+    /*──────────────────────────────────────────────────────────────────────────*/
+    /* RESET & BASE STYLES */
+    /*──────────────────────────────────────────────────────────────────────────*/
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    ul,
+    li,
+    table,
+    td,
+    a,
+    span,
+    .paragraph {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, "Avenir Next", -apple-system, BlinkMacSystemFont,
+            "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+    }
+
+    body {
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #F5F3F2 !important;
+    }
+
+    table {
+        border-collapse: collapse !important;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+    }
+
+    img {
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+        -ms-interpolation-mode: bicubic;
+    }
+
+    .body-bg {
+        background-color: #E5DEDC !important;
+    }
+
+    /*──────────────────────────────────────────────────────────────────────────*/
+    /* TYPOGRAPHY */
+    /*──────────────────────────────────────────────────────────────────────────*/
+    h1,
+    h2,
+    h3,
+    h4 {
+        margin: 0;
+    }
+
+    h2 {
+        margin: 30px 0 30px 0;
+    }
+
+    p,
+    .paragraph,
+    li {
+        font-size: 18px !important;
+        line-height: 24px !important;
+        margin: 20px 0;
+    }
+
+    ul {
+        padding: 5px 20px !important;
+    }
+
+    .heading {
+        font-size: 30px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .subheading {
+        font-size: 16px !important;
+    }
+
+    .body-content {
+        background-color: #f6f6f6 !important;
+        border-radius: 8px;
+    }
+
+    .section-title {
+        padding: 0 20px !important;
+    }
+
+    .section-title h2 {
+        font-size: 28px !important;
+        margin: 30px 0 !important;
+    }
+
+    /*──────────────────────────────────────────────────────────────────────────*/
+    /* LINK STYLES */
+    /*──────────────────────────────────────────────────────────────────────────*/
+    a {
+        color: #f05a22;
+        text-decoration: underline;
+        cursor: pointer !important;
+        transition: 0.35s ease-in-out;
+    }
+
+    a:hover {
+        text-decoration: underline !important;
+    }
+
+    /* iOS blue links */
+    a[x-apple-data-detectors],
+    /* Gmail blue links */
+    u+#body a,
+    /* Samsung blue links */
+    #MessageViewBody a,
+    #MessageWebViewDiv a {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+    }
+
+    .cta-primary a {
+        color: #f6f6f6 !important;
+        background-color: #f05a22 !important;
+    }
+
+    .cta-secondary a {
+        color: #f6f6f6 !important;
+        background-color: #7F09B7 !important;
+    }
+
+    .cta-light-dark a {
+        color: #f6f6f6 !important;
+        background-color: #231f20 !important;
+    }
+
+    /*──────────────────────────────────────────────────────────────────────────*/
+    /* RESPONSIVE IMAGES */
+    /*──────────────────────────────────────────────────────────────────────────*/
+    .light-img {
+        display: block !important;
+        overflow: visible !important;
+        visibility: inherit !important;
+        max-width: inherit !important;
+        max-height: inherit !important;
+        margin-top: 0 !important;
+    }
+
+    .dark-img {
+        display: none !important;
+    }
+
+    /*──────────────────────────────────────────────────────────────────────────*/
+    /* CARD COMPONENTS */
+    /*──────────────────────────────────────────────────────────────────────────*/
+    .card {
+        padding: 10px 20px;
+    }
+
+    .tag--primary {
+        background-color: #f05a22;
+        color: #ffffff;
+    }
+
+    .tag--black {
+        color: #f6f6f6 !important;
+        background-color: #231f20 !important;
+    }
+
+    .card__tag {
+        display: inline-block;
+        padding: 10px 22px;
+        margin-bottom: 1rem;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 14px 4px;
+    }
+
+    .tag--secondary {
+        background-color: #7F09B7;
+        color: #ffffff;
+    }
+
+    .card__heading {
+        font-size: 22px;
+        line-height: 30px;
+        margin: 0 0 10px 0;
+    }
+
+    .card__text {
+        margin: 20px 0 10px 0;
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .card__bottom-details-firstline {
+        font-size: 14px;
+        line-height: 24px;
+    }
+
+    .card__byline {
+        font-size: 14px !important;
+    }
+
+    .card__byline a {
+        color: #AF00FA !important;
+    }
+
+    .card__cta,
+    .card__cta-arrow {
+        color: #f05a22 !important;
+    }
+
+    .card__cta {
+        display: block;
+        font-size: 20px;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 1.5rem 0;
+    }
+
+    .card__cta:hover .card__cta-arrow {
+        padding-left: 8px !important;
+    }
+
+    /*──────────────────────────────────────────────────────────────────────────*/
+    /* MEDIA QUERIES */
+    /*──────────────────────────────────────────────────────────────────────────*/
+    /* Breakpoint: 620px */
+    @@media screen and (max-width: 620px) {
+
+        .paragraph,
+        p,
+        a {
+            font-size: 16px !important;
+        }
+
+        .card__cta {
+            font-size: 18px !important;
+        }
+    }
+
+    /* Breakpoint: 435px */
+    @@media screen and (max-width: 480px) {
+        .logo-right>div {
+            text-align: left !important;
+        }
+    }
+
+    /*──────────────────────────────────────────────────────────────────────────*/
+    /* DARK MODE */
+    /*──────────────────────────────────────────────────────────────────────────*/
+    @@media (prefers-color-scheme: dark) {
+
+        /* Swap images */
+        .dark-img {
+            display: block !important;
+            overflow: visible !important;
+            visibility: inherit !important;
+            max-width: inherit !important;
+            max-height: inherit !important;
+            margin-top: 0 !important;
+        }
+
+        .light-img {
+            display: none;
+            display: none !important;
+        }
+
+        /* Text & backgrounds */
+        body,
+        .body {
+            background-color: #000000 !important;
+        }
+
+        .body-bg {
+            background-color: #333333 !important;
+        }
+
+        .body-content {
+            background-color: #231f20 !important;
+        }
+
+        h1,
+        h2,
+        h3,
+        p,
+        span,
+        b,
+        ul,
+        .paragraph,
+        .salutation,
+        .card__bottom-details,
+        .links__list li {
+            color: #f6f6f6 !important;
+        }
+
+        a {
+            color: #00B3FC !important;
+        }
+
+        .brand-char {
+            color: #f05a22 !important;
+        }
+
+        .cta-primary a {
+            color: #f6f6f6 !important;
+            background-color: #f05a22 !important;
+        }
+
+        .cta-secondary a {
+            color: #f6f6f6 !important;
+            background-color: #7F09B7 !important;
+        }
+
+        .cta-light-dark a {
+            color: #231f20 !important;
+            background-color: #f6f6f6 !important;
+        }
+
+        .tag--black {
+            background-color: #f6f6f6 !important;
+            color: #231f20 !important;
+        }
+
+        .card__byline a {
+            color: #EBD8FF !important;
+        }
+
+        .card__cta,
+        .card__cta-arrow {
+            color: #f05a22 !important;
+        }
+    }
+
+    /*──────────────────────────────────────────────────────────────────────────*/
+    /* OUTLOOK DARK MODE ([data-ogsb]/[data-ogsc]) */
+    /*──────────────────────────────────────────────────────────────────────────*/
+    [data-ogsb] .dark-img {
+        display: block !important;
+        overflow: visible !important;
+        visibility: inherit !important;
+        max-width: inherit !important;
+        max-height: inherit !important;
+        margin-top: 0 !important;
+    }
+
+    [data-ogsb] .light-img {
+        display: none !important;
+    }
+
+    [data-ogsb] body,
+    [data-ogsb] .body {
+        background-color: #363a3b !important;
+    }
+
+    [data-ogsb] .body-bg {
+        background-image: none !important;
+    }
+
+    [data-ogsc] h1,
+    [data-ogsc] h2,
+    [data-ogsc] h3,
+    [data-ogsc] p,
+    [data-ogsc] a,
+    [data-ogsc] b,
+    [data-ogsc] .paragraph,
+    [data-ogsc] .salutation,
+    [data-ogsc] .links__list li,
+    [data-ogsc] .card__bottom-details {
+        color: #ffffff !important;
+    }
+
+    [data-ogsc] .brand-char {
+        color: #f05a22 !important;
+    }
+
+    [data-ogsc] .card__byline a {
+        color: #F7F1FF !important;
+    }
+
+    [data-ogsc] .card__cta,
+    [data-ogsc] .card__cta-arrow {
+        color: #f05a22 !important;
+    }
+</style>

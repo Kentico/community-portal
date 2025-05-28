@@ -9,7 +9,7 @@ Xperience by Kentico solution for the Kentico managed SaaS hosted Kentico
 Community website.
 
 This project is using Xperience by Kentico
-[v30.4.1](https://docs.kentico.com/changelog#hotfix-april-30-2025).
+[v30.5.1](https://docs.kentico.com/changelog#hotfix-may-22-2025).
 
 ## Screenshots
 

@@ -64,9 +64,7 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
 
             Continue discussions 🤗 on this blog post below.
             """;
-        var dxTopicTagIdentifiers = page.BlogPostPageBlogPostContent
-            .TryFirst()
-            .Match(c => c.BlogPostContentDXTopics.Select(t => t.Identifier), () => []);
+        var dxTopicTagIdentifiers = page.BlogPostPageDXTopics.Select(t => t.Identifier);
         var member = new CommunityMember()
         {
             Id = 0 // Only the Id is required and an Id of 0 will result in the author being the Kentico Community author

@@ -32,26 +32,27 @@ public class BlogPostPageTemplateProperties : IPageTemplateProperties { }
 public class BlogPostPageTemplateController(
     WebPageMetaService metaService,
     IMediator mediator,
-    IWebPageDataContextRetriever contextRetriever,
+    IContentRetriever contentRetriever,
     IWebPageUrlRetriever urlRetriever) : Controller
 {
     private readonly WebPageMetaService metaService = metaService;
     private readonly IMediator mediator = mediator;
-    private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
 
     public async Task<ActionResult> Index()
     {
-        if (!contextRetriever.TryRetrieve(out var data))
+        var blogPage = await contentRetriever.RetrieveCurrentPage<BlogPostPage>(new RetrieveCurrentPageParameters() { LinkedItemsMaxLevel = BlogPostPage.FullQueryDepth });
+        if (blogPage is null)
         {
             return NotFound();
         }
 
-        var blogPage = await mediator.Send(new BlogPostPageQuery(data.WebPage));
         var author = await GetAuthor(blogPage);
         string absoluteURL = Request.Path.Value!.RelativePathToAbsoluteURL(Request);
-        var discussionURL = await GetDiscussionLinkPath(blogPage, data.WebPage.WebsiteChannelName);
-        var vm = new BlogPostPageViewModel(blogPage, author, discussionURL, absoluteURL);
+        var discussionURL = await GetDiscussionLinkPath(blogPage);
+        int commentCount = await GetDiscussionCommentCount(blogPage);
+        var vm = new BlogPostPageViewModel(blogPage, author, discussionURL, absoluteURL, commentCount);
 
         metaService.SetMeta(blogPage.GetWebpageMeta());
 
@@ -65,26 +66,42 @@ public class BlogPostPageTemplateController(
         {
             return new(author, Url);
         }
+        var authors = await contentRetriever.RetrieveContent<AuthorContent>(
+            new RetrieveContentParameters(),
+            p => p.Where(w => w.WhereEquals(nameof(AuthorContent.AuthorContentCodeName), AuthorContent.KENTICO_AUTHOR_CODE_NAME)),
+            new RetrievalCacheSettings($"{nameof(AuthorContent.AuthorContentCodeName)}|{AuthorContent.KENTICO_AUTHOR_CODE_NAME}"));
 
-        var resp = await mediator.Send(new AuthorContentQuery(AuthorContent.KENTICO_AUTHOR_CODE_NAME));
-        if (resp.Author is null)
+        if (authors.FirstOrDefault() is not AuthorContent kenticoAuthor)
         {
             throw new Exception($"Missing Author [{AuthorContent.KENTICO_AUTHOR_CODE_NAME}] which is required to display BlogPosts");
         }
 
-        return new(resp.Author, Url);
+        return new(kenticoAuthor, Url);
     }
 
-    private async Task<Maybe<string>> GetDiscussionLinkPath(BlogPostPage blogPostPage, string channelName)
+    private async Task<Maybe<string>> GetDiscussionLinkPath(BlogPostPage blogPostPage)
     {
         if (blogPostPage.BlogPostPageQAndADiscussionPage.FirstOrDefault() is not WebPageRelatedItem relatedItem)
         {
             return Maybe<string>.None;
         }
 
-        return await mediator.Send(new QAndAQuestionPageByGUIDQuery(relatedItem.WebPageGuid, channelName))
+        var pages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([relatedItem.WebPageGuid]);
+
+        return await pages
+            .TryFirst()
             .Map(p => urlRetriever.Retrieve(p))
             .Map(url => url.RelativePath);
+    }
+
+    private async Task<int> GetDiscussionCommentCount(BlogPostPage blogPostPage)
+    {
+        if (blogPostPage.BlogPostPageQAndADiscussionPage.FirstOrDefault() is not WebPageRelatedItem relatedItem)
+        {
+            return 0;
+        }
+
+        return await mediator.Send(new QAndAAnswerCountQuery(relatedItem.WebPageGuid));
     }
 }
 
@@ -95,14 +112,16 @@ public class BlogPostPageViewModel
     public AuthorViewModel Author { get; }
     public string AbsoluteURL { get; } = "";
     public Maybe<string> DiscussionLinkPath { get; }
+    public int DiscussionCommentsCount { get; }
 
-    public BlogPostPageViewModel(BlogPostPage page, AuthorViewModel author, Maybe<string> discussionURL, string absoluteURL)
+    public BlogPostPageViewModel(BlogPostPage page, AuthorViewModel author, Maybe<string> discussionURL, string absoluteURL, int commentCount)
     {
         Title = page.WebPageMetaTitle;
         PublishedDate = page.BlogPostPagePublishedDate;
         Author = author;
         DiscussionLinkPath = discussionURL;
         AbsoluteURL = absoluteURL;
+        DiscussionCommentsCount = commentCount;
     }
 }
 

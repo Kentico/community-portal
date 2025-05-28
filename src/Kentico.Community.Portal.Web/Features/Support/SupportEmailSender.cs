@@ -1,9 +1,14 @@
-using System.Net.Mail;
+using CMS.ContentEngine.Internal;
 using CMS.Core;
 using CMS.DataEngine;
 using CMS.EmailEngine;
 using CMS.EmailLibrary;
+using CMS.EmailLibrary.Internal;
+using CMS.EmailMarketing;
+using CMS.EmailMarketing.Internal;
 using Kentico.Community.Portal.Core.Modules;
+using Kentico.Community.Portal.Web.Features.Emails;
+using Kentico.Xperience.Admin.DigitalMarketing.Internal;
 
 namespace Kentico.Community.Portal.Web.Features.Support;
 
@@ -15,67 +20,122 @@ public interface ISupportEmailSender
     /// <param name="supportRequest"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task SendConfirmationEmail(SupportRequestMessage message, CancellationToken cancellationToken);
+    public Task SendConfirmationEmail(SupportRequestMessage message, CancellationToken cancellationToken);
 }
 
 public class SupportEmailSender(
     IInfoProvider<EmailConfigurationInfo> emailConfigurationProvider,
-    IInfoProvider<EmailChannelInfo> emailChannelProvider,
-    IInfoProvider<EmailChannelSenderInfo> senderProvider,
-    IEmailChannelDomainProvider domainProvider,
+    IEmailContentResolverFactory emailContentResolverFactory,
     IEmailService emailService,
+    IEmailMarkupBuilderFactory markupBuilderFactory,
+    IEmailChannelLanguageRetriever languageRetriever,
+    IContentItemDataInfoRetriever dataRetriever,
+    IEmailChannelSenderEmailProvider senderInfoProvider,
+    IInfoProvider<ContentItemInfo> contentItems,
+    IInfoProvider<EmailChannelInfo> emailChannels,
+    IInfoProvider<EmailChannelSenderInfo> emailChannelSenders,
+    IEmailUnsubscriptionUrlGenerator emailUnsubscriptionUrlGenerator,
     IEventLogService log
 ) : ISupportEmailSender
 {
     private readonly IInfoProvider<EmailConfigurationInfo> emailConfigurationProvider = emailConfigurationProvider;
-    private readonly IInfoProvider<EmailChannelInfo> emailChannelProvider = emailChannelProvider;
-    private readonly IInfoProvider<EmailChannelSenderInfo> senderProvider = senderProvider;
-    private readonly IEmailChannelDomainProvider domainProvider = domainProvider;
+    private readonly IEmailContentResolverFactory emailContentResolverFactory = emailContentResolverFactory;
     private readonly IEmailService emailService = emailService;
+    private readonly IEmailMarkupBuilderFactory markupBuilderFactory = markupBuilderFactory;
+    private readonly IEmailChannelLanguageRetriever languageRetriever = languageRetriever;
+    private readonly IContentItemDataInfoRetriever dataRetriever = dataRetriever;
+    private readonly IEmailChannelSenderEmailProvider senderInfoProvider = senderInfoProvider;
+    private readonly IInfoProvider<ContentItemInfo> contentItems = contentItems;
+    private readonly IInfoProvider<EmailChannelInfo> emailChannels = emailChannels;
+    private readonly IInfoProvider<EmailChannelSenderInfo> emailChannelSenders = emailChannelSenders;
+    private readonly IEmailUnsubscriptionUrlGenerator emailUnsubscriptionUrlGenerator = emailUnsubscriptionUrlGenerator;
     private readonly IEventLogService log = log;
 
     /// <inheritdoc />
     public async Task SendConfirmationEmail(SupportRequestMessage message, CancellationToken cancellationToken)
     {
-        // TODO - in the future use the email's content to populate this email
-        // which requires using some pubternal APIs
-        // https://community.kentico.com/blog/programmatically-sending-templated-emails-with-dynamic-data
-
         try
         {
-            var config = await emailConfigurationProvider.GetAsync(SystemEmails.SupportRequestConfirmationEmail.CodeName, cancellationToken);
-            var emailChannel = await emailChannelProvider.GetAsync(config.EmailConfigurationEmailChannelID, cancellationToken);
-            var sender = await senderProvider.Get()
-                .WhereEquals(nameof(EmailChannelSenderInfo.EmailChannelSenderEmailChannelID), emailChannel.EmailChannelID)
-                .SingleAsync(cancellationToken);
-
-            var domains = await domainProvider.GetDomains(emailChannel.EmailChannelID, cancellationToken);
-
-            var address = new MailAddress($"{sender.EmailChannelSenderName}@{domains.SendingDomain}", sender.EmailChannelSenderDisplayName);
-
-            string body = $"""
-            <p>{message.FirstName},</p>
-            <p>We've begun to process your support request.</p>
-            <p>Subject: {message.Subject}</p>
-            <br>
-            <p>Thanks,
-                <br>
-                <em>Kentico Community Portal</em>
-            </p>
-            """;
-
-            var email = new EmailMessage()
+            var recipient = new Recipient
             {
-                From = address.ToString(),
-                Recipients = message.Email,
-                Subject = $"Kentico Community Portal: Support request received",
-                Body = body,
-                PlainTextBody = body,
-                EmailFormat = EmailFormatEnum.Both,
-                EmailConfigurationID = config.EmailConfigurationID
+                FirstName = message.FirstName,
+                LastName = message.LastName,
+                Email = message.Email
             };
 
-            await emailService.SendEmail(email);
+            var dataContext = new CustomTokenValueDataContext
+            {
+                Recipient = recipient,
+                Items = new() { { "TOKEN_SUPPORT_REQUEST_SUBJECT", message.Subject } }
+            };
+
+            var emailConfig = await emailConfigurationProvider
+                .GetAsync(SystemEmails.SupportRequestConfirmation.EmailConfigurationName);
+            string unsubscriptionUrl = await emailUnsubscriptionUrlGenerator.GenerateSignedUrl(emailConfig, "/Kentico.Emails/Unsubscribe", recipient.Email, Guid.NewGuid(), false);
+            var builderContext = new RecipientEmailMarkupBuilderContext
+            {
+                EmailRecipientContext = new EmailRecipientContext
+                {
+                    FirstName = recipient.FirstName,
+                    LastName = recipient.LastName,
+                    EmailAddress = recipient.Email,
+                    UnsubscriptionUrl = unsubscriptionUrl
+                }
+            };
+
+            var markupBuilder = await markupBuilderFactory.Create(emailConfig);
+            string mergedTemplate = await markupBuilder
+                .BuildEmailForSending(emailConfig, builderContext);
+
+            var contentResolver = await emailContentResolverFactory.Create(emailConfig, default);
+            string emailBody = await contentResolver.Resolve(
+                emailConfig,
+                mergedTemplate,
+                EmailContentFilterType.Sending,
+                dataContext);
+
+            var contentItem = await contentItems
+                .GetAsync(emailConfig.EmailConfigurationContentItemID);
+            var contentLanguage = await languageRetriever
+                .GetEmailChannelLanguageInfoOrThrow(emailConfig.EmailConfigurationEmailChannelID);
+            var data = await dataRetriever
+                .GetContentItemData(contentItem, contentLanguage.ContentLanguageID, false);
+            var emailFieldValues = new EmailContentTypeSpecificFieldValues(data);
+            string plainTextBody = await contentResolver.Resolve(
+                emailConfig,
+                emailFieldValues.EmailPlainText,
+                EmailContentFilterType.Sending,
+                dataContext);
+
+            var emailChannel = (await emailChannels.Get()
+                .WhereEquals(
+                    nameof(EmailChannelInfo.EmailChannelID),
+                    emailConfig.EmailConfigurationEmailChannelID)
+                .GetEnumerableTypedResultAsync())
+                .FirstOrDefault();
+
+            if (emailChannel is null)
+            {
+                throw new Exception($"There is not email channel for the email configuration [{emailConfig.EmailConfigurationID}]");
+            }
+
+            var sender = await emailChannelSenders
+                .GetAsync(emailFieldValues.EmailSenderID);
+            string senderEmail = await senderInfoProvider
+                .GetEmailAddress(emailChannel.EmailChannelID, sender.EmailChannelSenderName);
+
+            var emailMessage = new EmailMessage
+            {
+                From = $"\"{sender.EmailChannelSenderDisplayName}\" <{senderEmail}>",
+                Recipients = recipient.Email,
+                Subject = emailFieldValues.EmailSubject,
+                Body = emailBody,
+                PlainTextBody = plainTextBody,
+                EmailConfigurationID = emailConfig.EmailConfigurationID,
+                MailoutGuid = dataContext.MailoutGuid
+            };
+
+            await emailService.SendEmail(emailMessage);
         }
         catch (Exception ex)
         {

@@ -1,0 +1,29 @@
+@{
+    string margin = Properties.MarginParsed switch
+    {
+        ContentMargins.None => "0px",
+        ContentMargins.Small => "20px",
+        ContentMargins.Large => "40px",
+        ContentMargins.Medium or _ => "40px"
+    };
+
+    string containerClasses = Properties.DesignParsed switch
+    {
+        ContentDesigns.Card => "paragraph body-content",
+        ContentDesigns.Normal or _ => ""
+    };
+}
+
+<mj-section padding="0 20px" css-class="body-bg">
+    <mj-column>
+        <mj-spacer height="@margin" />
+
+        <mj-section padding="0" css-class="@containerClasses">
+            <mj-column>
+                <WidgetZone ZoneName="ZoneA" />
+            </mj-column>
+        </mj-section>
+
+        <mj-spacer height="@margin" />
+    </mj-column>
+</mj-section>

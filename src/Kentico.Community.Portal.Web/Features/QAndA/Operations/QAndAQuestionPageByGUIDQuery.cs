@@ -3,7 +3,7 @@ using Kentico.Community.Portal.Core.Operations;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public record QAndAQuestionPageByGUIDQuery(Guid WebPageGUID, string ChannelName) : WebPageByGUIDQuery<Maybe<QAndAQuestionPage>>(WebPageGUID), IChannelContentQuery;
+public record QAndAQuestionPageByGUIDQuery(Guid WebPageGUID) : WebPageByGUIDQuery<Maybe<QAndAQuestionPage>>(WebPageGUID);
 public class QAndAQuestionPageByGUIDQueryHandler(WebPageQueryTools tools) : WebPageQueryHandler<QAndAQuestionPageByGUIDQuery, Maybe<QAndAQuestionPage>>(tools)
 {
     public override async Task<Maybe<QAndAQuestionPage>> Handle(QAndAQuestionPageByGUIDQuery request, CancellationToken cancellationToken = default)

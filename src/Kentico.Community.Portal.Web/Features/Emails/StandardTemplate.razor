@@ -1,0 +1,43 @@
+@using Kentico.Community.Portal.Web.Components.EmailBuilder.Sections.SingleColumn
+
+@if (Model.TryGetValue(out var vm))
+{
+    <mjml>
+        <mj-head>
+            <mj-preview>@vm.PreviewText</mj-preview>
+            <mj-raw>
+                <meta name="color-scheme" content="light dark">
+                <meta name="supported-color-schemes" content="light dark">
+                <EmailDefaultStyles />
+                <style>
+                    .warning {
+                        padding: 20px !important;
+                        font-size: 20px !important;
+                    }
+
+                    .warning>p {
+                        color: red !important;
+                    }
+                </style>
+            </mj-raw>
+            <EmailBuilderStyles />
+        </mj-head>
+
+        <mj-body css-class='body'>
+            <mj-section padding="60px 20px 0px 20px" css-class="body-bg">
+                <mj-column>
+                    <EmailHeader Model="@vm.Header" />
+                </mj-column>
+            </mj-section>
+
+            <EditableArea AreaIdentifier="MainContents" DefaultSectionIdentifier="@SingleColumnSection.IDENTIFIER" />
+
+            <mj-section padding="0px 20px 60px 20px" css-class="body-bg">
+                <mj-column>
+                    <EmailFooter Model="@vm.Footer" />
+                </mj-column>
+            </mj-section>
+            <EmailBuilderScripts />
+        </mj-body>
+    </mjml>
+}

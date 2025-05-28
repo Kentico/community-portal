@@ -1,0 +1,42 @@
+@using CMS.EmailMarketing
+
+<mj-text>
+    <h2 style="margin: 0;">Meet Kentico on social networks<span class="orange-char">.</span></h2>
+</mj-text>
+<mj-social align="left" font-size="15px" icon-size="30px" mode="horizontal">
+    @foreach (var link in Model.SocialLinks)
+    {
+        <mj-social-element css-class="light-img" href="@link.SocialLinkContentURL"
+            src="@link.SocialLinkContentLogoLightImage.Url">
+        </mj-social-element>
+        <mj-social-element css-class="dark-img" href="@link.SocialLinkContentURL"
+            src="@link.SocialLinkContentLogoDarkImage.Url">
+        </mj-social-element>
+    }
+</mj-social>
+<mj-divider border-width="1px" border-style="solid" border-color="lightgrey" />
+<mj-text>
+    <p>Kentico software s.r.o., Nove sady 25, 602 00 Brno, Czech Republic.</p>
+    @if (Model.ShowUnsubscribe)
+    {
+        <p><a href="@Model.Recipient.UnsubscriptionUrl">Unsubscribe</a></p>
+    }
+</mj-text>
+@if (Model.LogoLight.TryGetValue(out var logoLight) && Model.LogoDark.TryGetValue(out var logoDark))
+{
+    <EmailLogo ImageLight="@logoLight" ImageDark="@logoDark" LinkURL="@Model.LogoLinkURL" />
+}
+
+@code {
+    [Parameter]
+    public required EmailFooterViewModel Model { get; set; }
+
+    public record EmailFooterViewModel(
+    EmailRecipientContext Recipient,
+    bool ShowUnsubscribe,
+    Maybe<ImageContent> LogoLight,
+    Maybe<ImageContent> LogoDark,
+    string LogoLinkURL,
+    IEnumerable<SocialLinkContent>
+    SocialLinks);
+}

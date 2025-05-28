@@ -1,11 +1,12 @@
 using System.Reflection;
+using CMS.DataEngine;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Infrastructure;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components.ViewComponents.Navigation;
-using Kentico.Community.Portal.Web.Components.Widgets.Forms;
-using Kentico.Community.Portal.Web.Components.Widgets.Licenses;
+using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Forms;
+using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Licenses;
 using Kentico.Community.Portal.Web.Features.Blog.Events;
 using Kentico.Community.Portal.Web.Features.DataCollection;
 using Kentico.Community.Portal.Web.Features.Forms;
@@ -110,7 +111,9 @@ public static class ServiceCollectionAppExtensions
 
     private static IServiceCollection AddQAndA(this IServiceCollection services) =>
         services
-            .AddTransient<QAndAAnswerSearchIndexTaskHandler>();
+            .AddInfoObjectEventHandler<InfoObjectBeforeInsertEvent<QAndAAnswerDataInfo>, QAndAAnswerSearchIndexTaskHandler>()
+            .AddInfoObjectEventHandler<InfoObjectBeforeUpdateEvent<QAndAAnswerDataInfo>, QAndAAnswerSearchIndexTaskHandler>()
+            .AddInfoObjectEventHandler<InfoObjectBeforeDeleteEvent<QAndAAnswerDataInfo>, QAndAAnswerSearchIndexTaskHandler>();
     private static IServiceCollection AddBlogs(this IServiceCollection services) =>
         services
             .AddTransient<BlogPostPublishCreateQAndAQuestionHandler>()

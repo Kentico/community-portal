@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ma.automationstep>
+  <StepActionParameters />
+  <StepDefinition>
+    <Step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <TimeoutEnabled>true</TimeoutEnabled>
+      <TimeoutInterval>minute;1/1/0001 12:00:00 AM;1;00:00:00;00:00:00</TimeoutInterval>
+      <TimeoutTarget>00000000-0000-0000-0000-000000000000</TimeoutTarget>
+      <SourcePoints>
+        <SourcePoint Guid="10a70f00-86fd-4582-a03c-5ff4c83c376d">
+          <Label>workflowsourcepoint.standard</Label>
+          <Type>0</Type>
+          <StepRolesSecurity>0</StepRolesSecurity>
+          <StepUsersSecurity>0</StepUsersSecurity>
+        </SourcePoint>
+      </SourcePoints>
+      <Position>
+        <X>-1</X>
+        <Y>-1</Y>
+      </Position>
+    </Step>
+  </StepDefinition>
+  <StepDisplayName>Wait 1 minute</StepDisplayName>
+  <StepGUID>4c092c91-2ce9-4684-b8f8-fbbc3047e426</StepGUID>
+  <StepName>Wait1Minute</StepName>
+  <StepRolesSecurity>0</StepRolesSecurity>
+  <StepType>10</StepType>
+  <StepUsersSecurity>0</StepUsersSecurity>
+  <StepWorkflowID>
+    <CodeName>MemberWelcome</CodeName>
+    <GUID>c2e9e014-5860-4128-af4b-2b1b31c6ca57</GUID>
+    <ObjectType>ma.automationprocess</ObjectType>
+  </StepWorkflowID>
+  <StepWorkflowType>3</StepWorkflowType>
+</ma.automationstep>

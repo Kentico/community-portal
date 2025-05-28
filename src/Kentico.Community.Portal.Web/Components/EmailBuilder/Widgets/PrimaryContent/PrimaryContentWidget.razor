@@ -1,0 +1,26 @@
+@using Kentico.EmailBuilder.Web.Mvc
+@using Kentico.Xperience.Admin.Base.ContentEngine
+
+@if (!Model.TryGetValue(out var content))
+{
+    <ComponentError Message="Please add some content to the email's primary content field." />
+
+    return;
+}
+
+@if (EmailContext.BuilderMode == EmailBuilderMode.Edit)
+{
+    <mj-section padding="0">
+        <mj-column>
+            <mj-text>
+                @content
+            </mj-text>
+        </mj-column>
+    </mj-section>
+}
+else
+{
+    <mj-text>
+        @content
+    </mj-text>
+}

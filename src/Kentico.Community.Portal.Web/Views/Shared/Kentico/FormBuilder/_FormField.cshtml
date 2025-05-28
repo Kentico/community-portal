@@ -1,4 +1,4 @@
-@using Kentico.Community.Portal.Web.Components.FormComponents
+@using Kentico.Community.Portal.Web.Components.FormBuilder
 @using Kentico.Forms.Web.Mvc
 @using Microsoft.AspNetCore.Html
 @using Kentico.Forms.Web.Mvc.Internal
@@ -58,7 +58,7 @@
 @if (renderComponent)
 {
     @Html.Kentico().WrappedExplanationText(Model.BaseProperties.ExplanationText,
-        formConfiguration.ExplanationTextWrapperConfiguration)
+    formConfiguration.ExplanationTextWrapperConfiguration)
 }
 
 @if (FormBuilderContext.Mode != FormBuilderMode.Live && !showOnWebsite)

@@ -1,11 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentitemdata.kenticocommunity.autoresponderemail>
-  <AutoresponderEmailContent>
+  <AutoresponderEmailBodyContent>
     <![CDATA[<p>Hey {!ResolveDynamicText("Recipient.FirstName","there")!},</p><p>We noticed that you recently signed up for the Kentico Community Newsletter. We want to make sure you don't miss out on community news, insights, and events.</p><p>To start receiving our newsletter, please confirm your email address by clicking on the link below:</p><p class="brand-link" style="color: rgba(255, 129, 70, 1) !important">{!ResolveSubscriptionConfirmationLink("Confirm your subscription!","a4f0eaaa-9f80-4fd2-835b-9489991288b3")!}<br></p><p>We look forward to seeing you around the Kentico Community!</p><p>Cheers,</p><p>Kentico</p>]]>
-  </AutoresponderEmailContent>
-  <AutoresponderEmailTitle>
-    <![CDATA[Confirm your Kentico Community Newsletter Subscription]]>
-  </AutoresponderEmailTitle>
+  </AutoresponderEmailBodyContent>
+  <AutoresponderEmailTitle>Confirm your subscription</AutoresponderEmailTitle>
   <AutoresponderEmailUTMParameters>
     <![CDATA[{"ID":"99f22b2c-3439-440a-a3f7-524a3cce4b41","Source":"community","Medium":"email","Campaign":"newsletter-opt-in","Content":"","Term":""}]]>
   </AutoresponderEmailUTMParameters>

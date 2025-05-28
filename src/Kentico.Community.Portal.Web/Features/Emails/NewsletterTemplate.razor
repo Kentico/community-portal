@@ -1,0 +1,79 @@
+@if (Model.TryGetValue(out var vm))
+{
+    <mjml>
+        <mj-head>
+            <mj-preview>@vm.PreviewText</mj-preview>
+            <mj-raw>
+                <meta name="color-scheme" content="light dark">
+                <meta name="supported-color-schemes" content="light dark">
+                <EmailDefaultStyles />
+            </mj-raw>
+        </mj-head>
+        <mj-body css-class='body'>
+            <mj-section padding="60px 20px" css-class="body-bg">
+                <mj-column>
+                    <EmailHeader Model="@vm.Header">
+                        <LogoRight>
+                            <span>@vm.PublishedDate.ToString("yyyy/MM/dd")</span>
+                        </LogoRight>
+                        <SubHeading>
+                            @vm.Header.Subtitle
+                        </SubHeading>
+                    </EmailHeader>
+
+                    <mj-text css-class="paragraph body-content">
+                        @vm.IntroContent
+                    </mj-text>
+
+                    <mj-spacer height="32px" />
+
+                    @if (vm.BlogPostPages.Any())
+                    {
+                        <mj-text css-class="section-title heading">
+                            <h2>Blog posts</h2>
+                        </mj-text>
+                    }
+
+                    @foreach (var post in vm.BlogPostPages)
+                    {
+                        <BlogCard Model="post" BlogTypes="vm.BlogTypes" DXTopics="vm.DXTopics" />
+                    }
+
+                    @if (vm.LinkContents.Any())
+                    {
+                        <mj-text css-class="section-title heading" padding="10px 0 0 0">
+                            <h2>Community contributions</h2>
+                        </mj-text>
+                    }
+
+                    @foreach (var link in vm.LinkContents)
+                    {
+                        <LinkCard Model="link" DXTopics="vm.DXTopics" Members="vm.Members" />
+                    }
+
+                    @if (vm.Discussions.Any())
+                    {
+                        <mj-text css-class="section-title heading" padding="10px 0 0 0">
+                            <h2>Featured discussions</h2>
+                        </mj-text>
+                    }
+
+                    @foreach (var discussion in vm.Discussions)
+                    {
+                        <DiscussionCard Model="discussion" DXTopics="vm.DXTopics" />
+                    }
+
+                    <mj-spacer height="32px" />
+
+                    <mj-text css-class="paragraph body-content">
+                        @vm.OutroContent
+                    </mj-text>
+
+                    <mj-spacer height="32px" />
+
+                    <EmailFooter Model="@vm.Footer" />
+                </mj-column>
+            </mj-section>
+        </mj-body>
+    </mjml>
+}

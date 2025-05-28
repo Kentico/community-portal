@@ -85,7 +85,7 @@ public class BlogSearchIndexModel
     }
 }
 
-public partial class BlogSearchIndexingStrategy(
+public class BlogSearchIndexingStrategy(
     IContentQueryExecutor executor,
     WebScraperHtmlSanitizer htmlSanitizer,
     WebCrawlerService webCrawler,

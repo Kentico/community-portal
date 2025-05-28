@@ -25,10 +25,10 @@
           </ValidationRuleConfiguration>
         </validationrulesdata>
       </field>
-      <field allowempty="true" column="EmailDefaultsContentHeaderLogoImageContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="717a2f0e-3af2-4af6-9966-654b8b0fcc0a" visible="true">
+      <field allowempty="true" column="EmailDefaultsContentLogoLightImageContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="717a2f0e-3af2-4af6-9966-654b8b0fcc0a" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Header Logo</fieldcaption>
+          <fieldcaption>Logo (light)</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
@@ -47,10 +47,32 @@
           </ValidationRuleConfiguration>
         </validationrulesdata>
       </field>
-      <field column="EmailDefaultsContentHeaderLinkURL" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="fc52620f-78bf-40df-a6f7-c68dbfaad4e7" visible="true">
+      <field allowempty="true" column="EmailDefaultsContentLogoDarkImageContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="e7653e96-1222-445e-8ae6-4919676ccb24" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Header Link URL</fieldcaption>
+          <fieldcaption>Logo (dark)</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["40334c2a-0969-4e68-96eb-e0fb8d89b37e"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>1</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field column="EmailDefaultsContentLogoLinkURL" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="fc52620f-78bf-40df-a6f7-c68dbfaad4e7" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Logo Link URL</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
@@ -78,46 +100,6 @@
           <controlname>Kentico.Administration.ContentItemSelector</controlname>
           <SelectionType>contentTypes</SelectionType>
         </settings>
-      </field>
-      <field allowempty="true" column="EmailDefaultsContentFooterLogoImageContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="e7653e96-1222-445e-8ae6-4919676ccb24" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Footer Logo</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <AllowedContentItemTypeIdentifiers>
-            <![CDATA[["40334c2a-0969-4e68-96eb-e0fb8d89b37e"]]]>
-          </AllowedContentItemTypeIdentifiers>
-          <controlname>Kentico.Administration.ContentItemSelector</controlname>
-          <MaximumItems>1</MaximumItems>
-          <MinimumItems>1</MinimumItems>
-          <SelectionType>contentTypes</SelectionType>
-        </settings>
-        <validationrulesdata>
-          <ValidationRuleConfiguration>
-            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
-            <RuleValues />
-          </ValidationRuleConfiguration>
-        </validationrulesdata>
-      </field>
-      <field column="EmailDefaultsContentFooterLinkURL" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="ed9401ad-8066-47ad-9d77-47cdfab3dcd5" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Footer Link URL</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.TextInput</controlname>
-        </settings>
-        <validationrulesdata>
-          <ValidationRuleConfiguration>
-            <ValidationRuleIdentifier>Kentico.Community.Portal.ValidationRule.URL</ValidationRuleIdentifier>
-            <RuleValues>
-              <RequireHTTPS>true</RequireHTTPS>
-            </RuleValues>
-          </ValidationRuleConfiguration>
-        </validationrulesdata>
       </field>
       <field column="EmailDefaultsContentHTMLStyles" columnprecision="0" columntype="longtext" enabled="true" guid="f8aff6cb-27ee-480b-917c-5f542a9141e9" visible="true">
         <properties>

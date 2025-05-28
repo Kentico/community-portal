@@ -1,0 +1,13 @@
+@using Kentico.EmailBuilder.Web.Mvc
+@using Kentico.Xperience.Admin.Base.ContentEngine
+
+@{
+    string height = Properties.SpaceSizeParsed switch
+    {
+        SpaceSizes.Small => "20px",
+        SpaceSizes.Large => "40px",
+        SpaceSizes.Medium or _ => "30px"
+    };
+}
+
+<mj-spacer height="@height" />

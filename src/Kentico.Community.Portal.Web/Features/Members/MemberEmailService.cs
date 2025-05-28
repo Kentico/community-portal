@@ -3,7 +3,10 @@ using CMS.DataEngine;
 using CMS.EmailEngine;
 using CMS.EmailLibrary;
 using CMS.EmailLibrary.Internal;
+using CMS.EmailMarketing;
 using CMS.EmailMarketing.Internal;
+using Kentico.Community.Portal.Core.Modules;
+using Kentico.Community.Portal.Web.Features.Emails;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Xperience.Admin.DigitalMarketing.Internal;
 
@@ -15,10 +18,14 @@ public class MemberEmailConfiguration
     public string EmailConfigurationName { get; }
 
     public static MemberEmailConfiguration RegistrationConfirmation(string confirmationURL) =>
-        new(new() { { "TOKEN_ConfirmationURL", confirmationURL } }, "MemberRegistrationEmailConfirmation-6wjw8hge");
+        new(
+            new() { { "TOKEN_ConfirmationURL", confirmationURL } },
+            SystemEmails.RegistrationConfirmation.EmailConfigurationName);
 
     public static MemberEmailConfiguration ResetPassword(string resetURL) =>
-        new(new() { { "TOKEN_PasswordResetURL", resetURL } }, "MemberResetPasswordConfirmation-ahw9v8cj");
+        new(
+            new() { { "TOKEN_PasswordResetURL", resetURL } },
+            SystemEmails.PasswordRecoveryConfirmation.EmailConfigurationName);
 
     private MemberEmailConfiguration(Dictionary<string, string> contextItems, string configurationName)
     {
@@ -42,7 +49,8 @@ public class MemberEmailService(
     IEmailChannelSenderEmailProvider senderInfoProvider,
     IInfoProvider<ContentItemInfo> contentItems,
     IInfoProvider<EmailChannelInfo> emailChannels,
-    IInfoProvider<EmailChannelSenderInfo> emailChannelSenders
+    IInfoProvider<EmailChannelSenderInfo> emailChannelSenders,
+    IEmailUnsubscriptionUrlGenerator emailUnsubscriptionUrlGenerator
 ) : IMemberEmailService
 {
     private readonly IInfoProvider<EmailConfigurationInfo> emailConfigurationProvider = emailConfigurationProvider;
@@ -55,6 +63,7 @@ public class MemberEmailService(
     private readonly IInfoProvider<ContentItemInfo> contentItems = contentItems;
     private readonly IInfoProvider<EmailChannelInfo> emailChannels = emailChannels;
     private readonly IInfoProvider<EmailChannelSenderInfo> emailChannelSenders = emailChannelSenders;
+    private readonly IEmailUnsubscriptionUrlGenerator emailUnsubscriptionUrlGenerator = emailUnsubscriptionUrlGenerator;
 
     public async Task SendEmail(CommunityMember member, MemberEmailConfiguration configuration)
     {
@@ -65,18 +74,29 @@ public class MemberEmailService(
             Email = member.Email
         };
 
-        var dataContext = new CustomValueDataContext
+        var dataContext = new CustomTokenValueDataContext
         {
             Recipient = recipient,
             Items = configuration.ContextItems
         };
 
+
         var emailConfig = await emailConfigurationProvider
             .GetAsync(configuration.EmailConfigurationName);
-
+        string unsubscriptionUrl = await emailUnsubscriptionUrlGenerator.GenerateSignedUrl(emailConfig, "/Kentico.Emails/Unsubscribe", recipient.Email, Guid.NewGuid(), false);
+        var builderContext = new RecipientEmailMarkupBuilderContext
+        {
+            EmailRecipientContext = new EmailRecipientContext
+            {
+                FirstName = recipient.FirstName,
+                LastName = recipient.LastName,
+                EmailAddress = recipient.Email,
+                UnsubscriptionUrl = unsubscriptionUrl
+            }
+        };
         var markupBuilder = await markupBuilderFactory.Create(emailConfig);
         string mergedTemplate = await markupBuilder
-            .BuildEmailForSending(emailConfig);
+            .BuildEmailForSending(emailConfig, builderContext);
 
         var contentResolver = await emailContentResolverFactory.Create(emailConfig, default);
         string emailBody = await contentResolver.Resolve(
@@ -92,6 +112,11 @@ public class MemberEmailService(
         var data = await dataRetriever
             .GetContentItemData(contentItem, contentLanguage.ContentLanguageID, false);
         var emailFieldValues = new EmailContentTypeSpecificFieldValues(data);
+        string plainTextBody = await contentResolver.Resolve(
+            emailConfig,
+            emailFieldValues.EmailPlainText,
+            EmailContentFilterType.Sending,
+            dataContext);
 
         var emailChannel = (await emailChannels.Get()
             .WhereEquals(
@@ -116,35 +141,11 @@ public class MemberEmailService(
             Recipients = recipient.Email,
             Subject = emailFieldValues.EmailSubject,
             Body = emailBody,
-            PlainTextBody = emailFieldValues.EmailPlainText,
+            PlainTextBody = plainTextBody,
             EmailConfigurationID = emailConfig.EmailConfigurationID,
             MailoutGuid = dataContext.MailoutGuid
         };
 
         await emailService.SendEmail(emailMessage);
-    }
-}
-
-public class CustomValueDataContext : FormAutoresponderEmailDataContext
-{
-    public Dictionary<string, string> Items { get; set; } = [];
-}
-
-public class CustomValueFilter : IEmailContentFilter
-{
-    public Task<string> Apply(
-        string text,
-        EmailConfigurationInfo email,
-        IEmailDataContext dataContext)
-    {
-        if (dataContext is CustomValueDataContext customValueContext)
-        {
-            foreach (var (key, val) in customValueContext.Items)
-            {
-                text = text.Replace(key, val);
-            }
-        }
-
-        return Task.FromResult(text);
     }
 }

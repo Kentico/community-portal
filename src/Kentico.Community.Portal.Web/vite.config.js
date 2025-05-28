@@ -134,6 +134,7 @@ function getDotnetCertPaths() {
     process.env.APPDATA !== undefined && process.env.APPDATA !== ""
       ? `${process.env.APPDATA}/ASP.NET/https`
       : `${process.env.HOME}/.aspnet/https`;
+  fs.mkdirSync(baseFolder, { recursive: true });
 
   const certificateName = process.env.npm_package_name;
 

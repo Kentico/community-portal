@@ -30,7 +30,7 @@ public class QAndAQuestionFormViewComponent(IMediator mediator, IWebsiteChannelC
                 new QAndAQuestionFormViewModel(null, formHelpMessageHTML, groups, submission));
         }
 
-        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(id, channelContext.WebsiteChannelName));
+        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(id));
         if (!questionResp.TryGetValue(out var questionPage))
         {
             ModelState.AddModelError("", $"Could not find question {id}.");

@@ -1,5 +1,67 @@
 # Architecture Decision Record
 
+## 2025-05-28 - Email Builder
+
+Although Xperience's [email templates](https://docs.kentico.com/x/eRT_Cw) are
+easy to quickly author, they are difficult to maintain and improve because they
+are authored within the administration's Email templates application. Accessing
+content type fields, validating closing HTML tags, and supporting a variety of
+email clients is very challenging.
+
+Additionally, the benefits that come from strongly typed content type C#
+classes, while iterating and evolving content models, are lost with email
+templates.
+
+### Solution - Email Builder
+
+Now that Xperience has an
+[Email Builder](https://docs.kentico.com/x/email_builder_xp) we should being to
+adopt it to support an increasing number of emails and email designs using
+website channel pages and reusable content.
+
+- The
+  [Email Builder MJML integration](https://docs.kentico.com/developers-and-admins/development/builders/email-builder#enable-the-email-builder-feature)
+  will help improve cross-email client render consistency without increasing the
+  complexity of email templates.
+- [Email Builder components](https://docs.kentico.com/x/develop_email_builder_components_xp)
+  enable emails for various scenarios to be authored and customized much more
+  quickly.
+- Support for
+  [generated email content type C# classes](https://docs.kentico.com/developers-and-admins/development/builders/email-builder/develop-email-builder-components#email-fields)
+  ensures an evolving content model will not result in broken email experiences.
+
+We have converted the Kentico Community Newsletter, most autoresponder emails,
+and all membership emails to use the Email Builder.
+
+We also created an example Email Builder template (`StandardTemplate.razor`)
+along with a section and a suite of widgets which can be used for demoing. In
+the future these will be optimized for production scenarios.
+
+### Caveats
+
+The Email Builder does not yet have the full breadth of features found in the
+Page Builder or other email delivery products, however most of these
+[will be delivered soon](https://roadmap.kentico.com/c/296-email-builder-4-personalization).
+
+- Changing templates
+- Copying and pasting components
+- Mobile previews
+- Widget personalization
+
+The form autoresponder and confirmation
+[email purposes](https://docs.kentico.com/business-users/digital-marketing/emails#email-purposes)
+are not yet supported in the Email Builder which means some emails must continue
+to use email templates instead of the Email Builder - namely those for recipient
+list registration.
+
+Also, sending Email Builder emails programmatically is not officially supported.
+Thankfully, enough of the required APIs are "pubternal" (internal namespaces,
+but `public` C# access modifiers). This means we can author membership related
+emails in the Email Builder and trigger sending them based on member actions
+(example: password recovery and registration).
+
+- See: `MemberEmailService.cs` and `SupportEmailSender.cs`
+
 ## 2025-02-13 - Polls
 
 To make the Kentico Community Portal more interactive and informative, we want

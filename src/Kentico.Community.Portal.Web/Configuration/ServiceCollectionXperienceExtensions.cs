@@ -1,19 +1,25 @@
 using CMS;
 using CMS.Base.Configuration;
 using CMS.ContentEngine;
+using CMS.ContentSynchronization;
 using CMS.Core;
 using CMS.EmailEngine;
 using Kentico.Activities.Web.Mvc;
-using Kentico.Community.Portal.Web.Components.Sections.Grid;
+using Kentico.Community.Portal.Core.Emails;
+using Kentico.Community.Portal.Web.Components.EmailBuilder.Sections.SingleColumn;
+using Kentico.Community.Portal.Web.Components.PageBuilder.Sections.Grid;
 using Kentico.Community.Portal.Web.Features.DataCollection;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Infrastructure.Storage;
 using Kentico.Community.Portal.Web.Rendering;
+using Kentico.Content.Web.Mvc;
 using Kentico.Content.Web.Mvc.Routing;
 using Kentico.CrossSiteTracking.Web.Mvc;
+using Kentico.EmailBuilder.Web.Mvc;
 using Kentico.OnlineMarketing.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Web.Mvc;
+using Kentico.Xperience.Mjml;
 using Microsoft.AspNetCore.Localization.Routing;
 
 [assembly: RegisterModule(typeof(StorageInitializationModule))]
@@ -49,6 +55,7 @@ public static class ServiceCollectionXperienceExtensions
 
                 features.UseEmailMarketing();
                 features.UseEmailStatisticsLogging();
+                features.UseEmailBuilder();
 
                 features.UseActivityTracking();
 
@@ -59,6 +66,17 @@ public static class ServiceCollectionXperienceExtensions
 
                 features.UseWebPageRouting();
             })
+            .Configure<EmailBuilderOptions>(options =>
+            {
+                options.AllowedEmailContentTypeNames =
+                [
+                    AutoresponderEmail.CONTENT_TYPE_NAME,
+                    NewsletterEmail.CONTENT_TYPE_NAME
+                ];
+                options.RegisterDefaultSection = false;
+                options.DefaultSectionIdentifier = SingleColumnSection.IDENTIFIER;
+            })
+            .AddMjmlForEmails()
             .AddKenticoTagManager(config)
             .AddPreviewComponentOutlines()
             .Configure<EmailQueueOptions>(o =>
@@ -75,6 +93,10 @@ public static class ServiceCollectionXperienceExtensions
                 {
                     _ = c.AddKenticoMiniProfiler();
                 }
+            })
+            .IfDevelopment(env, c =>
+            {
+                _ = c.Configure<ContentSynchronizationOptions>(config.GetSection("ContentSynchronizationOptions"));
             })
             .Configure<CookieLevelOptions>(options =>
             {
@@ -95,6 +117,10 @@ public static class ServiceCollectionXperienceExtensions
                 options.MaxFileSize = 524_288_000L;
                 // 20 MB
                 options.ChunkSize = 20_971_520;
+            })
+            .Configure<ContentRetrieverCacheOptions>(options =>
+            {
+                options.DefaultCacheExpiration = TimeSpan.FromMinutes(10);
             })
             .AddSingleton<IContentItemReferenceExtractor, MarkdownContentItemReferenceExtractor>()
             .AddSingleton<IEmailActivityTrackingEvaluator, ConsentEmailActivityTrackingEvaluator>()

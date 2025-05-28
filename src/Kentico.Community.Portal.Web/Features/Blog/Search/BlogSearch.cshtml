@@ -4,7 +4,7 @@
 
 <div class="container mb-5">
     <form id="search" method="get" hx-get="/blog" hx-swap="outerHTML" hx-select="#results" hx-target="#results"
-        hx-push-url="true" hx-trigger="submit" hx-select-oob="#filters">
+        hx-push-url="true" hx-trigger="submitReady" hx-select-oob="#filters" hx-disabled-elt="find fieldset">
         <fieldset class="grid">
             <input asp-for="@Model.Page" />
             <partial name="~/Features/Blog/Search/_Filters.cshtml" model="Model" />

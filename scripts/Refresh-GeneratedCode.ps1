@@ -73,6 +73,20 @@ function GenerateResusableSchemas {
     Invoke-ExpressionWithException $command
 }
 
+function GenerateEmailTypes {
+    $command = "dotnet run " + `
+        "--project $webProjectPath " + `
+        "--no-restore " + `
+        "--no-build " + `
+        "-- --kxp-codegen " + `
+        "--skip-confirmation " + `
+        "--type `"EmailContentTypes`" " + `
+        "--namespace `"Kentico.Community.Portal.Core.Emails`"" + `
+        "--location `"$(Get-AppendedCorePath "Emails/")`""
+
+    Invoke-ExpressionWithException $command
+}
+
 function GenerateDataTypes {
     $command = "dotnet run " + `
         "--project $webProjectPath " + `
@@ -106,17 +120,24 @@ function GenerateForms {
 Write-Status "Re-generating code for Project: $webProjectPath"
 Write-Host "`n"
 
-if ($Types -contains 'Pages') {
+if ($Types -contains 'PageContentTypes') {
     GeneratePageTypes
 }
 
-if ($Types -contains 'Reusable') {
+if ($Types -contains 'ReusableContentTypes') {
     GenerateResusableTypes
-    GenerateResusableSchemas
 }
 
-if ($Types -contains 'DataTypes') {
+if ($Types -contains 'Classes') {
     GenerateDataTypes
+}
+
+if ($Types -contains 'EmailContentTypes') {
+    GenerateEmailTypes
+}
+
+if ($Types -contains 'ReusableFieldSchemas') {
+    GenerateResusableSchemas
 }
 
 if ($Types -contains 'Forms') {

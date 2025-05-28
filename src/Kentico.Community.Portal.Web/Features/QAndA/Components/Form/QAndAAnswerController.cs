@@ -37,7 +37,7 @@ public class QAndAAnswerController(
             return ViewComponent(typeof(QAndAAnswerFormViewComponent), new { questionID });
         }
 
-        var parentQuestionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
+        var parentQuestionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
         if (!parentQuestionResp.TryGetValue(out var parentQuestionPage))
         {
             ModelState.AddModelError(nameof(questionID), "Question is not valid");
@@ -79,7 +79,7 @@ public class QAndAAnswerController(
             return NotFound();
         }
 
-        var parentQuestionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
+        var parentQuestionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
         if (!parentQuestionResp.TryGetValue(out var parentQuestionPage))
         {
             ModelState.AddModelError(nameof(questionID), "Question is not valid");
@@ -148,7 +148,7 @@ public class QAndAAnswerController(
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> MarkApprovedAnswer(Guid questionID, int answerID)
     {
-        var parentQuestionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
+        var parentQuestionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
         if (!parentQuestionResp.TryGetValue(out var parentQuestionPage))
         {
             return NotFound();

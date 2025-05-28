@@ -1,0 +1,21 @@
+@using Kentico.EmailBuilder.Web.Mvc
+
+@if (EmailContext.BuilderMode != EmailBuilderMode.Off)
+{
+    <mj-text>
+        <div class="warning">
+            <p>This component is misconfigured.</p>
+            <p>@Message</p>
+        </div>
+    </mj-text>
+}
+
+@code {
+    private EmailContext? emailContext;
+
+    [Inject] public required IEmailContextAccessor EmailContextAccessor { get; set; }
+
+    [Parameter] public required string Message { get; set; } = "";
+
+    public EmailContext EmailContext => emailContext ??= EmailContextAccessor.GetContext();
+}

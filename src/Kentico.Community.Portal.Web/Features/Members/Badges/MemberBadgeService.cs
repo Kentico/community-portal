@@ -3,18 +3,18 @@ using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.Accounts;
 using Kentico.Community.Portal.Web.Features.QAndA.Search;
 using Kentico.Community.Portal.Web.Rendering;
-using MediatR;
+using Kentico.Content.Web.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.Members.Badges;
 
 public class MemberBadgeService(
     IMemberBadgeInfoProvider memberBadgeInfoProvider,
     IMemberBadgeMemberInfoProvider memberBadgeMemberInfoProvider,
-    IMediator mediator)
+    IContentRetriever contentRetriever)
 {
     private readonly IMemberBadgeInfoProvider memberBadgeInfoProvider = memberBadgeInfoProvider;
     private readonly IMemberBadgeMemberInfoProvider memberBadgeMemberInfoProvider = memberBadgeMemberInfoProvider;
-    private readonly IMediator mediator = mediator;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
 
     public async Task<IReadOnlyList<MemberBadgeViewModel>> GetSelectedBadgesFor(int memberId)
     {
@@ -89,17 +89,15 @@ public class MemberBadgeService(
     private async Task<FrozenDictionary<int, MemberBadgetWithMediaAsset>> GetMemberBadgesWithMediaAssets()
     {
         var badges = await memberBadgeInfoProvider.GetAllMemberBadgesCached();
-        var images = new Dictionary<Guid, ImageViewModel>();
-
-        foreach (var imageGUID in badges.SelectMany(b => b.MemberBadgeImageContent.Select(i => i.Identifier).Where(id => id != default)))
-        {
-            // We have very few badges, so an N+1 query is better for cache busting and not a huge performance hit
-            await mediator.Send(new ImageContentByGUIDQuery(imageGUID))
-                .Execute(image => images.Add(imageGUID, ImageViewModel.Create(image)));
-        }
+        var badgeGUIDs = badges
+            .SelectMany(b => b.MemberBadgeImageContent
+            .Select(i => i.Identifier)
+            .Where(id => id != default));
+        var images = (await contentRetriever.RetrieveContentByGuids<ImageContent>(badgeGUIDs))
+            .Select(ImageViewModel.Create)
+            .ToDictionary(i => i.ID);
 
         var resultsDictionary = new Dictionary<int, MemberBadgetWithMediaAsset>();
-
         foreach (var badge in badges)
         {
             var imageGUID = badge.MemberBadgeImageContent.Select(i => i.Identifier).FirstOrDefault();

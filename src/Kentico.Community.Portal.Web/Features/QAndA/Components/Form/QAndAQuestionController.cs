@@ -90,7 +90,7 @@ public class QAndAQuestionController(
             return NotFound();
         }
 
-        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
+        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
         if (!questionResp.TryGetValue(out var questionPage))
         {
             return NotFound();
@@ -122,7 +122,7 @@ public class QAndAQuestionController(
             return Unauthorized();
         }
 
-        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
+        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
         if (!questionResp.TryGetValue(out var questionPage))
         {
             return NotFound();
@@ -151,7 +151,7 @@ public class QAndAQuestionController(
             return Forbid();
         }
 
-        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
+        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
         if (!questionResp.TryGetValue(out var questionPage))
         {
             return NotFound();

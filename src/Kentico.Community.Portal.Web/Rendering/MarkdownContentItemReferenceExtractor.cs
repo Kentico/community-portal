@@ -8,7 +8,7 @@ using Markdig.Syntax.Inlines;
 
 namespace Kentico.Community.Portal.Web.Rendering;
 
-public partial class MarkdownContentItemReferenceExtractor(
+public class MarkdownContentItemReferenceExtractor(
     MarkdownRenderer markdownRenderer,
     IInfoProvider<WebPageUrlPathInfo> urlProvider,
     IConversionService conversionService) : IContentItemReferenceExtractor

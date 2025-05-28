@@ -1,0 +1,24 @@
+@using Kentico.EmailBuilder.Web.Mvc
+@using Kentico.Xperience.Admin.Base.ContentEngine
+
+@if (!Model.TryGetValue(out var image))
+{
+    <ComponentError Message="Please select a valid image from the Content hub." />
+
+    return;
+}
+
+@if (EmailContext.BuilderMode == EmailBuilderMode.Edit)
+{
+    <mj-section padding="0">
+        <mj-column>
+            <mj-image href="@image.ImageContentAsset.Url" src="@image.ImageContentAsset.Url"
+                alt="@image.MediaItemShortDescription" />
+        </mj-column>
+    </mj-section>
+}
+else
+{
+    <mj-image href="@image.ImageContentAsset.Url" src="@image.ImageContentAsset.Url"
+        alt="@image.MediaItemShortDescription" />
+}

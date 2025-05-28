@@ -18,6 +18,6 @@ public class PostPageIntegrationTests : IntegrationTests
 
         var posts = await executor.GetMappedWebPageResult<BlogPostPage>(b);
 
-        posts.ToList().Should().HaveCountGreaterThanOrEqualTo(3);
+        Assert.That(posts.Count(), Is.GreaterThanOrEqualTo(3));
     }
 }

@@ -3,7 +3,7 @@
   <EmailTemplateCode>
 <![CDATA[
 <!DOCTYPE html>
-{% emailDefaults = EmailDefaults[0].Data; "" |(user)SeanW@kentico.com|(hash)af7fd582af63b7f7f164ed73f609687efad3f0890fab5aca12dfaa6dded5971d%}
+{% emailDefaults = EmailDesignEmailDefaultsContent[0].Data; "" |(user)SeanW@kentico.com|(hash)421ad81c27df5bcfd7a39898c96999462d0e13616511c68eca89ff149743baa3%}
 <html lang="en">
   <head>
     <title>{% AutoresponderEmailTitle %}</title>
@@ -19,30 +19,15 @@
     </style>
   </head>
   <body style="margin: 0; padding: 0; height: 100%; width: 100%">
-    <div class="body" style="background-color: #d3d2d2">
-      <span
-        class="preheader"
-        style="font-size: 1px; color: #ffffff; display: none"
-        >{% EmailPreviewText %}</span
-      >
-      <!-- Outlook main content wrapper. The role attribute is set to presentation to prevent it from being read by screenreaders. -->
-      <!--[if (gte mso 9)|(IE)]>
-    <table cellspacing="0" cellpadding="0" border="0" width="100%" height="100%" align="center" role="presentation" bgcolor="#D3D2D2"><tr><td>
-    <![endif]-->
-      <!-- Outlook main content -->
-      <!--[if (gte mso 9)|(IE)]>
-    <table cellspacing="0" cellpadding="0" border="0" width="600" align="center" role="presentation" bgcolor="#ffffff"><tr><td style="padding-bottom:30px;">
-    <![endif]-->
-      <!-- **** The role and aria-label attributes are added to wrap the email content as an article for screen readers. Some of them will read out the aria-label as the title of the document. -->
-      <!-- Main content top indent - not needed in Outlook - therefore no table here -->
+    <div style="display:none;">{%EmailPreviewText%}</div>
+    <div class="body" style="background-color: #fafafa">
       <div
-        style="background-color: #d3d2d2; height: 66px"
+        style="background-color: #fafafa; height: 66px"
         class="body-gap"
       ></div>
-
       <div
         role="article"
-        aria-label="{% emailTitle %}"
+        aria-label="Kentico newsletter"
         class="body-bg"
         lang="en"
         style="
@@ -57,103 +42,57 @@
           margin: 0 auto;
           max-width: 540px;
           padding: 30px;
-          background-image: url('https://www.kentico.com/getmedia/e00e369a-77ec-40a3-a605-4337d73919bd/dots-header.png');
-          background-size: 318px 248px;
-          background-position: top right;
-          background-repeat: no-repeat;
         "
       >
         <header>
-          <table
-            role="presentation"
-            cellspacing="0"
-            cellpadding="0"
-            border="0"
-            width="100%"
-            style="margin: auto"
+          <div
+            style="
+              display: inline-block;
+              margin: 0;
+              width: 100%;
+              min-width: 200px;
+              max-width: 270px;
+              vertical-align: bottom;
+            "
+            class="logo"
           >
-            <!-- Email Header -->
-            <tbody>
-              <tr>
-                <td align="left" valign="top" style="font-size: 0; padding: 0">
-                  <!--[if (gte mso 9)|(IE)]>
-	                        <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="600">
-	                        <tr>
-	                        <td valign="top" width="300" style="padding-left:30px;padding-top:30px;">
-	                        <![endif]-->
-                  <div
-                    style="
-                      display: inline-block;
-                      margin: 0;
-                      width: 100%;
-                      min-width: 200px;
-                      max-width: 270px;
-                      vertical-align: bottom;
-                    "
-                    class="logo"
-                  >
-                    <a
-                      href="{% emailDefaults.EmailDefaultsContentHeaderLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters) |(user)SeanW@kentico.com|(hash)2df7c881522540450fa55bac9cf38cb882e985ab4b68db190fd58187581cafde%}"
-                      title="{% emailDefaults.EmailDefaultsContentHeaderLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters) |(user)SeanW@kentico.com|(hash)2df7c881522540450fa55bac9cf38cb882e985ab4b68db190fd58187581cafde%}"
-                      style="width: 50px; height: 40px; display: inline-block"
-                      target="_blank"
-                    >
-                      {% headerLogo = emailDefaults.EmailDefaultsContentHeaderLogoImageContent[0].Data; "" |(user)SeanW@kentico.com|(hash)4cd7ac5dbd201787e446f7fdfb9fa94b2d0827d34bb396dae54309abfbfab3fc%}
-                      <img
-                        class="light-img"
-                        src="{% headerLogo.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)e4d87320865da5b224b877264039c16bd236caebd3ba0bf5e1f4d34ffc5195d4%}"
-                        alt="{% HTMLEncode(headerLogo.MediaItemTitle) |(user)SeanW@kentico.com|(hash)4851518c1dd0ab034b7f7d8e3773ed3d9e8f77aa81ce003b0c926f85c44a3729%}"
-                        width="{% headerLogo.MediaItemAssetWidth |(user)SeanW@kentico.com|(hash)4b55b66bbbe63dc90b2d1c26d1fee72dc592793cc04ce541bb01a1ef324428db%}"
-                        height="{% headerLogo.MediaItemAssetHeight |(user)SeanW@kentico.com|(hash)dd17f05a1e98ab48108d8f84a106082b7019a2b3ae1db8e1f8f1550baade4d90%}"
-                        style="width: 101px;"
-                      />
-                      <div
-                        class="dark-img"
-                        style="
-                          display: none;
-                          overflow: hidden;
-                          float: left;
-                          width: 0px;
-                          max-height: 0px;
-                          max-width: 0px;
-                          line-height: 0px;
-                          visibility: hidden;
-                        "
-                      >
-                         <img
-                            src="{% headerLogo.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)e4d87320865da5b224b877264039c16bd236caebd3ba0bf5e1f4d34ffc5195d4%}"
-                            alt="{% HTMLEncode(headerLogo.MediaItemTitle) |(user)SeanW@kentico.com|(hash)4851518c1dd0ab034b7f7d8e3773ed3d9e8f77aa81ce003b0c926f85c44a3729%}"
-                            width="{% headerLogo.MediaItemAssetWidth |(user)SeanW@kentico.com|(hash)4b55b66bbbe63dc90b2d1c26d1fee72dc592793cc04ce541bb01a1ef324428db%}"
-                            height="{% headerLogo.MediaItemAssetHeight |(user)SeanW@kentico.com|(hash)dd17f05a1e98ab48108d8f84a106082b7019a2b3ae1db8e1f8f1550baade4d90%}"
-                            style="width: 101px;"
-                          />
-                      </div>
-                    </a>
-                  </div>
-                  <!--[if (gte mso 9)|(IE)]>
-	                        </td></tr></table>
-	                        <![endif]-->
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </header>
-
-        <main>
-          <!--[if (gte mso 9)|(IE)]>
-            <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="540">
-            <tr>
-            <td valign="top" width="600" style="padding-left:30px;padding-right:30px;padding-bottom:30px;">
-            <![endif]-->
-          <div class="paragraph" style="color: #4f4c4d">
-            {% AutoresponderEmailContent %}
+            <a
+              href="{% emailDefaults.EmailDefaultsContentLogoLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters) |(user)SeanW@kentico.com|(hash)6027490c623122ab1d0fcf99f0f8135a77a06f4ba3c520899847a089f4c54eb6%}"
+              title="{% HTMLEncode(emailDefaults.EmailDefaultsContentLogoLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters)) |(user)SeanW@kentico.com|(hash)66df87fda6920685a3d64969e4877dccd3b72a49f5d736e21a3b94742f7da6e9%}"
+              style="width: 174px; display: inline-block"
+              target="_blank"
+            >
+              {% headerLogoLight = emailDefaults.EmailDefaultsContentLogoLightImageContent[0].Data; "" |(user)SeanW@kentico.com|(hash)226ce8433e63474023899839a461744097824c90c18908a948cd22cffe03a532%}
+              {% headerLogoDark = emailDefaults.EmailDefaultsContentLogoDarkImageContent[0].Data; "" |(user)SeanW@kentico.com|(hash)8aa665ec6ed0f07236133f154bd703c643eca57da251ad11f676de23f5f59e86%}
+              <img
+                class="light-img"
+                src="{% headerLogoLight.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)3eb3dd0602dbd9ed1b1ccf4103ac0a6a8f1a4d0e37ac4d6f345c81b40a13487d%}"
+                alt="{% HTMLEncode(headerLogoLight.MediaItemTitle) |(user)SeanW@kentico.com|(hash)76b4187e8aee1d0b6270067cfa7b31d4c14ac169efec3bf05f30c24e9be9c17a%}"
+                style="width: 150px;"
+              />
+              <div
+                class="dark-img"
+                style="
+                  display: none;
+                  overflow: hidden;
+                  float: left;
+                  width: 0px;
+                  max-height: 0px;
+                  max-width: 0px;
+                  line-height: 0px;
+                  visibility: hidden;
+                "
+              >
+                <img
+                  src="{% headerLogoDark.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)15696381f13b66b7fdc84dc8c1abb01b8ad679672dbbf5efd87d377f9c0fd656%}"
+                  alt="{% HTMLEncode(headerLogoDark.MediaItemTitle) |(user)SeanW@kentico.com|(hash)c4a9acefce0161e45f353247992b4fb0360568f868b14852075547ae7f179f91%}"
+                  style="width: 150px;"
+                />
+              </div>
+            </a>
           </div>
-          <!--[if mso]>
-            </td>
-            </tr>
-            </table>
-            <![endif]-->
-        </main>
+        </header>
+        {% AutoresponderEmailBodyContent %}
       </div>
       <div
         class="footer"
@@ -164,18 +103,9 @@
           font-family: Arial, 'Avenir Next', -apple-system, BlinkMacSystemFont,
             'Segoe UI', Roboto, Helvetica, sans-serif, 'Apple Color Emoji',
             'Segoe UI Emoji', 'Segoe UI Symbol';
-          background-image: url('https://www.kentico.com/getmedia/58ad5643-8464-4e02-996f-761e53ae1669/dots-footer.png');
-          background-position: top right;
-          background-size: 196px 155px;
-          background-repeat: no-repeat;
         "
       >
         <footer style="margin: 0; padding: 0">
-          <!-- Footer -->
-          <!--[if (gte mso 9)|(IE)]>
-        <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="600">
-        <tr><td valign="top" width="600" style="background-color:#F4F4F4;padding: 56px 40px 20px 40px;">
-        <![endif]-->
           <h2
             style="
               color: #000000;
@@ -189,16 +119,9 @@
             "
             class="footer__heading"
           >
-            Meet Kentico on social networks<span
-              class="orange-char"
-              style="color: #f05a22"
-              >.</span
-            >
+            Meet Kentico on social networks
+            <span class="orange-char" style="color: #f05a22">.</span>
           </h2>
-          <!--[if (gte mso 9)|(IE)]>
-            <table role="presentation" border="0" cellspacing="0" cellpadding="0">
-            <tr><td valign="top" style="text-align:left;padding-top:20px;padding-bottom:30px;color:#333333;">
-            <![endif]-->
           <div
             style="
               padding-left: 30px;
@@ -275,41 +198,16 @@
                       </div>
                     </a>
                   </td>
-                  {% } |(user)SeanW@kentico.com|(hash)335157bc81e4f3610996e05b464e58c20543a42572797b9322a12951aacd8b82%}
+                 {% } |(user)SeanW@kentico.com|(hash)8054d7cde398aa028e3bedf36f11fd841acbe064885d591f8692eaa073a569a7%}
                 </tr>
               </tbody>
             </table>
           </div>
-          <!--[if (gte mso 9)|(IE)]>
-            </td></tr></table>
-            <![endif]-->
-          <!-- Footer line -->
-          <!--[if (gte mso 9)|(IE)]>
-            <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="100%" height="1px" bgcolor="#B2B2B2">
-            <tr><td style="background-color:#B2B2B2;height:1px;">
-            <![endif]-->
           <div style="padding: 0 40px">
             <div
               style="background-color: #b2b2b2; height: 1px; padding: 0"
             ></div>
           </div>
-          <!--[if (gte mso 9)|(IE)]>
-            </td></tr></table>
-            <![endif]-->
-          <!-- Gap below the line -->
-          <!--[if (gte mso 9)|(IE)]>
-            <table
-              role="presentation"
-              border="0"
-              cellspacing="0"
-              cellpadding="0"
-              width="100%"
-            >
-              <tr>
-                <td style="padding-bottom: 20px"></td>
-              </tr>
-            </table>
-          <![endif]-->
           <p
             style="
               color: #4f4c4d;
@@ -339,19 +237,18 @@
             class="footer__logo"
           >
             <a
-              href="{% emailDefaults.EmailDefaultsContentFooterLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters) |(user)SeanW@kentico.com|(hash)5872ae6d6afb780ba6ec99c35f7a4b1e065362a507511d9f2819b5bb6cf8676e%}"
-              title="{% HTMLEncode(emailDefaults.EmailDefaultsContentFooterLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters)) |(user)SeanW@kentico.com|(hash)02fd28d0cdd67d4a8448eadbb156a249f6ccb4adc338c9096febdb62459dfb6b%}"
-              style="width: 50px; height: 40px; display: inline-block"
+              href="{% emailDefaults.EmailDefaultsContentLogoLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters) |(user)SeanW@kentico.com|(hash)6027490c623122ab1d0fcf99f0f8135a77a06f4ba3c520899847a089f4c54eb6%}"
+              title="{% HTMLEncode(emailDefaults.EmailDefaultsContentLogoLinkURL.ReplaceUtmParameters(AutoresponderEmailUTMParameters)) |(user)SeanW@kentico.com|(hash)66df87fda6920685a3d64969e4877dccd3b72a49f5d736e21a3b94742f7da6e9%}"
+              style="width: 150px; display: inline-block"
               target="_blank"
             >
-              {% footerLogo = emailDefaults.EmailDefaultsContentFooterLogoImageContent[0].Data; "" |(user)SeanW@kentico.com|(hash)690505af8fcad0cc0401a695c4614ba36f2e171df9aa6a68d73195354af431d6%}
+              {% footerLogoLight = emailDefaults.EmailDefaultsContentLogoLightImageContent[0].Data; "" |(user)SeanW@kentico.com|(hash)2c73cc6b1ce36dd6d89ae35d88c58453ee683f0610be5998d2663c6e1125e32d%}
+              {% footerLogoDark = emailDefaults.EmailDefaultsContentLogoDarkImageContent[0].Data; "" |(user)SeanW@kentico.com|(hash)b7191b63ce850de8db8fbf7454376790d10bee9f8f0360cb3eb550cf13bc89cc%}
               <img
                 class="light-img"
-                src="{% footerLogo.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)dd0a3dd40e4600d7c4bf8ff1b57025faec249f23c87dcb8f5e8c2856fb666288%}"
-                alt="{% HTMLEncode(footerLogo.MediaItemTitle) |(user)SeanW@kentico.com|(hash)4ea6a2695648396b1a4e317437cfa13adde985db51a910c54135ca6a5cbcf74d%}"
-                width="{% footerLogo.MediaItemAssetWidth |(user)SeanW@kentico.com|(hash)56644b07d3a71e7187051f34a9221369c7fab1ba6ed133c0e7d86e1506a7bddf%}"
-                height="{% footerLogo.MediaItemAssetHeight |(user)SeanW@kentico.com|(hash)3c2b29f358ae5e40ac2e658215e01950d23dfc853a010fa7958f7e557ca0b875%}"
-                style="width: 101px;"
+                src="{% footerLogoLight.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)f553baaa1aed6644bc31ed57f98681523e0adde96080bdb8018b9dc3f43e8fb0%}"
+                alt="{% HTMLEncode(footerLogoLight.MediaItemTitle) |(user)SeanW@kentico.com|(hash)782c0fc468f866836a25d28563c3e61428ffcac5dba4180af5a37eefdaa32ad4%}"
+                style="width: 150px;"
               />
               <div
                 class="dark-img"
@@ -367,33 +264,18 @@
                 "
               >
                 <img
-                  src="{% footerLogo.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)dd0a3dd40e4600d7c4bf8ff1b57025faec249f23c87dcb8f5e8c2856fb666288%}"
-                  alt="{% HTMLEncode(footerLogo.MediaItemTitle) |(user)SeanW@kentico.com|(hash)4ea6a2695648396b1a4e317437cfa13adde985db51a910c54135ca6a5cbcf74d%}"
-                  width="{% footerLogo.MediaItemAssetWidth |(user)SeanW@kentico.com|(hash)56644b07d3a71e7187051f34a9221369c7fab1ba6ed133c0e7d86e1506a7bddf%}"
-                  height="{% footerLogo.MediaItemAssetHeight |(user)SeanW@kentico.com|(hash)3c2b29f358ae5e40ac2e658215e01950d23dfc853a010fa7958f7e557ca0b875%}"
-                  style="width: 101px;"
+                  src="{% footerLogoDark.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)3356fbb63b00f3601a2d4d42fd86abda60b33c15b2a3f1c6006182f66a56d16f%}"
+                  alt="{% HTMLEncode(footerLogoDark.MediaItemTitle) |(user)SeanW@kentico.com|(hash)cbb8097fea962592b7d4ef692b3502d36e264ed40d244104f8d5e96077f5b7b8%}"
+                  style="width: 150px;"
                 />
               </div>
             </a>
           </div>
-          <!-- Footer end -->
-          <!--[if (gte mso 9)|(IE)]>
-        </td></tr></table>
-        <![endif]-->
         </footer>
       </div>
-      <!-- Footer wrapper end -->
-      <!--[if (gte mso 9)|(IE)]>
-    </td></tr></table>
-    <![endif]-->
-      <!-- Outlook main content wrapper end -->
-      <!--[if (gte mso 9)|(IE)]>
-    </td></tr></table>
-    <![endif]-->
     </div>
-    <!-- Main content bottom indent -->
     <div
-      style="background-color: #d3d2d2; height: 30px; border: none"
+      style="background-color: #fafafa; height: 30px; border: none"
       class="body-gap"
     ></div>
   </body>

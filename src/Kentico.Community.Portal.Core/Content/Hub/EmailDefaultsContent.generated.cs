@@ -41,33 +41,27 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// EmailDefaultsContentHeaderLogoImageContent.
+		/// EmailDefaultsContentLogoLightImageContent.
 		/// </summary>
-		public IEnumerable<ImageContent> EmailDefaultsContentHeaderLogoImageContent { get; set; }
+		public IEnumerable<ImageContent> EmailDefaultsContentLogoLightImageContent { get; set; }
 
 
 		/// <summary>
-		/// EmailDefaultsContentHeaderLinkURL.
+		/// EmailDefaultsContentLogoDarkImageContent.
 		/// </summary>
-		public string EmailDefaultsContentHeaderLinkURL { get; set; }
+		public IEnumerable<ImageContent> EmailDefaultsContentLogoDarkImageContent { get; set; }
+
+
+		/// <summary>
+		/// EmailDefaultsContentLogoLinkURL.
+		/// </summary>
+		public string EmailDefaultsContentLogoLinkURL { get; set; }
 
 
 		/// <summary>
 		/// EmailDefaultsContentSocialLinks.
 		/// </summary>
 		public IEnumerable<SocialLinkContent> EmailDefaultsContentSocialLinks { get; set; }
-
-
-		/// <summary>
-		/// EmailDefaultsContentFooterLogoImageContent.
-		/// </summary>
-		public IEnumerable<ImageContent> EmailDefaultsContentFooterLogoImageContent { get; set; }
-
-
-		/// <summary>
-		/// EmailDefaultsContentFooterLinkURL.
-		/// </summary>
-		public string EmailDefaultsContentFooterLinkURL { get; set; }
 
 
 		/// <summary>

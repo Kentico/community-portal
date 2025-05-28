@@ -1,0 +1,44 @@
+@{
+    string width = LogoRight is null ? "100%" : "50%";
+}
+
+<mj-section padding="10px 0 10px 0">
+    @if (Model.LogoLight.TryGetValue(out var logoLight) && Model.LogoDark.TryGetValue(out var logoDark))
+    {
+        <mj-column width="@width" vertical-align="middle" padding="0">
+            <EmailLogo ImageLight="@logoLight" ImageDark="@logoDark" LinkURL="@Model.LogoLinkURL" />
+        </mj-column>
+    }
+    @if (LogoRight is not null)
+    {
+        <mj-column width="@width" vertical-align="middle" padding="0">
+            <mj-text align="right" css-class="logo-right">
+                @LogoRight
+            </mj-text>
+        </mj-column>
+    }
+</mj-section>
+
+<mj-text align="left">
+    <h1 class="heading">@Model.Title</h1>
+    @if (SubHeading is not null)
+    {
+        <span class="subheading">@SubHeading</span>
+    }
+</mj-text>
+
+<mj-spacer height="60px" />
+
+
+@code {
+    [Parameter] public required EmailHeaderViewModel Model { get; set; }
+    [Parameter] public RenderFragment? LogoRight { get; set; }
+    [Parameter] public RenderFragment? SubHeading { get; set; }
+
+    public record EmailHeaderViewModel(
+    string Title,
+    Maybe<ImageContent> LogoLight,
+    Maybe<ImageContent> LogoDark,
+    string LogoLinkURL,
+    string Subtitle = "");
+}

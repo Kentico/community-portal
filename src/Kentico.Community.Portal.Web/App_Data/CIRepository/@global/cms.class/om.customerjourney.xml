@@ -11,6 +11,11 @@
       <field column="CustomerJourneyGUID" columnprecision="0" columntype="guid" enabled="true" guid="fbe5d2bb-1283-4a16-bb22-3f1e1ea857d1" system="true" />
       <field column="CustomerJourneyLastModified" columnprecision="7" columntype="datetime" enabled="true" guid="ad1c0704-170f-4cff-bc97-b4d4ba4300fa" system="true" />
       <field allowempty="true" column="CustomerJourneyLastRecalculation" columnprecision="7" columntype="datetime" enabled="true" guid="169ce320-e362-4b70-b4dd-cc055082c254" system="true" />
+      <field column="CustomerJourneyIsScheduledRecalculationEnabled" columnprecision="0" columntype="boolean" enabled="true" guid="cc70616e-15d1-4b77-9f9f-5cd7e5b89026" system="true">
+        <properties>
+          <defaultvalue>True</defaultvalue>
+        </properties>
+      </field>
     </form>
   </ClassFormDefinition>
   <ClassGUID>4f956ca7-5ccf-43d3-9987-edea213cad22</ClassGUID>

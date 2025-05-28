@@ -11,4 +11,9 @@ public partial class AuthorContent
         string.IsNullOrWhiteSpace(AuthorContentSurname)
             ? AuthorContentFirstName
             : $"{AuthorContentFirstName} {AuthorContentSurname}";
+
+    public string ProfileRelativePath =>
+        string.Equals(KENTICO_AUTHOR_CODE_NAME, AuthorContentCodeName) || AuthorContentMemberID == 0
+            ? "#"
+            : $"/member/{AuthorContentMemberID}";
 }

@@ -1,0 +1,42 @@
+@if (Model.TryGetValue(out var vm))
+{
+    string containerClasses = Properties.DesignParsed switch
+    {
+        ContentDesigns.Card => "paragraph body-content",
+        ContentDesigns.Normal or _ => ""
+    };
+
+    <mjml>
+        <mj-head>
+            <mj-preview>@vm.PreviewText</mj-preview>
+            <mj-raw>
+                <meta name="color-scheme" content="light dark">
+                <meta name="supported-color-schemes" content="light dark">
+                <EmailDefaultStyles />
+            </mj-raw>
+            <EmailBuilderStyles />
+        </mj-head>
+
+        <mj-body css-class='body'>
+            <mj-section padding="60px 20px" css-class="body-bg">
+                <mj-column>
+                    <EmailHeader Model="@vm.Header" />
+
+                    <mj-section padding="0">
+                        <mj-column>
+                            <mj-text css-class="@containerClasses">
+                                @vm.Content
+                            </mj-text>
+                        </mj-column>
+                    </mj-section>
+
+                    <mj-spacer height="40px" />
+
+                    <EmailFooter Model="@vm.Footer" />
+                </mj-column>
+            </mj-section>
+
+            <EmailBuilderScripts />
+        </mj-body>
+    </mjml>
+}

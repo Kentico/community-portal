@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.workflowtransition>
+  <Parent>
+    <CodeName>Wait1Minute</CodeName>
+    <GUID>4c092c91-2ce9-4684-b8f8-fbbc3047e426</GUID>
+    <ObjectType>ma.automationstep</ObjectType>
+    <Parent>
+      <CodeName>MemberWelcome</CodeName>
+      <GUID>c2e9e014-5860-4128-af4b-2b1b31c6ca57</GUID>
+      <ObjectType>ma.automationprocess</ObjectType>
+    </Parent>
+  </Parent>
+  <Bindings>
+    <Binding id="ma.automationstep_SendWelcomeEmail_ma.automationprocess_MemberWelcome-ma.automationstep_SendWelcomeEmail_ma.automationprocess_MemberWelcome">
+      <TransitionEndStepID>
+        <CodeName>SendWelcomeEmail</CodeName>
+        <GUID>13d499f2-b003-472d-81b3-b15893294505</GUID>
+        <ObjectType>ma.automationstep</ObjectType>
+        <Parent>
+          <CodeName>MemberWelcome</CodeName>
+          <GUID>c2e9e014-5860-4128-af4b-2b1b31c6ca57</GUID>
+          <ObjectType>ma.automationprocess</ObjectType>
+        </Parent>
+      </TransitionEndStepID>
+      <TransitionSourcePointGUID>10a70f00-86fd-4582-a03c-5ff4c83c376d</TransitionSourcePointGUID>
+      <TransitionType>1</TransitionType>
+      <TransitionWorkflowID>
+        <CodeName>MemberWelcome</CodeName>
+        <GUID>c2e9e014-5860-4128-af4b-2b1b31c6ca57</GUID>
+        <ObjectType>ma.automationprocess</ObjectType>
+      </TransitionWorkflowID>
+    </Binding>
+  </Bindings>
+</cms.workflowtransition>

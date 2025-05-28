@@ -1,0 +1,11 @@
+@using Kentico.EmailBuilder.Web.Mvc
+@using Kentico.Xperience.Admin.Base.ContentEngine
+
+@if (!Model.TryGetValue(out var page))
+{
+    <ComponentError Message="Please select a valid blog post from a website channel." />
+
+    return;
+}
+
+<BlogCard Model="page" BlogTypes="BlogTypes" DXTopics="DXTopics" />

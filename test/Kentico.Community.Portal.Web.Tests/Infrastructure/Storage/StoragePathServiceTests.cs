@@ -15,29 +15,29 @@ public class StoragePathServiceTests
 
         var sut = new StoragePathService(env);
 
-        sut.ShouldMapAzureStorage.Should().BeFalse();
+        Assert.That(sut.ShouldMapAzureStorage, Is.False);
     }
 
     [Test]
-    public void ShouldMapAzureStorage_Will_Return_False_For_SaaS_Environments()
+    public void ShouldMapAzureStorage_Will_Return_True_For_SaaS_Environments()
     {
         var envQA = Substitute.For<IWebHostEnvironment>();
         envQA.EnvironmentName = CloudEnvironments.Qa;
 
         var sut = new StoragePathService(envQA);
-        sut.ShouldMapAzureStorage.Should().BeTrue();
+        Assert.That(sut.ShouldMapAzureStorage, Is.True);
 
         var envUAT = Substitute.For<IWebHostEnvironment>();
         envUAT.EnvironmentName = CloudEnvironments.Uat;
 
         sut = new StoragePathService(envUAT);
-        sut.ShouldMapAzureStorage.Should().BeTrue();
+        Assert.That(sut.ShouldMapAzureStorage, Is.True);
 
         var envProd = Substitute.For<IWebHostEnvironment>();
         envProd.EnvironmentName = "Production";
 
         sut = new StoragePathService(envProd);
-        sut.ShouldMapAzureStorage.Should().BeTrue();
+        Assert.That(sut.ShouldMapAzureStorage, Is.True);
     }
 
     [TestCase(StorageAssetType.Xperience, "~/assets/")]
@@ -50,7 +50,7 @@ public class StoragePathServiceTests
         var sut = new StoragePathService(env);
         string prefix = sut.GetStoragePathPrefix(assetType);
 
-        prefix.Should().Be(expectedResult);
+        Assert.That(prefix, Is.EqualTo(expectedResult));
     }
 
     [Test]
@@ -64,7 +64,7 @@ public class StoragePathServiceTests
         var sut = new StoragePathService(env);
         string fullFilePath = sut.GetStorageFilePath(relativeFilePath, StorageAssetType.Member);
 
-        fullFilePath.Should().Be($"member-assets{Path.DirectorySeparatorChar}{relativeFilePath}");
+        Assert.That(fullFilePath, Is.EqualTo($"member-assets{Path.DirectorySeparatorChar}{relativeFilePath}"));
     }
 
     [Test]
@@ -76,9 +76,7 @@ public class StoragePathServiceTests
         string filePath = "test-path/test-file.png";
 
         var sut = new StoragePathService(env);
-        var action = () => sut.GetStorageFilePath(filePath, StorageAssetType.Xperience);
-
-        action.Should().Throw<ArgumentOutOfRangeException>();
+        _ = Assert.Throws<ArgumentOutOfRangeException>(() => sut.GetStorageFilePath(filePath, StorageAssetType.Xperience));
     }
 
     public static IEnumerable<object[]> GetContainerPath_Will_Return_A_Custom_Path_For_Each_AssetType_For_Local_Development_Source =
@@ -96,7 +94,7 @@ public class StoragePathServiceTests
         var sut = new StoragePathService(env);
         string containerPath = sut.GetContainerPath(assetType);
 
-        containerPath.Should().Be(expectedResult);
+        Assert.That(containerPath, Is.EqualTo(expectedResult));
     }
 
     [TestCase(StorageAssetType.Xperience, "default")]
@@ -109,7 +107,7 @@ public class StoragePathServiceTests
         var sut = new StoragePathService(env);
         string containerPath = sut.GetContainerPath(assetType);
 
-        containerPath.Should().Be(expectedResult);
+        Assert.That(containerPath, Is.EqualTo(expectedResult));
     }
 }
 

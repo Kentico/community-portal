@@ -95,28 +95,56 @@ public class BlogSearchViewModel : IPagedViewModel
 
         IEnumerable<FacetGroup> BuildGroups(IReadOnlyList<TaxonomyTag> parentTags, BlogSearchResults results, BlogSearchRequest request)
         {
+            // First, create a group for selected topics
+            var selectedTopics = parentTags
+                .SelectMany(p => p.Children)
+                .Where(c => request.DXTopics.Contains(c.NormalizedName, StringComparer.OrdinalIgnoreCase))
+                .Select(x => new FacetOption()
+                {
+                    Label = x.DisplayName,
+                    Value = x.NormalizedName,
+                    Count = (int)Math.Round(result.DXTopics
+                        .FirstOrDefault(t => t.Label.Equals(x.NormalizedName, StringComparison.InvariantCultureIgnoreCase))
+                        ?.Value ?? 0),
+                    IsSelected = true
+                })
+                .ToList();
+
+            // Always yield the selected topics group, even if empty
+            yield return new FacetGroup()
+            {
+                Label = "Selected Topics",
+                Value = "selected-topics",
+                Count = selectedTopics.Count,
+                Facets = selectedTopics
+            };
+
+            // Then return the regular groups with unselected topics
             foreach (var parent in parentTags)
             {
-                yield return new FacetGroup()
+                var unselectedTopics = parent.Children
+                    .Where(c => !request.DXTopics.Contains(c.NormalizedName, StringComparer.OrdinalIgnoreCase))
+                    .Select(x => new FacetOption()
+                    {
+                        Label = x.DisplayName,
+                        Value = x.NormalizedName,
+                        Count = (int)Math.Round(result.DXTopics
+                            .FirstOrDefault(t => t.Label.Equals(x.NormalizedName, StringComparison.InvariantCultureIgnoreCase))
+                            ?.Value ?? 0),
+                        IsSelected = false
+                    })
+                    .ToList();
+
+                if (unselectedTopics.Count > 0)
                 {
-                    Label = parent.DisplayName,
-                    Value = parent.NormalizedName,
-                    Count = parent.Children.Count(c => request
-                        .DXTopics
-                        .Contains(c.NormalizedName, StringComparer.OrdinalIgnoreCase)),
-                    Facets = [.. parent.Children
-                        .Select(x => new FacetOption()
-                        {
-                            Label = x.DisplayName,
-                            Value = x.NormalizedName,
-                            Count = (int)Math.Round(result
-                                .DXTopics
-                                .FirstOrDefault(t => t.Label.Equals(x.NormalizedName, StringComparison.InvariantCultureIgnoreCase))?.Value ?? 0),
-                            IsSelected = request
-                                .DXTopics
-                                .Contains(x.NormalizedName, StringComparer.OrdinalIgnoreCase)
-                        })]
-                };
+                    yield return new FacetGroup()
+                    {
+                        Label = parent.DisplayName,
+                        Value = parent.NormalizedName,
+                        Count = 0, // Since selected topics are in their own group
+                        Facets = unselectedTopics
+                    };
+                }
             }
         }
     }

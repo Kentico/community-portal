@@ -6,7 +6,7 @@ namespace Kentico.Community.Portal.Core;
 
 public interface IChannelDataProvider
 {
-    public Task<string?> GetChannelNameByWebsiteChannelID(int websiteChannelID);
+    public Task<string?> GetChannelNameByWebsiteChannelID(int websiteChannelID, CancellationToken cancellationToken = default);
 }
 
 public class ChannelDataProvider(
@@ -19,7 +19,7 @@ public class ChannelDataProvider(
     private readonly IProgressiveCache cache = cache;
     private readonly ICacheDependencyBuilderFactory cacheFactory = cacheFactory;
 
-    public Task<string?> GetChannelNameByWebsiteChannelID(int websiteChannelID)
+    public Task<string?> GetChannelNameByWebsiteChannelID(int websiteChannelID, CancellationToken cancellationToken = default)
     {
         var builder = cacheFactory.Create();
 
@@ -27,7 +27,7 @@ public class ChannelDataProvider(
             .Source(s => s.Join<WebsiteChannelInfo>(nameof(ChannelInfo.ChannelID), nameof(WebsiteChannelInfo.WebsiteChannelChannelID)))
             .WhereEquals(nameof(WebsiteChannelInfo.WebsiteChannelID), websiteChannelID)
             .Columns(nameof(ChannelInfo.ChannelName))
-            .GetScalarResultAsync<string?>(), new(30, [nameof(ChannelDataProvider), nameof(GetChannelNameByWebsiteChannelID)])
+            .GetScalarResultAsync<string?>(cancellationToken: cancellationToken), new(30, [nameof(ChannelDataProvider), nameof(GetChannelNameByWebsiteChannelID)])
             {
                 CacheDependency = builder.ForInfoObjects<ChannelInfo>().All().Builder().Build()
             });

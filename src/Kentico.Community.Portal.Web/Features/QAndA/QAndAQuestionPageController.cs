@@ -1,5 +1,4 @@
 using CMS.Membership;
-using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.Members;
@@ -31,8 +30,7 @@ public class QAndAQuestionPageController(
     WebPageMetaService metaService,
     IMediator mediator,
     MemberBadgeService memberBadgeService,
-    MarkdownRenderer markdownRenderer,
-    IWebsiteChannelContext channelContext) : Controller
+    MarkdownRenderer markdownRenderer) : Controller
 {
     private readonly IWebPageDataContextRetriever dataContextRetriever = dataContextRetriever;
     private readonly UserManager<CommunityMember> userManager = userManager;
@@ -40,7 +38,6 @@ public class QAndAQuestionPageController(
     private readonly WebPageMetaService metaService = metaService;
     private readonly IMediator mediator = mediator;
     private readonly MarkdownRenderer markdownRenderer = markdownRenderer;
-    private readonly IWebsiteChannelContext channelContext = channelContext;
     private readonly MemberBadgeService memberBadgeService = memberBadgeService;
 
     [HttpGet]
@@ -69,7 +66,7 @@ public class QAndAQuestionPageController(
     [HttpGet]
     public async Task<ActionResult> DisplayQuestionDetail(Guid questionID)
     {
-        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
+        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
         if (!questionResp.TryGetValue(out var questionPage))
         {
             return NotFound();
@@ -95,7 +92,7 @@ public class QAndAQuestionPageController(
 
         var currentMember = await userManager.CurrentUser(HttpContext);
         bool canManageContent = await userManager.CanManageContent(currentMember, userInfoProvider);
-        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID, channelContext.WebsiteChannelName));
+        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
 
         if (!questionResp.TryGetValue(out var questionPage))
         {

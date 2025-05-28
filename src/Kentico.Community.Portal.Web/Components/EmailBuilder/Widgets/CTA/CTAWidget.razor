@@ -1,0 +1,58 @@
+@using Kentico.EmailBuilder.Web.Mvc
+@using Kentico.Xperience.Admin.Base.ContentEngine
+
+@{
+    string alignment = Properties.AlignmentParsed switch
+    {
+        CTAAlignments.Left => "left",
+        CTAAlignments.Right => "right",
+        CTAAlignments.Center or _ => "center"
+    };
+
+    string padding = Properties.PaddingParsed switch
+    {
+        CTAPaddings.Small => "20px",
+        CTAPaddings.Large => "40px",
+        CTAPaddings.Medium or _ => "40px"
+    };
+
+    (string fontSize, string buttonPadding) = Properties.ButtonSizeParsed switch
+    {
+        CTAButtonSizes.Small => ("16px", "8px 16px"),
+        CTAButtonSizes.Large => ("26px", "16px 32px"),
+        CTAButtonSizes.Medium or _ => ("20px", "12px 24px")
+    };
+
+    string buttonClass = Properties.ButtonColorParsed switch
+    {
+        CTAButtonColors.Secondary => "cta-secondary",
+        CTAButtonColors.LightAndDark => "cta-light-dark",
+        CTAButtonColors.Primary or _ => "cta-primary"
+    };
+
+    string borderRadius = Properties.BorderRadiusParsed switch
+    {
+        CTABorderRadii.Square => "0px",
+        CTABorderRadii.Pill => "40px",
+        CTABorderRadii.Rounded or _ => "20px"
+    };
+}
+
+@if (EmailContext.BuilderMode == EmailBuilderMode.Edit)
+{
+    <mj-section padding="0">
+        <mj-column>
+            <mj-button css-class="body-content @buttonClass" href="@Properties.URL" align="@alignment" padding="@padding"
+                border-radius="@borderRadius">
+                <div style="font-size: @fontSize; padding: @buttonPadding;">@Properties.Label</div>
+            </mj-button>
+        </mj-column>
+    </mj-section>
+}
+else
+{
+    <mj-button css-class="body-content @buttonClass" href="@Properties.URL" align="@alignment" padding="@padding"
+        border-radius="@borderRadius">
+        <div style="font-size: @fontSize; padding: @buttonPadding;">@Properties.Label</div>
+    </mj-button>
+}

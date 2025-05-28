@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.autoresponderemail>
+  <AutoresponderEmailBodyContent>
+    <![CDATA[<p>To reset your account's password, click <a data-confirmation-url="" href="TOKEN_PasswordResetURL">here</a>.</p><p>You can also copy and paste this URL into your browser.</p><p>TOKEN_PasswordResetURL</p>]]>
+  </AutoresponderEmailBodyContent>
+  <AutoresponderEmailTitle>Reset your password</AutoresponderEmailTitle>
+  <AutoresponderEmailUTMParameters>
+    <![CDATA[{"ID":"8150a798-fd1a-4fd2-aca9-c86737d86b05","Source":"community","Medium":"email","Campaign":"reset-password","Content":"","Term":""}]]>
+  </AutoresponderEmailUTMParameters>
+  <ContentItemDataCommonDataID>
+    <GUID>a747fd94-b9ce-434b-9c35-0205f97b6534</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>MemberResetPasswordConfirmation-edclynqe</CodeName>
+      <GUID>3d0fafc8-edc0-4f63-9ab7-2c3d83100ea7</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>27f72bcd-a3c0-47a6-8ed7-c2f538a95017</ContentItemDataGUID>
+  <EmailPlainText>
+<![CDATA[
+To reset your account's password you can copy and paste this URL into your browser.
+
+TOKEN_PasswordResetURL
+]]>
+  </EmailPlainText>
+  <EmailPreviewText>Password reset request</EmailPreviewText>
+  <EmailSenderID>
+    <CodeName>no-reply</CodeName>
+    <GUID>24520bc4-cdda-401d-812a-e5a73699edac</GUID>
+    <ObjectType>emaillibrary.emailchannelsender</ObjectType>
+    <Parent>
+      <GUID>2b0fe19c-6251-455f-8233-407a1303b541</GUID>
+      <ObjectType>emaillibrary.emailchannel</ObjectType>
+      <Parent>
+        <CodeName>KenticoCommunityEmails</CodeName>
+        <GUID>1b41b848-ddd2-4a8d-9bc7-850a93e147c4</GUID>
+        <ObjectType>cms.channel</ObjectType>
+      </Parent>
+    </Parent>
+  </EmailSenderID>
+  <EmailSubject>
+    <![CDATA[Kentico Community Portal - Reset Password Confirmation]]>
+  </EmailSubject>
+  <EmailTemplateID>0</EmailTemplateID>
+</contentitemdata.kenticocommunity.autoresponderemail>

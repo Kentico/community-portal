@@ -1,0 +1,82 @@
+<mj-text padding="0">
+    <div class="card">
+        @if (Tag.TryGetValue(out string? tag))
+        {
+            string tagColor = TagColor switch
+            {
+                TagColors.Primary => "primary",
+                TagColors.Secondary => "secondary",
+                TagColors.Light => "white",
+                TagColors.Dark or _ => "black",
+            };
+
+            <span class="card__tag tag tag--@tagColor">@tag</span>
+        }
+
+        <h2 class="card__heading">
+            @HeadingTrimmed<span class="brand-char">@HeadingPunctuation</span>
+        </h2>
+
+        @if (Byline is not null)
+        {
+            <span class="card__byline">
+                @Byline
+            </span>
+        }
+
+        @if (BodyContent.TryGetValue(out string? bodyContent))
+        {
+            <p class="card__text">@bodyContent</p>
+        }
+
+        <span class="card__bottom-details-firstline">
+            <span>Topics:</span> @(new MarkupString(string.Join(", ", Topics)))
+        </span>
+
+        <a href="@LinkURL" class="card__cta brand-link">
+            @LinkText
+            <span class="card__cta-arrow">@("\u203a")</span>
+        </a>
+    </div>
+</mj-text>
+
+@code {
+    [Parameter] public Maybe<string> Tag { get; set; }
+    [Parameter] public TagColors TagColor { get; set; } = TagColors.Dark;
+    [Parameter] public required string Heading { get; set; }
+    [Parameter] public RenderFragment? Byline { get; set; }
+    public string HeadingTrimmed { get; set; } = "";
+    public string HeadingPunctuation { get; set; } = "";
+    [Parameter] public Maybe<string> BodyContent { get; set; }
+    [Parameter] public IReadOnlyList<string> Topics { get; set; } = [];
+    [Parameter] public string LinkText { get; set; } = "Read more";
+    [Parameter] public required string LinkURL { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(Heading))
+        {
+            var trimmed = Heading.TrimEnd();
+            if (trimmed.Length > 0 && char.IsPunctuation(trimmed[^1]) && ".!?.,".Contains(trimmed[^1]))
+            {
+                HeadingPunctuation = trimmed[^1].ToString();
+                HeadingTrimmed = trimmed[..^1];
+            }
+            else
+            {
+                HeadingTrimmed = trimmed;
+                HeadingPunctuation = ".";
+            }
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public enum TagColors
+    {
+        Primary,
+        Secondary,
+        Light,
+        Dark
+    }
+}

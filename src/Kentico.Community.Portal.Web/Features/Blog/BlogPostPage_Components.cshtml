@@ -55,7 +55,8 @@
                         [
                             SI.Grid,
                             SI.SingleColumn
-                        ]" area-options-allowed-widgets="
+                        ]" 
+                        area-options-allowed-widgets="
                         [ 
                             WI.BlogPostList,
                             WI.CTAButton,
@@ -69,7 +70,8 @@
                             WI.Embed,
                             WI.FallbackForm,
                             WI.Poll
-                        ]" allow-widget-output-cache="View.CacheEnabled"
+                        ]" 
+                        allow-widget-output-cache="View.CacheEnabled"
                         widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
                 </div>
 
@@ -79,9 +81,18 @@
                             <div class="mt-6">
                                 @if (post.DiscussionLinkPath.TryGetValue(out string? discussionPath))
                                 {
-                                    <a class="btn btn-secondary" href="@discussionPath">
-                                        Discuss this post with the community
-                                    </a>
+                                    string message = post.DiscussionCommentsCount switch
+                                    {
+                                        0 => "Start a discussion about this post",
+                                        1 => "Join the conversation (1 comment)",
+                                        _ => $"Join the conversation ({post.DiscussionCommentsCount} comments)"
+                                    };
+
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <a class="btn btn-secondary" href="@discussionPath">
+                                            @message
+                                        </a>
+                                    </div>
                                 }
                                 <div class="mt-4 text-center">
                                     <p>Share on:</p>

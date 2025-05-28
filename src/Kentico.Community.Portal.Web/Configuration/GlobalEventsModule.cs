@@ -10,8 +10,7 @@ using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Configuration;
 using Kentico.Community.Portal.Web.Features.Blog.Events;
-using Kentico.Community.Portal.Web.Features.Members;
-using Kentico.Community.Portal.Web.Features.QAndA.Events;
+using Kentico.Community.Portal.Web.Features.Emails;
 
 [assembly: RegisterModule(typeof(GlobalEventsModule))]
 
@@ -38,9 +37,6 @@ internal class GlobalEventsModule : Module
             ContentItemEvents.Create.Before += ContentItem_CreateBefore_Local;
         }
 
-        QAndAAnswerDataInfo.TYPEINFO.Events.Insert.After += QAndAAnswerDataInfo_InsertAfter;
-        QAndAAnswerDataInfo.TYPEINFO.Events.Update.After += QAndAAnswerDataInfo_UpdateAfter;
-        QAndAAnswerDataInfo.TYPEINFO.Events.Delete.After += QAndAAnswerDataInfo_DeleteAfter;
         WebPageEvents.Create.Before += WebPage_CreateBefore;
         WebPageEvents.UpdateDraft.Before += WebPage_UpdateBefore;
         WebPageEvents.Publish.Execute += WebPage_PublishExecute;
@@ -56,11 +52,17 @@ internal class GlobalEventsModule : Module
         BizFormItemEvents.Update.After += FormItem_UpdateAfter;
         BizFormItemEvents.Delete.After += FormItem_DeleteAfter;
 
-        EmailContentFilterRegister.Instance
+        /**
+        * This filter enables token replacement in Email Builder email content
+        * _before_ Xperience's URL replacement for URL click tracking.
+        * This is key for emails to members that include dynamically generated
+        * and member-specific URLs, like password recovery and registration confirmation
+        */
+        EmailContentFilterRegister.EmailBuilderInstance
             .Register(
-                () => new CustomValueFilter(),
-                EmailContentFilterType.Sending,
-                100);
+            () => new CustomTokenValueEmailContentFilter(),
+            EmailContentFilterType.Sending,
+            100);
 
         base.OnInit(parameters);
     }
@@ -121,42 +123,6 @@ internal class GlobalEventsModule : Module
         {
             e.Name = e.Name[..Math.Min(90, e.Name.Length)] + "-localtest";
         }
-    }
-
-    private void QAndAAnswerDataInfo_InsertAfter(object? sender, ObjectEventArgs e)
-    {
-        if (e.Object is not QAndAAnswerDataInfo answer)
-        {
-            return;
-        }
-
-        services.GetRequiredService<QAndAAnswerSearchIndexTaskHandler>().Handle(answer)
-            .GetAwaiter()
-            .GetResult();
-    }
-
-    private void QAndAAnswerDataInfo_UpdateAfter(object? sender, ObjectEventArgs e)
-    {
-        if (e.Object is not QAndAAnswerDataInfo answer)
-        {
-            return;
-        }
-
-        services.GetRequiredService<QAndAAnswerSearchIndexTaskHandler>().Handle(answer)
-            .GetAwaiter()
-            .GetResult();
-    }
-
-    private void QAndAAnswerDataInfo_DeleteAfter(object? sender, ObjectEventArgs e)
-    {
-        if (e.Object is not QAndAAnswerDataInfo answer)
-        {
-            return;
-        }
-
-        services.GetRequiredService<QAndAAnswerSearchIndexTaskHandler>().Handle(answer)
-            .GetAwaiter()
-            .GetResult();
     }
 
     private void WebPage_PublishExecute(object? sender, PublishWebPageEventArgs args)

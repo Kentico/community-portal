@@ -1,5 +1,6 @@
 using CMS.ContentEngine;
 using CMS.Core;
+using CMS.DataEngine;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Lucene.Core.Indexing;
@@ -15,14 +16,30 @@ public class QAndAAnswerSearchIndexTaskHandler(
     IChannelDataProvider channelProvider,
     IContentQueryExecutor executor,
     IEventLogService log,
-    ILuceneTaskLogger taskLogger)
+    ILuceneTaskLogger taskLogger) :
+        IInfoObjectEventHandler<InfoObjectBeforeInsertEvent<QAndAAnswerDataInfo>>,
+        IInfoObjectEventHandler<InfoObjectBeforeUpdateEvent<QAndAAnswerDataInfo>>,
+        IInfoObjectEventHandler<InfoObjectBeforeDeleteEvent<QAndAAnswerDataInfo>>
 {
     private readonly IChannelDataProvider channelProvider = channelProvider;
     private readonly IContentQueryExecutor executor = executor;
     private readonly IEventLogService log = log;
     private readonly ILuceneTaskLogger taskLogger = taskLogger;
 
-    public async Task Handle(QAndAAnswerDataInfo answer)
+    public void Handle(InfoObjectBeforeInsertEvent<QAndAAnswerDataInfo> infoObjectEvent) =>
+        Handle(infoObjectEvent.InfoObject).GetAwaiter().GetResult();
+    public void Handle(InfoObjectBeforeUpdateEvent<QAndAAnswerDataInfo> infoObjectEvent) =>
+        Handle(infoObjectEvent.InfoObject).GetAwaiter().GetResult();
+    public void Handle(InfoObjectBeforeDeleteEvent<QAndAAnswerDataInfo> infoObjectEvent) =>
+        Handle(infoObjectEvent.InfoObject).GetAwaiter().GetResult();
+    public async Task HandleAsync(InfoObjectBeforeInsertEvent<QAndAAnswerDataInfo> infoObjectEvent, CancellationToken cancellationToken) =>
+        await Handle(infoObjectEvent.InfoObject, cancellationToken);
+    public async Task HandleAsync(InfoObjectBeforeUpdateEvent<QAndAAnswerDataInfo> infoObjectEvent, CancellationToken cancellationToken) =>
+        await Handle(infoObjectEvent.InfoObject, cancellationToken);
+    public async Task HandleAsync(InfoObjectBeforeDeleteEvent<QAndAAnswerDataInfo> infoObjectEvent, CancellationToken cancellationToken) =>
+        await Handle(infoObjectEvent.InfoObject, cancellationToken);
+
+    public async Task Handle(QAndAAnswerDataInfo answer, CancellationToken cancellationToken = default)
     {
         int questionWebPageID = answer.QAndAAnswerDataQuestionWebPageItemID;
 
@@ -31,7 +48,7 @@ public class QAndAAnswerSearchIndexTaskHandler(
                 .OfContentType(QAndAQuestionPage.CONTENT_TYPE_NAME)
                 .ForWebsite([questionWebPageID]));
 
-        var page = (await executor.GetMappedWebPageResult<QAndAQuestionPage>(b)).FirstOrDefault();
+        var page = (await executor.GetMappedWebPageResult<QAndAQuestionPage>(b, cancellationToken: cancellationToken)).FirstOrDefault();
         if (page is null)
         {
             log.LogWarning(
@@ -42,7 +59,7 @@ public class QAndAAnswerSearchIndexTaskHandler(
             return;
         }
 
-        string? channelName = await channelProvider.GetChannelNameByWebsiteChannelID(page.SystemFields.WebPageItemWebsiteChannelId);
+        string? channelName = await channelProvider.GetChannelNameByWebsiteChannelID(page.SystemFields.WebPageItemWebsiteChannelId, cancellationToken);
         if (channelName is null)
         {
             log.LogWarning(

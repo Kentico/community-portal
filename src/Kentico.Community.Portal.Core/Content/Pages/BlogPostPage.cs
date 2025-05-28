@@ -6,27 +6,11 @@ public partial class BlogPostPage
     /// Linked items query depth to retrieve a fully hydrated object graph
     /// </summary>
     /// <value></value>
-    public static int FullQueryDepth { get; } = 3;
+    public const int FullQueryDepth = 3;
 
-    /// <summary>
-    /// Cascading logic across all relevant <see cref="BlogPostPage"/> fields to create a <see cref="WebpageMeta"/>
-    /// </summary>
-    /// <returns></returns>
-    public WebpageMeta GetWebpageMeta()
-    {
-        string metaTitle = Maybe
-            .From(WebPageMetaTitle)
-            .MapNullOrWhiteSpaceAsNone()
-            .GetValueOrDefault("");
-
-        string metaDescription = Maybe
-            .From(WebPageMetaDescription)
-            .MapNullOrWhiteSpaceAsNone()
-            .GetValueOrDefault("");
-
-        return new WebpageMeta(metaTitle, metaDescription)
+    public WebpageMeta GetWebpageMeta() =>
+        new(WebPageMetaTitle, WebPageMetaDescription)
         {
             CanonicalURL = WebPageCanonicalURL
         };
-    }
 }

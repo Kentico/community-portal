@@ -1,0 +1,47 @@
+@using CMS.ContentEngine
+@using static Kentico.Community.Portal.Web.Components.EmailBuilder.Card
+
+<Card Tag="Tag" TagColor="TagColors.Primary" Heading="@Model.WebPageMetaTitle"
+    BodyContent="Model.WebPageMetaDescription" Topics="Topics" LinkURL="@LinkURL">
+
+    <Byline>
+        @if (Model.BlogPostPageAuthorContent.TryFirst().TryGetValue(out var author))
+        {
+            if (author.AuthorContentMemberID > 0)
+            {
+                <text>by <a href="@author.ProfileRelativePath">@author.FullName</a></text>
+            }
+            else
+            {
+                <text>by @author.FullName</text>
+            }
+        }
+    </Byline>
+</Card>
+
+@code {
+    [Parameter] public required BlogPostPage Model { get; set; }
+    [Parameter] public required Dictionary<Guid, Tag> BlogTypes { get; set; }
+    [Parameter] public required Dictionary<Guid, Tag> DXTopics { get; set; }
+
+    public Maybe<string> Tag { get; set; }
+    public IReadOnlyList<string> Topics { get; set; } = [];
+    public string LinkURL { get; set; } = "";
+
+    [Inject] public required IWebPageUrlRetriever WebPageUrlRetriever { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Tag = Model.BlogPostPageBlogType
+        .TryFirst()
+        .Bind(r => BlogTypes.TryFind(r.Identifier))
+        .Map(t => t.Title);
+
+        Topics = Model.BlogPostPageDXTopics
+        .Select(t => DXTopics.TryGetValue(t.Identifier, out var tag) ? tag.Title : "")
+        .Where(t => !string.IsNullOrWhiteSpace(t))
+        .ToList();
+
+        LinkURL = (await WebPageUrlRetriever.Retrieve(Model)).AbsoluteUrl;
+    }
+}

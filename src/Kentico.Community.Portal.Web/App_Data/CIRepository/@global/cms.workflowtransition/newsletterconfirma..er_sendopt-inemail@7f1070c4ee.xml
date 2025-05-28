@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.workflowtransition>
+  <Parent>
+    <CodeName>SendOpt-inEmail</CodeName>
+    <GUID>6705e2a4-3910-4438-885a-c02b1a63c6c4</GUID>
+    <ObjectType>ma.automationstep</ObjectType>
+    <Parent>
+      <CodeName>NewsletterConfirmationReminder</CodeName>
+      <GUID>f7a212b3-5b2f-4bc7-96ef-b4ddd6d095de</GUID>
+      <ObjectType>ma.automationprocess</ObjectType>
+    </Parent>
+  </Parent>
+  <Bindings>
+    <Binding id="ma.automationstep_Wait2Days_ma.automationprocess_NewsletterConfirmationReminder-ma.automationstep_Wait2Days_ma.automationprocess_NewsletterConfirmationReminder">
+      <TransitionEndStepID>
+        <CodeName>Wait2Days</CodeName>
+        <GUID>299c824e-7aba-495e-aef8-1a6ad6744331</GUID>
+        <ObjectType>ma.automationstep</ObjectType>
+        <Parent>
+          <CodeName>NewsletterConfirmationReminder</CodeName>
+          <GUID>f7a212b3-5b2f-4bc7-96ef-b4ddd6d095de</GUID>
+          <ObjectType>ma.automationprocess</ObjectType>
+        </Parent>
+      </TransitionEndStepID>
+      <TransitionSourcePointGUID>9c89c66b-30fe-4241-9254-600ca8e99016</TransitionSourcePointGUID>
+      <TransitionType>1</TransitionType>
+      <TransitionWorkflowID>
+        <CodeName>NewsletterConfirmationReminder</CodeName>
+        <GUID>f7a212b3-5b2f-4bc7-96ef-b4ddd6d095de</GUID>
+        <ObjectType>ma.automationprocess</ObjectType>
+      </TransitionWorkflowID>
+    </Binding>
+  </Bindings>
+</cms.workflowtransition>

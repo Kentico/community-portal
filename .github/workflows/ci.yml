@@ -18,6 +18,7 @@ on:
       - "**.ts"
       - "**.tsx"
       - "**.js"
+      - "**.razor"
 
 jobs:
   build_and_test:
@@ -119,6 +120,7 @@ jobs:
 
       - name: Install Playwright Dependencies
         run: |
+          # Must be path to the RELEASE build
           ./test/Kentico.Community.Portal.Web.E2E.Tests/bin/Release/net8.0/playwright.ps1 install
 
       - name: Install Azurite from npm
