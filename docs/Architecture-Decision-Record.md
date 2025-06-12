@@ -1,5 +1,48 @@
 # Architecture Decision Record
 
+## 2025-06-12 - Reusable field schema refactor
+
+Early versions of Xperience by Kentico did not have
+[reusable field schemas](https://docs.kentico.com/x/D4_OD) (RFS) and when they
+were added they still did not have the full feature support they do now.
+
+The Kentico Community Portal already had many content types, templates, and
+components used for website channels, but other channels (primary email) were
+not yet in use. Content models and features evolved organically but over time
+some of the reusable field schemas and various content type fields were not as
+useful. Some were even an extra burden during content management and feature
+development. There are also specific fields using old data types (ex: Pages)
+that are made obsolete by newer features (ex:
+[combined content selector](https://docs.kentico.com/documentation/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/reference-admin-ui-form-components#combined-content-selector))
+which have a much better UX and feature set.
+
+Now, the content models are being made more consistent, simplified, made more
+flexible while also improving the content authoring and management experience.
+
+To support the migration of content in-production, RFS are being added to or new
+ones are being created before any fields are deleted. This gives us time to
+migrate existing content over either through copying (ex: a _title_ value from
+one field to another) or some pre-defined business process (ex: switching from
+the page selector to the combined content selector).
+
+The administration UI has been extended with a migration application. This
+application provides a UI to run any registered "migrations" which implement the
+`IDataMigrator` type.
+
+The UI shows which migrations are available, how many items can be migrated by
+each migration, and a field to submit how many will be migrated in a batch run.
+
+Additionally, after a migration run completes the resulting successfully
+migrated items are displayed along with any migration errors.
+
+This approach follows the iterative
+[expand and contract](https://community.kentico.com/blog/safely-evolving-a-content-model-with-expand-and-contract)
+migration pattern.
+
+A later deployment will remove the old fields once the application code no
+longer depends on them. Finally the old RFS, fields, and content types can be
+deleted.
+
 ## 2025-05-28 - Email Builder
 
 Although Xperience's [email templates](https://docs.kentico.com/x/eRT_Cw) are
