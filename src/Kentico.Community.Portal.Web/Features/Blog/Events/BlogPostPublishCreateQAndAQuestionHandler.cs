@@ -1,6 +1,5 @@
 using CMS.ContentEngine;
 using CMS.Core;
-using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Membership;
@@ -17,13 +16,13 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
     IMediator mediator,
     IContentQueryExecutor queryExecutor,
     IWebPageUrlRetriever pageUrlRetriever,
-    ISystemClock clock,
+    TimeProvider clock,
     IEventLogService log)
 {
     private readonly IMediator mediator = mediator;
     private readonly IContentQueryExecutor queryExecutor = queryExecutor;
     private readonly IWebPageUrlRetriever pageUrlRetriever = pageUrlRetriever;
-    private readonly ISystemClock clock = clock;
+    private readonly TimeProvider clock = clock;
     private readonly IEventLogService log = log;
 
     public async Task Handle(PublishWebPageEventArgs args)
@@ -47,13 +46,13 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
         }
 
         // Do not re-process pages that already have a linked Q&A Discussion Page
-        if (page.BlogPostPageQAndADiscussionPage.Any())
+        if (page.BlogPostPageQAndADiscussionPage.Any() || page.BlogPostPageQAndAQuestionPages.Any())
         {
             return;
         }
 
         var rootQuestionPage = await mediator.Send(new QAndAQuestionsRootPageQuery(args.WebsiteChannelName));
-        var now = clock.Now;
+        var now = clock.GetLocalNow();
         var questionMonthFolder = await mediator.Send(new QAndAMonthFolderQuery(rootQuestionPage, args.WebsiteChannelName, now.Year, now.Month, args.WebsiteChannelID));
 
         var url = await pageUrlRetriever.Retrieve(page);
@@ -64,7 +63,8 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
 
             Continue discussions 🤗 on this blog post below.
             """;
-        var dxTopicTagIdentifiers = page.BlogPostPageDXTopics.Select(t => t.Identifier);
+        var dxTopicTagIdentifiers = page.CoreTaxonomyDXTopics.Select(t => t.Identifier)
+            ?? page.BlogPostPageDXTopics.Select(t => t.Identifier);
         var member = new CommunityMember()
         {
             Id = 0 // Only the Id is required and an Id of 0 will result in the author being the Kentico Community author
@@ -86,10 +86,10 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
                 * This will recurse on this handler because it publishes the blog post
                 * but we guard against updating a blog post page that already has a question path
                 */
-                return await mediator.Send(new BlogPostPageSetQuestionURLCommand(page, args.WebsiteChannelID, questionWebPageID));
+                return await mediator.Send(new BlogPostPageSetQuestionCommand(page, args.WebsiteChannelID, questionWebPageID));
             })
             .Match(
                 MonadUtilities.Noop,
-                err => log.LogError(nameof(BlogPostPublishCreateQAndAQuestionHandler), "UPDATE_BLOG_QUESTION_URL", err));
+                err => log.LogError(nameof(BlogPostPublishCreateQAndAQuestionHandler), "UPDATE_BLOG_QUESTION", err));
     }
 }

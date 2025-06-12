@@ -1,0 +1,11 @@
+@using Kentico.Forms.Web.Mvc
+@using Kentico.Community.Portal.Web.Components.FormBuilder
+
+@model DateInputComponent
+
+@{
+    var htmlAttributes = ViewData.Kentico().GetEditorHtmlAttributes();
+    htmlAttributes["type"] = "date";
+}
+
+@Html.TextBoxFor(m => m.Value, htmlAttributes)

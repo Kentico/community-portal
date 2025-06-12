@@ -58,7 +58,7 @@ public class AutoresponderTemplateViewModel
     {
         Title = email.AutoresponderEmailTitle;
         PreviewText = email.EmailPreviewText;
-        Content = new(email.AutoresponderEmailBodyContent);
+        Content = new(email.AutoresponderEmailBodyContentHTML);
         UTMParameters = email.AutoresponderEmailUTMParameters;
         Defaults = email.EmailDesignEmailDefaultsContent.First();
 

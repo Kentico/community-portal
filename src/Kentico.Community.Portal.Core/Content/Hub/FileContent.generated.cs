@@ -19,7 +19,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// Represents a content item of type <see cref="FileContent"/>.
 	/// </summary>
 	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
-	public partial class FileContent : IContentItemFieldsSource, IMediaItem
+	public partial class FileContent : IContentItemFieldsSource, IMediaItemFields, IBasicItemFields, ICoreTaxonomyFields
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -56,5 +56,23 @@ namespace Kentico.Community.Portal.Core.Content
 		/// MediaItemTaxonomy.
 		/// </summary>
 		public IEnumerable<TagReference> MediaItemTaxonomy { get; set; }
+
+
+		/// <summary>
+		/// BasicItemTitle.
+		/// </summary>
+		public string BasicItemTitle { get; set; }
+
+
+		/// <summary>
+		/// BasicItemShortDescription.
+		/// </summary>
+		public string BasicItemShortDescription { get; set; }
+
+
+		/// <summary>
+		/// CoreTaxonomyDXTopics.
+		/// </summary>
+		public IEnumerable<TagReference> CoreTaxonomyDXTopics { get; set; }
 	}
 }

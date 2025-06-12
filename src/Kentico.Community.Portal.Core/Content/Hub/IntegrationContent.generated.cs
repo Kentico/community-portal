@@ -19,7 +19,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// Represents a content item of type <see cref="IntegrationContent"/>.
 	/// </summary>
 	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
-	public partial class IntegrationContent : IContentItemFieldsSource, IListableItem
+	public partial class IntegrationContent : IContentItemFieldsSource, IFeaturedImageFields, IBasicItemFields, ICoreTaxonomyFields
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -59,6 +59,12 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
+		/// IntegrationContentHasMemberAuthor.
+		/// </summary>
+		public bool IntegrationContentHasMemberAuthor { get; set; }
+
+
+		/// <summary>
 		/// IntegrationContentAuthorMemberID.
 		/// </summary>
 		public int IntegrationContentAuthorMemberID { get; set; }
@@ -89,8 +95,26 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// ListableItemFeaturedImageContent.
+		/// FeaturedImageImageContent.
 		/// </summary>
-		public IEnumerable<ImageContent> ListableItemFeaturedImageContent { get; set; }
+		public IEnumerable<ImageContent> FeaturedImageImageContent { get; set; }
+
+
+		/// <summary>
+		/// BasicItemTitle.
+		/// </summary>
+		public string BasicItemTitle { get; set; }
+
+
+		/// <summary>
+		/// BasicItemShortDescription.
+		/// </summary>
+		public string BasicItemShortDescription { get; set; }
+
+
+		/// <summary>
+		/// CoreTaxonomyDXTopics.
+		/// </summary>
+		public IEnumerable<TagReference> CoreTaxonomyDXTopics { get; set; }
 	}
 }

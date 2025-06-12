@@ -1,5 +1,4 @@
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList;
-using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.ContactDetailsCard;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CookiePreferences;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CTAButton;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Embed;
@@ -20,7 +19,6 @@ namespace Kentico.Community.Portal.Web.Components.PageBuilder.Widgets;
 public static class WidgetIdentifiers
 {
     public const string BlogPostList = BlogPostListWidget.IDENTIFIER;
-    public const string ContactDetailsCard = ContactDetailsCardWidget.IDENTIFIER;
     public const string CookiePreferences = CookiePreferencesWidget.IDENTIFIER;
     public const string CTAButton = CTAButtonWidget.IDENTIFIER;
     public const string File = FileWidget.IDENTIFIER;

@@ -21,6 +21,7 @@ using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Web.Mvc;
 using Kentico.Xperience.Mjml;
 using Microsoft.AspNetCore.Localization.Routing;
+using XperienceCommunity.MCPServer;
 
 [assembly: RegisterModule(typeof(StorageInitializationModule))]
 
@@ -96,6 +97,10 @@ public static class ServiceCollectionXperienceExtensions
             })
             .IfDevelopment(env, c =>
             {
+                _ = c.AddXperienceMCPServer();
+            })
+            .IfDevelopment(env, c =>
+            {
                 _ = c.Configure<ContentSynchronizationOptions>(config.GetSection("ContentSynchronizationOptions"));
             })
             .Configure<CookieLevelOptions>(options =>
@@ -122,7 +127,7 @@ public static class ServiceCollectionXperienceExtensions
             {
                 options.DefaultCacheExpiration = TimeSpan.FromMinutes(10);
             })
-            .AddSingleton<IContentItemReferenceExtractor, MarkdownContentItemReferenceExtractor>()
+            .AddSingleton<IFormFieldContentItemReferenceExtractor, MarkdownContentItemReferenceExtractor>()
             .AddSingleton<IEmailActivityTrackingEvaluator, ConsentEmailActivityTrackingEvaluator>()
             .Decorate<ILocalizationService, ApplicationLocalizationService>();
 }

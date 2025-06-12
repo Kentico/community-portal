@@ -8,6 +8,12 @@
       <field column="ContentItemDataID" columntype="integer" enabled="true" guid="3fc2f29d-ef4c-4813-aa07-47a48777276f" isPK="true" />
       <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="76616d6f-ead8-4f84-b97e-11937c1bac99" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
       <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="e0c7de4a-8b37-4c5f-b735-6c745cc2d33b" isunique="true" system="true" />
+      <schema guid="668b6777-06f6-47eb-a04a-956ac74c7c52" name="668b6777-06f6-47eb-a04a-956ac74c7c52">
+        <properties />
+      </schema>
+      <schema guid="bdc7088f-b01e-4186-a83c-703214805501" name="bdc7088f-b01e-4186-a83c-703214805501">
+        <properties />
+      </schema>
       <schema guid="058caefa-c8d6-440f-8f3e-cd0fd9d7a41a" name="058caefa-c8d6-440f-8f3e-cd0fd9d7a41a">
         <properties />
       </schema>
@@ -67,6 +73,19 @@
           </ValidationRuleConfiguration>
         </validationrulesdata>
       </field>
+      <field column="IntegrationContentHasMemberAuthor" columnprecision="0" columntype="boolean" enabled="true" guid="464524a4-74d1-4136-907f-376c56de0dfb" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[If true, member selection will be visible in the form]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Has member author</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+      </field>
       <field allowempty="true" column="IntegrationContentAuthorMemberID" columnprecision="0" columntype="integer" enabled="true" guid="6ec51ee5-f658-455f-9c60-1db00f0548df" visible="true">
         <properties>
           <explanationtext>
@@ -80,6 +99,14 @@
           <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
           <ObjectType>CMS.Member</ObjectType>
         </settings>
+        <visibilityconditiondata>
+          <VisibilityConditionConfiguration>
+            <Identifier>Kentico.Administration.IsTrueVisibilityCondition</Identifier>
+            <Properties>
+              <PropertyName>IntegrationContentHasMemberAuthor</PropertyName>
+            </Properties>
+          </VisibilityConditionConfiguration>
+        </visibilityconditiondata>
       </field>
       <field allowempty="true" column="IntegrationContentAuthorName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="3aad3ef4-7bc8-40f5-b670-5a4579811e71" visible="true">
         <properties>
@@ -93,6 +120,14 @@
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
+        <visibilityconditiondata>
+          <VisibilityConditionConfiguration>
+            <Identifier>Kentico.Administration.IsFalseVisibilityCondition</Identifier>
+            <Properties>
+              <PropertyName>IntegrationContentHasMemberAuthor</PropertyName>
+            </Properties>
+          </VisibilityConditionConfiguration>
+        </visibilityconditiondata>
       </field>
       <field allowempty="true" column="IntegrationContentAuthorLinkURL" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="96b0e87e-a952-4dca-b86b-33b7ede0fc9c" visible="true">
         <properties>
@@ -106,6 +141,14 @@
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
+        <visibilityconditiondata>
+          <VisibilityConditionConfiguration>
+            <Identifier>Kentico.Administration.IsFalseVisibilityCondition</Identifier>
+            <Properties>
+              <PropertyName>IntegrationContentHasMemberAuthor</PropertyName>
+            </Properties>
+          </VisibilityConditionConfiguration>
+        </visibilityconditiondata>
       </field>
     </form>
   </ClassFormDefinition>

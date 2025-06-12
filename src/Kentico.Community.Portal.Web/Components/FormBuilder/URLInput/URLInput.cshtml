@@ -1,0 +1,11 @@
+@using Kentico.Forms.Web.Mvc
+@using Kentico.Community.Portal.Web.Components.FormBuilder
+
+@model URLInputComponent
+
+@{
+    var htmlAttributes = ViewData.Kentico().GetEditorHtmlAttributes();
+    htmlAttributes["type"] = "url";
+}
+
+@Html.TextBoxFor(m => m.Value, htmlAttributes)

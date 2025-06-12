@@ -20,7 +20,9 @@ public class IntegrationAuthorMemberBadgeAssignmentRule(IContentQueryExecutor co
             .ForContentType(
                 IntegrationContent.CONTENT_TYPE_NAME,
                 q => q
-                    .Where(w => w.WhereGreater(nameof(IntegrationContent.IntegrationContentAuthorMemberID), 0))
+                    .Where(w => w
+                        .WhereGreater(nameof(IntegrationContent.IntegrationContentAuthorMemberID), 0)
+                        .WhereTrue(nameof(IntegrationContent.IntegrationContentHasMemberAuthor)))
                     .Columns(nameof(IntegrationContent.IntegrationContentAuthorMemberID)));
 
         var integrations = await contentQueryExecutor.GetMappedResult<IntegrationContent>(b, options: null, cancellationToken: cancellationToken);

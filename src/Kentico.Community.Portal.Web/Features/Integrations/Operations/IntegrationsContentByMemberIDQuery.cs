@@ -17,7 +17,9 @@ public class IntegrationContentsByMemberIDQueryHandler(ContentItemQueryTools too
         var b = new ContentItemQueryBuilder().ForContentType(
             IntegrationContent.CONTENT_TYPE_NAME,
             q => q
-                .Where(w => w.WhereEquals(nameof(IntegrationContent.IntegrationContentAuthorMemberID), request.MemberID))
+                .Where(w => w
+                    .WhereEquals(nameof(IntegrationContent.IntegrationContentAuthorMemberID), request.MemberID)
+                    .WhereTrue(nameof(IntegrationContent.IntegrationContentHasMemberAuthor)))
                 .OrderBy(new OrderByColumn(nameof(IntegrationContent.IntegrationContentPublishedDate), OrderDirection.Descending)));
 
         var contents = await Executor.GetMappedWebPageResult<IntegrationContent>(b, DefaultQueryOptions, cancellationToken);

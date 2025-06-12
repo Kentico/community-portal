@@ -1,0 +1,71 @@
+@using Kentico.Content.Web.Mvc
+@using Kentico.PageBuilder.Web.Mvc
+@using Kentico.Web.Mvc
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.FallbackForm
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Forms
+
+@model FallbackFormWidgetViewModel
+
+@{
+    bool isPreview = Context.Kentico().Preview().Enabled;
+    bool hasFallbackContent = Model.FallbackContent.HasValue;
+
+    if (Model.IsHidden && !isPreview && !hasFallbackContent)
+    {
+        return;
+    }
+
+    var (backgroundColorClass, backgroundColorProperty) = Model.BackgroundColor switch
+    {
+        BackgroundColors.Dark => ("bg-light-subtle", "rgb(var(--bs-light-bg-subtle))"),
+        BackgroundColors.Secondary_Light => ("bg-purple-100", "rgb(var(--bs-purple-100-rgb))"),
+        BackgroundColors.Light => ("bg-light", "rgb(var(--bs-light-rgb))"),
+        BackgroundColors.White or _ => ("bg-white", "var(--bs-white)"),
+    };
+    string overlayAttr = Model.IsHidden ? "overlay" : "";
+    var showDisabled = JSEncoder.EncodeToJson(Model.IsHidden && hasFallbackContent);
+
+    FormState.SetIsFormHidden(ViewData, Model);
+}
+
+<div xpc-preview-outline="@FallbackFormWidget.NAME Widget" x-data="{ showDisabled: @showDisabled }">
+    <div class="hideable-form @backgroundColorClass p-4 rounded"
+        style="--fallback-form-bg-color: @backgroundColorProperty" @overlayAttr :overlay="showDisabled">
+
+        @await Html.Kentico().RenderNestedWidgetAsync(
+        SystemComponentIdentifiers.FORM_WIDGET_IDENTIFIER,
+                Model.FormWidgetProperties)
+
+        @if (Model.IsHidden || isPreview)
+        {
+            <div class="fallback-content justify-content-center align-items-center flex-column position-absolute w-100 h-100"
+                x-cloak :class="{ 'd-flex': showDisabled, 'd-none': !showDisabled }">
+                <div class="p-3 bg-white rounded text-center border border-2 border-gray-100"
+                    style="background-color: var(--section-bg-color, --bs-light-rgb)">
+                    @if (Model.FallbackContent.TryGetValue(out var content))
+                    {
+                        @content
+                    }
+                    @if (Model.CTA.TryGetValue(out var cta))
+                    {
+                        <a href="@cta.URL" class="btn btn-primary btn-sm">
+                            @cta.Label
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+    @if (Model.IsHidden && isPreview)
+    {
+        <div class="d-flex justify-content-end pt-2">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="pollShowDisabled"
+                    x-on:click="showDisabled = !showDisabled" :checked="showDisabled">
+                <label class="form-check-label" for="pollShowDisabled">
+                    Show disabled
+                </label>
+            </div>
+        </div>
+    }
+</div>

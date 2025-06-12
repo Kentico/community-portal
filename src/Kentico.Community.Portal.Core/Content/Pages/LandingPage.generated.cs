@@ -20,7 +20,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// Represents a page of type <see cref="LandingPage"/>.
 	/// </summary>
 	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
-	public partial class LandingPage : IWebPageFieldsSource, IWebPageMeta, IContentAuthorization
+	public partial class LandingPage : IWebPageFieldsSource, IWebPageMetaFields, IContentAuthorizationFields, IBasicItemFields
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -54,9 +54,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// WebPageMetaDescription.
+		/// WebPageMetaShortDescription.
 		/// </summary>
-		public string WebPageMetaDescription { get; set; }
+		public string WebPageMetaShortDescription { get; set; }
 
 
 		/// <summary>
@@ -81,5 +81,17 @@ namespace Kentico.Community.Portal.Core.Content
 		/// ContentAuthorizationAllowedTags.
 		/// </summary>
 		public IEnumerable<TagReference> ContentAuthorizationAllowedTags { get; set; }
+
+
+		/// <summary>
+		/// BasicItemTitle.
+		/// </summary>
+		public string BasicItemTitle { get; set; }
+
+
+		/// <summary>
+		/// BasicItemShortDescription.
+		/// </summary>
+		public string BasicItemShortDescription { get; set; }
 	}
 }

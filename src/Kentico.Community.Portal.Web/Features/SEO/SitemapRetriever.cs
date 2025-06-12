@@ -54,7 +54,7 @@ public class SitemapRetriever(
 
         var b = new ContentItemQueryBuilder()
             .ForContentTypes(c => c
-                .OfReusableSchema(IWebPageMeta.REUSABLE_FIELD_SCHEMA_NAME)
+                .OfReusableSchema(IWebPageMetaFields.REUSABLE_FIELD_SCHEMA_NAME)
                 .ForWebsite(website.WebsiteChannelName))
             .InLanguage(PortalWebSiteChannel.DEFAULT_LANGUAGE);
 
@@ -65,7 +65,7 @@ public class SitemapRetriever(
              * Using a "bool" out param would throw an exception when the value is null
              * so we use a nullable bool to match the null|true|false cases for this field.
              */
-            bool isInSitemap = !c.TryGetValue(nameof(IWebPageMeta.WebPageMetaExcludeFromSitemap), out bool? val)
+            bool isInSitemap = !c.TryGetValue(nameof(IWebPageMetaFields.WebPageMetaExcludeFromSitemap), out bool? val)
                 || val is not bool isExcluded
                 || !isExcluded;
 

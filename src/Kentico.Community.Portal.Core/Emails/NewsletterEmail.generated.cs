@@ -21,7 +21,7 @@ namespace Kentico.Community.Portal.Core.Emails
 	/// Represents an email of type <see cref="NewsletterEmail"/>.
 	/// </summary>
 	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
-	public partial class NewsletterEmail : IEmailFieldsSource, IEmailDesign
+	public partial class NewsletterEmail : IEmailFieldsSource, IEmailDesignFields
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -67,9 +67,9 @@ namespace Kentico.Community.Portal.Core.Emails
 
 
 		/// <summary>
-		/// NewsletterEmailIntroContent.
+		/// NewsletterEmailIntroContentHTML.
 		/// </summary>
-		public string NewsletterEmailIntroContent { get; set; }
+		public string NewsletterEmailIntroContentHTML { get; set; }
 
 
 		/// <summary>
@@ -85,15 +85,15 @@ namespace Kentico.Community.Portal.Core.Emails
 
 
 		/// <summary>
-		/// NewsletterEmailQAndADiscussions.
+		/// NewsletterEmailQAndADiscussionPages.
 		/// </summary>
-		public IEnumerable<QAndAQuestionPage> NewsletterEmailQAndADiscussions { get; set; }
+		public IEnumerable<QAndAQuestionPage> NewsletterEmailQAndADiscussionPages { get; set; }
 
 
 		/// <summary>
-		/// NewsletterEmailOutroContent.
+		/// NewsletterEmailOutroContentHTML.
 		/// </summary>
-		public string NewsletterEmailOutroContent { get; set; }
+		public string NewsletterEmailOutroContentHTML { get; set; }
 
 
 		/// <summary>

@@ -9,7 +9,7 @@ public partial class BlogPostPage
     public const int FullQueryDepth = 3;
 
     public WebpageMeta GetWebpageMeta() =>
-        new(WebPageMetaTitle, WebPageMetaDescription)
+        new(WebPageMetaTitle, WebPageMetaShortDescription)
         {
             CanonicalURL = WebPageCanonicalURL
         };

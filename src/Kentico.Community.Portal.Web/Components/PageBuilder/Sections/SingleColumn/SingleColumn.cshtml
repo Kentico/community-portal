@@ -1,0 +1,56 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Sections.SingleColumn
+
+@model SingleColumnSectionViewModel
+
+@{
+    string containerClasses = Model.Layout switch
+    {
+        Layouts.FullWidth_ContentContained or Layouts.FullWidth_EdgeToEdge => "container-fluid",
+        Layouts.Standard or _ => "container",
+    };
+
+    string paddingTopClasses = Model.PaddingTop switch
+    {
+        VerticalPaddings.Small => "pt-1",
+        VerticalPaddings.Medium => "pt-2",
+        VerticalPaddings.Large => "pt-3",
+        VerticalPaddings.None or _ => "",
+    };
+
+    string paddingBottomClasses = Model.PaddingBottom switch
+    {
+        VerticalPaddings.Small => "pb-1",
+        VerticalPaddings.Medium => "pb-2",
+        VerticalPaddings.Large => "pb-3",
+        VerticalPaddings.None or _ => "",
+    };
+
+    string backgroundColorClases = Model.BackgroundColor switch
+    {
+        BackgroundColors.Dark => "bg-dark",
+        BackgroundColors.Secondary_Light => "bg-secondary-light",
+        BackgroundColors.Light => "bg-light",
+        BackgroundColors.White or _ => "",
+    };
+
+    string rowClasses = Model.Layout switch
+    {
+        Layouts.FullWidth_EdgeToEdge => "justify-content-center",
+        Layouts.FullWidth_ContentContained or Layouts.Standard or _ => "row justify-content-center"
+    };
+
+    string colClasses = Model.Layout switch
+    {
+        Layouts.FullWidth_EdgeToEdge => "col-lg-12",
+        Layouts.FullWidth_ContentContained or Layouts.Standard or _ => "col-md-10 col-lg-9 col-xl-8"
+    };
+}
+
+<div class="@containerClasses @paddingTopClasses @paddingBottomClasses @backgroundColorClases"
+    xpc-preview-outline="Single Column Section">
+    <div class="@rowClasses">
+        <div class="@colClasses">
+            <widget-zone />
+        </div>
+    </div>
+</div>

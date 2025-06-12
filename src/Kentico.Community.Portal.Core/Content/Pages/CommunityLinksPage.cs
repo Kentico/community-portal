@@ -4,5 +4,5 @@ public partial class CommunityLinksPage : IPortalPage
 {
     public string Title => WebPageMetaTitle;
 
-    public string ShortDescription => WebPageMetaDescription;
+    public string ShortDescription => WebPageMetaShortDescription;
 }

@@ -19,7 +19,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// Represents a content item of type <see cref="LinkContent"/>.
 	/// </summary>
 	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
-	public partial class LinkContent : IContentItemFieldsSource
+	public partial class LinkContent : IContentItemFieldsSource, IBasicItemFields, ICoreTaxonomyFields
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -74,5 +74,23 @@ namespace Kentico.Community.Portal.Core.Content
 		/// LinkContentMemberID.
 		/// </summary>
 		public int LinkContentMemberID { get; set; }
+
+
+		/// <summary>
+		/// BasicItemTitle.
+		/// </summary>
+		public string BasicItemTitle { get; set; }
+
+
+		/// <summary>
+		/// BasicItemShortDescription.
+		/// </summary>
+		public string BasicItemShortDescription { get; set; }
+
+
+		/// <summary>
+		/// CoreTaxonomyDXTopics.
+		/// </summary>
+		public IEnumerable<TagReference> CoreTaxonomyDXTopics { get; set; }
 	}
 }

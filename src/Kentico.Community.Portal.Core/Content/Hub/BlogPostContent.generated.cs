@@ -19,7 +19,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// Represents a content item of type <see cref="BlogPostContent"/>.
 	/// </summary>
 	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
-	public partial class BlogPostContent : IContentItemFieldsSource
+	public partial class BlogPostContent : IContentItemFieldsSource, ICoreTaxonomyFields
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -44,5 +44,11 @@ namespace Kentico.Community.Portal.Core.Content
 		/// BlogPostContentDXTopics.
 		/// </summary>
 		public IEnumerable<TagReference> BlogPostContentDXTopics { get; set; }
+
+
+		/// <summary>
+		/// CoreTaxonomyDXTopics.
+		/// </summary>
+		public IEnumerable<TagReference> CoreTaxonomyDXTopics { get; set; }
 	}
 }

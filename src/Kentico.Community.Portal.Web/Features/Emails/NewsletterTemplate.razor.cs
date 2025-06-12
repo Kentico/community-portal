@@ -97,11 +97,11 @@ public class NewsletterTemplateViewModel
         IssueNumber = email.NewsletterEmailIssueNumber;
         PublishedDate = email.NewsletterEmailPublishedDate;
         PreviewText = email.EmailPreviewText;
-        IntroContent = new(email.NewsletterEmailIntroContent);
+        IntroContent = new(email.NewsletterEmailIntroContentHTML);
         BlogPostPages = email.NewsletterEmailBlogPostPages;
         LinkContents = email.NewsletterEmailLinkContents;
-        Discussions = email.NewsletterEmailQAndADiscussions;
-        OutroContent = new(email.NewsletterEmailOutroContent);
+        Discussions = email.NewsletterEmailQAndADiscussionPages;
+        OutroContent = new(email.NewsletterEmailOutroContentHTML);
         UTMParameters = email.NewsletterEmailUTMParameters;
         Defaults = email.EmailDesignEmailDefaultsContent.First();
 

@@ -141,7 +141,7 @@ public class RSSFeedController(
 
             var postURL = await webPageUrlRetriever.Retrieve(page);
             string title = page.WebPageMetaTitle;
-            string description = page.WebPageMetaDescription;
+            string description = page.WebPageMetaShortDescription;
             var absoluteURI = new Uri(postURL.WebPageAbsoluteURL(Request));
             string pageID = page.SystemFields.WebPageItemGUID.ToString("N");
             var item = new SyndicationItem(title, description, absoluteURI, pageID, new(page.SystemFields.ContentItemCommonDataLastPublishedWhen ?? page.BlogPostPagePublishedDate))
@@ -183,7 +183,7 @@ public class RSSFeedController(
                 .MapNullOrWhiteSpaceAsNone()
                 .IfNoValue(page.WebPageMetaTitle)
                 .GetValueOrDefault("");
-            string description = Maybe.From(page.WebPageMetaDescription)
+            string description = Maybe.From(page.WebPageMetaShortDescription)
                 .MapNullOrWhiteSpaceAsNone()
                 .GetValueOrDefault("");
             var absoluteURI = new Uri(postURL.WebPageAbsoluteURL(Request));

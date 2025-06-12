@@ -45,7 +45,7 @@ namespace Kentico.Community.Portal.Core.Content
 		/// <summary>
 		/// CardContentListableItem.
 		/// </summary>
-		public IEnumerable<IListableItem> CardContentListableItem { get; set; }
+		public IEnumerable<IFeaturedImageFields> CardContentListableItem { get; set; }
 
 
 		/// <summary>

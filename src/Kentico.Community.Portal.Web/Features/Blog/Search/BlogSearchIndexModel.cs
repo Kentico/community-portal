@@ -167,7 +167,7 @@ public class BlogSearchIndexingStrategy(
         string content = await webCrawler.CrawlWebPage(page);
         indexModel.Content = htmlSanitizer.SanitizeHtmlDocument(content);
         indexModel.Title = page.WebPageMetaTitle;
-        indexModel.ShortDescription = page.WebPageMetaDescription;
+        indexModel.ShortDescription = page.WebPageMetaShortDescription;
         indexModel.PublishedDate = page.BlogPostPagePublishedDate != default
             ? page.BlogPostPagePublishedDate
             : DateTime.MinValue;

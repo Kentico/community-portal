@@ -21,7 +21,7 @@ namespace Kentico.Community.Portal.Core.Emails
 	/// Represents an email of type <see cref="AutoresponderEmail"/>.
 	/// </summary>
 	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
-	public partial class AutoresponderEmail : IEmailFieldsSource, IEmailDesign
+	public partial class AutoresponderEmail : IEmailFieldsSource, IEmailDesignFields
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -55,9 +55,9 @@ namespace Kentico.Community.Portal.Core.Emails
 
 
 		/// <summary>
-		/// AutoresponderEmailBodyContent.
+		/// AutoresponderEmailBodyContentHTML.
 		/// </summary>
-		public string AutoresponderEmailBodyContent { get; set; }
+		public string AutoresponderEmailBodyContentHTML { get; set; }
 
 
 		/// <summary>

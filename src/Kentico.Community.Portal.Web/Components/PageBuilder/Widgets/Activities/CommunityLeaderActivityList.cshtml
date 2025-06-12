@@ -1,0 +1,91 @@
+@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CommunityLeaderActivityList.CommunityLeaderActivityListWidgetViewModel
+
+<ul class="nav nav-tabs" id="activities" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="activityTab1" data-bs-toggle="tab" data-bs-target="#myActivities" type="button" role="tab" aria-controls="myActivities" aria-selected="true">
+            My activities
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="activityTab2" data-bs-toggle="tab" data-bs-target="#allActivities" type="button" role="tab" aria-controls="allActivities" aria-selected="false">
+            All Community Leader activities
+        </button>
+    </li>
+</ul>
+
+ <div class="tab-content mt-2">
+    <div class="tab-pane fade show active" id="myActivities" role="tabpanel" aria-labelledby="activityTab1">
+        <table class="table table-bordered table-striped table-hover align-middle">
+            <caption class="text-center">My activities for the Year</caption>
+            <thead class="table-secondary">
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">URL</th>
+                    <th scope="col">Short description</th>
+                    <th scope="col">Impact</th>
+                    <th scope="col">Effort</th>
+                    <th scope="col">Satisfaction</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.MyActivities)
+                {
+                    <tr>
+                        <td>@item.ActivityDate.ToString("yyyy/MM/dd")</td>
+                        <td>@Model.ActivityType(item)</td>
+                        <td>@item.URL</td>
+                        <td>@item.ShortDescription</td>
+                        <td>@Model.Impact(item)</td>
+                        <td>@Model.Effort(item)</td>
+                        <td>@Model.Satisfaction(item)</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr class="fw-bold">
+                    <td colspan="6" class="text-end">Total activities</td>
+                    <td>@Model.MyActivities.Count</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="tab-pane fade" id="allActivities" role="tabpanel" aria-labelledby="activityTab2">
+        <table class="table table-bordered table-striped table-hover align-middle">
+            <caption class="text-center">All Community Leaders activities for the Year</caption>
+            <thead class="table-secondary">
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Member</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">URL</th>
+                    <th scope="col">Short description</th>
+                    <th scope="col">Impact</th>
+                    <th scope="col">Effort</th>
+                    <th scope="col">Satisfaction</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.AllActivities)
+                {
+                    <tr>
+                        <td>@item.ActivityDate.ToString("yyyy/MM/dd")</td>
+                        <td>@Model.MemberName(item)</td>
+                        <td>@Model.ActivityType(item)</td>
+                        <td>@item.URL</td>
+                        <td>@item.ShortDescription</td>
+                        <td>@Model.Impact(item)</td>
+                        <td>@Model.Effort(item)</td>
+                        <td>@Model.Satisfaction(item)</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr class="fw-bold">
+                    <td colspan="7" class="text-end">Total activities</td>
+                    <td>@Model.MyActivities.Count</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

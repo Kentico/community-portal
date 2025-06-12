@@ -1,0 +1,46 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Image
+
+@model ImageWidgetViewModel
+
+@{
+    string containerClasses = Model.Alignment switch
+    {
+        ImageAlignments.Left => "justify-content-start",
+        ImageAlignments.Right => "justify-content-end",
+        ImageAlignments.Center or _ => "justify-content-center",
+    };
+
+    string figureStyles = Model.Size switch
+    {
+        ImageSizes.Small => "--size-preferred: 50cqi",
+        ImageSizes.Medium => "--size-preferred: 70cqi",
+        ImageSizes.Large => "--size-preferred: 80cqi",
+        ImageSizes.Full_Width or _ => "--size-preferred: 100cqi",
+    };
+}
+
+<div class="d-flex align-content-center @containerClasses container-inline-size"
+    xpc-preview-outline="@Model.ComponentName">
+    <figure class="figure clamp-width" style="@figureStyles">
+        @if (Model.LinkToFullsizeImage)
+        {
+            <a href="@Model.Image.Asset.Url">
+                <picture>
+                    <img class="img-fluid" xpc-image-asset="Model.Image" kxp-img="Model.Image.Asset" kxp-img-dimensions>
+                </picture>
+            </a>
+        }
+        else
+        {
+            <picture>
+                <img class="img-fluid" xpc-image-asset="Model.Image" kxp-img="Model.Image.Asset" kxp-img-dimensions>
+            </picture>
+        }
+        @if (Model.ShowDescriptionAsCaption)
+        {
+            <figcaption class="figure-caption">
+                @Model.Image.AltText
+            </figcaption>
+        }
+    </figure>
+</div>

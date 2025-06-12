@@ -1,6 +1,7 @@
 using Kentico.Web.Mvc;
 using Kentico.Xperience.Cloud;
 using Vite.AspNetCore;
+using XperienceCommunity.MCPServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +41,7 @@ app
     .UseStatusCodePagesWithReExecute("/error/{0}")
     .IfNotDevelopment(env, b => b.UseHsts())
     .UseAuthorization()
+    .IfDevelopment(env, app, b => b.UseXperienceMCPServer())
     .UseKenticoRoutes(app)
     .UseAppRoutes()
     .IfDevelopment(env, b => b.UseViteDevelopmentServer(true));

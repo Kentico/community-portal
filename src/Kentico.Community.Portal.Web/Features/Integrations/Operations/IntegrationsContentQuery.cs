@@ -8,7 +8,27 @@ namespace Kentico.Community.Portal.Web.Features.Integrations;
 
 public record IntegrationContentsQuery : IQuery<IntegrationContentsQueryResponse>;
 public record IntegrationContentsQueryResponse(IReadOnlyList<IntegrationContentAggregate> Items);
-public record IntegrationContentAggregate(IntegrationContent Content, Maybe<CommunityMember> IntegrationAuthor);
+public class IntegrationContentAggregate
+{
+    public IntegrationContent Content { get; }
+    public Maybe<CommunityMember> IntegrationAuthor { get; }
+
+    public IntegrationContentAggregate(IntegrationContent content, Dictionary<int, CommunityMember> members)
+    {
+        Content = content;
+        IntegrationAuthor = content.IntegrationContentHasMemberAuthor
+            ? members.GetValueOrDefault(content.IntegrationContentAuthorMemberID) is CommunityMember member
+                ? member
+                : Maybe<CommunityMember>.None
+            : Maybe<CommunityMember>.None;
+    }
+
+    public void Deconstruct(out IntegrationContent content, out Maybe<CommunityMember> integrationAuthor)
+    {
+        content = Content;
+        integrationAuthor = IntegrationAuthor;
+    }
+}
 public class IntegrationContentsQueryHandler(ContentItemQueryTools tools, IInfoProvider<MemberInfo> memberProvider) : ContentItemQueryHandler<IntegrationContentsQuery, IntegrationContentsQueryResponse>(tools)
 {
     private readonly IInfoProvider<MemberInfo> memberProvider = memberProvider;
@@ -25,7 +45,7 @@ public class IntegrationContentsQueryHandler(ContentItemQueryTools tools, IInfoP
         var members = await GetIntegrationAuthors(contents);
 
         var items = contents
-            .Select(c => new IntegrationContentAggregate(c, Maybe.From(members.GetValueOrDefault(c.IntegrationContentAuthorMemberID)!)))
+            .Select(c => new IntegrationContentAggregate(c, members))
             .ToList();
 
         return new(items);
@@ -35,6 +55,7 @@ public class IntegrationContentsQueryHandler(ContentItemQueryTools tools, IInfoP
     {
         var memberAuthorIDs = contents
             .Select(c => c.IntegrationContentAuthorMemberID)
+            .Where(id => id > 0)
             .Distinct();
 
         var members = await memberProvider

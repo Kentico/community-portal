@@ -1,0 +1,37 @@
+@using CMS.Helpers
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Video
+
+@model VideoWidgetViewModel
+
+@{
+    string containerClasses = Model.Alignment switch
+    {
+        VideoAlignments.Left => "justify-content-start",
+        VideoAlignments.Right => "justify-content-end",
+        VideoAlignments.Center or _ => "justify-content-center",
+    };
+
+    string figureStyles = Model.Size switch
+    {
+        VideoSizes.Small => "--size-preferred: 50cqi",
+        VideoSizes.Medium => "--size-preferred: 70cqi",
+        VideoSizes.Large => "--size-preferred: 80cqi",
+        VideoSizes.Full_Width or _ => "--size-preferred: 100cqi",
+    };
+}
+
+<div class="d-flex align-content-center @containerClasses container-inline-size"
+    xpc-preview-outline="@Model.ComponentName">
+    <figure class="figure clamp-width" style="@figureStyles">
+        <video class="w-100" controls>
+            <source src="@Model.Video.VideoContentAsset.Url" type="@Model.Video.VideoContentAssetMimeType">
+            Your browser does not support the video tag.
+        </video>
+        @if (Model.ShowDescriptionAsCaption)
+        {
+            <figcaption class="figure-caption">
+                @Model.Video.MediaItemShortDescription
+            </figcaption>
+        }
+    </figure>
+</div>

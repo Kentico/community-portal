@@ -1,0 +1,97 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList
+@using Kentico.Community.Portal.Web.Features.Blog
+
+@model BlogPostListWidgetViewModel
+
+<div xpc-preview-outline="@Model.ComponentName">
+    @if (Model.Heading.TryGetValue(out string? heading))
+    {
+        <h3>@heading</h3>
+    }
+
+    @foreach (var post in Model.BlogPosts)
+    {
+        if (Model.Layout == ItemLayout.Minimal)
+        {
+            <div class="c-card article nopic mt-3">
+                <div class="c-card_inner d-grid">
+                    <div class="c-card_title">
+                        <h4>
+                            <a class="slash" href="@post.LinkPath">@post.Title</a>
+                        </h4>
+                    </div>
+                    <div class="c-card_footer d-flex">
+                        <small class="me-1">Written on @post.PublishedDate.ToString("d", View.Culture) by</small>
+                        @if (post.Author.ID > 0)
+                        {
+                            <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
+                                class="c-tag secondary invert user">
+                                <img xpc-image="post.Author.Photo" style="max-width: 24px" class="c-tag_icon me-1" />
+                                <span>@post.Author.Name</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <div>
+                                <img xpc-image="post.Author.Photo" style="max-width: 24px" class="c-tag_icon me-1" />
+                                <span>@post.Author.Name</span>
+                            </div>
+                        }
+
+                    </div>
+                    <div class="c-card_content">
+                        <p>
+                            @post.ShortDescription
+                        </p>
+                    </div>
+                    @if (post.Taxonomy.TryGetValue(out string? taxonomy))
+                    {
+                        <div class="c-card_tags">
+                            <div class="c-group tags">
+                                <span class="c-tag info">@taxonomy</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else if (Model.Layout == ItemLayout.Full)
+        {
+            <div class="c-card_inner">
+                <div class="c-card_icon">
+                    <partial name="~/Features/Blog/_BlogHero.cshtml" />
+                </div>
+                <h3 class="h3 mt-2 pt-1">@post.Title</h3>
+                <p class="m-0">
+                    <small>
+                        @post.PublishedDate.ToString("d", View.Culture)
+                    </small>
+                </p>
+                <p>
+                    <small>
+                        by
+                        @if (post.Author.ID > 0)
+                        {
+                            <a asp-controller="Member" asp-action="MemberDetail"
+                                asp-route-memberID="@post.Author.ID">@post.Author.Name</a>
+                        }
+                        else
+                        {
+                            @post.Author.Name
+                        }
+                    </small>
+                </p>
+                <p class="mt-2">@post.ShortDescription</p>
+
+                <div>
+                    <a class="c-link silent text-primary" href="@post.LinkPath">
+                        Read More
+                        <svg class="c-icon ms-2 chevron">
+                            <use xlink:href="/img/icons.svg#chevron-right" asp-append-version></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        }
+    }
+</div>

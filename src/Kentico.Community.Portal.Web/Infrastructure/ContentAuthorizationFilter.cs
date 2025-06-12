@@ -137,10 +137,10 @@ public class ContentAuthorizationFilter(
 
             var query = new ContentItemQueryBuilder()
                 .ForContentTypes(q => q
-                    .OfReusableSchema(IContentAuthorization.REUSABLE_FIELD_SCHEMA_NAME)
+                    .OfReusableSchema(IContentAuthorizationFields.REUSABLE_FIELD_SCHEMA_NAME)
                     .ForWebsite([page.WebPageItemID]));
 
-            var pages = await executor.GetMappedWebPageResult<IContentAuthorization>(query, new ContentQueryExecutionOptions { ForPreview = false, IncludeSecuredItems = true });
+            var pages = await executor.GetMappedWebPageResult<IContentAuthorizationFields>(query, new ContentQueryExecutionOptions { ForPreview = false, IncludeSecuredItems = true });
             return pages
                 .SelectMany(p => p.ContentAuthorizationAllowedTags)
                 .ToImmutableList();

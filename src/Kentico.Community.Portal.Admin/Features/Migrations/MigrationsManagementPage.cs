@@ -46,8 +46,9 @@ public class MigrationManagementPage(IEnumerable<IDataMigrator> migrators) : Pag
         }
 
         var result = await migration.Migrate(count);
+        var remaining = await migration.MigrateableItems();
 
-        return ResponseFrom(result)
+        return ResponseFrom(result with { MigratableItemsCount = remaining.Count })
             .AddSuccessMessage("Migration complete");
     }
 }

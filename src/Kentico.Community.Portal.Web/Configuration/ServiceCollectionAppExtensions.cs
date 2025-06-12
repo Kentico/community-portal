@@ -21,6 +21,7 @@ using Kentico.Community.Portal.Web.Rendering;
 using Sidio.Sitemap.AspNetCore;
 using Sidio.Sitemap.Core.Services;
 using Slugify;
+using Kentico.Community.Portal.Admin.Features.Migrations;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -61,6 +62,7 @@ public static class ServiceCollectionAppExtensions
             .AddClosedGenericTypes(typeof(HomePageQuery).Assembly, typeof(IQueryHandler<,>), ServiceLifetime.Transient)
             .AddClosedGenericTypes(typeof(HomePageQuery).Assembly, typeof(ICommandHandler<,>), ServiceLifetime.Transient)
             .AddTransient<WebPageCommandTools>()
+            .AddTransient<ContentItemManagerCreator>()
             .AddTransient<IContentQueryExecutionOptionsCreator, DefaultContentQueryExecutionOptionsCreator>()
             .AddTransient<WebPageQueryTools>()
             .AddTransient<ContentItemQueryTools>()
@@ -144,7 +146,16 @@ public static class ServiceCollectionAppExtensions
         services;
 
     private static IServiceCollection AddMigrations(this IServiceCollection services) =>
-        services;
+        services
+            .AddTransient<IDataMigrator, WebPageMigrator>()
+            .AddTransient<IDataMigrator, QAndAQuestionPageMigrator>()
+            .AddTransient<IDataMigrator, BlogPostPageMigrator>()
+            .AddTransient<IDataMigrator, LinkContentMigrator>()
+            .AddTransient<IDataMigrator, PollContentMigrator>()
+            .AddTransient<IDataMigrator, BlogPostContentMigrator>()
+            .AddTransient<IDataMigrator, MediaContentMigrator>()
+            .AddTransient<IDataMigrator, IntegrationContentMigrator>()
+            .AddTransient<IDataMigrator, CommunityGroupContentMigrator>();
 
     private static IServiceCollection AddClosedGenericTypes(
         this IServiceCollection services,

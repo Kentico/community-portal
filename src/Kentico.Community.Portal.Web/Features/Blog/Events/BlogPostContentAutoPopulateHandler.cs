@@ -1,29 +1,19 @@
-using System.Security.Claims;
 using CMS.ContentEngine;
 using CMS.ContentEngine.Internal;
 using CMS.DataEngine;
-using CMS.Membership;
 using Kentico.Community.Portal.Core;
-using Kentico.Community.Portal.Web.Infrastructure;
-using Kentico.Membership;
+using Kentico.Community.Portal.Core.Modules;
 
 namespace Kentico.Community.Portal.Web.Features.Blog.Events;
 
 public class BlogPostContentAutoPopulateHandler(
-    IContentItemManagerFactory factory,
-    AdminUserManager adminUserManager,
-    IInfoProvider<UserInfo> userProvider,
-    IHttpContextAccessor contextAccessor,
     IInfoProvider<ContentItemInfo> contentProvider,
-    IContentItemCodeNameProvider nameProvider)
+    IContentItemCodeNameProvider nameProvider,
+    ContentItemManagerCreator contentItemManagerCreator)
 {
-    private readonly IContentItemManagerFactory factory = factory;
-    private readonly AdminUserManager adminUserManager = adminUserManager;
-    private readonly IInfoProvider<UserInfo> userProvider = userProvider;
-    private readonly IHttpContextAccessor contextAccessor = contextAccessor;
     private readonly IInfoProvider<ContentItemInfo> contentProvider = contentProvider;
     private readonly IContentItemCodeNameProvider nameProvider = nameProvider;
-
+    private readonly ContentItemManagerCreator contentItemManagerCreator = contentItemManagerCreator;
 
     public async Task Handle(CreateWebPageEventArgs args)
     {
@@ -57,9 +47,13 @@ public class BlogPostContentAutoPopulateHandler(
                     ? dxTopics
                     : []
             },
+            {
+                nameof(BlogPostContent.CoreTaxonomyDXTopics),
+                dxTopics ?? []
+            },
         });
 
-        var manager = await GetManager();
+        var manager = await contentItemManagerCreator.GetContentItemManager();
         int contentItemID = await manager.Create(parameters, data);
         var item = await contentProvider.GetAsync(contentItemID);
 
@@ -89,17 +83,16 @@ public class BlogPostContentAutoPopulateHandler(
             ? dxTopics
             : [];
 
-        if (!item.TryGetValue(nameof(BlogPostContent.BlogPostContentBlogType), out object existingBlogTypeObj)
-            || existingBlogTypeObj is not IEnumerable<TagReference> existingBlogType
-            || !item.TryGetValue(nameof(BlogPostContent.BlogPostContentDXTopics), out object existingDXTopicsObj)
-            || existingDXTopicsObj is not IEnumerable<TagReference> existingDXTopics
-            || (!existingBlogType.Except(currentBlogType).Any()
-                && !existingDXTopics.Except(currentDXTopics).Any()))
+        // If all are identical, return early
+        if (item.TryGetValue(nameof(BlogPostContent.BlogPostContentBlogType), out object existingBlogTypeObj)
+            && existingBlogTypeObj is IEnumerable<TagReference> existingBlogType && !existingBlogType.Except(currentBlogType).Any()
+            && item.TryGetValue(nameof(BlogPostContent.BlogPostContentDXTopics), out object existingDXTopicsObj)
+            && existingDXTopicsObj is IEnumerable<TagReference> existingDXTopics && !existingDXTopics.Except(currentDXTopics).Any())
         {
             return;
         }
 
-        var manager = await GetManager();
+        var manager = await contentItemManagerCreator.GetContentItemManager();
         _ = await manager.TryCreateDraft(item.ContentItemID, args.ContentLanguageName);
 
         var data = new ContentItemData(new Dictionary<string, object>
@@ -112,30 +105,11 @@ public class BlogPostContentAutoPopulateHandler(
                 nameof(BlogPostContent.BlogPostContentDXTopics),
                 currentDXTopics
             },
+            {
+                nameof(BlogPostContent.CoreTaxonomyDXTopics),
+                currentDXTopics
+            },
         });
         _ = await manager.TryUpdateDraft(item.ContentItemID, args.ContentLanguageName, data);
-    }
-
-    public async Task<IContentItemManager> GetManager()
-    {
-        /*
-         * Scheduled posts are published in a background thread
-         * which means there's no HttpContext
-         */
-        if (contextAccessor.HttpContext?.User is not ClaimsPrincipal principal)
-        {
-            var contentAuthor = await userProvider.GetPublicMemberContentAuthor();
-            return factory.Create(contentAuthor.UserID);
-        }
-
-        var adminUser = await adminUserManager.GetUserAsync(principal);
-
-        if (adminUser is null)
-        {
-            var contentAuthor = await userProvider.GetPublicMemberContentAuthor();
-            return factory.Create(contentAuthor.UserID);
-        }
-
-        return factory.Create(adminUser.UserID);
     }
 }

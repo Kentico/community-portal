@@ -101,11 +101,9 @@ export const MigrationManagementLayoutTemplate = (
                 <></>
               ) : (
                 <dl>
-                  <dt>Migratable items:</dt>
-                  <dd>{result.migratableItemsCount}</dd>
-                  <dt>Successes:</dt>
+                  <dt>Migratable items: {result.migratableItemsCount}</dt>
+                  <dt>Successes: {result.successes.length}</dt>
                   <dd>
-                    {result.successes.length}
                     <ul>
                       {result.successes.map((success, index) => (
                         <li key={index}>{success}</li>
@@ -113,9 +111,8 @@ export const MigrationManagementLayoutTemplate = (
                     </ul>
                   </dd>
 
-                  <dt>Failures: </dt>
+                  <dt>Failures: {result.failures.length}</dt>
                   <dd>
-                    {result.failures.length}
                     <ul>
                       {result.failures.map((failure, index) => (
                         <li key={index}>{failure}</li>
@@ -128,7 +125,7 @@ export const MigrationManagementLayoutTemplate = (
                 <Input
                   type={'number'}
                   key={name}
-                  label="Number of items"
+                  label="Items to migrate"
                   name={result.name}
                   max={result.migratableItemsCount}
                   value={inputValue}
@@ -153,9 +150,9 @@ function initalizeMigrations(
   migrations: MigrationState[],
 ): Map<string, MigrationResult> {
   return new Map(
-    migrations.map(({ name, migratableItemsCount }) => [
+    migrations.map(({ name, displayName, migratableItemsCount }) => [
       name,
-      { successes: [], failures: [], migratableItemsCount },
+      { successes: [], failures: [], migratableItemsCount, displayName, name },
     ]),
   );
 }

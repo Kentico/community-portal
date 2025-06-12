@@ -20,6 +20,10 @@
                         {
                             @Model.Member.UserName
                         }
+                        @if (Model.Member.IsUnderModeration())
+                        {
+                            <span class="badge bg-danger ms-2">Disabled</span>
+                        }
                     </h3>
                 </div>
 

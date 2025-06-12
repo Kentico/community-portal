@@ -19,7 +19,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// Represents a content item of type <see cref="PollContent"/>.
 	/// </summary>
 	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
-	public partial class PollContent : IContentItemFieldsSource
+	public partial class PollContent : IContentItemFieldsSource, ICoreTaxonomyFields
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -47,12 +47,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// PollContentDXTopics.
-		/// </summary>
-		public IEnumerable<TagReference> PollContentDXTopics { get; set; }
-
-
-		/// <summary>
 		/// PollContentPublishedDate.
 		/// </summary>
 		public DateTime PollContentPublishedDate { get; set; }
@@ -62,5 +56,17 @@ namespace Kentico.Community.Portal.Core.Content
 		/// PollContentOpenUntilDate.
 		/// </summary>
 		public DateTime PollContentOpenUntilDate { get; set; }
+
+
+		/// <summary>
+		/// PollContentDXTopics.
+		/// </summary>
+		public IEnumerable<TagReference> PollContentDXTopics { get; set; }
+
+
+		/// <summary>
+		/// CoreTaxonomyDXTopics.
+		/// </summary>
+		public IEnumerable<TagReference> CoreTaxonomyDXTopics { get; set; }
 	}
 }

@@ -10,8 +10,8 @@ public class ImageAssetViewModel
     public ContentItemAsset Asset { get; }
 
     public static ImageAssetViewModel Create(ImageContent content) => new(content);
-    public static Maybe<ImageAssetViewModel> Create(IListableItem item) =>
-        item.ListableItemFeaturedImageContent
+    public static Maybe<ImageAssetViewModel> Create(IFeaturedImageFields item) =>
+        item.FeaturedImageImageContent
             .TryFirst()
             .Map(Create);
 
@@ -26,7 +26,7 @@ public class ImageAssetViewModel
 
 public static class ImageAssetViewModelExtensions
 {
-    public static Maybe<ImageAssetViewModel> ToImageAssetViewModel(this IListableItem item) => ImageAssetViewModel.Create(item);
+    public static Maybe<ImageAssetViewModel> ToImageAssetViewModel(this IFeaturedImageFields item) => ImageAssetViewModel.Create(item);
     public static Maybe<ImageAssetViewModel> ToImageAssetViewModel(this AuthorContent content) =>
         content.AuthorContentPhotoImageContent
             .TryFirst()

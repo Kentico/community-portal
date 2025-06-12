@@ -47,7 +47,9 @@ public class MemberIntegrationsListPage(
                         .Join(new QuerySourceTable("KenticoCommunity_IntegrationContent"),
                             "CMS_ContentItemCommonData.ContentItemCommonDataID",
                             "KenticoCommunity_IntegrationContent.ContentItemDataCommonDataID"))
-                    .Where(w => w.WhereEquals(nameof(IntegrationContent.IntegrationContentAuthorMemberID), ObjectId))
+                    .Where(w => w
+                        .WhereEquals(nameof(IntegrationContent.IntegrationContentAuthorMemberID), ObjectId)
+                        .WhereTrue(nameof(IntegrationContent.IntegrationContentHasMemberAuthor)))
                     .OrderByDescending(nameof(IntegrationContent.IntegrationContentPublishedDate));
             });
 

@@ -20,7 +20,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// Represents a page of type <see cref="QAndAQuestionPage"/>.
 	/// </summary>
 	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
-	public partial class QAndAQuestionPage : IWebPageFieldsSource, IWebPageMeta
+	public partial class QAndAQuestionPage : IWebPageFieldsSource, IWebPageMetaFields, IBasicItemFields, ICoreTaxonomyFields
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -78,6 +78,12 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
+		/// QAndAQuestionPageBlogPostPages.
+		/// </summary>
+		public IEnumerable<BlogPostPage> QAndAQuestionPageBlogPostPages { get; set; }
+
+
+		/// <summary>
 		/// QAndAQuestionPageBlogPostPage.
 		/// </summary>
 		public IEnumerable<WebPageRelatedItem> QAndAQuestionPageBlogPostPage { get; set; }
@@ -96,9 +102,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// WebPageMetaDescription.
+		/// WebPageMetaShortDescription.
 		/// </summary>
-		public string WebPageMetaDescription { get; set; }
+		public string WebPageMetaShortDescription { get; set; }
 
 
 		/// <summary>
@@ -117,5 +123,23 @@ namespace Kentico.Community.Portal.Core.Content
 		/// WebPageCanonicalURL.
 		/// </summary>
 		public string WebPageCanonicalURL { get; set; }
+
+
+		/// <summary>
+		/// BasicItemTitle.
+		/// </summary>
+		public string BasicItemTitle { get; set; }
+
+
+		/// <summary>
+		/// BasicItemShortDescription.
+		/// </summary>
+		public string BasicItemShortDescription { get; set; }
+
+
+		/// <summary>
+		/// CoreTaxonomyDXTopics.
+		/// </summary>
+		public IEnumerable<TagReference> CoreTaxonomyDXTopics { get; set; }
 	}
 }

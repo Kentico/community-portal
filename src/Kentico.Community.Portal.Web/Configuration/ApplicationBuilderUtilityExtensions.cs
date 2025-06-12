@@ -14,6 +14,16 @@ public static class ApplicationBuilderUtilityExtensions
         return app;
     }
 
+    public static WebApplication IfDevelopment(this IApplicationBuilder _, IWebHostEnvironment env, WebApplication app, Action<WebApplication> configure)
+    {
+        if (env.IsDevelopment())
+        {
+            configure(app);
+        }
+
+        return app;
+    }
+
     public static IApplicationBuilder IfNotDevelopment(this IApplicationBuilder app, IWebHostEnvironment env, Action<IApplicationBuilder> configure)
     {
         if (!env.IsDevelopment())
@@ -42,7 +52,7 @@ public static class ApplicationBuilderUtilityExtensions
         return app;
     }
 
-    public static WebApplication UseKenticoRoutes(this IApplicationBuilder _, WebApplication app)
+    public static WebApplication UseKenticoRoutes(this IApplicationBuilder b, WebApplication app)
     {
         app.Kentico().MapRoutes();
 

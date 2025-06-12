@@ -1,11 +1,9 @@
-using System.Text.Json;
 using CMS.ContentEngine;
 using CMS.DataEngine;
 using CMS.Membership;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
-using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
@@ -51,22 +49,28 @@ public class QAndAQuestionCreateCommandHandler(
             { nameof(QAndAQuestionPage.QAndAQuestionPageDateCreated), now },
             { nameof(QAndAQuestionPage.QAndAQuestionPageDateModified), now },
             { nameof(QAndAQuestionPage.QAndAQuestionPageTitle), request.QuestionTitle },
+            { nameof(QAndAQuestionPage.BasicItemTitle), request.QuestionTitle },
             // Content is not sanitized because it can include fenced code blocks.
             { nameof(QAndAQuestionPage.QAndAQuestionPageContent), request.QuestionContent },
             { nameof(QAndAQuestionPage.QAndAQuestionPageAuthorMemberID), request.MemberAuthor.Id },
             { nameof(QAndAQuestionPage.QAndAQuestionPageAcceptedAnswerDataGUID), Guid.Empty },
-            {
-                nameof(QAndAQuestionPage.QAndAQuestionPageDiscussionType),
-                JsonSerializer.Serialize<IEnumerable<TagReference>>([new() { Identifier = request.DiscussionTypeTagIdentifier }])
-            },
-            { nameof(QAndAQuestionPage.QAndAQuestionPageDXTopics), JsonSerializer.Serialize(validTags) }
+            { nameof(QAndAQuestionPage.QAndAQuestionPageDXTopics), validTags },
+            { nameof(QAndAQuestionPage.CoreTaxonomyDXTopics), validTags },
         });
+        itemData.SetValue<IEnumerable<TagReference>>(
+            nameof(QAndAQuestionPage.QAndAQuestionPageDiscussionType),
+            [new() { Identifier = request.DiscussionTypeTagIdentifier }]);
+
         request.LinkedBlogPost
             .Execute(post =>
             {
-                itemData.SetValue(
+                // TODO - remove this field when migrations are complete
+                itemData.SetValue<IEnumerable<WebPageRelatedItem>>(
                     nameof(QAndAQuestionPage.QAndAQuestionPageBlogPostPage),
-                    JsonSerializer.Serialize<IEnumerable<WebPageRelatedItem>>([new() { WebPageGuid = post.SystemFields.WebPageItemGUID }]));
+                    [new WebPageRelatedItem() { WebPageGuid = post.SystemFields.WebPageItemGUID }]);
+                itemData.SetValue<IEnumerable<ContentItemReference>>(
+                    nameof(QAndAQuestionPage.QAndAQuestionPageBlogPostPages),
+                    [new ContentItemReference() { Identifier = post.SystemFields.ContentItemGUID }]);
             });
 
         var contentItemParameters = new ContentItemParameters(QAndAQuestionPage.CONTENT_TYPE_NAME, itemData);
@@ -80,7 +84,6 @@ public class QAndAQuestionCreateCommandHandler(
         try
         {
             return await webPageManager.Create(webPageParameters);
-
         }
         catch (Exception ex)
         {

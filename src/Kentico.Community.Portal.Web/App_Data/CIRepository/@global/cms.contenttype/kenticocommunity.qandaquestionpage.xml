@@ -10,6 +10,12 @@
       <field column="ContentItemDataID" columntype="integer" enabled="true" guid="2d613d26-4ab8-49c9-ae25-a8adc5966b08" isPK="true" />
       <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="692c17bf-e031-4f4e-b448-c9c7c20cdf82" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
       <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="98e8135e-aa60-4726-9ce1-f22aad530ed0" isunique="true" system="true" />
+      <schema guid="668b6777-06f6-47eb-a04a-956ac74c7c52" name="668b6777-06f6-47eb-a04a-956ac74c7c52">
+        <properties />
+      </schema>
+      <schema guid="bdc7088f-b01e-4186-a83c-703214805501" name="bdc7088f-b01e-4186-a83c-703214805501">
+        <properties />
+      </schema>
       <field column="QAndAQuestionPageTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="0be33a10-9303-4c4b-b6e7-be67056d9846" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
@@ -49,10 +55,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
-          <controlname>Kentico.Administration.TextArea</controlname>
-          <CopyButtonVisible>False</CopyButtonVisible>
-          <MaxRowsNumber>5</MaxRowsNumber>
-          <MinRowsNumber>3</MinRowsNumber>
+          <controlname>Kentico.Community.FormComponent.Markdown</controlname>
         </settings>
       </field>
       <field column="QAndAQuestionPageAuthorMemberID" columnprecision="0" columntype="integer" enabled="true" guid="9cf3c9fc-bd1c-4b33-b7b3-d791356ff81c" visible="true">
@@ -108,10 +111,29 @@
           </TaxonomyGroup>
         </settings>
       </field>
+      <field allowempty="true" column="QAndAQuestionPageBlogPostPages" columnprecision="0" columntype="contentitemreference" enabled="true" guid="fc2e1af5-924a-4bce-a268-c6f6572c3af0" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[If this Q&A discussion was created for a blog post, that blog post page is identified here.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Linked blog post</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["a0450c6e-a032-40cb-893f-ce121cb22c0e"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>0</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+      </field>
       <field allowempty="true" column="QAndAQuestionPageBlogPostPage" columnprecision="0" columntype="webpages" enabled="true" guid="067930f9-1c5f-4c47-b22c-31d634f99713" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Linked blog post</fieldcaption>
+          <fieldcaption>Linked blog post (deprecated)</fieldcaption>
           <fielddescription>
             <![CDATA[If this Q&A discussion was created for a blog post, that blog post page is identified here]]>
           </fielddescription>

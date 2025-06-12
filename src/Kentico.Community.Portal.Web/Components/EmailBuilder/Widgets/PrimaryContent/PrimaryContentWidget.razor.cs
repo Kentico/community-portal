@@ -37,7 +37,7 @@ public partial class PrimaryContentWidget : ComponentBase
         }
 
         Model = Maybe
-            .From(email.AutoresponderEmailBodyContent)
+            .From(email.AutoresponderEmailBodyContentHTML)
             .MapNullOrWhiteSpaceAsNone()
             .Map(c => new MarkupString(c));
     }

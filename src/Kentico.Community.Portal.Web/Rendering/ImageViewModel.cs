@@ -10,8 +10,8 @@ public class ImageViewModel
     public string URL { get; }
 
     public static ImageViewModel Create(ImageContent content) => new(content);
-    public static Maybe<ImageViewModel> Create(IListableItem item) =>
-        item.ListableItemFeaturedImageContent
+    public static Maybe<ImageViewModel> Create(IFeaturedImageFields item) =>
+        item.FeaturedImageImageContent
             .TryFirst()
             .Map(Create);
 
@@ -37,7 +37,7 @@ public class ImageViewModel
 
 public static class ImageViewModelExtensions
 {
-    public static Maybe<ImageViewModel> ToImageViewModel(this IListableItem item) => ImageViewModel.Create(item);
+    public static Maybe<ImageViewModel> ToImageViewModel(this IFeaturedImageFields item) => ImageViewModel.Create(item);
     public static Maybe<ImageViewModel> ToImageViewModel(this AuthorContent content) =>
         content.AuthorContentPhotoImageContent
             .TryFirst()

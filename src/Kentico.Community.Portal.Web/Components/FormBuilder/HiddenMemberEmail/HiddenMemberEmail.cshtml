@@ -1,0 +1,23 @@
+@using Kentico.Forms.Web.Mvc
+@using Kentico.Forms.Web.Mvc.Internal
+@using Kentico.Community.Portal.Web.Components.FormBuilder
+
+@model HiddenMemberEmailComponent
+
+@using Kentico.Community.Portal.Web.Infrastructure
+
+@{
+    var htmlAttributes = ViewData.Kentico().GetEditorHtmlAttributes();
+}
+
+@if (Model.FormBuilderMode == FormBuilderMode.Live)
+{
+    @Html.HiddenFor(m => m.Value, htmlAttributes)
+
+    return;
+}
+
+@{
+    htmlAttributes["disabled"] = "disabled";
+}
+@Html.TextBoxFor(x => x.Value, null, htmlAttributes)
