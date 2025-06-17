@@ -9,16 +9,13 @@ public record QAndAAnswerDataByIDQuery(int AnswerDataID) : IQuery<QAndAAnswerDat
     public string CacheValueKey => AnswerDataID.ToString();
 }
 
-public class QAndAAnswerDataByIDQueryHandler(DataItemQueryTools tools, IInfoProvider<QAndAAnswerDataInfo> provider) : DataItemQueryHandler<QAndAAnswerDataByIDQuery, QAndAAnswerDataInfo>(tools)
+public class QAndAAnswerDataByIDQueryHandler(DataItemQueryTools tools, IInfoProvider<QAndAAnswerDataInfo> provider)
+    : DataItemQueryHandler<QAndAAnswerDataByIDQuery, QAndAAnswerDataInfo>(tools)
 {
     private readonly IInfoProvider<QAndAAnswerDataInfo> provider = provider;
 
-    public override async Task<QAndAAnswerDataInfo> Handle(QAndAAnswerDataByIDQuery request, CancellationToken cancellationToken = default)
-    {
-        var item = await provider.GetAsync(request.AnswerDataID);
-
-        return item;
-    }
+    public override async Task<QAndAAnswerDataInfo> Handle(QAndAAnswerDataByIDQuery request, CancellationToken cancellationToken = default) =>
+        await provider.GetAsync(request.AnswerDataID);
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(QAndAAnswerDataByIDQuery query, QAndAAnswerDataInfo result, ICacheDependencyKeysBuilder builder) =>
         builder.Object(QAndAAnswerDataInfo.OBJECT_TYPE, query.AnswerDataID);

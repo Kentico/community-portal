@@ -4,8 +4,8 @@
 @using Kentico.Community.Portal.Web.Membership
 @using static Kentico.Community.Portal.Web.Components.EmailBuilder.Card
 
-<Card Tag="@("Contribution")" TagColor="@TagColors.Secondary" Heading="@Model.LinkContentLabel"
-    BodyContent="Model.LinkContentShortDescription" Topics="Topics" LinkURL="@Model.LinkContentPathOrURL">
+<Card Tag="@("Contribution")" TagColor="@TagColors.Secondary" Heading="@Model.BasicItemTitle"
+    BodyContent="Model.BasicItemShortDescription" Topics="Topics" LinkURL="@Model.LinkContentPathOrURL">
 
     <Byline>
         @if (MemberName.TryGetValue(out string? name2)
@@ -27,7 +27,7 @@
 
     protected override Task OnInitializedAsync()
     {
-        Topics = Model.LinkContentDXTopics
+        Topics = Model.CoreTaxonomyDXTopics
         .Select(t => DXTopics.TryGetValue(t.Identifier, out var tag) ? tag.Title : "")
         .Where(t => !string.IsNullOrWhiteSpace(t))
         .ToList();

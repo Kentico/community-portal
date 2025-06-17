@@ -41,12 +41,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// BlogPostContentDXTopics.
-		/// </summary>
-		public IEnumerable<TagReference> BlogPostContentDXTopics { get; set; }
-
-
-		/// <summary>
 		/// CoreTaxonomyDXTopics.
 		/// </summary>
 		public IEnumerable<TagReference> CoreTaxonomyDXTopics { get; set; }

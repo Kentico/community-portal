@@ -312,8 +312,8 @@ public class BlogPostViewModel
 
     public BlogPostViewModel(BlogPostPage page, BlogPostAuthorViewModel author, WebPageUrl url, Maybe<string> taxonomy)
     {
-        Title = page.WebPageMetaTitle;
-        ShortDescription = page.WebPageMetaShortDescription;
+        Title = page.BasicItemTitle;
+        ShortDescription = page.BasicItemShortDescription;
         PublishedDate = page.BlogPostPagePublishedDate;
         Author = author;
         LinkPath = url.RelativePath;

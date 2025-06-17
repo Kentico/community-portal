@@ -1,6 +1,5 @@
 ﻿using CMS.Core;
 using CMS.Membership;
-using CMS.Websites.Routing;
 using Htmx;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Membership;
@@ -20,16 +19,16 @@ public class QAndAQuestionController(
     IUserInfoProvider userInfoProvider,
     IMediator mediator,
     IWebPageUrlRetriever urlRetriever,
-    IWebsiteChannelContext channelContext,
     TimeProvider clock,
+    IContentRetriever contentRetriever,
     IEventLogService log) : PortalHandlerController(log)
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly IUserInfoProvider userInfoProvider = userInfoProvider;
     private readonly IMediator mediator = mediator;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
-    private readonly IWebsiteChannelContext channelContext = channelContext;
     private readonly TimeProvider clock = clock;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -47,14 +46,18 @@ public class QAndAQuestionController(
         }
 
         var now = clock.GetLocalNow();
-        var questionsParent = await mediator.Send(new QAndAQuestionsRootPageQuery(channelContext.WebsiteChannelName));
-        var questionMonthFolder = await mediator.Send(new QAndAMonthFolderQuery(questionsParent, channelContext.WebsiteChannelName, now.Year, now.Month, channelContext.WebsiteChannelID));
+        var rootPages = await contentRetriever.RetrievePages<QAndAQuestionsRootPage>();
+        if (rootPages.FirstOrDefault() is not QAndAQuestionsRootPage rootPage)
+        {
+            return LogAndReturnError("QUESTION_CREATE")($"Could not find required page of type [{QAndAQuestionsRootPage.CONTENT_TYPE_NAME}]");
+        }
+        var questionMonthFolder = await mediator.Send(new QAndAMonthFolderQuery(rootPage, now.Year, now.Month));
 
 
         return await mediator.Send(new QAndAQuestionCreateCommand(
             member,
             questionMonthFolder,
-            channelContext.WebsiteChannelID,
+            rootPage.SystemFields.WebPageItemWebsiteChannelId,
             requestModel.Title,
             requestModel.Content,
             SystemTaxonomies.QAndADiscussionTypeTaxonomy.QuestionTag.GUID,
@@ -67,7 +70,7 @@ public class QAndAQuestionController(
 
                     return PartialView("~/Features/QAndA/Components/Form/QAndAQuestionFormConfirmation.cshtml") as IActionResult;
                 },
-                LogAndReturnError("CREATE_QUESTION"));
+                LogAndReturnError("QUESTION_CREATE"));
     }
 
     [HttpPost]
@@ -90,8 +93,8 @@ public class QAndAQuestionController(
             return NotFound();
         }
 
-        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
-        if (!questionResp.TryGetValue(out var questionPage))
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID]);
+        if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
         {
             return NotFound();
         }
@@ -103,7 +106,7 @@ public class QAndAQuestionController(
         }
 
         return await mediator
-            .Send(new QAndAQuestionUpdateCommand(questionPage, requestModel.Title, requestModel.Content, requestModel.SelectedTags, channelContext.WebsiteChannelID))
+            .Send(new QAndAQuestionUpdateCommand(questionPage, requestModel.Title, requestModel.Content, requestModel.SelectedTags))
             .Match(async () =>
             {
                 string redirectURL = (await urlRetriever.Retrieve(questionPage)).RelativePathTrimmed();
@@ -122,8 +125,8 @@ public class QAndAQuestionController(
             return Unauthorized();
         }
 
-        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
-        if (!questionResp.TryGetValue(out var questionPage))
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID]);
+        if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
         {
             return NotFound();
         }
@@ -151,17 +154,22 @@ public class QAndAQuestionController(
             return Forbid();
         }
 
-        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
-        if (!questionResp.TryGetValue(out var questionPage))
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID]);
+        if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
         {
             return NotFound();
         }
 
-        var questionsParent = await mediator.Send(new QAndAQuestionsRootPageQuery(channelContext.WebsiteChannelName));
-        return await mediator.Send(new QAndAQuestionDeleteCommand(questionPage, channelContext.WebsiteChannelID))
+        var rootPages = await contentRetriever.RetrievePages<QAndAQuestionsRootPage>();
+        if (rootPages.FirstOrDefault() is not QAndAQuestionsRootPage rootPage)
+        {
+            return LogAndReturnError("QUESTION_DELETE")($"Could not find required page of type [{QAndAQuestionsRootPage.CONTENT_TYPE_NAME}]");
+        }
+
+        return await mediator.Send(new QAndAQuestionDeleteCommand(questionPage))
             .Match(async () =>
             {
-                string path = (await urlRetriever.Retrieve(questionsParent)).RelativePathTrimmed();
+                string path = (await urlRetriever.Retrieve(rootPage)).RelativePathTrimmed();
                 Response.Htmx(h => h.Redirect(path));
 
                 return Ok().AsStatusCodeResult();

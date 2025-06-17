@@ -3,7 +3,6 @@ using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
 using Kentico.Content.Web.Mvc.Routing;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 [assembly: RegisterPageTemplate(
@@ -25,22 +24,20 @@ namespace Kentico.Community.Portal.Web.Features.Home;
 
 public class HomePageTemplateProperties : IPageTemplateProperties { }
 
-public class HomePageTemplateController(IMediator mediator, WebPageMetaService metaService, IWebPageDataContextRetriever contextRetriever) : Controller
+public class HomePageTemplateController(IContentRetriever contentRetriever, WebPageMetaService metaService) : Controller
 {
-    private readonly IMediator mediator = mediator;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly WebPageMetaService metaService = metaService;
-    private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
 
     public async Task<ActionResult> Index()
     {
-        if (!contextRetriever.TryRetrieve(out var data))
+        var homePage = await contentRetriever.RetrieveCurrentPage<HomePage>();
+        if (homePage is null)
         {
             return NotFound();
         }
 
-        var homePage = await mediator.Send(new HomePageQuery(data.WebPage));
-
-        metaService.SetMeta(new(homePage));
+        metaService.SetMeta(homePage);
 
         return new TemplateResult(homePage);
     }

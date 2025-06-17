@@ -1,5 +1,5 @@
 ﻿using EnumsNET;
-using Kentico.Community.Portal.Core;
+
 using Kentico.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,12 +9,12 @@ namespace Kentico.Community.Portal.Web.Features.DataCollection;
 public class CookiesController(
     CookieConsentManager cookieConsentManager,
     ICookieAccessor cookies,
-    ISystemClock clock) : Controller
+    TimeProvider clock) : Controller
 {
     public const string ROUTE_SET_PREFERENCES = nameof(ROUTE_SET_PREFERENCES);
     private readonly CookieConsentManager cookieConsentManager = cookieConsentManager;
     private readonly ICookieAccessor cookies = cookies;
-    private readonly ISystemClock clock = clock;
+    private readonly TimeProvider clock = clock;
 
     [HttpPost(Name = ROUTE_SET_PREFERENCES)]
     public IActionResult CookiePreferences(CookieBannerCompleteViewModel requestModel)
@@ -29,7 +29,7 @@ public class CookiesController(
         // Set acceptance cookie
         cookies.Set(CookieNames.COOKIE_ACCEPTANCE, "true", new()
         {
-            Expires = clock.Now.AddYears(1),
+            Expires = clock.GetLocalNow().DateTime.AddYears(1),
             HttpOnly = false,
             Secure = true
         });

@@ -36,12 +36,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// QAndAQuestionPageTitle.
-		/// </summary>
-		public string QAndAQuestionPageTitle { get; set; }
-
-
-		/// <summary>
 		/// QAndAQuestionPageDateCreated.
 		/// </summary>
 		public DateTime QAndAQuestionPageDateCreated { get; set; }
@@ -72,21 +66,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// QAndAQuestionPageDXTopics.
-		/// </summary>
-		public IEnumerable<TagReference> QAndAQuestionPageDXTopics { get; set; }
-
-
-		/// <summary>
 		/// QAndAQuestionPageBlogPostPages.
 		/// </summary>
 		public IEnumerable<BlogPostPage> QAndAQuestionPageBlogPostPages { get; set; }
-
-
-		/// <summary>
-		/// QAndAQuestionPageBlogPostPage.
-		/// </summary>
-		public IEnumerable<WebPageRelatedItem> QAndAQuestionPageBlogPostPage { get; set; }
 
 
 		/// <summary>

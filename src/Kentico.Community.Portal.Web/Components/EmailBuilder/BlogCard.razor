@@ -37,7 +37,7 @@
         .Bind(r => BlogTypes.TryFind(r.Identifier))
         .Map(t => t.Title);
 
-        Topics = Model.BlogPostPageDXTopics
+        Topics = Model.CoreTaxonomyDXTopics
         .Select(t => DXTopics.TryGetValue(t.Identifier, out var tag) ? tag.Title : "")
         .Where(t => !string.IsNullOrWhiteSpace(t))
         .ToList();

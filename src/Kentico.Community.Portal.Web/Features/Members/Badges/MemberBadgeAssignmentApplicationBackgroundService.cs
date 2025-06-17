@@ -2,7 +2,7 @@
 using CMS.DataEngine;
 using CMS.Helpers;
 using CMS.Membership;
-using Kentico.Community.Portal.Core;
+
 using Kentico.Community.Portal.Core.Modules;
 
 namespace Kentico.Community.Portal.Web.Features.Members.Badges;
@@ -16,7 +16,7 @@ public class MemberBadgeAssignmentApplicationBackgroundService : ApplicationBack
     private readonly IInfoProvider<MemberInfo> memberInfoProvider;
     private readonly IInfoProvider<MemberBadgeConfigurationInfo> memberBadgeConfigurationProvider;
     private readonly IEventLogService log;
-    private readonly ISystemClock clock;
+    private readonly TimeProvider clock;
 
     private static int RestartDelayMinutes { get; } = 10;
 
@@ -28,7 +28,7 @@ public class MemberBadgeAssignmentApplicationBackgroundService : ApplicationBack
         IInfoProvider<MemberInfo> memberInfoProvider,
         IInfoProvider<MemberBadgeConfigurationInfo> memberBadgeConfigurationProvider,
         IEventLogService log,
-        ISystemClock clock)
+        TimeProvider clock)
     {
         this.serviceProvider = serviceProvider;
         this.badgeInfoProvider = badgeInfoProvider;
@@ -156,7 +156,7 @@ public class MemberBadgeAssignmentApplicationBackgroundService : ApplicationBack
                     MemberBadgeMemberMemberId = a.MemberID,
                     MemberBadgeMemberMemberBadgeId = a.MemberBadgeID,
                     MemberBadgeMemberIsSelected = false,
-                    MemberBadgeMemberCreatedDate = clock.UtcNow
+                    MemberBadgeMemberCreatedDate = clock.GetUtcNow().DateTime
                 });
 
             if (infos.Any())

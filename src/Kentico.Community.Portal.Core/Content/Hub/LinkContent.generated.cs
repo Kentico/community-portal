@@ -35,21 +35,9 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// LinkContentLabel.
-		/// </summary>
-		public string LinkContentLabel { get; set; }
-
-
-		/// <summary>
 		/// LinkContentPathOrURL.
 		/// </summary>
 		public string LinkContentPathOrURL { get; set; }
-
-
-		/// <summary>
-		/// LinkContentShortDescription.
-		/// </summary>
-		public string LinkContentShortDescription { get; set; }
 
 
 		/// <summary>
@@ -62,12 +50,6 @@ namespace Kentico.Community.Portal.Core.Content
 		/// LinkContentLinkType.
 		/// </summary>
 		public string LinkContentLinkType { get; set; }
-
-
-		/// <summary>
-		/// LinkContentDXTopics.
-		/// </summary>
-		public IEnumerable<TagReference> LinkContentDXTopics { get; set; }
 
 
 		/// <summary>

@@ -1,5 +1,4 @@
 using Kentico.Community.Portal.Admin.Features.QAndA;
-using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
 using Kentico.Xperience.Admin.Base.Forms;
@@ -14,15 +13,15 @@ using Kentico.Xperience.Admin.Base.Forms;
 
 namespace Kentico.Community.Portal.Admin.Features.QAndA;
 
-public class QAndACreatePage(IFormComponentMapper formComponentMapper, IFormDataBinder formDataBinder, IPageLinkGenerator pageLinkGenerator, ISystemClock clock)
+public class QAndACreatePage(IFormComponentMapper formComponentMapper, IFormDataBinder formDataBinder, IPageLinkGenerator pageLinkGenerator, TimeProvider clock)
     : CreatePage<QAndAAnswerDataInfo, QAndAEditPage>(formComponentMapper, formDataBinder, pageLinkGenerator)
 {
-    private readonly ISystemClock clock = clock;
+    private readonly TimeProvider clock = clock;
 
     protected override async Task FinalizeInfoObject(QAndAAnswerDataInfo infoObject, IFormFieldValueProvider fieldValueProvider, CancellationToken cancellationToken)
     {
         await base.FinalizeInfoObject(infoObject, fieldValueProvider, cancellationToken);
 
-        infoObject.QAndAAnswerDataDateModified = infoObject.QAndAAnswerDataDateCreated = clock.UtcNow;
+        infoObject.QAndAAnswerDataDateModified = infoObject.QAndAAnswerDataDateCreated = clock.GetUtcNow().DateTime;
     }
 }

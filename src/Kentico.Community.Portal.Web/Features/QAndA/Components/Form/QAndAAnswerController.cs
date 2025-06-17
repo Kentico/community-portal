@@ -1,6 +1,5 @@
 using CMS.Core;
 using CMS.Membership;
-using CMS.Websites.Routing;
 using Htmx;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Content.Web.Mvc;
@@ -18,14 +17,14 @@ public class QAndAAnswerController(
     IWebPageUrlRetriever urlRetriever,
     IUserInfoProvider userInfoProvider,
     IMediator mediator,
-    IWebsiteChannelContext channelContext,
+    IContentRetriever contentRetriever,
     IEventLogService log) : PortalHandlerController(log)
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
     private readonly IUserInfoProvider userInfoProvider = userInfoProvider;
     private readonly IMediator mediator = mediator;
-    private readonly IWebsiteChannelContext channelContext = channelContext;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -37,8 +36,8 @@ public class QAndAAnswerController(
             return ViewComponent(typeof(QAndAAnswerFormViewComponent), new { questionID });
         }
 
-        var parentQuestionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
-        if (!parentQuestionResp.TryGetValue(out var parentQuestionPage))
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID]);
+        if (questionPages.FirstOrDefault() is not QAndAQuestionPage parentQuestionPage)
         {
             ModelState.AddModelError(nameof(questionID), "Question is not valid");
 
@@ -52,7 +51,7 @@ public class QAndAAnswerController(
         }
 
         return await mediator
-            .Send(new QAndAAnswerCreateCommand(member, requestModel.Content, parentQuestionPage, channelContext))
+            .Send(new QAndAAnswerCreateCommand(member, requestModel.Content, parentQuestionPage))
             .Match(async id =>
             {
                 string questionPath = (await urlRetriever.Retrieve(parentQuestionPage)).RelativePathTrimmed();
@@ -79,8 +78,8 @@ public class QAndAAnswerController(
             return NotFound();
         }
 
-        var parentQuestionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
-        if (!parentQuestionResp.TryGetValue(out var parentQuestionPage))
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID]);
+        if (questionPages.FirstOrDefault() is not QAndAQuestionPage parentQuestionPage)
         {
             ModelState.AddModelError(nameof(questionID), "Question is not valid");
 
@@ -148,8 +147,8 @@ public class QAndAAnswerController(
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> MarkApprovedAnswer(Guid questionID, int answerID)
     {
-        var parentQuestionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
-        if (!parentQuestionResp.TryGetValue(out var parentQuestionPage))
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID]);
+        if (questionPages.FirstOrDefault() is not QAndAQuestionPage parentQuestionPage)
         {
             return NotFound();
         }
@@ -174,7 +173,7 @@ public class QAndAAnswerController(
         var answer = await mediator.Send(new QAndAAnswerDataByIDQuery(answerID));
 
         return await mediator
-            .Send(new QAndAQuestionMarkAnsweredCommand(parentQuestionPage, answer, channelContext.WebsiteChannelID))
+            .Send(new QAndAQuestionMarkAnsweredCommand(parentQuestionPage, answer))
             .Match(async () =>
             {
                 string questionPath = (await urlRetriever.Retrieve(parentQuestionPage)).RelativePathTrimmed();

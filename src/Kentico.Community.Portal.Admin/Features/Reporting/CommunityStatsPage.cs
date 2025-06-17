@@ -3,7 +3,6 @@ using System.Data;
 using CMS.DataEngine;
 using Kentico.Community.Portal.Admin.Features.Reporting;
 using Kentico.Community.Portal.Admin.Features.Stats;
-using Kentico.Community.Portal.Core;
 using Kentico.Xperience.Admin.Base;
 
 [assembly: UIPage(
@@ -17,11 +16,11 @@ using Kentico.Xperience.Admin.Base;
 
 namespace Kentico.Community.Portal.Admin.Features.Stats;
 
-public class CommunityStatsPage(ISystemClock clock) : Page<StatsLayoutClientProperties>
+public class CommunityStatsPage(TimeProvider clock) : Page<StatsLayoutClientProperties>
 {
     public const string IDENTIFIER = "community-stats";
 
-    private readonly ISystemClock clock = clock;
+    private readonly TimeProvider clock = clock;
 
     public override async Task<StatsLayoutClientProperties> ConfigureTemplateProperties(StatsLayoutClientProperties properties)
     {
@@ -36,10 +35,9 @@ public class CommunityStatsPage(ISystemClock clock) : Page<StatsLayoutClientProp
         var stats = await GetStats(fromMonths);
         return ResponseFrom(stats);
     }
-
     private async Task<StatsData> GetStats(int fromMonths)
     {
-        var startDate = clock.UtcNow.AddMonths(-fromMonths);
+        var startDate = clock.GetUtcNow().DateTime.AddMonths(-fromMonths);
         var membersData = await GetMembers(startDate, fromMonths);
         var subscribers = await GetSubscribers(startDate, fromMonths);
         var blogPosts = await GetBlogPosts(startDate, fromMonths);
@@ -233,7 +231,7 @@ public class CommunityStatsPage(ISystemClock clock) : Page<StatsLayoutClientProp
             new DataParameter("@StartDate", startDate)
         };
         var reader = await ConnectionHelper.ExecuteReaderAsync(queryText, qp, QueryTypeEnum.SQLQuery, CommandBehavior.Default, default);
-        var start = clock.Now.AddMonths(-11);
+        var start = clock.GetLocalNow().DateTime.AddMonths(-11);
         var entries = Enumerable.Range(1, fromMonths)
             .Select(i => startDate.AddMonths(i).ToString("MM/yyyy"))
             .ToDictionary(k => k, v => 0);

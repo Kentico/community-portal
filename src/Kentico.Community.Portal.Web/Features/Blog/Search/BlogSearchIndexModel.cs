@@ -153,7 +153,7 @@ public class BlogSearchIndexingStrategy(
                 indexModel.BlogTypeFacet = tag.NormalizedName;
             });
         var dxTopics = page
-            .BlogPostPageDXTopics
+            .CoreTaxonomyDXTopics
             .Select(tagRef => taxonomies.DXTopicsAll
                 .FirstOrDefault(t => tagRef.Identifier == t.Guid))
             .WhereNotNull();
@@ -166,8 +166,8 @@ public class BlogSearchIndexingStrategy(
 
         string content = await webCrawler.CrawlWebPage(page);
         indexModel.Content = htmlSanitizer.SanitizeHtmlDocument(content);
-        indexModel.Title = page.WebPageMetaTitle;
-        indexModel.ShortDescription = page.WebPageMetaShortDescription;
+        indexModel.Title = page.BasicItemTitle;
+        indexModel.ShortDescription = page.BasicItemShortDescription;
         indexModel.PublishedDate = page.BlogPostPagePublishedDate != default
             ? page.BlogPostPagePublishedDate
             : DateTime.MinValue;
@@ -191,9 +191,9 @@ public class ImageAssetViewModelSerializable
     public ImageAssetViewModelSerializable(ImageContent image)
     {
         ID = image.SystemFields.ContentItemGUID;
-        Title = image.MediaItemTitle;
+        Title = image.BasicItemTitle;
         URL = image.ImageContentAsset.Url;
-        AltText = image.MediaItemShortDescription;
+        AltText = image.BasicItemShortDescription;
         Dimensions = new() { Width = image.ImageContentAsset.Metadata.Width ?? 0, Height = image.ImageContentAsset.Metadata.Height ?? 0 };
     }
 

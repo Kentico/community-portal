@@ -4,7 +4,7 @@ using CMS.ContactManagement;
 using CMS.DataEngine;
 using CMS.DataEngine.Query;
 using Kentico.Community.Portal.Admin.Features.ContactManagement;
-using Kentico.Community.Portal.Core;
+
 using Kentico.Xperience.Admin.Base;
 using Kentico.Xperience.Admin.DigitalMarketing.UIPages;
 
@@ -20,7 +20,7 @@ using Kentico.Xperience.Admin.DigitalMarketing.UIPages;
 namespace Kentico.Community.Portal.Admin.Features.ContactManagement;
 
 public class ContactMaintenancePage(
-    ISystemClock clock,
+    TimeProvider clock,
     IInfoProvider<ContactInfo> contactProvider,
     IInfoProvider<ActivityInfo> activityProvider) : Page<ContactMaintenancePageProperties>
 {
@@ -31,7 +31,7 @@ public class ContactMaintenancePage(
     /// </summary>
     public const int DELETE_MONTH_LIMIT = -6;
 
-    private readonly ISystemClock clock = clock;
+    private readonly TimeProvider clock = clock;
     private readonly IInfoProvider<ContactInfo> contactProvider = contactProvider;
     private readonly IInfoProvider<ActivityInfo> activityProvider = activityProvider;
 
@@ -133,8 +133,8 @@ public class ContactMaintenancePage(
         SELECT @TotalContactsDeleted as TotalContacts, @TotalActivitiesDeleted as TotalActivities
         """;
 
-        var toDate = command.DateTo > clock.Now.AddMonths(DELETE_MONTH_LIMIT)
-            ? clock.Now.AddMonths(DELETE_MONTH_LIMIT)
+        var toDate = command.DateTo > clock.GetLocalNow().DateTime.AddMonths(DELETE_MONTH_LIMIT)
+            ? clock.GetLocalNow().DateTime.AddMonths(DELETE_MONTH_LIMIT)
             : command.DateTo;
 
         var qp = new QueryDataParameters

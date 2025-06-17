@@ -73,8 +73,8 @@ public class CommunityGroupViewModel
 
     public CommunityGroupViewModel(CommunityGroupContent content)
     {
-        Title = content.ListableItemTitle;
-        Description = content.ListableItemShortDescription;
+        Title = content.BasicItemTitle;
+        Description = content.BasicItemShortDescription;
         URL = Maybe.From(content.CommunityGroupContentWebsiteURL).MapNullOrWhiteSpaceAsNone();
         Banner = content.ToImageViewModel();
         Address = new CommunityGroupAddressViewModel(content);

@@ -3,7 +3,6 @@ using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
 using Kentico.Content.Web.Mvc.Routing;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 [assembly: RegisterPageTemplate(
@@ -38,13 +37,11 @@ public class LandingPageDefaultTemplateProperties : LandingPageTemplatePropertie
 public class LandingPageEmptyTemplateProperties : LandingPageTemplateProperties { }
 
 public class LandingPageTemplateController(
-    IMediator mediator,
-    WebPageMetaService metaService,
-    IWebPageDataContextRetriever contextRetriever) : Controller
+    IContentRetriever contentRetriever,
+    WebPageMetaService metaService) : Controller
 {
-    private readonly IMediator mediator = mediator;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly WebPageMetaService metaService = metaService;
-    private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
 
     /// <summary>
     /// 
@@ -57,17 +54,13 @@ public class LandingPageTemplateController(
     [TypeFilter(typeof(ContentAuthorizationFilter))]
     public async Task<ActionResult> Index()
     {
-        if (!contextRetriever.TryRetrieve(out var data))
+        var landingPage = await contentRetriever.RetrieveCurrentPage<LandingPage>();
+        if (landingPage is null)
         {
             return NotFound();
         }
 
-        var landingPage = await mediator.Send(new LandingPageQuery(data.WebPage));
-
-        metaService.SetMeta(new(landingPage)
-        {
-            CanonicalURL = landingPage.WebPageCanonicalURL
-        });
+        metaService.SetMeta(landingPage);
 
         return new TemplateResult(landingPage);
     }

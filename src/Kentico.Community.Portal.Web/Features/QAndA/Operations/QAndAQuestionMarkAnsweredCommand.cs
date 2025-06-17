@@ -4,11 +4,10 @@ using CMS.Membership;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
-using Kentico.Community.Portal.Web.Infrastructure;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public record QAndAQuestionMarkAnsweredCommand(QAndAQuestionPage QuestionPage, QAndAAnswerDataInfo Answer, int ChannelID) : ICommand<Result>;
+public record QAndAQuestionMarkAnsweredCommand(QAndAQuestionPage QuestionPage, QAndAAnswerDataInfo Answer) : ICommand<Result>;
 public class QAndAQuestionMarkAnsweredCommandHandler(
     WebPageCommandTools tools,
     IInfoProvider<UserInfo> users) : WebPageCommandHandler<QAndAQuestionMarkAnsweredCommand, Result>(tools)
@@ -20,7 +19,7 @@ public class QAndAQuestionMarkAnsweredCommandHandler(
         var user = await users.GetPublicMemberContentAuthor();
         var question = request.QuestionPage;
 
-        var webPageManager = WebPageManagerFactory.Create(request.ChannelID, user.UserID);
+        var webPageManager = WebPageManagerFactory.Create(request.QuestionPage.SystemFields.WebPageItemWebsiteChannelId, user.UserID);
 
         bool create = await webPageManager.TryCreateDraft(question.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
         if (!create)

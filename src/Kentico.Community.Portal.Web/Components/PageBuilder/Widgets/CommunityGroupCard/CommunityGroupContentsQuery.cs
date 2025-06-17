@@ -13,7 +13,7 @@ public class CommunityGroupContentsQueryHandler(ContentItemQueryTools tools) : C
         var b = new ContentItemQueryBuilder()
             .ForContentType(CommunityGroupContent.CONTENT_TYPE_NAME, queryParameters =>
                 queryParameters
-                    .OrderBy(new OrderByColumn(nameof(CommunityGroupContent.ListableItemTitle), OrderDirection.Ascending))
+                    .OrderBy(new OrderByColumn(nameof(CommunityGroupContent.BasicItemTitle), OrderDirection.Ascending))
                     .WithLinkedItems(2));
 
         var result = await Executor.GetMappedResult<CommunityGroupContent>(b, DefaultQueryOptions, cancellationToken);
@@ -40,7 +40,7 @@ public class CommunityGroupContentByGUIDQueryHandler(ContentItemQueryTools tools
             .ForContentType(CommunityGroupContent.CONTENT_TYPE_NAME, queryParameters =>
                 queryParameters
                     .Where(w => w.WhereContentItem(request.ContentItemGUID))
-                    .OrderBy(new OrderByColumn(nameof(CommunityGroupContent.ListableItemTitle), OrderDirection.Ascending))
+                    .OrderBy(new OrderByColumn(nameof(CommunityGroupContent.BasicItemTitle), OrderDirection.Ascending))
                     .WithLinkedItems(2));
 
         var contents = await Executor.GetMappedResult<CommunityGroupContent>(b, DefaultQueryOptions, cancellationToken);

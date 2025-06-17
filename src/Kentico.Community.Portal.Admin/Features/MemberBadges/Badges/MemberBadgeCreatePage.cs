@@ -1,6 +1,6 @@
 ﻿using CMS.Membership;
 using Kentico.Community.Portal.Admin.Features.MemberBadges;
-using Kentico.Community.Portal.Core;
+
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
 using Kentico.Xperience.Admin.Base.Forms;
@@ -20,15 +20,15 @@ public class MemberBadgeCreatePage(
     IFormComponentMapper formComponentMapper,
     IFormDataBinder formDataBinder,
     IPageLinkGenerator pageLinkGenerator,
-    ISystemClock clock)
+    TimeProvider clock)
     : CreatePage<MemberBadgeInfo, MemberBadgeSectionPage>(formComponentMapper, formDataBinder, pageLinkGenerator)
 {
-    private readonly ISystemClock clock = clock;
+    private readonly TimeProvider clock = clock;
 
     protected override async Task FinalizeInfoObject(MemberBadgeInfo infoObject, IFormFieldValueProvider fieldValueProvider, CancellationToken cancellationToken)
     {
         await base.FinalizeInfoObject(infoObject, fieldValueProvider, cancellationToken);
 
-        infoObject.MemberBadgeDateModified = infoObject.MemberBadgeDateCreated = clock.UtcNow;
+        infoObject.MemberBadgeDateModified = infoObject.MemberBadgeDateCreated = clock.GetUtcNow().DateTime;
     }
 }

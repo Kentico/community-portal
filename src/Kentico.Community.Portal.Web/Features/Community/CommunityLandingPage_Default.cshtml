@@ -6,7 +6,7 @@
     var templateModel = Model.GetTemplateModel<CommunityLandingPageViewModel>();
 }
 
-<vc:page-heading page="templateModel.Page" />
+<vc:page-heading page="new(templateModel.Page)" />
 
 <main>
     <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"

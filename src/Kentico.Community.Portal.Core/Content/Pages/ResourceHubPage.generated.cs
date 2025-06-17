@@ -36,18 +36,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// ResourceHubPageTitle.
-		/// </summary>
-		public string ResourceHubPageTitle { get; set; }
-
-
-		/// <summary>
-		/// ResourceHubPageShortDescription.
-		/// </summary>
-		public string ResourceHubPageShortDescription { get; set; }
-
-
-		/// <summary>
 		/// WebPageMetaTitle.
 		/// </summary>
 		public string WebPageMetaTitle { get; set; }

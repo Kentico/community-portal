@@ -39,25 +39,24 @@ public class CommunityLinksPageTemplateProperties : IPageTemplateProperties
 
 public class CommunityLinksPageTemplateController(
     IMediator mediator,
+    IContentRetriever contentRetriever,
     WebPageMetaService metaService,
-    IWebPageDataContextRetriever contextRetriever,
     IPageBuilderTemplatePropertiesRetriever propertiesRetriever) : Controller
 {
     private readonly IMediator mediator = mediator;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly WebPageMetaService metaService = metaService;
-    private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
     private readonly IPageBuilderTemplatePropertiesRetriever propertiesRetriever = propertiesRetriever;
 
     public async Task<ActionResult> Index()
     {
-        if (!contextRetriever.TryRetrieve(out var data))
+        var page = await contentRetriever.RetrieveCurrentPage<CommunityLinksPage>();
+        if (page is null)
         {
             return NotFound();
         }
 
-        var page = await mediator.Send(new CommunityLinksPageQuery(data.WebPage));
-
-        metaService.SetMeta(new(page));
+        metaService.SetMeta(page);
 
         var props = propertiesRetriever.Retrieve<CommunityLinksPageTemplateProperties>();
         var resp = await mediator.Send(new LinkContentsCommunityQuery(props.LinkPublishDelayDays));

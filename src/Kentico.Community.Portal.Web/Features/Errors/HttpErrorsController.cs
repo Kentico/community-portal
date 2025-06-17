@@ -13,12 +13,12 @@ public class HttpErrorsController(WebPageMetaService metaService) : Controller
     {
         if (code != 404)
         {
-            metaService.SetMeta(new("Error", "There was a problem handling your request."));
+            metaService.SetMeta(new WebPageMeta("Error", "There was a problem handling your request."));
 
             return View("~/Features/Errors/Exception.cshtml", new ErrorPageViewModel { StatusCode = code });
         }
 
-        metaService.SetMeta(new("Not Found", "The page you requested could not be found."));
+        metaService.SetMeta(new WebPageMeta("Not Found", "The page you requested could not be found."));
 
         return View("~/Features/Errors/NotFound.cshtml", new ErrorPageViewModel { StatusCode = code });
     }

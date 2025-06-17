@@ -4,14 +4,13 @@ using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Infrastructure;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
-using Kentico.Community.Portal.Web.Components.ViewComponents.Navigation;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Forms;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Licenses;
+using Kentico.Community.Portal.Web.Components.ViewComponents.Navigation;
 using Kentico.Community.Portal.Web.Features.Blog.Events;
 using Kentico.Community.Portal.Web.Features.DataCollection;
-using Kentico.Community.Portal.Web.Features.Forms;
-using Kentico.Community.Portal.Web.Features.Home;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
+using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Features.QAndA.Events;
 using Kentico.Community.Portal.Web.Features.SEO;
 using Kentico.Community.Portal.Web.Features.Support;
@@ -21,7 +20,6 @@ using Kentico.Community.Portal.Web.Rendering;
 using Sidio.Sitemap.AspNetCore;
 using Sidio.Sitemap.Core.Services;
 using Slugify;
-using Kentico.Community.Portal.Admin.Features.Migrations;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -34,7 +32,7 @@ public static class ServiceCollectionAppExtensions
             .AddScoped<ConsentManager>()
             .AddRendering()
             .AddSEO()
-            .AddForms(config)
+            .AddForms()
             .AddOperations(config)
             .AddInfrastructure(config)
             .AddSupport(config)
@@ -56,11 +54,11 @@ public static class ServiceCollectionAppExtensions
                 settings.IsSlidingExpiration = section.GetValue<bool>("IsSlidingExpiration");
             })
             .AddMediatR(c => c
-                .RegisterServicesFromAssembly(typeof(HomePageQuery).Assembly)
+                .RegisterServicesFromAssembly(typeof(QAndAAnswerCountQuery).Assembly)
                 .AddOpenBehavior(typeof(QueryCachingPipelineBehavior<,>))
                 .AddOpenBehavior(typeof(CommandHandlerLogDecorator<,>)))
-            .AddClosedGenericTypes(typeof(HomePageQuery).Assembly, typeof(IQueryHandler<,>), ServiceLifetime.Transient)
-            .AddClosedGenericTypes(typeof(HomePageQuery).Assembly, typeof(ICommandHandler<,>), ServiceLifetime.Transient)
+            .AddClosedGenericTypes(typeof(QAndAAnswerCountQuery).Assembly, typeof(IQueryHandler<,>), ServiceLifetime.Transient)
+            .AddClosedGenericTypes(typeof(QAndAAnswerCountQuery).Assembly, typeof(ICommandHandler<,>), ServiceLifetime.Transient)
             .AddTransient<WebPageCommandTools>()
             .AddTransient<ContentItemManagerCreator>()
             .AddTransient<IContentQueryExecutionOptionsCreator, DefaultContentQueryExecutionOptionsCreator>()
@@ -69,8 +67,7 @@ public static class ServiceCollectionAppExtensions
             .AddTransient<DataItemCommandTools>()
             .AddTransient<DataItemQueryTools>()
             .AddSingleton<IChannelDataProvider, ChannelDataProvider>()
-            .AddTransient<AlertMessageCookieManager>()
-            .AddSingleton(_ => TimeProvider.System);
+            .AddTransient<AlertMessageCookieManager>();
 
     private static IServiceCollection AddRendering(this IServiceCollection services) =>
         services
@@ -88,17 +85,15 @@ public static class ServiceCollectionAppExtensions
             .AddTransient<SitemapRetriever>()
             .AddDefaultSitemapServices<HttpContextBaseUrlProvider>();
 
-    private static IServiceCollection AddForms(this IServiceCollection services, IConfiguration config) =>
+    private static IServiceCollection AddForms(this IServiceCollection services) =>
         services
-            .AddSingleton<FormInternalAutoresponderEmailSender>()
-            .Configure<SystemDomainOptions>(config.GetSection("SystemDomains"))
             .AddScoped<IFormMemberEngagementRetriever, FormMemberEngagementRetriever>();
 
     private static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config) =>
         services
             .AddSingleton(s => new ApplicationAssemblyInformation())
             .AddSingleton<AzureStorageClientFactory>()
-            .AddSingleton<ISystemClock, SystemClock>()
+            .AddSingleton(TimeProvider.System)
             .AddSingleton<AssetItemService>()
             .AddSingleton<IStoragePathService, StoragePathService>()
             .AddScoped<CaptchaValidator>()
@@ -146,16 +141,7 @@ public static class ServiceCollectionAppExtensions
         services;
 
     private static IServiceCollection AddMigrations(this IServiceCollection services) =>
-        services
-            .AddTransient<IDataMigrator, WebPageMigrator>()
-            .AddTransient<IDataMigrator, QAndAQuestionPageMigrator>()
-            .AddTransient<IDataMigrator, BlogPostPageMigrator>()
-            .AddTransient<IDataMigrator, LinkContentMigrator>()
-            .AddTransient<IDataMigrator, PollContentMigrator>()
-            .AddTransient<IDataMigrator, BlogPostContentMigrator>()
-            .AddTransient<IDataMigrator, MediaContentMigrator>()
-            .AddTransient<IDataMigrator, IntegrationContentMigrator>()
-            .AddTransient<IDataMigrator, CommunityGroupContentMigrator>();
+        services;
 
     private static IServiceCollection AddClosedGenericTypes(
         this IServiceCollection services,

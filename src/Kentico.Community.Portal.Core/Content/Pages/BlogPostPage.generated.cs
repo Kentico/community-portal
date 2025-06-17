@@ -54,18 +54,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// BlogPostPageDXTopics.
-		/// </summary>
-		public IEnumerable<TagReference> BlogPostPageDXTopics { get; set; }
-
-
-		/// <summary>
-		/// BlogPostPageQAndADiscussionPage.
-		/// </summary>
-		public IEnumerable<WebPageRelatedItem> BlogPostPageQAndADiscussionPage { get; set; }
-
-
-		/// <summary>
 		/// BlogPostPageQAndAQuestionPages.
 		/// </summary>
 		public IEnumerable<QAndAQuestionPage> BlogPostPageQAndAQuestionPages { get; set; }

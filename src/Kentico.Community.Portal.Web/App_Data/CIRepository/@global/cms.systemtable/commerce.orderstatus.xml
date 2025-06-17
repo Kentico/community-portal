@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassDisplayName>Order status</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="OrderStatusID" columntype="integer" enabled="true" guid="b181ab5d-261b-4a98-83ec-f07ee1723bcd" isPK="true" system="true" />
+      <field column="OrderStatusName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="1dbd8c19-e0f8-4b06-9326-c12358079a6c" system="true" />
+      <field column="OrderStatusGUID" columnprecision="0" columntype="guid" enabled="true" guid="b9c927a5-6db3-4616-b4a3-3086e947ccf7" system="true" />
+      <field column="OrderStatusDisplayName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="302dca29-cdea-457a-8188-c1dcfab2dd63" system="true" />
+      <field column="OrderStatusOrder" columnprecision="0" columntype="integer" enabled="true" guid="f8beb676-ab1e-411c-84d0-12d7db77840b" system="true" />
+      <field column="OrderStatusInternalNotificationEnabled" columnprecision="0" columntype="boolean" enabled="true" guid="58b966b9-fbbf-4a00-9523-a31c2432e28d" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>d5cac0a9-0046-428a-b624-13b3a3244bbc</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>Commerce.OrderStatus</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Commerce</CodeName>
+    <GUID>4975d347-eb67-4a9c-a5d6-76997340b8ac</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Commerce_OrderStatus</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>

@@ -1,11 +1,9 @@
-using System.Text.Json;
 using CMS.ContentEngine;
 using CMS.DataEngine;
 using CMS.Membership;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
-using Kentico.Community.Portal.Web.Infrastructure;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
@@ -13,17 +11,16 @@ public record QAndAQuestionUpdateCommand(
     QAndAQuestionPage Question,
     string UpdatedQuestionTitle,
     string UpdatedQuestionContent,
-    IReadOnlyList<Guid> DXTopics,
-    int ChannelID) : ICommand<Result>;
+    IReadOnlyList<Guid> DXTopics) : ICommand<Result>;
 public class QAndAQuestionUpdateCommandHandler(
     WebPageCommandTools tools,
     IInfoProvider<UserInfo> users,
     ITaxonomyRetriever taxonomyRetriever,
-    ISystemClock clock) : WebPageCommandHandler<QAndAQuestionUpdateCommand, Result>(tools)
+    TimeProvider clock) : WebPageCommandHandler<QAndAQuestionUpdateCommand, Result>(tools)
 {
     private readonly IInfoProvider<UserInfo> users = users;
     private readonly ITaxonomyRetriever taxonomyRetriever = taxonomyRetriever;
-    private readonly ISystemClock clock = clock;
+    private readonly TimeProvider clock = clock;
 
     public override async Task<Result> Handle(QAndAQuestionUpdateCommand request, CancellationToken cancellationToken)
     {
@@ -39,7 +36,7 @@ public class QAndAQuestionUpdateCommandHandler(
             .ToList();
 
         var user = await users.GetPublicMemberContentAuthor();
-        var webPageManager = WebPageManagerFactory.Create(request.ChannelID, user.UserID);
+        var webPageManager = WebPageManagerFactory.Create(request.Question.SystemFields.WebPageItemWebsiteChannelId, user.UserID);
 
         bool create = await webPageManager.TryCreateDraft(question.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
         if (!create)
@@ -65,11 +62,11 @@ public class QAndAQuestionUpdateCommandHandler(
 
         var itemData = new ContentItemData(new Dictionary<string, object>
         {
-            { nameof(QAndAQuestionPage.QAndAQuestionPageDateModified), clock.UtcNow },
-            { nameof(QAndAQuestionPage.QAndAQuestionPageTitle), request.UpdatedQuestionTitle },
+            { nameof(QAndAQuestionPage.QAndAQuestionPageDateModified), clock.GetUtcNow().DateTime },
+            { nameof(QAndAQuestionPage.BasicItemTitle), request.UpdatedQuestionTitle },
             // Content is not sanitized because it can include fenced code blocks.
             { nameof(QAndAQuestionPage.QAndAQuestionPageContent), request.UpdatedQuestionContent },
-            { nameof(QAndAQuestionPage.QAndAQuestionPageDXTopics), JsonSerializer.Serialize(validTags) }
+            { nameof(QAndAQuestionPage.CoreTaxonomyDXTopics), validTags }
         });
         var draftData = new UpdateDraftData(itemData);
         bool update = await webPageManager.TryUpdateDraft(question.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, draftData, cancellationToken);

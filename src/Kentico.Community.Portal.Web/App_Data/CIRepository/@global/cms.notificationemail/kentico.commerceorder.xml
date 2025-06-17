@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.notificationemail>
+  <NotificationEmailContent>
+    <![CDATA[<p>Hi {{UserFirstName}},</p><p>The status of order {{OrderNumber}} has been updated. Here are the current details:</p><ul><li>Order grand total: {{OrderGrandTotal}}</li><li>Order created: {{OrderDate}}</li><li>New order status: {{OrderStatus}}</li></ul><p>For more information and to manage this order, visit the <a href="{{OrderDetailURL}}">order detail in the administration.</a></p><p>Best regards,</p><p>Your Store Team</p>]]>
+  </NotificationEmailContent>
+  <NotificationEmailDisplayName>Commerce order</NotificationEmailDisplayName>
+  <NotificationEmailEventType>Commerce order</NotificationEmailEventType>
+  <NotificationEmailGUID>63c3bc80-9b77-4567-b7d5-846b6a0bec82</NotificationEmailGUID>
+  <NotificationEmailName>Kentico.CommerceOrder</NotificationEmailName>
+  <NotificationEmailNotificationEmailTemplateID>
+    <CodeName>Kentico.General</CodeName>
+    <GUID>fd1107c3-3b5d-4372-972e-5e4890f12f71</GUID>
+    <ObjectType>cms.notificationemailtemplate</ObjectType>
+  </NotificationEmailNotificationEmailTemplateID>
+  <NotificationEmailSender>no-reply</NotificationEmailSender>
+  <NotificationEmailSubject>
+    <![CDATA[Order {{OrderNumber}} is now in status {{OrderStatus}}]]>
+  </NotificationEmailSubject>
+</cms.notificationemail>

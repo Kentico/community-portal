@@ -12,7 +12,7 @@
     
     @if (User.Identity is { IsAuthenticated: true })
     {
-        <vc:page-heading page="templateModel" />
+        <vc:page-heading page="new(templateModel)" />
         
         <section>
             <div class="container">

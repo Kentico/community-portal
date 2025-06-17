@@ -30,7 +30,7 @@ public class RegistrationController(
     [HttpGet]
     public ActionResult Register()
     {
-        metaService.SetMeta(new("Register", "Register for a new account on the Kentico Community Portal"));
+        metaService.SetMeta(new WebPageMeta("Register", "Register for a new account on the Kentico Community Portal"));
 
         return View("~/Features/Registration/Register.cshtml", new RegisterViewModel());
     }

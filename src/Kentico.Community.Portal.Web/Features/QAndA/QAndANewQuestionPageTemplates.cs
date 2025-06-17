@@ -1,9 +1,8 @@
-using CMS.Websites.Routing;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Infrastructure;
+using Kentico.Content.Web.Mvc;
 using Kentico.Content.Web.Mvc.Routing;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 [assembly: RegisterPageTemplate(
@@ -25,17 +24,20 @@ namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 public class QAndANewQuestionPageTemplateProperties : IPageTemplateProperties { }
 
-public class QAndANewQuestionPageTemplateController(IMediator mediator, WebPageMetaService metaService, IWebsiteChannelContext channelContext) : Controller
+public class QAndANewQuestionPageTemplateController(IContentRetriever contentRetriever, WebPageMetaService metaService) : Controller
 {
-    private readonly IMediator mediator = mediator;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly WebPageMetaService metaService = metaService;
-    private readonly IWebsiteChannelContext channelContext = channelContext;
 
     public async Task<ActionResult> Index()
     {
-        var questionPage = await mediator.Send(new QAndANewQuestionPageQuery(channelContext.WebsiteChannelName));
+        var questionPage = await contentRetriever.RetrieveCurrentPage<QAndANewQuestionPage>();
+        if (questionPage is null)
+        {
+            return NotFound();
+        }
 
-        metaService.SetMeta(new(questionPage));
+        metaService.SetMeta(questionPage);
 
         return new TemplateResult(questionPage);
     }

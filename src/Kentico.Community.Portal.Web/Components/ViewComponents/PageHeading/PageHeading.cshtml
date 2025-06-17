@@ -4,7 +4,7 @@
     <div class="container">
         <h1 class="text-center k-dot">@Model.Title</h1>
 
-        @if (Model.Description is string description)
+        @if (Model.Description.TryGetValue(out string? description))
         {
             <div class="row justify-content-center">
                 <div class="col-10 col-md-8 col-lg-6 col-xxl-4">

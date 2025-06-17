@@ -3,7 +3,7 @@ using System.Data;
 using CMS.DataEngine;
 using Kentico.Community.Portal.Admin.Features.ContactManagement;
 using Kentico.Community.Portal.Admin.Features.Reporting;
-using Kentico.Community.Portal.Core;
+
 using Kentico.Xperience.Admin.Base;
 using Kentico.Xperience.Admin.DigitalMarketing.UIPages;
 
@@ -18,11 +18,11 @@ using Kentico.Xperience.Admin.DigitalMarketing.UIPages;
 
 namespace Kentico.Community.Portal.Admin.Features.ContactManagement;
 
-public class ActivityStatsPage(ISystemClock clock) : Page<StatsLayoutClientProperties>
+public class ActivityStatsPage(TimeProvider clock) : Page<StatsLayoutClientProperties>
 {
     public const string IDENTIFIER = "activity-stats";
 
-    private readonly ISystemClock clock = clock;
+    private readonly TimeProvider clock = clock;
 
     public override async Task<StatsLayoutClientProperties> ConfigureTemplateProperties(StatsLayoutClientProperties properties)
     {
@@ -40,7 +40,7 @@ public class ActivityStatsPage(ISystemClock clock) : Page<StatsLayoutClientPrope
 
     private async Task<StatsData> GetStats(int fromMonths)
     {
-        var startDate = clock.UtcNow.AddMonths(-fromMonths);
+        var startDate = clock.GetUtcNow().DateTime.AddMonths(-fromMonths);
         var totals = await GetTotals(startDate);
         var data = await GetActivities(startDate, fromMonths);
 

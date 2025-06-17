@@ -30,8 +30,8 @@ public class PageCustomMetaViewComponent(
             SiteName = settings.GlobalContent.WebsiteGlobalContentDisplayName,
             URL = url,
             CaptchaSiteKey = Maybe.From(reCaptchaSettings.SiteKey).MapNullOrWhiteSpaceAsNone(),
-            OGImageURL = Maybe.From(meta.OGImageURL).MapNullOrWhiteSpaceAsNone(),
-            MetaRobotsContent = Maybe.From(meta.Robots).MapNullOrWhiteSpaceAsNone()
+            OGImageURL = meta.OGImageURL,
+            MetaRobotsContent = meta.Robots.MapNullOrWhiteSpaceAsNone()
         };
 
         return View("~/Components/ViewComponents/PageCustomMeta/PageCustomMeta.cshtml", vm);
@@ -40,13 +40,11 @@ public class PageCustomMetaViewComponent(
 
 public class PageCustomMetaViewModel
 {
-    public PageCustomMetaViewModel(WebpageMeta meta)
+    public PageCustomMetaViewModel(WebPageMeta meta)
     {
         Title = meta.Title;
         Description = meta.Description;
-        CanonicalURL = string.IsNullOrWhiteSpace(meta.CanonicalURL)
-            ? Maybe<string>.None
-            : meta.CanonicalURL;
+        CanonicalURL = meta.CanonicalURL;
     }
 
     public string Title { get; init; } = "";

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Order status notification</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="OrderStatusNotificationID" columntype="integer" enabled="true" guid="fb094e03-ec46-467b-b1f9-bc6c4d411833" isPK="true" system="true" />
+      <field column="OrderStatusNotificationOrderStatusID" columnprecision="0" columntype="integer" enabled="true" guid="e4ff28b8-9edf-4704-a97c-1fd2bbba46d2" refobjtype="commerce.orderstatus" reftype="Binding" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="OrderStatusNotificationUserID" columnprecision="0" columntype="integer" enabled="true" guid="563629f6-31ef-4651-b0ce-5a0ca3243061" refobjtype="cms.user" reftype="Binding" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>a286d4e4-edb2-43da-97ce-ac756c5e25ef</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>Commerce.OrderStatusNotification</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Commerce</CodeName>
+    <GUID>4975d347-eb67-4a9c-a5d6-76997340b8ac</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Commerce_OrderStatusNotification</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

@@ -23,10 +23,10 @@ public class BlogPostPageSetQuestionCommandHandler(
 
         var query = new ContentItemQueryBuilder()
             .ForContentTypes(q => q.ForWebsite([request.QuestionWebPageID]))
-            .Parameters(q => q.Columns(nameof(WebPageFields.WebPageItemGUID)));
+            .Parameters(q => q.Columns(nameof(WebPageFields.ContentItemGUID)));
         var questionPages = await Executor.GetMappedWebPageResult<QAndAQuestionPage>(query, cancellationToken: cancellationToken);
 
-        if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
+        if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage || questionPage.SystemFields.ContentItemGUID == default)
         {
             return Result.Failure($"Could not retrieve a {QAndAQuestionPage.CONTENT_TYPE_NAME} with {nameof(WebPageFields.WebPageItemID)} [{request.QuestionWebPageID}]");
         }
@@ -40,7 +40,6 @@ public class BlogPostPageSetQuestionCommandHandler(
         }
 
         var itemData = new ContentItemData([]);
-        itemData.SetValue<IEnumerable<WebPageRelatedItem>>(nameof(BlogPostPage.BlogPostPageQAndADiscussionPage), [new WebPageRelatedItem { WebPageGuid = questionPage.SystemFields.WebPageItemGUID }]);
         itemData.SetValue<IEnumerable<ContentItemReference>>(nameof(BlogPostPage.BlogPostPageQAndAQuestionPages), [new ContentItemReference { Identifier = questionPage.SystemFields.ContentItemGUID }]);
 
         var draftData = new UpdateDraftData(itemData);

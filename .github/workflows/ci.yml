@@ -42,15 +42,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: "Get node.js version from package.json"
-        run: |
-          $nodeVersion = (Get-Content -Raw -Path ./src/${{ env.PROJECT_NAME }}/package.json | ConvertFrom-Json).engines.node
-          "NODE_VERSION=$nodeVersion" >> $env:GITHUB_ENV
-
       - name: "Install Node.js from package.json version"
         uses: actions/setup-node@v4
         with:
-          node-version: "${{ env.NODE_VERSION }}"
+          node-version-file: "src/Kentico.Community.Portal.Web/package.json"
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4

@@ -27,8 +27,8 @@ public class ImageViewModel
     public ImageViewModel(ImageContent content)
     {
         ID = content.SystemFields.ContentItemGUID;
-        Title = content.MediaItemTitle;
-        AltText = content.MediaItemShortDescription;
+        Title = content.BasicItemTitle;
+        AltText = content.BasicItemShortDescription;
         Width = content.ImageContentAsset.Metadata.Width ?? 0;
         Height = content.ImageContentAsset.Metadata.Height ?? 0;
         URL = content.ImageContentAsset.Url;

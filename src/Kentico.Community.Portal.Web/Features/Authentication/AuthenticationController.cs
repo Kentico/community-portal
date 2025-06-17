@@ -32,7 +32,7 @@ public class AuthenticationController(
     [HttpGet]
     public ActionResult Login()
     {
-        metaService.SetMeta(new("Sign In", "Sign in to the Kentico Community Portal"));
+        metaService.SetMeta(new WebPageMeta("Sign In", "Sign in to the Kentico Community Portal"));
 
         return View("~/Features/Authentication/Login.cshtml", new LoginViewModel());
     }

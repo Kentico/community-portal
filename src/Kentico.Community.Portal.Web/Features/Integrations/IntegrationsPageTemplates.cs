@@ -3,7 +3,6 @@ using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
 using Kentico.Content.Web.Mvc.Routing;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 [assembly: RegisterPageTemplate(
@@ -26,24 +25,21 @@ namespace Kentico.Community.Portal.Web.Features.Integrations;
 public class IntegrationsLandingPageTemplateProperties : IPageTemplateProperties { }
 
 public class IntegrationsLandingPageTemplateController(
-    IMediator mediator,
-    WebPageMetaService metaService,
-    IWebPageDataContextRetriever contextRetriever) : Controller
+    IContentRetriever contentRetriever,
+    WebPageMetaService metaService) : Controller
 {
-    private readonly IMediator mediator = mediator;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly WebPageMetaService metaService = metaService;
-    private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
 
     public async Task<ActionResult> Index()
     {
-        if (!contextRetriever.TryRetrieve(out var data))
+        var landingPage = await contentRetriever.RetrieveCurrentPage<IntegrationsLandingPage>();
+        if (landingPage is null)
         {
             return NotFound();
         }
 
-        var landingPage = await mediator.Send(new IntegrationsLandingPageQuery(data.WebPage));
-
-        metaService.SetMeta(new(landingPage));
+        metaService.SetMeta(landingPage);
 
         return new TemplateResult(landingPage);
     }

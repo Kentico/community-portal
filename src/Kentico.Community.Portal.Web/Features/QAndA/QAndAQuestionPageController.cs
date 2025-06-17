@@ -24,34 +24,31 @@ namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 [Route("[controller]/[action]")]
 public class QAndAQuestionPageController(
-    IWebPageDataContextRetriever dataContextRetriever,
     UserManager<CommunityMember> userManager,
     IUserInfoProvider userInfoProvider,
     WebPageMetaService metaService,
     IMediator mediator,
     MemberBadgeService memberBadgeService,
+    IContentRetriever contentRetriever,
     MarkdownRenderer markdownRenderer) : Controller
 {
-    private readonly IWebPageDataContextRetriever dataContextRetriever = dataContextRetriever;
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly IUserInfoProvider userInfoProvider = userInfoProvider;
     private readonly WebPageMetaService metaService = metaService;
     private readonly IMediator mediator = mediator;
     private readonly MarkdownRenderer markdownRenderer = markdownRenderer;
     private readonly MemberBadgeService memberBadgeService = memberBadgeService;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
 
     [HttpGet]
     public async Task<ActionResult> Index()
     {
-        if (!dataContextRetriever.TryRetrieve(out var data))
-        {
-            return NotFound();
-        }
-
         var currentMember = await userManager.CurrentUser(HttpContext);
 
-        var question = await mediator.Send(new QAndAQuestionPageQuery(data.WebPage));
-        metaService.SetMeta(new(question.QAndAQuestionPageTitle, $"View the discussion about {question.QAndAQuestionPageTitle} in the Kentico Community Portal Q&A."));
+        var question = await contentRetriever.RetrieveCurrentPage<QAndAQuestionPage>();
+        metaService.SetMeta(new WebPageMeta(
+            question.BasicItemTitle,
+            $"View the discussion about {question.BasicItemTitle} in the Kentico Community Portal Q&A."));
 
         bool canManageContent = await userManager.CanManageContent(currentMember, userInfoProvider);
         var answers = await GetAnswers(question, currentMember, canManageContent);
@@ -66,8 +63,8 @@ public class QAndAQuestionPageController(
     [HttpGet]
     public async Task<ActionResult> DisplayQuestionDetail(Guid questionID)
     {
-        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
-        if (!questionResp.TryGetValue(out var questionPage))
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID]);
+        if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
         {
             return NotFound();
         }
@@ -92,9 +89,8 @@ public class QAndAQuestionPageController(
 
         var currentMember = await userManager.CurrentUser(HttpContext);
         bool canManageContent = await userManager.CanManageContent(currentMember, userInfoProvider);
-        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(questionID));
-
-        if (!questionResp.TryGetValue(out var questionPage))
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID]);
+        if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
         {
             return NotFound();
         }
@@ -230,7 +226,7 @@ public class QAndAPostQuestionViewModel
         bool ownsQuestion = currentMember?.Id == question.QAndAQuestionPageAuthorMemberID;
 
         ID = question.SystemFields.WebPageItemGUID;
-        Title = question.QAndAQuestionPageTitle;
+        Title = question.BasicItemTitle;
         HTMLSanitizedContentHTML = markdownRenderer.Render(question.QAndAQuestionPageContent);
         DateCreated = question.QAndAQuestionPageDateCreated;
         DateModified = question.QAndAQuestionPageDateModified;
@@ -241,12 +237,11 @@ public class QAndAPostQuestionViewModel
             CanEdit = canManageContent || ownsQuestion,
             CanAnswer = currentMember is not null
         };
-        var tagRefs = question.QAndAQuestionPageDXTopics.Select(t => t.Identifier);
-        DXTopics = taxonomiesResp
+        var tagRefs = question.CoreTaxonomyDXTopics.Select(t => t.Identifier);
+        DXTopics = [.. taxonomiesResp
             .DXTopicsAll
             .Where(t => tagRefs.Contains(t.Guid))
-            .Select(t => t.DisplayName)
-            .ToList();
+            .Select(t => t.DisplayName)];
     }
 }
 

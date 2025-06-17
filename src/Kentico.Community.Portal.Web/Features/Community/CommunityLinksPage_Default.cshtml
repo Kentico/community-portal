@@ -6,7 +6,7 @@
     var templateModel = Model.GetTemplateModel<CommunityLinksPageViewModel>();
 }
 
-<vc:page-heading page="templateModel.Page" />
+<vc:page-heading page="new(templateModel.Page)" />
 
 <main>
     <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"
@@ -22,7 +22,7 @@
                             <div class="c-card_inner">
                                 <h4 class="h4 mt-2 pt-1">
                                     <a href="@link.Content.LinkContentPathOrURL">
-                                        @link.Content.LinkContentLabel
+                                        @link.Content.BasicItemTitle
                                     </a>
                                 </h4>
                                 <div class="d-flex justify-content-between">
@@ -37,7 +37,7 @@
                                 </div>
 
                                 <p class="mt-2">
-                                    @link.Content.LinkContentShortDescription
+                                    @link.Content.BasicItemShortDescription
                                 </p>
                             </div>
                         </div>

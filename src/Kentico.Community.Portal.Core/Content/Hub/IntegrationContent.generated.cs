@@ -83,18 +83,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// ListableItemTitle.
-		/// </summary>
-		public string ListableItemTitle { get; set; }
-
-
-		/// <summary>
-		/// ListableItemShortDescription.
-		/// </summary>
-		public string ListableItemShortDescription { get; set; }
-
-
-		/// <summary>
 		/// FeaturedImageImageContent.
 		/// </summary>
 		public IEnumerable<ImageContent> FeaturedImageImageContent { get; set; }

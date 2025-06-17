@@ -55,9 +55,9 @@ public class IntegrationItemViewModel
 
     public IntegrationItemViewModel(IntegrationContent content, TaxonomyData taxonomy, Maybe<CommunityMember> member, LinkGenerator linkGenerator, IJSEncoder jsEncoder)
     {
-        Title = content.ListableItemTitle;
+        Title = content.BasicItemTitle;
         Logo = content.ToImageViewModel();
-        ShortDescription = content.ListableItemShortDescription;
+        ShortDescription = content.BasicItemShortDescription;
         RepositoryURL = Maybe.From(content.IntegrationContentRepositoryLinkURL).MapNullOrWhiteSpaceAsNone();
         LibraryURL = Maybe.From(content.IntegrationContentLibraryLinkURL).MapNullOrWhiteSpaceAsNone();
 

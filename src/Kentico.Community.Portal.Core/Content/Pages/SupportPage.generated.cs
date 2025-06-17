@@ -36,18 +36,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// SupportPageTitle.
-		/// </summary>
-		public string SupportPageTitle { get; set; }
-
-
-		/// <summary>
-		/// SupportPageShortDescription.
-		/// </summary>
-		public string SupportPageShortDescription { get; set; }
-
-
-		/// <summary>
 		/// WebPageMetaTitle.
 		/// </summary>
 		public string WebPageMetaTitle { get; set; }

@@ -4,7 +4,7 @@
 @using Kentico.Community.Portal.Web.Membership
 @using static Kentico.Community.Portal.Web.Components.EmailBuilder.Card
 
-<Card Tag="@("Q&A Discussion")" TagColor="TagColors.Dark" Heading="@Model.QAndAQuestionPageTitle"
+<Card Tag="@("Q&A Discussion")" TagColor="TagColors.Dark" Heading="@Model.BasicItemTitle"
     BodyContent="Model.WebPageMetaShortDescription" Topics="Topics" LinkText="Join the discussion" LinkURL="@LinkURL">
 </Card>
 
@@ -19,7 +19,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Topics = Model.QAndAQuestionPageDXTopics
+        Topics = Model.CoreTaxonomyDXTopics
         .Select(t => DXTopics.TryGetValue(t.Identifier, out var tag) ? tag.Title : "")
         .Where(t => !string.IsNullOrWhiteSpace(t))
         .ToList();

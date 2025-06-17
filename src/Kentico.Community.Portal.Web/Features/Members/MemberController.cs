@@ -40,7 +40,9 @@ public class MemberController(
 
         var member = memberInfo.AsCommunityMember();
 
-        metaService.SetMeta(new($"Community member profile - {member.UserName}", $"Learn about {member.UserName} and their contributions to the Kentico Community"));
+        metaService.SetMeta(new WebPageMeta(
+            $"Community member profile - {member.UserName}",
+            $"Learn about {member.UserName} and their contributions to the Kentico Community"));
 
         var blogResult = search.SearchBlog(new BlogSearchRequest("publishdate", 50)
         {
@@ -58,12 +60,12 @@ public class MemberController(
 
         var model = new MemberDetailViewModel(member)
         {
-            Page = new UnmanagedPage("Community member profile", $"Learn about {member.UserName} and their contributions to the Kentico Community"),
+            Page = new PortalPage("Community member profile", $"Learn about {member.UserName} and their contributions to the Kentico Community"),
             BlogPostLinks = [.. blogResult.Hits.Select(h => new BlogPostLink(h.Url, h.Title, h.PublishedDate, h.BlogType))],
             QuestionsAsked = [.. qandaResult.Hits.Select(h => new Link(h.Url, h.Title, h.PublishedDate))],
             MemberBadges = badges,
-            Contributions = [.. contributionsResp.Items.Select(c => new Link(c.LinkContentPathOrURL, c.LinkContentLabel, c.LinkContentPublishedDate))],
-            Integrations = [.. integrationsResp.Items.Select(i => new Link(i.IntegrationContentRepositoryLinkURL, i.ListableItemTitle, i.IntegrationContentPublishedDate))],
+            Contributions = [.. contributionsResp.Items.Select(c => new Link(c.LinkContentPathOrURL, c.BasicItemTitle, c.LinkContentPublishedDate))],
+            Integrations = [.. integrationsResp.Items.Select(i => new Link(i.IntegrationContentRepositoryLinkURL, i.BasicItemTitle, i.IntegrationContentPublishedDate))],
         };
 
         return View("~/Features/Members/MemberDetail.cshtml", model);
@@ -104,7 +106,7 @@ public class MemberController(
 
 public class MemberDetailViewModel(CommunityMember member)
 {
-    public required IPortalPage Page { get; init; }
+    public required PortalPage Page { get; init; }
     public CommunityMember Member { get; init; } = member;
     public IReadOnlyList<Link> QuestionsAsked { get; init; } = [];
     public IReadOnlyList<BlogPostLink> BlogPostLinks { get; init; } = [];

@@ -1,7 +1,4 @@
 using CMS.DataEngine;
-using CMS.Websites.Routing;
-
-using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Membership;
@@ -11,16 +8,15 @@ namespace Kentico.Community.Portal.Web.Features.QAndA;
 public record QAndAAnswerCreateCommand(
     CommunityMember MemberAuthor,
     string AnswerContent,
-    QAndAQuestionPage ParentQuestion,
-    IWebsiteChannelContext WebsiteChannelContext)
+    QAndAQuestionPage ParentQuestion)
     : ICommand<Result<int>>;
 public class QAndAAnswerCreateCommandHandler(
     DataItemCommandTools tools,
-    ISystemClock clock,
+    TimeProvider clock,
     IInfoProvider<QAndAAnswerDataInfo> provider)
     : DataItemCommandHandler<QAndAAnswerCreateCommand, Result<int>>(tools)
 {
-    private readonly ISystemClock clock = clock;
+    private readonly TimeProvider clock = clock;
     private readonly IInfoProvider<QAndAAnswerDataInfo> provider = provider;
 
     public override async Task<Result<int>> Handle(QAndAAnswerCreateCommand request, CancellationToken cancellationToken)
@@ -28,7 +24,7 @@ public class QAndAAnswerCreateCommandHandler(
         string filteredContent = QandAContentParser.Alphanumeric(request.AnswerContent);
         string uniqueID = Guid.NewGuid().ToString("N");
         string codeName = $"{filteredContent[..Math.Min(42, filteredContent.Length)]}{uniqueID[..8]}";
-        var now = clock.UtcNow;
+        var now = clock.GetUtcNow().DateTime;
 
         var answer = new QAndAAnswerDataInfo()
         {
@@ -39,7 +35,7 @@ public class QAndAAnswerCreateCommandHandler(
             QAndAAnswerDataDateModified = now,
             QAndAAnswerDataQuestionWebPageItemID = request.ParentQuestion.SystemFields.WebPageItemID,
             QAndAAnswerDataCodeName = codeName,
-            QAndAAnswerDataWebsiteChannelID = request.WebsiteChannelContext.WebsiteChannelID
+            QAndAAnswerDataWebsiteChannelID = request.ParentQuestion.SystemFields.WebPageItemWebsiteChannelId
         };
 
         try

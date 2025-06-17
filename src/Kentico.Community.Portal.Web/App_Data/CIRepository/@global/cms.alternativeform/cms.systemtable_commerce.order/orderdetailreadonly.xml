@@ -27,17 +27,18 @@
           <controlname>Kentico.Administration.TextWithLabel</controlname>
         </settings>
       </field>
-      <field column="OrderStatus" enabled="true" guid="ab9d49d0-b305-4e82-a687-4984cb1ec917" visible="true" order="10">
-        <settings>
-          <controlname>Kentico.Administration.TextWithLabel</controlname>
-        </settings>
+      <field column="OrderCreatedWhen" guid="32fbc894-b48e-458f-b028-242835d09cfa" enabled="" order="10" />
+      <field column="OrderOrderStatusID" guid="dbf0718d-a704-4c2b-a559-6616b8802d0c" enabled="" order="11" />
+      <field column="OrderStatus" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="32582fce-1014-41ba-a2a3-fa529cc54278" system="true" visible="true" order="12">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$digitalcommerce.order.orderdetail.status$}</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
       </field>
-      <field column="OrderCreatedWhen" guid="32fbc894-b48e-458f-b028-242835d09cfa" enabled="" order="11" />
     </form>
   </FormDefinition>
   <FormDisplayName>Order detail</FormDisplayName>

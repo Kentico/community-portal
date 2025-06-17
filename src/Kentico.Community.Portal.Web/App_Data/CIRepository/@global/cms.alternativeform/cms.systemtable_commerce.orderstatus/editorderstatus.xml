@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>Commerce.OrderStatus</CodeName>
+    <GUID>d5cac0a9-0046-428a-b624-13b3a3244bbc</GUID>
+    <ObjectType>cms.systemtable</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="OrderStatusID" guid="b181ab5d-261b-4a98-83ec-f07ee1723bcd" enabled="" />
+      <field column="OrderStatusGUID" guid="b9c927a5-6db3-4616-b4a3-3086e947ccf7" enabled="" order="1" />
+      <field column="OrderStatusDisplayName" enabled="true" guid="302dca29-cdea-457a-8188-c1dcfab2dd63" visible="true" order="2">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.orderstatuses.overview.orderstatusname$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="OrderStatusName" enabled="true" guid="1dbd8c19-e0f8-4b06-9326-c12358079a6c" visible="true" order="3">
+        <settings>
+          <controlname>Kentico.Administration.CodeName</controlname>
+          <HasAutomaticCodeNameGenerationOption>True</HasAutomaticCodeNameGenerationOption>
+          <IsCollapsed>True</IsCollapsed>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.orderstatuses.overview.codename$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="OrderStatusOrder" guid="f8beb676-ab1e-411c-84d0-12d7db77840b" enabled="" />
+      <category name="Notifications" order="5">
+        <properties>
+          <visible>true</visible>
+        </properties>
+      </category>
+      <field column="OrderStatusInternalNotificationEnabled" enabled="true" guid="58b966b9-fbbf-4a00-9523-a31c2432e28d" visible="true" order="6">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <defaultvalue>False</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.orderstatuses.overview.notifyuser$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="Recipients" columnprecision="0" columntype="objectids" dummy="altform" enabled="true" guid="725670b5-31b6-47b5-bb4e-75d5264d2844" system="true" visible="true" order="7">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.orderstatuses.overview.recipients$}]]>
+          </fieldcaption>
+          <fielddescription>
+            <![CDATA[{$digitalcommerce.orderstatuses.overview.recipientstooltip$}]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectIdSelector</controlname>
+          <MaximumItems>0</MaximumItems>
+          <ObjectType>CMS.User</ObjectType>
+        </settings>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit order status</FormDisplayName>
+  <FormGUID>f3179573-f191-45ee-bb55-7853bfbbe000</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>EditOrderStatus</FormName>
+</cms.alternativeform>

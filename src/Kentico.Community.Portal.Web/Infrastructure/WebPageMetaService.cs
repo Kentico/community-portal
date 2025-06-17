@@ -9,9 +9,9 @@ public class WebPageMetaService(
 {
     private readonly IMediator mediator = mediator;
     private readonly IHttpContextAccessor contextAccessor = contextAccessor;
-    private WebpageMeta meta = new("", "");
+    private WebPageMeta meta = WebPageMeta.Default;
 
-    public async Task<WebpageMeta> GetMeta()
+    public async Task<WebPageMeta> GetMeta()
     {
         var settings = await mediator.Send(new PortalWebsiteSettingsQuery());
 
@@ -22,7 +22,7 @@ public class WebPageMetaService(
 
         meta = meta with { Title = fullTitle };
 
-        if (meta.OGImageURL is null)
+        if (meta.OGImageURL.HasNoValue)
         {
             var imageContent = settings.GlobalContent.WebsiteGlobalContentLogoImageContent.FirstOrDefault();
 
@@ -36,5 +36,6 @@ public class WebPageMetaService(
         return meta;
     }
 
-    public void SetMeta(WebpageMeta meta) => this.meta = meta;
+    public void SetMeta(WebPageMeta meta) => this.meta = meta;
+    public void SetMeta(IWebPageMetaFields metaFields) => meta = new(metaFields);
 }

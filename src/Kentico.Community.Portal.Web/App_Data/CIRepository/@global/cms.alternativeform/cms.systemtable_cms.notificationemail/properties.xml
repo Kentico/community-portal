@@ -102,7 +102,19 @@
           <controlname>Kentico.Administration.TextWithLabel</controlname>
         </settings>
       </field>
-      <field column="NotificationEmailFormSubmissionEventTypeRecipients" columnprecision="0" columntype="objectids" dummy="altform" enabled="true" guid="d5ec38b8-aa2a-442b-8651-e141f84555cb" system="true" visible="true" order="14">
+      <field allowempty="true" column="NotificationEmailCommerceOrderEventTypeRecipients" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="d6e2f409-d050-4947-a825-f9995e2e9da6" system="true" visible="true" order="14">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$base.notifications.emails.commerceorder.recipients.label$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+      <field column="NotificationEmailFormSubmissionEventTypeRecipients" columnprecision="0" columntype="objectids" dummy="altform" enabled="true" guid="d5ec38b8-aa2a-442b-8651-e141f84555cb" system="true" visible="true" order="15">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>
@@ -119,7 +131,7 @@
           <ObjectType>cms.user</ObjectType>
         </settings>
       </field>
-      <field column="NotificationEmailNotificationEmailTemplateID" enabled="true" guid="8a1fa75a-8eae-4364-a85c-d9f78086087b" visible="true" refobjtype="" reftype="" order="15">
+      <field column="NotificationEmailNotificationEmailTemplateID" enabled="true" guid="8a1fa75a-8eae-4364-a85c-d9f78086087b" visible="true" refobjtype="" reftype="" order="16">
         <settings>
           <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
           <ObjectType>cms.notificationemailtemplate</ObjectType>
@@ -134,8 +146,8 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="NotificationEmailSender" guid="55219f6e-cbdf-40b2-bb5c-487d8382d0c2" enabled="" order="16" />
-      <field column="NotificationEmailSenderEmailAddress" columnprecision="0" columnsize="254" columntype="text" dummy="altform" enabled="true" guid="6ffe60d9-58e5-4f5e-8f7a-72f638d33cc0" system="true" visible="true" order="17">
+      <field column="NotificationEmailSender" guid="55219f6e-cbdf-40b2-bb5c-487d8382d0c2" enabled="" order="17" />
+      <field column="NotificationEmailSenderEmailAddress" columnprecision="0" columnsize="254" columntype="text" dummy="altform" enabled="true" guid="6ffe60d9-58e5-4f5e-8f7a-72f638d33cc0" system="true" visible="true" order="18">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$base.notifications.emails.edit.sender$}</fieldcaption>
@@ -154,7 +166,7 @@
           </ValidationRuleConfiguration>
         </validationrulesdata>
       </field>
-      <field column="NotificationEmailPreviewText" guid="4b7f93b4-f9d8-44bb-b806-8206178b0599" enabled="" order="18" />
+      <field column="NotificationEmailPreviewText" guid="4b7f93b4-f9d8-44bb-b806-8206178b0599" enabled="" order="19" />
     </form>
   </FormDefinition>
   <FormDisplayName>Properties</FormDisplayName>

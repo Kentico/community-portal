@@ -13,13 +13,12 @@
       <field column="OrderNumber" guid="259c6ec0-f9bf-4557-bbad-3cc63e04c64c" enabled="" />
       <field column="OrderCreatedWhen" guid="32fbc894-b48e-458f-b028-242835d09cfa" enabled="" />
       <field column="OrderModifiedWhen" guid="4e51993d-3f97-41d8-89c0-e4f9930f938c" enabled="" />
-      <field column="OrderStatus" guid="ab9d49d0-b305-4e82-a687-4984cb1ec917" enabled="" />
+      <field column="OrderCustomerID" guid="95833ce0-b784-42a4-a586-83f27bbbc30e" enabled="" order="5" />
       <field column="OrderTotalPrice" guid="7b42d452-65d3-4611-940f-152f9339cb33" enabled="" />
       <field column="OrderTotalShipping" guid="d3406338-30b7-458f-925d-889ce635c616" enabled="" />
       <field column="OrderTotalTax" guid="cac55cde-cb20-41e7-8a16-0fc1bf3df0b9" enabled="" />
       <field column="OrderGrandTotal" guid="e3ff8f61-61d2-4b27-afb3-4b4e160bedb7" enabled="" />
-      <field column="OrderCustomerID" guid="95833ce0-b784-42a4-a586-83f27bbbc30e" enabled="" />
-      <field column="OrderTotalPriceText" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="3d7a6876-583b-49e6-ab80-2fafb2952946" system="true" visible="true" order="11">
+      <field column="OrderTotalPriceText" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="3d7a6876-583b-49e6-ab80-2fafb2952946" system="true" visible="true" order="10">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$digitalcommerce.order.ordertotals.subtotal$}</fieldcaption>
@@ -29,7 +28,7 @@
           <controlname>Kentico.Administration.TextWithLabel</controlname>
         </settings>
       </field>
-      <field column="OrderTotalTaxText" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="7e6a6cff-1948-45de-b7d4-3fbc4b059249" system="true" visible="true" order="12">
+      <field column="OrderTotalTaxText" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="7e6a6cff-1948-45de-b7d4-3fbc4b059249" system="true" visible="true" order="11">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$digitalcommerce.order.ordertotals.tax$}</fieldcaption>
@@ -39,7 +38,7 @@
           <controlname>Kentico.Administration.TextWithLabel</controlname>
         </settings>
       </field>
-      <field column="OrderTotalShippingText" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="7b925825-9953-42f2-aeea-31a9428fe35f" system="true" visible="true" order="13">
+      <field column="OrderTotalShippingText" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="7b925825-9953-42f2-aeea-31a9428fe35f" system="true" visible="true" order="12">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$digitalcommerce.order.ordertotals.shipping$}</fieldcaption>
@@ -49,7 +48,7 @@
           <controlname>Kentico.Administration.TextWithLabel</controlname>
         </settings>
       </field>
-      <field column="OrderGrandTotalText" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="9c66a6ed-3f35-406c-85ac-f246936cfdb2" system="true" visible="true" order="14">
+      <field column="OrderGrandTotalText" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="9c66a6ed-3f35-406c-85ac-f246936cfdb2" system="true" visible="true" order="13">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$digitalcommerce.order.ordertotals.total$}</fieldcaption>
@@ -59,6 +58,7 @@
           <controlname>Kentico.Administration.TextWithLabel</controlname>
         </settings>
       </field>
+      <field column="OrderOrderStatusID" guid="dbf0718d-a704-4c2b-a559-6616b8802d0c" enabled="" order="14" />
     </form>
   </FormDefinition>
   <FormDisplayName>Order totals</FormDisplayName>

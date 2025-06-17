@@ -1,21 +1,22 @@
 using System.ComponentModel.DataAnnotations;
-using CMS.Websites.Routing;
+using Kentico.Content.Web.Mvc;
 using MediatR;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public class QAndAAnswerFormViewComponent(IMediator mediator, IWebsiteChannelContext channelContext) : ViewComponent
+public class QAndAAnswerFormViewComponent(
+    IMediator mediator,
+    IContentRetriever contentRetriever) : ViewComponent
 {
     private readonly IMediator mediator = mediator;
-    private readonly IWebsiteChannelContext channelContext = channelContext;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
 
     public async Task<IViewComponentResult> InvokeAsync(Guid questionID, int? answerID = null)
     {
-        var landingResp = await mediator.Send(new QAndALandingPageQuery(channelContext.WebsiteChannelName));
-
-        if (!landingResp.TryGetValue(out var landingPage))
+        var pages = await contentRetriever.RetrievePages<QAndALandingPage>();
+        if (pages.FirstOrDefault() is not QAndALandingPage page)
         {
             return View("~/Components/ComponentError.cshtml");
         }
@@ -23,7 +24,7 @@ public class QAndAAnswerFormViewComponent(IMediator mediator, IWebsiteChannelCon
         var model = new QAndAAnswerViewModel
         {
             ParentQuestionID = questionID,
-            FormHelpMessageHTML = new(landingPage.QAndALandingPageMarkdownFormHelpMessageHTML)
+            FormHelpMessageHTML = new(page.QAndALandingPageMarkdownFormHelpMessageHTML)
         };
 
         if (answerID is int id)

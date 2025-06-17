@@ -4,7 +4,6 @@ using System.Xml;
 using CMS.Helpers;
 using CMS.Membership;
 using CMS.Websites.Routing;
-using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.Members;
@@ -26,7 +25,7 @@ public class RSSFeedController(
     IMediator mediator,
     IWebPageDataContextRetriever webPageDataContextRetriever,
     IWebPageUrlRetriever webPageUrlRetriever,
-    ISystemClock clock,
+    TimeProvider clock,
     IProgressiveCache cache,
     ICacheDependencyKeysBuilder keysBuilder,
     IWebsiteChannelContext channelContext) : Controller
@@ -34,7 +33,7 @@ public class RSSFeedController(
     private readonly IMediator mediator = mediator;
     private readonly IWebPageDataContextRetriever webPageDataContextRetriever = webPageDataContextRetriever;
     private readonly IWebPageUrlRetriever webPageUrlRetriever = webPageUrlRetriever;
-    private readonly ISystemClock clock = clock;
+    private readonly TimeProvider clock = clock;
     private readonly IProgressiveCache cache = cache;
     private readonly ICacheDependencyKeysBuilder keysBuilder = keysBuilder;
     private readonly IWebsiteChannelContext channelContext = channelContext;
@@ -77,15 +76,16 @@ public class RSSFeedController(
 
     private async Task<SyndicationFeed> GetFeed(RSSFeedPage feedPage)
     {
+        var utcNow = clock.GetUtcNow().DateTime;
         var feedURL = await webPageUrlRetriever.Retrieve(feedPage);
         var feed = new SyndicationFeed(
             feedPage.RSSFeedPageFeedName,
             feedPage.RSSFeedPageFeedShortDescription,
             new Uri($"{Request.Scheme}://{Request.Host}{Request.PathBase}{feedURL.RelativePathTrimmed()}"),
             "RSSUrl",
-            clock.UtcNow)
+            utcNow)
         {
-            Copyright = new TextSyndicationContent($"{clock.UtcNow.Year} - Kentico")
+            Copyright = new TextSyndicationContent($"{utcNow.Year} - Kentico")
         };
 
         if (string.Equals(feedPage.RSSFeedPageWebPageContentType, BlogPostPage.CONTENT_TYPE_NAME, StringComparison.OrdinalIgnoreCase))
@@ -140,8 +140,8 @@ public class RSSFeedController(
             }
 
             var postURL = await webPageUrlRetriever.Retrieve(page);
-            string title = page.WebPageMetaTitle;
-            string description = page.WebPageMetaShortDescription;
+            string title = page.BasicItemTitle;
+            string description = page.BasicItemShortDescription;
             var absoluteURI = new Uri(postURL.WebPageAbsoluteURL(Request));
             string pageID = page.SystemFields.WebPageItemGUID.ToString("N");
             var item = new SyndicationItem(title, description, absoluteURI, pageID, new(page.SystemFields.ContentItemCommonDataLastPublishedWhen ?? page.BlogPostPagePublishedDate))
@@ -179,12 +179,13 @@ public class RSSFeedController(
         foreach (var page in resp.Items)
         {
             var postURL = await webPageUrlRetriever.Retrieve(page);
-            string title = Maybe.From(page.QAndAQuestionPageTitle)
+            string title = Maybe.From(page.BasicItemTitle)
                 .MapNullOrWhiteSpaceAsNone()
                 .IfNoValue(page.WebPageMetaTitle)
                 .GetValueOrDefault("");
-            string description = Maybe.From(page.WebPageMetaShortDescription)
+            string description = Maybe.From(page.BasicItemShortDescription)
                 .MapNullOrWhiteSpaceAsNone()
+                .IfNoValue(page.WebPageMetaShortDescription)
                 .GetValueOrDefault("");
             var absoluteURI = new Uri(postURL.WebPageAbsoluteURL(Request));
             string pageID = page.SystemFields.WebPageItemGUID.ToString("N");
@@ -198,7 +199,7 @@ public class RSSFeedController(
                 item.Authors.Add(new SyndicationPerson() { Name = member.MemberName });
             }
 
-            page.QAndAQuestionPageDXTopics
+            page.CoreTaxonomyDXTopics
                 .Select(t => qAndATags.DXTopicsAll.TryFirst(i => i.Guid == t.Identifier))
                 .ToList()
                 .ForEach(i => i.Execute(tag => item.Categories.Add(new SyndicationCategory(tag.DisplayName))));

@@ -59,12 +59,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// PollContentDXTopics.
-		/// </summary>
-		public IEnumerable<TagReference> PollContentDXTopics { get; set; }
-
-
-		/// <summary>
 		/// CoreTaxonomyDXTopics.
 		/// </summary>
 		public IEnumerable<TagReference> CoreTaxonomyDXTopics { get; set; }

@@ -37,7 +37,7 @@ public class AccountController(
     [HttpGet]
     public async Task<ActionResult> MyAccount()
     {
-        metaService.SetMeta(new("My Account", "Manage your member account."));
+        metaService.SetMeta(new WebPageMeta("My Account", "Manage your member account."));
 
         var member = await userManager.GetUserAsync(User);
         if (member is null)
@@ -47,6 +47,7 @@ public class AccountController(
 
         var vm = new MyAccountViewModel
         {
+            Page = new PortalPage("My Account", "Manage your account profile, password, and member settings."),
             MemberID = member.Id,
             Username = member.UserName ?? "",
             Email = member.Email ?? "",
@@ -210,8 +211,9 @@ public class SelectedBadgeViewModel
     public bool IsSelected { get; set; }
 }
 
-public class MyAccountViewModel : IPortalPage
+public class MyAccountViewModel
 {
+    public required PortalPage Page { get; set; }
     public int MemberID { get; set; }
     public string Username { get; set; } = "";
     public string Email { get; set; } = "";
@@ -220,9 +222,6 @@ public class MyAccountViewModel : IPortalPage
     public BadgesFormViewModel BadgesForm { get; set; } = new([]);
     public DateTime DateCreated { get; set; }
     public UpdatePasswordViewModel PasswordInfo { get; set; } = new();
-    public string Title => "My Account";
-    public string ShortDescription => "Manage your account profile, password, and member settings.";
-
     public AvatarFormViewModel AvatarForm { get; set; } = new();
 }
 

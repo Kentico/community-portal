@@ -15,8 +15,8 @@
     @foreach (var link in Model.Links)
     {
       <li>
-        <a href="@link.LinkContentPathOrURL"> @link.LinkContentLabel </a>
-        <p><small>@link.LinkContentShortDescription</small></p>
+        <a href="@link.LinkContentPathOrURL"> @link.BasicItemTitle </a>
+        <p><small>@link.BasicItemShortDescription</small></p>
       </li>
     }
   </ul>

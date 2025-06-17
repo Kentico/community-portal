@@ -1,10 +1,9 @@
-using CMS.Websites.Routing;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Infrastructure;
+using Kentico.Content.Web.Mvc;
 using Kentico.Content.Web.Mvc.Routing;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 [assembly: RegisterPageTemplate(
@@ -34,22 +33,20 @@ public class QAndALandingPageTemplateProperties : IPageTemplateProperties
     public bool DisplayPageDescription { get; set; } = true;
 }
 
-public class QAndALandingPageTemplateController(IMediator mediator, WebPageMetaService metaService, IWebsiteChannelContext channelContext) : Controller
+public class QAndALandingPageTemplateController(IContentRetriever contentRetriever, WebPageMetaService metaService) : Controller
 {
-    private readonly IMediator mediator = mediator;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly WebPageMetaService metaService = metaService;
-    private readonly IWebsiteChannelContext channelContext = channelContext;
 
     public async Task<ActionResult> Index()
     {
-        var landingPageResp = await mediator.Send(new QAndALandingPageQuery(channelContext.WebsiteChannelName));
-
-        if (!landingPageResp.TryGetValue(out var landingPage))
+        var landingPage = await contentRetriever.RetrieveCurrentPage<QAndALandingPage>();
+        if (landingPage is null)
         {
             return NotFound();
         }
 
-        metaService.SetMeta(new(landingPage));
+        metaService.SetMeta(landingPage);
 
         return new TemplateResult(landingPage);
     }

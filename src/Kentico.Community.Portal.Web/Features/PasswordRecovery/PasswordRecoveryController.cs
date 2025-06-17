@@ -27,7 +27,7 @@ public class PasswordRecoveryController(
     [HttpGet]
     public ActionResult RequestRecoveryEmail()
     {
-        metaService.SetMeta(new("Reset Password", "Reset your password"));
+        metaService.SetMeta(new WebPageMeta("Reset Password", "Reset your password"));
 
         return View("~/Features/PasswordRecovery/RequestRecoveryEmail.cshtml", new RequestRecoveryEmailViewModel());
     }
@@ -95,7 +95,7 @@ public class PasswordRecoveryController(
     [HttpGet]
     public async Task<ActionResult> SetNewPassword(int? userId, string? token)
     {
-        metaService.SetMeta(new("Password Reset", "Reset your password."));
+        metaService.SetMeta(new WebPageMeta("Password Reset", "Reset your password."));
 
         if (string.IsNullOrEmpty(token))
         {

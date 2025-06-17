@@ -67,7 +67,7 @@ public class MemberIntegrationsListPage(
                 searchable: false,
                 sortable: true,
                 defaultSortDirection: SortTypeEnum.Desc)
-            .AddComponentColumn(nameof(IntegrationContent.ListableItemTitle),
+            .AddComponentColumn(nameof(IntegrationContent.BasicItemTitle),
                 "@kentico-community/portal-web-admin/Link",
                 modelRetriever: ContentLinkModelRetriever,
                 caption: "Integration",

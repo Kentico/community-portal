@@ -3,7 +3,7 @@ using CMS.Helpers;
 using CMS.Membership;
 
 using Kentico.Community.Portal.Admin.Features.MemberBadges;
-using Kentico.Community.Portal.Core;
+
 using Kentico.Community.Portal.Core.Content;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
@@ -30,7 +30,7 @@ internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formIte
     IContentQueryExecutor contentQueryExecutor,
     IMemberBadgeInfoProvider memberBadgeProvider,
     IProgressiveCache cache,
-    ISystemClock clock) : ModelEditPage<MemberBadgesAssignmentConfigurationModel>(formItemCollectionProvider, formDataBinder)
+    TimeProvider clock) : ModelEditPage<MemberBadgesAssignmentConfigurationModel>(formItemCollectionProvider, formDataBinder)
 {
     private MemberBadgesAssignmentConfigurationModel model = new();
 
@@ -42,7 +42,7 @@ internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formIte
     private readonly IContentQueryExecutor contentQueryExecutor = contentQueryExecutor;
     private readonly IMemberBadgeInfoProvider memberBadgeProvider = memberBadgeProvider;
     private readonly IProgressiveCache cache = cache;
-    private readonly ISystemClock clock = clock;
+    private readonly TimeProvider clock = clock;
 
     protected override MemberBadgesAssignmentConfigurationModel Model => model;
 
@@ -76,7 +76,7 @@ internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formIte
                     MemberBadgeMemberMemberBadgeId = badge.MemberBadgeID,
                     MemberBadgeMemberMemberId = MemberID,
                     MemberBadgeMemberIsSelected = false,
-                    MemberBadgeMemberCreatedDate = clock.UtcNow
+                    MemberBadgeMemberCreatedDate = clock.GetUtcNow().DateTime
                 });
             }
         }

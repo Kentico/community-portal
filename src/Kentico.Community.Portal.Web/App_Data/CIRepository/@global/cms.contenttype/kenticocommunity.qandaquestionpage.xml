@@ -16,16 +16,6 @@
       <schema guid="bdc7088f-b01e-4186-a83c-703214805501" name="bdc7088f-b01e-4186-a83c-703214805501">
         <properties />
       </schema>
-      <field column="QAndAQuestionPageTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="0be33a10-9303-4c4b-b6e7-be67056d9846" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Title</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.TextInput</controlname>
-        </settings>
-      </field>
       <field column="QAndAQuestionPageDateCreated" columnprecision="3" columntype="datetime" enabled="true" guid="81d352b5-02ac-4b82-a01c-00e4adce4fa0" visible="true">
         <properties>
           <explanationtext>{$base.forms.datetimeinput.explanation$}</explanationtext>
@@ -97,20 +87,6 @@
           </ValidationRuleConfiguration>
         </validationrulesdata>
       </field>
-      <field allowempty="true" column="QAndAQuestionPageDXTopics" columnprecision="0" columntype="taxonomy" enabled="true" guid="f3cfe649-5652-46d2-8fe8-a848f39c0fbd" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>DX Topics</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.TagSelector</controlname>
-          <MaxSelectedTagsCount>8</MaxSelectedTagsCount>
-          <TaxonomyGroup>
-            <![CDATA[["72f39193-9dee-45df-9138-730ed4445858"]]]>
-          </TaxonomyGroup>
-        </settings>
-      </field>
       <field allowempty="true" column="QAndAQuestionPageBlogPostPages" columnprecision="0" columntype="contentitemreference" enabled="true" guid="fc2e1af5-924a-4bce-a268-c6f6572c3af0" visible="true">
         <properties>
           <explanationtext>
@@ -128,22 +104,6 @@
           <MaximumItems>1</MaximumItems>
           <MinimumItems>0</MinimumItems>
           <SelectionType>contentTypes</SelectionType>
-        </settings>
-      </field>
-      <field allowempty="true" column="QAndAQuestionPageBlogPostPage" columnprecision="0" columntype="webpages" enabled="true" guid="067930f9-1c5f-4c47-b22c-31d634f99713" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Linked blog post (deprecated)</fieldcaption>
-          <fielddescription>
-            <![CDATA[If this Q&A discussion was created for a blog post, that blog post page is identified here]]>
-          </fielddescription>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.WebPageSelector</controlname>
-          <MaximumPages>1</MaximumPages>
-          <Sortable>False</Sortable>
-          <TreePath>/Blog</TreePath>
         </settings>
       </field>
       <field allowempty="true" column="QAndAQuestionPageAcceptedAnswerDataGUID" columnprecision="0" columntype="guid" enabled="true" guid="d650da7d-7e2f-4103-9c9f-ed53c5413753" />

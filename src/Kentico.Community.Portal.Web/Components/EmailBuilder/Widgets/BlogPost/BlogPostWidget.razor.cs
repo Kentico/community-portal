@@ -52,11 +52,10 @@ public partial class BlogPostWidget : ComponentBase
             .Tags
             .ToDictionary(t => t.Identifier);
 
-        // TODO replace with Content Retriever when it is fixed and populates web page system fields
-        var b = new ContentItemQueryBuilder()
-            .ForContentTypes(q => q.OfContentType(BlogPostPage.CONTENT_TYPE_NAME).WithContentTypeFields().WithWebPageData().WithLinkedItems(BlogPostPage.FullQueryDepth))
-            .Parameters(p => p.Where(w => w.WhereIn(nameof(BlogPostPage.SystemFields.ContentItemGUID), Properties.SelectedBlogPosts.Select(i => i.Identifier))));
-        var pages = await QueryExecutor.GetMappedWebPageResult<BlogPostPage>(b, new ContentQueryExecutionOptions { ForPreview = emailContext.BuilderMode != EmailBuilderMode.Off });
+        var pages = await ContentRetriever.RetrieveContentByGuids<BlogPostPage>(
+            Properties.SelectedBlogPosts.Select(i => i.Identifier),
+            new RetrieveContentParameters { LanguageName = emailContext.LanguageName, IsForPreview = emailContext.BuilderMode != EmailBuilderMode.Off });
+
         Model = pages.TryFirst();
     }
 }

@@ -6,7 +6,7 @@
     var templateModel = Model.GetTemplateModel<QAndALandingPage>();
 }
 
-<vc:page-heading page="templateModel" display-description="Model.Properties.DisplayPageDescription" />
+<vc:page-heading page="new(templateModel)" display-description="Model.Properties.DisplayPageDescription" />
 
 <main>
     <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"

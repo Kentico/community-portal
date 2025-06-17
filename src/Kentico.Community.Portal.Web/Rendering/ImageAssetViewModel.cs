@@ -18,8 +18,8 @@ public class ImageAssetViewModel
     public ImageAssetViewModel(ImageContent content)
     {
         ID = content.SystemFields.ContentItemGUID;
-        Title = content.MediaItemTitle;
-        AltText = content.MediaItemShortDescription;
+        Title = content.BasicItemTitle;
+        AltText = content.BasicItemShortDescription;
         Asset = content.ImageContentAsset;
     }
 }

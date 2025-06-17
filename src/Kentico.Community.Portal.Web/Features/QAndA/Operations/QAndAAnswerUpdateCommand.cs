@@ -1,5 +1,5 @@
 using CMS.DataEngine;
-using Kentico.Community.Portal.Core;
+
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 
@@ -8,11 +8,11 @@ namespace Kentico.Community.Portal.Web.Features.QAndA;
 public record QAndAAnswerUpdateCommand(QAndAAnswerDataInfo Answer, string UpdatedAnswerContent) : ICommand<Result>;
 public class QAndAAnswerUpdateCommandHandler(
     DataItemCommandTools tools,
-    ISystemClock clock,
+    TimeProvider clock,
     IInfoProvider<QAndAAnswerDataInfo> provider)
     : DataItemCommandHandler<QAndAAnswerUpdateCommand, Result>(tools)
 {
-    private readonly ISystemClock clock = clock;
+    private readonly TimeProvider clock = clock;
     private readonly IInfoProvider<QAndAAnswerDataInfo> provider = provider;
 
     public override async Task<Result> Handle(QAndAAnswerUpdateCommand request, CancellationToken cancellationToken)
@@ -23,7 +23,7 @@ public class QAndAAnswerUpdateCommandHandler(
         string uniqueID = Guid.NewGuid().ToString("N");
         string codeName = $"{filteredContent[..Math.Min(42, filteredContent.Length)]}{uniqueID[..8]}";
 
-        var now = clock.UtcNow;
+        var now = clock.GetUtcNow().DateTime;
 
         answer.QAndAAnswerDataContent = request.UpdatedAnswerContent;
         answer.QAndAAnswerDataDateModified = now;

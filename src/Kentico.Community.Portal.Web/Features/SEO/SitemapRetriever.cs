@@ -12,41 +12,23 @@ public class SitemapRetriever(
     IWebPageUrlRetriever urlRetriever,
     IWebsiteChannelContext website,
     IContentQueryExecutor executor,
-    ISystemClock clock)
+    ICacheDependencyBuilderFactory cacheBuilderFactory)
 {
     private readonly IProgressiveCache cache = cache;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
     private readonly IWebsiteChannelContext website = website;
     private readonly IContentQueryExecutor executor = executor;
-    private readonly ISystemClock clock = clock;
-
-    private static readonly string[] contentTypeDependencies =
-    [
-        BlogLandingPage.CONTENT_TYPE_NAME,
-        BlogPostPage.CONTENT_TYPE_NAME,
-        CommunityLandingPage.CONTENT_TYPE_NAME,
-        HomePage.CONTENT_TYPE_NAME,
-        IntegrationsLandingPage.CONTENT_TYPE_NAME,
-        LandingPage.CONTENT_TYPE_NAME,
-        QAndALandingPage.CONTENT_TYPE_NAME,
-        QAndANewQuestionPage.CONTENT_TYPE_NAME,
-        QAndAQuestionPage.CONTENT_TYPE_NAME,
-        ResourceHubPage.CONTENT_TYPE_NAME,
-        SupportPage.CONTENT_TYPE_NAME
-    ];
+    private readonly ICacheDependencyBuilderFactory cacheBuilderFactory = cacheBuilderFactory;
 
     public async Task<List<SitemapNode>> GetSitemapNodes() =>
         await cache.LoadAsync(cs =>
         {
-            cs.CacheDependency = CacheHelper.GetCacheDependency(BuildCacheDependencyKeys());
+            var builder = cacheBuilderFactory.Create();
+
+            cs.CacheDependency = builder.ForWebPageItems().All(website.WebsiteChannelName).Builder().Build();
 
             return GetSitemapNodesInternal();
-        }, new CacheSettings(3, [nameof(GetSitemapNodes)]) { });
-
-    private string[] BuildCacheDependencyKeys() =>
-        contentTypeDependencies
-            .Select(t => $"webpageitem|bychannel|{website.WebsiteChannelName}|bycontenttype|{t}")
-            .ToArray();
+        }, new CacheSettings(60, [nameof(GetSitemapNodes)]) { });
 
     private async Task<List<SitemapNode>> GetSitemapNodesInternal()
     {
@@ -60,14 +42,7 @@ public class SitemapRetriever(
 
         var pages = await executor.GetWebPageResult(b, c =>
         {
-            /*
-             * TryGetValue throws an exception when using the generic override and the retrieved value does not match the generic type
-             * Using a "bool" out param would throw an exception when the value is null
-             * so we use a nullable bool to match the null|true|false cases for this field.
-             */
-            bool isInSitemap = !c.TryGetValue(nameof(IWebPageMetaFields.WebPageMetaExcludeFromSitemap), out bool? val)
-                || val is not bool isExcluded
-                || !isExcluded;
+            bool isInSitemap = !c.TryGetValue(nameof(IWebPageMetaFields.WebPageMetaExcludeFromSitemap), out bool val) || !val;
 
             return new SitemapPage(new()
             {
@@ -75,13 +50,13 @@ public class SitemapRetriever(
                 WebPageItemGUID = c.WebPageItemGUID,
                 WebPageItemName = c.WebPageItemName,
                 WebPageItemOrder = c.WebPageItemOrder,
-                /*
-                 * Accessing this field throws an exception
-                 */
-                // WebPageItemParentID = c.WebPageItemParentID,
+                WebPageItemParentID = c.WebPageItemParentID,
                 WebPageItemTreePath = c.WebPageItemTreePath,
                 WebPageUrlPath = c.WebPageUrlPath,
+                WebPageItemWebsiteChannelId = c.WebPageItemWebsiteChannelID,
+                WebPageUrlPathContentLanguageID = c.ContentItemCommonDataContentLanguageID,
 
+                ContentItemCommonDataLastPublishedWhen = c.ContentItemCommonDataLastPublishedWhen,
                 ContentItemCommonDataContentLanguageID = c.ContentItemCommonDataContentLanguageID,
                 ContentItemCommonDataVersionStatus = c.ContentItemCommonDataVersionStatus,
                 ContentItemContentTypeID = c.ContentItemContentTypeID,
@@ -103,7 +78,7 @@ public class SitemapRetriever(
 
             var node = new SitemapNode(pageUrl.RelativePathTrimmed())
             {
-                LastModified = clock.Now,
+                LastModified = page.SystemFields.ContentItemCommonDataLastPublishedWhen,
                 ChangeFrequency = ChangeFrequency.Weekly,
             };
 

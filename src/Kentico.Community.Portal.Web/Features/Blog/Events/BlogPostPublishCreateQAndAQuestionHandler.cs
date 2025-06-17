@@ -1,4 +1,3 @@
-using CMS.ContentEngine;
 using CMS.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.QAndA;
@@ -14,13 +13,13 @@ namespace Kentico.Community.Portal.Web.Features.Blog.Events;
 /// </summary>
 public class BlogPostPublishCreateQAndAQuestionHandler(
     IMediator mediator,
-    IContentQueryExecutor queryExecutor,
+    IContentRetriever contentRetriever,
     IWebPageUrlRetriever pageUrlRetriever,
     TimeProvider clock,
     IEventLogService log)
 {
     private readonly IMediator mediator = mediator;
-    private readonly IContentQueryExecutor queryExecutor = queryExecutor;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly IWebPageUrlRetriever pageUrlRetriever = pageUrlRetriever;
     private readonly TimeProvider clock = clock;
     private readonly IEventLogService log = log;
@@ -28,35 +27,34 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
     public async Task Handle(PublishWebPageEventArgs args)
     {
         /*
-         * We aren't using mediator for this query because it will return the cached page 
-         * which will result in an infinite loop for the check below ... ask me how I know 😅😅
+         * We disable caching for this query because returning the cached page 
+         * will result in an infinite loop for the check below ... ask me how I know 😅😅
          */
-        var b = new ContentItemQueryBuilder()
-            .ForContentType(BlogPostPage.CONTENT_TYPE_NAME,
-                q => q
-                .Where(w => w.WhereEquals(nameof(WebPageFields.WebPageItemID), args.ID))
-                .ForWebsite(args.WebsiteChannelName)
-                .WithLinkedItems(BlogPostPage.FullQueryDepth));
-
-        var pages = await queryExecutor.GetMappedWebPageResult<BlogPostPage>(b);
-
+        var pages = await contentRetriever.RetrievePagesByGuids<BlogPostPage>(
+            [args.Guid],
+            new RetrievePagesParameters { ChannelName = args.WebsiteChannelName, IsForPreview = true, LanguageName = args.ContentLanguageName, LinkedItemsMaxLevel = BlogPostPage.FullQueryDepth },
+            RetrievePagesQueryParameters.Default,
+            RetrievalCacheSettings.CacheDisabled);
         if (pages.FirstOrDefault() is not BlogPostPage page)
         {
             return;
         }
 
         // Do not re-process pages that already have a linked Q&A Discussion Page
-        if (page.BlogPostPageQAndADiscussionPage.Any() || page.BlogPostPageQAndAQuestionPages.Any())
+        if (page.BlogPostPageQAndAQuestionPages.Any())
         {
             return;
         }
 
-        var rootQuestionPage = await mediator.Send(new QAndAQuestionsRootPageQuery(args.WebsiteChannelName));
+        var rootQuestionPage = (await contentRetriever
+            .RetrievePages<QAndAQuestionsRootPage>(
+                new RetrievePagesParameters { ChannelName = args.WebsiteChannelName, IsForPreview = false, LanguageName = args.ContentLanguageName }))
+            .First();
         var now = clock.GetLocalNow();
-        var questionMonthFolder = await mediator.Send(new QAndAMonthFolderQuery(rootQuestionPage, args.WebsiteChannelName, now.Year, now.Month, args.WebsiteChannelID));
+        var questionMonthFolder = await mediator.Send(new QAndAMonthFolderQuery(rootQuestionPage, now.Year, now.Month));
 
         var url = await pageUrlRetriever.Retrieve(page);
-        string postTitle = page.WebPageMetaTitle;
+        string postTitle = page.BasicItemTitle;
         string questionTitle = $"Blog Discussion: {postTitle}";
         string questionContent = $"""
             Blog Post: [{postTitle}]({url.RelativePathTrimmed()})
@@ -64,7 +62,7 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
             Continue discussions 🤗 on this blog post below.
             """;
         var dxTopicTagIdentifiers = page.CoreTaxonomyDXTopics.Select(t => t.Identifier)
-            ?? page.BlogPostPageDXTopics.Select(t => t.Identifier);
+            ?? page.CoreTaxonomyDXTopics.Select(t => t.Identifier);
         var member = new CommunityMember()
         {
             Id = 0 // Only the Id is required and an Id of 0 will result in the author being the Kentico Community author

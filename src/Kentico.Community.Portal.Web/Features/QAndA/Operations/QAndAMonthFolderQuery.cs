@@ -1,22 +1,17 @@
-#pragma warning disable CA2016 // Forward the 'CancellationToken' parameter to methods
-
 using CMS.DataEngine;
 using CMS.Membership;
 using CMS.Websites.Internal;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Operations;
-using Kentico.Community.Portal.Web.Infrastructure;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 public record QAndAMonthFolderQuery(
     QAndAQuestionsRootPage ParentPage,
-    string ChannelName,
     int Year,
-    int Month,
-    int WebsiteChannelID) : IQuery<WebPageFolder>, IChannelContentQuery, ICacheByValueQuery
+    int Month) : IQuery<WebPageFolder>, ICacheByValueQuery
 {
-    public string CacheValueKey => $"{Year}|{Month}";
+    public string CacheValueKey => $"{Year}|{Month}|Channel|{ParentPage.SystemFields.WebPageItemWebsiteChannelId}";
 }
 
 public class QAndAMonthFolderQueryHandler(
@@ -33,8 +28,7 @@ public class QAndAMonthFolderQueryHandler(
     public override async Task<WebPageFolder> Handle(QAndAMonthFolderQuery request, CancellationToken cancellationToken = default)
     {
         var user = await users.GetPublicMemberContentAuthor();
-
-        var webPageManager = webPageManagerFactory.Create(request.WebsiteChannelID, user.UserID);
+        var webPageManager = webPageManagerFactory.Create(request.ParentPage.SystemFields.WebPageItemWebsiteChannelId, user.UserID);
 
         string yearName = request.Year.ToString();
         string monthName = request.Month.ToString("D2");
@@ -57,7 +51,7 @@ public class QAndAMonthFolderQueryHandler(
         {
             ParentWebPageItemID = yearFolder.WebPageItemID,
             RequiresAuthentication = false
-        });
+        }, CancellationToken.None);
 
         monthFolders = await webPageFolderRetriever.Retrieve(
             PortalWebSiteChannel.CODE_NAME,
@@ -87,7 +81,7 @@ public class QAndAMonthFolderQueryHandler(
         {
             ParentWebPageItemID = request.ParentPage.SystemFields.WebPageItemID,
             RequiresAuthentication = false
-        });
+        }, CancellationToken.None);
 
         yearFolders = await webPageFolderRetriever.Retrieve(
             PortalWebSiteChannel.CODE_NAME,

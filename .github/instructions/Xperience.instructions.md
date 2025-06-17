@@ -1,5 +1,5 @@
 ---
-applyTo: "**/*.cs"
+applyTo: "**/*.cs;**/*.cshtml"
 ---
 
 These are conventions to follow when working with Xperience by Kentico
@@ -12,8 +12,8 @@ content.
 Information about the available methods, parameters, and uses for this API can
 be found at the following URLs
 
-- <https://docs.kentico.com/x/content_retriever_experimental_xp>
-- <https://docs.kentico.com/x/reference_content_retriever_experimental_xp>
+- <https://docs.kentico.com/x/content_retriever_api_xp>
+- <https://docs.kentico.com/x/reference_content_retriever_api_xp>
 
 # Async
 

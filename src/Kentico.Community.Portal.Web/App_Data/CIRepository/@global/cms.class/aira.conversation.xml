@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>AIRA Conversation</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="AiraConversationID" columntype="integer" enabled="true" guid="913f4495-fac8-4bd9-b8c2-b585c09b3ccd" isPK="true" system="true" />
+      <field column="AiraConversationGUID" columnprecision="0" columntype="guid" enabled="true" guid="b8b52712-652e-4e05-800e-5a6b8b4e8f13" system="true" />
+      <field column="AiraConversationTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="175e712a-7f7c-427e-b189-e38f6ab44cb5" system="true" />
+      <field column="AiraConversationCreatedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="a0bf5910-84e4-4364-9eeb-e71fb62c6c15" system="true" />
+      <field column="AiraConversationLastModified" columnprecision="7" columntype="datetime" enabled="true" guid="8554844f-1fd6-4a47-aba9-046e9a3876c5" system="true" />
+      <field column="AiraConversationCreatedByUserID" columnprecision="0" columntype="integer" enabled="true" guid="949409bf-19ab-4179-8941-de981191a165" refobjtype="cms.user" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="AiraConversationMessages" columnprecision="0" columntype="longtext" enabled="true" guid="5b94d64f-ab09-4ead-b89e-038e1fd503f1" system="true">
+        <properties>
+          <defaultvalue>[]</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>50e0749f-a123-4cd7-aa41-e48d2166fb35</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>aira.conversation</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Aira</CodeName>
+    <GUID>4d122518-44fc-4caa-a058-4b59bbc6f1a7</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Aira_Conversation</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

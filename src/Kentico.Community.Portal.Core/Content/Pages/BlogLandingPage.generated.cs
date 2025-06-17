@@ -36,18 +36,6 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
-		/// BlogLandingPageTitle.
-		/// </summary>
-		public string BlogLandingPageTitle { get; set; }
-
-
-		/// <summary>
-		/// BlogLandingPageShortDescription.
-		/// </summary>
-		public string BlogLandingPageShortDescription { get; set; }
-
-
-		/// <summary>
 		/// WebPageMetaTitle.
 		/// </summary>
 		public string WebPageMetaTitle { get; set; }

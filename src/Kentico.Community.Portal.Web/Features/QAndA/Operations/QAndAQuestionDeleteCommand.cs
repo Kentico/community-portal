@@ -3,11 +3,10 @@ using CMS.Membership;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
-using Kentico.Community.Portal.Web.Infrastructure;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public record QAndAQuestionDeleteCommand(QAndAQuestionPage Question, int WebsiteChannelID) : ICommand<Result>;
+public record QAndAQuestionDeleteCommand(QAndAQuestionPage Question) : ICommand<Result>;
 public class QAndAQuestionDeleteCommandHandler(WebPageCommandTools tools, IInfoProvider<UserInfo> users, IInfoProvider<QAndAAnswerDataInfo> provider) : WebPageCommandHandler<QAndAQuestionDeleteCommand, Result>(tools)
 {
     private readonly IInfoProvider<UserInfo> users = users;
@@ -16,8 +15,7 @@ public class QAndAQuestionDeleteCommandHandler(WebPageCommandTools tools, IInfoP
     public override async Task<Result> Handle(QAndAQuestionDeleteCommand request, CancellationToken cancellationToken)
     {
         var user = await users.GetPublicMemberContentAuthor();
-
-        var webPageManager = WebPageManagerFactory.Create(request.WebsiteChannelID, user.UserID);
+        var webPageManager = WebPageManagerFactory.Create(request.Question.SystemFields.WebPageItemWebsiteChannelId, user.UserID);
 
         try
         {

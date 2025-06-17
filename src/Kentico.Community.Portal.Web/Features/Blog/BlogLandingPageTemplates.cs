@@ -1,10 +1,8 @@
-using CMS.Websites.Routing;
 using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
 using Kentico.Content.Web.Mvc.Routing;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 [assembly: RegisterPageTemplate(
@@ -27,26 +25,21 @@ namespace Kentico.Community.Portal.Web.Features.Blog;
 public class BlogLandingPageTemplateProperties : IPageTemplateProperties { }
 
 public class BlogLandingPageTemplateController(
-    IMediator mediator,
-    WebPageMetaService metaService,
-    IWebsiteChannelContext channelContext,
-    IWebPageDataContextRetriever contextRetriever) : Controller
+    IContentRetriever contentRetriever,
+    WebPageMetaService metaService) : Controller
 {
-    private readonly IMediator mediator = mediator;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly WebPageMetaService metaService = metaService;
-    private readonly IWebsiteChannelContext channelContext = channelContext;
-    private readonly IWebPageDataContextRetriever contextRetriever = contextRetriever;
 
     public async Task<ActionResult> Index()
     {
-        if (!contextRetriever.TryRetrieve(out var data))
+        var landingPage = await contentRetriever.RetrieveCurrentPage<BlogLandingPage>();
+        if (landingPage is null)
         {
             return NotFound();
         }
 
-        var landingPage = await mediator.Send(new BlogLandingPageQuery(data.WebPage, channelContext.WebsiteChannelName));
-
-        metaService.SetMeta(new(landingPage.BlogLandingPageTitle, landingPage.BlogLandingPageShortDescription));
+        metaService.SetMeta(landingPage);
 
         return new TemplateResult(landingPage);
     }

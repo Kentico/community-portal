@@ -22,7 +22,8 @@ public class BlogPostContentAutoPopulateHandler(
         {
             return;
         }
-        if (!args.ContentItemData.TryGetValue(nameof(BlogPostPage.WebPageMetaTitle), out string title))
+        if (!args.ContentItemData.TryGetValue(nameof(BlogPostPage.BasicItemTitle), out string title)
+            || string.IsNullOrWhiteSpace(title))
         {
             return;
         }
@@ -42,15 +43,11 @@ public class BlogPostContentAutoPopulateHandler(
                     : []
             },
             {
-                nameof(BlogPostContent.BlogPostContentDXTopics),
-                args.ContentItemData.TryGetValue<IEnumerable<TagReference>>(nameof(BlogPostPage.BlogPostPageDXTopics), out var dxTopics)
+                nameof(BlogPostContent.CoreTaxonomyDXTopics),
+                args.ContentItemData.TryGetValue<IEnumerable<TagReference>>(nameof(BlogPostPage.CoreTaxonomyDXTopics), out var dxTopics)
                     ? dxTopics
                     : []
-            },
-            {
-                nameof(BlogPostContent.CoreTaxonomyDXTopics),
-                dxTopics ?? []
-            },
+            }
         });
 
         var manager = await contentItemManagerCreator.GetContentItemManager();
@@ -79,14 +76,14 @@ public class BlogPostContentAutoPopulateHandler(
         var currentBlogType = args.ContentItemData.TryGetValue<IEnumerable<TagReference>>(nameof(BlogPostPage.BlogPostPageBlogType), out var blogType)
             ? blogType
             : [];
-        var currentDXTopics = args.ContentItemData.TryGetValue<IEnumerable<TagReference>>(nameof(BlogPostPage.BlogPostPageDXTopics), out var dxTopics)
+        var currentDXTopics = args.ContentItemData.TryGetValue<IEnumerable<TagReference>>(nameof(BlogPostPage.CoreTaxonomyDXTopics), out var dxTopics)
             ? dxTopics
             : [];
 
         // If all are identical, return early
         if (item.TryGetValue(nameof(BlogPostContent.BlogPostContentBlogType), out object existingBlogTypeObj)
             && existingBlogTypeObj is IEnumerable<TagReference> existingBlogType && !existingBlogType.Except(currentBlogType).Any()
-            && item.TryGetValue(nameof(BlogPostContent.BlogPostContentDXTopics), out object existingDXTopicsObj)
+            && item.TryGetValue(nameof(BlogPostContent.CoreTaxonomyDXTopics), out object existingDXTopicsObj)
             && existingDXTopicsObj is IEnumerable<TagReference> existingDXTopics && !existingDXTopics.Except(currentDXTopics).Any())
         {
             return;
@@ -102,13 +99,9 @@ public class BlogPostContentAutoPopulateHandler(
                 currentBlogType
             },
             {
-                nameof(BlogPostContent.BlogPostContentDXTopics),
-                currentDXTopics
-            },
-            {
                 nameof(BlogPostContent.CoreTaxonomyDXTopics),
                 currentDXTopics
-            },
+            }
         });
         _ = await manager.TryUpdateDraft(item.ContentItemID, args.ContentLanguageName, data);
     }

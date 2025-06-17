@@ -1,22 +1,24 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core.Modules;
+using Kentico.Content.Web.Mvc;
 using MediatR;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
-public class QAndAQuestionFormViewComponent(IMediator mediator, IWebsiteChannelContext channelContext) : ViewComponent
+public class QAndAQuestionFormViewComponent(
+    IMediator mediator,
+    IContentRetriever contentRetriever) : ViewComponent
 {
     private readonly IMediator mediator = mediator;
-    private readonly IWebsiteChannelContext channelContext = channelContext;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
 
     public async Task<IViewComponentResult> InvokeAsync(Guid? questionID = null, QAndAQuestionFormSubmissionViewModel? submission = null)
     {
-        var landingResp = await mediator.Send(new QAndALandingPageQuery(channelContext.WebsiteChannelName));
-        if (!landingResp.TryGetValue(out var landingPage))
+        var landingPages = await contentRetriever.RetrievePages<QAndALandingPage>();
+        if (landingPages.FirstOrDefault() is not QAndALandingPage landingPage)
         {
             ModelState.AddModelError("", $"Could not load Q&A question form.");
             return View("~/Components/ComponentError.cshtml");
@@ -30,18 +32,18 @@ public class QAndAQuestionFormViewComponent(IMediator mediator, IWebsiteChannelC
                 new QAndAQuestionFormViewModel(null, formHelpMessageHTML, groups, submission));
         }
 
-        var questionResp = await mediator.Send(new QAndAQuestionPageByGUIDQuery(id));
-        if (!questionResp.TryGetValue(out var questionPage))
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([id]);
+        if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
         {
             ModelState.AddModelError("", $"Could not find question {id}.");
             return View("~/Components/ComponentError.cshtml");
         }
 
-        var selectedTaxonomies = questionPage.QAndAQuestionPageDXTopics
+        var selectedTaxonomies = questionPage.CoreTaxonomyDXTopics
             .Select(t => t.Identifier)
             .ToList();
         var groupsWithSelected = await GetTagGroups(selectedTaxonomies);
-        var vm = new QAndAQuestionFormViewModel(id, questionPage.QAndAQuestionPageTitle, questionPage.QAndAQuestionPageContent, formHelpMessageHTML, groupsWithSelected);
+        var vm = new QAndAQuestionFormViewModel(id, questionPage.BasicItemTitle, questionPage.QAndAQuestionPageContent, formHelpMessageHTML, groupsWithSelected);
         return View("~/Features/QAndA/Components/Form/QAndAQuestionForm.cshtml", vm);
     }
 

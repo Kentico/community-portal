@@ -1,6 +1,6 @@
 ﻿using CMS.Membership;
 using Kentico.Community.Portal.Admin.Features.MemberBadges;
-using Kentico.Community.Portal.Core;
+
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
 using Kentico.Xperience.Admin.Base.Forms;
@@ -16,10 +16,10 @@ using Kentico.Xperience.Admin.Base.Forms;
 namespace Kentico.Community.Portal.Admin.Features.MemberBadges;
 
 [UIEvaluatePermission(SystemPermissions.UPDATE)]
-public class MemberBadgeEditPage(IFormComponentMapper formComponentMapper, IFormDataBinder formDataBinder, ISystemClock clock)
+public class MemberBadgeEditPage(IFormComponentMapper formComponentMapper, IFormDataBinder formDataBinder, TimeProvider clock)
     : InfoEditPage<MemberBadgeInfo>(formComponentMapper, formDataBinder)
 {
-    private readonly ISystemClock clock = clock;
+    private readonly TimeProvider clock = clock;
 
     [PageParameter(typeof(IntPageModelBinder))]
     public override int ObjectId { get; set; }
@@ -28,7 +28,7 @@ public class MemberBadgeEditPage(IFormComponentMapper formComponentMapper, IForm
     {
         await base.FinalizeInfoObject(infoObject, fieldValueProvider, cancellationToken);
 
-        infoObject.MemberBadgeDateModified = clock.UtcNow;
+        infoObject.MemberBadgeDateModified = clock.GetUtcNow().DateTime;
     }
 }
 

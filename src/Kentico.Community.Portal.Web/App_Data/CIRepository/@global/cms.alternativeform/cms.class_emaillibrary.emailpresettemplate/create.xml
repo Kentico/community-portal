@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>EmailLibrary.EmailPresetTemplate</CodeName>
+    <GUID>75c1c5bc-ed7c-4ab4-a778-20716eca6703</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="EmailPresetTemplateID" guid="356cabdb-ccb4-4c38-a7c3-1baf2a45ec42" enabled="" />
+      <field column="EmailPresetTemplateGUID" guid="45df452d-e4e2-4bbc-bd0d-8489d8fb5c64" enabled="" />
+      <field column="EmailPresetTemplateLastModified" guid="eecad145-f014-4d6f-a779-5db27099c7a6" enabled="" />
+      <field column="EmailPresetTemplateTemplate" guid="fad3d922-2bb3-46e0-984a-97ff27bb4d0a" enabled="" order="3" />
+      <field column="EmailPresetTemplateWidgets" guid="9361211b-5fe9-4a9d-921a-a2b9104b1aa6" enabled="" order="4" />
+      <field column="EmailPresetTemplateName" enabled="true" guid="5f168c91-5ea8-4dbd-8daa-52f4f3159548" visible="true" order="5">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalmarketing.emails.emailpresettemplate.displayname.label$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="EmailPresetTemplateDescription" enabled="true" guid="b463bf5c-9f01-4994-9277-9be65e54756a" visible="true" order="6">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalmarketing.emails.emailpresettemplate.description.label$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="EmailPresetTemplateIcon" enabled="true" guid="6474f3b6-78f4-44ab-b036-0010db3617f6" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.IconSelector</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalmarketing.emails.emailpresettemplate.icon.label$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Create</FormDisplayName>
+  <FormGUID>4ee10e6d-331a-4bdc-a86b-c27f71f8ffcd</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>Create</FormName>
+</cms.alternativeform>

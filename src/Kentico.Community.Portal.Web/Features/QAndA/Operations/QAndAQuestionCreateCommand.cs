@@ -17,15 +17,16 @@ public record QAndAQuestionCreateCommand(
     Guid DiscussionTypeTagIdentifier,
     IEnumerable<Guid> DXTopics,
     Maybe<BlogPostPage> LinkedBlogPost) : ICommand<Result<int>>;
+
 public class QAndAQuestionCreateCommandHandler(
     WebPageCommandTools tools,
     IInfoProvider<UserInfo> users,
     ITaxonomyRetriever taxonomyRetriever,
-    ISystemClock clock) : WebPageCommandHandler<QAndAQuestionCreateCommand, Result<int>>(tools)
+    TimeProvider clock) : WebPageCommandHandler<QAndAQuestionCreateCommand, Result<int>>(tools)
 {
     private readonly IInfoProvider<UserInfo> users = users;
     private readonly ITaxonomyRetriever taxonomyRetriever = taxonomyRetriever;
-    private readonly ISystemClock clock = clock;
+    private readonly TimeProvider clock = clock;
 
     public override async Task<Result<int>> Handle(QAndAQuestionCreateCommand request, CancellationToken cancellationToken)
     {
@@ -42,19 +43,17 @@ public class QAndAQuestionCreateCommandHandler(
             .Where(t => request.DXTopics.Contains(t.Identifier))
             .Select(t => new TagReference() { Identifier = t.Identifier })
             .ToList();
-        var now = clock.UtcNow;
+        var now = clock.GetUtcNow().DateTime;
 
         var itemData = new ContentItemData(new Dictionary<string, object>
         {
             { nameof(QAndAQuestionPage.QAndAQuestionPageDateCreated), now },
             { nameof(QAndAQuestionPage.QAndAQuestionPageDateModified), now },
-            { nameof(QAndAQuestionPage.QAndAQuestionPageTitle), request.QuestionTitle },
             { nameof(QAndAQuestionPage.BasicItemTitle), request.QuestionTitle },
             // Content is not sanitized because it can include fenced code blocks.
             { nameof(QAndAQuestionPage.QAndAQuestionPageContent), request.QuestionContent },
             { nameof(QAndAQuestionPage.QAndAQuestionPageAuthorMemberID), request.MemberAuthor.Id },
             { nameof(QAndAQuestionPage.QAndAQuestionPageAcceptedAnswerDataGUID), Guid.Empty },
-            { nameof(QAndAQuestionPage.QAndAQuestionPageDXTopics), validTags },
             { nameof(QAndAQuestionPage.CoreTaxonomyDXTopics), validTags },
         });
         itemData.SetValue<IEnumerable<TagReference>>(
@@ -64,10 +63,6 @@ public class QAndAQuestionCreateCommandHandler(
         request.LinkedBlogPost
             .Execute(post =>
             {
-                // TODO - remove this field when migrations are complete
-                itemData.SetValue<IEnumerable<WebPageRelatedItem>>(
-                    nameof(QAndAQuestionPage.QAndAQuestionPageBlogPostPage),
-                    [new WebPageRelatedItem() { WebPageGuid = post.SystemFields.WebPageItemGUID }]);
                 itemData.SetValue<IEnumerable<ContentItemReference>>(
                     nameof(QAndAQuestionPage.QAndAQuestionPageBlogPostPages),
                     [new ContentItemReference() { Identifier = post.SystemFields.ContentItemGUID }]);
@@ -83,7 +78,7 @@ public class QAndAQuestionCreateCommandHandler(
 
         try
         {
-            return await webPageManager.Create(webPageParameters);
+            return await webPageManager.Create(webPageParameters, cancellationToken: CancellationToken.None);
         }
         catch (Exception ex)
         {

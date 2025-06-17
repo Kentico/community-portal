@@ -1,10 +1,9 @@
 using CMS.ContentEngine;
-using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Files;
+using Kentico.Content.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Slugify;
 
@@ -18,17 +17,18 @@ using Slugify;
 
 namespace Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Files;
 
-public class FileWidget(IMediator mediator, ISlugHelper slugHelper) : ViewComponent
+public class FileWidget(IContentRetriever contentRetriever, ISlugHelper slugHelper) : ViewComponent
 {
     public const string IDENTIFIER = "CommunityPortal.FileWidget";
     public const string NAME = "File";
-    private readonly IMediator mediator = mediator;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
 
     public async Task<IViewComponentResult> InvokeAsync(ComponentViewModel<FileWidgetProperties> cvm)
     {
         var props = cvm.Properties;
-
-        var file = await mediator.Send(new MediaItemContentByGUIDQuery(props.FileContents.FirstOrDefault()?.Identifier ?? default));
+        var file = await contentRetriever
+            .RetrieveContentByGuids<IContentItemFieldsSource>(props.FileContents.Select(c => c.Identifier))
+            .TryFirst();
 
         return Validate(props, file)
             .Match(
@@ -36,15 +36,14 @@ public class FileWidget(IMediator mediator, ISlugHelper slugHelper) : ViewCompon
                 vm => View("~/Components/ComponentError.cshtml", vm));
     }
 
-    private Result<FileWidgetViewModel, ComponentErrorViewModel> Validate(FileWidgetProperties props, Maybe<IMediaItemFields> mediaItem)
+    private Result<FileWidgetViewModel, ComponentErrorViewModel> Validate(FileWidgetProperties props, Maybe<IContentItemFieldsSource> item)
     {
-        if (!mediaItem.TryGetValue(out var media))
+        if (!item.TryGetValue(out var i))
         {
             return Result.Failure<FileWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "No media item has been selected."));
         }
 
-        // populate this switch statement with all the content types that implement IMediaItemFields
-        var asset = media switch
+        var asset = i switch
         {
             FileContent file => file.FileContentAsset,
             ImageContent image => image.ImageContentAsset,
@@ -52,43 +51,22 @@ public class FileWidget(IMediator mediator, ISlugHelper slugHelper) : ViewCompon
             _ => null
         };
 
-        if (asset is null)
+        if (asset is null || i is not IBasicItemFields basicItem)
         {
             return Result.Failure<FileWidgetViewModel, ComponentErrorViewModel>(
-                new ComponentErrorViewModel(NAME, ComponentType.Widget, "The selected content item is not a media ."));
+                new ComponentErrorViewModel(NAME, ComponentType.Widget, "The selected content item is not a media content item."));
         }
 
-        return new FileWidgetViewModel(props, asset, media, slugHelper);
+        return new FileWidgetViewModel(props, asset, basicItem, slugHelper);
     }
-}
-
-public record MediaItemContentByGUIDQuery(Guid ContentItemGUID) : IQuery<Maybe<IMediaItemFields>>, ICacheByValueQuery
-{
-    public string CacheValueKey => ContentItemGUID.ToString();
-}
-
-public class MediaItemByGUIDQueryHandler(ContentItemQueryTools tools) : ContentItemQueryHandler<MediaItemContentByGUIDQuery, Maybe<IMediaItemFields>>(tools)
-{
-    public override async Task<Maybe<IMediaItemFields>> Handle(MediaItemContentByGUIDQuery request, CancellationToken cancellationToken)
-    {
-        var b = new ContentItemQueryBuilder()
-            .ForContentTypes(q => q.OfReusableSchema(IMediaItemFields.REUSABLE_FIELD_SCHEMA_NAME))
-            .Parameters(q => q.Where(w => w.WhereContentItem(request.ContentItemGUID)));
-
-        return await Executor
-            .GetMappedResult<IMediaItemFields>(b, DefaultQueryOptions, cancellationToken)
-            .TryFirst();
-    }
-
-    protected override ICacheDependencyKeysBuilder AddDependencyKeys(MediaItemContentByGUIDQuery query, Maybe<IMediaItemFields> result, ICacheDependencyKeysBuilder builder) =>
-        builder.ContentItem(query.ContentItemGUID);
 }
 
 [FormCategory(Label = "Content", Order = 1)]
 [FormCategory(Label = "Display", Order = 4)]
 public class FileWidgetProperties : BaseWidgetProperties
 {
-    [ContentItemSelectorComponent(typeof(MediaItemSchemasFilter),
+    [ContentItemSelectorComponent(
+        [FileContent.CONTENT_TYPE_NAME, ImageContent.CONTENT_TYPE_NAME, VideoContent.CONTENT_TYPE_NAME],
         Label = "Selected file",
         MinimumItems = 1,
         MaximumItems = 1,
@@ -146,21 +124,16 @@ public class FileWidgetViewModel : BaseWidgetViewModel
     public string AnchorSlug { get; }
     public ContentItemAsset Asset { get; }
 
-    public FileWidgetViewModel(FileWidgetProperties props, ContentItemAsset asset, IMediaItemFields mediaItem, ISlugHelper slugHelper)
+    public FileWidgetViewModel(FileWidgetProperties props, ContentItemAsset asset, IBasicItemFields basicItem, ISlugHelper slugHelper)
     {
         Label = string.IsNullOrWhiteSpace(props.CustomLabel)
-            ? mediaItem.MediaItemTitle
+            ? basicItem.BasicItemTitle
             : props.CustomLabel;
-        ShortDescription = mediaItem.MediaItemShortDescription;
+        ShortDescription = basicItem.BasicItemShortDescription;
         Design = props.LinkDesignsParsed;
         Padding = props.LinkPaddingsParsed;
         Alignment = props.LinkAlignmentsParsed;
         AnchorSlug = slugHelper.GenerateSlug(Label);
         Asset = asset;
     }
-}
-
-public class MediaItemSchemasFilter : IReusableFieldSchemasFilter
-{
-    public IEnumerable<string> AllowedSchemaNames => [IMediaItemFields.REUSABLE_FIELD_SCHEMA_NAME];
 }

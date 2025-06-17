@@ -153,7 +153,7 @@ public class QAndASearchIndexingStrategy(
         }
 
         indexModel.ID = page.SystemFields.WebPageItemID;
-        indexModel.Title = page.QAndAQuestionPageTitle;
+        indexModel.Title = page.BasicItemTitle;
 
         var author = await GetAuthor(executor, memberProvider, page);
         indexModel.AuthorUsername = author.Username;
@@ -186,7 +186,7 @@ public class QAndASearchIndexingStrategy(
                 indexModel.DiscussionTypeFacet = tag.NormalizedName;
             });
         var dxTopics = page
-            .QAndAQuestionPageDXTopics
+            .CoreTaxonomyDXTopics
             .Select(tagRef => taxonomies.DXTopicsAll
                 .FirstOrDefault(t => tagRef.Identifier == t.Guid))
             .WhereNotNull();
