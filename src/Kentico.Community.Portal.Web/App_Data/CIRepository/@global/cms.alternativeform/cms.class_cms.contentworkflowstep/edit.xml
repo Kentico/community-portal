@@ -71,6 +71,20 @@
           <ObjectType>cms.role</ObjectType>
         </settings>
       </field>
+      <field column="ContentWorkflowStepIsNotificationEnabled" enabled="true" guid="fb0c4fa1-fe7b-44e0-aa15-326ebedeef10" visible="true" order="11">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <defaultvalue>True</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Send email notification</fieldcaption>
+          <fielddescription>
+            <![CDATA[The system automatically sends email notifications when an item reaches this step to user roles  that can work with this step and also have the Update permission for the affected item.]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
     </form>
   </FormDefinition>
   <FormDisplayName>Edit</FormDisplayName>

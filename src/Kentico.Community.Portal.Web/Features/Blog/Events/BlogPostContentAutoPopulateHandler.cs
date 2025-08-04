@@ -6,14 +6,22 @@ using Kentico.Community.Portal.Core.Modules;
 
 namespace Kentico.Community.Portal.Web.Features.Blog.Events;
 
+/// <summary>
+/// Processes global events when BlogPostPage pages are created or updated and ensures
+/// BlogPostContent reusable items are created or updated to keep the titles and taxonomies
+/// in sync between the two items.
+/// </summary>
+/// <typeparam name="ContentItemInfo"></typeparam>
 public class BlogPostContentAutoPopulateHandler(
     IInfoProvider<ContentItemInfo> contentProvider,
     IContentItemCodeNameProvider nameProvider,
-    ContentItemManagerCreator contentItemManagerCreator)
+    ContentItemManagerCreator contentItemManagerCreator,
+    IContentQueryExecutor queryExecutor)
 {
     private readonly IInfoProvider<ContentItemInfo> contentProvider = contentProvider;
     private readonly IContentItemCodeNameProvider nameProvider = nameProvider;
     private readonly ContentItemManagerCreator contentItemManagerCreator = contentItemManagerCreator;
+    private readonly IContentQueryExecutor queryExecutor = queryExecutor;
 
     public async Task Handle(CreateWebPageEventArgs args)
     {
@@ -67,30 +75,42 @@ public class BlogPostContentAutoPopulateHandler(
             return;
         }
 
-        var item = await contentProvider.GetAsync(reference.Identifier);
-        if (item is null)
+        // Query for the BlogPostContent item using the GUID
+        var query = new ContentItemQueryBuilder()
+            .ForContentType(
+                BlogPostContent.CONTENT_TYPE_NAME,
+                queryParameters => queryParameters
+                    .Where(w => w.WhereEquals(nameof(ContentItemFields.ContentItemGUID), reference.Identifier)));
+
+        var blogPostContents = await queryExecutor.GetMappedResult<BlogPostContent>(
+            query,
+            new ContentQueryExecutionOptions { ForPreview = true, IncludeSecuredItems = true });
+        var blogPostContent = blogPostContents.FirstOrDefault();
+        if (blogPostContent is null)
         {
             return;
         }
 
         var currentBlogType = args.ContentItemData.TryGetValue<IEnumerable<TagReference>>(nameof(BlogPostPage.BlogPostPageBlogType), out var blogType)
-            ? blogType
+            ? blogType?.ToList() ?? []
             : [];
         var currentDXTopics = args.ContentItemData.TryGetValue<IEnumerable<TagReference>>(nameof(BlogPostPage.CoreTaxonomyDXTopics), out var dxTopics)
-            ? dxTopics
+            ? dxTopics?.ToList() ?? []
             : [];
 
-        // If all are identical, return early
-        if (item.TryGetValue(nameof(BlogPostContent.BlogPostContentBlogType), out object existingBlogTypeObj)
-            && existingBlogTypeObj is IEnumerable<TagReference> existingBlogType && !existingBlogType.Except(currentBlogType).Any()
-            && item.TryGetValue(nameof(BlogPostContent.CoreTaxonomyDXTopics), out object existingDXTopicsObj)
-            && existingDXTopicsObj is IEnumerable<TagReference> existingDXTopics && !existingDXTopics.Except(currentDXTopics).Any())
+        // Get existing values from the BlogPostContent item
+        var existingBlogType = blogPostContent.BlogPostContentBlogType?.ToList() ?? [];
+        var existingDXTopics = blogPostContent.CoreTaxonomyDXTopics?.ToList() ?? [];
+
+        // If all collections are identical, return early
+        if (AreTagReferencesEqual(existingBlogType, currentBlogType) &&
+            AreTagReferencesEqual(existingDXTopics, currentDXTopics))
         {
             return;
         }
 
         var manager = await contentItemManagerCreator.GetContentItemManager();
-        _ = await manager.TryCreateDraft(item.ContentItemID, args.ContentLanguageName);
+        _ = await manager.TryCreateDraft(blogPostContent.SystemFields.ContentItemID, args.ContentLanguageName);
 
         var data = new ContentItemData(new Dictionary<string, object>
         {
@@ -103,6 +123,30 @@ public class BlogPostContentAutoPopulateHandler(
                 currentDXTopics
             }
         });
-        _ = await manager.TryUpdateDraft(item.ContentItemID, args.ContentLanguageName, data);
+        _ = await manager.TryUpdateDraft(blogPostContent.SystemFields.ContentItemID, args.ContentLanguageName, data);
+    }
+
+    /// <summary>
+    /// Compares two collections of TagReference for equality by comparing their identifiers.
+    /// </summary>
+    /// <param name="first">First collection of TagReference objects</param>
+    /// <param name="second">Second collection of TagReference objects</param>
+    /// <returns>True if collections contain the same TagReference objects (by identifier), false otherwise</returns>
+    private static bool AreTagReferencesEqual(IEnumerable<TagReference> first, IEnumerable<TagReference> second)
+    {
+        if (first is null && second is null)
+        {
+            return true;
+        }
+
+        if (first is null || second is null)
+        {
+            return false;
+        }
+
+        var firstIds = first.Select(x => x.Identifier).OrderBy(x => x).ToList();
+        var secondIds = second.Select(x => x.Identifier).OrderBy(x => x).ToList();
+
+        return firstIds.SequenceEqual(secondIds);
     }
 }

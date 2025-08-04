@@ -27,7 +27,6 @@ public static class ServiceCollectionAppExtensions
 {
     public static IServiceCollection AddApp(this IServiceCollection services, IConfiguration config) =>
         services
-            .AddScoped<LicensesFacade>()
             .AddScoped<CookieConsentManager>()
             .AddScoped<ConsentManager>()
             .AddRendering()
@@ -94,7 +93,6 @@ public static class ServiceCollectionAppExtensions
             .AddSingleton(s => new ApplicationAssemblyInformation())
             .AddSingleton<AzureStorageClientFactory>()
             .AddSingleton(TimeProvider.System)
-            .AddSingleton<AssetItemService>()
             .AddSingleton<IStoragePathService, StoragePathService>()
             .AddScoped<CaptchaValidator>()
             .Configure<ReCaptchaSettings>(config.GetSection("ReCaptcha"));
@@ -102,6 +100,7 @@ public static class ServiceCollectionAppExtensions
 
     private static IServiceCollection AddSupport(this IServiceCollection services, IConfiguration config) =>
         services
+            .AddTransient<ILicenseFileService, LicenseFileService>()
             .AddHostedService<SupportRequestProcessorBackgroundService>()
             .AddSingleton<ISupportEmailSender, SupportEmailSender>()
             .Configure<SupportRequestProcessingSettings>(config.GetSection("SupportRequestProcessing"));

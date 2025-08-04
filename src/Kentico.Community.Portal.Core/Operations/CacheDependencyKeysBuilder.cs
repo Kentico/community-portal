@@ -1,5 +1,4 @@
 using CMS.DataEngine;
-using CMS.MediaLibrary;
 using CMS.OnlineForms;
 using CMS.Websites;
 
@@ -346,29 +345,9 @@ public interface ICacheDependencyKeysBuilder
     /// <summary>
     /// &lt;bizform.formName|all&gt;
     /// </summary>
-    /// <param name="keyName"></param>
+    /// <param name="formName"></param>
     /// <returns></returns>
-
     public ICacheDependencyKeysBuilder BizFormItems(string formName);
-
-    /// <summary>
-    /// mediafile|&lt;guid&gt;
-    /// </summary>
-    /// <param name="mediaFileGUID"></param>
-    /// <returns></returns>
-    public ICacheDependencyKeysBuilder Media(Guid mediaFileGUID);
-    /// <summary>
-    /// mediafile|&lt;guid&gt;
-    /// </summary>
-    /// <param name="mediaFileGUID"></param>
-    /// <returns></returns>
-    public ICacheDependencyKeysBuilder Media(AssetRelatedItem asset);
-    /// <summary>
-    /// mediafile|&lt;guid&gt;
-    /// </summary>
-    /// <param name="mediaFileGUID"></param>
-    /// <returns></returns>
-    public ICacheDependencyKeysBuilder Media(Maybe<Guid> mediaFileGUID);
 
     /// <summary>
     /// Executes the <paramref name="action"/> on each item in the collectio <paramref name="items"/>
@@ -837,22 +816,6 @@ public class CacheDependencyKeysBuilder : ICacheDependencyKeysBuilder
     public ICacheDependencyKeysBuilder Objects(IEnumerable<BaseInfo> objects)
     {
         dependencyKeys.UnionWith(objects.Select(o => $"{o.TypeInfo.ObjectType}|byid|{o.Generalized.ObjectID}"));
-
-        return this;
-    }
-
-    public ICacheDependencyKeysBuilder Media(Maybe<Guid> mediaFileGUID) =>
-        Media(mediaFileGUID.GetValueOrDefault());
-    public ICacheDependencyKeysBuilder Media(AssetRelatedItem asset) =>
-        Media(asset.Identifier);
-    public ICacheDependencyKeysBuilder Media(Guid mediaFileGUID)
-    {
-        if (mediaFileGUID == default)
-        {
-            return this;
-        }
-
-        _ = dependencyKeys.Add($"mediafile|{mediaFileGUID}");
 
         return this;
     }

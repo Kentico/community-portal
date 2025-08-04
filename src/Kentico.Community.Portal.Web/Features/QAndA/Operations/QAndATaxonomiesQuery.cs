@@ -44,6 +44,6 @@ public class QAndATaxonomiesQueryHandler(DataItemQueryTools tools, ITaxonomyRetr
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(QAndATaxonomiesQuery query, QAndATaxonomiesQueryResponse result, ICacheDependencyKeysBuilder builder) =>
-        builder.Object(TaxonomyInfo.OBJECT_TYPE, SystemTaxonomies.BlogTypeTaxonomy.CodeName)
+        builder.Object(TaxonomyInfo.OBJECT_TYPE, SystemTaxonomies.DXTopicTaxonomy.CodeName)
             .Collection(result.Types, i => builder.Object(TagInfo.OBJECT_TYPE, i.Name));
 }

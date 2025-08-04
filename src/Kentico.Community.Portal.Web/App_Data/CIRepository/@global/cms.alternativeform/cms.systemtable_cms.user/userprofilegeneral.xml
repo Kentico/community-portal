@@ -57,7 +57,16 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="UserPassword" guid="adaad374-af5a-4e1b-afc7-72b4fb798d19" />
+      <field column="UserPreferredLanguage" enabled="true" guid="4d0bb35d-70d0-4f59-ad46-a64237982449" visible="true" order="5">
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.users.preferredLanguage$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
       <field column="UserEnabled" guid="d5d58e7d-6b71-4a51-9226-d7ce166e8580" />
       <field column="UserCreated" guid="d75ebe3e-3d7d-44ab-af34-0ee947c3a3eb" />
       <field column="LastLogon" guid="8bb80186-0c9b-45cb-91d1-cbec14b8fdc7" />
@@ -74,6 +83,7 @@
       <field column="UserAuthenticationRecoveryCode" guid="332acaac-915a-4a4b-8b8a-516e6da0b6c6" enabled="" order="19" />
       <field column="UserFailedLoginAttempts" guid="e6de69e5-3583-4927-91ee-f26dcf53f31d" enabled="" />
       <field column="UserLockoutEnd" guid="c37477fe-7208-4bd0-a89f-5306950b78ee" enabled="" />
+      <field column="UserPassword" guid="adaad374-af5a-4e1b-afc7-72b4fb798d19" order="22" />
     </form>
   </FormDefinition>
   <FormDisplayName>UserProfileGeneral</FormDisplayName>

@@ -202,7 +202,7 @@ public class BlogSearchService(
         {
             var (slop, term) = searchText switch
             {
-                ['"', .., '"'] => (0, searchText.Trim('"')),
+            ['"', .., '"'] => (0, searchText.Trim('"')),
                 _ => (PHRASE_SLOP, searchText)
             };
 

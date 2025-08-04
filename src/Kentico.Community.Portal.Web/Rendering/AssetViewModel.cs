@@ -1,4 +1,5 @@
-using Kentico.Content.Web.Mvc;
+using CMS.ContentEngine;
 
 namespace Kentico.Community.Portal.Web.Rendering;
-public record AssetViewModel(Guid ID, string Title, IMediaFileUrl URLData, string AltText, string Extension);
+
+public record AssetViewModel(Guid ID, string Title, ContentItemAsset URLData, string AltText, string Extension);

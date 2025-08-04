@@ -123,7 +123,19 @@
           <ObjectType>cms.user</ObjectType>
         </settings>
       </field>
-      <field column="NotificationEmailNotificationEmailTemplateID" enabled="true" guid="8a1fa75a-8eae-4364-a85c-d9f78086087b" visible="true" refobjtype="" reftype="" order="15">
+      <field allowempty="true" column="NotificationEmailWorkflowEventTypeRecipients" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="402c0138-bf86-4425-97be-2e3d44201831" system="true" visible="true" order="15">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$base.notifications.emails.workflow.recipients.label$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+      <field column="NotificationEmailNotificationEmailTemplateID" enabled="true" guid="8a1fa75a-8eae-4364-a85c-d9f78086087b" visible="true" refobjtype="" reftype="" order="16">
         <settings>
           <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
           <ObjectType>cms.notificationemailtemplate</ObjectType>
@@ -138,7 +150,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="NotificationEmailSenderEmailAddress" columnprecision="0" columnsize="254" columntype="text" dummy="altform" enabled="true" guid="cb78854e-fcf7-4e83-9272-7febcf7293c7" system="true" visible="true" order="16">
+      <field column="NotificationEmailSenderEmailAddress" columnprecision="0" columnsize="254" columntype="text" dummy="altform" enabled="true" guid="cb78854e-fcf7-4e83-9272-7febcf7293c7" system="true" visible="true" order="17">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$base.notifications.emails.edit.sender$}</fieldcaption>
@@ -157,8 +169,8 @@
           </ValidationRuleConfiguration>
         </validationrulesdata>
       </field>
-      <field column="NotificationEmailSender" guid="55219f6e-cbdf-40b2-bb5c-487d8382d0c2" enabled="" order="17" />
-      <field column="NotificationEmailPreviewText" guid="4b7f93b4-f9d8-44bb-b806-8206178b0599" enabled="" order="18" />
+      <field column="NotificationEmailSender" guid="55219f6e-cbdf-40b2-bb5c-487d8382d0c2" enabled="" order="18" />
+      <field column="NotificationEmailPreviewText" guid="4b7f93b4-f9d8-44bb-b806-8206178b0599" enabled="" order="19" />
     </form>
   </FormDefinition>
   <FormDisplayName>Create</FormDisplayName>

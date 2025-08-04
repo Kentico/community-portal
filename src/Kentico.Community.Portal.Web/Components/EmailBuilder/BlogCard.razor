@@ -1,8 +1,8 @@
 @using CMS.ContentEngine
 @using static Kentico.Community.Portal.Web.Components.EmailBuilder.Card
 
-<Card Tag="Tag" TagColor="TagColors.Primary" Heading="@Model.WebPageMetaTitle"
-    BodyContent="Model.WebPageMetaShortDescription" Topics="Topics" LinkURL="@LinkURL">
+<Card Tag="Tag" TagColor="TagColors.Primary" Heading="@Model.BasicItemTitle"
+    BodyContent="Model.BasicItemShortDescription" Topics="Topics" LinkURL="@LinkURL">
 
     <Byline>
         @if (Model.BlogPostPageAuthorContent.TryFirst().TryGetValue(out var author))

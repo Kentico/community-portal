@@ -1,7 +1,7 @@
-﻿using CMS.MediaLibrary;
+﻿using CMS.ContentEngine;
 using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Licenses;
-using Kentico.Community.Portal.Web.Rendering;
+using Kentico.Content.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
@@ -16,13 +16,13 @@ using Newtonsoft.Json;
 
 namespace Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Licenses;
 
-public class LicensesWidget(LicensesFacade licensesFacade, AssetItemService itemService) : ViewComponent
+public class LicensesWidget(ILicenseFileService licenseFileService, IContentRetriever contentRetriever) : ViewComponent
 {
     public const string IDENTIFIER = "CommunityPortal.LicensesWidget";
     public const string NAME = "3rd Party Licenses";
 
-    private readonly LicensesFacade licensesFacade = licensesFacade;
-    private readonly AssetItemService itemService = itemService;
+    private readonly ILicenseFileService licenseFileService = licenseFileService;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
 
     public async Task<IViewComponentResult> InvokeAsync(LicensesWidgetProperties properties) =>
         await Validate(properties)
@@ -40,15 +40,17 @@ public class LicensesWidget(LicensesFacade licensesFacade, AssetItemService item
             return Result.Failure<LicensesWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "No License File has been selected."));
         }
 
-        var asset = await itemService.RetrieveMediaFile(props.LicenseFiles.FirstOrDefault());
+        var fileContent = await contentRetriever
+            .RetrieveContentByGuids<FileContent>(props.LicenseFiles.Select(c => c.Identifier))
+            .TryFirst();
 
-        if (asset is null)
+        if (!fileContent.TryGetValue(out var file))
         {
-            return Result.Failure<LicensesWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, $"Could not find the License File {relatedAsset.Name}: {relatedAsset.Identifier}"));
+            return Result.Failure<LicensesWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, $"Could not find the License File: {relatedAsset.Identifier}"));
         }
 
         var licenseTypeLinks = GetDictionary(props.LicensesTypeDescriptionLinks);
-        var licenses = await licensesFacade.GetLicenses(asset, licenseTypeLinks);
+        var licenses = licenseFileService.GetLicenses(file, licenseTypeLinks);
         return new LicensesWidgetViewModel(props, licenses);
     }
 
@@ -78,12 +80,12 @@ public class LicensesWidgetProperties : BaseWidgetProperties
     [TextInputComponent(Label = "No licenses text", Order = 1)]
     public string NoLicensesText { get; set; } = "";
 
-    [AssetSelectorComponent(
+    [ContentItemSelectorComponent(
+        FileContent.CONTENT_TYPE_NAME,
         Label = "Licenses file",
-        MaximumAssets = 1,
-        AllowedExtensions = "json",
+        MaximumItems = 1,
         ExplanationText = "Should be a JSON file containing a dictionary of license identifiers, each with an array of libraries using that license.")]
-    public IEnumerable<AssetRelatedItem> LicenseFiles { get; set; } = [];
+    public IEnumerable<ContentItemReference> LicenseFiles { get; set; } = [];
 
     [TextAreaComponent(Label = "Licenses type description links", Order = 4)]
     public string LicensesTypeDescriptionLinks { get; set; } = "";

@@ -7,7 +7,7 @@ using Kentico.Community.Portal.Core.Modules;
 
 namespace Kentico.Community.Portal.Web.Features.Members.Badges;
 
-public class MemberBadgeAssignmentApplicationBackgroundService : ApplicationBackgroundService
+public class MemberBadgeAssignmentApplicationBackgroundService : ApplicationLifecycleBackgroundService
 {
     private readonly IServiceProvider serviceProvider;
     private readonly IMemberBadgeInfoProvider badgeInfoProvider;

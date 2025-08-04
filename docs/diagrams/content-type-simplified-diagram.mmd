@@ -1,0 +1,70 @@
+graph TD
+    %% Define main content types
+    %% Email Content Types
+    subgraph "Email Content Types"
+        AE[AutoresponderEmail]
+        NE[NewsletterEmail]
+    end
+    
+    %% Reusable Content Types
+    subgraph "Reusable Content Types"
+        AC[AuthorContent]
+        BPC[BlogPostContent]
+        IC[ImageContent]
+        LC[LinkContent]
+    end
+    
+    %% Web Page Content Types
+    subgraph "Web Page Content Types"
+        BPP[BlogPostPage]
+        QQP[QAndAQuestionPage]
+    end
+    
+    %% Taxonomies
+    subgraph "Taxonomies"
+        BT[BlogType]
+        QDT[QAndADiscussionType]
+        DXT[DXTopic]
+    end
+    
+    %% Content Type Relationships
+    NE -->|References| BPP
+    NE -->|References| LC
+    NE -->|References| QQP
+    
+    BPP -->|References| AC
+    BPP -->|References| BPC
+    BPP -->|References| QQP
+    
+    QQP -->|References| BPP
+    
+    AC -->|References| IC
+    
+    %% Taxonomy Relationships
+    BPC -->|Uses| BT
+    BPP -->|Uses| BT
+    QQP -->|Uses| QDT
+    QQP -->|Uses| DXT
+    
+    %% Field Details
+    AE -.->|Contains| AE_FIELDS["Title, Content, UTM Parameters"]
+    NE -.->|Contains| NE_FIELDS["Title, Issue Number, Published Date, Content, UTM Parameters"]
+    AC -.->|Contains| AC_FIELDS["FirstName, Surname, CodeName, MemberID, Biography"]
+    BPC -.->|Contains| BPC_FIELDS["BlogType (Taxonomy)"]
+    IC -.->|Contains| IC_FIELDS["Asset (Image File)"]
+    LC -.->|Contains| LC_FIELDS["PathOrURL, PublishedDate, LinkType, MemberID"]
+    BPP -.->|Contains| BPP_FIELDS["AuthorContent, PublishedDate, BlogType, QAndAQuestionPages, BlogPostContent"]
+    QQP -.->|Contains| QQP_FIELDS["DateCreated, DateModified, Content, AuthorMemberID, DiscussionType, BlogPostPages, AcceptedAnswer"]
+    
+    %% Styling
+    classDef email fill:#f9d5e5,stroke:#333,stroke-width:1px
+    classDef reusable fill:#d5f5e3,stroke:#333,stroke-width:1px
+    classDef webpage fill:#d6eaf8,stroke:#333,stroke-width:1px
+    classDef taxonomy fill:#fef9e7,stroke:#333,stroke-width:1px
+    classDef fields fill:#f5f5f5,stroke:#ddd,stroke-width:1px,font-size:10px
+    
+    class AE,NE email
+    class AC,BPC,IC,LC reusable
+    class BPP,QQP webpage
+    class BT,QDT,DXT taxonomy
+    class AE_FIELDS,NE_FIELDS,AC_FIELDS,BPC_FIELDS,IC_FIELDS,LC_FIELDS,BPP_FIELDS,QQP_FIELDS fields

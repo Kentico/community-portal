@@ -13,7 +13,7 @@ using Microsoft.Extensions.Options;
 
 namespace Kentico.Community.Portal.Web.Features.Support;
 
-public class SupportRequestProcessorBackgroundService : ApplicationBackgroundService
+public class SupportRequestProcessorBackgroundService : ApplicationLifecycleBackgroundService
 {
     public const string QUEUE_PRIMARY_NAME = "support-messages";
     public const string QUEUE_DEAD_LETTER_NAME = "support-messages-dead-letter";

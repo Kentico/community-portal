@@ -54,6 +54,19 @@
     "*": false
   },
 
+  "github.copilot.chat.agent.terminal.allowList": {
+    "git status": true,
+    "/^git add .*/": true,
+    "git push": true,
+    "git diff": true
+  },
+
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "file": ".github/instructions/Git.instructions.md"
+    }
+  ],
+
   "emmet.includeLanguages": {
     "razor": "html"
   },
@@ -80,6 +93,9 @@
   },
 
   "terminal.integrated.defaultProfile.osx": "pwsh",
+  "terminal.integrated.env.osx": {
+    "DISABLE_OH_MY_POSH": "1"
+  },
 
   "azurite.location": "azurite_storage",
   "[sql]": {

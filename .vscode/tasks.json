@@ -286,6 +286,24 @@
         "showReuseMessage": true,
         "clear": false
       }
+    },
+    {
+      "label": "MailHog: Start Server",
+      "detail": "Starts MailHog SMTP server for email testing",
+      "type": "shell",
+      "command": "./Run-MailHog.ps1",
+      "options": {
+        "cwd": "${workspaceFolder}/scripts"
+      },
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
     }
   ]
 }

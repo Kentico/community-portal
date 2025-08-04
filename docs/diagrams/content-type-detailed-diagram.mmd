@@ -1,0 +1,134 @@
+graph TD
+    %% Define Content Type Groups
+    subgraph EmailContentTypes[Email Content Types]
+        AE[AutoresponderEmail]
+        NE[NewsletterEmail]
+    end
+    
+    subgraph ReusableContentTypes[Reusable Content Types]
+        AC[AuthorContent]
+        BPC[BlogPostContent]
+        IC[ImageContent]
+        LC[LinkContent]
+        EDC[EmailDefaultsContent]
+    end
+    
+    subgraph WebPageContentTypes[Web Page Content Types]
+        BPP[BlogPostPage]
+        QQP[QAndAQuestionPage]
+    end
+    
+    subgraph TaxonomySystem[Taxonomy System]
+        BT[BlogType]
+        QDT[QAndADiscussionType]
+        DXT[DXTopic]
+    end
+    
+    %% Define Content Fields for Email Content Types
+    AE --> AEF[AutoresponderEmail Fields]
+    AEF --> AEF1[EmailSenderID]
+    AEF --> AEF2[EmailTemplateID]
+    AEF --> AEF3[EmailPlainText]
+    AEF --> AEF4[EmailSubject]
+    AEF --> AEF5[EmailPreviewText]
+    AEF --> AEF6[AutoresponderEmailTitle]
+    AEF --> AEF7[AutoresponderEmailBodyContentHTML]
+    AEF --> AEF8[AutoresponderEmailUTMParameters]
+    
+    NE --> NEF[NewsletterEmail Fields]
+    NEF --> NEF1[EmailSenderID]
+    NEF --> NEF2[EmailTemplateID]
+    NEF --> NEF3[EmailPlainText]
+    NEF --> NEF4[EmailSubject]
+    NEF --> NEF5[EmailPreviewText]
+    NEF --> NEF6[NewsletterEmailTitle]
+    NEF --> NEF7[NewsletterEmailIssueNumber]
+    NEF --> NEF8[NewsletterEmailPublishedDate]
+    NEF --> NEF9[NewsletterEmailIntroContentHTML]
+    NEF --> NEF10[NewsletterEmailBlogPostPages]
+    NEF --> NEF11[NewsletterEmailLinkContents]
+    NEF --> NEF12[NewsletterEmailQAndADiscussionPages]
+    NEF --> NEF13[NewsletterEmailOutroContentHTML]
+    NEF --> NEF14[NewsletterEmailUTMParameters]
+    
+    %% Define Content Fields for Reusable Content Types
+    AC --> ACF[AuthorContent Fields]
+    ACF --> ACF1[AuthorContentFirstName]
+    ACF --> ACF2[AuthorContentSurname]
+    ACF --> ACF3[AuthorContentPhotoImageContent]
+    ACF --> ACF4[AuthorContentCodeName]
+    ACF --> ACF5[AuthorContentMemberID]
+    ACF --> ACF6[AuthorContentBiographyHTML]
+    
+    BPC --> BPCF[BlogPostContent Fields]
+    BPCF --> BPCF1[BlogPostContentBlogType]
+    
+    IC --> ICF[ImageContent Fields]
+    ICF --> ICF1[ImageContentAsset]
+    
+    LC --> LCF[LinkContent Fields]
+    LCF --> LCF1[LinkContentPathOrURL]
+    LCF --> LCF2[LinkContentPublishedDate]
+    LCF --> LCF3[LinkContentLinkType]
+    LCF --> LCF4[LinkContentMemberID]
+    
+    EDC --> EDCF[EmailDefaultsContent Fields]
+    
+    %% Define Content Fields for Web Page Content Types
+    BPP --> BPPF[BlogPostPage Fields]
+    BPPF --> BPPF1[BlogPostPageAuthorContent]
+    BPPF --> BPPF2[BlogPostPagePublishedDate]
+    BPPF --> BPPF3[BlogPostPageBlogType]
+    BPPF --> BPPF4[BlogPostPageQAndAQuestionPages]
+    BPPF --> BPPF5[BlogPostPageBlogPostContent]
+    
+    QQP --> QQPF[QAndAQuestionPage Fields]
+    QQPF --> QQPF1[QAndAQuestionPageDateCreated]
+    QQPF --> QQPF2[QAndAQuestionPageDateModified]
+    QQPF --> QQPF3[QAndAQuestionPageContent]
+    QQPF --> QQPF4[QAndAQuestionPageAuthorMemberID]
+    QQPF --> QQPF5[QAndAQuestionPageDiscussionType]
+    QQPF --> QQPF6[QAndAQuestionPageBlogPostPages]
+    QQPF --> QQPF7[QAndAQuestionPageAcceptedAnswerDataGUID]
+    
+    %% Define Taxonomy Tags
+    BT --> BTT[BlogType Tags]
+    QDT --> QDTT[QAndADiscussionType Tags]
+    QDTT --> QDTT1[Question]
+    QDTT --> QDTT2[Blog]
+    DXT --> DXTT[DXTopic Tags]
+    
+    %% Define Key Relationships
+    NE -->|References| BPP
+    NE -->|References| LC
+    NE -->|References| QQP
+    
+    BPP -->|References| AC
+    BPP -->|References| BPC
+    BPP -->|References| QQP
+    
+    QQP -->|References| BPP
+    
+    AC -->|References| IC
+    
+    BPC -->|Uses| BT
+    BPP -->|Uses| BT
+    QQP -->|Uses| QDT
+    QQP -->|Uses| DXT
+    
+    %% Styling
+    classDef email fill:#f9d5e5,stroke:#333,stroke-width:1px
+    classDef reusable fill:#d5f5e3,stroke:#333,stroke-width:1px
+    classDef webpage fill:#d6eaf8,stroke:#333,stroke-width:1px
+    classDef taxonomy fill:#fef9e7,stroke:#333,stroke-width:1px
+    classDef fields fill:#f5f5f5,stroke:#ccc,stroke-width:1px,font-size:10px
+    classDef taxonomyTags fill:#fcf3cf,stroke:#ccc,stroke-width:1px,font-size:10px
+    classDef contentGroups fill:none,stroke:#333,stroke-width:2px
+    
+    class AE,NE email
+    class AC,BPC,IC,LC,EDC reusable
+    class BPP,QQP webpage
+    class BT,QDT,DXT taxonomy
+    class AEF,NEF,ACF,BPCF,ICF,LCF,EDCF,BPPF,QQPF fields
+    class BTT,QDTT,DXTT,QDTT1,QDTT2 taxonomyTags
+    class EmailContentTypes,ReusableContentTypes,WebPageContentTypes,TaxonomySystem contentGroups

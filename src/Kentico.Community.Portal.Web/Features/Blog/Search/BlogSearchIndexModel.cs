@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using CMS.ContentEngine;
-using CMS.MediaLibrary;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Xperience.Lucene.Core.Indexing;
@@ -194,7 +193,7 @@ public class ImageAssetViewModelSerializable
         Title = image.BasicItemTitle;
         URL = image.ImageContentAsset.Url;
         AltText = image.BasicItemShortDescription;
-        Dimensions = new() { Width = image.ImageContentAsset.Metadata.Width ?? 0, Height = image.ImageContentAsset.Metadata.Height ?? 0 };
+        Dimensions = new(image.ImageContentAsset.Metadata.Width ?? 0, image.ImageContentAsset.Metadata.Height ?? 0);
     }
 
     public ImageAssetViewModelSerializable() { }
@@ -203,7 +202,12 @@ public class ImageAssetViewModelSerializable
     public string Title { get; set; } = "";
     public string URL { get; set; } = "";
     public string AltText { get; set; } = "";
-    public AssetDimensions Dimensions { get; set; } = new();
+    public SimpleAssetDimensions Dimensions { get; set; } = new(0, 0);
 
     public ImageViewModel ToImageViewModel() => new(Title, AltText, Dimensions.Width, Dimensions.Height, URL) { ID = ID };
 }
+
+/// <summary>
+/// Simple record to replace the deprecated AssetDimensions
+/// </summary>
+public record SimpleAssetDimensions(int Width, int Height);

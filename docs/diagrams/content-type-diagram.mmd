@@ -1,0 +1,108 @@
+graph TD
+    %% Define all content types
+    %% Email Content Types
+    AE[AutoresponderEmail<br>Email]
+    NE[NewsletterEmail<br>Email]
+    
+    %% Reusable Content Types
+    AMC[AlertMessageContent<br>Reusable]
+    AC[AuthorContent<br>Reusable]
+    BPC[BlogPostContent<br>Reusable]
+    CC[CardContent<br>Reusable]
+    CGC[CommunityGroupContent<br>Reusable]
+    EDC[EmailDefaultsContent<br>Reusable]
+    EC[EmbedContent<br>Reusable]
+    FC[FileContent<br>Reusable]
+    IC[ImageContent<br>Reusable]
+    INC[IntegrationContent<br>Reusable]
+    LC[LinkContent<br>Reusable]
+    MPC[MemberProfileContent<br>Reusable]
+    PC[PollContent<br>Reusable]
+    SLC[SocialLinkContent<br>Reusable]
+    VC[VideoContent<br>Reusable]
+    WBSC[WebsiteAlertSettingsContent<br>Reusable]
+    WCBSC[WebsiteCookieBannerSettingsContent<br>Reusable]
+    WGC[WebsiteGlobalContent<br>Reusable]
+    
+    %% Web Page Content Types
+    BLP[BlogLandingPage<br>Website]
+    BPP[BlogPostPage<br>Website]
+    CLP[CommunityLandingPage<br>Website]
+    CLP2[CommunityLinksPage<br>Website]
+    HP[HomePage<br>Website]
+    ILP[IntegrationsLandingPage<br>Website]
+    LP[LandingPage<br>Website]
+    QALP[QAndALandingPage<br>Website]
+    QANQP[QAndANewQuestionPage<br>Website]
+    QQP[QAndAQuestionPage<br>Website]
+    QAQRP[QAndAQuestionsRootPage<br>Website]
+    RHP[ResourceHubPage<br>Website]
+    RSSF[RSSFeedPage<br>Website]
+    SP[SupportPage<br>Website]
+    
+    %% Taxonomies
+    BT[BlogType<br>Taxonomy]
+    QDT[QAndADiscussionType<br>Taxonomy]
+    DXT[DXTopic<br>Taxonomy]
+    IT[IntegrationType<br>Taxonomy]
+    CAT[ContentAuthorization<br>Taxonomy]
+    ET[EmbedType<br>Taxonomy]
+    
+    %% Content Relationships - Email
+    AE -->|Fields| AE_FIELDS["• Title<br>• Content<br>• UTM Parameters"]
+    
+    NE -->|Fields| NE_FIELDS["• Title<br>• Issue Number<br>• Published Date<br>• Content<br>• Outro Content<br>• UTM Parameters"]
+    NE -->|BlogPostPages| BPP
+    NE -->|LinkContents| LC
+    NE -->|QAndADiscussionPages| QQP
+    
+    %% Content Relationships - Reusable
+    AC -->|Fields| AC_FIELDS["• FirstName<br>• Surname<br>• Code Name<br>• Member ID<br>• Biography"]
+    AC -->|PhotoImageContent| IC
+    
+    BPC -->|BlogType| BT
+    
+    IC -->|Asset| IC_FIELDS["Image File (jpg/jpeg/webp/png)"]
+    
+    LC -->|Fields| LC_FIELDS["• Path or URL<br>• Published Date<br>• Link Type<br>• Member ID"]
+    
+    %% Content Relationships - Web Page
+    BPP -->|Fields| BPP_FIELDS["• Published Date"]
+    BPP -->|AuthorContent| AC
+    BPP -->|BlogType| BT
+    BPP -->|QAndAQuestionPages| QQP
+    BPP -->|BlogPostContent| BPC
+    
+    QQP -->|Fields| QQP_FIELDS["• Date Created<br>• Date Modified<br>• Content<br>• Author<br>• Accepted Answer"]
+    QQP -->|DiscussionType| QDT
+    QQP -->|DXTopics| DXT
+    QQP -->|LinkedBlogPost| BPP
+    
+    %% Taxonomy Tags
+    QDT -->|Tags| QDT_TAGS["• Question<br>• Blog"]
+    BT -->|Tags| BT_TAGS["(Various blog types)"]
+    DXT -->|Tags| DXT_TAGS["(Various topic tags)"]
+    IT -->|Tags| IT_TAGS["• Product Feature<br>• Individual Contribution<br>• 7 Day Bugfix Support Policy<br>• Labs<br>• Partner Integration"]
+    ET -->|Tags| ET_TAGS["• YouTube<br>• Vimeo<br>• LinkedIn<br>• Other"]
+    CAT -->|Tags| CAT_TAGS["• Community Leader<br>• Internal Employee<br>• MVP"]
+    
+    %% Taxonomy Field Connections
+    BPC -.->|Uses| BT
+    BPP -.->|Uses| BT
+    QQP -.->|Uses| QDT
+    QQP -.->|Uses| DXT
+    
+    %% Styling
+    classDef email fill:#f9d5e5,stroke:#333,stroke-width:1px
+    classDef reusable fill:#d5f5e3,stroke:#333,stroke-width:1px
+    classDef webpage fill:#d6eaf8,stroke:#333,stroke-width:1px
+    classDef taxonomy fill:#fef9e7,stroke:#333,stroke-width:1px
+    classDef fields fill:#f5f5f5,stroke:#ccc,stroke-width:1px,font-size:10px
+    classDef taxonomyTags fill:#fcf3cf,stroke:#ccc,stroke-width:1px,font-size:10px
+    
+    class AE,NE email
+    class AMC,AC,BPC,CC,CGC,EDC,EC,FC,IC,INC,LC,MPC,PC,SLC,VC,WBSC,WCBSC,WGC reusable
+    class BLP,BPP,CLP,CLP2,HP,ILP,LP,QALP,QANQP,QQP,QAQRP,RHP,RSSF,SP webpage
+    class BT,QDT,DXT,IT,CAT,ET taxonomy
+    class AE_FIELDS,NE_FIELDS,AC_FIELDS,IC_FIELDS,LC_FIELDS,BPP_FIELDS,QQP_FIELDS fields
+    class QDT_TAGS,BT_TAGS,DXT_TAGS,IT_TAGS,ET_TAGS,CAT_TAGS taxonomyTags

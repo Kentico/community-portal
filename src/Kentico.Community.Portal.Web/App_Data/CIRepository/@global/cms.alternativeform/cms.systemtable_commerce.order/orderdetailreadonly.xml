@@ -39,6 +39,29 @@
           <controlname>Kentico.Administration.TextWithLabel</controlname>
         </settings>
       </field>
+      <field column="CustomerDetail" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="8f2126a6-65db-471f-a2b5-946155703487" system="true" visible="true" order="13">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Customer</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.Link</controlname>
+          <OpenInNewTab>True</OpenInNewTab>
+        </settings>
+      </field>
+      <field column="CustomerIsMember" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="e95d661b-96b0-4b39-a5d0-7c1a039e028f" system="true" visible="true" order="14">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.order.customerinformation.ismember$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
     </form>
   </FormDefinition>
   <FormDisplayName>Order detail</FormDisplayName>

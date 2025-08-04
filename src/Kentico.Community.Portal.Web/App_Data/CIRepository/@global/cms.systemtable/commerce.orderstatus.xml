@@ -7,8 +7,14 @@
       <field column="OrderStatusName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="1dbd8c19-e0f8-4b06-9326-c12358079a6c" system="true" />
       <field column="OrderStatusGUID" columnprecision="0" columntype="guid" enabled="true" guid="b9c927a5-6db3-4616-b4a3-3086e947ccf7" system="true" />
       <field column="OrderStatusDisplayName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="302dca29-cdea-457a-8188-c1dcfab2dd63" system="true" />
-      <field column="OrderStatusOrder" columnprecision="0" columntype="integer" enabled="true" guid="f8beb676-ab1e-411c-84d0-12d7db77840b" system="true" />
+      <field column="OrderStatusOrder" columnprecision="0" columntype="integer" enabled="true" guid="f8beb676-ab1e-411c-84d0-12d7db77840b" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
       <field column="OrderStatusInternalNotificationEnabled" columnprecision="0" columntype="boolean" enabled="true" guid="58b966b9-fbbf-4a00-9523-a31c2432e28d" system="true" />
+      <field column="OrderStatusCustomerNotificationEnabled" columnprecision="0" columntype="boolean" enabled="true" guid="f7d40375-f8f2-413f-a474-ab3365f1e34b" system="true" />
+      <field allowempty="true" column="OrderStatusCustomerNotificationEmailConfigurationID" columnprecision="0" columntype="integer" enabled="true" guid="6d3da9ed-157b-4f25-9077-b93b484619f4" refobjtype="emaillibrary.emailconfiguration" reftype="NotRequired" system="true" />
     </form>
   </ClassFormDefinition>
   <ClassGUID>d5cac0a9-0046-428a-b624-13b3a3244bbc</ClassGUID>

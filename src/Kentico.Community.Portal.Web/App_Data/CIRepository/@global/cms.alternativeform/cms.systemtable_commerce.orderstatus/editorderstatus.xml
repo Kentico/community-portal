@@ -15,9 +15,7 @@
         </settings>
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>
-            <![CDATA[{$digitalcommerce.orderstatuses.overview.orderstatusname$}]]>
-          </fieldcaption>
+          <fieldcaption>{$digitalcommerce.orderstatuses.orderstatusname$}</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
@@ -29,15 +27,14 @@
         </settings>
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>
-            <![CDATA[{$digitalcommerce.orderstatuses.overview.codename$}]]>
-          </fieldcaption>
+          <fieldcaption>{$digitalcommerce.orderstatuses.codename$}</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
       <field column="OrderStatusOrder" guid="f8beb676-ab1e-411c-84d0-12d7db77840b" enabled="" />
-      <category name="Notifications" order="5">
+      <category name="OrderStatusNotifications" order="5">
         <properties>
+          <caption>{$digitalcommerce.orderstatuses.notifications$}</caption>
           <visible>true</visible>
         </properties>
       </category>
@@ -48,27 +45,48 @@
         <properties>
           <defaultvalue>False</defaultvalue>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>
-            <![CDATA[{$digitalcommerce.orderstatuses.overview.notifyuser$}]]>
-          </fieldcaption>
+          <fieldcaption>{$digitalcommerce.orderstatuses.notifyuser$}</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="Recipients" columnprecision="0" columntype="objectids" dummy="altform" enabled="true" guid="725670b5-31b6-47b5-bb4e-75d5264d2844" system="true" visible="true" order="7">
+      <field column="OrderStatusInternalNotificationRecipients" columnprecision="0" columntype="objectids" dummy="altform" enabled="true" guid="725670b5-31b6-47b5-bb4e-75d5264d2844" system="true" visible="true" order="7">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>
-            <![CDATA[{$digitalcommerce.orderstatuses.overview.recipients$}]]>
-          </fieldcaption>
-          <fielddescription>
-            <![CDATA[{$digitalcommerce.orderstatuses.overview.recipientstooltip$}]]>
-          </fielddescription>
+          <fieldcaption>{$digitalcommerce.orderstatuses.recipients$}</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
           <controlname>Kentico.Administration.ObjectIdSelector</controlname>
           <MaximumItems>0</MaximumItems>
           <ObjectType>CMS.User</ObjectType>
+        </settings>
+      </field>
+      <field column="OrderStatusCustomerNotificationEnabled" enabled="true" guid="f7d40375-f8f2-413f-a474-ab3365f1e34b" visible="true" order="8">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <defaultvalue>False</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalcommerce.orderstatuses.notifycustomer$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="OrderStatusCustomerNotificationEmailConfigurationID" guid="6d3da9ed-157b-4f25-9077-b93b484619f4" enabled="" order="9" />
+      <field column="OrderStatusCustomerNotificationEmailConfiguration" columnprecision="0" columntype="emails" dummy="altform" enabled="true" guid="51f2f321-dede-4796-9822-24bac99d077c" system="true" visible="true" order="10">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.orderstatuses.notificationemail$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedEmailPurpose>CommerceOrderStatusChange</AllowedEmailPurpose>
+          <controlname>Kentico.Administration.EmailSelector</controlname>
+          <ForPreview>True</ForPreview>
+          <MaximumEmails>1</MaximumEmails>
+          <Sortable>False</Sortable>
         </settings>
       </field>
     </form>

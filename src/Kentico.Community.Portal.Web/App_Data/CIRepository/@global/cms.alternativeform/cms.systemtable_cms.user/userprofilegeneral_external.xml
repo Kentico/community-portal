@@ -69,11 +69,21 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="UserAuthenticatorSharedKey" guid="fb1f9bf3-516d-4841-880c-5b6fc62fee10" enabled="" />
+      <field column="UserPreferredLanguage" enabled="true" guid="4d0bb35d-70d0-4f59-ad46-a64237982449" visible="true" order="17">
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.users.preferredLanguage$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
       <field column="UserAuthenticatorSharedKeyResetRequested" guid="56c134b7-4d52-4747-93d0-9f25e1f55253" enabled="" order="18" />
       <field column="UserAuthenticationRecoveryCode" guid="332acaac-915a-4a4b-8b8a-516e6da0b6c6" enabled="" order="19" />
       <field column="UserFailedLoginAttempts" guid="e6de69e5-3583-4927-91ee-f26dcf53f31d" enabled="" />
       <field column="UserLockoutEnd" guid="c37477fe-7208-4bd0-a89f-5306950b78ee" enabled="" />
+      <field column="UserAuthenticatorSharedKey" guid="fb1f9bf3-516d-4841-880c-5b6fc62fee10" enabled="" order="22" />
     </form>
   </FormDefinition>
   <FormDisplayName>UserProfileGeneral external</FormDisplayName>

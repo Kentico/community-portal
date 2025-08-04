@@ -1,3 +1,4 @@
+using CMS.ContactManagement;
 using CMS.ContentEngine.Internal;
 using CMS.DataEngine;
 using CMS.EmailEngine;
@@ -71,7 +72,7 @@ public class MemberEmailService(
         {
             FirstName = member.FirstName,
             LastName = member.LastName,
-            Email = member.Email
+            Email = member.Email!
         };
 
         var dataContext = new CustomTokenValueDataContext
@@ -80,23 +81,15 @@ public class MemberEmailService(
             Items = configuration.ContextItems
         };
 
-
         var emailConfig = await emailConfigurationProvider
             .GetAsync(configuration.EmailConfigurationName);
         string unsubscriptionUrl = await emailUnsubscriptionUrlGenerator.GenerateSignedUrl(emailConfig, "/Kentico.Emails/Unsubscribe", recipient.Email, Guid.NewGuid(), false);
-        var builderContext = new RecipientEmailMarkupBuilderContext
-        {
-            EmailRecipientContext = new EmailRecipientContext
-            {
-                FirstName = recipient.FirstName,
-                LastName = recipient.LastName,
-                EmailAddress = recipient.Email,
-                UnsubscriptionUrl = unsubscriptionUrl
-            }
-        };
+
+        var currentContact = ContactManagementContext.CurrentContact;
+
         var markupBuilder = await markupBuilderFactory.Create(emailConfig);
         string mergedTemplate = await markupBuilder
-            .BuildEmailForSending(emailConfig, builderContext);
+            .BuildEmailForSending(emailConfig, SetEmailContext(dataContext.MailoutGuid, currentContact, recipient.Email, emailConfig));
 
         var contentResolver = await emailContentResolverFactory.Create(emailConfig, default);
         string emailBody = await contentResolver.Resolve(
@@ -148,4 +141,28 @@ public class MemberEmailService(
 
         await emailService.SendEmail(emailMessage);
     }
+
+    private Func<IServiceProvider, Task> SetEmailContext(Guid mailoutGuid, ContactInfo currentContact, string contactEmail, EmailConfigurationInfo emailConfiguration) =>
+        async (serviceProvider) =>
+        {
+            var recipientContextAccessor = serviceProvider.GetRequiredService<IEmailRecipientContextAccessor>();
+            var emailRecipientContextProvider = serviceProvider.GetRequiredService<IEmailRecipientContextProvider>();
+            var recipientContactGroupContextAccessor = serviceProvider.GetRequiredService<IEmailRecipientContactGroupContextAccessor>();
+
+            var emailRecipientContext = await emailRecipientContextProvider.Get(currentContact.ContactID, contactEmail, emailConfiguration, mailoutGuid, default);
+
+            recipientContextAccessor.SetContext(emailRecipientContext);
+
+            var groupNames = currentContact.ContactGroups.Select(g => g.ContactGroupName).ToList();
+            var recipientContactGroupContext = new EmailRecipientContactGroupContext() { ContactGroupNames = groupNames };
+
+            var recipientContactGroupAccessor = serviceProvider.GetRequiredService<IEmailRecipientContactGroupContextAccessor>();
+
+            if (recipientContactGroupAccessor is not EmailRecipientContactGroupContextAccessor accessor)
+            {
+                return;
+            }
+
+            accessor.Context = recipientContactGroupContext;
+        };
 }

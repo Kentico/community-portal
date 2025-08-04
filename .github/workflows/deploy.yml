@@ -7,6 +7,15 @@ on:
         description: "The reason for running the workflow"
         required: true
         default: "Manual run"
+      environment:
+        description: "Target environment for deployment"
+        required: false
+        default: "qa"
+        type: choice
+        options:
+          - qa
+          - uat
+          - prod
 
 jobs:
   createDeploymentPackage:
@@ -99,7 +108,7 @@ jobs:
         run: |
           $headers = @{ Authorization = "Bearer ${{ secrets.XPERIENCE_PORTAL_DEPLOYMENT_PAT }}" }
           Invoke-RestMethod `
-            -Uri https://xperience-portal.com/api/deployment/upload/${{ secrets.XPERIENCE_PORTAL_PROJECT_GUID }} `
+            -Uri https://xperience-portal.com/api/deployment/upload/${{ secrets.XPERIENCE_PORTAL_PROJECT_GUID }}/${{ inputs.environment }} `
             -Method Post `
             -InFile './DeploymentPackage.zip' `
             -ContentType "application/zip" `
