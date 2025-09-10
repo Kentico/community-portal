@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>c1beb8f9-4673-40d8-acdd-2dd56e5cd1bb</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Alex-All-the-answers-you-are-looking-for-ad44c1c9d</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Alex,
+
+All the answers you are looking for are mentioned in [the Refresh blog post](/blog/xperience-by-kentico-refresh-may-19-2025#saas-stg-environments) where content sync was announced and in the documentation that Vasu linked above.
+
+You can set up as many environments as you want as long as the connections are linear (no loops), each environment is only connected to one other environment, and they all connect in one direction.
+
+For example, the following are all valid:
+
+* LOCAL > PROD
+* LOCAL > QA
+* LOCAL > QA > PROD
+* LOCAL > STG > PROD
+* QA > UAT > STG > PROD
+* QA < PROD
+
+The following are not supported:
+
+* LOCAL > PROD > LOCAL
+* LOCAL > QA < PROD
+* LOCAL > QA > STG, PROD
+
+I'm also going to copy something here from the blog post I linked.
+
+> Content synchronization **[is not a replacement for content staging](https://docs.kentico.com/x/cgeRBg)** from previous versions of Kentico. Xperience by Kentico does not generate staging tasks, synchronize settings or database schema changes through the administration UI, or give programmatic access to the content synchronization API.
+>
+> Why? Because, the goal of **[content synchronization in Xperience by Kentico](https://docs.kentico.com/x/content_sync_xp)** is to solve the marketer's challenge of authoring content in a pre-production environment. It can be used by developers, but it is not built for them. Developers have their own tool - **[Xperience's CI/CD feature](https://docs.kentico.com/x/YAaiCQ)** - which was improved in **[April's 2025's Refresh](https://community.kentico.com/blog/xperience-by-kentico-refresh-april-17-2025#better-cicd)**, and they can use it to deploy schema and configuration changes they author locally to other environments.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-08-01 17:08:57Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>b2bcc100-f3df-42b3-928c-8a4100862bb1</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Kentico-xperience-staging-6165548a-rzhj8s6w</CodeName>
+    <GUID>494d6a27-7159-4340-8c90-cd9149ac20c4</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>61429559-a7a2-4c34-aa05-c78c3b0a63f3</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Manage-multiple-websites-5d74fce9-o35bje6g</CodeName>
+      <GUID>a4a9f40b-0d9e-477f-aeaa-604d6a5ea866</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>2107fb14-cdfb-4e1d-badd-51be4314bbe3</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I've been reading the [documentation](https://docs.kentico.com/x/OQpdD) round hosting multiple websites within the same Xperience instance, and it makes sense mostly.
+
+It describes how to structure the web project with RCLs for each website, but I don't think it _really_ goes into too much detail about how the right RCL would be picked up per website? I can see how it might work for publishing, you can publish the shared RCL, the channel specific RCL (and ignore the other channel's RCL), and do it like that. But how does that work locally?
+
+The alternative if no shared logic/components is needed, would be fully separate solutions. But then you lose out on the reusability.
+
+I think it would be great if there was a working example in GitHub to showcase an example setup.
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-08-11 13:02:57Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-08-11 13:02:57Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

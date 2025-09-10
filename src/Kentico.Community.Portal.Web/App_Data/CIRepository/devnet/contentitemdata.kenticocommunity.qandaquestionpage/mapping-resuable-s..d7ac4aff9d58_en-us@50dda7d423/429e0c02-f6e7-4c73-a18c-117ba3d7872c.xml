@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>4db06f59-9a13-4664-b08a-d7ac4aff9d58</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Mapping-resuable-schemas-to-existing-content-types-when-migrating-from-v13-to-XbyK-62fab9dd-8vy7lfbl</CodeName>
+      <GUID>6a744436-6bea-4e7d-ba5b-67eecf3d83a6</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>429e0c02-f6e7-4c73-a18c-117ba3d7872c</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>a9b2bf31-beca-47d2-a880-0de84453dd37</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>7</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+Working on a migration from version 13 to XbyK 30.8.0 using the Toolkit.  I have 4 custom mappings I'm creating, all of them use the same reusable schema assigned to them.  2 of the mappings are being merged into one page type and this is working great.  One of the other two page types is a blog post.  I want the blog post definition to be created and the content migrated, but I need to extract the SEO fields (page title, page meta description, etc.) and add the values to the reusable schema for the blog post.&#x20;
+
+Based on my tests, it looks like I need to fully define the blog post object with all of the field definitions and assign the values because once the migration process identifies the custom mapping, it excludes the auto-generation of the object creation. Is this a correct statement?  Or is there a way to migrate the object definition over, then add the mapping, then migrate the data?
+
+I've followed some documentation from here:
+
+<https://docs.kentico.com/guides/development/upgrade-deep-dives/remodel-page-types-as-reusable-field-schemas>
+
+and here:
+
+<https://github.com/Kentico/xperience-by-kentico-kentico-migration-tool/blob/master/Migration.Tool.Extensions/README.md#custom-class-mappings>
+
+The second question is if I create all these field mappings/definitions, will I also have to code around fixing the media library links/urls that the object has in them?  This is probably my bigger concern.&#x20;
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.8.0]
+
+* .NET version: \[8]
+
+* Execution environment: \[Private cloud Azure or local]
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-08-14 18:44:25Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-08-14 19:45:31Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

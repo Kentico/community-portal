@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>The-RTE-links-should-be-handled-automaticab5346063</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+The RTE links should be handled automatically. However, I suspect there might be an issue since your RTE content has been migrated. I looked into my XbyK site, and this is how the automatic URL resolution seems to work when adding links manually in the RTE:
+
+1. You select a page to be linked in the RTE editor.
+2. In the markup, an `a` tag is added with a relative URL in the `href` attribute and a `data-channel-guid` attribute that identifies your channel (it is the value of the `ChannelGUID` column in the `CMS_Channel` table). Example:
+   ```HTML
+   <a href="/about" data-channel-guid="0c3f353f-efc1-4975-99ef-9dec3bc2336d">About</a>
+   ```
+3. If the RTE is within a widget on a page and the page gets saved/published, the `href` attribute will resolve automatically in the markup. If the RTE is inside a content item, it seems the URL is not resolved upon saving the item. The `data-channel-guid` attribute persists, and therefore the preview URL is resolved on-the-fly when rendering the actual page.
+
+My assumption is that if you add the `data-channel-guid` to each a tag, the preview link resolution will work. However, first, check how your current links are built to verify that the above description is valid for your case.
+
+In my custom migration scripts for a client site, I also manipulated links in RTE markup, so it should be feasible to create custom scripts that will modify the RTE markup in one go.
+
+Since I don't have access to your migrated site, I can't validate my assumptions. Therefore, I recommend you put some effort into resolving this and then consult Kentico customer success team. Alternatively, you can hire me as a consultant.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-26 11:46:55Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>afdb8390-68c1-452a-989b-847b96e76b17</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Links-in-Page-Builerd-Preview-vs-the-live-channel-site-SaaS-367fdfc5-7kidrhrb</CodeName>
+    <GUID>7500ca9e-3412-43ee-a2e2-9ce72d1f6a43</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -26,21 +26,32 @@ public class FileWidget(IContentRetriever contentRetriever, ISlugHelper slugHelp
     public async Task<IViewComponentResult> InvokeAsync(ComponentViewModel<FileWidgetProperties> cvm)
     {
         var props = cvm.Properties;
-        var file = await contentRetriever
-            .RetrieveContentByGuids<IContentItemFieldsSource>(props.FileContents.Select(c => c.Identifier))
-            .TryFirst();
+        var contentItemGUID = props.FileContents.Select(c => c.Identifier).TryFirst();
 
-        return Validate(props, file)
+        return await Validate(props, contentItemGUID)
             .Match(
                 vm => View("~/Components/PageBuilder/Widgets/Files/File.cshtml", vm),
                 vm => View("~/Components/ComponentError.cshtml", vm));
     }
 
-    private Result<FileWidgetViewModel, ComponentErrorViewModel> Validate(FileWidgetProperties props, Maybe<IContentItemFieldsSource> item)
+    private async Task<Result<FileWidgetViewModel, ComponentErrorViewModel>> Validate(FileWidgetProperties props, Maybe<Guid> contentItemGUID)
     {
+        if (!contentItemGUID.TryGetValue(out var guid))
+        {
+            return Result.Failure<FileWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "No content item has been selected."));
+        }
+
+        var item = await contentRetriever
+            .RetrieveContentOfContentTypes<IContentItemFieldsSource>(
+                [FileContent.CONTENT_TYPE_NAME, ImageContent.CONTENT_TYPE_NAME, VideoContent.CONTENT_TYPE_NAME],
+                new RetrieveContentOfContentTypesParameters { IncludeSecuredItems = User.Identity?.IsAuthenticated ?? false },
+                q => q.Where(w => w.WhereEquals(nameof(ContentItemFields.ContentItemGUID), guid)),
+                new RetrievalCacheSettings($"{nameof(FileWidget)}|{guid}"))
+            .TryFirst();
+
         if (!item.TryGetValue(out var i))
         {
-            return Result.Failure<FileWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "No media item has been selected."));
+            return Result.Failure<FileWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "The selected content item could not be found."));
         }
 
         var asset = i switch

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Yeah-consistency-is-key-but-giving-the-fle327e2a59</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Yeah consistency is key, but giving the flexibility of which way to enforce is important.
+
+Clients (and their SEO teams) often demand that URLs are output in HTML in a particular way - sometimes they demand with and sometimes without a trailing slash. So the current XbyK default works fine for the latter, but makes it difficult for the former.
+
+We already have a middleware to handle the redirection to the correct version, and I think we've looked at doing something similar to what you've both mentioned in terms of creating an extension, but ideally there would be a configuration where XbyK would respect this as a configuration option.
+
+Thanks for the suggestions - I'll also submit to the roadmap as an idea!
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-19 14:28:51Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>9baa8399-6e02-44ab-a7f1-854d93a48987</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Trailing-slashes-in-resolved-urls-e0d48518-8fbt2cml</CodeName>
+    <GUID>f7f45401-df60-4576-bbd9-f802bbbb0714</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

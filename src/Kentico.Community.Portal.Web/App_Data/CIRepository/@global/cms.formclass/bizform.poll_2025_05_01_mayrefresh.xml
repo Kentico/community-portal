@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.formclass>
+  <ClassContactMapping>
+    <form />
+  </ClassContactMapping>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Poll - 2025-05-01 - MayRefresh</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="Form_2025_05_01_19_20ID" columntype="integer" enabled="true" guid="5dd03cd2-70bd-43f8-ad6f-a0055f115424" isPK="true" />
+      <field column="FormInserted" columnprecision="7" columntype="datetime" enabled="true" guid="5bbf35d4-3cd2-459a-b079-95204c621c0c" system="true">
+        <properties>
+          <fieldcaption>Form inserted</fieldcaption>
+        </properties>
+      </field>
+      <field column="FormUpdated" columnprecision="7" columntype="datetime" enabled="true" guid="e26ed26d-b2f8-4e02-aa84-e35236199671" system="true">
+        <properties>
+          <fieldcaption>Form updated</fieldcaption>
+        </properties>
+      </field>
+      <field allowempty="true" column="MemberID" columntype="integer" enabled="true" guid="cb9d18dd-f54e-449e-98e5-6115503c5064" visible="true">
+        <properties>
+          <fieldcaption>Member ID</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberID</componentidentifier>
+        </settings>
+      </field>
+      <field allowempty="true" column="MemberEmail" columnsize="500" columntype="text" enabled="true" guid="4fb3d4b2-4a8b-4871-9374-181d2cb2d3d6" visible="true">
+        <properties>
+          <fieldcaption>Member email</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberEmail</componentidentifier>
+        </settings>
+      </field>
+      <field column="Question" columnsize="200" columntype="text" enabled="true" guid="5d0a22c9-780d-4410-bc4b-7295f4ea398e" visible="true">
+        <properties>
+          <fieldcaption>
+            <![CDATA[Which feature from May's Refresh are you most excited about?]]>
+          </fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.RadioButtons</componentidentifier>
+          <DataSource>
+<![CDATA[
+Content sync
+Web page usage tracking
+Production-ready content retriever
+Email Builder widget personalization
+Improved SaaS DNS verification
+Version history read-only mode
+Improved Former URLs
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>cce46cb9-5e59-4073-92bc-6ffe4ee118d1</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>BizForm.Poll_2025_05_01_MayRefresh</ClassName>
+  <ClassTableName>Form_Form_2025_05_01_19_20</ClassTableName>
+  <ClassType>Form</ClassType>
+  <ClassXmlSchema>
+<![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Form_Form_2025_05_01_19_20">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Form_2025_05_01_19_20ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+              <xs:element name="FormInserted" type="xs:dateTime" />
+              <xs:element name="FormUpdated" type="xs:dateTime" />
+              <xs:element name="MemberID" type="xs:int" minOccurs="0" />
+              <xs:element name="MemberEmail" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Question">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Form_Form_2025_05_01_19_20" />
+      <xs:field xpath="Form_2025_05_01_19_20ID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
+]]>
+  </ClassXmlSchema>
+</cms.formclass>

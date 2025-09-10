@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>c1beb8f9-4673-40d8-acdd-2dd56e5cd1bb</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>The-examples-in-DG-or-other-public-code-re5d5431bf</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+The examples in DG or other public code repos and the tutorial which can be found here\
+<https://docs.kentico.com/tutorial/developer-tutorial/implement-navigation>\
+show only suggestions and one possible way to implement a navigation.
+
+There is not that one way which is the correct one.
+
+XbyK is a standard dotnet application and all navigation rendering technologies can be used here.
+
+In the past I used dynamic navigation, which creates the menu items from the content tree dynamically and could be controlled via some properties in the page types. I did this because it was the common way in historic Kentico projects of the past.
+
+Today I prefer to use a repository for menu items as well.
+
+In most projects the dynamic way was insufficent and leads to hacky entries in the page tree to get links to external pages or media content. In addition the most pages should be excluded from the navigation, so we do all this overhead of configuration and dynamic detection for only a few pages.\
+If you use a repository, content editors will have to set the navigation explicit in addition to content pages but can also add all kinds of links which they would like to have here. I think this is the most userfriendly way to achieve navigation in XbyK from my perspective.
+
+To answer your question: I guess the codename is used to identify the navigation items from the content NavigationMenu content type documents. You can add multiple navigation menus for different locations (main navigation, side navigation, etc.).\
+You can find more details in the github repository: <https://github.com/Kentico/xperience-by-kentico-kickstart/blob/main/src/Kickstart.Entities/ReusableContentTypes/NavigationMenu/NavigationMenu.generated.cs>
+
+But at the end it depends on your project, your needs, used frameworks and your client how this is implemented best.
+
+Hint: always implement caching for navigation items.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-02 15:45:49Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>ca14f6e1-ef09-4e22-80bb-fd6c715fd0f1</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Navigation-Implementation-INavigation-vs-Repository-and-Kentico-Tag-Helper-2bb070a8-hv5masoy</CodeName>
+    <GUID>a4756ff7-36e1-4180-b9d2-4733f301e1e2</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>87887876-fe88-4d64-b6b0-d922c59c353a</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Problem-in-Navigation-Menu-52c04414-ysal7n4v</CodeName>
+      <GUID>b6efdb49-e5bb-4504-94b3-d188744dc375</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>837a5438-e5c1-4b70-a0d6-6c788bf72dfc</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>a3db8500-6613-42df-b52d-0f0ef18a16be</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I have a problem with the Navigation menu, I added pages under a home page so how can I get these pages under the home page on navbar.
+
+```CSharp
+using System.Linq;
+using System.Threading.Tasks; 
+using CMS.Websites; 
+using Kentico.Content.Web.Mvc.Routing; 
+using Microsoft.IdentityModel.Tokens;
+
+namespace Kickstart.Web.Features.Navigation;
+
+public class NavigationService : INavigationService
+{
+    private readonly IWebPageUrlRetriever webPageUrlRetriever;
+    private readonly IPreferredLanguageRetriever preferredLanguageRetriever;
+
+    public NavigationService(IWebPageUrlRetriever webPageUrlRetriever,
+    IPreferredLanguageRetriever preferredLanguageRetriever)
+    {
+        this.webPageUrlRetriever = webPageUrlRetriever;
+        this.preferredLanguageRetriever = preferredLanguageRetriever;
+    }
+
+    public async Task<NavigationItemViewModel> GetNavigationItemViewModel(NavigationItem navigationItem)
+    {
+        if (navigationItem?.NavigationItemTarget?.IsNullOrEmpty() ?? true)
+        {
+            return null;
+        }
+
+        var targetGuid = navigationItem.NavigationItemTarget.FirstOrDefault().WebPageGuid;
+
+        var targetUrl = await webPageUrlRetriever.Retrieve(targetGuid, preferredLanguageRetriever.Get());
+
+        return new NavigationItemViewModel
+        {
+            Title = navigationItem.NavigationItemTitle,
+            Url = targetUrl.RelativePath
+        };
+    }
+
+    public async Task<NavigationMenuViewModel> GetNavigationMenuViewModel(NavigationMenu navigationMenu)
+    {
+        if (navigationMenu?.NavigationMenuItems?.IsNullOrEmpty() ?? true)
+        {
+            return null;
+        }
+
+        var menuItems = await Task.WhenAll(navigationMenu.NavigationMenuItems.Select(GetNavigationItemViewModel));
+
+        return new NavigationMenuViewModel
+        {
+            Name = navigationMenu.NavigationMenuDisplayName,
+            Items = menuItems
+        };
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System.Linq;
+using System.Threading.Tasks;
+
+using CMS.ContentEngine;
+using CMS.Websites.Routing;
+
+using Kentico.Content.Web.Mvc.Routing;
+
+using Microsoft.AspNetCore.Mvc;
+
+namespace Kickstart.Web.Features.Navigation;
+public class NavigationMenuViewComponent : ViewComponent
+{
+    private readonly IContentQueryExecutor contentQueryExecutor;
+    private readonly IPreferredLanguageRetriever preferredLanguageRetriever;
+    private readonly IWebsiteChannelContext webSiteChannelContext;
+    private readonly INavigationService navigationService;
+
+    public NavigationMenuViewComponent(
+        IContentQueryExecutor contentQueryExecutor,
+        IPreferredLanguageRetriever preferredLanguageRetriever,
+        IWebsiteChannelContext webSiteChannelContext,
+        INavigationService navigationService)
+    {
+        this.contentQueryExecutor = contentQueryExecutor;
+        this.preferredLanguageRetriever = preferredLanguageRetriever;
+        this.webSiteChannelContext = webSiteChannelContext;
+        this.navigationService = navigationService;
+    }
+
+    public async Task<IViewComponentResult> InvokeAsync(string navigationMenuCodeName)
+    {
+        var menu = await RetrieveMenu(navigationMenuCodeName);
+
+        if (menu == null)
+        {
+            return View("~/Features/Navigation/NavigationMenuViewComponent.cshtml", new NavigationMenuViewModel());
+        }
+
+        var model = await navigationService.GetNavigationMenuViewModel(menu);
+
+        return View("~/Features/Navigation/NavigationMenuViewComponent.cshtml", model);
+    }
+
+    private async Task<NavigationMenu> RetrieveMenu(string navigationMenuCodeName)
+    {
+        var builder = new ContentItemQueryBuilder()
+            .ForContentType(NavigationMenu.CONTENT_TYPE_NAME,
+            config => config
+                .Where(where => where.WhereEquals(nameof(NavigationMenu.NavigationMenuCodeName), navigationMenuCodeName))
+                .WithLinkedItems(2))
+            .InLanguage(preferredLanguageRetriever.Get());
+
+        var queryExecutorOptions = new ContentQueryExecutionOptions
+        {
+            ForPreview = webSiteChannelContext.IsPreview
+        };
+
+        var items = await contentQueryExecutor.GetMappedResult<NavigationMenu>(builder, queryExecutorOptions);
+
+        return items.FirstOrDefault();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------------------
+// <auto-generated>
+//
+//     This code was generated by code generator tool.
+//
+//     To customize the code use your own partial class. For more info about how to use and customize
+//     the generated code see the documentation at https://docs.xperience.io/.
+//
+// </auto-generated>
+//--------------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using CMS.ContentEngine;
+
+namespace Kickstart
+{
+	/// <summary>
+	/// Represents a content item of type <see cref="NavigationMenu"/>.
+	/// </summary>
+	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
+	public partial class NavigationMenu : IContentItemFieldsSource
+	{
+		/// <summary>
+		/// Code name of the content type.
+		/// </summary>
+		public const string CONTENT_TYPE_NAME = "Kickstart.NavigationMenu";
+
+
+		/// <summary>
+		/// Represents system properties for a content item.
+		/// </summary>
+		[SystemField]
+		public ContentItemFields SystemFields { get; set; }
+
+
+		/// <summary>
+		/// NavigationMenuDisplayName.
+		/// </summary>
+		public string NavigationMenuDisplayName { get; set; }
+
+
+		/// <summary>
+		/// NavigationMenuCodeName.
+		/// </summary>
+		public string NavigationMenuCodeName { get; set; }
+
+
+		/// <summary>
+		/// NavigationMenuItems.
+		/// </summary>
+		public IEnumerable<NavigationItem> NavigationMenuItems { get; set; }
+	}
+}
+
+
+
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------------------
+// <auto-generated>
+//
+//     This code was generated by code generator tool.
+//
+//     To customize the code use your own partial class. For more info about how to use and customize
+//     the generated code see the documentation at https://docs.xperience.io/.
+//
+// </auto-generated>
+//--------------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using CMS.ContentEngine;
+using CMS.Websites;
+
+namespace Kickstart
+{
+	/// <summary>
+	/// Represents a content item of type <see cref="NavigationItem"/>.
+	/// </summary>
+	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
+	public partial class NavigationItem : IContentItemFieldsSource
+	{
+		/// <summary>
+		/// Code name of the content type.
+		/// </summary>
+		public const string CONTENT_TYPE_NAME = "Kickstart.NavigationItem";
+
+
+		/// <summary>
+		/// Represents system properties for a content item.
+		/// </summary>
+		[SystemField]
+		public ContentItemFields SystemFields { get; set; }
+
+
+		/// <summary>
+		/// NavigationItemTitle.
+		/// </summary>
+		public string NavigationItemTitle { get; set; }
+
+
+		/// <summary>
+		/// NavigationItemTarget.
+		/// </summary>
+		public IEnumerable<WebPageRelatedItem> NavigationItemTarget { get; set; }
+	}
+}
+
+
+```
+
+![1.00](blob:https://community.kentico.com/7fd34dc0-fd7f-45d2-9db9-4c96a428c989)
+
+![1.00](blob:https://community.kentico.com/bd41fb5f-ed06-45d2-b336-8b34fabc88b3)
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-01-23 10:45:39Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-01-23 13:16:17Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

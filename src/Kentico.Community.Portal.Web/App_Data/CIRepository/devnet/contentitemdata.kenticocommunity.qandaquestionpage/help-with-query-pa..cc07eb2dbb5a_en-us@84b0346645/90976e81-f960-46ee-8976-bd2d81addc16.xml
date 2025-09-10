@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>6782f346-9eea-46ae-9be8-cc07eb2dbb5a</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Help-with-query-pages-linked-to-content-items-filtering-by-taxonomy-a46ce6c9-y16ue98g</CodeName>
+      <GUID>6fd8e647-de23-459b-aa5d-48c7ed218260</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>90976e81-f960-46ee-8976-bd2d81addc16</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>2c05b41f-83a5-48d3-a614-9c9374035b7e</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I'm trying to write a paged query that queries all 'ArticlePage' in the /Articles path in the content tree where the ArticlePage type is linked to a ArticleContent reusable content type and limited by a ArticleContentType Taxonomy.
+
+Where I am stuck is that I first need to query the ArticleContent to get a list of ContentItemIDs to pass into the Linking method. However, even if I limit this just to the ID column it will still retrieve thousands of records making it inefficient. If I try to use the page size to limit the results of the query on the ArticleContent, then it is possible to get a result set that is less than the page size because whilst the Content Item is published the actually ArticlePage is not published.
+
+I looked at the Community Portal (<https://github.com/Kentico/community-portal/blob/main/src/Kentico.Community.Portal.Web/Features/Blog/Operations/BlogPostsByTaxonomyQuery.cs>) as a basis.
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-02-27 00:20:50Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-02-27 00:20:50Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

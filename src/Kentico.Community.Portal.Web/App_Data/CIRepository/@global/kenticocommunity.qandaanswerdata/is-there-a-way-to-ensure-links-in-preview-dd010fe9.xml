@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Is-there-a-way-to-ensure-links-in-Preview-dd010fe9</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Is there a way to ensure links in Preview mode (that were not handled automatically) get handled properly as a whole?
+
+If I'm reading your response (and the docs you linked) right, it seems I would have to leverage `ApplyPreviewContext` for _every_ single link. I don't think that's feasible, especially because the overwhelming majority of these links reside inside an RTE on a given page. And there are LOTS of pages. The links got there primarily by being migrated in using the Migration Tool, not manually added by a user.
+
+How can I ensure that when in Preview mode, all of them are treated such that the proper channel domain gets added? Unfortunately, at this point, processing them manually (one at a time) just isn't realistic.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-24 20:01:01Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>3ccd4a3a-a47f-42c9-92c9-90429a9532be</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Links-in-Page-Builerd-Preview-vs-the-live-channel-site-SaaS-367fdfc5-7kidrhrb</CodeName>
+    <GUID>7500ca9e-3412-43ee-a2e2-9ce72d1f6a43</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

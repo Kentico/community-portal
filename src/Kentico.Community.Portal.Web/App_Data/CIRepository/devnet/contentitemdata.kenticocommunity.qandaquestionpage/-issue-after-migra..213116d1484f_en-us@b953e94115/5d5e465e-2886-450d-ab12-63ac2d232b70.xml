@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>04753009-ec2f-466f-a418-213116d1484f</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>-Issue-after-migrating-a-project-developed-on-Kentico13-to-Xperience-Unable-to-use-the-Page-aiyfc3iu</CodeName>
+      <GUID>d6dfc9a7-0134-4f71-9b68-bcf75d7ce60d</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>5d5e465e-2886-450d-ab12-63ac2d232b70</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>2986bb35-d3e0-4811-a3af-a287a9979a59</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>7</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I encountered an issue after migrating a project developed on Kentico 13 to Xperience. I am unable to use the Page Builder and encountered the following error&#x20;
+
+# An unhandled exception occurred while processing the request.
+
+InvalidOperationException: The view on path '' could not be found and there is no page template registered for selected page.
+
+Kentico.Content.Web.Mvc.Routing.Internal.KenticoPageBuilderWebPageController.Index()
+
+***
+
+This is my migration configuration.
+
+```
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "System": "Warning",
+      "Microsoft": "Warning"
+    },
+    "File": {
+      "LogLevel": {
+        "Default": "Information",
+        "System": "Warning",
+        "Microsoft": "Warning"
+      },
+      "pathFormat": "logs/migration.tool.log",
+      "OutputTemplate": "{Timestamp:o} ({SourceContext}) [{Level:u3}] {Message} ({EventId:x8}){NewLine}{Exception}"
+    }
+  },
+  "Settings": {
+    "MigrationProtocolPath": "D:\\SourceCode\\xperience-by-kentico-kentico-migration-tool-master\\xperience-by-kentico-kentico-migration-tool-master\\Migration.Tool.Protocol.log",
+    "KxConnectionString": "Data Source=localhost\\MSSQLSERVER2022;Initial Catalog=kentico_playground;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=xxx;Connect Timeout=60;Encrypt=False;Current Language=English;",
+    "KxCmsDirPath": "D:\\SourceCode\\KenticoPlaygroundBackup\\CMS",
+    "XbyKDirPath": "D:\\SourceCode\\XTarget",
+    "XbyKApiSettings": {
+      "ConnectionStrings": {
+        "CMSConnectionString": "Data Source=localhost\\MSSQLSERVER2022;Initial Catalog=xtarget;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=xxx;Connect Timeout=60;Encrypt=False;Current Language=English;"
+      }
+    },
+    "MigrateOnlyMediaFileInfo": false,
+    "MigrateMediaToMediaLibrary": false,
+    "LegacyFlatAssetTree": false,
+    "AssetRootFolders": {},
+    "UseDeprecatedFolderPageType": true,
+    "ConvertClassesToContentHub": "",
+    "CreateReusableFieldSchemaForClasses": "",
+    "OptInFeatures": {
+      "QuerySourceInstanceApi": {
+        "Enabled": true,
+        "Connections": [
+          {
+            "SourceInstanceUri": "http://localhost:7071",
+            "Secret": "xxx"
+          }
+        ]
+      }
+    },
+    "UseOmActivityNodeRelationAutofix": "AttemptFix",
+    "UseOmActivitySiteRelationAutofix": "AttemptFix",
+    "EntityConfigurations": {
+      "CMS_Class": {
+        "ExcludeCodeNames": [
+        ]
+      },
+      "CMS_SettingsKey": {
+        "ExcludeCodeNames": []
+      }
+    },
+    "MemberIncludeUserSystemFields": "FirstName|MiddleName|LastName|FullName|UserPassword|PreferredCultureCode|PreferredUICultureCode|UserPrivilegeLevel|UserIsExternal|UserPasswordFormat|LastLogon|UserStartingAliasPath|UserLastModified|UserLastLogonInfo|UserIsHidden|UserIsDomain|UserHasAllowedCultures|UserMFRequired|UserMFSecret|UserMFTimestep|UserNickName|UserSignature|UserURLReferrer|UserCampaign|UserCustomData|UserRegistrationInfo|UserActivationDate|UserActivatedByUserID|UserTimeZoneID|UserAvatarID|UserGender|UserDateOfBirth|UserSettingsUserGUID|UserSettingsUserID|UserWaitingForApproval|UserDialogsConfiguration|UserDescription|UserAuthenticationGUID|UserSkype|UserIM|UserPhone|UserPosition|UserLogActivities|UserPasswordRequestHash|UserInvalidLogOnAttempts|UserInvalidLogOnAttemptsHash|UserPasswordLastChanged|UserAccountLockReason|UserShowIntroductionTile|UserDashboardApplications|UserDismissedSmartTips"
+  }
+}
+```
+
+This is the view part of the Home page, which I noticed was not included in the migration to Xperience. (KenticoPlayground\_Home.cshtml)
+
+```
+@addTagHelper *, Kentico.Content.Web.Mvc
+
+@model Kentico.Content.Web.Mvc.Routing.IPageViewModel<CMS.DocumentEngine.Types.KenticoPlayground.Home>
+
+@{
+    ViewBag.Title = Model.Page.DocumentName;
+}
+
+@section styles
+{
+@* Includes CSS necessary for page builder functionality *@
+        <page-builder-styles />
+}
+@section scripts
+{
+@* Includes scripts necessary for page builder functionality *@
+        <page-builder-scripts />
+}
+
+<div class="container-fluid">
+    <section class="teaser">
+            @* <p>@Model.Page.Fields.Title</p> *@
+        <div class="clearfix"></div>
+    </section>
+    <section class="content">
+            @* <h1>@Model.Page.Fields.Title</h1> *@
+            @* <p>@Model.Page.Fields.Title</p> *@
+            <editable-area area-identifier="editableArea" />
+        <div class="clearfix"></div>
+    </section>
+</div>
+```
+
+**Environment**
+
+* Xperience by Kentico version: \[30.4.0]
+
+* .NET version: \[8]
+
+* Execution environment: \[Local machine]
+
+* Link to relevant <https://github.com/Kentico/xperience-by-kentico-kentico-migration-tool>
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-05-14 11:50:25Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-05-15 23:31:38Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

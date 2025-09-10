@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>6a34e95f-2052-44dd-9ec2-2e8394cdfb4a</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Issue-with-Loading-Content-after-Adding-Workspaces-to-CI-984fb856-9kvxa64i</CodeName>
+      <GUID>1bea5c5c-8aaa-417a-b61d-b84e7b11983d</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>f6c7f84f-4d8c-4dc7-b6ca-c3c427476b16</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+We had the default Kentico Workspace setup for a client. I added 4 more to explain something to the client and test a theory and now I am getting an error that I am not sure how to solve. This does NOT happen on my local environment, only in HostedDev.  Anyone have any insight on how I can solve this? Basically ANY time I am editing widgets or content, I am getting this error. 
+
+***Message: Root folder not found for workspace with ID '2'.***
+
+```Event
+27362
+Source
+Kentico.Web.Mvc.KenticoErrorHandlingMiddleware
+Event code
+0
+User ID
+96
+User name
+gfuller@bluemodus.com
+IP address
+162.207.199.46
+Description
+Message: Invocation of command 'LoadFormItems' on the 'Kentico.Xperience.Admin.Base.Forms.ContentItemSelectorComponent' component failed. See the inner exception for details.
+
+Exception type: System.InvalidOperationException
+Stack trace:
+at Kentico.Xperience.Admin.Base.Forms.FormComponentCommandInvoker.InvokeCore(Object target, Command command, IFormComponentCommandInvocationModel commandArguments, CancellationToken cancellationToken)
+at Kentico.Xperience.Admin.Websites.UIPages.PageBuilderTab.ComponentCommand(FormComponentCommandModel commandModel, CancellationToken cancellationToken)
+at Kentico.Xperience.Admin.Base.Command.Invoke(Object target, Object parameter, Object confirmationModel, CancellationToken cancellationToken)
+at Kentico.Xperience.Admin.Base.PageCommandInvoker.InvokeCommand(CommandRequestModel commandRequest, PageRouteValues routeValues, UITreeNode node, Command command, CancellationToken cancellationToken)
+at Kentico.Xperience.Admin.Base.PageCommandInvoker.InvokeCommand(CommandRequestModel commandRequest, CancellationToken cancellationToken)
+at Kentico.Xperience.Admin.Base.KenticoAdministrationController.ProcessCommand(CommandRequestModel commandRequest, CancellationToken cancellationToken)
+at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+at Kentico.Xperience.Admin.Base.AntiforgeryMiddleware.InvokeAsync(HttpContext context)
+at Kentico.Web.Mvc.Internal.DefaultAdminSchemeAuthenticationMiddleware.InvokeAsync(HttpContext context)
+at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+at Kentico.Xperience.Admin.Base.AdminLocalizationMiddleware.InvokeAsync(HttpContext context)
+at Kentico.Web.Mvc.KenticoRequestEventsMiddleware.InvokeAsync(HttpContext context)
+at Kentico.Web.Mvc.KenticoErrorHandlingMiddleware.InvokeAsync(HttpContext context, ILogger`1 logger)
+
+Message: Root folder not found for workspace with ID '2'.
+
+Exception type: System.InvalidOperationException
+Stack trace:
+at CMS.ContentEngine.ContentFolderInfoExtensions.<>c__DisplayClass7_0.<<GetRootAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+at CMS.Helpers.ProgressiveCache.<>c__DisplayClass6_0`1.<<LoadCoreAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+at CMS.Helpers.ProgressiveLoadItem`1.ExecuteTaskAsync(CancellationToken cancellationToken)
+at CMS.Helpers.ProgressiveLoadItem`1.GetResultAsync(CancellationToken cancellationToken)
+at CMS.Helpers.ProgressiveLoader.GetResultAsync[TData](IProgressiveLoadItem progressiveLoadItem, String progressiveItemName, CancellationToken cancellationToken)
+at CMS.Helpers.ProgressiveCache.LoadCoreAsync[TData](Func`3 loadDataFuncAsync, CacheSettings settings, CancellationToken cancellationToken)
+at CMS.ContentEngine.ContentFolderInfoExtensions.GetRootAsync(IInfoProvider`1 infoProvider, Int32 workspaceId, CancellationToken cancellationToken)
+at Kentico.Xperience.Admin.Base.ContentFolderCommandManager.GetRootFolder(String workspaceName, CancellationToken cancellationToken)
+at Kentico.Xperience.Admin.Base.Forms.ContentItemSelectorComponent.ModifyContentTypeSelectionFormComponents(ICollection`1 formItems, CancellationToken cancellationToken)
+at Kentico.Xperience.Admin.Base.Forms.ContentItemSelectorComponentBase`1.LoadFormItems(ContentItemCommandParameters args, CancellationToken cancellationToken)
+at Kentico.Xperience.Admin.Base.Command.Invoke(Object target, Object parameter, Object confirmationModel, CancellationToken cancellationToken)
+at Kentico.Xperience.Admin.Base.Forms.FormComponentCommandInvoker.InvokeCore(Object target, Command command, IFormComponentCommandInvocationModel commandArguments, CancellationToken cancellationToken)
+Machine name
+WN0XSDWK0000D4
+Event URL
+/admin/api/cmd
+URL referrer
+https://****-xbyk-dev.azurewebsites.net/admin/webpages-1/en-US_9899/page-builder
+User agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36
+```
+
+**Environment**
+
+* Xperience by Kentico version: 30.3.1
+
+* .NET version: \[8]
+
+* Execution environment: Private cloud (Azure)
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-06-28 01:11:00Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-07-01 20:52:14Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

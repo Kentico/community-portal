@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>1e9b709d-94ee-4609-b3fd-7b60abb1e0ae</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>PageConfiguration-HeaderActions-AddLink--57d93c04-ugq1m4fh</CodeName>
+      <GUID>3c7fbd33-7864-4bee-971f-8f5040014291</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>0610682d-43d4-4822-806c-10b5e74c8358</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>995da879-6483-4972-8410-5f6cfdc009d7</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>3</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+For the listing page of the Web Channel Snippets, the ~~PageConfiguration.HeaderActions.AddLink~~ and ~~PageConfiguration.AddEditRowAction~~ are \[Obsolete] in 30.0.1 and 30.2.0 which result in scan vulnerabilities. The deprecated suggestion is "Use AddLink with PageParameterValues instead".
+
+```CSharp
+    PageConfiguration.HeaderActions.AddLink<WebChannelSnippetCreatePage>(
+        label: stringLocalizer["New snippet"],
+        parameters: WebChannelSettingsId.ToString());
+```
+
+Here is the closest configuration that isn't giving the deprecated warning. However, running this results in an error: **Parameter for the page type '\<Namespace>.Pages.WebChannelSettings.WebChannelSettingsEditSection' is missing.** I've reviewed the github training-guides repository also, but the version is still 29.6.1. &#x20;
+
+```CSharp
+        PageConfiguration.HeaderActions.AddLink<WebChannelSnippetCreatePage>(
+            label: stringLocalizer["New snippet"],
+            icon: Icons.Plus,
+            parameters: new PageParameterValues
+            {
+                { typeof(WebChannelSnippetEditSection), WebChannelSettingsId }
+            });
+```
+
+When running the \[Obsolete] code, the application returns the same error even though the record has been created: **Message: Parameter for the page type 'GL.Kentico.Admin.Pages.WebChannelSettings.WebChannelSettingsEditSection' is missing.**
+
+Additionally, in the ConfigurePage of the Create Page, ~~AdditionalUrlParameters.Add~~ is now AdditionalLinkParameters.Add
+
+```CSharp
+// Obsolete
+AdditionalUrlParameters.Add(WebChannelSettingsId.ToString());
+
+// Appears to be working as intended
+AdditionalLinkParameters.Add(
+  new PageParameterValues
+  {
+    { typeof(WebChannelSnippetCreatePage), WebChannelSettingsId }
+  });
+```
+
+Any suggestions?
+
+**Environment**
+
+* Xperience by Kentico version: \[30.0.1 & 30.2.0]
+* .NET version: \[8]
+* Execution environment: \[Private cloud (AWS)]
+* <https://docs.kentico.com/x/add_channels_to_module_guides>\
+  <https://github.com/Kentico/xperience-by-kentico-training-guides>
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-03-04 22:13:36Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-03-04 22:13:36Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

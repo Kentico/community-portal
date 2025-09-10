@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Make-sure-you-are-using-the-right-C-types-218f3484</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Make sure you are using the right C# types because Xperience currently has 2 sets of Form Components that are not interoperable.
+
+1. [Form Components from the Form Builder](https://docs.kentico.com/x/YIbWCQ) (or Legacy Page Builder)
+
+   1. namespace - `Kentico.Forms.Web.Mvc`
+2. [UI Form Components based on React](https://docs.kentico.com/x/5ASiCQ) and Xperience administration UI technology
+
+   1. namespace - `Kentico.Xperience.Admin.Base.Forms`
+
+These are in different namespaces and it's unfortunately very easy to confuse them.
+
+
+
+If you want to see a functioning example of custom UI Form Components (and custom data types) check out the [Kentico Community Portal source code](https://github.com/Kentico/community-portal/blob/v30.2.0.0/src/Kentico.Community.Portal.Admin/Features/Content/LinkDataTypeRegistrar.cs) or read the blog post [Embedded structured content and the power of custom data types](https://community.kentico.com/blog/embedded-structured-content-and-the-power-of-custom-data-types).
+
+You can also see an example of a [UI Form Component registered for an existing data type](https://github.com/Kentico/community-portal/blob/v30.2.0.0/src/Kentico.Community.Portal.Admin/Components/MarkdownFormComponent.cs) (`text/string`).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-27 05:42:50Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>d9ef754d-4f9f-46c9-9868-20b3e5216375</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-can-I-create-a-custom-Form-Component-for-a-existing-Data-Type--c3edf337-iht24zjd</CodeName>
+    <GUID>19fab0f0-b9b4-4a7d-892b-c182914e4f58</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

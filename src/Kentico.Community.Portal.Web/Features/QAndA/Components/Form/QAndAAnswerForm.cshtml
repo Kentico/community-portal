@@ -29,7 +29,7 @@
         <div asp-validation-summary="All" class="alert alert-danger validation-summary"></div>
 
         <label for="@editorFieldID" class="form-label"><span class="text-secondary fw-bold">@User.Identity.Name</span>
-            would answer</label>
+            would respond</label>
         <div id="@editorID" class="border border-1 border-dark-subtle rounded-2 milkdown-container">
             <textarea id="@editorFieldID" class="form-control d-none field-sizing-content h-100 border-0"
                 asp-for="@Model.Content" name="Content" placeholder="Your full question description goes here"
@@ -47,11 +47,11 @@
             <button type="submit" class="btn btn-primary btn-lighter px-5 mt-4" xpc-loading-button>
                 @if (Model.EditedObjectID is int)
                 {
-                    <text>Update your answer</text>
+                    <text>Update your response</text>
                 }
                 else
                 {
-                    <text>Submit your answer</text>
+                    <text>Submit your response</text>
                 }
             </button>
 

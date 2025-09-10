@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>83e099d0-51d7-4fec-8483-f74f36b6bb73</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Links-in-Page-Builerd-Preview-vs-the-live-channel-site-SaaS-367fdfc5-7kidrhrb</CodeName>
+      <GUID>9790346d-ffc0-464c-9728-38edbfdedd72</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>5294bb9e-0218-4349-b0e1-08ef0aa43606</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>afdb8390-68c1-452a-989b-847b96e76b17</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>2</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+How do you ensure that links in Page Builder/Preview render with the proper channel domain, and not the Administrative domain?
+
+I have examples where a link that starts with a / renders correctly in Page Builder/Preview and the live site, and also examples where in Page Builder/Preview the link renders with the Administrative domain.
+
+The '\~' character doesn't seem to help either, as also sometimes that works and sometimes it doesn't.
+
+And, if I use an RTE to create a new link (that starts with / ), it gets a `data-channel-guid` attribute that appears to point to the correct channel and works, but after creating the link I can remove the attribute completely and the link still works.
+
+I having trouble finding a consistent pattern where links _do_ work, and where they _don't_ work.
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.2.2]
+* .NET version: 8
+* Execution environment: SaaS
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-03-24 03:44:54Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-03-24 03:47:02Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

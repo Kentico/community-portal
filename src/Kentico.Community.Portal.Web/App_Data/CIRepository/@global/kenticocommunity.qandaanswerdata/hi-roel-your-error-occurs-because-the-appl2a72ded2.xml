@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Hi-Roel-Your-error-occurs-because-the-appl2a72ded2</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Hi Roel,\
+Your error occurs because the application is still running during the restore process, which triggers module initialization while the required tables are missing.
+
+**Recommended steps:**
+
+* Deploy the new release files
+* Stop the Xperience application or application pool before running the CD restore.
+* Run the CD restore command
+* Start or restart the application after the CD restore is complete.
+
+For more details, refer to the official documentation:
+\
+**Continuous Deployment – Kentico Documentation** <https://docs.kentico.com/documentation/developers-and-admins/ci-cd/continuous-deployment>
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-08-12 03:36:43Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>204e232a-1416-4bf8-9afc-78651d4ae104</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>At-which-step-do-CD-restore-in-release-pipeline--3f9c38f8-111h6z4q</CodeName>
+    <GUID>6eef30c0-45df-4c37-a371-75999010dd77</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

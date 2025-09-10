@@ -78,9 +78,11 @@
         <properties>
           <defaultvalue>True</defaultvalue>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Send email notification</fieldcaption>
+          <fieldcaption>
+            <![CDATA[{$base.workflows.workflow.step.sentemailnotification.caption$}]]>
+          </fieldcaption>
           <fielddescription>
-            <![CDATA[The system automatically sends email notifications when an item reaches this step to user roles  that can work with this step and also have the Update permission for the affected item.]]>
+            <![CDATA[{$base.workflows.workflow.step.sentemailnotification.tooltip$}]]>
           </fielddescription>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>

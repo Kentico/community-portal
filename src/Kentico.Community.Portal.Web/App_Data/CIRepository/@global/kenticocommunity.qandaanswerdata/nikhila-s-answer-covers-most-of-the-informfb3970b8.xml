@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Nikhila-s-answer-covers-most-of-the-informfb3970b8</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Nikhila's answer covers most of the information, but I wanted to elaborate on the answer for the sake of anyone else seeking this information:
+
+* The feature in Kentico called 'Recipient Lists' are internally managed as **ContactGroupInfo** with the **\[ContactGroupIsRecipientList]** flag set. You use the **IInfoProvider** for **ContactGroupInfo** class to manage them but also to manage dynamic Contact Groups (which do not have that flag set).
+* A **ContactGroupMemberInfo** (a recipient in a Recipient List) represents a single 'person' in a single Recipient List - this could be tied to **ContactInfo** or to **AccountInfo** (a group of **ContactInfo** with a single target email)
+
+  * Aside from those two types, you could also just use the email in the Recipient List itself to map together a single 'person' across multiple Contact groups / Recipient Lists
+
+***
+
+As far as the other two classes I'd brought up:
+
+* It is technically true that **EmailMarketingRecipientInfo** is related to 'managing recipient data' - however it should be clarified that this does not mean 'recipients' in the sense of the 'Recipient Lists' Kentico feature. Instead, these are tied to individual emails (through the **EmailConfigurationID** field) - and appear to actually be the metadata for attempts to send a single email to a single 'email recipient' (which I believe could be in a Recipient List or a contact in a dynamic Contact Group). The fields on this are things such as a retry-count and whether the email succeeded.
+* **RecipientListSettingsInfo**, on the other hand, are specifically records to handle the metadata of a Recipient List that don't apply to Contact Groups as a whole - subscription confirmation and unsubscription pages.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-08-27 01:16:10Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>7a25e343-0213-4605-a880-e996b18ede24</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Recipient-List-API-a5c25e8d-e9mpc564</CodeName>
+    <GUID>435a2eb5-629d-4d37-83b5-ea632e2cf7c6</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -78,11 +78,28 @@ function bindToastComponent() {
   });
 
   document.addEventListener("htmx:responseError", function handleError(e) {
+    let message = "There was an error processing your request";
+    let status = "failure";
+
+    // Check if the server provided custom error details
+    if (e.detail && e.detail.xhr && e.detail.xhr.responseText) {
+      try {
+        const responseData = JSON.parse(e.detail.xhr.responseText);
+        if (responseData.detail && responseData.detail.message) {
+          message = responseData.detail.message || message;
+          status = responseData.detail.status || status;
+        }
+      } catch (parseError) {
+        // If JSON parsing fails, use the default message
+        console.warn("Could not parse error response:", parseError);
+      }
+    }
+
     document.body.dispatchEvent(
       new CustomEvent("showToast", {
         detail: {
-          message: "There was an error processing your request",
-          status: "failure",
+          message: message,
+          status: status,
         },
       }),
     );

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>No-Xperience-by-Kentico-only-supports-langd9400025</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+No, Xperience by Kentico only supports [language path prefix localization](https://docs.kentico.com/x/OxT_Cw) and there is no built-in way [to limit requests to pages in specific languages for specific channels](https://docs.kentico.com/guides/development/multilingual/display-your-website-content-in-multiple-languages#understand-languages-in-xperience-by-kentico) (except by not publishing those URLs).
+
+You could use multiple website channels (one subdomain for each language) but you would still need the path prefix in the URL for each subdomain to retrieve the correct language culture.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-06-16 16:31:20Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>a665de98-f711-4ff8-acf2-f5362d7cac2a</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Domain-alias-for-language-site-7344a969-g95dkr8c</CodeName>
+    <GUID>b59dfb84-0ed7-4370-8913-05cca2c28838</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

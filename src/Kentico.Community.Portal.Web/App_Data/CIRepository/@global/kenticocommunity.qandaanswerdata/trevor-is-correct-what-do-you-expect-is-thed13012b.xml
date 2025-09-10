@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>c1beb8f9-4673-40d8-acdd-2dd56e5cd1bb</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Trevor-is-correct-What-do-you-expect-is-thed13012b</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Trevor is correct.
+
+What do you expect is the source of the generated code name - a random value, transformed content item name, or some other field in the content type?
+
+If you need to generate non-display, but readable identifiers for content items I would recommend [using a global event](https://docs.kentico.com/x/r4t1CQ) to generate these when new content items are created. This event handler would set the "code name" field programmatically based on logic you define. If you only add a handler for [the Content Item Create events](https://docs.kentico.com/developers-and-admins/customization/handle-global-events/reference-global-system-events#contentitemevents) then once the code name is set it won't change. Additionally, you can use the [Text with label](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/reference-admin-ui-form-components#text-with-label) Form component for text fields of the content type. This will ensure the value cannot be modified in the administration UI but it will be visible.
+
+You could also use the `Guid` values of the content items exposed by `_system {````id }`, but this value is not exposed in the administration UI by default.
+
+If you would like the content item's internal `CodeName` to be exposed over headless channels or , [make a request on our roadmap](https://roadmap.kentico.com/tabs/6-next-refreshes) explaining your use-case so we can best understand how to help solve your challenge and prioritize the work.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-19 23:00:51Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>eed6c162-b60d-47e0-8add-b499abc78a05</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>-Issue-with-Code-Name-in-Form-Component-When-Auto-Pre-Fill-is-Enabled-ac91e229-c9k3n67k</CodeName>
+    <GUID>b95822ed-6d5c-4535-a4df-caa8e718d69c</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

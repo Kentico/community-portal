@@ -22,6 +22,7 @@ var app = builder.Build();
 
 app
     .InitKentico()
+    .UseForwardedHeaders()
     .IfDevelopment(env, b => b.UseDeveloperExceptionPage())
     .IfNotDevelopment(env, b => b.UseExceptionHandler("/error/500"))
     .UseStaticFiles()
@@ -31,6 +32,7 @@ app
     .UseKenticoCloud()
     .UseKentico()
     .UseAppMiniProfiler(app, config, env)
+    .UseRateLimiter()
     /**
      * By including this middleware after UseKentico() we can set the request culture/ui culture
      * based on something other than content localization and the URL.

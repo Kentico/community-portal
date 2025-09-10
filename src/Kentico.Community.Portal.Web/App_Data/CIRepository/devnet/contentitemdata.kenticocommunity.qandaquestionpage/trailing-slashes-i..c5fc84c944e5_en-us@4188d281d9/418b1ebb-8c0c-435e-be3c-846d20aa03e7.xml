@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>034bb689-432e-4958-b11d-c5fc84c944e5</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Trailing-slashes-in-resolved-urls-e0d48518-8fbt2cml</CodeName>
+      <GUID>f5cdd0fc-08ae-4b5c-a6b3-169a8ac7279f</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>418b1ebb-8c0c-435e-be3c-846d20aa03e7</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>9baa8399-6e02-44ab-a7f1-854d93a48987</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>1</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+Is there a recommended approach for ensuring trailing slashes are used throughout the website?
+
+
+
+In the [documentation](https://docs.kentico.com/developers-and-admins/development/content-retrieval/retrieve-page-content#get-page-urls) it talks about the default being:
+
+> Retrieved URLs are always returned in lower case without a trailing slash.
+
+
+
+Is there a way of configuring to make sure XbyK always renders URLs with a trailing slash?
+
+
+
+The documentation mentions some options can be configured through `WebPageUrlRetrieverOptions` and `UrlResolveOptions` but they don't seem to have options for trailing slash. Is this just not added yet?
+
+
+
+My ideal scenario here would be a configuration option to ensure URLs retrieved through the retriever, and URLs rendered in Rich Text would be handled correctly.
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-02-18 19:42:05Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-02-18 19:42:05Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

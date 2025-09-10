@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>dc609851-ab9c-436c-9e99-5c5216d1560f</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>To-set-up-Content-Synchronization-in-Xperi8f0873f4</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+To set up Content Synchronization in Xperience by Kentico for moving content from Development → Staging → Production, make sure you have these things ready:
+
+1. **Correct License**\
+   You must have the **Advanced license** for Xperience by Kentico. The basic one won’t work for content sync (>=**30.5.0)**. <https://docs.kentico.com/documentation/developers-and-admins/installation/licenses>
+2. **Same Version Everywhere**\
+   All your environments (**Development**, **Staging**, **Production**) must run **exactly the same Xperience version and hotfix** — no mismatches.
+3. **Source and Target Configuration**
+
+   <https://docs.kentico.com/documentation/developers-and-admins/configuration/content-sync-configuration#source-and-target-configuration>
+4. **HTTPS Only**\
+   Your Staging and Production sites must run on **HTTPS** with a valid SSL certificate. No HTTP allowed.
+5. **Shared Storage (if using auto-scaling)**\
+   If your site uses **auto-scaling** in a cloud setup, make sure the `~/assets` folder is on **shared storage** (like **Azure Blob Storage** or **Amazon S3**) so all servers see the same files.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-07-29 13:51:03Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>a9ed087e-3e3e-4f35-83fb-d4601fd4e358</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Kentico-xperience-staging-6165548a-rzhj8s6w</CodeName>
+    <GUID>494d6a27-7159-4340-8c90-cd9149ac20c4</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

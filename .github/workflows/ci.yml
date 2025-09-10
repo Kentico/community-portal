@@ -85,6 +85,21 @@ jobs:
           docker exec -u root sql bash -c "chown mssql:mssql /var/backups/Kentico.Community.bak"
           docker exec -u root sql bash -c "chmod 644 /var/backups/Kentico.Community.bak"
 
+          # First, get the logical file names from the backup
+          Write-Output "Getting logical file names from backup..."
+          $fileList = sqlcmd `
+            -S localhost `
+            -d master `
+            -U "sa" `
+            -P "Pass@12345" `
+            -N o `
+            -C `
+            -Q "RESTORE FILELISTONLY FROM DISK = '/var/backups/Kentico.Community.bak'"
+
+          Write-Output "Backup file contents:"
+          Write-Output $fileList
+
+          # Now restore the database
           sqlcmd `
             -S localhost `
             -d master `

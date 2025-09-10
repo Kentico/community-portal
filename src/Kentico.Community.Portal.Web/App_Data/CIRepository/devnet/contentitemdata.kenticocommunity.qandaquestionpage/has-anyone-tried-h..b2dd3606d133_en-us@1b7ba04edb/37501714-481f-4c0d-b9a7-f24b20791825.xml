@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>57c0e40f-a9c7-41ef-9d84-b2dd3606d133</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Has-anyone-tried-had-luck-with-using-Azurite-locally-to-emulate-Azure-Blob-Storage-in-devel-t017q1xa</CodeName>
+      <GUID>eccb6c8e-5749-4f9a-a3be-bbff5d1b962e</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>37501714-481f-4c0d-b9a7-f24b20791825</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>3</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I was interested in keeping blob files out of source control while not incurring any of the typical Azure blob storage costs, and thought I thought I might try Azurite. I had Azurite running with the typical dev setup, tried adding "CMSAzureStorageConnectionString": "UseDevelopmentStorage=true" to my local app settings, and updated StorageInitializationModule.cs to use MapAzureStoragePath instead of MapLocalStoragePath even in Development/Local... but just didn't have any luck getting it to work. Kept getting "Message: Invalid URI: The hostname could not be parsed. Exception type: System.UriFormatException" in the Event logs.
+
+For now, I'm planning to just switch back to local storage for local/development, seems worth committing some slim core .webp images to the repo for the ease of syncing between developers and having those objects get automatically created in Azure Blob Storage when deploying to QA/PRD. But still curious of other patterns. I know using a shared Google drive is another option but that didn't seem perfect either and still included some tedious manual syncing.
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.4.0]
+
+* .NET version: \[9]
+
+* Execution environment: \[SaaS]
+
+* Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-05-14 05:44:43Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-05-14 05:44:43Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

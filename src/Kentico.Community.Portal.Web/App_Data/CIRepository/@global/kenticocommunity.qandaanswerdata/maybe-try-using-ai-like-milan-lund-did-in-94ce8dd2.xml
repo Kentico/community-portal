@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Maybe-try-using-AI-like-Milan-Lund-did-in-94ce8dd2</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Maybe try using AI, like Milan Lund did in [the upgrade he was working on](https://www.linkedin.com/posts/milanlund_contentmigration-xperiencebykentico-llmintegration-activity-7350766353332543488-lR8s/).
+
+You could tell the LLM the constraints for the name length and have it rewrite them to some shorter convention.
+
+This could either be done as a .csv populated by Gemini or ChatGPT and then used during your data migration, or you could call the AI API at migration time, transforming each name one at a time.
+
+We can't casually make a column size change because that will definitely have performance impacts on all the existing XbyK projects (and all future XbyK projects). The media library in KX13 isn't the "standard" we want to support.
+
+If you need to make these assets easier to find in the Content hub, then consider using a dedicated "media" taxonomy that includes tags to categorize the content items - these can be used for organization in the Content hub only and don't need to be exposed to visitors.
+
+You can also use content folders, smart folders, and usage tracking to improve organization and discovery.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-08-01 19:16:08Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>7619414a-dab2-4480-ac9b-746baf656e99</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>-Suggestion-Increasing-nvarchar-column-sizes-to-prevent-a-database-truncation-error-e3367ce-dop78sy4</CodeName>
+    <GUID>a2d9ea7e-8f68-49cf-8eae-af39287bf746</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

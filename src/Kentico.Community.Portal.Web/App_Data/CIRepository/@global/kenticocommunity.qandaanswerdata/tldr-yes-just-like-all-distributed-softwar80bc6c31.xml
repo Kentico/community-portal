@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>c1beb8f9-4673-40d8-acdd-2dd56e5cd1bb</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>TLDR-Yes-Just-like-all-distributed-softwar80bc6c31</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+TLDR; Yes
+
+***
+
+Just like all distributed software, Xperience by Kentico has version numbers that are unique to every release. These are listed prominently [in our Changelog](https://docs.kentico.com/documentation/changelog) and [on the product roadmap](https://roadmap.kentico.com/tabs/5-released).
+
+This information is accessible in the administration UI by clicking on the "i" icon in the lower left of the administration UI.
+
+![1.00](https://community.kentico.com/getContentAsset/2d2fac97-b0b5-4fc3-9fdc-242c56699a57/f6c98f2d-65fc-44ba-9351-3f0beda8e921/kentico-community-portal-administration-version-number.webp?language=en-US)
+
+This information is also available in several places within the code and data that runs the product.
+
+In C# I can use reflection to get this information from the assemblies containing Xperience's types, for example if I define this minimal API endpoint in my `Program.cs` I can quickly see what the current version of Xperience's assemblies are.
+
+```CSharp
+app.MapGet("/api/assembly-version", () =>
+{
+    var assembly = typeof(PageBuilderOptions).Assembly;
+    var assemblyName = assembly.GetName();
+    
+    return Results.Json(new
+    {
+        AssemblyName = assemblyName.Name,
+        Version = assemblyName.Version?.ToString(),
+        FullName = assemblyName.FullName,
+        Location = assembly.Location
+    });
+});
+```
+
+This will return the following JSON
+
+```JSON
+{
+  "assemblyName": "Kentico.Content.Web.Mvc",
+  "version": "30.8.0.0",
+  "fullName": "Kentico.Content.Web.Mvc, Version=30.8.0.0, Culture=neutral, PublicKeyToken=834b12a258f213f9",
+  "location": "<path-to>\\DancingGoat\\bin\\Debug\\net8.0\\Kentico.Content.Web.Mvc.dll"
+}
+```
+
+I can also query the database using the `IInfoProvider<SettingsKeyInfo>` service to retrieve the version number. Again, here's a minimal API endpoint example:
+
+```CSharp
+app.MapGet("/api/database-version", async (IInfoProvider<SettingsKeyInfo> settingsKeyProvider) =>
+{
+    var settingsKey = await settingsKeyProvider.GetAsync("CMSDBVersion");
+    var cmsVersion = settingsKey?.KeyValue;
+    
+    return Results.Json(new
+    {
+        CMSDBVersion = cmsVersion,
+        Key = "CMSDBVersion"
+    });
+});
+```
+
+This will return a JSON result:
+
+```JSON
+{
+  "cmsdbVersion": "30.8.0",
+  "key": "CMSDBVersion"
+}
+```
+
+Why are there 2 ways to retrieve the version?
+
+Well, the assembly version is obvious - all .NET `.dll` files include a version number and our NuGet packages are all versioned so these numbers should match. This is the true version of the features and APIs the running Xperience by Kentico application.
+
+However, the database version is the version of the data schemas. These can be different under specific circumstances, like when you've updated your NuGet packages after a hotfix or Refresh but have not yet run the `dotnet run --kxp-update` command [to update your local database](https://docs.kentico.com/documentation/developers-and-admins/installation/update-xperience-by-kentico-projects#update-data-and-files).
+
+Which version you would use to drive specific behavior in your application depends on what you are trying to accomplish.
+
+You could also use *both* values, compare them, and use that as a case to handle in a special way like we do when there is a mismatch and you try to run your application.
+
+```
+Unhandled exception. System.NotSupportedException: The database version '30.8.0' does not match the project version '30.8.1', please check your connection string.
+```
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-08-22 18:45:12Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>82d0a479-82c4-41c8-8204-a4974ef7d462</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Xbyk-Versioning-10c69065-54rfqnoj</CodeName>
+    <GUID>23fd43e7-8906-4dc0-ba92-0b0c9b0087ea</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

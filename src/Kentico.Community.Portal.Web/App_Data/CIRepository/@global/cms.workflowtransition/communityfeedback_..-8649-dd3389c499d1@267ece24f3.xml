@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.workflowtransition>
+  <Parent>
+    <CodeName>start051c6dec-f32c-425e-8649-dd3389c499d1</CodeName>
+    <GUID>051c6dec-f32c-425e-8649-dd3389c499d1</GUID>
+    <ObjectType>ma.automationstep</ObjectType>
+    <Parent>
+      <CodeName>CommunityFeedback</CodeName>
+      <GUID>583c4493-e315-475d-82f3-ce626eee1b00</GUID>
+      <ObjectType>ma.automationprocess</ObjectType>
+    </Parent>
+  </Parent>
+  <Bindings>
+    <Binding id="ma.automationstep_SendEmail_ma.automationprocess_CommunityFeedback-ma.automationstep_SendEmail_ma.automationprocess_CommunityFeedback">
+      <TransitionEndStepID>
+        <CodeName>SendEmail</CodeName>
+        <GUID>fca539ae-d0a2-4aa8-a2bf-1c5e37352ccc</GUID>
+        <ObjectType>ma.automationstep</ObjectType>
+        <Parent>
+          <CodeName>CommunityFeedback</CodeName>
+          <GUID>583c4493-e315-475d-82f3-ce626eee1b00</GUID>
+          <ObjectType>ma.automationprocess</ObjectType>
+        </Parent>
+      </TransitionEndStepID>
+      <TransitionSourcePointGUID>af214b67-3d2f-4f4c-be34-9708dd30f8b0</TransitionSourcePointGUID>
+      <TransitionType>1</TransitionType>
+      <TransitionWorkflowID>
+        <CodeName>CommunityFeedback</CodeName>
+        <GUID>583c4493-e315-475d-82f3-ce626eee1b00</GUID>
+        <ObjectType>ma.automationprocess</ObjectType>
+      </TransitionWorkflowID>
+    </Binding>
+  </Bindings>
+</cms.workflowtransition>

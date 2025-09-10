@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>There-are-several-two-primary-scenarios-yobce749c9</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+There are several two primary scenarios you can encounter during deployments
+
+1. Code-only deployment - your deployment is "code changes only" and does not need a database backup or db changes. Therefore we can process the package, deploy the code to the offline App Service slot, do some house keeping and file system backups, and then swap the slots. You'll typically see the Xperience application updated _before_ it shows the deployment as finished in the Xperience Portal because we also have some post-deployment house keeping.\
+   The deployment might take a few minutes to complete but you shouldn't experience any downtime.
+2. Database change deployment - your deployment has CD repository changes (the hash of the last deployment's CD repository does not match the current's), you are updating the version of Xperience currently deployed to the environment, or you are deploying `$StorageAssets` (only relevant for the media library, [which we recommend not using at this point](/q-and-a/q/media-library-vs-content-hub-eb782379#answer_d4ef9a9bf300470e9b876280c14ede99)), then we _probably_ need to make database changes and we conservatively assume we do.\
+   This scenario requires downtime _after_ we do some preparation for the deployment but before we swap slots. We have to backup the database and ensure we don't lose data while performing the backup, so we take the app offline.
+
+Scenario 1 won't experience downtime and scenario 2 will.
+
+We have several upcoming SaaS deployment updates on the Xperience roadmap to improve both scenarios.
+
+1. [Deploy straight to production](https://roadmap.kentico.com/c/298-fast-track-emergency-deployments-to-production) - helps scenarios 1 & 2
+2. [Optimized database backups](https://roadmap.kentico.com/c/294-saas-deployment-speed-improvements-1-3-optimized-backups-for-databases) - helps scenario 2
+3. [Zero-downtime deployments](https://roadmap.kentico.com/c/232-enhanced-zero-downtime-support-for-customer-deployments) and related improvements - helps scenarios 1 & 2
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-13 22:44:36Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>40a9c3d8-9606-4db1-9224-ecf3549b7ea6</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Downtime-during-deployments-560282cf-qai4l9ob</CodeName>
+    <GUID>8bc56f2c-6dc2-444d-9e37-bc79dab8ddfe</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

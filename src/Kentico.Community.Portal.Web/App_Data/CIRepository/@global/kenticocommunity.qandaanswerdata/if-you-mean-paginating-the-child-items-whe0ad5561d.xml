@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>If-you-mean-paginating-the-child-items-whe0ad5561d</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+If you mean paginating the child items when querying the content for rendering, you can use the `.Offset(skip, pageSize)` to specify page of results you want, and `.IncludeTotalCount()` and `GetTotalCount()` to get the grand total.
+
+However, it means you can't use `GetMappedResult<T>` instead you have to use `GetWebPageResult` which allows use to use the `GetTotalCount()` extension method on the result. After that, you can use the `WebPageQueryResultMapper` to map the results to generated types.
+
+Here's an example:
+
+```CSharp
+contentItemQueryBuilder.Parameters(q => q
+    .OrderBy(orderByColumns.ToArray())
+    .Offset(skip, pageSize)
+    .IncludeTotalCount()
+);
+
+var webpageResult = await _contentQueryExecutor.GetWebPageResult(
+                                           contentItemQueryBuilder,
+                                           contentItem => contentItem,
+                                           options: contentQueryExecutionOptions);
+var totalCount = webpageResult.Any()
+                 ? webpageResult.First().GetTotalCount().GetValueOrDefault()
+                 : 0;
+
+var webPageItems = webpageResult
+                        .Select(contentItem =>
+                            (contentItem is IWebPageContentQueryDataContainer webItem)
+                                ? _webPageQueryResultMapper.Map<T>(webItem)
+                                : null)
+                        .ToList<T?>().CastToNonNullable();
+
+```
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-07-17 21:01:34Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>6828c923-942b-49f1-8c9d-28040fd0d18d</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-to-Pagination-child-item-for-Webpage--ad777b48-u9strgdx</CodeName>
+    <GUID>45e678d8-a614-4628-9011-a9a3c278d9d9</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

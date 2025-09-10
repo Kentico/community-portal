@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>dc609851-ab9c-436c-9e99-5c5216d1560f</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>The-website-you-are-using-to-ask-your-quese5672725</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+The website you are using to ask your question is running on Xperience by Kentico, v30.1.0 (at the time of this answer), and hosted in Kentico's SaaS environment.
+
+It also [uses Lucene.NET for Q\&A and blog search experiences](https://github.com/Kentico/community-portal/blob/v30.1.0.1/src/Kentico.Community.Portal.Web/Features/QAndA/Search/QAndASearchService.cs).
+
+We don't map the index files to blob storage for the Community Portal, but if you did it would give you the benefit of having the files immediately available on scale-out, which the SaaS environment handles for you.
+
+We also have [integrations for Algolia and Azure AI Search](https://github.com/orgs/Kentico/repositories?type=source\&q=search) if you are concerned about Lucene.NET's capabilities/scalability.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-26 03:22:50Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>be6ebb13-591c-4d93-8a15-0222e0da2da0</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Search-in-Kentico-SaaS-0a93371d-jjsxhf3d</CodeName>
+    <GUID>15667460-52bb-4578-99fd-d93d431309da</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

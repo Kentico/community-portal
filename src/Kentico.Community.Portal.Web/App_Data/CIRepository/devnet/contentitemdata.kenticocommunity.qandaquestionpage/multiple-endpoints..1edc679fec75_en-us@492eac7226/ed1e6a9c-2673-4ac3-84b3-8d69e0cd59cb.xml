@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>7a386fbd-0137-45f9-9a0e-1edc679fec75</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Multiple-Endpoints-Matched-Multiple-Sites-Razor-Class-Libraries-fd039a98-jvu9obhg</CodeName>
+      <GUID>628f537b-9a68-4884-8f32-22d0ba55a051</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>ed1e6a9c-2673-4ac3-84b3-8d69e0cd59cb</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>652b7dc3-54dc-4fb9-acc5-a656c3a8feca</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>2</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I'm currently going down [this](https://community.kentico.com/q-and-a/q/multiple-sites-razor-class-libraries-9155e094) path on a project, and I'm curious if anyone has insight on how to best tackle what I'm attempting to do.
+
+For my initial round of trying to get something up and running, I have a `HomeController` in each of my two RCL projects (Group and Agency). They're both individually registered to use the same content type, but have different values being sent in for the `WebsiteChannelNames` array.
+
+Group:\
+`[assembly: RegisterWebPageRoute(HomePage.CONTENT_TYPE_NAME, typeof(HomeController), WebsiteChannelNames = [XperienceConstants.GroupWebsiteChannelName])]`
+
+Agency:
+
+`[assembly: RegisterWebPageRoute(HomePage.CONTENT_TYPE_NAME, typeof(HomeController), WebsiteChannelNames = [XperienceConstants.AgencyWebsiteChannelName])]`
+
+When I run my solution, hosting each channel at a separate localhost port, I get the following error message on both sites:
+
+
+
+![1.00](https://i.imgur.com/p4KqNL7.png)
+
+Based on the [description](https://api-reference.kentico.com/api/Kentico.Content.Web.Mvc.Routing.RegisterWebPageRouteAttribute.html?q=websitechannelnames#Kentico_Content_Web_Mvc_Routing_RegisterWebPageRouteAttribute_WebsiteChannelNames) of the `WebsiteChannelNames` field, I would assume that it should be differentiating between the two controllers, based on which channel the request is coming from.
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: 30.2.2
+* .NET version: 8
+* Execution environment: localhost
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-03-14 21:19:16Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-03-16 04:44:06Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

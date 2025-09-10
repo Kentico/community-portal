@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>TLDR-don-t-use-the-Media-Library-We-added-407a4e19</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+TLDR; don't use the Media Library. We added it to Xperience because the Content hub wasn't mature enough for asset management 2 years ago when Xperience launched. Today the Content hub is 100x better and encourages marketers to do what they should have been doing for the past 10 years - treat their media and assets as content.
+
+> We have used the media library for a long time to manage assets and the client is most familiar with the media library.
+
+Thankfully, we have [a page in the documentation](https://docs.kentico.com/x/content_item_assets_xp) dedicated to all the features in Xperience for managing assets in the Content hub.
+
+> I know the content hub offers a lot of additional features for assets including editing, taxonomy & expanded customization.
+
+This is correct. We also have features for optimization and AI content generation for assets in the Content hub. You can read about the benefits of using the Content hub for assets in our guides on [storing content](https://docs.kentico.com/guides/architecture/content-modeling/content-modeling-guide/store-content#store-assets-in-content-hub) and [content modeling](https://docs.kentico.com/guides/architecture/content-modeling/content-modeling-guide/general-content-modeling-recommendations#digital-marketing-features).
+
+> I am concerned it could result in situations over time when many images are added, the ContentItem tables becoming very large.
+
+Yes, it will become large just like the media library tables in previous versions of Kentico. Did those large tables cause a problem for your Kentico solutions?
+
+We have tested the Content hub with millions of items 😅 and content delivery works just fine.
+
+> Also, what about separation of concerns? Having images, documents, and content in the content hub could make it messy.
+
+Assets ***are*** content. If things are messy why not organize them?
+
+* [Smart folders](https://docs.kentico.com/business-users/content-hub/content-hub-folders#smart-folders) (using content types and [taxonomies](https://docs.kentico.com/guides/architecture/content-modeling/content-modeling-guide/model-taxonomies#classification-options-in-xperience))
+
+* [Content folders](https://docs.kentico.com/business-users/content-hub/content-hub-folders#content-folders) (for more organization control and responsibility)
+
+* [Workspaces](https://docs.kentico.com/x/workspaces_xp) (to limit content management permissions and access, like AlexG mentioned)
+
+* If you need total control you can even create a "container" content type with [content item fields](https://docs.kentico.com/business-users/content-hub/content-items#link-content-items) to link *and order* related items.
+
+Are you trying to convince me that Kentico media libraries never got messy because the media was separate from web pages? That was definitely never my experience 🤣🤣.
+
+***
+
+As Brenden mentioned, the media library will soon be deprecated and we're shipping a feature in the product to help customers (and partners) [migrate media items to the Content hub (on our roadmap for June)](https://roadmap.kentico.com/c/279-migrating-media-library-items-to-content-hub-media-library-sunset).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-13 20:28:49Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>d4ef9a9b-f300-470e-9b87-6280c14ede99</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Media-Library-vs-Content-Hub-eb782379-vjltvd5m</CodeName>
+    <GUID>04ab69dc-34dd-4048-918f-cd10a49f29d6</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

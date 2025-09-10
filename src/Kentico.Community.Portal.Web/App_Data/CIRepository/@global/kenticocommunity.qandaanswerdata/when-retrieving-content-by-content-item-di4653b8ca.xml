@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>When-retrieving-content-by-content-item-di4653b8ca</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+When retrieving content by content item directly (with `IContentRetriever` or `ContentItemQueryBuilder`) you are asking Xperience to build the graph of linked items and populate all them.
+
+From [this API example](https://docs.kentico.com/api/content-management/content-items#retrieve-content-items-of-a-single-content-type), if the `CandyStore` content type has many linked items Xperience will auto populate those when querying for the `CandyStore` (assuming you set the query depth for linked items correctly with `.WithLinkedItems(X)`).
+
+This means Xperience will order the linked content items for you because it's already doing all the linked querying and model hydration.
+
+If instead you have a widget property using the combined content selector, it's not returning populated content items - it returns an array of `ContentItemGUID`. It's your responsibility to query for them.
+
+At no point in your query have you told Xperience "these results need to be in a specific order", right?? SQL doesn't magically know that you want a set of rows returned in a specific order. It's your responsibility to tell it that using a SQL `ORDER BY` clause.
+
+But SQL requires that `ORDER BY` to be a specific column or computed value the result set. There's no good way to do this when passing an array of values for the `WHERE IN` part of the SQL query.
+
+The content items returned from your query where you passed the `ContentItemGUID` array will have all their linked content items in the correct order, but that's because Xperience knows those are supposed to be in that order. `WHERE IN` doesn't imply any specific order in any dialect of SQL.
+
+By the way, this is the exact same topic [you asked about previously](/q-and-a/q/how-to-change-sequence-of-the-content-type-on-page-e352c50c#answer_c2752000fce34d1ca1bcf45014ce8ab8) 😄.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-06-27 20:04:58Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>3323f7f9-78d4-4027-8e33-10e99497d35c</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-to-make-content-item-selectable-sortable-in-widget-0cbc7ea8-autb92f2</CodeName>
+    <GUID>4ac8ad2b-90b2-4541-807f-a08cfeab2b3f</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

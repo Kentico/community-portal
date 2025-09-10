@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>8617e4ff-d9b6-42df-8fdf-fb6b25e27c6f</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>New-Deployment-for-existing-project-ddeea5b0-i9prs09s</CodeName>
+      <GUID>c4f7e8ee-2d53-4172-a844-b5873b6fe638</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>3e1afccf-092e-4511-9810-daaf514f8476</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>82aee40e-6c56-40eb-b319-44e7332ed551</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>3</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I have a client who has already built a project with a channel-type website on the Kentico administration page (CMS). Let's call this **Project A**. Currently, I have created a new project, **Project B**, with a channel type of **Headless**. I attempted to create a deployment package to publish it to the QA environment. After publishing, I checked the CMS and noticed that the headless channel was created successfully. However, the existing channel (Project A) seems to have been replaced by the new one. As a result, I can no longer preview the existing pages on the QA CMS.
+
+When I created Project B, I followed the instructions from scratch using the [first installation guide](https://docs.kentico.com/developers-and-admins/installation). I used the kentico-xperience-mvc template. My question is: How can I publish Project B to the portal without replacing the existing project (Project A)?
+
+I followed the instructions in the [Deploy to SaaS guide](https://docs.kentico.com/developers-and-admins/deployment/deploy-to-the-saas-environment) to create the deployment package. I'm using the same salt hash from the portal when i created Project B
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.1.3]
+* .NET version: \[8]
+* Execution environment: \[SaaS]
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-03-10 18:51:25Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-03-10 18:51:25Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

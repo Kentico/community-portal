@@ -1,6 +1,7 @@
 using System.Web;
 using CMS.Core;
 using Htmx;
+using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Registration;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
@@ -8,6 +9,7 @@ using Kentico.Community.Portal.Web.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Localization;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
@@ -39,6 +41,7 @@ public class AuthenticationController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [EnableRateLimiting(MemberRateLimitingConstants.Login)]
     public async Task<ActionResult> Login(LoginViewModel model, string? returnUrl = null)
     {
         if (!ModelState.IsValid)

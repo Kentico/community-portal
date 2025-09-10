@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>There-is-a-specific-string-field-in-K13-thea1f00d4</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+There is a specific string field in K13 that is in a custom table that before and after being copied, the field is manipulated to ensure it remains unique throughout the copy process (a suffix is added to the string before the copy, and them removed after the copy).
+
+The field doesn't contain a GUID - it's just an underlying nvarchar(200) field that must remain unique. So, in translating to XbyK I'm just trying to make sure the business rule is still in place. When I couldn't find a copy event API, I reached out to make sure I wasn't missing anything.
+
+Thank you all for your responses! We will figure something out!
+
+-chris
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-07-10 18:38:41Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>032c5f47-59e3-42a6-999a-a0ab7afacc39</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Substitute-for-old-DocumentEvents-Copy-Before-After-in-XbyK--1ce694cb-gjuvi40r</CodeName>
+    <GUID>1995ade9-12f3-411c-8ea6-e444e6193892</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

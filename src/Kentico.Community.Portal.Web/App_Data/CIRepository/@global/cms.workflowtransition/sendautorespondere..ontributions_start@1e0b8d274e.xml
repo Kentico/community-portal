@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.workflowtransition>
+  <Parent>
+    <CodeName>start</CodeName>
+    <GUID>a3ec5bb3-eee8-4e18-a2e7-c48d2ad8244e</GUID>
+    <ObjectType>ma.automationstep</ObjectType>
+    <Parent>
+      <CodeName>SendAutoresponderEmail.CommunityContributions</CodeName>
+      <GUID>c0ad6a8f-4b2d-4769-a8d8-18156f144d0e</GUID>
+      <ObjectType>ma.automationprocess</ObjectType>
+    </Parent>
+  </Parent>
+  <Bindings>
+    <Binding id="ma.automationstep_SendAutoresponderEmail_ma.automationprocess_SendAutoresponderEmail.CommunityContributions-ma.automationstep_SendAutoresponderEmail_ma.automationprocess_SendAutoresponderEmail.CommunityContributions">
+      <TransitionEndStepID>
+        <CodeName>SendAutoresponderEmail</CodeName>
+        <GUID>aa9cdb83-d4b8-4f4d-9df3-a3a89a19bc5b</GUID>
+        <ObjectType>ma.automationstep</ObjectType>
+        <Parent>
+          <CodeName>SendAutoresponderEmail.CommunityContributions</CodeName>
+          <GUID>c0ad6a8f-4b2d-4769-a8d8-18156f144d0e</GUID>
+          <ObjectType>ma.automationprocess</ObjectType>
+        </Parent>
+      </TransitionEndStepID>
+      <TransitionSourcePointGUID>ffea3c26-6751-46d5-a1f4-db684f808a5c</TransitionSourcePointGUID>
+      <TransitionType>1</TransitionType>
+      <TransitionWorkflowID>
+        <CodeName>SendAutoresponderEmail.CommunityContributions</CodeName>
+        <GUID>c0ad6a8f-4b2d-4769-a8d8-18156f144d0e</GUID>
+        <ObjectType>ma.automationprocess</ObjectType>
+      </TransitionWorkflowID>
+    </Binding>
+  </Bindings>
+</cms.workflowtransition>

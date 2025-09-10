@@ -107,6 +107,7 @@ public static class ServiceCollectionAppExtensions
 
     private static IServiceCollection AddQAndA(this IServiceCollection services) =>
         services
+            .AddTransient<IQAndAPermissionService, QAndAPermissionService>()
             .AddInfoObjectEventHandler<InfoObjectBeforeInsertEvent<QAndAAnswerDataInfo>, QAndAAnswerSearchIndexTaskHandler>()
             .AddInfoObjectEventHandler<InfoObjectBeforeUpdateEvent<QAndAAnswerDataInfo>, QAndAAnswerSearchIndexTaskHandler>()
             .AddInfoObjectEventHandler<InfoObjectBeforeDeleteEvent<QAndAAnswerDataInfo>, QAndAAnswerSearchIndexTaskHandler>();

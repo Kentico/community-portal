@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>c1beb8f9-4673-40d8-acdd-2dd56e5cd1bb</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>I-don-t-believe-there-is-a-way-to-customizb82122d4</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+I don't believe there is a way to customize this today. Is the trailing slash required for something to work correctly? I think consistency is more important for SEO and redirects, right? The internet doesn't generally care whether URLs end in `/` or not.
+
+That said, I've taken a similar approach to Trevor, creating extension methods on `WebPageUrl` for [the Kentico Community Portal](https://github.com/Kentico/community-portal/blob/v30.1.0.11/src/Kentico.Community.Portal.Web/Infrastructure/URLExtensions.cs#L12), except I remove the `~` prefix of generated URLs because those don't work outside of ASP.NET Core rendering and URL resolving.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-19 00:41:25Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>099add37-2b99-4d17-a832-b4f176207ca0</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Trailing-slashes-in-resolved-urls-e0d48518-8fbt2cml</CodeName>
+    <GUID>f7f45401-df60-4576-bbd9-f802bbbb0714</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

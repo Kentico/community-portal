@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.workflowtransition>
+  <Parent>
+    <CodeName>start2f3627fa-1f50-419f-82bc-febd9fc89258</CodeName>
+    <GUID>2f3627fa-1f50-419f-82bc-febd9fc89258</GUID>
+    <ObjectType>ma.automationstep</ObjectType>
+    <Parent>
+      <CodeName>CommunityProgramInterest</CodeName>
+      <GUID>8e8116fe-5148-4155-b4ff-ae320c7abad5</GUID>
+      <ObjectType>ma.automationprocess</ObjectType>
+    </Parent>
+  </Parent>
+  <Bindings>
+    <Binding id="ma.automationstep_SendEmail_ma.automationprocess_CommunityProgramInterest-ma.automationstep_SendEmail_ma.automationprocess_CommunityProgramInterest">
+      <TransitionEndStepID>
+        <CodeName>SendEmail</CodeName>
+        <GUID>28ebd962-fb28-4703-88eb-07c08f96cdd5</GUID>
+        <ObjectType>ma.automationstep</ObjectType>
+        <Parent>
+          <CodeName>CommunityProgramInterest</CodeName>
+          <GUID>8e8116fe-5148-4155-b4ff-ae320c7abad5</GUID>
+          <ObjectType>ma.automationprocess</ObjectType>
+        </Parent>
+      </TransitionEndStepID>
+      <TransitionSourcePointGUID>e3380ddd-176f-4764-8d5c-7faf9ebb1e1d</TransitionSourcePointGUID>
+      <TransitionType>1</TransitionType>
+      <TransitionWorkflowID>
+        <CodeName>CommunityProgramInterest</CodeName>
+        <GUID>8e8116fe-5148-4155-b4ff-ae320c7abad5</GUID>
+        <ObjectType>ma.automationprocess</ObjectType>
+      </TransitionWorkflowID>
+    </Binding>
+  </Bindings>
+</cms.workflowtransition>

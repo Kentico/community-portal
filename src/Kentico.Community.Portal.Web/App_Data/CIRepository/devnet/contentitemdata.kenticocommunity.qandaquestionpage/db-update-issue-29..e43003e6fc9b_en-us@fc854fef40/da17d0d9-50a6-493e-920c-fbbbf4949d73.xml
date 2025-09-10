@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>3f04d920-a545-4e0f-81be-e43003e6fc9b</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>DB-Update-Issue-29-0-2-30--d8dc2260-4b5betbp</CodeName>
+      <GUID>1b65897e-a4ce-4c1c-b661-08d5d8b19f00</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>da17d0d9-50a6-493e-920c-fbbbf4949d73</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I am attempting to update an Xperience by Kentico project from 29.0 to 30 (or even 29.1 for that matter) and each time I am getting the same database update error.
+
+
+
+Kentico.Web.Mvc.IStartupConfigureAction\[0]
+Startup action 'Kentico.Web.Mvc.DbUpdateService'.
+System.Exception:
+\[DataConnection.HandleError]:
+
+```
+  Query:
+  IF NOT EXISTS (SELECT 1 FROM CMS_ScheduledTask WHERE TaskGUID = '99c68980-6627-4e05-8008-fd4a4377e56a')
+  BEGIN
+      INSERT [CMS_ScheduledTask] ([TaskName], [TaskDisplayName], [TaskAssemblyName], [TaskClass], [TaskInterval], [TaskData], [TaskLastRunTime], [TaskNextRunTime], [TaskLastResult], [TaskDeleteAfterLastRun], [TaskServerName], [TaskGUID], [TaskLastModified], [TaskExecutions], [TaskResourceID], [TaskRunInSeparateThread], [TaskLastExecutionReset], [TaskCondition], [TaskUserID], [TaskType], [TaskObjectType], [TaskObjectID], [TaskExecutingServerName], [TaskEnabled], [TaskIsRunning])
+      VALUES ('Content.PublishScheduledContentItems', 'Publish scheduled content items', 'CMS.ContentEngine', 'CMS.ContentEngine.Internal.ScheduledContentItemPublisherTask', 'minute;3/11/2024 9:00:17 PM;1;00:00:00;00:00:00;Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday', '', getDate(), getDate(), 0, 0, NULL, '99c68980-6627-4e05-8008-fd4a4377e56a', getDate(), 0, NULL, 0, getDate(), NULL, NULL, NULL, NULL, NULL, '', 1, 0)
+  END
+
+  Caused exception:
+  Invalid column name 'TaskResourceID'.
+  Invalid column name 'TaskRunInSeparateThread'.
+  Invalid column name 'TaskLastExecutionReset'.
+  Invalid column name 'TaskCondition'.
+
+   ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'TaskResourceID'.
+  Invalid column name 'TaskRunInSeparateThread'.
+  Invalid column name 'TaskLastExecutionReset'.
+  Invalid column name 'TaskCondition'.
+```
+
+Any help would be appreciated.
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-01-08 19:32:54Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-01-08 19:34:17Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

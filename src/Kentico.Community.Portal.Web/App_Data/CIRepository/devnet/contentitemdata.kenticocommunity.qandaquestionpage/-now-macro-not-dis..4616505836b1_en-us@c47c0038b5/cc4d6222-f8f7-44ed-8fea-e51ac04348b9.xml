@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>0f58caf8-62b9-4c28-a45d-4616505836b1</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>-Now-Macro-Not-Displaying-Current-Date-and-Time-in-Form-Field-in-Xperience-by-Kentico-29-3--0fm4zij4</CodeName>
+      <GUID>d6270362-c04f-4343-8349-56e8edad2022</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>cc4d6222-f8f7-44ed-8fea-e51ac04348b9</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>34b024ca-b44e-41cb-98c1-692929c21c6b</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+Hello Kentico Community,
+
+I am encountering an issue with the `{% Now %}` macro in Xperience by Kentico version 29.3.0. I am trying to display the current date and time in a form field when the form is rendered. However, instead of showing the current date and time, the `{% Now %}` macro is being displayed as a literal string in the form field, like this: `{% Now %}`.
+
+### Steps I have taken:
+
+1. Created a **Text** field in **Form Builder**.
+2. Set the **Default Value** of the field to `{% Now %}`.
+3. Ensured the form is published and cached properly.
+4. Tried clearing the cache and testing again.
+
+### Issue:
+
+* The `{% Now %}` macro does not resolve to the current date and time. Instead, it shows `{% Now %}` as plain text when the form is rendered.
+* I have tested with other macros (like `{% DateTime.Now %}`), but the issue persists.
+
+### Questions:
+
+* Is there any configuration needed in Xperience by Kentico 29.3.0 to enable the processing of macros in form fields?
+* Is the `{% Now %}` macro supported in this context for form fields, or is there a different macro that should be used to display the current date and time?
+
+Any assistance or suggestions would be greatly appreciated!
+
+\
+Thank you
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-01-03 15:40:36Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-01-03 15:40:36Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

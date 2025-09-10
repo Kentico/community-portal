@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>00c35313-0143-49d8-886d-fbb3236a632d</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Error-Unable-to-Find-Kentico-Xperience-DancingGoat-Template-While-Running-dotnet-new-Comman-owsohyij</CodeName>
+      <GUID>3b3b9949-3d3c-49ee-8e00-c969195190f2</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>bdcfc0e5-9287-440b-a556-ca07909f2bba</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>ab0945d3-03a9-47c8-9dc6-8064e0d09da3</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>5</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+When attempting to run the command `dotnet new kentico-xperience-sample-mvc -n DancingGoatXbyK`, an error occurs. The template cannot be found, and the process fails with the following output:
+
+``Could not find the template package containing template 'Kentico.Xperience.DancingGoat' Could not find the template package containing template 'Kentico.Xperience.DancingGoat' Sequence contains more than one matching element    at System.Linq.ThrowHelper.ThrowMoreThanOneMatchException()    at System.Linq.Enumerable.TryGetSingle[TSource](IEnumerable`1 source, Func`2 predicate, Boolean& found)    at System.Linq.Enumerable.Single[TSource](IEnumerable`1 source, Func`2 predicate)    at Microsoft.TemplateEngine.Edge.Settings.TemplatePackageManager.GetTemplatePackageAsync(ITemplateInfo template, CancellationToken cancellationToken)    at Microsoft.TemplateEngine.Cli.CliTemplateInfo.GetManagedTemplatePackageAsync(TemplatePackageManager templatePackageManager, CancellationToken cancellationToken)    at Microsoft.TemplateEngine.Cli.TemplateInvoker.InvokeTemplateAsync(TemplateCommandArgs templateArgs, CancellationToken cancellationToken)    at Microsoft.TemplateEngine.Cli.Commands.TemplateCommand.InvokeAsync(ParseResult parseResult, CancellationToken cancellationToken)    at Microsoft.TemplateEngine.Cli.Commands.InstantiateCommand.HandleTemplateInstantiationAsync(InstantiateCommandArgs args, IEngineEnvironmentSettings environmentSettings, TemplatePackageManager templatePackageManager, TemplateGroup templateGroup, CancellationToken cancellationToken)    at Microsoft.TemplateEngine.Cli.Commands.InstantiateCommand.ExecuteIntAsync(InstantiateCommandArgs instantiateArgs, IEngineEnvironmentSettings environmentSettings, TemplatePackageManager templatePackageManager, ParseResult parseResult, CancellationToken cancellationToken)    at Microsoft.TemplateEngine.Cli.Commands.BaseCommand`1.CommandAction.InvokeAsync(ParseResult parseResult, CancellationToken cancellationToken) ``&#x20;
+
+This prevents the successful creation of the sample MVC application.
+
+***
+
+**Environment**
+
+* **Xperience by Kentico version:** 29.3.0
+* **.NET version:** 8
+* **Execution environment:** Local
+
+### **Additional Information**
+
+* Verified that the Kentico Xperience template package is installed.
+* Running `dotnet new --list` does not show the Kentico Xperience templates as available.
+* Attempted reinstalling the Kentico Xperience template package using `dotnet new -i Kentico.Xperience.Templates`, but the issue persists.
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-01-07 11:36:01Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-01-07 11:36:01Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

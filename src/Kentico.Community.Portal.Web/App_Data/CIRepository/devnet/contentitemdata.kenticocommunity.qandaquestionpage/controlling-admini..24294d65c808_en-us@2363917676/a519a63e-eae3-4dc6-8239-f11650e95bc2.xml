@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>8e7f2a4e-554f-4496-8e66-24294d65c808</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Controlling-Administrative-Session-timeouts-in-Kentico-SaaS--624504d1-43tsk2lo</CodeName>
+      <GUID>29c66ae2-3e10-4e6b-87e5-9006f96e2a65</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>a519a63e-eae3-4dc6-8239-f11650e95bc2</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>183ba77a-7d76-4b7f-af91-8f69b49cc760</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>7</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I've tried about all I can think of - can you actually control the session timeout of an Administrative User in the SaaS-based CMS? I've set this code, but to no avail:
+
+```CSharp
+services.AddSession(options =>
+{
+  options.IdleTimeout = TimeSpan.FromMinutes(configuration.GetValue<int>("SessionTimeoutInMinutes"));
+  options.Cookie.HttpOnly = true;
+  options.Cookie.IsEssential = true;
+});
+```
+
+...there is also an app.UseSession() in the code as well. The `SessionTimeoutInMinutes` value comes from appsettings, and is set to 120. Regardless of all of the above, the SaaS-based site is still timing out Users at the default 20-minute interval.
+
+I also have tried to set the Application Cookie timeout as well:
+
+```CSharp
+services.ConfigureApplicationCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(configuration.GetValue<int>("SessionTimeoutInMinutes")); // Set authentication cookie expiration to 2 hours
+    options.SlidingExpiration = true;
+}); 
+```
+
+This doesn't seem to work, either.
+
+
+
+Oh, and this is running on v30.2.2.
+
+
+
+Any thoughts?
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-03-17 18:51:51Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-03-17 18:52:43Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

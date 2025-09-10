@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>1-I-would-always-recommend-using-the-combi4f2d997f</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+1. I would ***always*** recommend using the [combined content selector](https://docs.kentico.com/documentation/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/reference-admin-ui-form-components#combined-content-selector) (which uses the [Pages and reusable content](https://docs.kentico.com/x/RoXWCQ) field data type) over the [Page selector](https://docs.kentico.com/documentation/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/reference-admin-ui-form-components#page-selector) (which uses the Pages field data type). The combined content selector will continue to get the most new features and UX improvements and covers almost all of the same functionality of the Page selector.
+2. The combined content selector makes querying much simpler because it models your C# classes as having a collection of content items instead of a collection of references (Guid values) to other content items. This means you can the [WithLinkedItems](https://docs.kentico.com/documentation/developers-and-admins/api/content-item-api/reference-content-item-query#withlinkeditems-1) content query API (using the new [IContentRetriever](https://docs.kentico.com/x/reference_content_retriever_api_xp) or [ContentItemQueryBuilder](https://docs.kentico.com/x/YRT_Cw)) to perform 1 query instead of 2.
+3. Both querying approaches (`IContentRetriever` and `ContentItemQueryBuilder`) have documentation explaining which APIs you need call to ensure you can retrieve the page URL for any query results. But, in both cases you would use the [IWebPageUrlRetriever](https://docs.kentico.com/x/retrieve_page_urls_xp).
+4. Why do you want to retrieve the page template of the page? This is an internal implementation detail and cannot be used in your code in website channels.
+5. The "page name" is for internal use (within the Xperience administration UI). If you want a publicly visible page name or title, create your own custom field in your content type or in a [reusable field schema](https://docs.kentico.com/x/D4_OD) (RFS) which you can apply to multiple content types.
+
+   The Kentico Community Portal uses a `IBasicItem` RFS [to ensure all web pages have a title and short description field](https://github.com/Kentico/community-portal/blob/v30.5.4.2/src/Kentico.Community.Portal.Core/Content/Hub/IBasicItemFields.generated.cs).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-06-16 17:15:09Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>9463e2b4-db11-4287-b9ba-6fcd6a1f9892</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-to-retrieve-pages-75f10d0d-0yn09wfh</CodeName>
+    <GUID>fe2a0c22-fda8-4581-8644-d6e0312c06db</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

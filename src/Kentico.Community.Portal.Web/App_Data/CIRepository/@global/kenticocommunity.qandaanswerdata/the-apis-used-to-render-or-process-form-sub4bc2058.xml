@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>The-APIs-used-to-render-or-process-form-sub4bc2058</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+The APIs used to render or process form submissions in Xperience are all abstract, generic, and often know nothing about the context they are used in.
+
+They reflect on the form class and form XML definition, do validation with instantiated form components, render, etc...
+
+So I think _our_ code is probably similar to what you are doing. I'm guessing if we do have higher level APIs than what you are doing they are `internal`.
+
+
+
+Form Builder forms just aren't designed for headless rendering today, even though some partners take that approach.
+
+If you'd like to see better headless rendering support let us know via the roadmap - we have discussed it internally but haven't prioritized it yet.
+
+
+
+I'd be interested to see examples of headless form rendering from anyone who has tried it.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-06 08:35:51Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>268b48ca-591b-42ff-8053-594d9571d89e</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Best-Practices-for-Retrieving-a-Form-Schema-8d13bb73-tm6gqsmh</CodeName>
+    <GUID>b9679276-0673-49a5-a908-f35e44e01ebb</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

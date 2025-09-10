@@ -1,4 +1,3 @@
-using CMS.Membership;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.Members;
@@ -25,7 +24,7 @@ namespace Kentico.Community.Portal.Web.Features.QAndA;
 [Route("[controller]/[action]")]
 public class QAndAQuestionPageController(
     UserManager<CommunityMember> userManager,
-    IUserInfoProvider userInfoProvider,
+    IQAndAPermissionService permissionService,
     WebPageMetaService metaService,
     IMediator mediator,
     MemberBadgeService memberBadgeService,
@@ -33,7 +32,7 @@ public class QAndAQuestionPageController(
     MarkdownRenderer markdownRenderer) : Controller
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
-    private readonly IUserInfoProvider userInfoProvider = userInfoProvider;
+    private readonly IQAndAPermissionService permissionService = permissionService;
     private readonly WebPageMetaService metaService = metaService;
     private readonly IMediator mediator = mediator;
     private readonly MarkdownRenderer markdownRenderer = markdownRenderer;
@@ -45,15 +44,14 @@ public class QAndAQuestionPageController(
     {
         var currentMember = await userManager.CurrentUser(HttpContext);
 
-        var question = await contentRetriever.RetrieveCurrentPage<QAndAQuestionPage>();
+        var question = await contentRetriever.RetrieveCurrentPage<QAndAQuestionPage>(new RetrieveCurrentPageParameters { LinkedItemsMaxLevel = 1 });
         metaService.SetMeta(new WebPageMeta(
             question.BasicItemTitle,
             $"View the discussion about {question.BasicItemTitle} in the Kentico Community Portal Q&A."));
 
-        bool canManageContent = await userManager.CanManageContent(currentMember, userInfoProvider);
-        var answers = await GetAnswers(question, currentMember, canManageContent);
+        var answers = await GetAnswers(question, currentMember);
         var taxonomyResp = await mediator.Send(new QAndATaxonomiesQuery());
-        var questionVM = await MapQuestion(question, currentMember, canManageContent, taxonomyResp);
+        var questionVM = await MapQuestion(question, currentMember, taxonomyResp);
 
         var vm = new QAndAQuestionPageViewModel(questionVM, answers);
 
@@ -63,17 +61,17 @@ public class QAndAQuestionPageController(
     [HttpGet]
     public async Task<ActionResult> DisplayQuestionDetail(Guid questionID)
     {
-        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID]);
-        if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
+        var questionPage = await contentRetriever
+            .RetrievePagesByGuids<QAndAQuestionPage>([questionID], new RetrievePagesParameters { LinkedItemsMaxLevel = 1 })
+            .TryFirst();
+        if (!questionPage.TryGetValue(out var question))
         {
             return NotFound();
         }
 
         var currentMember = await userManager.CurrentUser(HttpContext);
-        bool canManageContent = await userManager.CanManageContent(currentMember, userInfoProvider);
         var taxonomyResp = await mediator.Send(new QAndATaxonomiesQuery());
-
-        var vm = await MapQuestion(questionPage, currentMember, canManageContent, taxonomyResp);
+        var vm = await MapQuestion(question, currentMember, taxonomyResp);
 
         return PartialView("~/Features/QAndA/_QAndAQuestionDetail.cshtml", vm);
     }
@@ -87,15 +85,16 @@ public class QAndAQuestionPageController(
             return NotFound();
         }
 
-        var currentMember = await userManager.CurrentUser(HttpContext);
-        bool canManageContent = await userManager.CanManageContent(currentMember, userInfoProvider);
-        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID]);
-        if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
+        var questionPage = await contentRetriever
+            .RetrievePagesByGuids<QAndAQuestionPage>([questionID], new RetrievePagesParameters { LinkedItemsMaxLevel = 1 })
+            .TryFirst();
+        if (!questionPage.TryGetValue(out var question))
         {
             return NotFound();
         }
 
-        var vm = await MapAnswer(questionPage, answer, currentMember, canManageContent);
+        var currentMember = await userManager.CurrentUser(HttpContext);
+        var vm = await MapAnswer(question, answer, currentMember, permissionService);
 
         return PartialView("~/Features/QAndA/_QAndAAnswerDetail.cshtml", vm);
     }
@@ -106,14 +105,13 @@ public class QAndAQuestionPageController(
 
     private async Task<IReadOnlyList<QAndAPostAnswerViewModel>> GetAnswers(
         QAndAQuestionPage question,
-        CommunityMember? currentMember,
-        bool canManageContent)
+        CommunityMember? currentMember)
     {
         var res = await mediator.Send(new QAndAAnswerDatasByQuestionQuery(question.SystemFields.WebPageItemID));
         var vms = new List<QAndAPostAnswerViewModel>();
         foreach (var answer in res.Items)
         {
-            var answerModel = await MapAnswer(question, answer, currentMember, canManageContent);
+            var answerModel = await MapAnswer(question, answer, currentMember, permissionService);
             vms.Add(answerModel);
         }
 
@@ -123,26 +121,17 @@ public class QAndAQuestionPageController(
     private async Task<QAndAPostQuestionViewModel> MapQuestion(
         QAndAQuestionPage question,
         CommunityMember? currentMember,
-        bool canManageContent,
         QAndATaxonomiesQueryResponse taxonomiesResp)
     {
         var author = await GetAuthor(question.QAndAQuestionPageAuthorMemberID);
+        var permissions = await permissionService.GetPermissions(currentMember, question);
 
-        return new(question, currentMember, canManageContent, taxonomiesResp, author, markdownRenderer);
+        return new(question, permissions, currentMember, taxonomiesResp, author, markdownRenderer);
     }
 
-    private async Task<QAndAPostAnswerViewModel> MapAnswer(QAndAQuestionPage question, QAndAAnswerDataInfo answer, CommunityMember? currentMember, bool canManageContent)
+    private async Task<QAndAPostAnswerViewModel> MapAnswer(QAndAQuestionPage question, QAndAAnswerDataInfo answer, CommunityMember? currentMember, IQAndAPermissionService permissionService)
     {
-        var permissions = new QAndAManagementPermissions()
-        {
-            CanDelete = canManageContent,
-            CanEdit = question.QAndAQuestionPageAcceptedAnswerDataGUID != answer.QAndAAnswerDataGUID
-                && (canManageContent || currentMember?.Id == answer.QAndAAnswerDataAuthorMemberID),
-            CanMarkAnswered = canManageContent ||
-                (currentMember?.Id == question.QAndAQuestionPageAuthorMemberID
-                    && question.QAndAQuestionPageAcceptedAnswerDataGUID == default),
-            CanAnswer = currentMember is not null
-        };
+        var permissions = await permissionService.GetPermissions(currentMember, question, answer);
 
         var author = await GetAuthor(answer.QAndAAnswerDataAuthorMemberID);
 
@@ -211,13 +200,13 @@ public class QAndAPostQuestionViewModel
     public DateTime DateModified { get; set; }
     public QAndAAuthorViewModel Author { get; set; } = new();
     public HtmlSanitizedHtmlString HTMLSanitizedContentHTML { get; set; } = HtmlSanitizedHtmlString.Empty;
-    public QAndAManagementPermissions Permissions { get; set; } = new();
+    public QAndAQuestionPermissions Permissions { get; set; } = QAndAQuestionPermissions.NoPermissions;
     public IReadOnlyList<string> DXTopics { get; } = [];
 
     public QAndAPostQuestionViewModel(
         QAndAQuestionPage question,
+        QAndAQuestionPermissions permissions,
         CommunityMember? currentMember,
-        bool canManageContent,
         QAndATaxonomiesQueryResponse taxonomiesResp,
         QAndAAuthorViewModel author,
         MarkdownRenderer markdownRenderer
@@ -231,12 +220,7 @@ public class QAndAPostQuestionViewModel
         DateCreated = question.QAndAQuestionPageDateCreated;
         DateModified = question.QAndAQuestionPageDateModified;
         Author = author;
-        Permissions = new()
-        {
-            CanDelete = canManageContent,
-            CanEdit = canManageContent || ownsQuestion,
-            CanAnswer = currentMember is not null
-        };
+        Permissions = permissions;
         var tagRefs = question.CoreTaxonomyDXTopics.Select(t => t.Identifier);
         DXTopics = [.. taxonomiesResp
             .DXTopicsAll
@@ -255,7 +239,7 @@ public class QAndAPostAnswerViewModel
     public DateTime DateCreated { get; set; }
     public DateTime DateModified { get; set; }
     public bool IsAcceptedAnswer { get; set; }
-    public QAndAManagementPermissions Permissions { get; set; } = new();
+    public QAndAAnswerPermissions Permissions { get; set; } = QAndAAnswerPermissions.NoPermissions;
 }
 
 public class QAndAAuthorViewModel
@@ -295,16 +279,5 @@ public class QAndAAuthorViewModel
         AuthorAttributes = authorAttributes ?? DiscussionAuthorAttributes.Default;
     }
     public QAndAAuthorViewModel() { }
-}
-
-public class QAndAManagementPermissions
-{
-    public bool CanEdit { get; set; }
-    public bool CanDelete { get; set; }
-    public bool CanMarkAnswered { get; set; }
-    public bool CanAnswer { get; set; }
-
-    public bool CanInteract =>
-        CanEdit || CanDelete || CanMarkAnswered || CanAnswer;
 }
 

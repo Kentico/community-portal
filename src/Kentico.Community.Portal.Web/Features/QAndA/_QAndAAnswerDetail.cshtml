@@ -33,7 +33,7 @@
                                     <use xlink:href="/img/icons.svg#check" asp-append-version></use>
                                 </svg>
                                 <span class="fs-6">
-                                    <strong>Answer</strong>
+                                    <strong>Accepted answer</strong>
                                 </span>
                             </div>
                         }
@@ -48,30 +48,32 @@
 
             @if (Model.Permissions.CanInteract)
             {
-                <div class="d-flex gap-1 mt-2">
-                    @if (Model.Permissions.CanMarkAnswered)
+                <div class="d-flex gap-1 mt-2 justify-content-end">
+                    @if (Model.Permissions.MarkApprovedAnswer)
                     {
                         <form id="@markAnswerFormElId" method="post" hx-post hx-controller="QAndAAnswer"
                             hx-action="MarkApprovedAnswer" hx-route-questionID="@Model.ParentQuestionID"
                             hx-route-answerID="@Model.ID" class="align-self-center">
-                            <button type="submit" class="btn btn-outline-primary btn-sm text-wrap">
+                            <button type="submit" class="btn btn-outline-primary btn-sm text-wrap"
+                                title="This response will be marked as the accepted response. You can only do this once.">
                                 Mark as answer
                             </button>
                         </form>
                     }
 
-                    @if (Model.Permissions.CanEdit)
+                    @if (Model.Permissions.Edit)
                     {
                         <button type="button" class="btn btn-sm btn-outline-secondary" hx-get hx-controller="QAndAAnswer"
                             hx-action="DisplayEditAnswerForm" hx-route-questionID="@Model.ParentQuestionID"
                             hx-route-answerID="@Model.ID" hx-swap="outerHTML" hx-target="#@wrapperElId">
-                            Edit Answer
+                            Edit
                         </button>
                     }
-                    @if (Model.Permissions.CanDelete)
+                    @if (Model.Permissions.Delete)
                     {
                         <form method="post" hx-post hx-controller="QAndAAnswer" hx-action="DeleteAnswer"
-                            hx-route-answerID="@Model.ID" hx-swap="delete" hx-target="#@wrapperElId">
+                            hx-route-questionID="@Model.ParentQuestionID" hx-route-answerID="@Model.ID" hx-swap="delete"
+                            hx-confirm="Do you want to delete this answer?" hx-target="#@wrapperElId">
                             <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                         </form>
                     }

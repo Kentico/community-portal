@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>c1beb8f9-4673-40d8-acdd-2dd56e5cd1bb</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Good-point-We-have-two-different-imports-o27a568e7</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Good point. We have two different imports, one of the old URL's, and one of marketing URL's. We wanted those marketing URL's as Vanity URL's anyway, but why not both?\
+\
+Works the same, but there is no differentiation anymore.
+
+It was a puzzle, but I found the solution:
+easy one is use the stored procedure:\
+Proc\_CMS\_WebPageFormerUrlPath\_InsertRedirect
+
+Or use this method:
+
+
+
+```CSharp
+    private static string ComputeUrlPathHash(string formerUrlPath)
+    {
+        using var sha256 = System.Security.Cryptography.SHA256.Create();
+        var inputBytes = Encoding.Unicode.GetBytes(formerUrlPath.ToLowerInvariant());
+        var hashBytes = sha256.ComputeHash(inputBytes);
+        return Convert.ToHexString(hashBytes);
+    }
+```
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-08-19 18:48:42Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>e20cb88b-d398-4cce-ac52-8ffcdd40b48e</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Adding-FormerUrl-s-in-code-how-to-generate-the-WebPageFormerUrlPathHash--27601bd8-cchmnuvb</CodeName>
+    <GUID>88ce6184-6555-4b76-ba03-ddc566cc88a1</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.formclass>
+  <ClassContactMapping>
+    <form>
+      <field column="ContactEmail" enabled="true" guid="0fa708ce-2d4e-4bbb-82a2-c600235ed3d4" mappedtofield="memberemail" visible="true" />
+    </form>
+  </ClassContactMapping>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>Community contributions</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="Form_2025_01_24_18_40ID" columntype="integer" enabled="true" guid="a0240f3b-ba95-4720-95b8-6b7e25f4cbf9" isPK="true" />
+      <field column="FormInserted" columnprecision="7" columntype="datetime" enabled="true" guid="230644e2-413e-445b-9ae8-7b86e75bbda4" system="true">
+        <properties>
+          <fieldcaption>Form inserted</fieldcaption>
+        </properties>
+      </field>
+      <field column="FormUpdated" columnprecision="7" columntype="datetime" enabled="true" guid="bd25bc40-5674-440d-9857-66d95eb947d2" system="true">
+        <properties>
+          <fieldcaption>Form updated</fieldcaption>
+        </properties>
+      </field>
+      <field allowempty="true" column="MemberID" columntype="integer" enabled="true" guid="f89eaaeb-fb6e-4cd7-b503-cc0d8079fd9e" visible="true">
+        <properties>
+          <fieldcaption>Member ID</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberID</componentidentifier>
+        </settings>
+      </field>
+      <field allowempty="true" column="MemberEmail" columnsize="500" columntype="text" enabled="true" guid="cdc76863-1aab-48a5-9bb6-86aa873ad132" visible="true">
+        <properties>
+          <fieldcaption>Member email</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberEmail</componentidentifier>
+        </settings>
+      </field>
+      <field column="URL" columnsize="500" columntype="text" enabled="true" guid="d51bd588-2584-45c2-9d1a-dddfc59d9a0b" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[Primary link to your contribution or activity. For example, a LinkedIn post, blog post, open-source repository, YouTube video.]]>
+          </explanationtext>
+          <fieldcaption>URL</fieldcaption>
+          <fielddescription>
+            <![CDATA[We require a URL that we can use to promote your contribution.]]>
+          </fielddescription>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.URLInput</componentidentifier>
+          <IsHidden>False</IsHidden>
+          <Placeholder>https://</Placeholder>
+        </settings>
+      </field>
+      <field column="Description" columntype="longtext" enabled="true" guid="c448c60f-4b3c-4d53-8171-3870a3b7af82" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[Describe your contribution to the Kentico community and how you'd like us to speak about it. If you have multiple links, for example a blog post and a post on LinkedIn promoting it, add additional links here.]]>
+          </explanationtext>
+          <fieldcaption>Description</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.TextArea</componentidentifier>
+          <Placeholder>...</Placeholder>
+        </settings>
+      </field>
+      <field allowempty="true" column="HiddenInput" columnsize="200" columntype="text" enabled="true" guid="9d2237b5-4524-4fb4-ab51-7b000442335d" visible="true">
+        <properties>
+          <fieldcaption>Hidden input</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>DancingGoat.HiddenInput</componentidentifier>
+          <HiddenInputValueSource>DefaultValue</HiddenInputValueSource>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>f147bfc4-c953-47ae-90fa-b5441b3bea0a</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>BizForm.CommunityContributions</ClassName>
+  <ClassTableName>Form_Form_2025_01_24_18_40</ClassTableName>
+  <ClassType>Form</ClassType>
+  <ClassXmlSchema>
+<![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Form_Form_2025_01_24_18_40">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Form_2025_01_24_18_40ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+              <xs:element name="FormInserted" type="xs:dateTime" />
+              <xs:element name="FormUpdated" type="xs:dateTime" />
+              <xs:element name="MemberID" type="xs:int" minOccurs="0" />
+              <xs:element name="MemberEmail" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="URL">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="HiddenInput" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Form_Form_2025_01_24_18_40" />
+      <xs:field xpath="Form_2025_01_24_18_40ID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
+]]>
+  </ClassXmlSchema>
+</cms.formclass>

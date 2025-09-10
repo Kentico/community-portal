@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>dc609851-ab9c-436c-9e99-5c5216d1560f</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-I-just-submitted-the-feedback-about-the-v489a61dc</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+> I just submitted the feedback about the verbose flag on the roadmap *(which I actually I cannot see it on the roadmap board)*.
+
+Correct. Feedback is triaged, taxonomized, discussed with the product team and engineers, and then prioritized. You won't see it on the roadmap until we've received enough feedback from a broad spectrum of partners and customers about this product area (ex: deployments, CLI, etc...) and we have committed to deliver improvements.
+
+But, every item on the roadmap starts as feedback, so don't feel discouraged if you don't see your request immediately appear as an item on the roadmap.
+
+> there is not a set of recommendations of the paths we should follow to upgrade Xperience by Kentico projects using best practices, for example, if we are running a project in version **29.0.0**, what should be the recommended path? Update to **30.0.0**, then **31.0.0**, etc. Or should we jump from **29.0.0** to **35.5.x**?
+
+We do have [a support policy page](https://docs.kentico.com/x/support_policy_xp). It explains which versions of Xperience by Kentico are currently supported.
+
+That said, I would recommend updating your Xperience by Kentico project far more frequently than the example you shared. [v29.0.0 (from April 2024)](https://docs.kentico.com/changelog#refresh-april-18-2024) is still supported until October 2025, but the longer you wait the more difficult the update will be. A marketing team is also missing out on more than 1 year's worth of features even though they paid for them with their subscription.
+
+My personal recommendation is to be at most 3 Refreshes (3 months) behind for ease of development and getting access to the latest capabilities.
+
+As long as your current version is supported you can upgrade directly to any other supported version. We do not require you apply each intermediate update, so yes you can update from v29.0.0 to v30.5.0 (May 2025). There _could_ be bugs that we haven't identified with an upgrade of that many features (we don't test upgrading from _every_ supported version to every other version), but if you do find a bug in a supported version, we will work to resolve it.
+
+> Finally, on the documentation you mention this statement: "*Create a backup of your Xperience database, project folder and the folder where you store assets (**\~/assets** by default). In case of a failed update, use these backups to restore your environment to its original state to prevent inconsistent data.*"
+>
+> So, if the update fails, how can I know what failed?
+
+The database changes are applied as a transaction, but if you aren't using Xperience by Kentico SaaS we don't control your deployment process. We don't know what you changed, so we recommend you back up your assets, application, and database. Often this is accomplished by using shared (cloud) storage and blue/green deployments.
+
+Additionally, deployments using [our Continuous Deployment (CD) feature](https://docs.kentico.com/x/YgaiCQ) will make changes to the database. If the changes apply successfully but later you identify that these changes had unintended side-effects in a production environment, there is no way to "roll them back". This is another reason to backup your database and files.
+
+> An automatic rollback would mitigate the risk of partial updates or inconsistencies and would be a strong step toward more robust deployment workflows.
+
+Again, we apply the Refresh updates in a transaction so it does rollback when there's a failure. We do not recommend applying Refreshes and CD updates to a live database because of the risk of locks and failures. We are [planning a series of features working towards true zero-downtime deployments](https://roadmap.kentico.com/c/232-enhanced-zero-downtime-support-for-customer-deployments) - if these are important for your team, let us know with feedback.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-23 02:26:15Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>bdc6c5b5-7157-4ef0-85b3-90b504724b8b</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Update-Xperience-by-Kentico-projects-e893f63a-igmyxb8g</CodeName>
+    <GUID>aa78c5af-1cf9-48bd-be81-3b53f74063d8</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

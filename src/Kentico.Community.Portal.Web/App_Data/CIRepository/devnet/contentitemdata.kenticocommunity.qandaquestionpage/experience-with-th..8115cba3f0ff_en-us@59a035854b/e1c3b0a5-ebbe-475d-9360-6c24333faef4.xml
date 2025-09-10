@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>cb4f92ab-9d7a-4d40-b0e4-8115cba3f0ff</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Experience-with-the-Kentico-Migration-Tool-bf9e7259-3d9zoepb</CodeName>
+      <GUID>a2c420ce-da14-4a92-bcc5-c4e4578f99f3</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>e1c3b0a5-ebbe-475d-9360-6c24333faef4</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>3</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I'm interested in hearing from others who have used the Kentico Migration Tool on their projects, particularly regarding the migration of content (page types, pages, widgets, media). I'd appreciate insights on your experiences, challenges faced, and strategies employed.
+
+To give you my background quickly, I've been working with Kentico since version 5.5 and in recent months I obtained Xperience by Kentico certifications in Content Modeling and as a Certified Developer. While I'm a full-stack developer rather than a dedicated .NET or C# specialist, I have substantial experience with the platform but may be missing some knowledge and context especially regarding the Migration tool.
+
+My first encounter with the migration tool was about a year ago on a project where I evaluated it and discovered a blocker bug, which raised an initial red flag. After reviewing the documentation, I anticipated some challenges ahead. For that project, I decided to implement my own migration approach, which proved straightforward and resulted in a successful delivery that followed XbyK's best practices. For reference, I [documented the project development on my blog](https://www.linkedin.com/pulse/rebuilding-website-xperience-kentico-12-key-steps-milan-lund-rp02e).
+
+Since then, I've been peripherally involved with two other projects that utilized the Migration Tool, where the feedback wasn't particularly positive, though I didn't have access to detailed information.
+
+Now, a year later, I'm re-evaluating the Migration Tool on a KX13 project. After investing 10+ hours, I'm leaning toward my previous custom approach rather than using the official tool. While the tool works well for straightforward 1:1 migrations, attempting to customize the content model quickly became challenging, even with only basic customizations.
+
+One of the more interesting observations is the gap between Kentico's current content modeling best practices and what's practically achievable through the migration tool. While XbyK advocates specific modeling approaches, the migration tool doesn't fully support transforming legacy content models to align with these recommendations.
+
+Another observation is that it doesn't seem possible to migrate only a specific page subtree (such as a blog section with many post pages that need to be migrated automatically), while rebuilding the rest of the pages manually or using results from previous runs of the migration tool. As a result, you're forced to apply migration tool customizations across the entire site structure, rather than isolating or limiting them to specific sections.
+
+Has anyone else encountered similar situations? Have you found effective strategies to overcome these challenges? Or is my experience different from others using the migration tool? Also, feel free to share your experience going beyond content migration.
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-05-17 23:47:57Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-05-18 10:22:31Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

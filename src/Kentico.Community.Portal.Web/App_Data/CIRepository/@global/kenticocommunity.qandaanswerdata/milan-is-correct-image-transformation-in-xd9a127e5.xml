@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Milan-is-correct-Image-transformation-in-Xd9a127e5</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Milan is correct 👍.
+
+Image transformation in Xperience by Kentico is currently performed **on upload**, which is different than previous versions of Kentico where the built-in image optimization was performed **on request**.
+
+An additional explanation of the feature can be found in the Kentico Community blog post - [Xperience by Kentico Refresh - December 12, 2024](https://community.kentico.com/blog/xperience-by-kentico-refresh-december-12-2024#1-click-image-optimization).
+
+This means you don't need to add [a hash/signature to every auto-generated image variant](https://docs.kentico.com/developers-and-admins/configuration/media-library-configuration#image-file-request-protection) to prevent a DoS attack of your application.
+
+We only support 1 image variant at this time, but we plan to support multiple in the future and potentially offer a combination of **on upload** and **on request** optimization and transformation.
+
+The original uploaded image is *always saved* (this lets you re-transform the original image after uploading) and if you download the image from the administration UI you are downloading the original un-transformed version. When retrieving the image via content delivery APIs, we always serve the transformed version of the image and you *do not* have direct access to the original through these APIs.
+
+[Webp has much better support across email clients](https://www.caniemail.com/features/image-webp/) than it did even a few years ago, however if email recipients are not using the web or new desktop version of Outlook, they could have issues seeing the image.
+
+If you want to avoid sending webp images to your email recipients today you would either need to specify a fallback image and [use VML](https://www.badsender.com/en/2024/04/16/outlook-email-display-problems/#h-le-vml) to render that only for older versions of Outlook.
+
+That fallback image could be static or it could be a second Content Item Asset field on your Content Type that is configured to have optimization/transformation convert to a supported format like jpg or png.
+
+If you would like to have more flexible image variant selection, [send us some feedback on our roadma](https://roadmap.kentico.com/tabs/6-next-refreshes)p explaining your use cases 👍.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-24 19:57:28Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>89c5e243-7f35-49d9-886b-cdb26ebf1e0f</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Question-regarding-automatic-image-file-type-conversion-2124c789-5y5otjut</CodeName>
+    <GUID>7d6bbba9-ca4a-4cf0-83d1-26c561d841a7</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>e034e534-d34d-4c0e-91cf-29b34d6b4008</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Migration-Tool-migrates-UserPassword-for-Members-cec6a8e9-nhdryvbl</CodeName>
+      <GUID>ac823c82-664b-42cf-bd21-5fb24efc597d</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>0890ea6b-a1e2-4114-8f18-14f7d97bb468</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>c6cee3b8-1daa-4c4a-9a60-4e60a11f93d0</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>2</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+During migration using the Kentico Migration tool from K12 MVC to Xperience by Kentico, when migrating users/members I included some required user fields. This results in an issue during member registration since the some of these fields are required and considered "fundamental" in the CMS so it cannot be changed or deleted. I have looked at the Class XMLSchema and FormDefinition and don't see where this field is being marked as such. How do I remove migrated "fundamental" fields?
+
+I realize I can go back and modify the migration following this [documentation](https://github.com/Kentico/xperience-by-kentico-kentico-migration-tool/blob/master/Migration.Tool.CLI/README.md#members) However, at this time I am unable to redo the migration.
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.3.1]
+* .NET version: \[8]
+* Execution environment: \[local]
+* Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-04-01 22:36:23Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-04-01 22:53:37Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

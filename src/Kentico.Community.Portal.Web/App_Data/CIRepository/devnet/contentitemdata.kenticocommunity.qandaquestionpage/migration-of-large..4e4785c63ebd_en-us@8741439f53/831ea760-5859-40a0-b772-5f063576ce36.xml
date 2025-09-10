@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>954e6a3a-e7d7-4216-a009-4e4785c63ebd</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Migration-of-large-amount-of-assets-and-a-large-database-07acee89-qxvru7lf</CodeName>
+      <GUID>11b341a2-9890-4f28-a8c3-ee62c8c9f47b</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>831ea760-5859-40a0-b772-5f063576ce36</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>3ef86156-c6fb-4ea0-a816-a1c246e276e5</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I have a XbK v30.8.0 solution with 4 sites that was a migration from Kentico 12 to XbK that has an /assets (and therefore \$StorageAssets) folder with a size of nearly 14 GB and a database that is \~40GB.&#x20;
+
+How am I supposed to get this into SaaS? I can use Content Sync for some, CD for others but none of those tools seem to be able to handle this large of a data set.
+
+Is there some way for me to upload the \$StorageAssets folder to the Azure blob by myself or doe sit only happen during CD? The 2GB package limitation will not work.
+
+I know I can reach out to the SaaS team about placing my database, is that going to be the best bet to get everything there as quickly as possible? I have my CD's repository.config setup to only include bare minimum (sites, page types, countries / states, users...) currently but I can add some additional items there, but likely not all of it.
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.8.0]
+
+* .NET version: \[9]
+
+* Execution environment: \[SaaS]
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-08-07 06:05:51Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-08-07 06:05:51Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

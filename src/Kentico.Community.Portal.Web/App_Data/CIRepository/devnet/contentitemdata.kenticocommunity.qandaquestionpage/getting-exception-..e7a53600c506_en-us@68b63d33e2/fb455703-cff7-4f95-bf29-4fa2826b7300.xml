@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>0563c393-2626-44c2-a429-e7a53600c506</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Getting-exception-after-upgrading-to-30-9-1-a8037911-wkph1uu7</CodeName>
+      <GUID>d6e97d8c-1f46-4f48-b60e-d91ab46bb095</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>fb455703-cff7-4f95-bf29-4fa2826b7300</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>3</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+After upgrading to to 30.9.1 from 30.5.3 I am getting an error while accessing the admin ui or even running `dotnet run --xkp-ci-store`
+
+`fail: Kentico.Web.Mvc.KenticoErrorHandlingMiddleware[0]````System.Resources.MissingManifestResourceException: No manifests exist for the current culture.`
+
+***
+
+I have tried specifying  the DefaultCultureCode in program.cs
+
+```CSharp
+builder.Services.Configure<AdminLocalizationOptions>(options =>
+{
+    options.DefaultCultureCode = "en-US";
+    options.SupportedCultures = [
+        new AdminCulture { CultureCode = "en-US", DisplayName = "English (United States)" }
+    ];
+});
+```
+
+Revert to 30.8.3 and all is good.
+
+**Environment**
+
+* Xperience by Kentico version: \[30.9.1]
+
+* .NET version: \[8]
+
+* Execution environment: \[local]
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-08-30 19:35:22Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-08-30 19:35:22Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

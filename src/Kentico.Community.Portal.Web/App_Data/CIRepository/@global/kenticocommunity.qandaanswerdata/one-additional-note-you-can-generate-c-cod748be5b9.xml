@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>One-additional-note-you-can-generate-C-cod748be5b9</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+One additional note - you can [generate C# code files](https://docs.kentico.com/x/5IbWCQ) for Forms defined in your project.
+
+While it's not the form "schema", it is the form data structure. This could give you a strongly typed API for form retrieval or persistence.
+
+There's an example [in the Kentico Community Portal](https://github.com/Kentico/community-portal/blob/v30.1.0.11/src/Kentico.Community.Portal.Web/Components/Widgets/Activities/CommunityLeaderActivityListWidget.cs#L123).
+
+Maybe you can combine this with the [Form data management APIs](https://docs.kentico.com/api/digital-marketing/form-data#update-the-data-records-of-a-form) to get what you want. However, any custom validation or Form Component behavior (business rules baked into the Form itself) will not apply here.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-12 21:08:22Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>cba41db3-a660-422a-a50c-1154356ab661</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Best-Practices-for-Retrieving-a-Form-Schema-8d13bb73-tm6gqsmh</CodeName>
+    <GUID>b9679276-0673-49a5-a908-f35e44e01ebb</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>dc609851-ab9c-436c-9e99-5c5216d1560f</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>The-way-React-component-actions-and-backenb94a3dba</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+The way React component actions and backend Page endpoints are glued together is [described in the documentation](https://docs.kentico.com/x/4ASiCQ).
+
+Using the `[PageCommand]` attribute you associate a command name with a public method on a `Page` class
+
+```CSharp
+[PageCommand(CommandName = "EXPORT_LIST")]
+public async Task<ICommandResponse> PageCommandHandler(CancellationToken cancellationToken = default)
+{
+   // command behavior ...
+}
+```
+
+From [RecipientListOverviewExtender.cs](https://github.com/Kentico/community-portal/blob/v30.1.0.1/src/Kentico.Community.Portal.Admin/Features/RecipientLists/RecipientListOverviewExtender.cs#L65)
+
+You call the command in your React code using the `usePageCommand` hook.
+
+```TSX
+// Define how the hook operates
+const { execute: dataExport } = usePageCommand<SubscriberExportResult>(
+    'EXPORT_LIST', // Matches PageCommand attribute CommandName property
+    {
+      // configure the client-side behavior
+    });
+```
+
+Then you call that hook to call the back-end command handler.
+
+```TSX
+useEffect(() => {
+    setState((s) => ({ ...s, status: 'EXPORTING' }));
+    dataExport() // Calling my C# PageCommandHandler method
+      .then(() => setState((s) => ({ ...s, status: 'COMPLETE' })))
+      .catch((err) => {
+        console.error(err);
+        setState((s) => ({ ...s, status: 'FAILURE' }));
+      });
+```
+
+From [DataExportComponent.tsx](https://github.com/Kentico/community-portal/blob/v30.1.0.1/src/Kentico.Community.Portal.Admin/Client/src/components/DataExportComponent.tsx#L60)
+
+
+
+It might feel like there's less gluing these front and back-end components together than there should be, but what it enables is you can make a more generic React component and load it on _any_ page in the administration.
+
+As long as the back-end `Page` class has a command handler to handle the React component's commands and return a response in the shape the React component expects, you can mix and match Pages and React components.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-25 05:06:31Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>fb08f24b-2b49-435b-916d-8e0c91a40aad</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Can-I-export-Form-Submissions--b33eeb88-oewsz1hl</CodeName>
+    <GUID>3eb62e93-10eb-4fa3-a230-5cbe6afe560e</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

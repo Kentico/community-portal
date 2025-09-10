@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>The-item-manager-APIs-require-being-constrc807e85c</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+The item manager APIs require being constructed via a factory where you supply the current user ID.
+
+In your case you should be injecting `IHeadlessItemManagerFactory` and use it to create a new `IHeadlessItemManager`.
+
+Note that `IHeadlessItemManagerFactory` and `IHeadlessItemManager` are in an `.Internal` namespace, which means even though they are `public` we can make breaking changes to them at any time.
+
+If you would like to see improved support for programmatic management of headless channels, [give us some feedback on our roadmap](https://roadmap.kentico.com/tabs/5-released).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-01 23:40:52Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>431ec905-5410-46f7-b949-8a9f047c6fad</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Manually-update-Headless-item-Field-b9c673c1-0pokl83r</CodeName>
+    <GUID>9ba45834-2888-4c63-b485-0deeec5753c2</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

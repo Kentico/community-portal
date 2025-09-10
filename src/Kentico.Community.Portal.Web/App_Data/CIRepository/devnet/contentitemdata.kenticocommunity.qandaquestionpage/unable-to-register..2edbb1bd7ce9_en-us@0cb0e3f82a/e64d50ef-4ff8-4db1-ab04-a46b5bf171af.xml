@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>ff28af52-eb9f-44f3-9710-2edbb1bd7ce9</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Unable-to-register-the-email-builder-template-1cbc8866-f2m1pgsr</CodeName>
+      <GUID>8f03ab85-63f6-46c5-90d3-2e1f5064145e</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>e64d50ef-4ff8-4db1-ab04-a46b5bf171af</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>463b069c-0c55-45cf-8d7d-ea8d9882dc15</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>6</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+Hello friends
+
+I'm currently trying to register an email builder template for newsletter on XbyK v30.6.1 using the following code in the file *NewsletterEmailTemplate.razor.cs*:
+
+```CSharp
+[assembly: RegisterEmailTemplate(NewsletterEmailTemplate.IDENTIFIER, "Newsletter Email Template", typeof(NewsletterEmailTemplate),
+    Description = "Template for the newsletter email",
+    IconClass = "icon-newspaper",
+    ContentTypeNames = [NewsletterRelease.CONTENT_TYPE_NAME],
+    PropertiesType = typeof(NewsletterEmailTemplateProperties))]
+```
+
+On the program.cs, I initialized the `features.UseEmailBuilder();` and also configured it:
+
+```CSharp
+.Configure<EmailBuilderOptions>(options =>
+{
+    // Enter the code names of all email content types where you wish to use Email Builder
+    options.AllowedEmailContentTypeNames = [nameof(NewsletterRelease.CONTENT_TYPE_NAME)];
+    // Replace the default Email Builder section with the MJML full-width section provided by the Starter Kit
+    options.RegisterDefaultSection = false;
+    options.DefaultSectionIdentifier = FullWidthEmailSection.IDENTIFIER; 
+})
+```
+
+I don't see any issues when building the project and when loading the admin site, I cannot see the template listed:&#x20;
+
+![1.00](https://i.postimg.cc/28jRKB2d/image-19.png)
+
+\
+\
+I'm not sure if this is a known bug or if I'm missing something. Also, if there is a way to enable debugging when the email templates are being registered on the startup, let me know, so I can enable it and share the logs. The event logs are empty on my side.\
+\
+Any hint is always welcome! thank you
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-07-02 22:25:27Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-07-02 23:06:33Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

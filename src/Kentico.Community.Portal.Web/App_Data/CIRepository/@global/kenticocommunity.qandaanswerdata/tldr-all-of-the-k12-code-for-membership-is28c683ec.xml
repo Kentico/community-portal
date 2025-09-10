@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>TLDR-All-of-the-K12-code-for-membership-is28c683ec</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+TLDR; All of the K12 code for membership is gone. XbyK is based completely on modern ASP.NET Core features, including Identity.
+
+***
+
+1. Correct, members and users are _completely separate_ in Xperience by Kentico. Members only have access to the customer experience of various channels and users only have access to the Xperience administration UI.  They are stored in different tables in the db and have different security rules applied to them based on how you configure your application (ex: MFA, cookie expiration, SSO, etc...)
+2. Both user and member authentication uses standard ASP.NET Core Identity for passwords - nothing special, nothing custom. You can view the code for [the password hasher used by Identity](https://source.dot.net/#Microsoft.Extensions.Identity.Core/PasswordHasher.cs,f120517802334c3b). The [default password hash iteration count](https://source.dot.net/#Microsoft.Extensions.Identity.Core/PasswordHasherOptions.cs,33) is 100,000 iterations!
+3. You can [read more details about ASP.NET Core's implementation of password hashing](https://andrewlock.net/exploring-the-asp-net-core-identity-passwordhasher/#the-default-passwordhashertuser-implementation), but here's two things to consider:
+
+   1. It's security by default.
+   2. You don't want to customize it.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-04-01 03:14:23Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>3ef80131-8492-4638-85ac-ad5f33c12cb3</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-are-passwords-hashed--0986f43c-e9qxjhq4</CodeName>
+    <GUID>d64b7de8-0638-47fa-bebf-1c5f9bb648b7</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

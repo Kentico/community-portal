@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>e95d38ce-fe8e-4860-b374-eb48d677dab1</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>The-following-reusable-field-schemas-do-not-exist-e950aa1c-5lua4yzm</CodeName>
+      <GUID>4859c320-0447-4b6a-a772-caefd81279d7</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>42655890-0e25-47de-b62e-26b3fc812c42</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>8c9848f4-4357-4c38-b0fe-740619b7bed9</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>5</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+Some web page types inherit from a reusable schema, some do not. The below query for my sitemap throws the error "The following reusable field schemas do not exist 'BasePage'". I ran codegen for the content types and reusable schema types. I am not sure why I am getting this error.
+
+```
+var b = new ContentItemQueryBuilder()
+    .ForContentTypes(c => c
+        .OfReusableSchema(IBasePage.REUSABLE_FIELD_SCHEMA_NAME)
+        .ForWebsite(website.WebsiteChannelName))
+    .InLanguage(preferredLanguageRetriever.Get());
+```
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.3.1]
+
+* .NET version: \[8]
+
+* Execution environment: \[local]
+
+* Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-05-10 21:39:51Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-05-12 23:54:08Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

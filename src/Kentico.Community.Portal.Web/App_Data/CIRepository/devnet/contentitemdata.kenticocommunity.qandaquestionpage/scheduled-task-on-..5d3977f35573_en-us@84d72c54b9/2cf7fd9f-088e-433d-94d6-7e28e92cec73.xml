@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>1f2fcc6d-a078-421e-ada9-5d3977f35573</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Scheduled-Task-on-all-instance-with-Auto-Scaling-414e0d7b-3ao2fwmu</CodeName>
+      <GUID>7baa1f81-8b1c-451c-b7d9-07dd7667f612</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>2cf7fd9f-088e-433d-94d6-7e28e92cec73</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>d0595e20-781f-4dab-8059-0209e1e8e568</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>5</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+In the documentation for Scheduled Tasks, it says that in an auto-scaling scenario, a random instance will be selected when the task is run or on the specific instance when manually run. I am trying to figure out if there is a way to run a scheduled task at the same time on all instances. This would is necessary if I want to perform some sort of task that interacts with the filesystem such as rebuilding a search index or moving files around. If there were to be a way to force tasks to run on all instances, this would be very helpful.
+
+Thanks!
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: 30.4.1
+* .NET version: 8
+* Execution environment: Private cloud (Virtual machine)
+* <https://docs.kentico.com/developers-and-admins/customization/scheduled-tasks>
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-05-01 23:19:37Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-05-01 23:19:37Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

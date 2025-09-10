@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>f11dda1a-86ae-4aba-b317-9f50a6467c61</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Joined-data-no-longer-available-in-InfoProvider-Typed-Results-GetValue-abd700f4-m5js7vhq</CodeName>
+      <GUID>d7f3db23-b394-4b83-92c6-6bbce6dced86</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>f4c5daaa-4d82-460d-9a74-674e139f543f</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>933eba51-80f5-4e36-bb71-6ea40167c19b</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>6</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+In KX13 and below, when you performed a join (`Source`) using the InfoProvider classes, the joined data was returned with the `TypedResult` and you could access it.
+
+
+
+In Xperience by Kentico, if you map to the TypedResult (ex `GetEnumeratedTypedResultAsync()`), that data is now scrubbed and not available.
+
+
+
+example:
+
+```
+var items = await _mediaFileInfoProvider.Get()
+    .Source(x => x.InnerJoin<MediaLibraryInfo>(nameof(MediaFileInfo.FileLibraryID), nameof(MediaLibraryInfo.LibraryID)))
+    .Columns(nameof(MediaFileInfo.FileName), nameof(MediaLibraryInfo.LibraryDisplayName))
+    .GetEnumerableTypedResultAsync();
+
+// KX13 and below this works
+items.First().GetStringValue(nameof(MediaLibraryInfo.LibraryDisplayName), string.Empty);
+
+// Xperience by Kentico this no longer returns
+items.First().GetStringValue(nameof(MediaLibraryInfo.LibraryDisplayName), string.Empty);
+          
+```
+
+
+
+Common use cases were to join on a Foreign Key ID field to the actual referenced entity so you could retrieve additional data.
+
+
+
+(rhetorical question as I am going to answer with the answer), how do you retrieve this data in Xperience by Kentico?
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-01-06 20:32:37Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-01-06 20:32:37Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

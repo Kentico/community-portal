@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>837fcb69-8b2c-4d98-8078-4760f105db3c</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Media-Library-when-using-dedicated-administration-domain-50ca2f35-vwlfvlxa</CodeName>
+      <GUID>6f143c37-02de-4107-b8e7-8ebf27434cce</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>ff65f93a-5482-490f-8184-7cd572f0739d</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>845fbbdd-9c54-4b0b-936c-74775e4b7f20</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>7</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+We have a client website that was using `domain.co.uk` as the web channel URL, and `domain.co.uk/admin` for the admin URL.
+
+We are now changing this to follow best practises by using a [dedicated sub-domain](https://docs.kentico.com/developers-and-admins/configuration/administration-domain-configuration#benefits-of-a-dedicated-administration-domain), which would now be `admin.domain.co.uk/admin`.
+
+The admin site is working fine, pages in the content tree load fine, etc. However, there are issues with images in the Media Library on the admin site. The image preview and URLs are being generated using the new sub-domain, which breaks them as they're not available through it.
+
+E.g. `https://admin.domain.co.uk/getmedia/83b7c56c-f783-4e37-b895-aec4faaab0fe/book-grey.jpg`
+
+Is there a recommended approach to fixing this? Am I missing a setting to control this, or do we need to add a redirect/rewrite for forwarding requests to the channel URL?
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-02-27 16:58:03Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-02-27 16:59:12Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

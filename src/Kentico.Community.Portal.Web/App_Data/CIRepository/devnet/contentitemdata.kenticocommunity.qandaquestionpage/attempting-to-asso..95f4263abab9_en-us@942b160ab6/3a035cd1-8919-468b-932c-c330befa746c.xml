@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>ed2dbcbe-76d9-4eef-9452-95f4263abab9</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Attempting-to-associate-templates-with-pages-from-migration-0f477682-thuk3itm</CodeName>
+      <GUID>3045cba7-2ab2-47b9-88b1-b7d68261cb42</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>3a035cd1-8919-468b-932c-c330befa746c</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>bf7e2e2d-9e52-4e49-8051-bf9094ccdcaf</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>1</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I am attempting to associate pages that I migrated over from an older instance with new page templates that were created for items of that type, but I am getting this error:
+
+
+
+```CSharp
+InvalidOperationException: The web page (WebPageItemID: '7096', Content type: Convenience.Page) is requested to be rendered via a page template (called 'TemplateResult' in a MVC controller). However, the web page does not have a page template assigned. Re-create the page and select a page template during the web page creation process.
+```
+
+***
+
+Is there a way to assign a template to these pages without having to re-create them or else what is the point of migrating them over? There are literally thousands of pages and so re-creating them all isn't really an option. I've been trying to see if there is somewhere in the database that it assigns a template value but have not been able to successfully locate it.&#x20;
+
+
+
+Any help would be most appreciated.
+
+
+
+**Environment**
+
+* Xperience by Kentico version: \[30.0.0]
+* .NET version: \[8]
+* Execution environment: \[SaaS, but localhost]
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-03-12 02:43:32Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-03-12 02:43:32Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

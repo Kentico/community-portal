@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>3f53e08b-3ec9-489c-993f-45785aa0e70d</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>What-is-the-best-approach-to-enforce-unique-values-in-a-Module--8b67bd70-pg0202c8</CodeName>
+      <GUID>58cb54da-719d-4764-9016-5ca1ee9d0b0e</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>4b179220-475b-438f-ba1c-4393b4cd4db0</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>7</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+What is the best approach to enforce unique values in a Module?
+For example, consider a list of shops with a field named 'ShopCode'. We want to make sure that the content editor can only enter unique ShopCodes.
+
+One solution is to create a validation rule, such as 'UniqueShopCodeValidationRule', which checks if an item with the entered ShopCode already exists and apply this rule to the 'ShopCode' field using the field editor.
+A drawback is that the 'UniqueShopCodeValidationRule' could also be applied to other fields, although the advantage is that we can provide the content editor with a message if the shop code already exists.
+
+With the IInfoObjectEventHandler we could also perform this check, but I don't see how we could display a message to the content editor indicating that the shop code already exists.
+Am I overlooking another possible approach?Describe your question...
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.6.0]
+
+* .NET version: \[8|9]
+
+* Execution environment: \[Azure]
+
+* <https://docs.kentico.com/documentation/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/ui-form-component-validation-rules#register-validation-rules>
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-07-31 17:01:28Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-08-06 17:52:08Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

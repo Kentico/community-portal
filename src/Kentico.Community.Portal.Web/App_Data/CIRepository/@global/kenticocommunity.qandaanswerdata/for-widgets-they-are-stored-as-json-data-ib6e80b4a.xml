@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>For-Widgets-they-are-stored-as-JSON-data-ib6e80b4a</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+For Widgets, they are stored as JSON data in the CMS\_ContentItemCommonData.ContentItemCommonDataVisualBuilderWidgets table/column.
+
+Creating widgets programmatically may be possible, but not easy.  I don't think there's many APIs for it, most of the classes are internal sealed.  You would have to create your own mimic-classes of the different Page Builder classes and serialize, which i did in my KX12 Portal to KX13 migration toolkit, so overall, i wouldn't assume you can.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-04-23 23:39:53Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>ac35a537-4830-425a-9e56-cc3e984f2530</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-widget-data-is-stored--475039a1-hqhog1fc</CodeName>
+    <GUID>c9e09cfe-5cff-4ee7-a100-6eb4914db826</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

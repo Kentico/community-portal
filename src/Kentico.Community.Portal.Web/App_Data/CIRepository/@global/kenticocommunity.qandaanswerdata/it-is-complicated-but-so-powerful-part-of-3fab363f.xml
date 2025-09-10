@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>It-is-complicated-but-so-powerful-Part-of-3fab363f</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+It is complicated but so powerful. Part of the reason it’s complicated is that migrations and content model transformations are complicated.
+
+We’ve done a few migrations using the K13 Migration Tool, and the result was an XbyK-optimized content model, \*but\* there are cases where we chose to do something more custom and used the Universal Migration Tool.
+
+The K13 Migration tool works great when the K13 project has a decent content model because it needs to migrate everything, to manage parent-child relationships and other content linking. However, we transform the model \*every time\* using mapping classes and other extension points.
+
+It allows us to do things like:
+
+* Redefining types to use shared reusable schemas
+
+* Mapping multiple types to one type
+
+* Mapping custom selector fields to native XbyK selectors
+
+* Controlling what’s migrated as reusable content
+
+* Migrating categories to taxonomy
+
+* Transforming page builder configurations (This even allowed us to map configurations from a huge set of K13 widgets to a consolidated set of XbyK widgets.)
+
+* Transforming tree hierarchies into linked content
+
+
+
+It would take a lot of work to handle all of this from scratch, but it is still not easy.
+
+
+
+Some of the things that make it easier is having a few people become well-practiced experts at using the tool, and auto-generating mapping classes based on definitions in a spreadsheet.
+
+
+
+Sometimes it isn’t the right tool. For example, we're migrating content for a site that looks like it originated as a Portal Engine site. Each page is made up of deep hierarchies of nodes, where there is a node representing every container and element on a page (e.g. Page content, section, column, content block, etc). Even the blogs are constructed this way.
+
+
+
+For that project, we're going to query the K13 database directly for all the blog nodes, with titles, URLs, and metadata, and then create ContentItemSimplifiedModel objects for each blog. Before feeding each object into the UMT, we’ll scrape the legacy blog body and add it to the simplified model.
+
+
+
+The UMT works really well. We used it with the Sitecore Migration Tool and before feeding each exported content item, we were able to map each item to a new model \*before\* feeding it to the UMT. We ignored all the types exported from Sitecore and were able to migrate all the content into an XbyK-optimized content model using taxonomy, reusable schemas, and reusable content.
+
+
+
+So, I agree it’s complicated—I’m still getting used to delegate-based extensions—but the payoff is pretty good. It’s powerful and handles a lot of challenging things for us.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-19 07:42:08Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>63940266-122b-4222-83b4-fc353f91e42f</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Experience-with-the-Kentico-Migration-Tool-bf9e7259-3d9zoepb</CodeName>
+    <GUID>539a638e-4130-49e6-bc8b-237d98cc116c</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

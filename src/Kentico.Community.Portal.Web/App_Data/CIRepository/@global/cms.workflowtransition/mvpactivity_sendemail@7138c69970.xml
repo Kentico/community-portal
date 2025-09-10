@@ -2,11 +2,11 @@
 <cms.workflowtransition>
   <Parent>
     <CodeName>SendEmail</CodeName>
-    <GUID>add59d42-72ad-4b46-ac3a-6c37b2f8f2f3</GUID>
+    <GUID>3b2bb424-ce99-441e-bf9e-6cdca3726d49</GUID>
     <ObjectType>ma.automationstep</ObjectType>
     <Parent>
       <CodeName>MVPActivity</CodeName>
-      <GUID>f82561c0-2f3c-439f-acf1-5deb0e70712a</GUID>
+      <GUID>7e50b330-5b15-43b8-85cf-c4a6d8fec2a5</GUID>
       <ObjectType>ma.automationprocess</ObjectType>
     </Parent>
   </Parent>
@@ -14,19 +14,19 @@
     <Binding id="ma.automationstep_Finish_ma.automationprocess_MVPActivity-ma.automationstep_Finish_ma.automationprocess_MVPActivity">
       <TransitionEndStepID>
         <CodeName>Finish</CodeName>
-        <GUID>b1b39349-e7db-4560-b104-d2440e6b53cd</GUID>
+        <GUID>a707f2dc-8cd5-44d3-820a-57bfe83ffe53</GUID>
         <ObjectType>ma.automationstep</ObjectType>
         <Parent>
           <CodeName>MVPActivity</CodeName>
-          <GUID>f82561c0-2f3c-439f-acf1-5deb0e70712a</GUID>
+          <GUID>7e50b330-5b15-43b8-85cf-c4a6d8fec2a5</GUID>
           <ObjectType>ma.automationprocess</ObjectType>
         </Parent>
       </TransitionEndStepID>
-      <TransitionSourcePointGUID>af243c5d-bfd3-4ac7-b78a-4351c0819da1</TransitionSourcePointGUID>
+      <TransitionSourcePointGUID>81445ff0-71b3-41cf-ad2c-3601a4e31f81</TransitionSourcePointGUID>
       <TransitionType>1</TransitionType>
       <TransitionWorkflowID>
         <CodeName>MVPActivity</CodeName>
-        <GUID>f82561c0-2f3c-439f-acf1-5deb0e70712a</GUID>
+        <GUID>7e50b330-5b15-43b8-85cf-c4a6d8fec2a5</GUID>
         <ObjectType>ma.automationprocess</ObjectType>
       </TransitionWorkflowID>
     </Binding>

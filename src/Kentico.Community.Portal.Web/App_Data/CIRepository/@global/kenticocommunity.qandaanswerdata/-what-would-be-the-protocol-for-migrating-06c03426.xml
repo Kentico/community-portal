@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-What-would-be-the-protocol-for-migrating-06c03426</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+> What would be the protocol for migrating a K12 MVC site with no templates to an Xperience site with templates?
+
+Page template data in Xperience by Kentico is stored in the database in `CMS_ContentItemCommonData.ContentItemCommonDataVisualBuilderTemplateConfiguration`.
+
+Returning to the Community Portal example, a blog post page would have the following JSON in this column.
+
+```JSON
+{
+    "identifier": "KenticoCommunity.BlogPostPage_Default",
+    "properties": null,
+    "fieldIdentifiers": null
+}
+```
+
+This means you could pre-populate this column when using the Kentico Migration Tool to migrate K12 Nodes/Documents to XbyK web page items.
+
+> Also, I dont see any examples where multiple content types are using one template.
+
+Correct, that is an approach I haven't needed but it's fully supported.
+
+The Kentico Community Portal uses separate templates for each web page content type so that these can evolve independently of each other, but it does have [a general "Landing Page" catch-all content type with templates](https://github.com/Kentico/community-portal/tree/v30.2.2.1/src/Kentico.Community.Portal.Web/Features/LandingPages) which is used for basic content pages.
+
+You can see that [Page Templates are registered with an attribute](https://github.com/Kentico/community-portal/blob/v30.2.2.1/src/Kentico.Community.Portal.Web/Features/LandingPages/LandingPageTemplates.cs#L9) and one of the attribute properties is an array of content types that can use the registered template.
+
+```CSharp
+[assembly: RegisterPageTemplate(
+    identifier: "KenticoCommunity.LandingPage_Default",
+    name: "Landing Page - Default",
+    propertiesType: typeof(LandingPageDefaultTemplateProperties),
+    customViewName: "/Features/LandingPages/LandingPage_Default.cshtml",
+    ContentTypeNames = [LandingPage.CONTENT_TYPE_NAME],
+    Description = "Default Landing Page template with a heading",
+    IconClass = "xp-l-header-text"
+)]
+```
+
+If you want the template to be available to more than one content type then populate the `ContentTypeNames` array with multiple content type names - nothing magic here!
+
+You can also use the older approach of [defining and registering](https://docs.kentico.com/x/ionWCQ) an `IPageTemplateFilter`, but I find `ContentTypeNames` handles all the filtering I need.
+
+If you don't define any filters and don't provide a value to `ContentTypeNames` then your page template will be available **to all web pages**.
+
+You can then use C# pattern matching to determine which view model type your template is being provided for the current request.
+
+```
+@model TemplateViewModel<MyTemplateProperties>
+
+@{
+    var templateModel = Model.GetTemplateModel<AViewModelBaseClassOrInterface>();
+}
+
+@if (templateModel is HomePageViewModel homeModel)
+{
+    <h1>...</h1>
+}
+else if (templateModel is ContactUsViewModel contactModel)
+{
+    <!-- ... -->
+}
+
+@* ... *@
+```
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-19 18:20:32Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>48fb4562-b3dc-4cef-a5bd-992b6e868d13</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Thoughts-on-templates-vs-content-type-based-pages-ff6d0e09-0tt513w0</CodeName>
+    <GUID>257e0d12-c5fe-4f0b-9bb0-050007543b1d</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

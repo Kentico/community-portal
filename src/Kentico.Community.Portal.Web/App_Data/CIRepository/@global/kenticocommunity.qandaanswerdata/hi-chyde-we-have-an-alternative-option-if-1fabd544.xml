@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Hi-Chyde-We-have-an-alternative-option-if-1fabd544</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Hi Chyde,
+
+\
+We have an alternative option if you are using a specific object type, reference to this <https://docs.kentico.com/documentation/developers-and-admins/customization/handle-global-events/handle-object-events>
+
+
+
+```
+public class CustomObjectBeforeUpdateHandler : IInfoObjectEventHandler<InfoObjectBeforeUpdateEvent<CustomObjectTypeInfo>>
+```
+
+
+
+Agree with you Sean, Thanks for correcting me, here we have an reference to the handler [https://api-reference.kentico.com/api/CMS.ContentEngine.ContentItemEventHandler-1.html and](https://api-reference.kentico.com/api/CMS.ContentEngine.ContentItemEventHandler-1.html)&#x20;
+
+Nikhila R
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-07-07 22:31:18Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>5d11e160-0b58-4154-8948-8039d3b089db</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Substitute-for-old-DocumentEvents-Copy-Before-After-in-XbyK--1ce694cb-gjuvi40r</CodeName>
+    <GUID>1995ade9-12f3-411c-8ea6-e444e6193892</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

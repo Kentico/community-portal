@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-TLDR-Use-Xperience-s-IProgressiveCache-anda9f2147</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+#### TLDR
+
+Use Xperience's `IProgressiveCache` and move on to higher value work for your client.
+
+#### HybridCache
+
+[HybridCache](https://learn.microsoft.com/en-us/aspnet/core/performance/caching/hybrid?view=aspnetcore-9.0) was created to solve problems when switching from [IMemoryCache](https://learn.microsoft.com/en-us/aspnet/core/performance/caching/memory?view=aspnetcore-9.0#use-imemorycache) to [IDistributedCache](https://learn.microsoft.com/en-us/aspnet/core/performance/caching/distributed?view=aspnetcore-9.0#idistributedcache-interface). You can basically think of it as a replacement for both with additional features.
+
+In Xperience [we have IProgressiveCache](https://docs.kentico.com/x/w4LWCQ), which was created before `HybridCache` existed, but has many of the same capabilities.
+
+Xperience does distributed caching through [our web farm support](https://docs.kentico.com/x/SI3WCQ), which coordinates cache eviction through web farm tasks synchronized through the database. This requires more database resources than an external cache, like Redis, but with ***much less complexity*** and ***doesn't require the cost*** of an additional external service.
+
+Web farms also help with server restarts since a proxy server can send traffic to a different web farm server while one is restarting. Yes, the cache would need to be regenerated on the server after the restart, but externally cached data (ex: Redis) needs to be retrieved via HTTP request in this scenario anyway! You are effectively trading a SQL request for an HTTP request, but the point of a cache is to make these kinds of trades since most requests will be handled by cached data.
+
+So, `IProgressiveCache` already supports L1 and L2 caching without Xperience developers needing to think about how it works.
+
+What is the benefit of a Redis cache vs in-memory cache synchronized through SQL? Scalability - you can scale Redis independent of your SQL Server. But this is *only* a benefit if you **need** that scalability.
+
+> I have a custom solution for tagging cache entries in place already ... the only problem is HybridCache is still in preview
+
+I have a few questions:
+
+1. What problem are you trying to solve by creating a custom cache solution?
+2. Is this something your solution *requires*?
+3. Are you sure that `IProgressiveCache` won't work?
+4. Does the custom cache solution truly help your client?
+5. is using an "in preview" technology worth it given the engineering cost?
+
+Umbraco adopted `HybridCache` because their existing caching solution was old and didn't handle their customer's needs - they couldn't really continue to use what they had.
+
+If we see a benefit in switching to `HybridCache` in the future (I had a discussion with one of our architects about it in June 2024) then we'll probably do that in a way that is transparent to developers to avoid breaking changes, but as of now we just don't see the need because we already designed a good API and caching architecture.
+
+#### FusionCache
+
+Yep, it's an awesome library, but the same argument applies here - `IProgressiveCache` already does everything needed in most Xperience solutions with 0 extra engineering cost.
+
+I would recommend sticking with Xperience's caching architecture for now.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-07 20:09:16Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>78099d8a-cef8-457a-91c5-c30f1032ef48</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Hybrid-Caching-in-Xperience-c2263533-ejlcl6hl</CodeName>
+    <GUID>1a78ae2a-a8e9-4f5f-91ea-b92f028e4235</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

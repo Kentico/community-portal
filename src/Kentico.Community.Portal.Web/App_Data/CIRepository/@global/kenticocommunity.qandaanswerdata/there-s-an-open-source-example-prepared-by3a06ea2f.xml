@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>There-s-an-open-source-example-prepared-by3a06ea2f</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+There's an open-source example prepared by our senior support special Eric over on his GitHub account.
+
+<https://github.com/kentico-ericd/xperience-multichannel-sample>
+
+
+
+There isn't any magic in setting these things up - you still need to explicitly assign different widgets to your `<editable-area>` widget restrictions, map page template controllers to specific channels, and use the right component code in the right `_Layout.cshtml` or templates Razor views.
+
+
+
+The biggest difference between an application with 1 set of components and assets managed directly in a single ASP.NET Core project and an application that consumes multiple libraries with separate components is the code organization. You are separating the components and services for the benefit of the team - everything still gets deployed together.
+
+***
+
+As a side note, I don't usually use the term RCL (Razor class library) because it makes it seem like you can only put Razor code in it.
+
+In fact every RCL is just a regular .NET library with the addition of some [MSBuild](https://github.com/Kentico/xperience-by-kentico-email-builder-starter-kit/blob/v1.1.0/src/Kentico.Xperience.Mjml.StarterKit.Rcl/Kentico.Xperience.Mjml.StarterKit.Rcl.csproj#L1) and [ASP.NET Core specific configuration](https://learn.microsoft.com/en-us/aspnet/core/blazor/hybrid/class-libraries?view=aspnetcore-9.0) *and* you can put anything in it, like service classes, tag helpers, view components, Razor components (for [the Email Builder](https://docs.kentico.com/x/email_builder_xp)), static assets, or `.resx` files for localization. Then you consume it in your application [following the ASP.NET Core documentation](https://learn.microsoft.com/en-us/aspnet/core/mvc/advanced/app-parts?view=aspnetcore-9.0).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-08-12 18:56:53Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>3f7fbdf9-8744-40f2-84cb-1cea558f588f</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Manage-multiple-websites-5d74fce9-o35bje6g</CodeName>
+    <GUID>c9006ddb-6ddb-4452-9533-aab30dc910cd</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

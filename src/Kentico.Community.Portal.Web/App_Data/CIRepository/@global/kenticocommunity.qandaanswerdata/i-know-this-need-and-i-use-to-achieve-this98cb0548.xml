@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>I-know-this-need-and-I-use-to-achieve-this98cb0548</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+I know this need and I use to achieve this with a combination of radios and different selectors, which depend on the radio option. Kentico can toggle visibility for fields depending on another field.
+
+I would use selectors which store a reference to the item, not store the URL as string. You should keep usage tracking and URL configuration working.\
+The backend can use different providers and helpers to get URLs from any referenced item type.
+
+Maybe you can implement this combination as reusable field schema. Doing this, you would be able to use it on multiple content types. The view model constructor can also use a provider for that reusable field schema. So it can be inherited as well.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-13 21:38:03Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>b564819e-ee55-4bff-8ebe-4aae97746598</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-to-Create-a-Custom-Data-Type-for-Combined-URL-or-Page-Selector-in-Xperience-by-Kentico--ynesdkig</CodeName>
+    <GUID>74226c3c-0424-4394-8c98-661dfa6fc4e3</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

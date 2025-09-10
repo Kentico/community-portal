@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-These-elements-are-created-by-the-admin-aed4dfed5</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+> These elements are created by the admin, and it should not be possible for a user to create them, because there is only one for each static widget.
+
+Workspaces don't enable that kind of control today. The Content hub leans more towards supporting content editing and visibility control more than content creation control.
+
+> Is there a way to limit the available content types in Content Hub
+
+No, not today. This also applies to web page content types in website channels. You cannot directly restrict which types of web page content types a marketer can use through configuration.
+
+You *can do this in an indirect way* by limiting which web page content types can be used with allowed web page content types and scopes, and then combine this with web site channel page tree permissions for marketers.
+
+If you need the ability to limit specific content creation to administrators only then [request this on our roadmap](https://roadmap.kentico.com/tabs/5-released) and share your use-case.
+
+### Workaround
+
+As an alternative solution, developers can model this "restricted" content as a [custom object type](https://docs.kentico.com/x/AKDWCQ) and design the administration UI for managing it to only allow 1 instance of this data. This data can then link to content items in the Content hub and also be linked to in Page Builder component properties.
+
+Our [guide on creating a custom settings application](https://docs.kentico.com/x/create_basic_module_guides) uses this approach and the Kentico Community Portal does this [for website channel settings](https://github.com/Kentico/community-portal/blob/v30.2.2.1/src/Kentico.Community.Portal.Admin/Features/PortalWebsiteSettings/PortalWebsiteSettingsEditPage.cs#L39).
+
+![1.00](/getContentAsset/4f075ec6-667d-4479-a7f4-060b82277452/f6c98f2d-65fc-44ba-9351-3f0beda8e921/Screenshot-2025-04-07-111200.webp?language=en-US)
+
+In this screenshot, the administrator edits a custom object type but each of the fields is linking to a content item managed in the Content hub. There can be only 1 instance of this "settings", but there can be multiple instances of the linked content items. This is ok because they can't be used without selecting them here in this settings UI and permissions are restricted for this custom application.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-04-07 19:20:00Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>4d57d7b4-ffd2-4b5f-b73f-4e228b2131da</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Best-way-to-limit-a-user-in-creating-Content-in-a-workspace-in-ContentHub-91d35029-pt7pj9qv</CodeName>
+    <GUID>407eb05b-bd15-4bce-91fa-72838979e374</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>It-still-is-not-clear-to-me-what-you-are-a86fd5a00</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+It still is not clear to me what you are asking about.
+
+The `SupportEmailSender` class that you linked to makes sure emails are sent to website visitors when they submit a form. That form is _**not**_ created with the Form Builder, which is why I need to programmatically send the email in code.
+
+If the form was created with the Form Builder I could use an automation or form autoresponder, and both are configured in Xperience's administration UI, not in code.
+
+The email recipient data for the email sent in `SupportEmailSender` comes from the form data submitted by the visitor. There's nothing special going on here. The `ContactInfo` comes from `ContactManagementContext.CurrentContact` as you can see [in the source code](https://github.com/Kentico/community-portal/blob/v30.8.1.2/src/Kentico.Community.Portal.Web/Features/Support/SupportEmailSender.cs#L86).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-08-18 17:12:57Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>454cb8ab-116a-44e2-b14f-bd0c29bb7064</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-to-get-recipient-link-to-which-email-channel-or-email-template-via-code--83ffa69d-phxzktrp</CodeName>
+    <GUID>3e84d660-1fcb-4a3a-a03e-868d561938ce</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

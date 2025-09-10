@@ -3,7 +3,9 @@
   <AutoresponderEmailBodyContentHTML>
     <![CDATA[<p>Hey {!ResolveDynamicText("Recipient.FirstName","there")!},</p><p>We noticed that you recently signed up for the Kentico Community Newsletter. We want to make sure you don't miss out on community news, insights, and events.</p><p>To start receiving our newsletter, please confirm your email address by clicking on the link below:</p><p class="brand-link" style="color: rgba(255, 129, 70, 1) !important">{!ResolveSubscriptionConfirmationLink("Confirm your subscription!","a4f0eaaa-9f80-4fd2-835b-9489991288b3")!}<br></p><p>We look forward to seeing you around the Kentico Community!</p><p>Cheers,</p><p>Kentico</p>]]>
   </AutoresponderEmailBodyContentHTML>
-  <AutoresponderEmailTitle>Confirm your subscription</AutoresponderEmailTitle>
+  <AutoresponderEmailTitle>
+    <![CDATA[Confirm your Kentico Community Newsletter Subscription]]>
+  </AutoresponderEmailTitle>
   <AutoresponderEmailUTMParameters>
     <![CDATA[{"ID":"99f22b2c-3439-440a-a3f7-524a3cce4b41","Source":"community","Medium":"email","Campaign":"newsletter-opt-in","Content":"","Term":""}]]>
   </AutoresponderEmailUTMParameters>
@@ -30,7 +32,9 @@ We look forward to seeing you around the Kentico Community!
 Cheers, Kentico
 ]]>
   </EmailPlainText>
-  <EmailPreviewText>Confirm ✅ your subscription!</EmailPreviewText>
+  <EmailPreviewText>
+    <![CDATA[Stay up to date with Kentico, the Kentico community, and Xperience by Kentico product announcements.]]>
+  </EmailPreviewText>
   <EmailSenderID>
     <CodeName>no-reply</CodeName>
     <GUID>24520bc4-cdda-401d-812a-e5a73699edac</GUID>
@@ -46,7 +50,7 @@ Cheers, Kentico
     </Parent>
   </EmailSenderID>
   <EmailSubject>
-    <![CDATA[Confirm your Kentico Community Newsletter Subscription]]>
+    <![CDATA[Confirm ✅ your Kentico Community Newsletter Subscription]]>
   </EmailSubject>
   <EmailTemplateID>
     <CodeName>CommunityAutoresponder</CodeName>

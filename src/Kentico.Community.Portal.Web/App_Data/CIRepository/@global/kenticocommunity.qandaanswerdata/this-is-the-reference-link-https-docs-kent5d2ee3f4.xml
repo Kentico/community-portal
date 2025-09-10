@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>dc609851-ab9c-436c-9e99-5c5216d1560f</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>this-is-the-reference-link-https-docs-kent5d2ee3f4</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+this is the reference link <https://docs.kentico.com/api/content-management/content-items#update-content-item-drafts>
+
+
+
+```
+var blogQuery =
+            await _webPageRetriever.HejazRetrieve<BlogModel>(
+                BlogModel.CONTENT_TYPE_NAME,
+                parameters =>
+                {
+                    parameters.Where(where => where.WhereEquals(nameof(BlogModel.UrlPath), request.UrlPath));
+                });
+
+        if (blogQuery == null)
+        {
+            return Models.Result<bool>.NotFound(
+                $"Blog with url path {request.UrlPath} not found");
+        }
+
+ContentItemData updatedBlogContentItem = new ContentItemData(new Dictionary<string, object>{
+            {
+                "LikeCount", blogQuery.LikeCount + 1
+            },
+        });
+
+        await _headlessItemManager.TryUpdateDraft(
+            3060,
+            "en",
+            updatedBlogContentItem,
+            cancellationToken);
+```
+
+blogQuery is data from headless Item, \_headlessItemManager is depedency from IHeadlessItemManager
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-04-30 18:26:44Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>655c6a90-0df9-4d46-a8b2-b47c020d1c72</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Manually-update-Headless-item-Field-b9c673c1-0pokl83r</CodeName>
+    <GUID>9ba45834-2888-4c63-b485-0deeec5753c2</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

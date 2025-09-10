@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>You-can-achieve-this-by-creating-a-custom-336fd795</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+You can achieve this by creating a custom widget, **ServiceCategoriesWidget**, which retrieves service categories and their related images (with titles) from the content tree.
+
+### Prerequisites
+
+Create the following **Page Types** in the content tree:
+
+1. **Service Categories** (Fields: *Service Category Name*)
+2. **Service Category Image** (Fields: *Service Category Image Title, Service Category Image*)
+
+
+
+### Content tree structure
+
+
+
+Services\
+├── Service Category 1\
+│ ├── Service Category Image 1\
+│ ├── Service Category Image 2\
+│ ├── ...\
+│ ├── Service Category Image N\
+│\
+├── Service Category 2\
+│ ├── Service Category Image 1\
+│ ├── Service Category Image 2\
+│ ├── ...\
+│ ├── Service Category Image N
+
+### Custom Service Category Widget
+
+#### **ServiceCategoriesWidget Properties**
+
+1. **Select Service Categories Root Path** (e.g., `/Services`)
+
+#### **ServiceCategoriesWidgetViewModel**
+
+Define a ViewModel according to your requirements to store category names and images.
+
+#### **ServiceCategoriesWidgetViewComponent**
+
+Implement the logic to retrieve service categories and their images from the content tree.
+
+#### **\_ServiceCategoriesWidget.cshtml**
+
+Render the retrieved data as per the desired HTML structure
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-14 15:50:48Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>17be7844-9fc7-4ba1-b692-64177faf2914</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Can-we-use-multiple-page-builder-with-data-that-comes-from-widget--b7f433b2-sj7h9le4</CodeName>
+    <GUID>bc1cea0b-6a35-47e7-9cc4-ea36b551fc3f</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

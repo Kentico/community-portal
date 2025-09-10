@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-Scheduled-tasks-are-for-short-lived-recur38d5abd2</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+[Scheduled tasks are for short-lived, recurring operations that don't require manual intervention](https://community.kentico.com/q-and-a/q/scheduled-task-workaround-to-get-scheduledtaskconfigurationdata-editable-in-ui-e2d386f4#answer_f45cf7e86996480d9b429913e9abfb52). Can you use them for other things? Yes, but you will begin to fight against their design.
+
+What you are trying to do is what the [web farm tasks API](https://docs.kentico.com/x/HAqiCQ) is for, not scheduled tasks.
+
+You want to generate a web farm task in one application instance and then process it in the others, which are all synchronized through the database.
+
+Lucene search indexes aside, you should avoid manipulating files on the file system and instead use something like [Azure Blob Storage](https://docs.kentico.com/x/5IfWCQ) which is shared by all application instances.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-01 23:37:14Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>d0595e20-781f-4dab-8059-0209e1e8e568</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Scheduled-Task-on-all-instance-with-Auto-Scaling-414e0d7b-3ao2fwmu</CodeName>
+    <GUID>7e4a4e3e-826e-449b-b0dc-a6ae604a6b50</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

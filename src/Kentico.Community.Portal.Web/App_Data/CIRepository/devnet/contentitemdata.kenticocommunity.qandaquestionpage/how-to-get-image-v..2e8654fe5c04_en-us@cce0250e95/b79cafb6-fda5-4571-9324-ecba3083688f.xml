@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>955fa2f5-e87a-45c8-98e9-2e8654fe5c04</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>How-to-get-image-variants-dynamically-92f89d52-44i4echx</CodeName>
+      <GUID>abcf0f06-62a3-47b1-8860-89934b9191a1</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>b79cafb6-fda5-4571-9324-ecba3083688f</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>bdbeb908-7e94-489e-a76c-53d82cb60a61</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>2</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I am creating one banner widget in which i am uploading the image and i have defined one widget property which is one dropdown showing all image variants. Based on that selection i want to render widget.&#x20;
+
+Now in the dropdown widget property currently i have hardcoded the options as follow:
+
+\[DropDownComponent(Label = "Select Image Variants Type",
+\
+Order = 1,
+\
+Options = $"Default;Default"         + $\
+&#x20;   "\nImageVariant1;ImageVariant1"
++\
+&#x20;   $"\nImageVariant2;ImageVariant2"         + $\
+&#x20;   "\nImageVariant3;ImageVariant3"
+\+ \$"\nTest;Test",\\
+
+OptionsValueSeparator = ";",
+\
+Placeholder = "Select ImageVariants")]
+&#x20;   \
+public string ImageVariants { get; set; } = "Default";\
+\
+Now in future it can be changed so i wanted to know if there is way to dynamically retrieve the image variants
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.5.3]
+
+* .NET version: \[8]
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-06-25 15:33:39Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-06-25 16:24:34Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

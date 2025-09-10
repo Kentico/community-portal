@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>I-recommended-using-Page-Templates-for-httdc6e3d3c</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+I recommended [using Page Templates for](https://dev.to/seangwright/kentico-xperience-design-patterns-mvc-is-dead-long-live-ptvc-4635) *[all](https://dev.to/seangwright/kentico-xperience-design-patterns-mvc-is-dead-long-live-ptvc-4635)* [pages](https://dev.to/seangwright/kentico-xperience-design-patterns-mvc-is-dead-long-live-ptvc-4635) back in the K12 MVC/KX13 days (2021 feels like a lifetime ago now). Our current guidance comes from that same perspective with the caveat that Xperience by Kentico supports a much simpler [Page Template registration](https://docs.kentico.com/developers-and-admins/development/builders/page-builder/page-templates-for-page-builder#register-page-templates) and [Controller/View model setup](https://community.kentico.com/blog/xperience-by-kentico-refresh-november-16-2023#improved-page-template-usage-and-guidance) than was possible in K12 MVC and KX13 and View Components (part of the PTVC pattern I was using) are not required because of Xperience's improved architecture.
+
+My perspective is that most teams didn't use Page Templates because they didn't understand them and were struggling to even understand how to model content and create a good content authoring experience using Widgets and Sections. It didn't help that the Page Template APIs weren't well documented, there wasn't any good example code out there, and the setup was complex even if you understood it.
+
+The main benefits of Page Templates over route-to-view or route-to-controller action are the following.
+
+1. If you only have 1 Page Template, the marketer never knows because it's auto-selected when they create a new page.
+2. If you want to give an alternate page layout or design in the future you only need to add a new Page Template which the marketer can now select - all the rest of your code can stay the same. The idea of evolving an Xperience by Kentico project over time is a very important concept to embrace and Page Templates help a team evolve web experiences in parallel streams without disrupting everything already in-place.
+3. Page Templates give you access to properties where you can store marketer customizable settings that apply to an entire template. You could use these to set any design or content options that are not part of a single Section or Widget, like opt-in page-level navigation. Yes, you could store these properties in Content type fields, but what happens when you have two templates that need different properties? Now you have page fields that only apply for specific templates, which becomes confusing.
+4. Templates are a content authoring feature, not a page rendering/content delivery feature, so they're all about giving the marketer more control and options at little cost with a very simple "grow up" story. Unfortunately there's no easy way to start with non-Page Template pages and convert them to use Page Templates without a database migration, so you might as well start with Page Templates.
+
+If you want a real-world example, the [Kentico Community Portal uses Page Templates](https://github.com/Kentico/community-portal/blob/v30.2.2.1/src/Kentico.Community.Portal.Web/Features/Blog/BlogPostPageTemplates.cs) for every content tree page.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-19 03:50:29Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>9a4688bc-74a2-423d-9825-afef79f5bbc3</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Thoughts-on-templates-vs-content-type-based-pages-ff6d0e09-0tt513w0</CodeName>
+    <GUID>257e0d12-c5fe-4f0b-9bb0-050007543b1d</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

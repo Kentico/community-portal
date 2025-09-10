@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>53ccbb02-baba-4421-a079-b7baa23e847e</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Customizing-Migration-Tool-to-modify-items-after-migration-0baaedff-qxaeuc2x</CodeName>
+      <GUID>f80c96b5-c689-4795-a4eb-a6777dd2797c</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>6d5e8974-e734-48e7-b6cf-79569d499584</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>7</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+TLDR: I would like to assign content items to folders based off their class name during the migration. How do I enable ContentQueryExecutor in the Migration Tool? And how to I prevent content items from being migrated with the required PageName field in the content hub?
+
+In the migration tool I have used the "ConvertClassesToContentHub" setting to indicate custom tables that I want migrated to the ContentHub. All of the items are migrated to the root folder, and each item has a required PageName field. I want to modify the logic to migrate the custom table items to the content hub under a folder with their respective ClassNames AND exclude the required PageName field since the custom tables dont have one. I have attempted to add logic based off the ContentFolderService to create the folders but when attempting to load the content items already migrated using this logic ([https://docs.kentico.com/api/content-management/content-items) I get the below error:](https://docs.kentico.com/api/content-management/content-items)
+
+"Unable to resolve service for type 'CMS.ContentEngine.IContentQueryExecutor'"
+
+
+
+How can I include ContentQueryExecutor in the services, am I missing something needed for DI in the program? OR is there some other logic or InfoProvider I can use to load and modify this content hub data in the migration tool, post migration?
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.2.2]
+* .NET version: \[8]
+* Execution environment: \[local]
+* Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-03-21 22:15:26Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-03-21 23:22:05Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

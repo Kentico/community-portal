@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>c1beb8f9-4673-40d8-acdd-2dd56e5cd1bb</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Take-a-look-at-the-UI-Tree-in-the-System-ad57c41a7</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Take a look at the [UI Tree in the System application](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-pages/ui-page-extenders#create-page-extenders). It will show you which parameters are required to generate URLs for every built-in administration page in Xperience.
+
+Here's an example for a Content hub item's Content tab:
+
+```CSharp
+// URL parameters sample (usings are ommited for clarity):
+new PageParameterValues()
+{
+  { typeof(ContentItemEditSection), /*<REPLACE_WITH_ACTUAL_VALUE>*/ },
+  { typeof(ContentHubFolder), /*<REPLACE_WITH_ACTUAL_VALUE>*/ },
+  { typeof(ContentHubContentLanguage), /*<REPLACE_WITH_ACTUAL_VALUE>*/ },
+  { typeof(ContentHubWorkspace), /*<REPLACE_WITH_ACTUAL_VALUE>*/ },
+}
+
+// URL path within administration:
+// /content-hub/{ContentHubWorkspace}/{ContentHubContentLanguage}/{ContentHubFolder}/list/{ContentItemEditSection}/content
+```
+
+
+
+Here's an example from [the Kentico Community Portal source](https://github.com/Kentico/community-portal/blob/v30.2.0.0/src/Kentico.Community.Portal.Admin/Features/Members/MemberBadgesListPage.cs#L37) which links to a custom application page.
+
+```CSharp
+_ = PageConfiguration.HeaderActions
+  .AddLink<MemberBadgeAssignmentEditPage>(
+    "Manage assigned badges", 
+    Icons.Edit, 
+    parameters: new PageParameterValues
+    {
+       { typeof(MemberBadgeAssignSectionPage), ObjectId }
+    });
+```
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-05 22:29:14Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>995da879-6483-4972-8410-5f6cfdc009d7</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>PageConfiguration-HeaderActions-AddLink--57d93c04-ugq1m4fh</CodeName>
+    <GUID>903a16e7-af7c-4aa4-868b-0e3d76e3dc7a</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

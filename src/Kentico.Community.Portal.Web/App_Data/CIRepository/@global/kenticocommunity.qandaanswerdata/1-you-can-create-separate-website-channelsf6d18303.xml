@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>1-You-can-create-separate-website-channelsf6d18303</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+1. You can create separate website channels and use completely different domains for these channels. If you need to share content between them you can do this through the Content Hub. So, you aren't blocked as this is still an option.
+
+   This might be the best approach if the content is _completely_ different between the different localized sites.
+
+   Just to clarify, if you want you can specify a _different_ **[primary language](https://docs.kentico.com/x/34HFC)** [for each website channel](https://docs.kentico.com/x/34HFC). This means your URLs _would not_ need to be prefixed for each separate website channel catering a different language. But if English was the "default" (fallback) for all website channels for unlocalized content then you would have the language prefix for localized content across all of them.
+
+   From [the docs](https://docs.kentico.com/documentation/developers-and-admins/configuration/website-channel-management#create-website-channels):
+
+   > * **Primary language** – a language configured in the **Languages** application. In multilingual content, the primary language is not displayed in URLs, as opposed to other languages. For example: If the primary language is set to English, and content is also in French, the URLs are in the format:
+   >   * `~/page` for English
+   >   * `~/fr-fr/page` for French
+
+   So, if you had a subscription with 4 website channels you could use a separate domain (or subdomain) for each *and* configure a different primary language for each. There would still be a single default language for all non-channel (Content Hub) content, but you could get the experience you wanted out of your website channels.\
+   This does require that each website channel manages its own pages/tree/etc...
+2. It's an SEO best practice to use paths to separate language variants of the same content for a website vs separate domains.
+
+When considering how to design localization in Xperience by Kentico we received feedback from a large number of customers and partners. Their feedback led us to the solution we're using, so it's used effectively by global companies with multiple languages and territories.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-06-28 01:55:34Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>ecf9bce9-53ff-42ed-a234-a6d58740be6d</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Domain-alias-for-language-site-7344a969-g95dkr8c</CodeName>
+    <GUID>b59dfb84-0ed7-4370-8913-05cca2c28838</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

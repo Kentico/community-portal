@@ -19,11 +19,14 @@
   <ContentItemCommonDataFirstPublishedWhen>2024-05-18 01:36:31Z</ContentItemCommonDataFirstPublishedWhen>
   <ContentItemCommonDataGUID>0758982a-eb4b-41d3-b617-3f68bfcd6dc9</ContentItemCommonDataGUID>
   <ContentItemCommonDataIsLatest>True</ContentItemCommonDataIsLatest>
-  <ContentItemCommonDataLastPublishedWhen>2025-06-12 04:13:59Z</ContentItemCommonDataLastPublishedWhen>
+  <ContentItemCommonDataLastPublishedWhen>2025-06-12 23:39:26Z</ContentItemCommonDataLastPublishedWhen>
   <ContentItemCommonDataVersionStatus>2</ContentItemCommonDataVersionStatus>
   <ContentItemCommonDataVisualBuilderTemplateConfiguration>
     <![CDATA[{"identifier":"KenticoCommunity.BlogPostPage_Components","properties":{},"fieldIdentifiers":{}}]]>
   </ContentItemCommonDataVisualBuilderTemplateConfiguration>
+  <ContentItemCommonDataVisualBuilderWidgets>
+    <![CDATA[{"editableAreas":[{"identifier":"main","sections":[{"identifier":"68efbb70-cfc6-4f03-8c7b-32707d7e6bef","type":"CommunityPortal.SingleColumnSection","properties":{"layout":"Standard","layoutParsed":0,"paddingTop":"Large","paddingTopParsed":0,"paddingBottom":"Large","paddingBottomParsed":0,"backgroundColor":"White","backgroundColorParsed":1},"zones":[{"identifier":"1fb70664-78eb-4ca3-b8fa-49be7f385ed9","widgets":[{"identifier":"c9c9f318-5b86-430d-8b12-52d906133307","type":"CommunityPortal.MarkdownWidget","variants":[{"identifier":"640460a0-a884-406c-bb61-1089240016e6","properties":{"markdown":"In [this episode of the Humans of Martech podcast](https://humansofmartech.com/2023/08/08/83-kate-nowrouzi-mailguns-vp-of-deliverability-on-email-subdomain-strategies-and-inbox-placement-tools/), Kate Nowrouzi, VP of Deliverability at Mailgun by Sinch gives some really actionable insights on email deliverability. These insights have some interesting implications for using Xperience by Kentico's email channels.\n\nEmail deliverability can often seem impenetrable for email marketers - you try to keep your emails from being marked as spam while delivering personalized messages to as large of an audience as possible.\n\nAnd if your domain does end up losing some reputation points, how do you fix it? There's no \"email doctor\" you can go see to fix things. What if you need to resolve a problem with Google? Who can you get in contact with?\n\nThe best option is to avoid this situation altogether, but that requires some planning and strategy.\n\nOf special note is the idea of using multiple sending domains (or subdomains) as a email deliverability risk mitigation technique.\n\n> If the domain gets blocked due to poor marketing practices, it can impact all types of communications, including critical transactional emails.\n\nHow can multiple sending domains help here? Well it starts with audience segmentation.\n\n> This includes sorting subscribers into categories like most engaged, less engaged, and non-engaged, and assigning them to different subdomains.\n\nHowever, it's not just the domain, but also the sending IP address that's used to determine email reputation.\n\n> Even if an organization has a strong reputation, a poorly performing subdomain can damage this reputation. Moving to new IPs requires warming them up, which is not an easy task.\n\nXperience by Kentico's approach of using multiple email channels, each with [unique sending domains](https://docs.kentico.com/business-users/digital-marketing/emails#email-channels) supports this strategic email reputation management approach.\n\nI learned a ton listening to this discussion, so do yourself a favor and go [listen to the full podcast](https://humansofmartech.com/2023/08/08/83-kate-nowrouzi-mailguns-vp-of-deliverability-on-email-subdomain-strategies-and-inbox-placement-tools/) over on the Humans of Martech website for many more key insights into email deliverability, A/B testing, and using AI for emails.\n","markdownStyle":"Standard","markdownStyleParsed":0,"markdownCodeLanguage":"","id":"9373f66a-7078-4bab-8ba9-45eeb864b352"},"fieldIdentifiers":{"markdown":"5f20b38d-e1ca-4d0e-b9e6-fd0ef9dc9bfb","markdownStyle":"4038a04a-fa54-4e60-864e-1f12b227d4ff","markdownStyleParsed":"e0f8a13e-e006-4981-bdda-e4292f8c4389","markdownCodeLanguage":"738eaf31-c6fe-4dd9-a6a0-a276cf14738c","id":"559e3d31-6d05-4aa4-a163-332b67d25cf9"}}]}]}],"fieldIdentifiers":{"layout":"6adef585-3d73-40ac-9bc2-4aba2f27fb53","layoutParsed":"49cca70c-f7c9-4bd7-91e4-f91bf0468825","paddingTop":"a884e9b4-bc2c-4f77-b750-5214fae56e1a","paddingTopParsed":"ab6957e0-bc72-422c-ab28-fac15c266eb8","paddingBottom":"dd55d98f-ad57-4384-8908-efabf20ba8c4","paddingBottomParsed":"babea614-9f6b-4f2e-b47e-9e6e0fdb4122","backgroundColor":"842c12f5-e204-4876-afc2-9e1b2541c40e","backgroundColorParsed":"bd08d461-0c7d-40d7-8605-14494375d90d"}}]}]}]]>
+  </ContentItemCommonDataVisualBuilderWidgets>
   <CoreTaxonomyDXTopics>
     <![CDATA[[{"Identifier":"0f35b486-d76e-4791-aca0-139456d98980"},{"Identifier":"577d5787-5562-4e9a-8ad6-044fdfa6ac31"}]]]>
   </CoreTaxonomyDXTopics>
@@ -39,7 +42,7 @@
   <ContentItemReferences>
     <cms.contentitemreference>
       <ContentItemReferenceGroupGUID>baef8e96-a792-478c-a9dc-1929378ccbac</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>545dafec-f852-4eb3-8308-8bf644a31153</ContentItemReferenceGUID>
+      <ContentItemReferenceGUID>ed93f140-a5e2-4e7f-b5c1-f28720983b99</ContentItemReferenceGUID>
       <ContentItemReferenceSourceCommonDataID>
         <GUID>0758982a-eb4b-41d3-b617-3f68bfcd6dc9</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>
@@ -51,21 +54,8 @@
       </ContentItemReferenceTargetItemID>
     </cms.contentitemreference>
     <cms.contentitemreference>
-      <ContentItemReferenceGroupGUID>e09047d5-2c58-403e-be9b-ed772ca76a2d</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>276d7d15-9c7d-41a5-9373-b38b3bc91a19</ContentItemReferenceGUID>
-      <ContentItemReferenceSourceCommonDataID>
-        <GUID>0758982a-eb4b-41d3-b617-3f68bfcd6dc9</GUID>
-        <ObjectType>cms.contentitemcommondata</ObjectType>
-      </ContentItemReferenceSourceCommonDataID>
-      <ContentItemReferenceTargetItemID>
-        <CodeName>Blog-Discussion-Re-post-Humans-of-Martech-Email-subdomain-strategies-and-inbox-placement-t-localtest</CodeName>
-        <GUID>9e1479b6-c1cf-4463-a01b-5b1b85d0d931</GUID>
-        <ObjectType>cms.contentitem</ObjectType>
-      </ContentItemReferenceTargetItemID>
-    </cms.contentitemreference>
-    <cms.contentitemreference>
       <ContentItemReferenceGroupGUID>9a93d64c-5cc7-47f0-94e8-f7b3cc48946e</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>d0cedcbd-cde5-4f66-a586-568c7625d5d6</ContentItemReferenceGUID>
+      <ContentItemReferenceGUID>edce8fdc-440b-43b0-9f01-018312116e8a</ContentItemReferenceGUID>
       <ContentItemReferenceSourceCommonDataID>
         <GUID>0758982a-eb4b-41d3-b617-3f68bfcd6dc9</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>

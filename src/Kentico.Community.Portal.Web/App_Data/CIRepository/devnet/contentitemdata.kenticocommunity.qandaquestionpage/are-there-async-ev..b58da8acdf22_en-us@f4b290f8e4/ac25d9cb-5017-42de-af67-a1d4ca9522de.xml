@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>866d5fd3-75c0-447f-91c1-b58da8acdf22</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Are-there-Async-Event-Handler-for-WebPageEvents--32b92d3c-6cus8x93</CodeName>
+      <GUID>eaf07636-337f-4ae8-919d-c1342741fc50</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>ac25d9cb-5017-42de-af67-a1d4ca9522de</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>5c78b6ca-6a32-4ced-8dd4-d7bce14fab38</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>5</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I want to create an event handler to update a page once it has been created, and also to wipe any image metadata when the image is added to the CMS. I see in the documentation there is a way to do this asynchronously with IInfo providers, but I dont think this is available for Webpages or Content Items.
+
+Am I missing something, or am I going to need to use GetAwaiter().GetResult() again?
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.3.1]
+
+* .NET version: \[8]
+
+* Execution environment: \[local)]
+
+* Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-05-23 01:25:37Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-05-23 02:08:32Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

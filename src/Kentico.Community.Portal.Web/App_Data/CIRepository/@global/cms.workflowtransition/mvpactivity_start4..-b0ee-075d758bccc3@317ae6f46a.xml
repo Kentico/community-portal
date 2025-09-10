@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.workflowtransition>
+  <Parent>
+    <CodeName>start45530ccb-fe66-4ad6-b0ee-075d758bccc3</CodeName>
+    <GUID>45530ccb-fe66-4ad6-b0ee-075d758bccc3</GUID>
+    <ObjectType>ma.automationstep</ObjectType>
+    <Parent>
+      <CodeName>MVPActivity</CodeName>
+      <GUID>7e50b330-5b15-43b8-85cf-c4a6d8fec2a5</GUID>
+      <ObjectType>ma.automationprocess</ObjectType>
+    </Parent>
+  </Parent>
+  <Bindings>
+    <Binding id="ma.automationstep_SendEmail_ma.automationprocess_MVPActivity-ma.automationstep_SendEmail_ma.automationprocess_MVPActivity">
+      <TransitionEndStepID>
+        <CodeName>SendEmail</CodeName>
+        <GUID>3b2bb424-ce99-441e-bf9e-6cdca3726d49</GUID>
+        <ObjectType>ma.automationstep</ObjectType>
+        <Parent>
+          <CodeName>MVPActivity</CodeName>
+          <GUID>7e50b330-5b15-43b8-85cf-c4a6d8fec2a5</GUID>
+          <ObjectType>ma.automationprocess</ObjectType>
+        </Parent>
+      </TransitionEndStepID>
+      <TransitionSourcePointGUID>62bb1cbb-1a7e-43e5-b5d2-9b6335777058</TransitionSourcePointGUID>
+      <TransitionType>1</TransitionType>
+      <TransitionWorkflowID>
+        <CodeName>MVPActivity</CodeName>
+        <GUID>7e50b330-5b15-43b8-85cf-c4a6d8fec2a5</GUID>
+        <ObjectType>ma.automationprocess</ObjectType>
+      </TransitionWorkflowID>
+    </Binding>
+  </Bindings>
+</cms.workflowtransition>

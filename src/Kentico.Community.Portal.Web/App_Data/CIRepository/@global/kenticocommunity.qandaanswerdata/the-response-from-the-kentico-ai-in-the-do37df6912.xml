@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>c1beb8f9-4673-40d8-acdd-2dd56e5cd1bb</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>The-response-from-the-Kentico-AI-in-the-do37df6912</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+The response from the Kentico AI in the docs is correct, but there's also some nuance.
+
+`Task.GetAwaiter().GetResult()` is the best way to "block" on asynchronous work, but it's still not great. It potentially uses another thread to do work which would have only required 1 thread. It _can_ cause deadlocks but only in frameworks where there's a synchronization context.
+
+[There is no synchronization context in traditional ASP.NET Core MVC](https://blog.stephencleary.com/2017/03/aspnetcore-synchronization-context.html).
+
+[There is a synchronization context in ASP.NET Core Blazor](https://learn.microsoft.com/en-us/aspnet/core/blazor/components/synchronization-context?view=aspnetcore-9.0).
+
+So, as long as you are using `.GetAwaiter().GetResult()` in code that is not executed where there is a synchronization context then the code will work and you won't experience a deadlock. This can be difficult for libraries to ensure, but you know how your application code is used so you can avoid this pitfall.
+
+If you look at the Kentico Community Portal you can see that I use `.GetAwaiter().GetResult()` [in a personalization condition type](https://github.com/Kentico/community-portal/blob/v30.4.1.5/src/Kentico.Community.Portal.Web/Components/Personalization/HasMemberBadgeConditionType.cs#L42) because the `Evaluate` method is synchronous.
+
+```CSharp
+public override bool Evaluate()
+{
+    var context = contextAccessor.HttpContext;
+    if (context is null)
+    {
+        return false;
+    }
+
+    var identity = context.User.Identity;
+
+    if (identity is null || !identity.IsAuthenticated)
+    {
+        return false;
+    }
+    var id = identity as ClaimsIdentity;
+
+    var member = userManager
+        .GetUserAsync(context.User)
+        .GetAwaiter()
+        .GetResult();
+
+    if (member is null)
+    {
+        return false;
+    }
+
+    var assignedMemberBadgeNames = badgeService
+        .GetSelectedBadgesFor(member.Id)
+        .GetAwaiter()
+        .GetResult()
+        .Select(b => b.MemberBadgeCodeName);
+
+    return SelectedMemberBadges
+        .IntersectBy(
+          assignedMemberBadgeNames, 
+          selected => selected.ObjectCodeName, StringComparer.OrdinalIgnoreCase)
+        .Any();
+}
+```
+
+Xperience APIs [are gradually being made async](https://docs.kentico.com/developers-and-admins/customization/handle-global-events/handle-object-events#object-event-handlers-with-async-support) (most already are) so you should need to use this workaround less and less over time.
+
+Our APIs that work with Blazor (currently, [only the Email Builder](https://docs.kentico.com/x/develop_email_builder_components_xp)) are all async or have an async variant.
+
+Your code should generally be async-first because ASP.NET Core is designed to be async (concurrent, not parallel) from top to bottom.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-21 04:44:00Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>299a637a-ae8b-49fb-b827-c941c6a5d45e</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Getting-the-webpage-URL-in-VisibilityCondition-Evaluate-method-225ccc5c-k6gpr0jx</CodeName>
+    <GUID>24c97cb6-7d3b-4824-8600-630b5eb62b89</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

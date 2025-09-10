@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>While-Sean-is-correct-that-you-should-looka83d9f0f</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+While Sean is correct that you should look into the reason *why* you need to tweak it, there are cases where you want some settings that a scheduled task uses, and may want those controlled in the CMS (example, say you have a scheduled task that purges old comments, you may want the # of days configurable in case you want to change that).
+
+
+
+I would use the [KenticoDevTrev/XperienceCommunity.ChannelSettings: Module to easily create and manage Channel Specific Settings in Xperience by Kentico](https://github.com/KenticoDevTrev/XperienceCommunity.ChannelSettings) module.  This allows you to easily add settings for the channel and retrieve them, with fall backs.  Then you simply retrieve your settings module in your scheduled task.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-12 19:18:45Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>eeed3c46-6bdc-4865-ad4a-951191e54183</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Scheduled-task-Workaround-to-get-ScheduledTaskConfigurationData-editable-in-UI--e2d386f4-jbk0i9c2</CodeName>
+    <GUID>10bb81f4-7275-4ba5-9c26-090dc37c45db</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

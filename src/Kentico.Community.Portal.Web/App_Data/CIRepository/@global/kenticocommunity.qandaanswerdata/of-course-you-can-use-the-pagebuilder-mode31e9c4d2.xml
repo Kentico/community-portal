@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Of-course-You-can-use-the-PageBuilder-mode31e9c4d2</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Of course!
+
+You can use the PageBuilder mode information to conditionally render _anything_ into a view at any level (`_Layout.cshtml`, page template, section, widget, etc...).
+
+There's [an example in the Kentico Community Portal](https://github.com/Kentico/community-portal/blob/v30.4.1.5/src/Kentico.Community.Portal.Web/Rendering/ViewService.cs#L21) which gets this information from the `HttpContext` and also some [information about this in the docs](https://docs.kentico.com/developers-and-admins/development/builders/page-builder/create-pages-with-editable-areas#establish-rendering-context) which uses the `IPageBuilderDataContextRetriever`.
+
+I would recommend putting this information inside an abstraction vs injecting the context retriever into every view using `@inject` view DI with Razor.
+
+Years ago I made an ASP.NET Core Tag Helper to conditionally render content on a page based on the Page Builder mode. [It was built for KX13](https://github.com/wiredviews/xperience-page-builder-utilities/blob/main/src/XperienceCommunity.PageBuilderTagHelpers/PageBuilderModeTagHelper.cs) but it could easily be re-created for XbyK.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-17 00:10:08Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>e3311e3e-c7ff-49ad-905d-ad459ac197f6</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Editing-the-Admin-Edit-Page-Styles-448defad-lmoj49ff</CodeName>
+    <GUID>42fce2da-8171-45cb-9504-631e99426e21</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

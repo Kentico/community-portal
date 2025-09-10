@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>b69096d6-fcc5-49ab-9668-7cff587d050e</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Retrieve-Page-Tags-Taxonomy--062511b4-fm7aym59</CodeName>
+      <GUID>c1b609c4-2e38-46d0-813d-390f075d6a98</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>48811d7b-8d7f-4922-902f-faf9de5e687a</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>ac2e3756-ecab-401b-a53c-9a82b2f09eb2</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>7</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+On XbK, I have a page content type with a field called Categories as taxonomy data type. I'm trying to retrieve the Categories tags associated with a page. I'm able to retrieve the tags GUIDs but the TagReference class only allows Identifier property. How do I convert the tag GUID to tag Name so the tag name actually displays? This is an example of how I successfully retrieve the Categories tags (GUIDs) associated with a page in my View:
+
+```
+@foreach (var pageItem in Model) { @foreach (var tag in pageItem.Categories) { @tag.Identifier } }
+```
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.4.1]
+
+* .NET version: \[8|9]
+
+* Execution environment: \[SaaS|Private cloud (Azure/AWS/Virtual machine)]
+
+* Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-05-05 18:23:38Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-05-09 08:35:35Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

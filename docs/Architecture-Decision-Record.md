@@ -1,5 +1,75 @@
 # Architecture Decision Record
 
+## 2025-09-04 - Spam controls for Q&A discussions
+
+The Kentico Community Portal has received spam postings in Q&A discussions
+completed by bot accounts which are likely human controlled.
+
+While we cannot completely remove bot behavior on a public website with open
+registration we can limit it and make it easier to address.
+
+There are many approaches with various amounts of administration overhead and
+complexity. Below are the options that were considered and selected.
+
+### Solution - Approval requirement
+
+We can add a requirement that new accounts must be approved to create Q&A
+discussions or limit creating discussions for new members until a probation
+period has elapsed.
+
+This has the benefit of an easy check for the discussion and answer endpoints
+but requires administrator approval. A probation also doesn't prevent spam for
+determined spammers - it just delays it.
+
+Optionally, we could enable auto-approval for email addresses that match an
+allowlist based on partner agency and customer email domains. This list would
+have to be actively maintained to prevent restricting new partners and customers
+from being limited. It would also have the drawback that agencies or marketing
+teams exploring Kentico would be prohibited from immediately participating in
+the community.
+
+### Solution - Rate limiting
+
+We can use
+[ASP.NET Core's built-in rate limiting feature](https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/proxy-load-balancer?view=aspnetcore-9.0)
+to ensure the amount of spam that can be generated is limited. This can be
+applied not only to the Q&A discussions but also other authentication/submission
+endpoints (like registration and login).
+
+Rate limiting will need to take into account the visitor IP address for
+non-authenticated endpoints. This means we'll need to
+[handle Cloudflare as a reverse-proxy and its IP addresses](https://developers.cloudflare.com/fundamentals/reference/http-headers/#cf-connecting-ip).
+
+### Solution - Community moderation
+
+We can enable permissions (role-based) for specific community members to flag
+Q&A discussions or answers that they identify as spam. This could also trigger
+disabling the spamming account until an administrator can review it.
+
+Additionally, we can unpublish the spam discussions or hide the spam answers.
+
+Hiding spam answers would require a new field on the answer object type and
+updating all answer querying to exclude hidden answers. Hidden answers would
+need to be visible to administrators so they can choose to delete them.
+
+Alternatively, we could enable deletion permissions for community members for
+answers and discussions and add a confirmation dialog to prevent accidental
+permanent deletion of Q&A discussion content.
+
+### Selected solution
+
+We wil implement a combination of rate limiting and community moderation.
+
+The Kentico Community Portal can benefit from rate limiting beyond just the Q&A
+discussion features, so it makes sense to add it now. The rate limiting for Q&A
+discussions can take into account how long the user has been a member, the
+number of badges they have, and if they have previously approved Q&A answers.
+
+Community moderation can start simple (deletion with confirmation dialog) and be
+assigned to specific members (MVPs and Community Leaders). In the future we can
+add a flagging system with auto-hiding of discussions or answers and allow more
+members to participate.
+
 ## 2025-06-12 - Reusable field schema refactor
 
 Early versions of Xperience by Kentico did not have

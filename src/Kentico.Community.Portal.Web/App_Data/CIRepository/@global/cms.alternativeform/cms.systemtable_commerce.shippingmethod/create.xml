@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>Commerce.ShippingMethod</CodeName>
+    <GUID>0bc4e4fa-38db-4917-82ed-def462ce1d96</GUID>
+    <ObjectType>cms.systemtable</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="ShippingMethodID" guid="58fffe45-45e8-4942-94dd-e33f5a2b073c" enabled="" />
+      <field column="ShippingMethodGUID" guid="1bfb4eae-7aa7-46a6-bc68-0957fe959f2a" enabled="" order="1" />
+      <field column="ShippingMethodDisplayName" enabled="true" guid="c89b222c-7136-45cd-9439-05fdf734402e" visible="true" order="2">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.shippingmethods.edit.displayname.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ShippingMethodName" enabled="true" guid="096bc18e-44a2-4261-9c3b-f45e4afdda96" visible="true" order="3">
+        <settings>
+          <controlname>Kentico.Administration.CodeName</controlname>
+          <HasAutomaticCodeNameGenerationOption>True</HasAutomaticCodeNameGenerationOption>
+          <IsCollapsed>True</IsCollapsed>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.shippingmethods.edit.name.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ShippingMethodDescription" enabled="true" guid="1177f9c1-c088-46c6-830f-7cd0e99ce8fe" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtext>
+            <![CDATA[{$digitalcommerce.shippingmethods.edit.description.explanation$}]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.shippingmethods.edit.description.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="ShippingMethodEnabled" enabled="true" guid="b36f1212-1b64-4a69-87ee-6abf1ba5af1f" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <defaultvalue>True</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.shippingmethods.edit.enabled.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <category name="digitalcommerce_shippingmethods_edit_pricecalculation_caption" order="6">
+        <properties>
+          <caption>
+            <![CDATA[{$digitalcommerce.shippingmethods.edit.pricecalculation.caption$}]]>
+          </caption>
+          <visible>true</visible>
+        </properties>
+      </category>
+      <field column="ShippingMethodPrice" enabled="true" guid="64da4adc-6c53-484c-82fe-319f67ac612b" visible="true" order="7">
+        <settings>
+          <controlname>Kentico.Administration.DecimalNumberInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.MinimumDecimalValue</ValidationRuleIdentifier>
+            <RuleValues>
+              <MinValue>0</MinValue>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+        <properties>
+          <explanationtext>Enter a decimal or whole number (e.g. 0.3)</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.shippingmethods.edit.price.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Create shipping method</FormDisplayName>
+  <FormGUID>f6dadb2c-1445-4fc7-974f-c6213feed0e1</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>create</FormName>
+</cms.alternativeform>

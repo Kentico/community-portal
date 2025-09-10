@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>I-ve-migrated-our-Media-Library-over-to-th9737de1c</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+I've migrated our Media Library over to the Content Hub, using multiple Workspaces and migrating the "folder' structure as the content folders.
+
+We have ourselves over 60,000 media assets i think...and i can tell you, it performs very well.  Will it be *slightly* slower than if you had full paths (/mysite/media/etc)?  Yes, because you can't beat a direct lookup, but that's hardly sustainable because you can't deploy then.
+
+It probably is comparable in speed to the /getmedia links, as there is little to no difference between them and the /getcontentasset links in terms of lookup.  It pulls down and caches images if you use blob storage (I would recommend).
+
+I was at first worried about a bloated content hub, i'm not worried anymore.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-13 21:02:29Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>09a1553f-2a8e-4260-9bbb-ede021e60276</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Media-Library-vs-Content-Hub-eb782379-vjltvd5m</CodeName>
+    <GUID>04ab69dc-34dd-4048-918f-cd10a49f29d6</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

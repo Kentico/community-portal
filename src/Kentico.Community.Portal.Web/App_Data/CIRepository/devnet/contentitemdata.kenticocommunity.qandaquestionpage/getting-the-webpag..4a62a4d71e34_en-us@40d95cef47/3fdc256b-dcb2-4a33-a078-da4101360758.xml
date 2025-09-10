@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>53f89125-1490-41ca-b038-4a62a4d71e34</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Getting-the-webpage-URL-in-VisibilityCondition-Evaluate-method-225ccc5c-k6gpr0jx</CodeName>
+      <GUID>cc74d68a-47be-4288-973d-f9706b7405a3</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>3fdc256b-dcb2-4a33-a078-da4101360758</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>aefa5ced-20e3-410e-9d35-18e5e7555cbe</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>7</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I want to create a visibility condition so that page template properties are only visible on pages that do not start with a specific path. The HttpContext returns the CMS path while editing a page so I tried to get the url for the page being edited using the IWebPageDataContextRetriever and IWebPageUrlRetriever. However the method to override, "Evaluate", does not have an async option.&#x20;
+
+I asked Kentico AI, and it said "If you require synchronous behavior, you would typically need to call the asynchronous method and block on it (e.g., using `.GetAwaiter().GetResult()`), but this is generally discouraged in ASP.NET Core applications due to potential deadlocks and performance issues."
+
+Is there another way to get the webpage URL within the VisibilityCondition Evaluate method?
+
+Another way might be to set a property for the template from within the controller but I dont see a way to set template properties this way.
+
+is there some other way I can get the property to hide or disable on a page starting with a specific url?
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.3.1]
+
+* .NET version: \[8]
+
+* Execution environment: \[SaaS|Private cloud (Azure/AWS/Virtual machine)]
+
+* Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-05-21 00:35:32Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-07-01 20:56:11Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

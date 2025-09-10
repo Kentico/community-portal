@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>dc609851-ab9c-436c-9e99-5c5216d1560f</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Hi-Rahul-This-answer-is-going-to-depend-oncb7d855b</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Hi Rahul.
+
+This answer is going to 'depend' on by "Form" you mean a form presented on the website (Form Widget), or an administration level form (one you see in the /admin area)
+
+\
+I'll try to answer for both.
+
+
+
+**For "Site" level forms:**
+
+1. Kentico exposes an event to modify the HTML markup of the form, including HTML before and after. See [Customize the Html Markup of rendered forms](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/ui-form-component-validation-ruleshttps://docs.kentico.com/developers-and-admins/development/builders/form-builder/form-widget-customization#customize-the-html-markup-of-rendered-forms).
+2. Each Form Component type has its own 'rules' for validation, all share a "Required" validation, but if you want to have more, you may need to define a custom Form Component with properties that allow the rule to be configured and such.  See documentation on creating a [custom form component](https://docs.kentico.com/developers-and-admins/development/builders/form-builder/form-components#develop-form-components).  In the `FormComponent` class that you inherit, you can override the Validate(ValidationContext) method to add your own validation logic.  Likewise, when you create the rendering (.cshtml) you can apply whatever attributes or client side validation you wish.
+3. Site CSS is totally up to you, when the form renders, you can use whatever css styles you wish on it.  If you need to apply a css class or attribute to hook onto with your style sheet, then use the [Contextually modify form markup](https://docs.kentico.com/developers-and-admins/development/builders/form-builder/form-widget-customization#contextually-modifying-form-markup) hook that Kentico provides to see what Form, and what components are being rendered and add any attributes or classes you wish to them (also any accessibility or attributes for validation, such as regex or min/max lengths)
+4. You can use the [Customize the Html Markup of rendered forms](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/ui-form-component-validation-ruleshttps://docs.kentico.com/developers-and-admins/development/builders/form-builder/form-widget-customization#customize-the-html-markup-of-rendered-forms) to add HTML around the validation message, and from there you can use CSS to style however you wish.
+
+
+
+**For "Admin" level forms:**
+
+1. You can create custom UI Form components (see [Documentation on UI form components](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-form-components)), this roughly involves creating your own React component and registering it, and within the react component itself you have the capability to easily set styles and inject CSS using normal javascript.
+2. You can also then define Validation Rules by implementing a ValidationRule class and registering it.  Instructions are here on [UI Form component validation rules](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/ui-form-component-validation-rules).
+3. CSS can be specified using styling injected in #1
+4. You should be able to customize the validation message possibly also in this, i'm not 100% positive though.
+
+
+
+Overall, I would highly recommend you go through the "[Work with Forms](https://docs.kentico.com/guides/digital-marketing/work-with-forms/forms-application-overview)" Guides and read documentation on the Forms themselves.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-08 19:23:35Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>f19af9f3-3a58-46e2-86ed-3b38def392ba</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Customizing-Form-Styles-Validation-and-CSS-in-Xperience-by-Kentico-5e808e8e-5c990yn4</CodeName>
+    <GUID>ca628dbf-742c-4f81-901c-2da61947b830</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

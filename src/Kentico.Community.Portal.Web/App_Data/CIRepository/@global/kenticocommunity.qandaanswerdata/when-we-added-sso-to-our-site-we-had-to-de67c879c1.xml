@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>When-we-added-SSO-to-our-site-we-had-to-de67c879c1</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+    <![CDATA[When we added SSO to our site, we had to delete the users and have the SSO recreate them. We also found that if you restore a db from say prod back to dev to re-sync them, the external users created on prod with the same SSO, do not work unless you delete them and have the sign back in. Super weird since they have the same permission groups. Haven't had a chance to really look into how the users work in XbyK vs how they were in K13 and below.]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-08-29 01:06:10Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>86009fea-6990-4eda-b596-d9e20faa8260</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Changing-local-users-to-external-827586f4-dk350epm</CodeName>
+    <GUID>bb9fed9e-7a33-4ae9-bf06-c33566f97dd3</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

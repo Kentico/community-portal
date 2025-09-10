@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>51bc4223-4aa4-4e3e-85d4-f11bcc19ae8d</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Facing-error-during-migration-during-kentico-upgrade-12-to-xbk-bd249dac-460dfnid</CodeName>
+      <GUID>e97fb32e-987f-4f67-b6e8-5457a9ffcdb5</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>1e28a044-2532-4cf3-847a-fec2068760b1</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>9c88ca7d-8ba9-4b9f-8a4f-b9f8d8dbe323</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>1</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+Process terminated. Assertion failed. migratedDocuments.Count > 0 at Migration.Tool.Source.Handlers.MigratePagesCommandHandler.MigratePages()
+
+
+
+Here is the full error log\
+Process terminated. Assertion failed.
+migratedDocuments.Count > 0
+at Migration.Tool.Source.Handlers.MigratePagesCommandHandler.MigratePages() in D:\xperience-by-kentico-kentico-migration-tool-master\xperience-by-kentico-kentico-migration-tool-master\KVA\Migration.Tool.Source\Handlers\MigratePagesCommandHandler.cs:line 316
+at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext(Thread threadPoolThread)
+at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction(IAsyncStateMachineBox box, Boolean allowInlining)
+at System.Threading.Tasks.Task.RunContinuations(Object continuationObject)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.SetExistingTaskResult(Task`1 task, TResult result)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder.SetResult()
+at Migration.Tool.Source.Handlers.MigratePagesCommandHandler.GenerateDefaultPageUrlPath(ICmsTree ksTree, WebPageItemInfo webPageItemInfo) in D:\xperience-by-kentico-kentico-migration-tool-master\xperience-by-kentico-kentico-migration-tool-master\KVA\Migration.Tool.Source\Handlers\MigratePagesCommandHandler.cs:line 895
+at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext(Thread threadPoolThread)
+at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction(IAsyncStateMachineBox box, Boolean allowInlining)
+at System.Threading.Tasks.Task.RunContinuations(Object continuationObject)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.SetExistingTaskResult(Task`1 task, TResult result)
+at CMS.Websites.Routing.WebPageUrlManager.GeneratePageUrlPath(WebPageItemInfo webPageItem, String webPageSlug, VersionStatus versionStatus, CancellationToken cancellationToken)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.ExecutionContextCallback(Object s)
+at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext(Thread threadPoolThread)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext()
+at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction(IAsyncStateMachineBox box, Boolean allowInlining)
+at System.Threading.Tasks.Task.RunContinuations(Object continuationObject)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.SetExistingTaskResult(Task`1 task, TResult result)
+at CMS.Websites.Routing.WebPageUrlPathsGenerator.Generate(WebPageItemInfo webPageItem, String webPageSlug, VersionStatus versionStatus, CancellationToken cancellationToken)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.ExecutionContextCallback(Object s)
+at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext(Thread threadPoolThread)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext()
+at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction(IAsyncStateMachineBox box, Boolean allowInlining)
+at System.Threading.Tasks.Task.RunContinuations(Object continuationObject)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.SetExistingTaskResult(Task`1 task, TResult result)
+at CMS.DataEngine.GeneralConnection.ExecuteReaderAsync(QueryParameters query, CommandBehavior commandBehavior, CancellationToken cancellationToken)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.ExecutionContextCallback(Object s)
+at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext(Thread threadPoolThread)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext()
+at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction(IAsyncStateMachineBox box, Boolean allowInlining)
+at System.Threading.Tasks.Task.RunContinuations(Object continuationObject)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.SetExistingTaskResult(Task`1 task, TResult result)
+at CMS.DataEngine.AbstractDataConnection.ExecuteReaderAsync(String queryText, QueryDataParameters queryParams, QueryTypeEnum queryType, CommandBehavior commandBehavior, CancellationToken cancellationToken)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.ExecutionContextCallback(Object s)
+at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext(Thread threadPoolThread)
+at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext()
+at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction(IAsyncStateMachineBox box, Boolean allowInlining)
+at System.Threading.Tasks.Task.RunContinuations(Object continuationObject)
+at System.Threading.Tasks.Task.FinishSlow(Boolean userDelegateExecute)
+at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+at System.Threading.Tasks.ThreadPoolTaskScheduler.TryExecuteTaskInline(Task task, Boolean taskWasPreviouslyQueued)
+at System.Threading.Tasks.TaskScheduler.TryRunInline(Task task, Boolean taskWasPreviouslyQueued)
+at System.Threading.Tasks.TaskContinuation.InlineIfPossibleOrElseQueue(Task task, Boolean needsProtection)
+at System.Threading.Tasks.ContinueWithTaskContinuation.Run(Task completedTask, Boolean canInlineContinuationTask)
+at System.Threading.Tasks.Task.RunContinuations(Object continuationObject)
+at System.Threading.Tasks.Task`1.TrySetResult(TResult result) at System.Threading.Tasks.UnwrapPromise`1.TrySetFromTask(Task task, Boolean lookForOce)
+at System.Threading.Tasks.UnwrapPromise\`1.ProcessInnerTask(Task task)
+at System.Threading.Tasks.Task.RunContinuations(Object continuationObject)
+at System.Threading.Tasks.Task.FinishSlow(Boolean userDelegateExecute)
+at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+at System.Threading.ThreadPoolWorkQueue.Dispatch()
+at System.Threading.PortableThreadPool.WorkerThread.WorkerThreadStart()
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-06-11 16:55:35Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-06-11 17:32:53Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>While-you-might-be-able-to-use-the-contentb34d7d2a</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+While you *might* be able to use the content retrieval APIs to author a query for your requirements, it's going to be a stretch. You have a couple of alternatives.
+
+1. Consolidate your `ArticleContent` and `ArticlePage` into the `ArticlePage` content type. Before we had the [combined content selector](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/reference-admin-ui-form-components#combined-content-selector) it was not possible to reusable web page content in email or headless channels, or across different website channels. This forced the separation of the reusable part from the web page part - that's no longer necessary. I'm actually in the preparation phase of this for the Kentico Community Portal. Eventually the [BlogPostContent](https://github.com/Kentico/community-portal/blob/v30.2.0.0/src/Kentico.Community.Portal.Core/Content/Hub/BlogPostContent.generated.cs) content type will be obsolete since I can use the [BlogPostPage](https://github.com/Kentico/community-portal/blob/v30.2.0.0/src/Kentico.Community.Portal.Core/Content/Pages/BlogPostPage.generated.cs) everywhere I need now.
+2. Write raw SQL. Sometimes this is the best option when you have more advanced scenarios. The Kentico Community Portal has a couple examples of [using raw SQL by itself](https://github.com/Kentico/community-portal/blob/v30.2.0.0/src/Kentico.Community.Portal.Admin/Features/Reporting/CommunityStatsPage.cs#L86) and also [combining it with the Object Query APIs](https://github.com/Kentico/community-portal/blob/v30.2.0.0/src/Kentico.Community.Portal.Admin/Features/Members/MemberListFilter.cs#L43).
+3. Use a search index. Normalizing your data into a search index that supports faceted searching can give you more powerful querying abilities at the cost of the complexity of eventually consistent search indexes and additional technology. The Kentico Community Portal uses [Xperience's Lucene integration](https://github.com/Kentico/xperience-by-kentico-lucene) to retrieve content for normal search experiences *and* [member profiles](https://github.com/Kentico/community-portal/blob/v30.2.0.0/src/Kentico.Community.Portal.Web/Features/Members/MemberController.cs#L45).
+4. Give us [some feedback on the product roadmap](https://roadmap.kentico.com/tabs/5-released) and explain the content and querying scenario you need support for.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-27 05:55:34Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>2c05b41f-83a5-48d3-a614-9c9374035b7e</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Help-with-query-pages-linked-to-content-items-filtering-by-taxonomy-a46ce6c9-y16ue98g</CodeName>
+    <GUID>c967a31a-f0b0-4507-98e8-0006b30c9523</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

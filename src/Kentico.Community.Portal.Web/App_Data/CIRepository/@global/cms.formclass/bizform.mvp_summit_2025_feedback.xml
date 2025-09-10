@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.formclass>
+  <ClassContactMapping>
+    <form />
+  </ClassContactMapping>
+  <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
+  <ClassDisplayName>2025 MVP Summit feedback</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="Form_2025_07_16_13_30ID" columntype="integer" enabled="true" guid="152d3fcf-b881-468a-aaf2-4c4f7fb4da26" isPK="true" />
+      <field column="FormInserted" columnprecision="7" columntype="datetime" enabled="true" guid="f0fcf560-520f-4c0c-93ca-b9aab1391353" system="true">
+        <properties>
+          <fieldcaption>Form inserted</fieldcaption>
+        </properties>
+      </field>
+      <field column="FormUpdated" columnprecision="7" columntype="datetime" enabled="true" guid="ed5374f9-af41-4b1b-ab27-0e75394192a5" system="true">
+        <properties>
+          <fieldcaption>Form updated</fieldcaption>
+        </properties>
+      </field>
+      <field allowempty="true" column="MemberID" columntype="integer" enabled="true" guid="57358e57-4e24-474e-9059-2e39c50bad69" visible="true">
+        <properties>
+          <fieldcaption>Member ID</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberID</componentidentifier>
+        </settings>
+      </field>
+      <field allowempty="true" column="MemberEmail" columnsize="500" columntype="text" enabled="true" guid="7bbb8a0a-36b8-4fc3-8a17-6abb8decdd42" visible="true">
+        <properties>
+          <fieldcaption>Member email</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberEmail</componentidentifier>
+        </settings>
+      </field>
+      <field column="TimeOfYearAndLength" columnsize="200" columntype="text" enabled="true" guid="b1095e33-7367-4571-81db-27dc494c87be" visible="true">
+        <properties>
+          <defaultvalue>3</defaultvalue>
+          <fieldcaption>Time of year and length of event?</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.DropDown</componentidentifier>
+          <DataSource>
+<![CDATA[
+5;5 - 🤩
+4;4 - 😊
+3;3 - 🙃
+2;2 - 🫤
+1; 1 - 😑
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+      <field column="TravelArrangementProcess" columnsize="200" columntype="text" enabled="true" guid="0e7a2a28-8b87-4da1-a340-8dd7e070f0d6" visible="true">
+        <properties>
+          <defaultvalue>3</defaultvalue>
+          <fieldcaption>Travel arrangement process?</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.DropDown</componentidentifier>
+          <DataSource>
+<![CDATA[
+5;5 - 🤩
+4;4 - 😊
+3;3 - 🙃
+2;2 - 🫤
+1; 1 - 😑
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+      <field column="WorkshopAndEducationSessionsAgenda" columnsize="200" columntype="text" enabled="true" guid="beadb42b-78f1-4b17-9b00-0725c17e12e9" visible="true">
+        <properties>
+          <defaultvalue>3</defaultvalue>
+          <fieldcaption>Workshop and education sessions agenda?</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.DropDown</componentidentifier>
+          <DataSource>
+<![CDATA[
+5;5 - 🤩
+4;4 - 😊
+3;3 - 🙃
+2;2 - 🫤
+1; 1 - 😑
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+      <field allowempty="true" column="DescribeTopicsOrTeamsYouFeltShouldHaveBeenALargerPartOfTheAgenda" columntype="longtext" enabled="true" guid="b53dc496-7d7f-4d0d-a75e-610099f5f884" visible="true">
+        <properties>
+          <fieldcaption>
+            <![CDATA[Describe topics or teams you felt should have been a larger part of the agenda]]>
+          </fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.TextArea</componentidentifier>
+        </settings>
+      </field>
+      <field column="WorkshopAndEducationSessionsExperience" columnsize="200" columntype="text" enabled="true" guid="a8516d87-50d7-49b9-ae53-387a24d4df7b" visible="true">
+        <properties>
+          <defaultvalue>3</defaultvalue>
+          <fieldcaption>Workshop and education sessions experience?</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.DropDown</componentidentifier>
+          <DataSource>
+<![CDATA[
+5;5 - 🤩
+4;4 - 😊
+3;3 - 🙃
+2;2 - 🫤
+1; 1 - 😑
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+      <field column="LunchAndDailySnacksSelection" columnsize="200" columntype="text" enabled="true" guid="e77c942f-9ef8-48f3-b8ed-b12e18ec9a40" visible="true">
+        <properties>
+          <defaultvalue>3</defaultvalue>
+          <fieldcaption>Lunch and daily snack selection</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.DropDown</componentidentifier>
+          <DataSource>
+<![CDATA[
+5;5 - 🤩
+4;4 - 😊
+3;3 - 🙃
+2;2 - 🫤
+1; 1 - 😑
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+      <field column="EveningAndSocialEventsExperience" columnsize="200" columntype="text" enabled="true" guid="4d002b87-3668-4c10-9b14-1ab4eba3ee1d" visible="true">
+        <properties>
+          <defaultvalue>3</defaultvalue>
+          <fieldcaption>Evening and social events experience?</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.DropDown</componentidentifier>
+          <DataSource>
+<![CDATA[
+5;5 - 🤩
+4;4 - 😊
+3;3 - 🙃
+2;2 - 🫤
+1; 1 - 😑
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+      <field allowempty="true" column="DescribeSocialEventsYouWouldLikeToSeeOrRepeatAtFutureMVPSummits" columntype="longtext" enabled="true" guid="395ea7b9-2880-493d-86b6-5391a0133b1d" visible="true">
+        <properties>
+          <fieldcaption>
+            <![CDATA[Describe social events you would like to see or repeat at future MVP Summits]]>
+          </fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.TextArea</componentidentifier>
+        </settings>
+      </field>
+      <field column="BalanceOfSessionsSocialEventsAndPersonalTime" columnsize="200" columntype="text" enabled="true" guid="3f2a7d3c-74da-4425-bfb4-4fa614612a29" visible="true">
+        <properties>
+          <defaultvalue>3</defaultvalue>
+          <fieldcaption>
+            <![CDATA[Balance of sessions, social events, and personal time?]]>
+          </fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.DropDown</componentidentifier>
+          <DataSource>
+<![CDATA[
+5;5 - 🤩
+4;4 - 😊
+3;3 - 🙃
+2;2 - 🫤
+1; 1 - 😑
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+      <field column="MVPSwagAndTreatSelection" columnsize="200" columntype="text" enabled="true" guid="b7de6098-37ae-45a3-8f54-0049e4831628" visible="true">
+        <properties>
+          <defaultvalue>3</defaultvalue>
+          <fieldcaption>MVP swag and treat selection?</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.DropDown</componentidentifier>
+          <DataSource>
+<![CDATA[
+5;5 - 🤩
+4;4 - 😊
+3;3 - 🙃
+2;2 - 🫤
+1; 1 - 😑
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+      <field column="OverallMVPSummitExperience" columnsize="200" columntype="text" enabled="true" guid="db72a91c-00d0-40d1-997d-b3e9dec8c9c3" visible="true">
+        <properties>
+          <defaultvalue>3</defaultvalue>
+          <fieldcaption>Overall MVP Summit experience</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.DropDown</componentidentifier>
+          <DataSource>
+<![CDATA[
+5;5 - 🤩
+4;4 - 😊
+3;3 - 🙃
+2;2 - 🫤
+1; 1 - 😑
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+      <field allowempty="true" column="OtherThoughtsAndSuggestions" columntype="longtext" enabled="true" guid="38c77204-9d92-4a5b-8691-0ca134460345" visible="true">
+        <properties>
+          <fieldcaption>Other thoughts and suggestions</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.TextArea</componentidentifier>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>12f317cf-5487-40b2-bdf3-dac78e43926b</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>BizForm.MVP_Summit_2025_Feedback</ClassName>
+  <ClassTableName>Form_Form_2025_07_16_13_30</ClassTableName>
+  <ClassType>Form</ClassType>
+  <ClassXmlSchema>
+<![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Form_Form_2025_07_16_13_30">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Form_2025_07_16_13_30ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+              <xs:element name="FormInserted" type="xs:dateTime" />
+              <xs:element name="FormUpdated" type="xs:dateTime" />
+              <xs:element name="MemberID" type="xs:int" minOccurs="0" />
+              <xs:element name="MemberEmail" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TimeOfYearAndLength">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TravelArrangementProcess">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WorkshopAndEducationSessionsAgenda">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DescribeTopicsOrTeamsYouFeltShouldHaveBeenALargerPartOfTheAgenda" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="WorkshopAndEducationSessionsExperience">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LunchAndDailySnacksSelection">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EveningAndSocialEventsExperience">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DescribeSocialEventsYouWouldLikeToSeeOrRepeatAtFutureMVPSummits" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BalanceOfSessionsSocialEventsAndPersonalTime">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MVPSwagAndTreatSelection">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OverallMVPSummitExperience">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OtherThoughtsAndSuggestions" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Form_Form_2025_07_16_13_30" />
+      <xs:field xpath="Form_2025_07_16_13_30ID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
+]]>
+  </ClassXmlSchema>
+</cms.formclass>

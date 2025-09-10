@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>I-m-going-to-make-a-couple-assumptions-in-f2134dd3</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+I'm going to make a couple assumptions in the reply.
+
+IF the image descriptions are uniform across the site (IE the same image, even if used in multiple locations, will have the same description) then your Widget can simply have a multiple content item selector, and put your images in [custom Content Type](https://docs.kentico.com/business-users/content-hub#upload-a-single-file) that has a description as part of it. The selector should provide the Asset GUIDs, which you can retrieve it and the description and use the /getassetasset to display.
+
+IF the image descriptions are unique on each, then you'll possibly need to either make a new content item that is a description AND a selector for the actual image content asset item, or perhaps create your own JSON Serialized property field that contains an array of the descriptions or something, that is more advanced though.
+
+Widgets by default can be 'placed' anywhere you allow them to be placed.  If you mean you want the SAME widget on multiple places (where the widget data is the same, but the page data is different), then you will need to use the [Partial Widget Page]((https://github.com/KenticoDevTrev/PartialWidgetPage) system in order to add a widget to an empty "Widget" Page, then use the partial widget page widget to load that same widget page section in multiple locations.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-12 19:14:15Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>a58505fc-8fec-417e-af47-ba94e733868c</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Problem-in-Custom-Widget-935ee97e-78ao4fv9</CodeName>
+    <GUID>a926fbe1-36d6-4c92-879e-022bb1a56433</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

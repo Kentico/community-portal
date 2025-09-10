@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>If-you-don-t-have-access-to-the-source-of-243179e1</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+If you don't have access to the source of Project A, option 3 will be locked for you.
+
+To my knowledge, it's not possible to have two projects deployed within a single SaaS environment. When you upload a new deployment package, its content is deployed and replaces the previous deployment.
+
+Regarding promoting your local data to a SaaS environment, you need to ensure that the required objects are serialized through the `$CDRepository/repository.config` file. I wrote a [blog post about SaaS deployments](https://www.milanlund.com/knowledge-base/kentico-xperience-portal-and-saas-from-setup-to-production#a--deployment-setup) where you can find more details.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-11 13:38:06Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>82aee40e-6c56-40eb-b319-44e7332ed551</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>New-Deployment-for-existing-project-ddeea5b0-i9prs09s</CodeName>
+    <GUID>df99531b-7dfc-4dad-a1f2-18259888eded</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

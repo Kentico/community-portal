@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ma.automationstep>
+  <StepActionID>
+    <CodeName>Send_e-mail</CodeName>
+    <GUID>a578a254-b251-4f1e-abb7-533e5898f012</GUID>
+    <ObjectType>ma.automationaction</ObjectType>
+  </StepActionID>
+  <StepActionParameters>
+    <Parameters>
+      <BasedOn>2</BasedOn>
+    </Parameters>
+  </StepActionParameters>
+  <StepAllowReject>False</StepAllowReject>
+  <StepDefinition>
+    <Step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <TimeoutEnabled>false</TimeoutEnabled>
+      <TimeoutTarget>00000000-0000-0000-0000-000000000000</TimeoutTarget>
+      <SourcePoints>
+        <SourcePoint Guid="84290e57-0b37-4436-a83b-c16946d07c1d">
+          <Label>Default</Label>
+          <Type>0</Type>
+          <StepRolesSecurity>0</StepRolesSecurity>
+          <StepUsersSecurity>0</StepUsersSecurity>
+        </SourcePoint>
+      </SourcePoints>
+      <Position>
+        <X>3000</X>
+        <Y>220</Y>
+      </Position>
+    </Step>
+  </StepDefinition>
+  <StepDisplayName>Send autoresponder email</StepDisplayName>
+  <StepGUID>10d00b68-9773-45d9-8a33-1dd65976a019</StepGUID>
+  <StepName>SendAutoresponderEmail</StepName>
+  <StepRolesSecurity>0</StepRolesSecurity>
+  <StepSendApproveEmails>False</StepSendApproveEmails>
+  <StepSendEmails>False</StepSendEmails>
+  <StepSendReadyForApprovalEmails>False</StepSendReadyForApprovalEmails>
+  <StepSendRejectEmails>False</StepSendRejectEmails>
+  <StepType>11</StepType>
+  <StepUsersSecurity>0</StepUsersSecurity>
+  <StepWorkflowID>
+    <CodeName>Kentico.Devnet.SendAutoresponderEmail.Form_2022_04_07_08_24</CodeName>
+    <GUID>4cc6fa98-0c06-4276-b821-a5789c353d7a</GUID>
+    <ObjectType>ma.automationprocess</ObjectType>
+  </StepWorkflowID>
+  <StepWorkflowType>3</StepWorkflowType>
+</ma.automationstep>

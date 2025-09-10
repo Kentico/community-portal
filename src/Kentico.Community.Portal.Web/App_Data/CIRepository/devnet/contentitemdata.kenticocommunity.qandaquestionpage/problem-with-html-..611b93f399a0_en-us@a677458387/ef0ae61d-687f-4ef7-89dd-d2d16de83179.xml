@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>f6ddb732-d475-445c-99cb-611b93f399a0</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Problem-with-html-tags-inside-richtext-editor-0eefbb94-iqr0o2li</CodeName>
+      <GUID>163370fb-34b2-418f-a369-cdf80bcb3c05</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>ef0ae61d-687f-4ef7-89dd-d2d16de83179</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>91a0557e-03c7-4298-9f29-2bb0e81462cb</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>6</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+Hey everyone,&#x20;
+
+I am facing this issue, when saving a lottie player tag, to the richtext editor inside a page type it is replaced with a \<br />, &#x20;
+
+What I need:&#x20;
+
+```
+<div class="col-xl-6 col-md-7 order-md-2 ms-n5">
+	<lottie-player src="/site/json/animation-newsletter-subscribe.json" background="transparent" speed="1" loop autoplay></lottie-player>
+</div>
+```
+
+What is saved:&#x20;
+
+```
+<div class="col-xl-6 col-md-7 order-md-2 ms-n5">
+	<br>
+</div>
+```
+
+***
+
+Does someone know how to disable this? or make it work?&#x20;
+
+Thanks!&#x20;
+
+**Environment**
+
+* Xperience by Kentico version: \[30.6.1]
+
+* .NET version: \[8]
+
+* Execution environment: Private cloud (Azure)]
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-07-24 19:32:07Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-07-24 19:33:37Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

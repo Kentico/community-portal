@@ -54,12 +54,12 @@
     "*": false
   },
 
-  "github.copilot.chat.agent.terminal.allowList": {
-    "git status": true,
-    "/^git add .*/": true,
-    "git push": true,
-    "git diff": true
-  },
+  "#chat.tools.terminal.autoApprove#": [
+    "git status",
+    "git add *",
+    "git push",
+    "git diff"
+  ],
 
   "github.copilot.chat.commitMessageGeneration.instructions": [
     {

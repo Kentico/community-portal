@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>c1904432-c07d-409c-ac1d-3aaacab749d9</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Hybrid-Caching-in-Xperience-c2263533-ejlcl6hl</CodeName>
+      <GUID>a6331713-a1d2-434b-9e85-cc4c921f807d</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>485cce99-7c15-4bf7-870c-a2e4767166cd</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>78099d8a-cef8-457a-91c5-c30f1032ef48</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>5</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+Hey guys, I'm keen to use the new HybridCache API with Xperience and am looking for a bit of guidance and to gauge the consensus around multilevel caching in general.
+
+
+
+For those unaware: [HybridCache library in ASP.NET Core | Microsoft Learn](https://learn.microsoft.com/en-us/aspnet/core/performance/caching/hybrid?view=aspnetcore-9.0)&#x20;
+
+
+
+HybridCaching combines an in-memory cache (L1) with a distributed caching solution (L2). This has a number of benefits over a traditional single tier cache:
+
+* Fast cache item access via L1 in memory store
+* High availability and resilience to server restarts, deployments etc...
+* Scalability across multiple nodes
+
+
+
+This is all great, but the only problem is HybridCache is still in preview, and is missing a lot of key features which would be required for a successful integration, in particular:
+
+
+
+* A way to invalidate cache
+
+  * There is a 'RemoveByTag' method which would be ideal for this (tags being equivalent to a kentico dummy cache key) however this feature hasn't been implemented yet
+  * [HybridCache library in ASP.NET Core | Microsoft Learn](https://learn.microsoft.com/en-us/aspnet/core/performance/caching/hybrid?view=aspnetcore-9.0#remove-cache-entries-by-tag)
+* A way to synchronise changes between nodes
+
+  * We would also need a way of synchronizing L1 cache changes between each node in a scaled out scenario
+
+
+
+I have a custom solution for tagging cache entries in place already, so that leaves the synchronization issue, which I believe I can solve using either of these approaches:
+
+
+
+* Custom web farm task
+
+  * Create a custom web farms task which is pushed in response to some CMS action such as updating a page or object
+  * The task would contain a collection of dummy keys specific to that object
+  * Each running node would then receive the dummy keys and handle invalidation of its own L1 cache
+  * Only issue is it appears custom web farms tasks are not officially supported in Xperience, although the API for them still exists
+* Use redis pub/sub
+
+  * We could use redis pub/sub pattern to synchronise changes between nodes
+  * We would designate a specific instance (could be the CMS) as the publisher, who publishes to a cache sync channel
+  * The subscribers (frontend instances) would listen to this channel for messages containing dummy keys to invalidate
+
+
+
+These are the challenges I'm currently faced with if I opt to use the new HybridCache API, however I've also come across an alternative package which is more mature, and offers many of the same features as HybridCache and more.
+
+
+
+FusionCache:
+
+[https://github.com/ZiggyCreatures/FusionCache](https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2FZiggyCreatures%2FFusionCache\&data=05%7C02%7CDuane.Gibbs%40crafted.co.uk%7C6964424f8d08483aa88b08dd2ea52056%7Cf11c7bc6fbcf4497a73a4e3a04f786cd%7C0%7C0%7C638718008939967403%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C\&sdata=TIiJWftvk3Iu%2BNLxjibSUcG6BUA5xQkVdmi63a%2F4s9A%3D\&reserved=0)
+
+
+
+For a comparison with HybridCache:
+
+[https://github.com/ZiggyCreatures/FusionCache/blob/main/docs/Comparison.md](https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2FZiggyCreatures%2FFusionCache%2Fblob%2Fmain%2Fdocs%2FComparison.md\&data=05%7C02%7CDuane.Gibbs%40crafted.co.uk%7C6964424f8d08483aa88b08dd2ea52056%7Cf11c7bc6fbcf4497a73a4e3a04f786cd%7C0%7C0%7C638718008939980238%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C\&sdata=CizWHyAbDsygmgdeGSeaQE%2Bnb38YIhDYlY%2FCXGQDJyM%3D\&reserved=0)
+
+
+
+This appears to do everything needed and has some other useful features such as automatic failsafes and fallback to stale content in the event of errors.
+
+
+
+In particular, it implements it's own 'RemoveByTag' functionality as well as a cache 'backplane' for syncing changes to each nodes L1 cache (which I believe uses redis pub/sub under the hood), so this solves the primary issues I'm facing with HybridCache.
+
+
+
+I will just summarise my question with the below points:
+
+
+
+* Do you have any thoughts on Hybrid Caching in general to share, or on either of the approaches I've outlined above (.NET HybridCache or FusionCache)?
+* Is this something Kentico are considering integrating into Xperience themselves and perhaps they’re waiting for HybridCache to mature? I do know that Umbraco have already added it to their latest version.
+* Would you use Hybrid Caching *at all* or just stick with a single in memory cache and keep things simple?
+
+
+
+
+
+Thanks
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-01-07 14:20:48Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-01-07 14:20:48Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

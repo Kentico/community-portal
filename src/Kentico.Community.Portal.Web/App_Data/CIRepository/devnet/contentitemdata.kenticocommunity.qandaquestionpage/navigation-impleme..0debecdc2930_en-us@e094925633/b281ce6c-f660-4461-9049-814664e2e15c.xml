@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>dd2ac4a6-9f93-4333-bf2d-0debecdc2930</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Navigation-Implementation-INavigation-vs-Repository-and-Kentico-Tag-Helper-2bb070a8-hv5masoy</CodeName>
+      <GUID>cdb7551b-9f77-4656-b3fe-5fc27ebea458</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>b281ce6c-f660-4461-9049-814664e2e15c</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>ca14f6e1-ef09-4e22-80bb-fd6c715fd0f1</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>3</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I have been reviewing the official Kickstart Project documentation for implementing navigation using the `INavigation` interface and `NavigationService`. However, I am facing issues with the approach provided in the documentation. In the sample project "Dancing Goat," navigation is implemented using a repository, which seems like a different approach. Could someone help clarify which method is more reliable? Is the repository-based method from "Dancing Goat" a more practical solution, or should I focus on implementing navigation with `INavigation` and `NavigationService` as described in the documentation?
+
+Additionally, I noticed that in the "Dancing Goat" example project, the navigation is rendered using the `<vc:navigation-menu />` tag, while in Kentico, there is a tag helper implementation like `<vc:navigation-menu navigation-menu-code-name="MainNavigation" />`. The latter uses the `navigation-menu-code-name` attribute to specify the code name of the navigation menu. Can someone explain how this tag helper works in Kentico? What is the significance of the `navigation-menu-code-name` attribute, and how does it affect navigation rendering in Kentico?
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-01-02 10:59:27Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-01-02 10:59:27Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

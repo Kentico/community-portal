@@ -5,6 +5,7 @@ using Kentico.Community.Portal.Web.Membership;
 using Kentico.Community.Portal.Web.Resources;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Localization;
 
 namespace Kentico.Community.Portal.Web.Features.Registration;
@@ -37,6 +38,7 @@ public class RegistrationController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [EnableRateLimiting(MemberRateLimitingConstants.Registration)]
     public async Task<IActionResult> Register(RegisterViewModel model)
     {
         var captchaResponse = await captchaValidator.ValidateCaptcha(model);

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Take-a-look-at-the-blog-post-Embedded-stru91e93c0d</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Take a look at the blog post [Embedded structured content and the power of custom data types](https://community.kentico.com/blog/embedded-structured-content-and-the-power-of-custom-data-types) here to see how you can create custom data types and UI Form Components to interact with them in the administration UI.
+
+However, we don't expose the built-in React components, like the Content Item selector, for you to combine with your own components.
+
+Until that option becomes available in the future you have 2 options.
+
+1. Model your 3 states as content types and allow the marketer to select from each of those for the content item field
+
+   1. You will model a link to a web page as a selected web page item in the Content Item selector. Additionally, your media assets should be stored as content items in the Content hub anyway, so this all fits your goals.
+   2. However, this will be a little awkward for external URLs because they will need to be a separate content item. This will feel like extra work for marketers when they initially enter the data, but it does improve identifying where you use an external URL across all your channels. You could also add additional data points for this content item - UTM parameters, link label, description, taxonomy.
+2. Use 2 fields to store this content - 1 uses the Content Item selector (media item and web page item) and 1 uses a text box (external URL). You can use [field visibility conditions](https://docs.kentico.com/x/7gSiCQ) along with a 3rd field to determine which of the 2 URL fields/components should be displayed - for example, use a drop down with 3 "URL" options - None, Internal, External.
+
+   1. This is more convenient for content authoring but requires 2 separate fields and you'll always need to check the URL options drop down value to know which field you should pull the URL information from.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-14 18:29:39Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>74f40db8-aee4-4a1a-aa1b-49057126aac2</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-to-Create-a-Custom-Data-Type-for-Combined-URL-or-Page-Selector-in-Xperience-by-Kentico--ynesdkig</CodeName>
+    <GUID>74226c3c-0424-4394-8c98-661dfa6fc4e3</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

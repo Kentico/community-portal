@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Sometimes-Kentico-media-library-isn-t-the-43b2dc90</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Sometimes Kentico media library isn't the best way to store images either, we have had several v13 projects where the amount of images and subsequent folder structure required to store those images have caused the interface to be quite slow (particularly adding images to widgets).
+
+I understand why everything has moved to the content hub, not only from the shared assets perspective but also making it very easy to add additional content to images (alt text for example) which was always a bit of a pain in the media library, and I'm sure the performance will be far better in the content hub than it was in the media library, making it easier to assign images to content and streamline a content editors workflow.
+
+Having said that I do think its a shame the media library is going away, I realize we now have folders and smart folders in the content hub but i struggle to see how we can keep a handle on the content in there once it starts having 100K+ items in it (I'm less thinking about performance and more about management), I currently have a v13 site in mind with 10,000 nodes in the tree (each with a lot of widget content to move into the content hub) and 30,000 images in the media library (and that's not including a lot of other content that is currently stored in modules/custom tables which would probably be better stored in the content hub). It's hard to have discussions with clients on this system and say "this is going to be better for you" which it certainly is in many regards, but media storage is a hard sell, especially when they are struggling to keep a handle on their current system.
+
+I think what I've taken from this is that Kentico are providing the foundation to be able to build sites, but once projects scale to enterprise level it really needs dedicated 3rd parties to handle these special requirements. this isn't just about images, for example if you want good site search you are probably looking at Algolia rather than the inbuilt Lucene, but that's not to say that the inbuilt search isn't great for smaller sites without the same requirement. In the same way for images something like Cloudinary or Binder are good options for storing images. This obviously adds additional cost but Kentico has always been a good framework for integrating with other systems, It's going to be down to each individual client/project to work out when what is built in is sufficient or when something more specialised is required to fulfil the needs of the project.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-19 11:51:34Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>9339da8c-c9c4-4d7f-9798-442acdcb9a90</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Media-Library-vs-Content-Hub-eb782379-vjltvd5m</CodeName>
+    <GUID>04ab69dc-34dd-4048-918f-cd10a49f29d6</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

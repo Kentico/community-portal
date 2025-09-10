@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>You-ll-want-to-use-the-cms-systemtable-obj8b3e98ee</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+You'll want to use the `cms.systemtable` object type which is mentioned in [the CI/CD object types docs](https://docs.kentico.com/developers-and-admins/ci-cd/reference-ci-cd-object-types#general).
+
+```XML
+<?xml version="1.0" encoding="utf-8"?>
+<RepositoryConfiguration xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+     <RestoreMode>CreateUpdate</RestoreMode>
+
+     <IncludedObjectTypes>
+          <ObjectType>cms.systemtable</ObjectType>
+     </IncludedObjectTypes>
+
+     <ObjectFilters>
+          <IncludedCodeNames ObjectType="cms.systemtable">
+               cms.member
+          </IncludedCodeNames>
+     </ObjectFilters>
+
+</RepositoryConfiguration>
+```
+
+You can see an example in [the Kentico Community Portal source code](https://github.com/Kentico/community-portal/blob/v29.6.1.6/src/Kentico.Community.Portal.Web/App_Data/CDRepository/repository.config#L17).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-04 19:34:58Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>b7db01da-5c0a-47d0-9f5c-b86256934057</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-do-I-add-CMS-Member-updates-to-the-CD-process-060ac807-b2y8sk8z</CodeName>
+    <GUID>05ceb7e5-12ec-4005-8aa9-ff7516995d07</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

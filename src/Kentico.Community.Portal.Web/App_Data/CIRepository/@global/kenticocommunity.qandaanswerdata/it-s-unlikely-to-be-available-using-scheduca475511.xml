@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>It-s-unlikely-to-be-available-Using-scheduca475511</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+It's unlikely to be available. Using scheduled tasks to execute a one off operation with custom data ***is not*** what they are designed for. Scheduled tasks should be used to run recurring, short-lived processes that don't require manual customization.
+
+Instead, build a custom administration application with forms and buttons that marketers can use to run these background jobs.
+
+You can see an example of this [in the Kentico Community Portal source code](https://github.com/Kentico/community-portal/blob/v30.1.0.11/src/Kentico.Community.Portal.Admin/Features/Members/MemberManagementPage.cs#L19).
+
+You could also follow our guides and create a custom application to manage settings which your scheduled task could check each time it runs. The Kentico Community Portal [also has an example of this](https://github.com/Kentico/community-portal/blob/v30.1.0.11/src/Kentico.Community.Portal.Admin/Features/PortalWebsiteSettings/PortalWebsiteSettingsApplicationPage.cs#L20).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-11 20:29:44Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>32887eac-2d41-46c9-a18d-1c5358f62b1d</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Scheduled-task-Workaround-to-get-ScheduledTaskConfigurationData-editable-in-UI--e2d386f4-jbk0i9c2</CodeName>
+    <GUID>10bb81f4-7275-4ba5-9c26-090dc37c45db</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

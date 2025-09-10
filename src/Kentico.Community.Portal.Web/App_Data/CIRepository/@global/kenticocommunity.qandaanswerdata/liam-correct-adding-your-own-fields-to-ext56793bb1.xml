@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>c1beb8f9-4673-40d8-acdd-2dd56e5cd1bb</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Liam-Correct-adding-your-own-fields-to-ext56793bb1</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Liam,
+
+Correct - adding your own fields to extensible object types (like Members, Contacts, digital commerce Orders and Customers, and even Notifications) is supported. Changing the attributes of fields shipped with the product are not, because we expect those fields to work a specific way for our code to function properly.
+
+Activity is currently not extensible. I would make a [request on the roadmap](https://roadmap.kentico.com/tabs/5-released) to support your scenario. However, because an in-production Xperience application can have millions of activities, expanding the size of activity value could have a negative performance impact on the application.
+
+What were you planning on using this additional data for?
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-08-21 18:58:16Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>31a2a8ef-2587-4f5c-b24d-235fec1cdf25</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Possible-to-extend-system-object-type-for-Activity--52d4a482-t40e4z5z</CodeName>
+    <GUID>6e0d4afd-bf39-4cd0-bd43-7f8f5153b303</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

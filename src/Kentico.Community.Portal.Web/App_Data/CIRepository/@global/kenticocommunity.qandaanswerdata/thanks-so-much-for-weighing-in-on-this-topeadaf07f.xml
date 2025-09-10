@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Thanks-so-much-for-weighing-in-on-this-topeadaf07f</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Thanks so much for weighing in on this topic, there are definitely some points to take away and digest :)
+
+Re; `IProgressiveCache` , correct me if I'm wrong but I believe it's not a truly distributed caching solution in the sense that cache items are being stored out of process. My understanding is that it still stores its items in the memory of each running instance, with web farms (SQL tables under the hood) being used to synchronise changes between them. I may be wrong on that though, I have not delved too deeply into the internals.
+
+Does it store cache items in memory *and* in SQL, so that it doesn't have to regenerate the cache on a cold start/restart or when provisioning additional nodes?
+
+If it does only store items in memory then I believe it can only be considered an L1 cache.
+
+1. **What problem are you trying to solve by creating a custom cache solution?**
+
+   1. To give a bit of background context, the project in question will be running in a kubernetes cluster and uses a horizontal pod autoscaler which can spin up/down new pods in response to increased requests or memory. Due to these scalability demands, we will need to maintain a high degree of availability and fast response times.
+   2. Using this tiered cache approach gives us the benefits of a fast low latency in-memory cache, with the resiliency of a distributed cache store like redis, making it that much quicker to spin up new pods
+2. **Is this something your solution *requires*?**
+
+   1. This hasn't been strictly mandated by the client and I do believe we can get by using the out of the box `IProgressiveCache` although I can't ignore the benefits of a hybrid cache solution
+3. **Are you sure that `IProgressiveCache` won't work?**
+
+   1. I believe it will be a workable solution, although for scaling out, it will not result in faster uptime vs a hybrid cache
+4. **Does the custom cache solution truly help your client?**
+
+   1. In the grand scheme of things, it is unlikely to be something the client would notice. It's sometimes difficult to not fall into the trap of wanting to use the 'new shiny' things from a Dev perspective and whilst I can justify it myself, knowing the technical implications pros/cons etc... could we justify the added complexity, and possible tech debt, to the client is another question :)
+5. **is using an "in preview" technology worth it given the engineering cost?**
+
+   1. This is great question and is something I've raised internally. With `HybridCache` in particular, we don't know when it will be out of preview and it's missing tag support so I feel this API in particular is out of the question. `FusionCache` is also in preview, but is expected to be GA very soon: [Release v2.0.0-preview-4 · ZiggyCreatures/FusionCache · GitHub](https://github.com/ZiggyCreatures/FusionCache/releases/tag/v2.0.0-preview-4)
+   2. I think if we were going to choose one of these, it will need to be `FusionCache` due to the tagging feature and the cache backplane
+
+I've been playing around with `FusionCache` since I opening this thread, and have a rough working solution with these features:
+
+* Cache invalidation for all content types via cache dependencies (tags in `FusionCache`)
+
+  * Pages
+  * Content items
+  * Media files
+  * Headless items
+  * Settings key items
+  * General object infos (via a custom 'provider' pattern)
+* A custom `<cache>` tag helper which is backed by hybrid cache, again with support for cache invalidation via dependencies
+* Custom output cache policy/store backed by `FusionCache` which also allows for setting dependencies
+
+I think even if we decide to not go down this route, the code may be useful to others, even if it's just to experiment with.
+
+If you or @Trevor Fayas would like to take a look I can pull it out of the project and into a public repo? :)
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-08 14:08:10Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>ea442622-9d8e-4b55-8c8f-81dbef40fd62</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Hybrid-Caching-in-Xperience-c2263533-ejlcl6hl</CodeName>
+    <GUID>1a78ae2a-a8e9-4f5f-91ea-b92f028e4235</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -5,6 +5,7 @@ using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Kentico.Community.Portal.Web.Features.PasswordRecovery;
 
@@ -39,6 +40,7 @@ public class PasswordRecoveryController(
     /// <returns></returns>
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [EnableRateLimiting(MemberRateLimitingConstants.ForgotPassword)]
     public async Task<ActionResult> RequestRecoveryEmail(RequestRecoveryEmailViewModel model)
     {
         if (!ModelState.IsValid)

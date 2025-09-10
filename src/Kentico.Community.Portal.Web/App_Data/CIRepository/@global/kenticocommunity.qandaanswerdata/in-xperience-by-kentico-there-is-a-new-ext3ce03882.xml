@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>In-Xperience-by-Kentico-there-is-a-new-ext3ce03882</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+In Xperience by Kentico, there is a new extension method `GetDataContainerResultAsync()` that returns an IEnumerable of `IDataContainer` (Xperience by Kentico's version of a DataRow).
+
+You can then leverage these with the `IInfoObject.New(IDataContainer data)` method, or use the `.GetValue(string FieldName)` to retrieve the data.
+
+```CSharp
+var items = await _mediaFileInfoProvider.Get()
+    .Source(x => x.InnerJoin<MediaLibraryInfo>(nameof(MediaFileInfo.FileLibraryID), nameof(MediaLibraryInfo.LibraryID)))
+    .Columns(nameof(MediaFileInfo.FileName), nameof(MediaLibraryInfo.LibraryDisplayName))
+    .GetDataContainerResultAsync();
+
+var firstIDataContainer = items.First();
+// Can reference with GetValue
+var libraryDisplayName = firstIDataContainer.GetValue(nameof(MediaLibraryInfo.LibraryDisplayName));
+// Can also cast for strongly typed
+var mediaInfoObject = MediaFileInfo.New(firstIDataContainer);
+var mediaLibraryInfoObject = MediaLibraryInfo.New(firstIDataContainer);
+var fileInfo = $"{mediaInfoObject.FileName} from Library {mediaLibraryInfoObject.LibraryDisplayName}"; 
+```
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-06 20:36:49Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>933eba51-80f5-4e36-bb71-6ea40167c19b</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Joined-data-no-longer-available-in-InfoProvider-Typed-Results-GetValue-abd700f4-m5js7vhq</CodeName>
+    <GUID>fc61ca9d-d0a8-4ca4-8767-d4f1b5803fbe</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

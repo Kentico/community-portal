@@ -11,7 +11,7 @@
             <div class="row justify-content-center">
                 <div class="col-xl-10 col-xxl-9">
                     <p>
-                        <a href="/q-and-a">Back to Q&A</a>
+                        <a href="/q-and-a">Back to Search</a>
                     </p>
                 </div>
                 <div class="col-xl-10 col-xxl-9">
@@ -30,7 +30,7 @@
                                     <option value="newest">Newest</option>
                                     @if (Model.HasAcceptedAnswer)
                                     {
-                                        <option value="acceptedAnswer">Accepted answer, oldest</option>
+                                        <option value="acceptedAnswer">Accepted response, oldest</option>
                                     }
                                 </select>
                             </div>
@@ -43,7 +43,7 @@
                             }
                         </div>
 
-                        @if (Model.Question.Permissions.CanAnswer)
+                        @if (Model.Question.Permissions.Answer)
                         {
                             <partial name="~/Features/QAndA/Components/Form/_QAndAAnswerButton.cshtml"
                                 model="@Model.Question.ID" />
@@ -51,7 +51,7 @@
                         else
                         {
                             <p data-ktc-search-exclude class="text-center mt-3">
-                                To answer this question, you have to
+                                To response this discussion, you have to
                                 <a asp-controller="Authentication" asp-action="Login"
                                     asp-route-returnUrl="@Context.Request.Path">login first</a>.
                             </p>

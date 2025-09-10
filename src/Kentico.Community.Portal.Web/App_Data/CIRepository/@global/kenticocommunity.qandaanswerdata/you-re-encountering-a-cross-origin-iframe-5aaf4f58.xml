@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>You-re-encountering-a-cross-origin-iframe-5aaf4f58</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+You're encountering a **cross-origin iframe security error** when previewing a page inside the **Page Builder tab** in **Xperience by Kentico (XBK)**. This error is expected behavior due to browser **security restrictions (Same-Origin Policy)**.
+
+***
+
+&#x20;**Why This Happens**
+
+When your live site runs on `http://localhost:60651` and Kentico’s admin UI (Page Builder tab) runs on a **different origin**, the browser treats them as **cross-origin**. Iframes (used in the Page Builder tab preview) **cannot access or modify properties** of a page from a different origin for security reasons.
+
+So this line fails:
+
+`window.addEventListener(...)  ` &#x20;
+
+Because `window` in your script is trying to access the top-level page outside its origin.
+
+**Why It Works in "Open in New Tab"**
+
+When you open the preview in a new tab, it **loads directly from the site’s origin**, not inside an iframe — so **no cross-origin restrictions** apply.
+
+**Workaround / Resolution Suggestions**
+
+1. **Detect if Inside an Iframe**\
+   &#x20;Modify your JS to only attach `window.addEventListener` if it's **not inside a cross-origin iframe**:
+
+   `try {     if (window.top === window) {         // Same-origin or top-level         window.addEventListener('yourEvent', yourHandler);     } } catch (e) {     console.warn("Cross-origin access blocked: ", e.message);     // Optionally fallback or skip functionality } `&#x20;
+2. **Move Critical JS Outside of Iframe Context**\
+   &#x20;If possible, avoid loading scripts in the iframe preview that depend on access to the parent frame. Stick to DOM manipulation within the iframe only.
+3. **Use PostMessage for Communication**\
+   &#x20;If you **must** communicate between iframe and parent window, use the `window.postMessage` API, which is designed for cross-origin messaging.
+4. **Enable Same-Origin Development (Optional)**\
+   &#x20;You could set up both Kentico admin and the live site under the **same hostname and port** during development (e.g., using a proxy or single IIS site) — but this is complex and usually not worth it just for iframe preview compatibility.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-13 21:18:39Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>ab778808-cafe-423a-9de0-dc26e8961a0a</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Uncaught-SecurityError-ba368faf-eaor4k3b</CodeName>
+    <GUID>38efcc28-4ddd-41ca-b440-91e5090166c7</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

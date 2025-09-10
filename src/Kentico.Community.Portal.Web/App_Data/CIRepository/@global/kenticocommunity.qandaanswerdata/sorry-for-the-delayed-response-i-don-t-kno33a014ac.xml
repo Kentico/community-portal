@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Sorry-for-the-delayed-response-I-don-t-kno33a014ac</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Sorry for the delayed response.
+
+I don't know if those web farm events are available in Xperience by Kentico, but you could respond to the `ApplicationEvents.PostStart` event and trigger a rebuild. Each time the web farm scaled out the new application would have an up-to-date local index. This would also trigger on application restarts, so you'd need to consider this if your index creation was resource intensive.
+
+Xperience's Lucene integration rotates through a limited number of indexes, so you shouldn't need to worry about filling up your storage in SaaS or private cloud hosting.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-07 21:59:50Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>deccd273-11d8-4793-b384-af23165ffe53</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Search-in-Kentico-SaaS-0a93371d-jjsxhf3d</CodeName>
+    <GUID>15667460-52bb-4578-99fd-d93d431309da</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

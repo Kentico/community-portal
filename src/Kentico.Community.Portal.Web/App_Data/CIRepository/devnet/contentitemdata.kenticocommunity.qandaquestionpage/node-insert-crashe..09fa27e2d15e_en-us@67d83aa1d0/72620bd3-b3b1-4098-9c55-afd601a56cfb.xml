@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>5490ecf3-5dd2-4552-a40c-09fa27e2d15e</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Node-insert-crashes-4d912e10-ozxnl1em</CodeName>
+      <GUID>8104dfac-c0f7-42fe-9698-680c7c37a819</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>72620bd3-b3b1-4098-9c55-afd601a56cfb</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>1c9a0047-8caa-462e-aa8b-a25430446689</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>2</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+Hello:
+
+Very weird issue here. We're building out a new Kentico site with version 13.0.138 and we also have a separate site for users to insert a node into the tree. Here's some sample code:
+
+```
+TreeProvider provider = new TreeProvider(MembershipContext.AuthenticatedUser);
+TreeNode parent = provider.SelectSingleNode("##site name##", "##node path##", "en-us");
+TreeNode node = TreeNode.New("##class type##", provider);
+node.NodeAlias = ##path variable##;
+node.DocumentName = ##doc name variable##;
+node.DocumentCulture = "en-us";
+node.Insert(parent);
+
+```
+
+This does insert the new node into the tree where it belongs, but the Insert method never returns. It just gives me a SQL timeout. It's a long query so I'll just only put part of it here but let me know if you want me to paste the full query:
+
+```
+SELECT *
+FROM CMS_PageFormerUrlPath
+WHERE (([PageFormerUrlPathNodeID] IN (
+    SELECT [NodeID]
+FROM View_CMS_Tree_Joined AS V WITH (NOLOCK, NOEXPAND) LEFT OUTER JOIN COM_SKU AS S WITH (NOLOCK) ON [V].[NodeSKUID] = [S].[SKUID] WHERE ([NodeLinkedNodeID] IN (
+    SELECT [NodeID]
+FROM View_CMS_Tree_Joined AS V WITH (NOLOCK, NOEXPAND) INNER JOIN NinetyTwoY_ProductionEvent AS C WITH (NOLOCK) ON [V].[DocumentForeignKeyValue] = [C].[ProductionEventID] AND V.ClassName = N'NinetyTwoY.ProductionEvent' LEFT OUTER JOIN COM_SKU AS S WITH (NOLOCK) ON [V].[NodeSKUID] = [S].[SKUID] WHERE ([DocumentID] = @DocumentID)
+))
+
+```
+
+One last thing to note is that this is only a problem with one of the sites. I tried a different site and there was no issue. I understand if this isn't a lot to go on so feel free to ask for more. Thanks for any help you can give me.
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: 13.0.138
+* .NET version: 8
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-01-01 23:59:26Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-01-01 23:59:26Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>348c0c2e-c4a2-4a6f-bfc1-f926cb0d99dd</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Migration-fails-when-reusable-schema-exists-9c312985-ucq5z8sz</CodeName>
+      <GUID>b8133f2b-95a5-418b-bf4b-335a5625c887</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>2b0f59c3-3246-474f-82ae-5ab408e7c44f</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>2</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I'm working through a migration from KX13 to XbyK 30.8.0 and I'm stuck on migrating content into a database that was started prior to the data migration.  All the version info, site name, etc match. &#x20;
+
+We have a content type called Page.  In my migration code, I'm adding this content type definition and field mapping and setting values based on data being migrated.  When I run the migration process, it's now erroring out saying the "the field name is already taken. Content type field names must be unique within the current content type and across all reusable field schemas." &#x20;
+
+Is importing content into an existing content type not allowed?
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.8.0]
+
+* .NET version: \[9]
+
+* Execution environment: \[Private cloud Azure]
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-08-28 22:45:45Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-08-28 23:24:04Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

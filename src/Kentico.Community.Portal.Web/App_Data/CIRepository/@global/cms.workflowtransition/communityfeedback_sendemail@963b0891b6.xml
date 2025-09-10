@@ -2,11 +2,11 @@
 <cms.workflowtransition>
   <Parent>
     <CodeName>SendEmail</CodeName>
-    <GUID>c3a98d9d-f6f7-4f09-993a-55875c1e863c</GUID>
+    <GUID>fca539ae-d0a2-4aa8-a2bf-1c5e37352ccc</GUID>
     <ObjectType>ma.automationstep</ObjectType>
     <Parent>
       <CodeName>CommunityFeedback</CodeName>
-      <GUID>587c1ff6-ec57-46e8-b51d-aac0e4faddd8</GUID>
+      <GUID>583c4493-e315-475d-82f3-ce626eee1b00</GUID>
       <ObjectType>ma.automationprocess</ObjectType>
     </Parent>
   </Parent>
@@ -14,19 +14,19 @@
     <Binding id="ma.automationstep_Finish_ma.automationprocess_CommunityFeedback-ma.automationstep_Finish_ma.automationprocess_CommunityFeedback">
       <TransitionEndStepID>
         <CodeName>Finish</CodeName>
-        <GUID>d34f1606-aa0a-41e2-ac01-31d0249ce9ef</GUID>
+        <GUID>a9a95c52-8607-4db3-9233-9e42f44bf60c</GUID>
         <ObjectType>ma.automationstep</ObjectType>
         <Parent>
           <CodeName>CommunityFeedback</CodeName>
-          <GUID>587c1ff6-ec57-46e8-b51d-aac0e4faddd8</GUID>
+          <GUID>583c4493-e315-475d-82f3-ce626eee1b00</GUID>
           <ObjectType>ma.automationprocess</ObjectType>
         </Parent>
       </TransitionEndStepID>
-      <TransitionSourcePointGUID>a2d5dfcb-64e6-4449-bc79-a42c51384837</TransitionSourcePointGUID>
+      <TransitionSourcePointGUID>ef19538b-ecba-4cc1-807f-e995a4c174b9</TransitionSourcePointGUID>
       <TransitionType>1</TransitionType>
       <TransitionWorkflowID>
         <CodeName>CommunityFeedback</CodeName>
-        <GUID>587c1ff6-ec57-46e8-b51d-aac0e4faddd8</GUID>
+        <GUID>583c4493-e315-475d-82f3-ce626eee1b00</GUID>
         <ObjectType>ma.automationprocess</ObjectType>
       </TransitionWorkflowID>
     </Binding>

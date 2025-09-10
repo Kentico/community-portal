@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<om.customerjourneyhistory>
+  <ClassDisplayName>
+    <![CDATA[CJ_StageConditionContactHistory_CustomerJourney2025_04_25_21_40]]>
+  </ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="CustomerJourneyStageConditionContactHistoryID" columntype="integer" enabled="true" guid="23ce53bf-839a-46f2-a15f-82a10657d13e" isPK="true" />
+      <field column="CustomerJourneyStageConditionContactHistoryContactID" columnprecision="0" columntype="integer" enabled="true" guid="0eea72bb-04b5-4ff8-b481-87a46f921a41" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+          <fieldcaption>
+            <![CDATA[CustomerJourneyStageConditionContactHistoryContactID]]>
+          </fieldcaption>
+        </properties>
+      </field>
+      <field column="CustomerJourneyStageConditionContactHistoryStageID" columnprecision="0" columntype="integer" enabled="true" guid="397a6ebb-4dc0-4c6b-b7c6-916f093f844a" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+          <fieldcaption>CustomerJourneyStageConditionContactHistoryStageID</fieldcaption>
+        </properties>
+      </field>
+      <field allowempty="true" column="CustomerJourneyStageConditionContactHistoryStageReachedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="adf49285-7324-4bc3-b54e-df3563bb02d1" system="true">
+        <properties>
+          <fieldcaption>
+            <![CDATA[CustomerJourneyStageConditionContactHistoryStageReachedWhen]]>
+          </fieldcaption>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>dcdfea34-d42a-44e1-b689-c715ecb6e319</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>
+    <![CDATA[CJ.StageConditionContactHistory_CustomerJourney2025_04_25_21_40]]>
+  </ClassName>
+  <ClassTableName>
+    <![CDATA[CJ_StageConditionContactHistory_CustomerJourney2025_04_25_21_40]]>
+  </ClassTableName>
+  <ClassType>CJ</ClassType>
+</om.customerjourneyhistory>

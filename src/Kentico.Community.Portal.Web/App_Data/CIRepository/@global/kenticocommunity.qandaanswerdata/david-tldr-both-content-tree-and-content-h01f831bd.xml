@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>c1beb8f9-4673-40d8-acdd-2dd56e5cd1bb</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>David-TLDR-both-content-tree-and-Content-h01f831bd</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+David,
+
+TLDR; both content tree and Content hub navigation modeling are supported today - so you can choose whichever option fits your marketer's workflow best.
+
+When we add the advanced navigation feature it is very possible it will be a metadata structure for hierarchical relationships between reusable content items, so that navigation items can continue to be modeled as needed. It will solve the main disadvantage of using the Content hub for navigation today - less than ideal editing UX.
+
+In the past, I always recommended modeling navigation as dedicated content-only items in the page tree with earlier versions of Kentico because
+
+* Navigation is dedicated content, not a property of all pages
+* Cache invalidation has less of a negative impact with dedicated navigation items
+* There was no where else to manage navigation!
+
+However, in Xperience I lean towards Content hub navigation modeling because that will always be valid - you can model whatever you want in the Content hub!
+
+Non-url web page items are a feature we added to Xperience to support navigation early on in the product's history but we would prefer to no longer have that feature at some point in the future (no announcements about this today 😅). So, although the editing UX of web page tree navigation is nicer, it's slightly less future proof.
+
+By the time we release advanced navigation support, AI should be able to help you with the content transformation to adopt it if for some reason we don't include support in the product itself.
+
+***
+
+Btw, Nikhila, that's a pretty creative solution. I never thought of using Taxonomy for navigation 🤔.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-08-08 01:45:10Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>b5adb0b8-d457-434a-b07b-41173bd4b068</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Site-Navigation-content-Modelling-afe12990-xneg4xgh</CodeName>
+    <GUID>f4ccc6a8-6727-417f-85c5-c32a67c4c090</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

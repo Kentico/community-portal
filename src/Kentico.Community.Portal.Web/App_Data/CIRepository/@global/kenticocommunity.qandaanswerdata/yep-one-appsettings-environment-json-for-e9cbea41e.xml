@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>dc609851-ab9c-436c-9e99-5c5216d1560f</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Yep-one-appsettings-environment-json-for-e9cbea41e</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Yep, one `appsettings.{environment}.json` for each environment is one approach. The SaaS hosting correctly sets the `ASPNETCORE_ENVIRONMENT` when the application starts up which is why [the environment specific extension methods work](https://docs.kentico.com/developers-and-admins/configuration/saas-configuration#environment-identification-extension-methods).
+
+Many teams already populate a configuration file in a CD pipeline using something like [variables and variables groups in Azure DevOps](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops\&tabs=azure-pipelines-ui%2Cyaml#create-a-variable-group).
+
+You can also store variables in Xperience with [a custom settings module](https://docs.kentico.com/x/create_basic_module_guides). You will likely want to exclude this settings object type in the `repository.config` to prevent overwriting environment data with local data. This approach can be convenient but requires you to secure configuration with [role management](https://docs.kentico.com/x/7IVwCg).
+
+Once we have Azure Key Vault support for SaaS you'll have an additional option.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-30 18:06:19Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>d22e9871-b8dd-438d-b2f6-0ec444685dbd</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>SaaS-Environment-Specific-Variables-47d860f2-d5nzsnzb</CodeName>
+    <GUID>05d98a43-acba-461d-9c18-eb4a4b906b49</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

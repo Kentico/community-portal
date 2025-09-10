@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>I-think-you-can-use-WorkspaceInfo-https-apd593faff</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+I think you can use [WorkspaceInfo](https://api-reference.kentico.com/api/CMS.Workspaces.WorkspaceInfo.html) directly - a workspace is just a logical container that a content item, smart folder, or content folder is associated with.
+
+```CSharp
+public class MyService(IInfoProvider<WorkspaceInfo> provider)
+{
+  private reasonly IInfoProvider<WorkspaceInfo> provider = provider;
+
+  public Task CreateWorkspace(...)
+  {
+    var newWorkspace = new WorkspaceInfo()
+    {
+      WorkspaceName = "...",
+      DisplayName = "..."
+    };
+
+    await provider.SetAsync(newWorkspace);
+  }
+}
+```
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-04-25 21:11:56Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>a80e6fc9-8d59-42ac-aa1e-fd06da97b912</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Programmatically-creating-new-Workspaces-b4f4f910-eq61t9i9</CodeName>
+    <GUID>c0bdf53c-e968-4f41-a404-53c76a4d3aeb</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

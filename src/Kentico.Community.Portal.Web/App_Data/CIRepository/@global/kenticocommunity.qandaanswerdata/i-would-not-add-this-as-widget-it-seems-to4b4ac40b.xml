@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>c1beb8f9-4673-40d8-acdd-2dd56e5cd1bb</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>I-would-not-add-this-as-widget-It-seems-to4b4ac40b</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+I would not add this as widget.
+
+It seems to be very specific and maybe it's better located in a custom template of a special page type.
+
+I would also move the data out of widgets, because it is not the place for that content. I would think about using the content hub and maybe taxonomie for relations if reference fields will not work.
+
+You can also use data nodes in the content tree.\
+Depends.\
+Do you have a clean structure of that content, that is not specific for website content => content hub\
+Do you only have this structure in the website and it is depending on language version and website channel => page content tree
+
+Use the template to render it to the page instead of widgets.
+
+I would not do it with widgets because no one will understand how to set up this things in that complexity.\
+And it has to be set up in every page that has such a thing.\
+And in every language version again.
+
+In a template you can use template properties to reference the content or a reference field in the page type.
+
+Also would recommend the guide as Trevor still did.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-14 17:30:24Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>28c86f9e-e84d-455d-824b-bf2b67695d78</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Can-we-use-multiple-page-builder-with-data-that-comes-from-widget--b7f433b2-sj7h9le4</CodeName>
+    <GUID>bc1cea0b-6a35-47e7-9cc4-ea36b551fc3f</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

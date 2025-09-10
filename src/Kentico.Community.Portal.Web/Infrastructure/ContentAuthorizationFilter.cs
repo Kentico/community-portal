@@ -93,14 +93,18 @@ public class ContentAuthorizationFilter(
         /*
          * Access check business logic is manual since we don't have a role/permission system for members
          */
-        if (tags.Any(t => t.Identifier.Equals(SystemTaxonomies.ContentAuthorizationTaxonomy.MVPTag.GUID)) &&
-            await IsAuthorizedByBadge(member, "KenticoMVP"))
+        if (tags.Any(t => t.Identifier.Equals(SystemTaxonomies.ContentAuthorizationTaxonomy.CommunityMemberTag.GUID))
+            && identity.IsAuthenticated)
         {
             return;
         }
-
+        if (tags.Any(t => t.Identifier.Equals(SystemTaxonomies.ContentAuthorizationTaxonomy.MVPTag.GUID)) &&
+            await IsAuthorizedByBadge(member, PortalMemberBadges.MVP))
+        {
+            return;
+        }
         if (tags.Any(t => t.Identifier.Equals(SystemTaxonomies.ContentAuthorizationTaxonomy.CommunityLeaderTag.GUID)) &&
-            await IsAuthorizedByBadge(member, "KenticoCommunityLeader"))
+            await IsAuthorizedByBadge(member, PortalMemberBadges.COMMUNITY_LEADER))
         {
             return;
         }

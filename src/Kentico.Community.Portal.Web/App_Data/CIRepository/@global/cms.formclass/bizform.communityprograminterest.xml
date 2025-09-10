@@ -2,7 +2,7 @@
 <cms.formclass>
   <ClassContactMapping>
     <form>
-      <field column="ContactEmail" enabled="true" guid="cd24d308-e36a-4607-9516-8c6e9ed23d27" mappedtofield="memberemail" visible="true" />
+      <field column="ContactEmail" enabled="true" guid="7eda9e60-e4c6-4dbd-9f27-d931076ae9c0" mappedtofield="memberemail" visible="true" />
     </form>
   </ClassContactMapping>
   <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
@@ -29,9 +29,9 @@
           <componentidentifier>CommunityPortal.FormComponent.HiddenMemberID</componentidentifier>
         </settings>
       </field>
-      <field allowempty="true" column="MemberEmail" columnsize="500" columntype="text" enabled="true" guid="31865491-fd74-4c38-bcd5-9fc51ff6ce80" visible="true">
+      <field allowempty="true" column="MemberEmail" columnsize="500" columntype="text" enabled="true" guid="8a5e280b-32ca-47bc-849d-3808dc4f91e3" visible="true">
         <properties>
-          <fieldcaption>Member Email</fieldcaption>
+          <fieldcaption>Member email</fieldcaption>
           <smart>False</smart>
         </properties>
         <settings>
@@ -57,7 +57,7 @@ CommunityLeader;Kentico Community Leaders
           <DataSourceValueSeparator>;</DataSourceValueSeparator>
         </settings>
       </field>
-      <field allowempty="true" column="Motivation" columntype="longtext" enabled="true" guid="00912325-bb74-4990-99c0-30b9a8872598" visible="true">
+      <field column="Motivation" columntype="longtext" enabled="true" guid="00912325-bb74-4990-99c0-30b9a8872598" visible="true">
         <properties>
           <explanationtext>
             <![CDATA[Help us understand your interest in Kentico's community programs.]]>
@@ -69,7 +69,7 @@ CommunityLeader;Kentico Community Leaders
           <componentidentifier>Kentico.TextArea</componentidentifier>
         </settings>
       </field>
-      <field allowempty="true" column="ActivityExamples" columntype="longtext" enabled="true" guid="7608f02a-ff8f-436a-83dc-2a9fa8fb069e" visible="true">
+      <field column="ActivityExamples" columntype="longtext" enabled="true" guid="7608f02a-ff8f-436a-83dc-2a9fa8fb069e" visible="true">
         <properties>
           <explanationtext>
             <![CDATA[Share some of your activities promoting or sharing about Kentico.]]>
@@ -102,6 +102,13 @@ CommunityLeader;Kentico Community Leaders
               <xs:element name="FormInserted" type="xs:dateTime" />
               <xs:element name="FormUpdated" type="xs:dateTime" />
               <xs:element name="MemberID" type="xs:int" minOccurs="0" />
+              <xs:element name="MemberEmail" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
               <xs:element name="Program">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -109,24 +116,17 @@ CommunityLeader;Kentico Community Leaders
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Motivation" minOccurs="0">
+              <xs:element name="Motivation">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="2147483647" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="ActivityExamples" minOccurs="0">
+              <xs:element name="ActivityExamples">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="2147483647" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="MemberEmail" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="500" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

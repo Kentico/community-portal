@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contentworkflowsteprole>
+  <Parent>
+    <CodeName>WaitingForApproval</CodeName>
+    <GUID>c1605f7c-0b7e-4c1d-8ca6-9ea2865fa5f7</GUID>
+    <ObjectType>cms.contentworkflowstep</ObjectType>
+    <Parent>
+      <CodeName>Blogs</CodeName>
+      <GUID>0aae48e2-375a-46c9-95b4-fd967bfbe579</GUID>
+      <ObjectType>cms.contentworkflow</ObjectType>
+    </Parent>
+  </Parent>
+  <Bindings>
+    <Binding id="cms.role_Administrator">
+      <ContentWorkflowStepRoleRoleID>
+        <CodeName>Administrator</CodeName>
+        <GUID>2c98af39-5f89-4639-8451-0b80eb100df8</GUID>
+        <ObjectType>cms.role</ObjectType>
+      </ContentWorkflowStepRoleRoleID>
+    </Binding>
+    <Binding id="cms.role_ContentManager">
+      <ContentWorkflowStepRoleRoleID>
+        <CodeName>ContentManager</CodeName>
+        <GUID>66a6b83f-45fc-474e-8d44-f3edf72d757f</GUID>
+        <ObjectType>cms.role</ObjectType>
+      </ContentWorkflowStepRoleRoleID>
+    </Binding>
+  </Bindings>
+</cms.contentworkflowsteprole>

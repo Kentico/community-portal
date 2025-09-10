@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>86f3482e-7639-4e6a-8280-741cf51fdea6</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>How-to-Apply-Custom-CSS-to-Kentico-Forms-from-Frontend-or-Admin-Panel--2f04a672-w1wxgb0v</CodeName>
+      <GUID>70ee5fdf-2377-4a8c-8979-df2c75bd3893</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>e2ed39fc-91d5-4ab8-aade-4d9840ad3523</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>82d93b4e-7e69-404d-9c3a-82c7bf15e7c3</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>1</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+Hi everyone,
+
+&#x20;
+
+Currently, we are customizing the markup and applying CSS classes to our Kentico MVC forms by hooking into the backend using `FormFieldRenderingConfiguration.GetConfiguration.Execute`. Here's a simplified version of what we're doing:
+
+
+
+`FormFieldRenderingConfiguration.GetConfiguration.Execute += InjectMarkupIntoKenticoComponents;  // Inside InjectMarkupIntoKenticoComponents e.Configuration.RootConfiguration.HtmlAttributes["class"] += " my-custom-class"; `&#x20;
+
+This approach works well, but it requires backend code deployment for even simple CSS changes.
+
+**My question is:**
+
+> Is there a way to apply CSS classes or customize form field markup either:
+>
+> 1. Through the front end (e.g., via Razor view overrides), or
+> 2. Via the Kentico Admin Panel (Form Builder UI or other settings),
+>
+> ...without relying on backend C# event handlers?
+
+We want to make styling changes more accessible to content editors or front-end devs without modifying and deploying backend code.
+
+Has anyone implemented a more flexible or dynamic way of styling forms this way?
+
+Thanks in advance!
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.5.1]
+
+* .NET version: 8
+
+* Link to relevant <https://docs.kentico.com/documentation/developers-and-admins/development/builders/form-builder/form-widget-customization>
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-06-09 10:51:44Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-06-09 10:51:44Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

@@ -19,11 +19,14 @@
   <ContentItemCommonDataFirstPublishedWhen>2024-01-29 18:04:48Z</ContentItemCommonDataFirstPublishedWhen>
   <ContentItemCommonDataGUID>362c83f6-3293-4a14-85c7-d454d67909b0</ContentItemCommonDataGUID>
   <ContentItemCommonDataIsLatest>True</ContentItemCommonDataIsLatest>
-  <ContentItemCommonDataLastPublishedWhen>2025-06-12 04:14:00Z</ContentItemCommonDataLastPublishedWhen>
+  <ContentItemCommonDataLastPublishedWhen>2025-06-12 23:39:19Z</ContentItemCommonDataLastPublishedWhen>
   <ContentItemCommonDataVersionStatus>2</ContentItemCommonDataVersionStatus>
   <ContentItemCommonDataVisualBuilderTemplateConfiguration>
     <![CDATA[{"identifier":"KenticoCommunity.BlogPostPage_Components","properties":{},"fieldIdentifiers":{}}]]>
   </ContentItemCommonDataVisualBuilderTemplateConfiguration>
+  <ContentItemCommonDataVisualBuilderWidgets>
+    <![CDATA[{"editableAreas":[{"identifier":"main","sections":[{"identifier":"2ef8219e-5321-4a8b-bd77-1b6998bdb8c6","type":"CommunityPortal.SingleColumnSection","properties":{"layout":"Standard","layoutParsed":0,"paddingTop":"Large","paddingTopParsed":0,"paddingBottom":"Large","paddingBottomParsed":0,"backgroundColor":"White","backgroundColorParsed":1},"zones":[{"identifier":"0481401f-8e51-434a-8229-e4f04caa319e","widgets":[{"identifier":"6d30a6b0-7b8e-4b48-bbfe-37cb29b2408a","type":"CommunityPortal.MarkdownWidget","variants":[{"identifier":"a090c429-19be-4c31-bac1-5fe2826d3d6e","properties":{"markdown":"Kentico MVP, [Liam Goldfinch](https://community.kentico.com/member/28), recently published [Keeping your Xperience by Kentico project up-to-date using Dependabot](https://www.goldfinch.me/blog/keeping-your-xperience-by-kentico-project-up-to-date-using-dependabot), a blog post detailing the benefits of dependency maintenance automation and his specific implementation using [Dependabot](https://github.blog/2022-04-06-how-dependabot-empowers-you-to-keep-your-projects-secure/) with [Azure DevOps](https://learn.microsoft.com/en-us/azure/devops/user-guide/what-is-azure-devops?view=azure-devops) for Xperience by Kentico solutions, like his own blog.\n\nLiam makes the setup process really clear. As he states, he uses tools like Dependabot to help identify and update outdated packages. This can be really beneficial to a team working on several projects at a time (like at a digital agency) because it reduces some of the janitorial maintenance and frees up developers to work on other things that have a more tangible impact on making marketers more productive.\n\nThere's also a security value in keeping dependencies up to date, which is touched on in a recent [Software Engineering Radio](https://se-radio.net/) podcast episode - [M. Scott Ford on Managing Dependency Freshness](https://se-radio.net/2023/10/se-radio-587-m-scott-ford-on-managing-dependency-freshness/). Implementing dependency maintenance automation in a project has a bonus side effect of making your dependencies much more explicit, because this is typically a requirement of the automation tools. This means dependencies can be audited and a project can be assigned a \"freshness score\".\n\nSo, if you want to learn more, go read [Keeping your Xperience by Kentico project up-to-date using Dependabot](https://www.goldfinch.me/blog/keeping-your-xperience-by-kentico-project-up-to-date-using-dependabot) on Liam's blog!\n","markdownStyle":"Standard","markdownStyleParsed":0,"markdownCodeLanguage":"","id":"6a1dc5ca-caec-435f-ae56-b03ff65b7d65"},"fieldIdentifiers":{"markdown":"824c9bec-ed4a-4fcb-98bf-569b3754ac30","markdownStyle":"91587eb2-22ed-4103-ae44-e28e265af187","markdownStyleParsed":"b68710eb-c3c0-47b3-8710-8e409bf7d583","markdownCodeLanguage":"0acb0de6-17d5-45a7-b107-6cbf2f050491","id":"a2938e5c-a0ed-4892-9a2f-20f8aa348943"}}]}]}],"fieldIdentifiers":{"layout":"1acf908a-7df8-448b-b98e-50974b3494a8","layoutParsed":"547615f3-fe65-43ad-8735-54e043d9fec0","paddingTop":"27fb7f29-bbbc-4521-af69-c08b726a040f","paddingTopParsed":"e8e3889c-7f7d-43c3-b80e-b6b46a68df75","paddingBottom":"a92f5de0-e7b4-4206-91fc-c9c7c6bec6b8","paddingBottomParsed":"bd6e8b34-4b87-4f4a-a1e8-860d328bf2ee","backgroundColor":"a9977b10-43aa-4858-a5d8-e9fbef22d8e6","backgroundColorParsed":"4866055a-eed7-454a-8bfd-31ae904bd829"}}]}]}]]>
+  </ContentItemCommonDataVisualBuilderWidgets>
   <CoreTaxonomyDXTopics>
     <![CDATA[[{"Identifier":"9d7f9413-3142-4f27-a6bc-fb9ec266d45f"},{"Identifier":"01798485-d64c-49fe-b754-cfcb5dfe73e6"},{"Identifier":"40e93dab-1279-49b7-b8a6-fc1518568b1b"},{"Identifier":"1015b219-7365-459f-9474-0c96a842291c"}]]]>
   </CoreTaxonomyDXTopics>
@@ -39,7 +42,7 @@
   <ContentItemReferences>
     <cms.contentitemreference>
       <ContentItemReferenceGroupGUID>baef8e96-a792-478c-a9dc-1929378ccbac</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>48903014-63a3-422a-8bb6-75bc123870d7</ContentItemReferenceGUID>
+      <ContentItemReferenceGUID>917353bc-9b60-40ac-8fb8-8ee80f6315d4</ContentItemReferenceGUID>
       <ContentItemReferenceSourceCommonDataID>
         <GUID>362c83f6-3293-4a14-85c7-d454d67909b0</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>
@@ -51,21 +54,8 @@
       </ContentItemReferenceTargetItemID>
     </cms.contentitemreference>
     <cms.contentitemreference>
-      <ContentItemReferenceGroupGUID>e09047d5-2c58-403e-be9b-ed772ca76a2d</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>a74abdc8-e60f-4a06-bcd9-de5a87151325</ContentItemReferenceGUID>
-      <ContentItemReferenceSourceCommonDataID>
-        <GUID>362c83f6-3293-4a14-85c7-d454d67909b0</GUID>
-        <ObjectType>cms.contentitemcommondata</ObjectType>
-      </ContentItemReferenceSourceCommonDataID>
-      <ContentItemReferenceTargetItemID>
-        <CodeName>Blog-Discussion-Re-post-Keeping-your-Xperience-by-Kentico-project-up-to-date-using-Dependa-localtest</CodeName>
-        <GUID>c10cc330-109b-4c15-ab62-aa07de187a46</GUID>
-        <ObjectType>cms.contentitem</ObjectType>
-      </ContentItemReferenceTargetItemID>
-    </cms.contentitemreference>
-    <cms.contentitemreference>
       <ContentItemReferenceGroupGUID>9a93d64c-5cc7-47f0-94e8-f7b3cc48946e</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>b70b1644-2dbb-441b-a0ee-4272e9f33692</ContentItemReferenceGUID>
+      <ContentItemReferenceGUID>92346887-82d8-43f9-b66b-520cb82e7fb8</ContentItemReferenceGUID>
       <ContentItemReferenceSourceCommonDataID>
         <GUID>362c83f6-3293-4a14-85c7-d454d67909b0</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>

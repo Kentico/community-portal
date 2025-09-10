@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>I-would-highly-caution-against-that-approa9a2fdf7b</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+I would **highly caution** against that approach - you are performing [a classic N+1 query](https://stackoverflow.com/a/97253/939634) where N is the number of tags.
+
+Instead of retrieving the details for each tag in a separate database query, you should retrieve them all together.
+
+```CSharp
+var tagIdentifiers = pageItem.Tags.Select(t => t.Identifier).ToList();
+
+var tags = await taxonomyRetriever.RetrieveTags(tagIdentifiers, "en");
+var tagsLookup = tags.ToDictionary(t => t.Identifier);
+
+foreach(var identifier in tagIdentifiers)
+{
+  string displayName = tagsLookup.TryGetValue(identifier, out var tag)
+    ? tag.DisplayName
+    : "";
+}
+```
+
+Additionally, I noticed your sample code looks like Razor. You **should not** be doing database calls in your Razor view.
+
+Your view should have access to a view model which was prepared by a View Component or MVC Controller.
+
+You can learn more about these recommendations and [better application architecture in our guides](https://docs.kentico.com/x/_pGOD).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-05 23:00:50Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>f8517b28-4ec8-481c-bef2-584cdfde4a5c</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Retrieve-Page-Tags-Taxonomy--062511b4-fm7aym59</CodeName>
+    <GUID>f3b80483-de12-42a4-b8e9-b13995209752</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

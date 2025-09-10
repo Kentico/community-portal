@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-CD-configuration-It-seems-to-me-like-you-9df6f1cc</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+### CD configuration
+
+It seems to me like you don't have a correctly configured package. I recommend running a script that will generate it for you locally so you can inspect it, iterate, and diagnose your configuration issues.
+
+1. How are you [generating your CD deployment package](https://docs.kentico.com/developers-and-admins/ci-cd/continuous-deployment#store-objects-to-a-cd-repository)? Is it generated in the GitHub workflow or are you creating it locally and committing it to your Git repo?
+2. What does your [CD repository.config look like](https://docs.kentico.com/developers-and-admins/ci-cd/configure-ci-cd-repositories/repository-configuration-templates#initial-deployment-to-target-instance)? It must be configured to include the content items that contain the assets. These items and their assets are copied from your CI Repository into your CD Repository before being .zip'd up. (Your CD Repository is a sub-set clone of your CI Repository).
+
+### CD deployment
+
+Once you have your deployment package configured correctly you'll need to consider the following.
+
+1. When you restore your deployment package, [where are you running the restore command](https://docs.kentico.com/developers-and-admins/ci-cd/continuous-deployment#where-to-run-the-cd-restore)?
+2. Are you storing your application's content assets in the App Service file system or in Azure Storage? In either case you need to transfer those assets to the storage location. Our recommendation is using Azure Storage and uploading the packaged assets to the storage container during the deployment (we do something similar in Xperience by Kentico SaaS).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-28 03:06:40Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>ce3a1d49-8605-48d0-a8b8-e5211e1682f0</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Assets-contentitems-not-appearing-in-azure-build-4a5bc27a-gvoxoqn0</CodeName>
+    <GUID>e57498ab-a606-4277-b937-311baea3f8b0</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

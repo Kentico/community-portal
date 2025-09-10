@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Not-a-great-answer-but-if-Kentico-can-openac928729</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Not a great answer, but if Kentico can open up the IWebPageUrlFormatter to be overwritten (currently internal), OR instead of using the WebPageUrlPathUtils.FormatUrlPath(urlPath) (static method), replace it with an interface to be customized, that would work...
+
+As it stands, i don't see a way either :-(
+
+
+
+```CSharp
+private static string FormatUrlPath(string urlPath)
+{
+    return "~/" + WebPageUrlPathUtils.FormatUrlPath(urlPath);
+}
+
+
+...
+
+public static class WebPageUrlPathUtils
+    {
+        /// <summary>
+        /// Formats web page URL path.
+        /// </summary>
+        /// <param name="urlPath">URL path to be formatted.</param>
+        /// <remarks>Formatted URL path is lowercased and without trailing slash.</remarks>
+        public static string FormatUrlPath(string urlPath)
+        {
+            if (string.IsNullOrEmpty(urlPath))
+            {
+                return string.Empty;
+            }
+
+            return urlPath.ToLowerInvariant().TrimEnd('/');
+        }
+    }
+```
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-18 22:03:28Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>3c578073-e817-4024-8352-25d008c402f1</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Trailing-slashes-in-resolved-urls-e0d48518-8fbt2cml</CodeName>
+    <GUID>f7f45401-df60-4576-bbd9-f802bbbb0714</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

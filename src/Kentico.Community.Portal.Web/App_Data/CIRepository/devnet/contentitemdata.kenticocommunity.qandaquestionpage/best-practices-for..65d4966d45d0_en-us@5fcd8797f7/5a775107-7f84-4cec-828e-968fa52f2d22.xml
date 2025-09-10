@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>52091c20-731b-42b8-b76b-65d4966d45d0</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Best-Practices-for-Retrieving-a-Form-Schema-8d13bb73-tm6gqsmh</CodeName>
+      <GUID>2ba6fa46-d091-404a-a8b3-f5bc135650eb</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>5a775107-7f84-4cec-828e-968fa52f2d22</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>268b48ca-591b-42ff-8053-594d9571d89e</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>5</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I am creating a controller for a custom API endpoint. On a **GET** request, it returns a form schema (defined in the Forms application) so an external app can render the form dynamically. On a **POST** request, it validates and stores the submitted data in the XbyK database.
+
+I have outlined the solution but am unsure of the best way to obtain the form schema. The most reasonable source seems to be the `CMS_Class` table, specifically the `ClassFormDefinition` field, which stores the schema as an XML document. While I can retrieve and parse this field via the XbyK API, it feels cumbersome, and I assume there’s a more efficient approach.
+
+I’d appreciate guidance on the best way to retrieve the full form schema, including the submit button, so I can properly render fields with the right attributes and validate values on submission in an external app by consuming the custom API endpoint.
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.1.0]
+* .NET version: \[8|9]
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-02-05 12:27:20Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-02-05 12:34:22Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

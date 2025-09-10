@@ -7,6 +7,7 @@ public static partial class SystemTaxonomies
         public static CommunityLeaderTag CommunityLeader { get; } = new();
         public static InternalEmployeeTag InternalEmployee { get; } = new();
         public static MVPTag MVP { get; } = new();
+        public static CommunityMemberTag Member { get; } = new();
 
         public static Guid GUID { get; } = new("ca9aa59d-d3fd-4f4c-bb67-5a1b3c0f5ad5");
         public const string CodeName = "ContentAuthorization";
@@ -18,7 +19,8 @@ public static partial class SystemTaxonomies
         [
             CommunityLeader,
             InternalEmployee,
-            MVP
+            MVP,
+            Member
         ];
 
         public record CommunityLeaderTag : ISystemTag
@@ -41,6 +43,14 @@ public static partial class SystemTaxonomies
         {
             public static Guid GUID { get; } = new("83b28847-6c4d-40d1-9d76-4214c740c3c3");
             public static string CodeName { get; } = "MVP";
+
+            public Guid TagGUID => GUID;
+            public string TagName => CodeName;
+        }
+        public record CommunityMemberTag : ISystemTag
+        {
+            public static Guid GUID { get; } = new("83b28847-6c4d-40d1-9d76-4214c740c3c3");
+            public static string CodeName { get; } = "CommunityMember";
 
             public Guid TagGUID => GUID;
             public string TagName => CodeName;

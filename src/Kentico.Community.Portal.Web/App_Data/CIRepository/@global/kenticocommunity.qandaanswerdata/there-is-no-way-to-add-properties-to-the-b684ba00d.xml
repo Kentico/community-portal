@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>There-is-no-way-to-add-properties-to-the-b684ba00d</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+There is no way to add properties to the built-in widgets (or any widget provided through a NuGet package) without extending them to create a new widget.
+
+My recommendation is to extend the built-in rich text widget and apply widget redirections to your `<editable-area>` or `<widget-zone>` tag helpers to exclude the built-in one.
+
+Widget and section restrictions are a good practice anyway and they are easier to adopt at the beginning of a project than later on when marketers have used all kinds of combinations of widgets and sections across the various pages.&#x20;
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-16 23:09:10Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>0e80f7e5-a19d-4677-8584-85af2160ba40</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Customizing-built-in-rich-text-widget-c0354954-51g0pucv</CodeName>
+    <GUID>3b8e6e44-4f95-477f-8158-ecc66179dbf4</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>The-async-event-handlers-for-object-types-c5306d9d</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+The [async event handlers for object types](https://docs.kentico.com/developers-and-admins/customization/handle-global-events/handle-object-events#object-event-handlers-with-async-support) are new and our first step in moving away from native .NET event handling for global events. We haven't yet added these for content items, but we plan to in the future as we adopt modern .NET patterns.
+
+So, yes, you will need to use `.GetAwaiter().GetResult()`.
+
+You can look at the Kentico Community Portal for examples of how to [handle async calls in global event handlers for content items](https://github.com/Kentico/community-portal/blob/v30.4.1.5/src/Kentico.Community.Portal.Web/Configuration/GlobalEventsModule.cs#L94).
+
+Watch the roadmap, [docs Changelog](https://docs.kentico.com/changelog), and [read the Refresh blog posts](/blog?Page=1\&SortBy=publishdate\&blogTypes=announcement\&Query=Refresh\&SortBy=publishdate) to see when we release an update for these APIs.
+
+If it's a priority for you to get true async content item event handling, [give us roadmap feedback](https://roadmap.kentico.com/tabs/5-released).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-23 02:07:24Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>5c78b6ca-6a32-4ced-8dd4-d7bce14fab38</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Are-there-Async-Event-Handler-for-WebPageEvents--32b92d3c-6cus8x93</CodeName>
+    <GUID>bb7e7a4d-7bcc-451f-803e-537e0d480e3c</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

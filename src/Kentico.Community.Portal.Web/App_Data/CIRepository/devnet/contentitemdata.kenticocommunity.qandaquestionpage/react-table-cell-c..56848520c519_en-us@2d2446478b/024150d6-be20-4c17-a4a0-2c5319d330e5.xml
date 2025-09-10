@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>da70e4e5-c23e-47c5-9730-56848520c519</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>React-Table-Cell-Component-hidden-behind-Edit-Row-369ed5dc-3ddormwx</CodeName>
+      <GUID>17e28ed7-dd20-4a19-8faf-7cb1a952c2e7</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>024150d6-be20-4c17-a4a0-2c5319d330e5</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>2</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I've added a ColumnConfiguration.AddComponentColumn to add a special React element, however the AddEditRowAction<> is activated when I click instead of the Component Column...
+
+
+
+I could add a custom "Edit" Pencil icon component column and remove the normal AddEditRowAction, but that seems kind of hacky...
+
+
+
+Any recommendations?
+
+
+
+```
+ PageConfiguration.ColumnConfigurations.AddComponentColumn(
+     nameof(TaskEntityPartInfo.TaskEntityPartCPAssignmentID),
+     CPAssignmentBuilderComponent._TableCellComponentName,
+     modelRetriever: (value, allData) => new CPAssignmentBuilderProperties() {
+         AssignmentID = ValidationHelper.GetValue(value, 0),
+         Show = _taskEntityTypeRepository.GetTaskEntityTypeCodeName((int)allData[nameof(TaskEntityPartInfo.TaskEntityPartTaskEntityTypeID)]).Equals(TaskEntityTypes.CalcPad, StringComparison.OrdinalIgnoreCase)
+     },
+     sortable: false,
+     caption: "Launch Assignment",
+     maxWidth: 25);
+     
+PageConfiguration.AddEditRowAction<TaskEntityPartSectionPage>();
+
+```
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.2.0]
+* .NET version: \[8]
+* Execution environment: \[Local]
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-03-22 02:39:26Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-03-22 02:39:26Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

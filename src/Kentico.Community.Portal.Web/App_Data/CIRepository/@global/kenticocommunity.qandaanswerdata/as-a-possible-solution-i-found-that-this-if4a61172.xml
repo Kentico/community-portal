@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>As-a-possible-solution-I-found-that-this-if4a61172</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+As a possible solution, I found that this information can be retrieved with the following query using the InfoProvider Query API::
+
+```
+public class ContentItemReferenceService(IInfoProvider<ContentItemReferenceInfo> contentItemReferenceInfoProvider)
+{
+    public async Task<IEnumerable<Guid>> GetPagesLinkingContentItemIds(int contentItemId)
+    {
+        var query = contentItemReferenceInfoProvider.Get()
+            .Source(cir =>
+                cir.InnerJoin<ContentItemCommonDataInfo>(
+                        ColumnName((ContentItemReferenceInfo x) => x.ContentItemReferenceSourceCommonDataID),
+                        ColumnName((ContentItemCommonDataInfo x) => x.ContentItemCommonDataID))
+                    .InnerJoin<ContentItemInfo>(
+                        ColumnName((ContentItemCommonDataInfo x) => x.ContentItemCommonDataContentItemID),
+                        ColumnName((ContentItemInfo x) => x.ContentItemID))
+                    .InnerJoin<DataClassInfo>(
+                        ColumnName((ContentItemInfo x) => x.ContentItemContentTypeID),
+                        ColumnName((DataClassInfo x) => x.ClassID))
+                    .InnerJoin<WebPageItemInfo>(
+                        ColumnName((ContentItemInfo x) => x.ContentItemID),
+                        ColumnName((WebPageItemInfo x) => x.WebPageItemContentItemID)))
+            .WhereEquals(ColumnName((DataClassInfo x) => x.ClassType), "Content")
+            .And()
+            .WhereEquals(ColumnName((DataClassInfo x) => x.ClassContentTypeType), "Website")
+            .And()
+            .WhereEquals(ColumnName((ContentItemReferenceInfo x) => x.ContentItemReferenceTargetItemID), contentItemId)
+            .Column(ColumnName((WebPageItemInfo x) => x.WebPageItemGUID))
+            .Distinct();
+            
+        return await query.GetEnumerableTypedResultAsync(record => record.GetGuid(0));
+    }
+
+    private static string ColumnName<T>(Expression<Func<T, object>> expression) where T : BaseInfo => ObjectQueryHelper.GetFullColumnName(expression);
+}
+```
+
+Is there a better way to do this?
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-04-29 19:31:24Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>d01b48c6-8e3f-49f8-bade-1cc905e838e1</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>References-between-pages-and-content-hub-items-linked-in-widget-properties--57826181-2rjtzygn</CodeName>
+    <GUID>6508c462-9c06-4815-b359-3043ff960753</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

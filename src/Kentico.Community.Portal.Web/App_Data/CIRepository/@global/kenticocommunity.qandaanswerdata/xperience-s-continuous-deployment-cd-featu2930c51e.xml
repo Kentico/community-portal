@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Xperience-s-Continuous-Deployment-CD-featu2930c51e</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Xperience's [Continuous Deployment (CD) feature](https://docs.kentico.com/x/YgaiCQ) is intended to let developers promote database schema and data changes from their local environment up to production. It's **not** meant to synchronize marketer authored content between environments.
+
+Sometimes content is initially authored by a developer but then ownership of that content is handed to marketers.
+
+A set of logos or hero banners added to Xperience to demo design implementations is an example of this. Developers need the images to build their templates and Page Builder components, but after sign-off and go-live the marketing manages the images.
+
+This kind of content _can_ be promoted to production using Xperience's CD.
+
+If a marketer uploads a large number of images or authors blog posts in a pre-production environment, you should not use CD to transfer these to a production environment. Instead, we currently recommend authoring content directly in production using [workspaces](https://docs.kentico.com/x/workspaces_xp), [workflows](https://docs.kentico.com/x/workflows_xp), and [web page permissions](https://docs.kentico.com/x/permissions_pagelevel_xp) to manage content authoring.&#x20;
+
+We [plan to release Content Sync in May](https://roadmap.kentico.com/c/163-content-sync-xbyk-s-answer-to-content-staging-phase-1-content-items), which is designed for marketers not developers. It will allow marketers to select content items in the Content hub (and later web pages in website channels) and sync them from a pre-production environment to production.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-20 17:31:30Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>2a2e83ff-3326-4318-a7da-22910c882a9c</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-to-Manage-Assets-on-multiple-environments--756abd08-t9f1ymla</CodeName>
+    <GUID>7983b4f8-a11e-48e9-949f-dc7bd68b7913</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

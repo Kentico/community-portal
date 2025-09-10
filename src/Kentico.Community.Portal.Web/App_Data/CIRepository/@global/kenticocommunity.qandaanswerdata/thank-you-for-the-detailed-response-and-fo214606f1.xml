@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Thank-you-for-the-detailed-response-and-fo214606f1</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Thank you for the detailed response and for the clarity regarding the current design and limitations.
+
+&#x20;
+
+Regarding the `--verbose` flag or similar logging capabilities, we believe this is a highly valuable feature that would support many common development and deployment scenarios. While we understand the process for submitting roadmap feedback, we would suggest that this kind of enhancement is broadly beneficial and aligns well with general developer expectations for transparency and traceability—especially in deployment pipelines. In anyways, I just submitted the feedback about the verbose flag on the roadmap *(which I actually I cannot see it on the roadmap board)*.
+
+Providing as much clarity during the upgrade process the better. In the following [documentation](https://docs.kentico.com/developers-and-admins/installation/update-xperience-by-kentico-projects) page, there is not a set of recommendations of the paths we should follow to upgrade Xperience by Kentico projects using best practices, for example, if we are running a project in version **29.0.0**, what should be the recommended path? Update to **30.0.0**, then **31.0.0**, etc. Or should we jump from **29.0.0** to **35.5.x**?
+
+\
+Additionally, if we have a project on version 29.0.0 and we need to upgrade it to 35.5.x, how can I tell the `dotnet run --no-build --kxp-update` command to upgrade to a certain version? Or should I update the Packages within the .csproj file and then execute this command? If yes, we cannot see clear instructions on the documentation page.
+
+Finally, on the documentation you mention this statement: "*Create a backup of your Xperience database, project folder and the folder where you store assets (**\~/assets** by default). In case of a failed update, use these backups to restore your environment to its original state to prevent inconsistent data.*"
+
+So, if the update fails, how can I know what failed? the DB or the assets, or what exactly?  We also believe it would be highly beneficial to introduce an **automatic rollback mechanism** in the event that the update process fails. Right now, without transparency or recovery options, teams are left in an uncertain state when something goes wrong, potentially requiring manual intervention or a full environment restore. An automatic rollback would mitigate the risk of partial updates or inconsistencies and would be a strong step toward more robust deployment workflows.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-22 23:09:49Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>3f8df901-9765-49a6-8df1-abaf7c2612a8</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Update-Xperience-by-Kentico-projects-e893f63a-igmyxb8g</CodeName>
+    <GUID>aa78c5af-1cf9-48bd-be81-3b53f74063d8</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

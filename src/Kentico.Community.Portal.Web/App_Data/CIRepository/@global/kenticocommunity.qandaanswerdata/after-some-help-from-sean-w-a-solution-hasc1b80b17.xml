@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>After-some-help-from-Sean-W-a-solution-hasc1b80b17</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+After some help from Sean W., a solution has been found for this problem.
+
+
+
+To get around this issue, you can rename your controllers to be unique between the projects, which allows the routing to work as expected. So in my case, updating mine to be `GroupHomeController` and `AgencyHomeController`, and updating the `typeof` parameter in each respective `RegisterWebPageRoute` to match, resolved this issue for me.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-18 01:37:49Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>652b7dc3-54dc-4fb9-acc5-a656c3a8feca</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Multiple-Endpoints-Matched-Multiple-Sites-Razor-Class-Libraries-fd039a98-jvu9obhg</CodeName>
+    <GUID>e8f27765-d335-4aaa-b286-809df188591b</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

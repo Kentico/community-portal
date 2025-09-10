@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>99b71765-e5eb-483f-9e1d-8668929e2b7d</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>How-to-use-content-query-API-where-clause-on-nested-content-items-e8795c1a-cqdpikz2</CodeName>
+      <GUID>e18b15d7-f32d-44ef-99ec-d3e1485416fc</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>6d5960b4-7a0e-44b4-9512-f9ef12ff70c1</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>3</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I have a reusable content type called Event that has a field called EventRegion, this field is a content item selector to select a reusable content type called Region. As we know, in the database the EventRegion stores a JSON string of an array of the selected content item GUID's.&#x20;
+
+So the EventRegion field would contain data like this for example: `[{"Identifier":"656eef94-63y1-4d2h-b0b5-05kdb4654342"}]`
+
+\
+I want to do the following query to retrieve events that are in the region I selected:
+
+```CSharp
+var eventIds = (await executor.GetMappedResult<Entities.Event>(
+    new ContentItemQueryBuilder().ForContentType(Entities.Event.CONTENT_TYPE_NAME, config => config
+        .Where(where => where.WhereContains(nameof(Entities.Event.EventRegion), region.SystemFields.ContentItemGUID.ToString())) // improve this line
+        .Columns("ContentItemID")
+    ),
+    options: new ContentQueryExecutionOptions { ForPreview = true },
+    cancellationToken: cancellationToken
+    ))
+    .Select(e => e.SystemFields.ContentItemID)
+    .ToList();
+```
+
+but using the WhereContains and converting the GUID to a string isnt the best route. Anyone have any ideas on how I can improve that code? Maybe a different content retriever API would be better?
+
+
+
+**EDIT:**\
+What I'm trying to accomplish is retrieving events that are in the selected region. This code is within a widget and the widget has a ContentItemSelector field called Region that allows the user to select 1 content item of type Region. I then need to automatically pull in the next 3 upcoming events for that selected region. Events have a field for choosing the Region content item it belongs in. I don't need to region data for the Event I am trying to improve my Where clause in the query but the way linked content items are stored in the database is via a JSON string of the content item GUID.
+
+
+
+**Environment**
+
+* Xperience by Kentico version: 30.8.2
+
+* .NET version: 8
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-08-18 22:45:10Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-08-20 23:04:01Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

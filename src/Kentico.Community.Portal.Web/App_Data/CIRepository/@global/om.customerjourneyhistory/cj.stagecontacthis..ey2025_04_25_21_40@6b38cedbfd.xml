@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<om.customerjourneyhistory>
+  <ClassDisplayName>
+    <![CDATA[CJ_StageContactHistory_CustomerJourney2025_04_25_21_40]]>
+  </ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="CustomerJourneyStageContactHistoryID" columntype="integer" enabled="true" guid="b737e3e1-7d92-487a-894e-f4d40fd0d4cc" isPK="true" />
+      <field column="CustomerJourneyStageContactHistoryContactID" columnprecision="0" columntype="integer" enabled="true" guid="bcd1f622-f73e-499f-8924-23a06f842146" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+          <fieldcaption>CustomerJourneyStageContactHistoryContactID</fieldcaption>
+        </properties>
+      </field>
+      <field column="CustomerJourneyStageContactHistoryStageID" columnprecision="0" columntype="integer" enabled="true" guid="2c8328d2-83da-4ec1-83c7-cd60810811d9" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+          <fieldcaption>CustomerJourneyStageContactHistoryStageID</fieldcaption>
+        </properties>
+      </field>
+      <field allowempty="true" column="CustomerJourneyStageContactHistoryStageReachedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="17a59e7f-51a4-442d-88f4-d01ef2ee3ba8" system="true">
+        <properties>
+          <fieldcaption>CustomerJourneyStageContactHistoryStageReachedWhen</fieldcaption>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>c89635a1-0bde-4690-8ad0-7f546b3721d3</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>
+    <![CDATA[CJ.StageContactHistory_CustomerJourney2025_04_25_21_40]]>
+  </ClassName>
+  <ClassTableName>
+    <![CDATA[CJ_StageContactHistory_CustomerJourney2025_04_25_21_40]]>
+  </ClassTableName>
+  <ClassType>CJ</ClassType>
+</om.customerjourneyhistory>

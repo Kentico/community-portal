@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Nikhila-Thanks-for-joining-the-conversatioa8a8f32e</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Nikhila,
+
+Thanks for joining the conversation!
+
+TLDR; Nope! No interesting surprises, but mostly because we intentionally didn't allow them by keeping the context and prompts focused, and applying our normal approach to code security.
+
+***
+
+There were some of the unwanted "optimizations" that I mentioned. They came from *some* of the agents and were attempts to "clean up" code that *was not* explicitly mentioned in the prompts. While the changes might have been a net positive for the code base we were very focused on the refactor to `IContentRetriever` *and* we wanted to show a well controlled example of using AI. We considered these changes a failure and either adjusted our prompts or switched agents.
+
+Something that we explored at a surface level (with the agents), but did not include in this work, was asking the agent to limit the columns returned from the queried database data sets.
+
+I believe the original Dancing Goat code did have some of this explicit SQL `SELECT ...` logic using the content query `.Columns()` API. But, unless you are querying for content items *without* any linked content items, the column selection has limited value. This is something we are considering as a future improvement to the `IContentRetriever` (e.g. limit columns at all linked item levels) and we'll almost surely use an AI agent to do the refactor at that time.
+
+While we intentionally used agents to perform the refactor (as opposed to having human engineers type the code changes), we absolutely had humans review the AI generated code, which had to pass the same security evaluation any other code does that we author and deliver to customers.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-07-07 23:49:16Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>ae486fb4-dfc3-4c07-acf3-b4054dd018e6</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Blog-Discussion-Evolving-Dancing-Goat-with-agentic-AI-software-development-45873b7f-2edr5pzd</CodeName>
+    <GUID>4f7cfddc-fbe9-40ba-b0db-ea1f3d09b8d5</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Daniel-If-you-want-something-OOTB-the-Base9cb0c2f5</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Daniel,
+
+If you want something OOTB, the Baseline has this using the ImageProfile and tag helper system.  It currently is manually defined (you tell it what screen size to image width configurations).  I'll eventually be incorporating it with the future Xperience Image Profiles
+
+[XperienceCommunity.Baseline/documentation/core/core-media-taghelpers.md at master · KenticoDevTrev/XperienceCommunity.Baseline](https://github.com/KenticoDevTrev/XperienceCommunity.Baseline/blob/master/documentation/core/core-media-taghelpers.md)
+
+This shows how it works.
+
+It works with both Media Files and Content Asset Items, it uses Liam's dynamic transformation library which is part of the Core Baseline nuget packages.
+
+Here's the base installation for the baseline if you aren't using the starting site.\
+[XperienceCommunity.Baseline/documentation/core/core-installation-xbyk.md at master · KenticoDevTrev/XperienceCommunity.Baseline](https://github.com/KenticoDevTrev/XperienceCommunity.Baseline/blob/master/documentation/core/core-installation-xbyk.md)
+
+If you use the baseline's starting site, it's all pretty much baked in.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-12 21:30:44Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>abcb84e1-1ee1-47b0-8b3b-abb454a3fe79</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-do-I-generate-responsive-SrcSets-for-Media--a27828bf-ygwxomlz</CodeName>
+    <GUID>76d21ff0-06ed-496d-9202-b83395218523</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>We-don-t-have-an-API-for-mass-unsubscriptibf9457bb</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+We don't have an API for mass unsubscriptions today, but [improvements to contact data management](https://roadmap.kentico.com/c/230-unified-contact-profile) are coming - leave some feedback there to let us know about the programmatic scenarios you have and APIs you'd like to see.
+
+> this page references a contact who 'unsubscribes from all email interaction'... vs someone who 'unsubscribes from specific email channels'
+
+It's worth noting that contacts don't subscribe to [email channels](https://docs.kentico.com/x/eBT_Cw), they subscribe to [recipient lists](https://docs.kentico.com/x/yQL9Cg). Any recipient list can be used by emails sent from any channel.
+
+Because contacts are global in Xperience (they can engage with _any_ channel), the email channel itself is more of a way for marketers to manage content and curate experiences. They let you define which domain emails are sent from (ex: marketing.example.com and support.example.com). Why would you want to have separate email sending domains? Check out the blog post [Re-post: Humans of Martech - Email subdomain strategies and inbox placement tools](https://community.kentico.com/blog/re-post-humans-of-martech-email-subdomain-strategies-and-inbox-placement-tools).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-08-29 03:21:41Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>70c0fb50-a7f7-40b7-a0c0-1dcb35d88d71</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Does-XbyK-support-global-unsubscription-from-emails--2c08d995-0pvmciia</CodeName>
+    <GUID>88102277-9b2a-4447-bf1c-2fe5dcbefd1c</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

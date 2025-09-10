@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>I-assume-you-re-using-a-single-form-for-al3c4f6e8b</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+I assume you're using a single form for all whitepapers. Controlling the UX with the built-in Form widget can be limiting. If you need more flexibility, I would consider this approach:
+
+1. **Create a custom controller** to handle POST requests. This controller should receive the form codename and submitted data, validate them, and store them as XbyK Form data. You can refer to [the API examples for form operations](https://docs.kentico.com/api/digital-marketing/form-data#add-data-records-to-a-form).
+2. **Generate the form dynamically using JavaScript** instead of relying on the Form widget, especially since the popup is likely controlled by JavaScript as well. On form submission, send the data to your custom controller via a client-side request.
+3. **Handle post-submission behavior** by displaying a confirmation message. Then, reset the form using JavaScript when the popup is closed and reopened.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-14 00:32:32Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>1cdc2a39-6b12-4e48-a9f8-66389830a716</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-to-reset-Form-1c8540ce-oasej11d</CodeName>
+    <GUID>e6d01c35-112c-4d87-8350-3dbf76a7f2aa</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

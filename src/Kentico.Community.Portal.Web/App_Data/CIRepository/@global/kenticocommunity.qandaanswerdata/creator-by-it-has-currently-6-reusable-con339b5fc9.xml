@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Creator-By-It-has-currently-6-reusable-con339b5fc9</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Creator,
+
+By 'It has currently 6 reusable content type configured' do you mean that you have a `Pages and Reusable Content` field type that can select from 6 reusable content types? If so, it should already handle ordering, as long as when you retrieve your primary content item you include the levels enough to grab the remaining items.
+
+The model will return an IEnumerable\<IContentItemFieldSource> but as long as you use the GetMappedResults, it will map it to the proper Content Type Classes for you to do type checking on. It will be in order.
+
+
+
+
+
+```CSharp
+var testPage = new ContentItemQueryBuilder().ForContentType(Testing.WebPage.CONTENT_TYPE_NAME, query => 
+    query.WithLinkedItems(100, o=> o.IncludeWebPageData())
+        .ForWebsite(_websiteChannelContext.WebsiteChannelName, includeUrlPath: true)
+        .Where(where => where.WhereEquals(nameof(WebPageFields.WebPageItemID), 7))
+        .TopN(1)
+        )
+    .InLanguage("en");
+var mappedToPage = await _contentQueryExecutor.GetMappedWebPageResult<Testing.WebPage>(testPage);
+if (mappedToPage.Any()) {
+    var firstItem = mappedToPage.First();
+    foreach(var section in firstItem.SectionsSystemSections) {
+        if(section is Section.TestA testA) {
+            var testing = testA.SectionTestAName;
+        } else if(section is Section.TestB testB) {
+            var testing = testB.SectionTestBName;
+        } else if(section is Section.Widget widget) {
+            // If you don't see the WebPageItem values, make sure your .WithLinkedItems has the optional ConfigureOptionsAction (query.WithLinkedItems(100, o=> o.IncludeWebPageData()))
+            // Partial Widget Page <inlinewidgetpage web-page-id="@webPageID" initialize-document-prior="true"></inlinewidgetpage>
+            // requires the WebPageItemID
+            var testing = widget.SystemFields.WebPageItemID;
+        }
+    }
+}
+```
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-29 22:43:46Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>aa0444ca-772b-4da8-a713-4a37f3776149</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-To-Change-Sequence-of-the-content-type-on-page-e352c50c-uqtrzbte</CodeName>
+    <GUID>fc30a934-3b18-4cb2-861a-5fcd9832d158</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>f225122c-b2d5-4494-a10f-0715cd3b2fe6</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>What-are-assets-documents-mentioned-in-documentation--b432ff65-73rfzwcx</CodeName>
+      <GUID>878972a8-6ccb-4269-821a-543dbe5e7d42</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>e54f3791-0d0c-4058-8410-b3a123128741</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>cbc4682c-e116-4b28-bb3a-ec7877f2f95c</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>7</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I'm setting up Azure Blob Storage, and mapping the various storage paths to either my Blob Storage's production container, or a "usercontent" container for any content that a user may upload via bizformfiles.
+
+/assets/media are obviously Media Files\
+/assets/contentitems are obviously Content Item Assets\
+/assets/bizformfiles are obviously Biz Form Uploaded Files\
+/assets/documents are...??? &#x20;
+
+Just need to know what container i should map them to, or what they are for...any hints?  It's in the below mentioned documentation in the code block:
+
+
+
+```
+if (Environment.IsQa() || Environment.IsUat() || Environment.IsProduction())
+    {
+        MapAzureStoragePath("~/assets/media", CONTAINER_NAME_LIBRARIES);
+        MapAzureStoragePath("~/assets/contentitems", CONTAINER_NAME_CONTENT_ITEM_ASSETS);
+        MapAzureStoragePath("~/assets/bizformfiles", CONTAINER_NAME_FORM_FILES);
+        MapAzureStoragePath("~/assets/documents", CONTAINER_NAME_DOCUMENTS);
+
+    }
+```
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: 30.3.1
+* .NET version: 8
+* Execution environment: Local
+* <https://docs.kentico.com/developers-and-admins/api/files-api-and-cms-io/file-system-providers/azure-blob-storage#map-folders-to-a-kentico-managed-azure-blob-storage>
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-04-01 21:02:24Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-04-01 21:02:24Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>dc609851-ab9c-436c-9e99-5c5216d1560f</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>1-Create-an-Image-content-type-one-with-a-e18f93f0</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+1. Create an Image content type ([one with a Content item asset field](https://docs.kentico.com/business-users/content-hub#upload-a-single-file)) to model your image. **We do not** support files outside of an associated content item like you might see in a classic media library. You can't just "upload a file" to a widget.
+2. Create [a widget based on a View Component](https://docs.kentico.com/developers-and-admins/development/builders/page-builder/widgets-for-page-builder#widgets-based-on-a-view-component) with some [widget properties](https://docs.kentico.com/x/7wWiCQ).
+3. Assign [the combined content selector](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/reference-admin-ui-form-components#combined-content-selector) to one of those widget properties and configure the selector to only allow selection of the Image content type.
+4. Retrieve the widget properties in the widget's `InvokeAsync` method and use [the content retrieval APIs](https://docs.kentico.com/x/OKrWCQ) to retrieve the Image content items identified by the items selected in the widget properties. The widget property values will be the `ContentItemGUID` values of the selected Image content items.
+5. Create [a View Model for the widget](https://docs.kentico.com/guides/development/page-builder/define-advanced-widget#create-the-widget-view-model) and populate it with the Image content items you retrieved.
+6. Render the View Model in the Razor view used by the widget.
+7. Done!
+
+You can see a full example of an image widget in [the Kentico Community Portal source code](https://github.com/Kentico/community-portal/blob/v30.1.0.11/src/Kentico.Community.Portal.Web/Components/Widgets/Image/ImageWidget.cs).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-12 20:42:16Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>dc2b64b2-39c6-4e32-b449-4a4870db360e</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Problem-in-Custom-Widget-935ee97e-78ao4fv9</CodeName>
+    <GUID>a926fbe1-36d6-4c92-879e-022bb1a56433</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

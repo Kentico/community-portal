@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>It-looks-like-a-related-bug-was-fixed-in-v16dfa081</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+It looks like a related bug was fixed in [v30.2.2](https://docs.kentico.com/documentation/changelog#hotfix-march-6-2025), but you're using v30.3.1?
+
+If you download the database and run a v30.3.1 app against it, can you identify any other information about the problem?
+
+The `CMS_ContentFolder` table lists all folders in the Content Hub across all workspaces. Each "root" folder has a `ContentFolderName` of "Root" and a `ContentFolderParentFolderID` value of `null`. The `ContentFolderWorkspaceID` tells you which workspace the folder is for.
+
+I'd look for a folders for workspace 2 and see if you are missing a root content folder there.
+
+The `CMS_ContentItem` table has a column `ContentItemContentFolderID` and `ContentItemWorkspaceID` - are there any items that don't have a valid folder for the given workspace? All items are required to be in a valid workspace/folder combination.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-06-28 01:42:15Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>47b32df4-4902-4c58-9f25-0521660ee475</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Issue-with-Loading-Content-after-Adding-Workspaces-to-CI-984fb856-9kvxa64i</CodeName>
+    <GUID>9b34eff8-0461-4eeb-94ae-e667622eb14f</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Sending-an-autoresponder-email-after-a-ford307143c</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Sending an autoresponder email after a form submission is supported by XbyK without any customization. You just need to set up a couple of things. Below is a high-level outline with links to the documentation. I recommend spending some time reading and understanding the process yourself:
+
+1. Ensure your Email channel is configured: <https://docs.kentico.com/developers-and-admins/digital-marketing-setup/email-channel-management>
+2. You need to create an email template and an email content type: <https://docs.kentico.com/developers-and-admins/digital-marketing-setup/email-templates>
+3. In your Email channel, create a new email using the "Form autoresponder" purpose, along with the content type and template you created in the previous step. (Here’s an outline for a regular email, which is very similar to the autoresponder email: <https://docs.kentico.com/guides/digital-marketing/work-with-email/create-a-marketing-email>)
+4. While composing the email, make sure to link your PDF file.
+5. In your Form settings, go to the "Autoresponder" tab,  select the "Select email" option and choose the autoresponder email you just created: <https://docs.kentico.com/business-users/digital-marketing/forms/create-and-edit-forms#autoresponders>
+
+Regarding the modal that should display the form, this depends on your frontend implementation. Ensure that the form widget is rendered within HTML elements controlled by your CSS and client-side JavaScript to display as a modal.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-21 13:14:40Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>cd0e6f34-2ea5-4498-866d-d73fa6ad36d4</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-to-render-Form-directly-into-Page-Template-9119c9cc-8y8pbcdm</CodeName>
+    <GUID>ea8eac63-32df-46d6-8cb3-767388e6e3d4</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

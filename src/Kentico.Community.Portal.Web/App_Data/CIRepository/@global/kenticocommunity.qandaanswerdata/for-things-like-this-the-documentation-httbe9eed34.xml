@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>c1beb8f9-4673-40d8-acdd-2dd56e5cd1bb</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>For-things-like-this-the-documentation-httbe9eed34</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+For things like this, the [documentation](https://docs.kentico.com/) and [guides](https://docs.kentico.com/guides) are your best friends!
+
+Regarding your question, you’re most likely looking for the *Combined content selector* to be added to your widget properties. This lets you select content items from the content hub. In your implementation, you can then access the selected items, process them as needed, and render them.
+
+The *Combined content selector* form component attribute is called `ContentItemSelectorComponent`, so that’s [where you should start](https://docs.kentico.com/developers-and-admins/customization/extend-the-administration-interface/ui-form-components/reference-admin-ui-form-components#combined-content-selector). I’d also recommend setting up the **[Dancing Goat](https://docs.kentico.com/developers-and-admins/installation#available-project-templates)** [sample site](https://docs.kentico.com/developers-and-admins/installation#available-project-templates) locally to see it in action. A couple of widgets use it, so you can check out their code for inspiration.
+
+For general best practices and working with widgets, the official guides are a great resource!
+
+<https://docs.kentico.com/guides/development/page-builder/build-simple-cta-widget>
+
+<https://docs.kentico.com/guides/development/page-builder/define-advanced-widget>
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-26 13:14:36Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>5b15731b-ba91-44e7-a841-38d6aa9f7ac6</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-to-render-content-item-in-widget-85268b6e-pf6luh7q</CodeName>
+    <GUID>ab1bbb51-d29d-46ef-888b-d760f6dbd941</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

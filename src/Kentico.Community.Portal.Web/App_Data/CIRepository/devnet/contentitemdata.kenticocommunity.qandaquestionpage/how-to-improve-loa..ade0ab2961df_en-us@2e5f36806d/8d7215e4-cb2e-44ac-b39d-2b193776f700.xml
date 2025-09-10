@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>a9a6fcd2-2576-4d5a-ac6c-ade0ab2961df</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>How-to-Improve-Load-Time-of-Recipient-List-Overview-aec30687-9ek3g2qu</CodeName>
+      <GUID>054e4e5e-d004-44d1-aeb1-40487a78cc04</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>8d7215e4-cb2e-44ac-b39d-2b193776f700</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>62222007-ca9d-4946-89ab-fc2afb8eb55f</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>6</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+Hello, we currently have around 180,000 contacts in a recipient list for our newsletter. The issue is that the Recipient List Overview page on the admin side takes over two minutes to load (after a clear cache) and around 10-15 seconds with a cache hit. With some investigation, we found that the issue lies with the statistics (Recipient Statuses) for the number of receiving, bounced, and unsubscribed contacts where there is an individual SQL query to the database for each individual contact to the `EmailLibrary_EmailSubscriptionConfirmation` table. This results in over 360,000 individual queries to the database. Even with an index, the page still loads over 2 minutes. Is there any way on our side to improve this?
+
+Thanks!
+
+Matthew
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[29.7.3]
+* .NET version: 8
+* Execution environment: Private cloud
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-02-06 01:07:48Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-02-06 01:07:48Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

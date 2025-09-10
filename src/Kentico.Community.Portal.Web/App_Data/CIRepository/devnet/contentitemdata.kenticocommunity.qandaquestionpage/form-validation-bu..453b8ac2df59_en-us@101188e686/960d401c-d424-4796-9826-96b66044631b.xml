@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>53095f7a-2acb-4553-9a1e-453b8ac2df59</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Form-Validation-bug-f6d3bdfd-wddrc0en</CodeName>
+      <GUID>fbe5581e-076d-4614-8f28-5a606acdc880</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>960d401c-d424-4796-9826-96b66044631b</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>5b7814bb-d586-4793-96d0-f6e4ad135f4d</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+**Conditions:**
+
+A form with a field marked as **required.** In my example I have a Number field.&#x20;
+
+A separate File Upload Field which is also set to **required**
+
+**Bug Replication:**
+
+1 - Fill the Number field intentionally incorrect, for example enter 5.5
+
+2 - Add a file in the file upload field.
+
+3 - Click Submit\
+&#x20;    The Number field gets rejected and marked red for you to change.
+
+4 - Change the number to 5
+
+5 - Try re-submitting the form
+
+6 - I get a JS error "An invalid form control is not focusable." and form doesn't submit even though the error had been corrected.
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: 30.2.2
+
+* .NET version: 9
+
+* Execution environment: Azure
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-05-28 00:39:00Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-05-28 18:01:49Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

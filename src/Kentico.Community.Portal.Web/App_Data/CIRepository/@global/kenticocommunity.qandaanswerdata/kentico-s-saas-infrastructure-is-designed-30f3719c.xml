@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Kentico-s-SaaS-infrastructure-is-designed-30f3719c</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Kentico’s SaaS infrastructure is designed to minimize downtime **as much as possible**, but downtime can occur under certain conditions, mainly for **safety and data integrity reasons**.&#x20;
+
+&#x20;**When Downtime Might Occur**
+
+1. **Schema Changes**
+   * Adding or removing fields, content types, or altering structure in ways that affect the database schema.
+   * These typically trigger a brief maintenance window and may result in **temporary downtime** (10–30 minutes).
+2. **Database-Level Changes**
+   * Complex operations such as data migrations or structural changes to stored content.
+   * Triggers backups, consistency checks, and may require **exclusive locks** on resources, leading to longer downtime.
+3. **Project Upgrades or New Version Rollouts**
+   * If a deployment includes upgrading the core Xperience libraries or services, downtime may occur while the system restarts and migrates internal state.
+4. **Manual SaaS Environment Reprovisioning**
+   * When environments are manually reprovisioned or reset, either by support or advanced DevOps triggers.
+
+***
+
+&#x20;**When Downtime Is** ***Unlikely*** (Safe for Daytime Deployments)
+
+* Pure frontend changes (e.g., Razor/React/HTML/CSS updates).
+* Adding or updating widgets, page templates, or views.
+* Updating localization strings or styling.
+* Adjustments in webhooks or content staging settings.
+* Deployment of content changes only (via API or Xperience Admin).
+
+***
+
+**Best Practices to Minimize or Avoid Downtime**
+
+1. **Bundle Structural Changes Together**
+   * Avoid many small schema changes across multiple deployments. Group them if possible.
+2. **Use Previews/Staging to Test**
+   * Verify schema changes on staging environments before applying to production.
+3. **Coordinate with Kentico Support**
+   * For large changes, you can request scheduled downtime or get insight into the estimated duration.
+4. **Deploy with Smart Windows**
+   * If you don’t know whether your deployment causes downtime, aim for late evenings or early mornings **until confident**.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-13 22:47:26Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>dae5004d-d056-4b2f-83f4-8a5305b9dc21</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Downtime-during-deployments-560282cf-qai4l9ob</CodeName>
+    <GUID>8bc56f2c-6dc2-444d-9e37-bc79dab8ddfe</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

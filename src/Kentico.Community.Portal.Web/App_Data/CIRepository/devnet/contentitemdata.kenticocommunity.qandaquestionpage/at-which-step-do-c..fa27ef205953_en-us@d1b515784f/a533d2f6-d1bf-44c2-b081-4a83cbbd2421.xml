@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>eb013662-3091-409b-ac7b-fa27ef205953</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>At-which-step-do-CD-restore-in-release-pipeline--3f9c38f8-111h6z4q</CodeName>
+      <GUID>92011a0e-472f-4dde-84bc-4fb11d382c3a</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>a533d2f6-d1bf-44c2-b081-4a83cbbd2421</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>6</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+We release using a devops release pipeline without a slot swap.
+
+In which steps should we call the CD restore? First release the CD repository, then call the CD restore, and after that release the app and do the upgrades?\
+We now have a problem when calling CD restore, because a module-init tries to insert some records in a table which is not there yet. Too bad the module init runs before the CD restore when calling:\
+dotnet Site.dll --kxp-cd-restore --repository-path .\App\_data\CDRepository
+
+
+
+Site.dll is in this case the dll from the new release. (with the newly added tables / module code)
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.8.0]
+
+* .NET version: \[9]
+
+* Execution environment: \[Private cloud (Azure)]
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-08-11 17:16:16Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-08-11 17:16:16Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

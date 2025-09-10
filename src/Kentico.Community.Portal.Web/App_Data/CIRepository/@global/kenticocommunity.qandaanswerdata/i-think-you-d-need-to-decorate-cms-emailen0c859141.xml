@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>I-think-you-d-need-to-decorate-CMS-EmailEn0c859141</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+I think you'd need to decorate `CMS.EmailEngine.IEmailClient` which uses `CMS.EmailEngine.Internal.IEmailClientCreator` internally to get the correct email client (and its SMTP settings) for each email.
+
+There are lower level APIs like `CMS.EmailEngine.ISmtpClientFactory` but they don't have enough information to allow you to change the SMTP options per email.
+
+I haven't tested any of this so no guarantees if its a viable path.
+
+Because some of these APIs are in `.Internal` namespaces, we can't support this kind of customization and you might experience breaking changes between Refreshes.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-06-16 21:31:14Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>c31696dd-434e-48de-bfab-ed6c30b92ec1</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-do-I-configuren-unique-SMTP-servers-per-website-channel--3205c437-0zobmlfa</CodeName>
+    <GUID>10068ff2-7655-43d1-951d-986912f8c755</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

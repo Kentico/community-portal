@@ -1,4 +1,6 @@
 using Kentico.Community.Portal.Web.Features.Errors;
+using Kentico.Community.Portal.Web.Features.Members;
+using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Resources;
 using Lucene.Net.Util;
@@ -100,5 +102,72 @@ public static class ServiceCollectionMvcExtensions
             .AddHttpClient()
             .AddViteServices()
             .AddHealthChecks()
-            .Services;
+            .Services
+            .AddRateLimiter(options =>
+            {
+                // Q&A Content Creation Policies (Authenticated - softer limits)
+                _ = options
+                    .AddPolicy(
+                        QAndARateLimitingConstants.CreateQuestion,
+                        httpContext => RateLimitingUtilities.CreateSlidingWindowPartition(
+                            httpContext,
+                            permitLimit: 1,
+                            segmentsPerWindow: 4,
+                            window: TimeSpan.FromMinutes(4)
+                        )
+                    )
+                    .AddPolicy(
+                        QAndARateLimitingConstants.CreateAnswer,
+                        httpContext => RateLimitingUtilities.CreateSlidingWindowPartition(
+                            httpContext,
+                            permitLimit: 2,
+                            segmentsPerWindow: 2,
+                            window: TimeSpan.FromMinutes(1)
+                        )
+                    )
+                    .AddPolicy(
+                        QAndARateLimitingConstants.UpdateQuestion,
+                        httpContext => RateLimitingUtilities.CreateSlidingWindowPartition(
+                            httpContext,
+                            permitLimit: 10,
+                            segmentsPerWindow: 5,
+                            window: TimeSpan.FromMinutes(5)
+                        )
+                    )
+                    .AddPolicy(
+                        QAndARateLimitingConstants.UpdateAnswer,
+                        httpContext => RateLimitingUtilities.CreateSlidingWindowPartition(
+                            httpContext,
+                            permitLimit: 10,
+                            segmentsPerWindow: 5,
+                            window: TimeSpan.FromMinutes(5)
+                        )
+                    )
+                    // Authentication and Member Management Policies (Public - stronger limits)
+                    .AddPolicy(
+                        MemberRateLimitingConstants.Login,
+                        httpContext => RateLimitingUtilities.CreateFixedWindowPartition(
+                            httpContext,
+                            permitLimit: 50,
+                            window: TimeSpan.FromMinutes(10)
+                        )
+                    )
+                    .AddPolicy(
+                        MemberRateLimitingConstants.Registration,
+                        httpContext => RateLimitingUtilities.CreateFixedWindowPartition(
+                            httpContext,
+                            permitLimit: 10,
+                            window: TimeSpan.FromMinutes(5)
+                        )
+                    )
+                    .AddPolicy(
+                        MemberRateLimitingConstants.ForgotPassword,
+                        httpContext => RateLimitingUtilities.CreateFixedWindowPartition(
+                            httpContext,
+                            permitLimit: 10,
+                            window: TimeSpan.FromMinutes(30)
+                        )
+                    )
+                    .OnRejected = RateLimitingUtilities.OnRejectedHandler;
+            });
 }

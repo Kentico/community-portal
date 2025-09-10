@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>1-Make-sure-the-component-is-exported-http0ae601d7</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+1. Make sure [the component is exported](https://github.com/Kentico/community-portal/blob/v30.8.1.2/src/Kentico.Community.Portal.Admin/Client/src/entry.tsx#L2) in the `entry.tsx` - if it's not exported it won't be accessible by Xperience's React app.
+2. Reference the component by name in your C# code correctly. The pattern is `@org-name/project-name/ComponentName`
+
+   1. `@org-name` and `project-name` come from the `webpack.config.js` and the C# `RegisterClientModule()` call.
+   2. The `ComponentName` is what you are exporting from your `Component.tsx` file.
+   3. Note: `TableCellComponent` components have the `TableCellComponent` part of the name implicitly included when referencing them from the C# side. This means your C# reference string should be `@org-name/project-name/Image` if your exported TypeScript React component is named `ImageTableCellComponent`.
+   4. There are [similar types of conventions](https://github.com/Kentico/community-portal/blob/v30.8.1.2/src/Kentico.Community.Portal.Admin/Components/MarkdownFormComponent.cs#L18) for `FormComponent` instances with client components. For example, a client component exported as `MarkdownFormComponent` would be referenced in C# as `@org-name/project-name/Markdown`
+   5. [Another example can be seen](https://github.com/Kentico/community-portal/blob/v30.8.1.2/src/Kentico.Community.Portal.Admin/Components/DataExportComponent.cs#L7) with with the `DataExportComponent` which is an `ActionComponent` and referenced as `@org-name/project-name/DataExport`.
+3. Make sure you have a C# [client module registration call](https://github.com/Kentico/community-portal/blob/v30.8.1.2/src/Kentico.Community.Portal.Admin/PortalWebAdminModule.cs#L36) using `RegisterClientModule()` which tells Xperience how to organize the client module by org and project name.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-08-19 22:14:22Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>074b5c8a-366b-42da-88d8-5ac990143d41</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Table-Cell-Component-giving-an-error-when-loading-a-listing-page-539d2abf-ww3evayr</CodeName>
+    <GUID>423075d4-6a4f-4260-9964-eaafb8bb88a1</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

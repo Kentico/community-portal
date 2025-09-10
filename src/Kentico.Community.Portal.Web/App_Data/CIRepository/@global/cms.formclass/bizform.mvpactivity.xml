@@ -2,8 +2,7 @@
 <cms.formclass>
   <ClassContactMapping>
     <form>
-      <field column="ContactEmail" enabled="true" guid="6cd930d1-f709-4a02-aaf3-df3a8ebdb4de" mappedtofield="memberemail" visible="true" />
-      <field column="ContactLastFormSubmissionDate" enabled="true" guid="560afba1-cc94-4a37-a1f2-133293a836f0" mappedtofield="activitydate" visible="true" />
+      <field column="ContactEmail" enabled="true" guid="95ad8877-00c4-4cb8-947e-08a5bfb2e382" mappedtofield="memberemail" visible="true" />
     </form>
   </ClassContactMapping>
   <ClassContactOverwriteEnabled>False</ClassContactOverwriteEnabled>
@@ -30,7 +29,7 @@
           <componentidentifier>CommunityPortal.FormComponent.HiddenMemberID</componentidentifier>
         </settings>
       </field>
-      <field allowempty="true" column="MemberEmail" columnsize="500" columntype="text" enabled="true" guid="1f7df913-91c4-4a08-9a14-344926c9773d" visible="true">
+      <field allowempty="true" column="MemberEmail" columnsize="500" columntype="text" enabled="true" guid="ab58d6b2-dc5f-40ee-b2d0-fe096802cf25" visible="true">
         <properties>
           <fieldcaption>Member email</fieldcaption>
           <smart>False</smart>
@@ -75,6 +74,7 @@ VirtualEvent;Virtual event
 InPersonEvent;In-person event
 OpenSourceSoftware;Open-source software
 Other
+WashCar;Washed Sean's car
 ]]>
           </DataSource>
           <DataSourceValueSeparator>;</DataSourceValueSeparator>
@@ -213,6 +213,22 @@ Other
               <xs:element name="Form_2024_10_23_17_57ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
               <xs:element name="FormInserted" type="xs:dateTime" />
               <xs:element name="FormUpdated" type="xs:dateTime" />
+              <xs:element name="MemberID" type="xs:int" minOccurs="0" />
+              <xs:element name="MemberEmail" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ActivityDate" type="xs:dateTime" />
+              <xs:element name="ActivityType">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
               <xs:element name="URL" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -224,13 +240,6 @@ Other
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="2147483647" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="ActivityType">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="200" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
@@ -259,15 +268,6 @@ Other
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="200" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="ActivityDate" type="xs:dateTime" />
-              <xs:element name="MemberID" type="xs:int" minOccurs="0" />
-              <xs:element name="MemberEmail" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="500" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

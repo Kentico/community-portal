@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Thank-you-for-the-responses-Unfortunately-56b3336e</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Thank you for the responses! Unfortunately, I'm still a little confused - here is the old K13 code I'm trying to transition:
+
+```CSharp
+DocumentEvents.Insert.Before += Document_Update_Before;
+DocumentEvents.Update.Before += Document_Update_Before;
+
+DocumentEvents.Copy.Before += Document_Copy_Before;
+DocumentEvents.Copy.After += Document_Copy_After;
+```
+
+\
+The first two lines I've (in XbyK) handled with this (I have a base handler so both are ultimately calling the same thing):
+
+```CSharp
+parameters.Services.AddInfoObjectEventHandler<InfoObjectBeforeUpdateEvent<ContentItemInfo>, UniqueIdentifierOnProductBeforeUpdateHandler>();
+parameters.Services.AddInfoObjectEventHandler<InfoObjectBeforeInsertEvent<ContentItemInfo>, UniqueIdentifierOnProductBeforeInsertHandler>();
+
+```
+
+\
+It's the last 2 lines above that I am unsure of - I see no Copy-related events exposed in the API. It seems in K13 there was a distinction between Insert/Update/Copy that I can't find in XbyK.
+
+I've looked here: <https://api-reference.kentico.com/api/CMS.ContentEngine.ContentItemEvents.html>, and there is no Copy event listed, nor anything that seems to resemble it.
+
+So, how do I implement what used to be a valid event in K13 that seems to no longer exist? Or - and this is 100% possible - am I missing something?
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-07-08 01:50:20Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>c7a67c98-f00c-44aa-a4ce-ecfbd8e38509</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Substitute-for-old-DocumentEvents-Copy-Before-After-in-XbyK--1ce694cb-gjuvi40r</CodeName>
+    <GUID>1995ade9-12f3-411c-8ea6-e444e6193892</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

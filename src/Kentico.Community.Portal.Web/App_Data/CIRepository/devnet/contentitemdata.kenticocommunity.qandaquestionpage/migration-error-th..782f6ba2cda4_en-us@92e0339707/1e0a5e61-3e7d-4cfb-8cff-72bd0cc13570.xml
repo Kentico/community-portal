@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>84d90971-fd42-4380-bbe8-782f6ba2cda4</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Migration-error-The-database-version-does-not-match-the-project-version-4db4f03e-j4go3ahd</CodeName>
+      <GUID>f360687e-de42-4e1f-914f-5336d6dc87d0</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>1e0a5e61-3e7d-4cfb-8cff-72bd0cc13570</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>62e70db8-d64c-4548-a7b7-25024fae4585</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>7</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I followed the instructions in the link below to migrate content from a Kentico 12 MVC site to Xperience by Kentico.&#x20;
+
+I ran 'dotnet new install kentico.xperience.templates' in the terminal and followed the process to create a new project resulting in a fresh version 30.2.2
+
+Running Migration.Tool.CLI.exe migrate resulted in the following error
+
+"Error occured System.NotSupportedException: The database version '30.2.2' does not match the project version '30.2.0', please check your connection string."
+
+
+
+Update: Updating the Kentico NuGet packages in the migration toolkit project to match my Xperience by Kentico project version solution fixed the problem.&#x20;
+
+
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.2.2]
+* .NET version: \[8]
+* Execution environment: \[localhost]
+* <https://github.com/Kentico/xperience-by-kentico-kentico-migration-tool/blob/master/Migration.Tool.CLI/README.md>
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-03-19 02:41:02Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-03-19 02:46:58Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

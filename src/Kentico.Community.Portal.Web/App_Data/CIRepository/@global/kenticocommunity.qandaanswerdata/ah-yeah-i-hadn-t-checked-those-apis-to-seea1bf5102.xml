@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Ah-yeah-I-hadn-t-checked-those-APIs-to-seea1bf5102</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Ah, yeah. I hadn't checked those APIs to see if they actually have access to that context, but that makes sense. The UI Form Components and related technology are not designed to have knowledge of the page they are used on, primarily because they can be used in other areas of Xperience's Admin UI, not just the Page Builder.
+
+Slightly related, you *can* send the page context on a POST from your page's view [by including the page data](https://docs.kentico.com/developers-and-admins/development/builders/page-builder/page-templates-for-page-builder#handle-post-actions) in your HTML form on the page. But, similar to what I mentioned above, this would be POSTing to _your_ endpoint, not one of Xperience's.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-21 22:59:38Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>358304aa-cf0c-4b36-9656-f279f2f9f3d3</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Getting-the-webpage-URL-in-VisibilityCondition-Evaluate-method-225ccc5c-k6gpr0jx</CodeName>
+    <GUID>24c97cb6-7d3b-4824-8600-630b5eb62b89</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>In-your-Create-class-for-your-custom-modulbbca258d</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+In your "Create" class for your custom module you can override the `SetFormData(infoObject, IFormFieldValueProvider)` method.&#x20;
+
+Something like so:
+
+
+
+
+
+```
+protected override Task SetFormData(ProductModelInfo infoObject, IFormFieldValueProvider fieldValueProvider)
+{
+    // default the order to be last in the list
+    var productType = ProductModelInfo.Provider.Get()
+        .Column(nameof(ProductModelInfo.ProductModelOrder))
+        .OrderByDescending(nameof(ProductModelInfo.ProductModelOrder))
+        .FirstOrDefault();
+        
+    // set the order of the new item to order + 1
+    if (productType != null) infoObject.ProductModelOrder = productType.ProductModelOrder + 1;
+
+    return base.SetFormData(infoObject, fieldValueProvider);
+}
+```
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-11 20:11:05Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>6deb9ef1-9d7b-4c29-a311-eb74f5798fb1</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-do-I-set-a-default-value-in-a-UI-Forms-field-using-a-macro-on-create--f4df3578-b5pvou7i</CodeName>
+    <GUID>e6cf5567-b262-4879-8756-a656a774362d</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

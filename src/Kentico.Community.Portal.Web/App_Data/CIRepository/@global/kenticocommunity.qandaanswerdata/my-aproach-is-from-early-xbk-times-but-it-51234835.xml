@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>My-aproach-is-from-early-XbK-times-but-it-51234835</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+My aproach is from early XbK times, but it still works.
+
+I use the "WebPageUrlPath" to achieve this.
+
+```CSharp
+public static async Task<List<IWebPageFieldsSource>> RetrieveBreadcrumbNodes(
+    IWebPageDataContextRetriever pageRetriever, RoutedWebPage page)
+{
+    List<IWebPageFieldsSource> pageItems = [];
+
+    string fullPath = page.GetWebPageFieldsSource().Result.SystemFields.WebPageUrlPath;
+    List<string> breadcrumbPaths = [];
+    while (!string.IsNullOrWhiteSpace(fullPath))
+    {
+        breadcrumbPaths.Add(fullPath);
+        fullPath = fullPath.Contains('/')
+            ? fullPath[..fullPath.LastIndexOf('/')]
+            : "";
+    }
+
+    ContentItemQueryBuilder builder = new ContentItemQueryBuilder()
+        .ForContentTypes(item =>
+        {
+            item.ForWebsite();
+            item.OfReusableSchema(IBasepage.REUSABLE_FIELD_SCHEMA_NAME);
+        })
+        .Parameters(outerQuery =>
+        {
+            outerQuery.Where(record =>
+            {
+                record.WhereIn(
+                    nameof(WebPageFields.WebPageUrlPath),
+                    breadcrumbPaths);
+
+                record.WhereFalse(
+                    nameof(IBasepage.BasePageHideInBreadcrumb));
+            });
+
+            
+        })                
+        .InLanguage(pageRetriever.Retrieve().WebPage.LanguageName);
+        
+    IContentQueryExecutor executor
+        = CMS.Core.Service.Resolve<IContentQueryExecutor>();
+
+    pageItems = (await executor.GetMappedWebPageResult<IWebPageFieldsSource>(builder))
+        .ToList();
+
+    return pageItems;
+```
+
+In the view I do this afterwards:
+
+```HTML
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                     @foreach(IWebPageFieldsSource node in Model.BreadcrumbNodes)
+                    {
+                        if (Model.Page.SystemFields.WebPageItemID.Equals(node.SystemFields.WebPageItemID))
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">@node.GetPageName()</li>
+                        }
+                        else
+                        {
+                            <li class="breadcrumb-item"><a href="~/@node.SystemFields.WebPageUrlPath">@node.GetPageName()</a></li>
+                        }
+                    }
+                    </ol>
+                </nav>
+```
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-04-06 22:41:59Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>5e9ad1ee-18c4-4809-815f-e16061b71924</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Best-Approach-for-Implementing-Breadcrumb-Navigation-in-Kentico--e96b0ef7-tbkvvnkg</CodeName>
+    <GUID>f86ac312-85a2-4eb2-ae80-2ce48e8c46dd</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

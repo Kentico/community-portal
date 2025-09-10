@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>7ce9e3ea-df59-43f2-a31d-246aa313ecad</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Table-Cell-Component-giving-an-error-when-loading-a-listing-page-539d2abf-ww3evayr</CodeName>
+      <GUID>d70be373-bce8-4bdc-b610-fa746b34d903</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>11c9c0a2-6136-4a27-b552-f532111376a6</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>074b5c8a-366b-42da-88d8-5ac990143d41</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>2</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I'm having an issue with getting table cell react component to work. I'm using the community LinkTableCellComponent as a guide. when I try to use it with AddComponentColumn the listing page `throws We have encountered an unexpected error.` on the page.
+
+```
+        PageConfiguration.ColumnConfigurations.AddComponentColumn(
+            nameof(BioInfo.BioName),
+            "@project/web-admin/ImageCell",
+            caption: "This",
+            modelRetriever: GetHeadShot,
+            sortable: false);
+```
+
+It seems like the component is not being registered. For the LinkTableCellComponent I could not find anywhere in the code where that is being registered either and the LinkTableCellComponent is being referenced with `@kentico-community/portal-web-admin/Link`  [https://github.com/Kentico/community-portal/blob/c04e241ad726754ec89900db7bfa89e72\[…\]y.Portal.Admin/Client/src/components/LinkTableCellComponent.tsx](https://github.com/Kentico/community-portal/blob/c04e241ad726754ec89900db7bfa89e72e3eac32/src/Kentico.Community.Portal.Admin/Client/src/components/LinkTableCellComponent.tsx)
+
+When I bring up chrome devtools I don't see the component in the scripts tab like it's not loading.
+
+I have other custom admin form components that I am using so my admin environment should not be the issue.
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.5.3]
+
+* .NET version: \[8]
+
+* Execution environment: \[local/Azure)]
+
+* Link to relevant <https://docs.kentico.com/documentation/developers-and-admins/customization/extend-the-administration-interface/ui-pages/reference-ui-page-templates/listing-ui-page-template#add-react-components-to-cells>
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-08-19 19:38:48Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-08-21 22:25:18Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

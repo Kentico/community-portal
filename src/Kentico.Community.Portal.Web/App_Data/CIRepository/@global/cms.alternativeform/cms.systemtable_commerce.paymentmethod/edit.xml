@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>Commerce.PaymentMethod</CodeName>
+    <GUID>6a4c2406-342c-4ec6-a816-a4459a286930</GUID>
+    <ObjectType>cms.systemtable</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="PaymentMethodID" guid="371d223a-bdd5-4a15-b7fc-94f84c317881" enabled="" />
+      <field column="PaymentMethodGUID" guid="d220907d-1ea0-4d8c-911b-a72252584194" enabled="" />
+      <field column="PaymentMethodDisplayName" enabled="true" guid="dbf1d2bd-5b9a-4dd5-9ec5-bcba208e17e3" visible="true" order="2">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.paymentmethods.edit.displayname.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="PaymentMethodName" enabled="true" guid="5d9ff5b4-23ad-4ab2-9f02-1db3bc33542f" visible="true" order="3">
+        <settings>
+          <controlname>Kentico.Administration.CodeName</controlname>
+          <HasAutomaticCodeNameGenerationOption>False</HasAutomaticCodeNameGenerationOption>
+          <IsCollapsed>True</IsCollapsed>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.paymentmethods.edit.name.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="PaymentMethodDescription" enabled="true" guid="b5083e80-d75b-4c6c-932c-ccab4e6cde09" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtext>
+            <![CDATA[{$digitalcommerce.paymentmethods.edit.description.explanation$}]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.paymentmethods.edit.description.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="PaymentMethodEnabled" enabled="true" guid="97a38c27-4682-49bb-b87e-e870f0a75a7c" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <defaultvalue>False</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.paymentmethods.edit.enabled.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit payment method</FormDisplayName>
+  <FormGUID>77b5cb9d-44ba-467a-81d9-a620a573db86</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>edit</FormName>
+</cms.alternativeform>

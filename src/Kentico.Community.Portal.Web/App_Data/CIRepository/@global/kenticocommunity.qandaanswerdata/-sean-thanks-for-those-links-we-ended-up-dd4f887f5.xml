@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-Sean-thanks-for-those-links-We-ended-up-dd4f887f5</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+@Sean, thanks for those links! We ended up doing something similar to newsletter recipients, but we have the data being sent in an email.
+
+Out of curiosity, how do we wire up that React component? I can see that the `PageCommandHandler` returns `return ResponseFrom(new { file = Convert.ToBase64String(ms.ToArray()) });` and that the React component handles that with `const binaryString = atob(resp.file);`. But I can't figure out&#x20;
+
+1. How to include that React component in the project
+2. How to connect the two pieces. Is that just with the PageCommand `EXPORT_LIST`?
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-20 13:36:57Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>5031b476-4c67-4e87-95ef-a86cd274501b</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Can-I-export-Form-Submissions--b33eeb88-oewsz1hl</CodeName>
+    <GUID>3eb62e93-10eb-4fa3-a230-5cbe6afe560e</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

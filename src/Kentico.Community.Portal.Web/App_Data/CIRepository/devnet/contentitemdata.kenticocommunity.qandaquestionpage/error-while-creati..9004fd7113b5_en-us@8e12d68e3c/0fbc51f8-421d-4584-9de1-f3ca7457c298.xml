@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>33f5c5c4-fdaa-4568-9e84-9004fd7113b5</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Error-while-creating-Deployment-Package-of-Saas-Project-f7ccb17c-nmr7jkgo</CodeName>
+      <GUID>8e4707ff-d3b1-45dd-b2a2-36b0231c4fa0</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>0fbc51f8-421d-4584-9de1-f3ca7457c298</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>4</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I was Following documentation for Saas Deployment. I am getting error when i am running following command:\
+.\Export-DeploymentPackage.ps1 -AssemblyName "SaasPOC"&#x20;
+
+I am getting following error as follow
+
+ZipArchiveHelper : The process cannot access the file 'D:\Xperience By Kentico Learning\Examples\SaaS\src\SaasPOC.Web\b
+in\CloudDeployment\$CDRepository\@global\cms.class\cms.contentitemcommondata.xml' because it is being used by another
+process.
+At
+C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules\Microsoft.PowerShell.Archive\Microsoft.PowerShell.Archive.psm1:697
+char:30
+
+Now i have close all the project still getting this error. I also tried to run the powershell in administrator mode.
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: \[30.3.0]
+
+* .NET version: \[8]
+
+* Execution environment: \[SaaS]
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-03-28 16:20:02Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-06-18 17:33:30Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

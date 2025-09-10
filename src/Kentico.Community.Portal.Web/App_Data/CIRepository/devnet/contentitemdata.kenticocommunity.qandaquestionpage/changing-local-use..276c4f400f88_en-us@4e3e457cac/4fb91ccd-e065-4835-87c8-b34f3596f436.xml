@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>c482eb79-ee83-497e-b63e-276c4f400f88</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Changing-local-users-to-external-827586f4-dk350epm</CodeName>
+      <GUID>58251baa-4294-4055-b4fc-c2c4fb679d2e</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>4fb91ccd-e065-4835-87c8-b34f3596f436</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>00000000-0000-0000-0000-000000000000</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>6</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+We have an XByK site whose admin uses the normal forms method to authenticate users. Our client has asked that we transition to their SSO solution going forward. The integration to that solution was straightforward, and they plan to provide accounts for those of us who are external.
+
+Our problem is that there are a number of users already in the system who should be logging in via SSO. Since they already have accounts with their corporate emails, they get errors if they try to log in via SSO. We're just running in mixed Forms/SSO mode for now, but they've made clear that's not ideal going forward.
+
+I'm trying to figure out how to update the user accounts in our system so that they'll cleanly map to the new external accounts. In K13 this was easy to do via the admin: change the username and click the "external" box. In XByK, though, the user names are read-only and the external option isn't available.
+
+We don't want to delete and re-create users since we'll lose change history for content items. I did figure out how to update the users in the database, so I could presumably write a one-off migration for it. That's not ideal, though, because I won't know if it works until we deploy as we're using the SaaS platform.
+
+Is there any way to handle this more elegantly? We don't currently synchronize users via CI/CD, so maybe there's an option there? Or some straightforward way to extend the admin interface to allow me to manually make the change as in K13?
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: 30.8.3
+
+* .NET version: 8
+
+* Execution environment: SaaS
+
+* Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-08-29 00:39:00Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-08-29 00:39:00Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

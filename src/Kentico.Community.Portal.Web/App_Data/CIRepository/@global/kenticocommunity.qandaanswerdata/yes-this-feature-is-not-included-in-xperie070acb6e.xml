@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Yes-this-feature-is-not-included-in-Xperie070acb6e</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Yes, this feature is not included in Xperience by Kentico today.
+
+Xperience by Kentico is not a 1-for-1 replacement for Kentico Xperience 13. If you need this feature added natively to the product you can request it on [our public product roadmap](https://roadmap.kentico.com/tabs/6-next-refreshes). It helps us if you include the details of the business problem it would solve for you.
+
+If you need this feature today, you can use something like [ILSpy for VS Code](https://github.com/icsharpcode/ilspy-vscode/wiki/Getting-started) to decompile our libraries and look at our default implementation.
+
+Then, you can [replace](https://docs.kentico.com/x/xQSiCQ) the included [IEmailService](https://api-reference.kentico.com/api/CMS.EmailEngine.IEmailService.html) implementation with your own. You can also use a library like [Scrutor](https://github.com/khellang/Scrutor) to [decorate our interfaces](https://github.com/Kentico/community-portal/blob/v30.2.0.0/src/Kentico.Community.Portal.Web/Configuration/ServiceCollectionMembershipExtensions.cs#L37) using ASP.NET Core features (instead of our dependency injection APIs).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-17 19:40:01Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>607cd96b-a18a-42d1-9d9b-e60b3f033d52</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Sending-emails-using-OAuth-authorization-in-XbK--c7c9ff75-7181hb1x</CodeName>
+    <GUID>c261823b-6997-48f5-a35c-b88be0b30555</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

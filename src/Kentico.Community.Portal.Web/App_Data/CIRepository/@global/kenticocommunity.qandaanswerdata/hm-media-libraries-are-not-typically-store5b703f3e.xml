@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>dc609851-ab9c-436c-9e99-5c5216d1560f</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Hm-media-libraries-are-not-typically-store5b703f3e</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Hm, media libraries are not typically stored under `wwwroot`  which is used for [storing static files](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/static-files?view=aspnetcore-9.0) that ASP.NET Core serves - often JavaScript and CSS, or images not managed in Xperience.
+
+The [docs show the media library folder](https://docs.kentico.com/developers-and-admins/api/files-api-and-cms-io/file-system-providers/azure-blob-storage#media-library-files-in-azure-blob-storage) storing files in a special assets directory `~/assets/media/` not `~/wwwroot`.
+
+I think your Azure Blob storage module is misconfigured. Take a look at [the Kentico Community Portal's source code](https://github.com/Kentico/community-portal/blob/v30.1.0.11/src/Kentico.Community.Portal.Web/Infrastructure/Storage/StorageInitializationModule.cs#L13) for an example of this module.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-20 18:34:30Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>fe0e93be-f8cb-480f-94e9-abd51e922bbe</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Blob-Upload-in-azure-linux-environment-issue-e9824c49-mxiha62v</CodeName>
+    <GUID>7774ca0d-6247-40bc-adb2-f3531cf1db35</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

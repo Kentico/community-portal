@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>b63e360d-4b76-4418-a8a7-affd51730462</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Take-a-look-at-the-documentation-for-Admin140002ee</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Take a look at the documentation for [Administration - Forms authentication](https://docs.kentico.com/developers-and-admins/configuration/users/administration-registration-and-authentication/administration-forms-authentication#expiretimespan) which has the configuration details you need to customize.
+
+```CSharp
+builder.Services.Configure<AdminIdentityOptions>(options =>
+{
+    options.AuthenticationOptions.ExpireTimeSpan = TimeSpan.FromHours(12);
+});
+```
+
+You can also see an example of this in [the Kentico Community Portal source code](https://github.com/Kentico/community-portal/blob/v30.2.0.0/src/Kentico.Community.Portal.Web/Configuration/ServiceCollectionAdminAuthenticationExtensions.cs#L30).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-17 19:28:08Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>57b86411-e098-4e29-9b7c-777a6e2bcc79</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Controlling-Administrative-Session-timeouts-in-Kentico-SaaS--624504d1-43tsk2lo</CodeName>
+    <GUID>b2018012-7f17-4f5e-87fc-d8b5fbaf7a1f</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

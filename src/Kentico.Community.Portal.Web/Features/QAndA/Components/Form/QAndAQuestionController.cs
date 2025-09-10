@@ -1,7 +1,7 @@
 ﻿using CMS.Core;
-using CMS.Membership;
 using Htmx;
 using Kentico.Community.Portal.Core.Modules;
+using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Content.Web.Mvc;
 using Kentico.Xperience.Admin.Base;
@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
@@ -16,22 +17,23 @@ namespace Kentico.Community.Portal.Web.Features.QAndA;
 [Route("[controller]/[action]")]
 public class QAndAQuestionController(
     UserManager<CommunityMember> userManager,
-    IUserInfoProvider userInfoProvider,
     IMediator mediator,
     IWebPageUrlRetriever urlRetriever,
     TimeProvider clock,
     IContentRetriever contentRetriever,
-    IEventLogService log) : PortalHandlerController(log)
+    IEventLogService log,
+    IQAndAPermissionService permissionService) : PortalHandlerController(log)
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
-    private readonly IUserInfoProvider userInfoProvider = userInfoProvider;
     private readonly IMediator mediator = mediator;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
     private readonly TimeProvider clock = clock;
     private readonly IContentRetriever contentRetriever = contentRetriever;
+    private readonly IQAndAPermissionService permissionService = permissionService;
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [EnableRateLimiting(QAndARateLimitingConstants.CreateQuestion)]
     public async Task<IActionResult> CreateQuestion(QAndAQuestionFormSubmissionViewModel requestModel)
     {
         if (!ModelState.IsValid)
@@ -75,14 +77,9 @@ public class QAndAQuestionController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [EnableRateLimiting(QAndARateLimitingConstants.UpdateQuestion)]
     public async Task<IActionResult> UpdateQuestion(QAndAQuestionFormSubmissionViewModel requestModel)
     {
-        var member = await userManager.CurrentUser(HttpContext);
-        if (member is null)
-        {
-            return Unauthorized();
-        }
-
         if (!ModelState.IsValid)
         {
             return ViewComponent(typeof(QAndAQuestionFormViewComponent), new { questionID = requestModel.EditedObjectID, submission = requestModel });
@@ -93,14 +90,15 @@ public class QAndAQuestionController(
             return NotFound();
         }
 
-        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID]);
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID], new RetrievePagesParameters { LinkedItemsMaxLevel = 1 });
         if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
         {
             return NotFound();
         }
 
-        bool canManageContent = await userManager.CanManageContent(member, userInfoProvider);
-        if (questionPage.QAndAQuestionPageAuthorMemberID != member.Id && !canManageContent)
+        var member = await userManager.CurrentUser(HttpContext);
+        bool canManageContent = await permissionService.HasPermission(HttpContext, questionPage, QAndAQuestionPermissionType.Edit);
+        if (questionPage.QAndAQuestionPageAuthorMemberID != member!.Id && !canManageContent)
         {
             return Forbid();
         }
@@ -119,20 +117,15 @@ public class QAndAQuestionController(
     [HttpGet]
     public async Task<IActionResult> DisplayEditQuestionForm(Guid questionID)
     {
-        var member = await userManager.CurrentUser(HttpContext);
-        if (member is null)
-        {
-            return Unauthorized();
-        }
-
-        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID]);
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID], new RetrievePagesParameters { LinkedItemsMaxLevel = 1 });
         if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
         {
             return NotFound();
         }
 
-        bool canManageContent = await userManager.CanManageContent(member, userInfoProvider);
-        if (questionPage.QAndAQuestionPageAuthorMemberID != member.Id && !canManageContent)
+        var member = await userManager.CurrentUser(HttpContext);
+        bool canManageContent = await permissionService.HasPermission(HttpContext, questionPage, QAndAQuestionPermissionType.Edit);
+        if (questionPage.QAndAQuestionPageAuthorMemberID != member!.Id && !canManageContent)
         {
             return Forbid();
         }
@@ -145,19 +138,16 @@ public class QAndAQuestionController(
     [HttpPost]
     public async Task<IActionResult> DeleteQuestion(Guid questionID)
     {
-        /**
-         * For now, only content managers can delete questions
-         */
-        bool canManageContent = await userManager.CanManageContent(HttpContext, userInfoProvider);
-        if (!canManageContent)
-        {
-            return Forbid();
-        }
-
-        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID]);
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID], new RetrievePagesParameters { LinkedItemsMaxLevel = 1 });
         if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
         {
             return NotFound();
+        }
+
+        bool canManageContent = await permissionService.HasPermission(HttpContext, questionPage, QAndAQuestionPermissionType.Delete);
+        if (!canManageContent)
+        {
+            return Forbid();
         }
 
         var rootPages = await contentRetriever.RetrievePages<QAndAQuestionsRootPage>();

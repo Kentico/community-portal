@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>As-Kentico-is-just-using-ASP-NET-Core-Idenc149f6a6</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+As Kentico is just using ASP.NET Core Identity, you can probably hook into password validation using a custom validator.
+
+I found [this](https://andrewlock.net/creating-custom-password-validators-for-asp-net-core-identity-2/#writing-a-custom-validator-for-asp-net-core-identity) blog post which has an example of one:
+
+```CSharp
+public class UsernameAsPasswordValidator<TUser> : IPasswordValidator<TUser> 
+    where TUser : IdentityUser
+{
+    public Task<IdentityResult> ValidateAsync(UserManager<TUser> manager, TUser user, string password)
+    {
+        if (string.Equals(user.UserName, password, StringComparison.OrdinalIgnoreCase))
+        {
+            return Task.FromResult(IdentityResult.Failed(new IdentityError
+            {
+                Code = "UsernameAsPassword",
+                Description = "You cannot use your username as your password"
+            }));
+        }
+        return Task.FromResult(IdentityResult.Success);
+    }
+}
+```
+
+You could use this to check for previous hashes? The hashes themselves could be stored _before_ you complete the password change, then these hashes are checked using the above validator.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-12 01:53:18Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>86d386d0-6cd4-4ec0-a4de-90c676d57db1</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Implementing-password-history-bc7e6e08-pp3hhsdt</CodeName>
+    <GUID>8033863a-372e-482e-8056-56ae1eb6f816</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Our-guide-for-upgrading-to-Xperience-by-Kefbb189c0</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Our guide for upgrading to Xperience by Kentico mentions the Content hub as [a great alternative to custom tables](https://docs.kentico.com/guides/architecture/migrate-from-kx13/plan-your-strategy-for-migrating-features#structured-content-page-types) from previous Kentico products, but Xperience also supports [custom applications](https://docs.kentico.com/x/2gSiCQ) and [object types](https://docs.kentico.com/x/AKDWCQ) to model and manage **non-content data**.
+
+That's the key for me - *is the data content or is it not content*?
+
+Content is typically and needs the following attributes.
+
+* Localized
+* Uses publishing workflows and previewing of unpublished changes
+* Benefits from visual usage tracking
+* Audited with version management
+* Prepped and deployed by marketers with content synchronization
+* Granular view/edit permission access (workspaces, web page tree permissions)
+
+Non-content data on the other hand has the following attributes.
+
+* Single language
+* No preview/publishing workflow requirements
+* Might require an audit trail (depending on business requirements)
+* Managed and deployed by developers and administrators
+* Individual data items referenced directly in code
+* View and edit permissions are all or nothing
+
+So, does your custom table data fall into the category of content or not?
+
+I would focus ***much less*** on the additional work to build the custom application and object type - this doesn't take much more time than creating a well designed content type with all the proper explanation text and validation to help marketers. You are building this project [for today and for the future](https://community.kentico.com/blog/xperience-by-kentico-saas-best-practices#no-more-rebuilds) so choose the path that has the long term payoff.&#x20;
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-19 02:28:45Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>fdc18d58-114d-4aff-8b54-687f29aebcb5</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Migrate-custom-tables-to-modules-or-content-types--89c0c283-09ef7jy3</CodeName>
+    <GUID>442b5d3b-5388-4617-9834-3cd3c3432f04</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

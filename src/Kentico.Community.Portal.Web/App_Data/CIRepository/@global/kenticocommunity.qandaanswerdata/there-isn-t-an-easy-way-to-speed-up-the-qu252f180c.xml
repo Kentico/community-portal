@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>There-isn-t-an-easy-way-to-speed-up-the-qu252f180c</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+There isn't an easy way to speed up the queries performed for this page, unfortunately.
+
+You have a couple of options
+
+1. Use [a page extender](https://docs.kentico.com/x/4gSiCQ) for the `Kentico.Xperience.Admin.DigitalMarketing.UIPages.RecipientListOverview` page and override the `Task ConfigurePage()` method. Do not call `base.ConfigurePage()` and try to re-implement some of the UI on your own in the `ConfigurePage()` method.\
+   This page uses `Page.PageConfiguration.CardGroups` to display its information and you can create your own and set whatever you want displayed on this page.\
+   To make re-implementing the page easier, decompile the source for the page (Visual Studio or a [VS Code extension](https://marketplace.visualstudio.com/items?itemName=icsharpcode.ilspy-vscode) should allow you to do this easily) and try re-implementing the parts you want. Most of it _should_ be `public` and accessible from your application code.
+2. [Contact support](/support) and explain your issue. This _could_ be identified as a bug since large numbers of contacts ideally wouldn't cause this page to be unusable.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-06 01:53:50Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>62222007-ca9d-4946-89ab-fc2afb8eb55f</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-to-Improve-Load-Time-of-Recipient-List-Overview-aec30687-9ek3g2qu</CodeName>
+    <GUID>6a0f78f1-d647-407b-bdf6-8f2aaecdd9a1</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

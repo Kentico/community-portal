@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>1-Retrieve-the-page-using-a-content-query-16d84c21</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+1. Retrieve the page using a content query or use the new content retriever API.
+2. Make sure there result is not null or empty.
+
+Also, why are you using `GetAwaiter().GetResult()` inside a View Component? `GetAwaiter().GetResult()` is only an escape hatch meant to be used when you have to write async code inside a synchronous method. The View Component's `InvokeAsync()`  is not synchronous, which means you should be using `async` and `await`.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-06-11 16:38:39Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>b4bfcd4b-7c58-4183-86de-5f1f346d04fe</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>WebpageUrlRetriver-Throwing-Error--08d22a9f-l8khecdi</CodeName>
+    <GUID>7fb37e50-3341-4f88-9f96-2062e161d9fa</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

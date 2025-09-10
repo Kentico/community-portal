@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>dc609851-ab9c-436c-9e99-5c5216d1560f</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>It-s-possible-but-it-s-also-not-advisable-0be1dc37</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+It's possible, but it's also not advisable.  Many modules and integrations don't assume a split model.
+
+Also, it's impossible to have an "Admin only" deployment and a "Site only" deployment.  You can have an "Admin+Site" deployment and a "Site" deployment, and you would have to set the Domain Override in the AppSettings for both differently:
+
+<https://docs.kentico.com/developers-and-admins/configuration/website-channel-management#domain-aliases-and-environment-specific-domains>
+
+
+
+Overall, it is much better to launch things together (Admin+Site) and just use a WAF or url rules to block /admin on the public facing site.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-30 23:23:53Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>8f365686-c242-4656-971e-44e80a851da0</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>XbyK-Can-Separate-Site-Admin-Site-and-Live-Site-02ea8973-odmp2qv2</CodeName>
+    <GUID>435bbf54-a455-45c7-8025-4c90a87ab858</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

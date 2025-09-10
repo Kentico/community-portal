@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-We-want-to-make-styling-changes-more-acce97b510c6</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+> We want to make styling changes more accessible to content editors or front-end devs without modifying and deploying backend code.
+>
+>
+>
+> Has anyone implemented a more flexible or dynamic way of styling forms this way?
+
+I strongly recommend against anything that would result in storing CSS classes or styles in the database.
+
+Try to add properties to the Form Builder sections that let marketers select "themes" or "designs". These selected values can be mapped to CSS classes in your section view and you can apply CSS rules accordingly in a CSS file.
+
+If you need more control over the views of individual form components, inherit from the existing ones and use your own custom view files when you register your custom ones. Add new design-focused properties to the sub-class your component uses for properties.
+
+If you want to override the Form Builder views, you can use MVC's view overriding (by matching path and name of View files) but this isn't supported by Kentico. If you want an example of view overriding for the Form Builder, check out the Kentico Community Portal project on GitHub.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-06-09 17:42:47Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>82d93b4e-7e69-404d-9c3a-82c7bf15e7c3</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-to-Apply-Custom-CSS-to-Kentico-Forms-from-Frontend-or-Admin-Panel--2f04a672-w1wxgb0v</CodeName>
+    <GUID>3dab101b-c184-4564-8310-d239d1869dca</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

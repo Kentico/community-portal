@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>c1beb8f9-4673-40d8-acdd-2dd56e5cd1bb</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>I-am-using-Xperience-by-Kentico-30-3-1-Whe5dded46b</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+I am using Xperience by Kentico 30.3.1. When I run dotnet run --no-build -- --kxp-codegen --type "ReusableFieldSchemas" --location "../MVC.Entities/{type}/{name}" --namespace "MVC.Entities"
+
+it generates a code file like below, removing the "." from MVC.BasePage
+
+```
+public const string REUSABLE_FIELD_SCHEMA_NAME = "MVCBasePage";
+```
+
+Replacing the "." fixes the problem
+
+Generating the ReusableFieldSchemas again, removes the "."
+
+It appears to be a bug. I fixed the issue for now by avoiding calling .OfReusableSchema and just using .OfContentType and listing all of the webpage content types that use this schema.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-12 23:58:42Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>8c9848f4-4357-4c38-b0fe-740619b7bed9</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>The-following-reusable-field-schemas-do-not-exist-e950aa1c-5lua4yzm</CodeName>
+    <GUID>c9e0b1b7-fdf1-47a6-be82-8e00ac674923</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

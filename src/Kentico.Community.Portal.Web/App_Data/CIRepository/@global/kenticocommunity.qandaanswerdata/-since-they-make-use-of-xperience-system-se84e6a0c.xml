@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>c1beb8f9-4673-40d8-acdd-2dd56e5cd1bb</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-since-they-make-use-of-Xperience-system-se84e6a0c</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+> since they make use of Xperience system services that are also scoped.
+
+All of Xperience's services are registered as singleton or transient - so if you are using Scope services that's because your application needs it, not because you are injecting scoped dependencies from Xperience.
+
+>  That's a problem here because the scheduled tasks don't run in a scoped context.
+
+Like you mentioned, you can always generate your own scope if you really need one. You lose the benefit of constructor injection into the scheduled task, but you can then handle any scoped services you need.
+
+```CSharp
+public class HelloScheduledTask : IScheduledTask
+{
+    private readonly IServiceProvider provider;
+
+    public HelloScheduledTask(IServiceProvider provider)
+    {
+        this.provider = provider;
+    }
+
+    // Called by the system when running the scheduled task.
+    public Task<ScheduledTaskExecutionResult> Execute(ScheduledTaskConfigurationInfo task, CancellationToken cancellationToken)
+    {
+        using var scope = provider.CreateScope();
+
+        var service = scope.ServiceProvider.GetRequiredService<MyScopedService>();
+
+        // use your service
+
+        return Task.FromResult(ScheduledTaskExecutionResult.Success);
+    }
+}
+```
+
+> but it seems like tasks should just run in their own DI scope.
+
+Scheduled tasks are managed by an `CMS.DataEngine.ApplicationBackgroundService`, so it _should_ be possible to have it generate a new scope for each task execution. I'm guessing we didn't do this because it was a much simpler solution to instantiate the scheduled tasks as transient and not have to handle creating/disposing of scopes.
+
+
+
+If you want to share your use-cases you can [give us some feedback on the roadmap](https://roadmap.kentico.com/tabs/5-released).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-20 02:28:37Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>3d2bb299-ea67-495d-a37b-dbf368a93cb2</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Scoped-dependency-injection-in-a-scheduled-task-90c6f3ff-wpmczdzq</CodeName>
+    <GUID>8c2f26d1-7ad8-4619-a7b6-cedfd90ac995</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-I-was-interested-in-keeping-blob-files-oub6b22ba4</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+> I was interested in keeping blob files out of source control while not incurring any of the typical Azure blob storage costs
+
+First, I recommend your local environment doesn't include all the content and assets that are in production. You should only have the content and asset files you need to:
+
+1. Build new features
+2. Prevent regressions in existing features
+
+If you need fewer binary files in your local environment, then store fewer files 😉.
+
+If you really want to try storing files somewhere else, the Azure Storage cost for blobs used in local development with Xperience should be low (far less than \$10/mo even for GBs of files) thanks to Xperience's local cache of assets.
+
+> I had Azurite running with the typical dev setup, tried adding "CMSAzureStorageConnectionString": "UseDevelopmentStorage=true" to my local app settings
+
+The `CMSAzureStorageConnectionString` app settings key is not a supported key for Azure Storage integration for Xperience. Take a look at [the docs for all the supported settings keys](https://docs.kentico.com/developers-and-admins/api/files-api-and-cms-io/file-system-providers/azure-blob-storage#azure-blob-storage-for-private-cloud-deployments).
+
+If you need to use Azurite, take a look at [the docs for the full Azurite connection string](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio%2Cblob-storage#http-connection-strings) and populate the supported Xperience app settings keys accordingly.
+
+You can see an example of how I've separated the connection string into settings key values [in the Kentico Community Portal](https://github.com/Kentico/community-portal/blob/v30.4.1.5/src/Kentico.Community.Portal.Web/appsettings.Development.json#L45).
+
+```JSON
+{
+  // These are the hard-coded Azurite connection string values
+  "__comment_Azurite": "See: https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio%2Cqueue-storage#http-connection-strings",
+  "CMSAzureAccountName": "devstoreaccount1",
+  "CMSAzureSharedKey": "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==",
+  "CMSAzureQueueEndPoint": "http://127.0.0.1:10001/devstoreaccount1/",
+  "CMSAzureBlobEndPoint": "http://127.0.0.1:10000/devstoreaccount1/",
+}
+```
+
+I think this approach can be very helpful when you need to test or debug some behavior locally with Xperience's Azure Storage integration (path mapping, for example).
+
+That said, if you use this approach for normal day-to-day development you'll end up with files stored in an `azurite_storage` folder instead of the `XperienceApp\App_Data\CIRepository\@global` folder, which is where Xperience expects them to be for the CI store/restore and CD deployment package generation processes to work correctly... and **[I definitely recommend using Xperience's CI support for local development](https://community.kentico.com/blog/xperience-by-kentico-ci-cd-developer-scenarios)**.
+
+The Azure Storage support is really meant for deployed scenarios, not development ones.
+
+Also, worth noting that [Azurite is not designed to support multiple concurrent clients](https://github.com/Azure/Azurite?tab=readme-ov-file#scalability--performance).
+
+> seems worth committing some slim core .webp images to the repo for the ease of syncing between developers and having those objects get automatically created in Azure Blob Storage when deploying to QA/PRD
+
+These files are part of the local environment and development process. They're not code, but what does that matter? Git can support _any_ type of file - text or binary. I recommend [storing image assets in Git](https://softwareengineering.stackexchange.com/a/80966) (even hundreds of MBs of them) because they are part of the project.
+
+### Future support...
+
+It's looking like [.NET Aspire](https://github.com/dotnet/aspire) will be the future of local .NET development, even for projects with just a few apps or resources.
+
+Our Azure Storage integration was designed years ago for a very different product (old Portal Engine Kentico), approach to hosting (teams were just beginning their cloud transition), and .NET ecosystem (.NET Framework and ASP.NET).
+
+I'm not promising anything here, but if we want Xperience to work seamlessly with Aspire, adding first class support for Azurite (likely running in a container) might be something we look at.
+
+We will still encourage isolated development environments (store files in source control), but Azurite support would bring local developer environments closer to production infrastructure, which is a good thing.&#x20;
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-05-15 23:01:01Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>8daeda31-f8c0-42e6-89ec-e424cca54423</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Has-anyone-tried-had-luck-with-using-Azurite-locally-to-emulate-Azure-Blob-Storage-in-devel-t017q1xa</CodeName>
+    <GUID>523ae846-46a9-4725-885a-de4deb760cf8</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

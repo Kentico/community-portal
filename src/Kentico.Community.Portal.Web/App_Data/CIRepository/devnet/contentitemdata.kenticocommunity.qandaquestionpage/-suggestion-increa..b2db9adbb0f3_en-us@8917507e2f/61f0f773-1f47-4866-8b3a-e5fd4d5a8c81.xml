@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>adbd8743-8100-4164-8cfc-b2db9adbb0f3</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>-Suggestion-Increasing-nvarchar-column-sizes-to-prevent-a-database-truncation-error-e3367ce-dop78sy4</CodeName>
+      <GUID>b26ea5a9-2052-4826-84a0-46d7362606b7</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>61f0f773-1f47-4866-8b3a-e5fd4d5a8c81</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>7449c972-ccb3-4f1c-bad2-f488d9fd43d6</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>7</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+Hi friends,
+
+&#x20;
+
+We're encountering a database truncation error that's causing our Kentico 13 media library files migration process to Content Hub assets to fail. The issue appears to be related to column size limitations in the Xperience by Kentico CMS tables.
+
+**Error Details:**
+
+```CSS
+String or binary data would be truncated in table 'demo.dbo.CMS_ContentItemLanguageMetadata', column 'ContentItemLanguageMetadataDisplayName'. 
+Truncated value: '2_3_9_blog_article_rebuilding_a_content_large_engineering_lead_practice_starting_with_existing_staff_and_more_even_36'
+The statement has been terminated.
+```
+
+**Proposed Solution:** I'd like to suggest increasing the size of the following NVarchar columns from their current limit of 100 characters:
+
+1. **CMS\_ContentItemLanguageMetadata** table:
+   * `ContentItemLanguageMetadataDisplayName` column
+2. **CMS\_ContentItem** table:
+   * `ContentItemName` column
+
+**Recommendation:** Increase both columns from `NVARCHAR(100)` to `NVARCHAR(200)`
+
+This would provide sufficient space for longer content names and metadata display names, especially for those large names that were allowed previously in *Kentico 13* which often exceed the current 100-character limit.
+
+So we're clearly hitting the current limit. Doubling the size to 200 characters would provide a comfortable buffer for future content while not significantly impacting database performance.
+
+Maybe include this minor upgrade as part of *30.8.1 or 30.8.2*? please&#x20;
+
+\
+Thanks in advance
+
+***
+
+**Environment**
+
+* Xperience by Kentico version: 30.8.0
+
+* .NET version: 8
+
+* Execution environment: Private cloud (Azure/AWS/Virtual machine)
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-07-31 23:09:53Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-07-31 23:09:53Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

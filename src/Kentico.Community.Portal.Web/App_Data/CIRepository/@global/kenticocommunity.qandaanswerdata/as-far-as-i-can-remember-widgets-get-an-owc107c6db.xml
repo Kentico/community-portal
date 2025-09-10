@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>f69d9d84-4ca9-4a3d-80f0-cff18438940a</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>As-far-as-I-can-remember-Widgets-get-an-owc107c6db</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+As far as I can remember...
+
+Widgets get an own internal identifier to get them referenced from the database to the location where they are used on the page. This identifier is not intended to be used externally and therefor it is not accessible out of the box. You can see more details if you look into the SQL table where the content of your page is stored including all widgets dropped on that page.
+
+If you need an own identifier I would use an own ID property in the widget properties. It could also be a GUID, auto-set when creating an instance, and excluded from the properties editing dialog to avoid confusion for content editors.\
+Doing this, you can use it as identifier for your purposes without touching the internal identifier for the rendering logic from Kentico.
+
+You should be able to access it from the Model.Properties.\<YOUR-ID-FIELD>.
+
+If you have ViewComponents without Widget context, I use to take properties from the page or template properties and map them to the view component view model in the page or template view, where the component is invoked and initialized.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-02 16:06:58Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>7b95ff7f-3489-415d-b37a-a5eaa005bb50</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Getting-identifier-of-invoked-view-component-bc726da1-et4usjrp</CodeName>
+    <GUID>7159c3bb-b9be-4bff-a5f5-b173b8d2bffa</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

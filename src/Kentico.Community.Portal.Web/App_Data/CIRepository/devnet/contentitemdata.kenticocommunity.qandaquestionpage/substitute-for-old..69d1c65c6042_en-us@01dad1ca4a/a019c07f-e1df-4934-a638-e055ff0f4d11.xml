@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>e62b99b5-41f8-4383-aaae-69d1c65c6042</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Substitute-for-old-DocumentEvents-Copy-Before-After-in-XbyK--1ce694cb-gjuvi40r</CodeName>
+      <GUID>825d880a-c5ed-490c-b2cb-f03ae707e823</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>a019c07f-e1df-4934-a638-e055ff0f4d11</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>49b98788-21dd-4aa7-bb28-6b400c41de15</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>1</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I'm looking to port a Module over th XbyK from K13, and am looking for valid replacements for the above named Events. Do such things exist in XbyK?
+
+A colleague pointed me to the `CloneSettings.OnCloneInsert` API, and this is implemented easily enough in a Module. But, I was told this by the AI Assistant on the docs.kentico.com page:
+
+
+
+> Based on the available documentation, the CloneSettings.OnCloneInsert delegate in Xperience by Kentico is designed to handle actions before or after inserting a clone, allowing you to further modify the object according to your settings. This delegate provides hooks similar in spirit to the event-based approach in Kentico 13, but it is focused on the cloning process rather than document copy events specifically.
+>
+> However, there is no explicit mention in the provided documentation that these callbacks are a direct or full replacement for the DocumentEvents.Copy.Before and DocumentEvents.Copy.After events. The new API is more focused on object cloning rather than document-specific copy events, and there may be differences in scope and behavior due to architectural changes in Xperience by Kentico.
+
+***
+
+So, I'm a little hesitant here now - the above seems logical (that the API is clone-centric and not _really_ meant for copy), but I am unsure. Is this truly a valid replacement for the old(er) Copy events?
+
+
+
+Thanks,
+
+Chris
+
+
+
+**Environment**
+
+* Xperience by Kentico version: \[30.6.0]
+
+* .NET version: \[8|9]
+
+* Execution environment: \[SaaS|Private cloud (Azure/AWS/Virtual machine)]
+
+* Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-07-03 20:11:04Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-07-03 20:11:04Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

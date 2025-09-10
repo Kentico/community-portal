@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>fd1ea1ce-9895-48d7-ae81-c832e9d2305e</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>XbK-Azure-AI-Search-How-to-trigger-index-updates-when-using-XbK-APIs-in-external-apps--dd7c-eh90gbqa</CodeName>
+      <GUID>aa2acd75-79ef-4933-b33a-b5cc5241d566</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>0e222110-c7f6-4da8-a887-d40cc6848334</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>b6a7f305-e9a3-4ede-b894-3424d9e871d6</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>5</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I've got an XbK site (let's call it Site A) that uses the Azure AI Search integration for XbK library to index some of the page content. I've got a second external non-Kentico site (Site B) with custom UI/functionality that allows users to edit and publish some pages from the XbK site, completely outside of the Kentico admin. Site B connects directly to Site A's Kentico database, and uses the Pages API for updating the page drafts and publishing pages.
+
+When I publish the pages directly in the Kentico admin on Site A, the connected Azure AI Search index updates successfully. However, when publishing the same pages externally on Site B using the Pages API, the Azure AI Search index does not get updated.\
+\
+Do I need to duplicate the AzureSearchSearchModule (<https://github.com/Kentico/xperience-by-kentico-azure-ai-search/blob/main/src/Kentico.Xperience.AzureSearch/AzureSearchSearchModule.cs>) in Site B to get this to work? Or is there a way to trigger the event handlers defined in the AzureSearchSearchModule in Site A, when events are triggered via Kentico APIs? Any other solutions?
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-03-17 23:44:33Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-03-17 23:44:33Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

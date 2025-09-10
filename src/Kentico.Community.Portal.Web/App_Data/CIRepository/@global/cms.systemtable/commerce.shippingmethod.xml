@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassDisplayName>Shipping method</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ShippingMethodID" columntype="integer" enabled="true" guid="58fffe45-45e8-4942-94dd-e33f5a2b073c" isPK="true" system="true" />
+      <field column="ShippingMethodName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="096bc18e-44a2-4261-9c3b-f45e4afdda96" system="true" />
+      <field column="ShippingMethodGUID" columnprecision="0" columntype="guid" enabled="true" guid="1bfb4eae-7aa7-46a6-bc68-0957fe959f2a" system="true" />
+      <field column="ShippingMethodDisplayName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="c89b222c-7136-45cd-9439-05fdf734402e" system="true" />
+      <field allowempty="true" column="ShippingMethodDescription" columnprecision="0" columntype="longtext" enabled="true" guid="1177f9c1-c088-46c6-830f-7cd0e99ce8fe" system="true" />
+      <field column="ShippingMethodEnabled" columnprecision="0" columntype="boolean" enabled="true" guid="b36f1212-1b64-4a69-87ee-6abf1ba5af1f" system="true" />
+      <field allowempty="true" column="ShippingMethodPrice" columnprecision="4" columnsize="19" columntype="decimal" enabled="true" guid="64da4adc-6c53-484c-82fe-319f67ac612b" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>0bc4e4fa-38db-4917-82ed-def462ce1d96</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>Commerce.ShippingMethod</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Commerce</CodeName>
+    <GUID>4975d347-eb67-4a9c-a5d6-76997340b8ac</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Commerce_ShippingMethod</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>

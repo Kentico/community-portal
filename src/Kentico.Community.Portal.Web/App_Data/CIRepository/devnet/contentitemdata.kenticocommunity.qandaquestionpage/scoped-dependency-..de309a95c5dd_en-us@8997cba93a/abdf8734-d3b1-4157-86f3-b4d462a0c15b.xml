@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentitemdata.kenticocommunity.qandaquestionpage>
+  <ContentItemDataCommonDataID>
+    <GUID>ca4ea6ef-b5e8-4489-875f-de309a95c5dd</GUID>
+    <ObjectType>cms.contentitemcommondata</ObjectType>
+    <Parent>
+      <CodeName>Scoped-dependency-injection-in-a-scheduled-task-90c6f3ff-wpmczdzq</CodeName>
+      <GUID>fb6aa380-6f70-4889-b98f-b46e4a676036</GUID>
+      <ObjectType>cms.contentitem</ObjectType>
+    </Parent>
+  </ContentItemDataCommonDataID>
+  <ContentItemDataGUID>abdf8734-d3b1-4157-86f3-b4d462a0c15b</ContentItemDataGUID>
+  <QAndAQuestionPageAcceptedAnswerDataGUID>3d2bb299-ea67-495d-a37b-dbf368a93cb2</QAndAQuestionPageAcceptedAnswerDataGUID>
+  <QAndAQuestionPageAuthorMemberID>5</QAndAQuestionPageAuthorMemberID>
+  <QAndAQuestionPageContent>
+<![CDATA[
+I'm trying to write a scheduled task that makes use of several of the repositories and services we've defined in our Xperience solution. I was happy to see that XByK allows injection into schedule task classes unlike K13.
+
+The problem I'm having is that most of these services are registered with a scoped lifetime since they make use of Xperience system services that are also scoped. That's a problem here because the scheduled tasks don't run in a scoped context. All of my service calls fail:
+
+> Cannot resolve scoped service '\[ServiceType]' from root provider.
+
+Now we can inject an `IServiceProvider` into our task, call `CreateScope`, and call `GetRequiredService` on that for our dependencies, but that makes testing hard. We could move the logic of the task into another class and call `GetRequiredService` for that class as well, but it seems like tasks should just run in their own DI scope.
+
+Is there any reason scheduled tasks aren't run in a DI scope? Or any way to override this default?
+
+**Environment**
+
+* Xperience by Kentico version: 30.2.2
+
+* .NET version: 8
+
+* Execution environment: SaaS
+
+* Link to relevant [Xperience by Kentico documentation](https://docs.kentico.com)
+]]>
+  </QAndAQuestionPageContent>
+  <QAndAQuestionPageDateCreated>2025-03-20 02:02:54Z</QAndAQuestionPageDateCreated>
+  <QAndAQuestionPageDateModified>2025-03-20 02:06:54Z</QAndAQuestionPageDateModified>
+  <QAndAQuestionPageDiscussionType>
+    <![CDATA[[{"Identifier":"c50e7dd3-2b8e-47b5-96ee-3f04ccfde8b6"}]]]>
+  </QAndAQuestionPageDiscussionType>
+</contentitemdata.kenticocommunity.qandaquestionpage>

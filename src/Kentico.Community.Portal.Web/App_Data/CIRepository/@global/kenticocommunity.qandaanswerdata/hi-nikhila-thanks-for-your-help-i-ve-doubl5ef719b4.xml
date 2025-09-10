@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>dc609851-ab9c-436c-9e99-5c5216d1560f</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Hi-Nikhila-Thanks-for-your-help-i-ve-doubl5ef719b4</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Hi Nikhila,
+
+Thanks for your help. i've doublechecked our pipeline, but the app service is really stopped:
+
+* Stop app service
+* Deploy release files
+* run:
+  dotnet Site.dll --no-build -- --kxp-cd-restore --repository-path .\App\_data\CDRepository
+* run:
+  dotnet Site.dll --kxp-update --skip-confirmation=true
+* Start app service
+
+kxp-cd-restore does trigger the module initialization.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-08-12 10:41:25Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>10c3739b-9a4b-4a20-9c46-2ab7e6a83c4f</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>At-which-step-do-CD-restore-in-release-pipeline--3f9c38f8-111h6z4q</CodeName>
+    <GUID>6eef30c0-45df-4c37-a371-75999010dd77</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

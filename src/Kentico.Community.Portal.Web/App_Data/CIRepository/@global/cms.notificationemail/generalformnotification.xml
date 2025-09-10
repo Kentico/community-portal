@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.notificationemail>
+  <NotificationEmailContent>
+    <![CDATA[<p><a href="{{FormLink}}">Submission link</a></p><p>Form: {{FormName}}</p><p>Form data:</p><div>{{FormData}}</div>]]>
+  </NotificationEmailContent>
+  <NotificationEmailDisplayName>General form notification</NotificationEmailDisplayName>
+  <NotificationEmailEventType>Form submission</NotificationEmailEventType>
+  <NotificationEmailGUID>f990887c-b3fe-4488-81c4-079d6a9465a3</NotificationEmailGUID>
+  <NotificationEmailName>GeneralFormNotification</NotificationEmailName>
+  <NotificationEmailNotificationEmailTemplateID>
+    <CodeName>Kentico.General</CodeName>
+    <GUID>fd1107c3-3b5d-4372-972e-5e4890f12f71</GUID>
+    <ObjectType>cms.notificationemailtemplate</ObjectType>
+  </NotificationEmailNotificationEmailTemplateID>
+  <NotificationEmailPreviewText>New Kentico Community Portal form submission</NotificationEmailPreviewText>
+  <NotificationEmailSender>no-reply</NotificationEmailSender>
+  <NotificationEmailSubject>
+    <![CDATA[Kentico Community Portal - Form submission - {{FormName}}]]>
+  </NotificationEmailSubject>
+</cms.notificationemail>

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>46b28c7b-3654-4262-ae46-99cee1b97aa6</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>The-Linking-method-behaves-correctly-in-thd4bcd4c6</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+The Linking() method behaves correctly in this case I believe, since the method limits the query to content items that link content items in the field specified by the first parameter (which in your case is Category.Articles). The curious thing is that it retrieves content items that link content items from the given collection for each item in the collection, which means that it will retrieve the same content item of the Category content type for each item in the collection since the item of the Category content type likely links all of those items. That is the reason why you got 10 times content item of type A in your original hypothetical scenario.
+
+Here is a little example:
+
+```CSharp
+// Let's say we have only one article page with the title "X",
+// which happens to link 8 products with IDs 1-8.
+IEnumerable<int> productsCollection = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+var builder = new ContentItemQueryBuilder();
+
+// Retrieves items of the 'project.ArticlePage' content type
+builder.ForContentType("project.ArticlePage", subqueryParameters =>
+{
+    // Retrieves all content items of 'project.ArticlePage' type that reference any
+    // of the items in 'productsCollection' from their 'RelatedProducts' field
+    subqueryParameters.Linking("RelatedProducts", productsCollection);
+});
+
+// The result would be 8 times the page with title "X"
+```
+
+You can also try retrieving items from the opposite side of the linking relationship using LinkedFrom().
+
+The documentation for the Linking method and others is available here: <https://docs.kentico.com/developers-and-admins/api/content-item-api/reference-content-item-query#linking>
+
+Note that I haven't tried any thorough testing besides a quick query in the DancingGoat sample website provided by Xperience.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-04-28 17:34:26Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>e472e79a-45d1-41dc-a0a1-8c947720606f</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Linking-not-work-property-094ddb55-y7rxp9bm</CodeName>
+    <GUID>e127a5e9-756b-47c0-9a3f-093c65cb8b16</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

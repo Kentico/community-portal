@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>dc609851-ab9c-436c-9e99-5c5216d1560f</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Hm-I-think-you-ve-covered-a-lot-of-the-ste10401a78</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Hm, I think you've covered a lot of the steps correctly.
+
+But, what about [email purposes](https://docs.kentico.com/documentation/business-users/digital-marketing/emails#email-purposes)? Currently the [Email Builder only supports Regular and Automation purposes](https://docs.kentico.com/x/email_builder_xp).
+
+We plan to add more in the future, but for now you can use Confirmation and Form autoresponder.
+
+There's an easy workaround for Form autoresponder emails - use Automations instead and use the Email automation step to send the form submitter a confirmation email.
+
+For recipient list confirmation emails, you'll need to continue using [the macro-based template email templates](https://docs.kentico.com/x/eRT_Cw) until we support more purposes. This is what I'm doing in the Kentico Community Portal - all emails use the Email Builder except for [the newsletter sign-up opt-in email](https://github.com/Kentico/community-portal/blob/v30.6.0.1/src/Kentico.Community.Portal.Web/App_Data/CIRepository/KenticoCommunityEmails/contentitemdata.ke..autoresponderemail%4079a961133c/communitynewslette..e81b700645e6_en-us%405f51aa35b7/087aacd3-156b-492a-a7b9-6bb3c9727e11.xml), which is still using the old macro templates.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-07-02 23:07:58Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>731e6232-924b-4e2e-82fd-f7a3c6049480</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Unable-to-register-the-email-builder-template-1cbc8866-f2m1pgsr</CodeName>
+    <GUID>e3dc58d8-bb33-4009-89fc-b9d6b4b715f7</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

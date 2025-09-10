@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>dc609851-ab9c-436c-9e99-5c5216d1560f</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Check-out-Diagnosing-Xperience-by-Kentico-5814a614</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Check out [Diagnosing Xperience by Kentico Page Template issues](https://community.kentico.com/blog/diagnosing-xperience-by-kentico-page-template-issues).
+
+My recommendation would be to use [a SQL migration in CI and CD](https://docs.kentico.com/x/ywAcCQ) to update all web pages that need to use a Page Template now but were created before there were any registered.
+
+1. Create a new page and select the Page Template you've registered.
+2. Query for the page template configuration\\
+   ```SQL
+   SELECT WP.WebPageItemTreePath, CD.ContentItemCommonDataVisualBuilderTemplateConfiguration
+   FROM CMS_ContentItemCommonData AS CD
+   INNER JOIN CMS_WebPageItem AS WP
+       ON CD.ContentItemCommonDataContentItemID = WP.WebPageItemContentItemID
+   ```
+3. Write a migration query to update the pages that need to use the same configuration
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-12 03:23:13Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>bf7e2e2d-9e52-4e49-8051-bf9094ccdcaf</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Attempting-to-associate-templates-with-pages-from-migration-0f477682-thuk3itm</CodeName>
+    <GUID>f1c3f7d1-49a2-476c-bdca-35a7c6ce9f66</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

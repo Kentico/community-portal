@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>dc609851-ab9c-436c-9e99-5c5216d1560f</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>It-largely-depends-on-how-you-model-those-26dae87d</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+It largely depends on how you model those relationships between the Home Page and your Content Type A and Content Type B.
+
+
+
+This is similar to the Section System problem, where you want to select from multiple 'section types' and render them out in any order that the user decides.
+
+Luckily, Xperience by Kentico makes that pretty easy thanks to the `Pages and Reusable Content` Field type. This allows you to specify your content types (`Content Type A` and `Content Type B`), and allow users to select any of those pages or reusable content items.&#x20;
+
+This is stored then as an ordered ContentItemGuid array in the database.
+
+The last step is to make sure to include the linked files in your content query getting your page (in this case, the home page), and to use the `IContentQueryExecutor` to map the results which will gather and map (in order) your linked items, just as long as you include the `WithLinkedItems(#)` extension.
+
+The `Page and Reusable Content` gets mapped to an `IEnumerable<IContentItemFieldSource>`, but it is actually mapped to the proper class, so you can use Type checking to retreive.
+
+Here's a code snippet where i have a `Testing.WebPage` (IE your home page), that has a Field `SectionsSystemSections` that is of type `Pages and Reusable Content` and allows my 3 section page types (IE your Content Type A and Content Type B)
+
+
+
+On the home page i selected various sections and ordered them.
+
+
+
+```CSharp
+var testPage = new ContentItemQueryBuilder().ForContentType(Testing.WebPage.CONTENT_TYPE_NAME, query => 
+    query.WithLinkedItems(100, o=> o.IncludeWebPageData())
+        .ForWebsite(_websiteChannelContext.WebsiteChannelName, includeUrlPath: true)
+        .Where(where => where.WhereEquals(nameof(WebPageFields.WebPageItemID), 7))
+        .TopN(1)
+        )
+    .InLanguage("en");
+var mappedToPage = await _contentQueryExecutor.GetMappedWebPageResult<Testing.WebPage>(testPage);
+if (mappedToPage.Any()) {
+    var firstItem = mappedToPage.First();
+    foreach(var section in firstItem.SectionsSystemSections) {
+        if(section is Section.TestA testA) {
+            var testing = testA.SectionTestAName;
+        } else if(section is Section.TestB testB) {
+            var testing = testB.SectionTestBName;
+        } else if(section is Section.Widget widget) {
+            // If you don't see the WebPageItem values, make sure your .WithLinkedItems has the optional ConfigureOptionsAction (query.WithLinkedItems(100, o=> o.IncludeWebPageData()))
+            // Partial Widget Page <inlinewidgetpage web-page-id="@webPageID" initialize-document-prior="true"></inlinewidgetpage>
+            // requires the WebPageItemID
+            var testing = widget.SystemFields.WebPageItemID;
+        }
+    }
+}
+```
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-17 22:05:25Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>20108c3f-3a7c-4baf-a3d3-65f94e6eb10d</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-to-change-the-sequence-of-content-items-from-multiple-content-types-on-the-home-page--3-a2l81o9x</CodeName>
+    <GUID>6617a2d6-4b7a-469f-af98-195c4a0665e7</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

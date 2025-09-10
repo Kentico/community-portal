@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>Commerce.Order</CodeName>
+    <GUID>b6396a17-3291-4640-8aee-736713f86728</GUID>
+    <ObjectType>cms.systemtable</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="OrderID" guid="ece42504-a84b-4275-b734-6d5c6d3fd642" enabled="" />
+      <field column="OrderGUID" guid="fffdbeb2-cd6a-41f4-8939-383eccba985f" enabled="" />
+      <field column="OrderNumber" guid="259c6ec0-f9bf-4557-bbad-3cc63e04c64c" enabled="" />
+      <field column="OrderCreatedWhen" guid="32fbc894-b48e-458f-b028-242835d09cfa" enabled="" />
+      <field column="OrderModifiedWhen" guid="4e51993d-3f97-41d8-89c0-e4f9930f938c" enabled="" />
+      <field column="OrderOrderStatusID" guid="dbf0718d-a704-4c2b-a559-6616b8802d0c" enabled="" />
+      <field column="OrderTotalPrice" guid="7b42d452-65d3-4611-940f-152f9339cb33" enabled="" />
+      <field column="OrderTotalShipping" guid="d3406338-30b7-458f-925d-889ce635c616" enabled="" />
+      <field column="OrderTotalTax" guid="cac55cde-cb20-41e7-8a16-0fc1bf3df0b9" enabled="" />
+      <field column="OrderGrandTotal" guid="e3ff8f61-61d2-4b27-afb3-4b4e160bedb7" enabled="" />
+      <field column="OrderCustomerID" guid="95833ce0-b784-42a4-a586-83f27bbbc30e" enabled="" />
+      <field column="OrderPaymentMethodID" guid="dad82dbd-a987-420e-9b00-79efb7c5ba7c" enabled="" />
+      <field column="OrderShippingMethodID" guid="a0795994-0938-46e6-b2f5-af61aeacc43b" enabled="" order="12" />
+      <field column="OrderShippingMethodPrice" guid="aba81771-ba51-43f2-bcd2-102de1d0f3c8" enabled="" order="13" />
+      <field allowempty="true" column="OrderShippingPlusPrice" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="6965f50c-21c9-43d8-8225-986b7e7a5c79" system="true" visible="true" order="14">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.order.orderdetail.orderpaymentandshipping.shipping$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+      </field>
+      <field column="OrderPaymentMethodDisplayName" enabled="true" guid="63d2da12-19f5-4a7f-9039-8c25954cf8c4" visible="true" order="15">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.order.orderdetail.orderpaymentandshipping.payment$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="OrderShippingMethodDisplayName" guid="692816cc-abb8-44ba-b7e5-6ca70ff517fd" enabled="" order="16" />
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Order shipping and payment</FormDisplayName>
+  <FormGUID>c4b644f1-a94c-4ca6-8163-872e89a7aecb</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>OrderShippingAndPaymentReadOnly</FormName>
+</cms.alternativeform>

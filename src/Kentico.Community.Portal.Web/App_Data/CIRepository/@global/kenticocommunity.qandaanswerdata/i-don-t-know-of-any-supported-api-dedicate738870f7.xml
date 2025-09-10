@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>I-don-t-know-of-any-supported-API-dedicate738870f7</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+I don't know of any supported API dedicated to moving content items between workspaces.
+
+However!
+
+You can use `CMS.ContentEngine.ContentFolderManager.MoveItems` which allows you to move content items from one Content Hub content folder to another. Since content folders are tied to workspaces, if you have a folder in a destination workspace you can move items from various workspaces to that destination workspace.
+
+This API is documented [in our API Examples](https://docs.kentico.com/api/content-management/content-hub-folders#move-items-into-a-content-hub-folder).
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-06-16 21:13:45Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>dbaa0ad2-2039-4e24-b3d9-2b92ad9ffb19</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Moving-a-Content-Item-to-a-new-Workspace-using-the-API-84f07066-n6f067z3</CodeName>
+    <GUID>26ab1061-61fa-4f67-92d3-bd0a3ba1c1d3</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

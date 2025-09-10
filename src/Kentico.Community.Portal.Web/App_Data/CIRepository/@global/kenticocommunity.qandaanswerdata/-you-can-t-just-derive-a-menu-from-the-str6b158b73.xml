@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>-you-can-t-just-derive-a-menu-from-the-str6b158b73</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+> you can't just derive a menu from the structure of the content?
+
+Correct. Navigation is content and we encourage customers to treat it that way. In previous versions of Kentico the "page as navigation" feature worked ok for small sites without good content modeling and was originally designed when mega menus were extremely popular.
+
+Eventually they would grow in complexity and developers would use a variety of workarounds to make exceptions to the rule and break out of the constraints of the page tree matching the navigation. Examples include external links in navigation, flattening navigation, changing navigation to match marketing/content strategy.
+
+Additionally, treating pages as navigation has a negative impact on caching. If you save a page that is in the navigation you have to clear the cache for _the entire website_ because the navigation appears on every page. By treating navigation as its own content you only need to clear cache for the entire site when you modify navigation content items.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-04-01 23:13:08Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>a22f0156-1a11-4e3f-8b5c-a27fe0a53460</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Tree-based-navigation-vs-navigation-content-type-7e917d8e-dj0qocty</CodeName>
+    <GUID>c5c89e58-d880-4450-81cf-030ad397daec</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

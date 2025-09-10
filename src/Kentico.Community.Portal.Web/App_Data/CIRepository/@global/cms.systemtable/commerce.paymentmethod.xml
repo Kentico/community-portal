@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.systemtable>
+  <ClassDisplayName>Payment method</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="PaymentMethodID" columntype="integer" enabled="true" guid="371d223a-bdd5-4a15-b7fc-94f84c317881" isPK="true" system="true" />
+      <field column="PaymentMethodGUID" columnprecision="0" columntype="guid" enabled="true" guid="d220907d-1ea0-4d8c-911b-a72252584194" system="true" />
+      <field column="PaymentMethodName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="5d9ff5b4-23ad-4ab2-9f02-1db3bc33542f" system="true" />
+      <field column="PaymentMethodDisplayName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="dbf1d2bd-5b9a-4dd5-9ec5-bcba208e17e3" system="true" />
+      <field allowempty="true" column="PaymentMethodDescription" columnprecision="0" columntype="longtext" enabled="true" guid="b5083e80-d75b-4c6c-932c-ccab4e6cde09" system="true" />
+      <field column="PaymentMethodEnabled" columnprecision="0" columntype="boolean" enabled="true" guid="97a38c27-4682-49bb-b87e-e870f0a75a7c" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>6a4c2406-342c-4ec6-a816-a4459a286930</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>Commerce.PaymentMethod</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Commerce</CodeName>
+    <GUID>4975d347-eb67-4a9c-a5d6-76997340b8ac</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Commerce_PaymentMethod</ClassTableName>
+  <ClassType>System</ClassType>
+</cms.systemtable>

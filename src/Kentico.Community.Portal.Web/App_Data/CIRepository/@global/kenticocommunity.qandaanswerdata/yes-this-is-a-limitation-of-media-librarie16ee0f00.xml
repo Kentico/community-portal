@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>8fb0dad6-8c28-43e4-849b-684df65417a7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Yes-this-is-a-limitation-of-media-librarie16ee0f00</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Yes, this is a limitation of media libraries. When embedding an asset content item (or links to one) into rich text fields, the value stored will look like this. Notice the relative path and `/admin/api` prefix.
+
+```
+/admin/api/getContentAsset/<content item GUID>/<asset field GUID>/my-image.png?language=en-US
+```
+
+However, the rendered URL will look like this, where the domain will change based on the channel it's rendered in.
+
+```
+https://your-domain.com/getContentAsset/<content item GUID>/<asset field GUID>/my-image.png?language=en-US
+```
+
+Another reason to use content item assets instead of the media library 🙂.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-03-05 22:38:50Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>0db57045-6f2d-41c7-8c7c-9134adf8276c</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Media-Library-when-using-dedicated-administration-domain-50ca2f35-vwlfvlxa</CodeName>
+    <GUID>e9102220-da6c-40bb-b227-44a0534f2542</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

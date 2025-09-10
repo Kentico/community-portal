@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>7577a98f-036d-454e-8e19-5ff0881e6fc7</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>Update-Take-a-look-at-the-February-2025-Reb68383c1</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+Update: Take a look at [the February 2025 Refresh blog post](https://community.kentico.com/blog/xperience-by-kentico-refresh-february-20-2025#asp.net-core-image-tag-helpers) which describes using our image tag helpers to generate `srcset` values.
+
+***
+
+### Content hub assets
+
+You should model all images, videos, pdfs, files, etc... as Content items with a content item asset field.
+
+This gives you the most power to leverage things like searching for content items, smart folders, taxonomies, image optimization, and the [upcoming image cropping, variants, and AIRA based focal point detection](https://roadmap.kentico.com/c/262-image-assets-transformations-powered-by-aira-focal-point-suggestion-responsive-image-support) which will be released next week (February 2025 Refresh).
+
+Administrators can define the variants you want to support for images across your Xperience solution. When a marketer uploads an image it will be optimized (on-upload) and variants will be generated (on-request) when they are used across the various channels. The variants can be referenced by code name and Xperience will generate the correct URL for them.
+
+I *believe* we will also be releasing an ASP.NET Core tag helper to help you generate URLs for images based on those variant code names. You can use this to create responsive `<figure>` or `<picture>` elements with `srcset=""` attributes. But we will also give access to a lower level dictionary of image variant metadata with the variant code name as the "key". The metadata will include the URL, width, and height of the image.
+
+### Media libraries
+
+Yes, media libraries will be deprecated in the future once the digital asset management capabilities in the Content hub are mature enough (within the next few Refreshes).
+
+If a customer built a project using media libraries they can use the media library migration support we will release (same time frame as deprecation of the media library).
+
+### Integrations
+
+As a side note, there's also [an open-source community authored integration](https://community.kentico.com/resource-hub/integrations) - Xperience Community: Image Processing - for dynamic resizing of image asset content items in the Content hub. I think most of its features will be handled natively with the upcoming Refresh.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-02-12 20:54:20Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>b13b1271-a499-483a-99b7-d920d277b7b9</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>How-do-I-generate-responsive-SrcSets-for-Media--a27828bf-ygwxomlz</CodeName>
+    <GUID>76d21ff0-06ed-496d-9202-b83395218523</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>

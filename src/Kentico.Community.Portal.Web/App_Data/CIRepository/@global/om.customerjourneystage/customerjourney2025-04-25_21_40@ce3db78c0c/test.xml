@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<om.customerjourneystage>
+  <CustomerJourneyStageCustomerJourneyID>
+    <CodeName>CustomerJourney2025-04-25_21_40</CodeName>
+    <GUID>cdba1906-b51b-41c3-8dce-5fff0bf20d39</GUID>
+    <ObjectType>om.customerjourney</ObjectType>
+  </CustomerJourneyStageCustomerJourneyID>
+  <CustomerJourneyStageDisplayName>Test</CustomerJourneyStageDisplayName>
+  <CustomerJourneyStageDynamicCondition>
+    <![CDATA[{%Rule("(Contact.HasBecomeMember())", "<rules><r pos=\"0\" par=\"\" op=\"and\" /><r pos=\"0\" par=\"0\" op=\"and\" n=\"CMSContactHasBecomeMember\" ></r></rules>")|(user)SeanW_kentico.com|(hash)0a5eb08380956f6a378330e5f5dce9b5f4e746300f9ee547f5ad75bfcb01069b%}]]>
+  </CustomerJourneyStageDynamicCondition>
+  <CustomerJourneyStageGUID>968c73a7-d366-45ca-839b-7378694e764b</CustomerJourneyStageGUID>
+  <CustomerJourneyStageName>Test</CustomerJourneyStageName>
+  <CustomerJourneyStageOrder>0</CustomerJourneyStageOrder>
+</om.customerjourneystage>

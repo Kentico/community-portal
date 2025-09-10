@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<kenticocommunity.qandaanswerdata>
+  <QAndAAnswerDataAuthorMemberID>
+    <GUID>c1beb8f9-4673-40d8-acdd-2dd56e5cd1bb</GUID>
+    <ObjectType>cms.member</ObjectType>
+  </QAndAAnswerDataAuthorMemberID>
+  <QAndAAnswerDataCodeName>My-first-thought-was-why-should-Users-inse642c25b5</QAndAAnswerDataCodeName>
+  <QAndAAnswerDataContent>
+<![CDATA[
+My first thought was, why should Users insert nodes into the tree node with another application than the CMS? What do you intend to do? Why this indirect content creation? Isn't it easier to log into the CMS and do whatever should be added there?
+
+It looks very performance intensive to crawl all NodeIDs to check for former URLs. Maybe because it is inserted as TreeNode and not as typed document via the document info provider methods? This is something I would ask the support.
+
+You could raise the timeout.\
+You could try to add more details to get a more concrete query.\
+You could use the query depug helper in Kentico.\
+You could check if old data could be deleted from the database, like history or versioning or the former URL data if not needed.
+
+For Kentico 13 you may also ask the Kentico DevNet forum. Maybe here you get help, too. The community portal is more XbyK focussed.
+]]>
+  </QAndAAnswerDataContent>
+  <QAndAAnswerDataDateCreated>2025-01-02 01:42:53Z</QAndAAnswerDataDateCreated>
+  <QAndAAnswerDataGUID>1c9a0047-8caa-462e-aa8b-a25430446689</QAndAAnswerDataGUID>
+  <QAndAAnswerDataQuestionWebPageItemID>
+    <CodeName>Node-insert-crashes-4d912e10-ozxnl1em</CodeName>
+    <GUID>159a8a4d-52c2-40f1-a7a5-20fe0e510d3f</GUID>
+    <ObjectType>cms.webpageitem</ObjectType>
+  </QAndAAnswerDataQuestionWebPageItemID>
+  <QAndAAnswerDataWebsiteChannelID>
+    <GUID>9ca57e0f-969f-43be-91d3-6c45659316bd</GUID>
+    <ObjectType>cms.websitechannel</ObjectType>
+    <Parent>
+      <CodeName>devnet</CodeName>
+      <GUID>4f636110-fd4a-4905-83e6-998752c2b2c2</GUID>
+      <ObjectType>cms.channel</ObjectType>
+    </Parent>
+  </QAndAAnswerDataWebsiteChannelID>
+</kenticocommunity.qandaanswerdata>
