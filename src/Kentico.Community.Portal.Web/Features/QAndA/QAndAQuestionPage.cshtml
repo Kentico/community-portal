@@ -5,7 +5,7 @@
 }
 
 <main>
-    <section class="c-section default">
+    <section class="section section--default">
         <div class="container">
 
             <div class="row justify-content-center">
@@ -23,7 +23,8 @@
                         <div class="d-flex justify-content-between gap-1">
                             <h2 class="h3" data-ktc-search-exclude>Answers</h2>
                             <div class="d-flex gap-1" style="max-width: 300px">
-                                <label for="answerOrder" class="form-label no-wrap align-self-center">Order by:</label>
+                                <label for="answerOrder" class="form-label text-nowrap align-self-center">Order
+                                    by:</label>
                                 <select id="answerOrder" class="form-select-sm" @@change="reorder"
                                     x-model="orderDirection">
                                     <option value="oldest">Oldest</option>

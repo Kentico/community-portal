@@ -10,15 +10,16 @@
 
     string badgeClasses = Model.DisplayStyle switch
     {
-        BadgeDisplayStyle.Full => "badge rounded-pill text-dark bg-purple-300 d-flex align-items-center gap-1 fw-medium px-2",
-        BadgeDisplayStyle.IconOnly or _ => "",
+        BadgeDisplayStyle.Full => "badge d-flex align-items-center gap-1 fw-medium",
+        BadgeDisplayStyle.IconOnly or _ => "icon",
     };
 }
 
-<span class="d-inline-flex wrap gap-1 mt-1 flex-wrap">
+<div class="flex wrap gap-1 mt-1 flex-wrap">
     @foreach (var badge in Model.Badges)
     {
-        <span class="@badgeClasses" title="@badge.MemberBadgeDescription" aria-label="@badge.MemberBadgeDescription">
+        <span class="@badgeClasses" theme="secondary-300" title="@badge.MemberBadgeDescription"
+            aria-label="@badge.MemberBadgeDescription">
             <img xpc-badge="@badge" />
             @if (Model.DisplayStyle == BadgeDisplayStyle.Full)
             {
@@ -26,4 +27,4 @@
             }
         </span>
     }
-</span>
+</div>

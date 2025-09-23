@@ -22,7 +22,7 @@ public class QAndAQuestionDeleteCommandHandler(WebPageCommandTools tools, IInfoP
             using var transaction = new CMSTransactionScope();
             provider.BulkDelete(new WhereCondition().WhereEquals(nameof(QAndAAnswerDataInfo.QAndAAnswerDataQuestionWebPageItemID), request.Question.SystemFields.WebPageItemID));
 
-            await webPageManager.Delete(request.Question.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE, cancellationToken);
+            await webPageManager.Delete(new DeleteWebPageParameters(request.Question.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE), cancellationToken);
 
             transaction.Commit();
         }

@@ -1,37 +1,94 @@
-.gap-1 {
-  gap: 1rem;
-}
-
-.gap-2 {
-  gap: 2rem;
-}
-
-.gap-3 {
-  gap: 3rem;
-}
-
+/* 
+ * ✅ PHASE 2 COMPLETE: Custom gap utilities removed
+ * 
+ * Bootstrap 5.3's gap utilities are used throughout the project:
+ * - .gap-0 = 0
+ * - .gap-1 = 0.25rem (4px)
+ * - .gap-2 = 0.5rem (8px)
+ * - .gap-3 = 1rem (16px)
+ * - .gap-4 = 1.5rem (24px)
+ * - .gap-5 = 3rem (48px)
+ * 
+ * Extended with our $spacers map:
+ * - .gap-6 = 3rem (48px)
+ * - .gap-7 = 4.125rem (66px)
+ * 
+ * Also available: .row-gap-* and .column-gap-* for axis-specific control
+ * Responsive variants: .gap-{breakpoint}-{size} (e.g., .gap-md-3)
+ */
 .target-bg:target {
   background-color: var(--bg-target);
 }
 
-.no-wrap {
-  white-space: nowrap;
-}
-
-@include media-breakpoint-up(md) {
-  .w-md-100 {
-    width: 100%;
-  }
-}
-
-.border-purple-100 {
-  border-color: var(--bs-purple-100);
-}
+/* 
+ * ✅ PHASE 2 COMPLETE: Custom utility classes reviewed and migrated
+ * 
+ * MIGRATED TO BOOTSTRAP UTILITIES + CSS CUSTOM PROPERTIES:
+ * - .no-wrap → .text-nowrap ✅ (Bootstrap standard)
+ * - .border-purple-300 → border-color: var(--color-purple-300) ✅
+ * - .border-gray-100 → border-color: var(--color-gray-100) ✅
+ * - .w-md-100 → Bootstrap utilities API ✅ (generated via $utilities map customization)
+ * 
+ * BORDER COLOR UTILITIES FIXED:
+ * Bootstrap doesn't generate border-color utilities for custom theme colors by default.
+ * Fixed components: Avatar, Poll, FallbackForm to use design system CSS custom properties.
+ * 
+ * DESIGN SYSTEM APPROACH:
+ * ✅ Uses CSS custom properties from :root in _variables.scss
+ * ✅ Colors are part of consistent design system (--color-purple-300, --color-gray-100)
+ * ✅ Inline styles reference design tokens, not hardcoded values
+ * ✅ Maintains Bootstrap utilities (.border, .border-1, .border-2) with dynamic colors
+ * 
+ * BOOTSTRAP UTILITIES API ENHANCEMENT:
+ * Responsive sizing utilities (.w-{breakpoint}-{size}, .h-{breakpoint}-{size}) 
+ * are now automatically generated via Bootstrap's utilities API in _variables.scss
+ * 
+ * This provides the full responsive sizing suite:
+ * .w-sm-25, .w-sm-50, .w-sm-75, .w-sm-100, .w-sm-auto
+ * .w-md-25, .w-md-50, .w-md-75, .w-md-100, .w-md-auto  
+ * .w-lg-25, .w-lg-50, .w-lg-75, .w-lg-100, .w-lg-auto
+ * (and same for height utilities)
+ */
 
 /*
+ * JUSTIFIED: Alpine.js framework integration
  * Hides Alpine components with visibility that can be toggled
  * https://alpinejs.dev/directives/cloak
  */
 [x-cloak] {
   display: none !important;
 }
+
+/* 
+ * ATOMIC CSS + CSS CUSTOM PROPERTIES APPROACH
+ * 
+ * PHILOSOPHY: Favor Bootstrap utilities + inline CSS custom properties over custom classes
+ * 
+ * MIGRATION EXAMPLES FOR DEVELOPERS:
+ * 
+ * ❌ AVOID: Creating custom CSS classes for components
+ * .author-avatar { width: 50px; height: 50px; }
+ * .icon-small { max-width: 24px; }
+ * .container-narrow { max-width: 300px; }
+ * 
+ * ✅ PREFERRED: Bootstrap utilities + CSS custom properties
+ * <img class="rounded-circle" style="--size: var(--size-author-avatar); width: var(--size); height: var(--size);">
+ * <img class="me-1" style="max-width: var(--size-icon-small);">
+ * <div class="d-flex gap-3" style="max-width: var(--size-container-narrow);">
+ * 
+ * ✅ EVEN BETTER: Razor component encapsulation
+ * <partial name="~/Components/ViewComponents/Avatar/Avatar.cshtml" model="authorModel" />
+ * 
+ * BENEFITS:
+ * ✅ Leverages Bootstrap's proven atomic utilities
+ * ✅ CSS custom properties provide dynamic styling
+ * ✅ Component logic stays in Razor templates
+ * ✅ Reduced CSS bundle size and complexity
+ * ✅ Better maintainability and consistency
+ * 
+ * WHEN TO CREATE CSS CLASSES (< 10 total):
+ * - Framework integration (Alpine.js, animations)
+ * - Complex state management (:target, :focus-visible)
+ * - Browser compatibility fallbacks
+ * - True utility patterns used 10+ times across codebase
+ */

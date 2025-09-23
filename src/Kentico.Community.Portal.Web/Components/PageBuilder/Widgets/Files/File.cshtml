@@ -34,7 +34,7 @@
         @if (Model.Design == LinkDesigns.Image)
         {
             <div class="d-flex flex-column align-items-center">
-                <svg class="c-icon" style="--icon-font-size: 3em;" aria-hidden="true">
+                <svg class="icon" style="--icon-font-size: 3em;" aria-hidden="true">
                     <use xlink:href="/img/icons.svg#file" asp-append-version></use>
                 </svg>
                 <span>@Model.Label</span>
@@ -43,7 +43,7 @@
         else
         {
             @Model.Label
-            <svg class="c-icon ms-1" style="--icon-font-size: 0.75em;" aria-hidden="true">
+            <svg class="icon ms-1" style="--icon-font-size: 0.75em;" aria-hidden="true">
                 <use xlink:href="/img/icons.svg#external-link" asp-append-version></use>
             </svg>
         }

@@ -1,405 +1,106 @@
-.c-card {
-  display: block;
-  color: inherit;
-  text-decoration: inherit;
-  font-size: 0.875rem;
-  transition: 0.2s background-color ease;
-  padding: 1rem;
+// Modern CSS API-based card components
+// Following CSS API best practices with component-level variables
 
-  --default-border-color: $gray-200;
+// Modern CSS API-based blog post cards
+:where(.blog-post-card) {
+  --card-bg: var(--color-surface-1, #fff);
+  --card-bg-hover: var(--color-surface-1-hover, #f8f9fa);
+  --card-padding: var(--space-3, 0.75rem);
+  --card-radius: var(--radius-md, var(--bs-border-radius-lg));
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --card-shadow-hover: 0 4px 12px rgba(138, 43, 226, 0.15);
 
-  &.default-border {
-    &.bordered {
-      --default-border-color: var(--bs-gray-200);
-    }
-    &.success {
-      --default-border-color: var(--bs-success);
-    }
-    border: 1px solid var(--default-border-color);
-    border-radius: $border-radius-lg;
-  }
-  &_num {
-    grid-area: card-num;
-    display: flex;
-    align-items: center;
-    font-size: 1.125rem;
-    justify-content: flex-end;
-    text-align: right;
-  }
-  &_icon {
-    grid-area: card-icon;
-  }
-  &_title {
-    grid-area: card-title;
-  }
-  &_content {
-    grid-area: card-content;
-    align-self: center;
-  }
-  &_footer {
-    grid-area: card-footer;
-    align-self: center;
-  }
-  &_tags {
-    grid-area: card-tags;
-  }
-  h3,
-  .h3 {
-    margin-bottom: 0;
-    a {
-      text-decoration: inherit;
-      color: inherit;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-  h4 {
-    a {
-      color: inherit;
-    }
-  }
-  p {
-    margin-bottom: 0;
-    & + p {
-      margin-top: 1rem;
-    }
-  }
+  padding: var(--card-padding);
+  border-radius: var(--card-radius);
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
 
-  &.widget {
-    display: flex;
-    .c-card {
-      &_inner {
-        display: flex;
-        flex-direction: column;
-      }
-      &_icon {
-        &,
-        img {
-          width: 40px;
-          height: 40px;
-          border-radius: 20px;
-        }
-      }
-    }
+// Enhanced hover states with subtle lift effect
+:where(.blog-post-card:is(:hover, :focus-within)) {
+  background: var(--card-bg-hover);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
+}
+
+// Modern CSS API-based Q&A question cards
+:where(.qa-question-card) {
+  --bs-border-color: var(--bs-gray-600);
+  --card-bg: var(--bs-white);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --card-shadow-hover: 0 4px 12px
+    color-mix(in srgb, var(--bs-border-color) 30%, transparent);
+
+  border-color: var(--bs-border-color);
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+// Q&A question card success state
+.qa-question-card--success {
+  --bs-border-color: var(--bs-success);
+}
+
+// Q&A question card hover states
+:where(.qa-question-card:is(:hover, :focus-within)) {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-1px);
+}
+
+// Widget card component with hover effects
+:where(.widget-card) {
+  --card-bg: var(--bs-body-bg);
+  --card-bg-hover: var(--bs-gray-50);
+  --card-border-color: var(--bs-border-color);
+  --card-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --card-shadow-hover: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+
+  background: var(--card-bg);
+  border-color: var(--card-border-color);
+  box-shadow: var(--card-shadow);
+  transition: all 0.15s ease-in-out;
+}
+
+// Enhanced hover states with subtle lift effect
+:where(.widget-card:is(:hover, :focus-within)) {
+  background: var(--card-bg-hover);
+  border-color: var(--card-border-color-hover, var(--card-border-color));
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
+}
+
+// Widget card action links with consistent hover states
+.widget-card-link {
+  transition: color 0.15s ease;
+
+  &:hover,
+  &:focus {
+    color: var(--bs-link-hover-color) !important;
+    text-decoration: underline !important;
   }
+}
 
-  &.article {
-    background: $purple-100;
-    border-radius: $border-radius-lg;
-    &:has(.c-card_title a:hover) {
-      color: inherit;
-      background: $purple-300;
-    }
-    .c-card {
-      &_inner {
-        &.d-grid {
-          gap: 0.375rem;
-          grid-template-columns: 100%;
-          grid-template-rows: 40px auto auto auto auto;
-          grid-template-areas: "card-icon" "card-title" "card-footer" "card-content" "card-tags";
-        }
-      }
-      &_icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 0.75rem;
-        display: flex;
-        align-items: center;
+// Widget card title links (dark titles that become primary on hover)
+.widget-card .text-dark {
+  transition: color 0.15s ease;
 
-        justify-content: center;
-        background: $white;
-        img,
-        .c-icon {
-          width: 21px;
-          height: 21px;
-          color: $secondary;
-        }
-      }
-      &_footer {
-        display: flex;
-        align-items: center;
-      }
-      &_title,
-      &_content,
-      &_tags {
-        padding-top: 0.625rem;
-      }
-      &_title {
-        a:hover {
-          text-decoration: none;
-        }
-      }
-    }
-    small {
-      font-size: 0.75rem;
-    }
-    &.nopic {
-      .c-card {
-        &_inner {
-          &.d-grid {
-            grid-template-rows: auto auto auto auto;
-            grid-template-areas: "card-title" "card-footer" "card-content" "card-tags";
-          }
-        }
-      }
-    }
-    @include media-breakpoint-up(sm) {
-      .c-card {
-        &_inner.d-grid {
-          gap: 0.5rem;
-          grid-template-columns: 64px auto auto;
-          grid-template-rows: auto auto auto;
-          grid-template-areas:
-            "card-icon card-title card-title"
-            "card-icon card-content card-content"
-            "card-icon card-tags card-footer";
-        }
-        &_icon {
-          width: 56px;
-          height: 56px;
-          border-radius: 1rem;
-        }
-        &_footer {
-          justify-content: flex-end;
-          small {
-            white-space: nowrap;
-          }
-        }
-        &_title,
-        &_content {
-          padding-top: 0;
-        }
-        &_tags,
-        &_footer {
-          padding-top: 0.5rem;
-        }
-      }
-      &.nopic {
-        .c-card {
-          &_inner {
-            &.d-grid {
-              grid-template-columns: auto auto;
-              grid-template-rows: auto auto;
-              grid-template-areas:
-                "card-title card-title"
-                "card-content card-content"
-                "card-tags card-footer";
-            }
-          }
-        }
-      }
-    }
+  &:hover,
+  &:focus {
+    color: var(--bs-primary) !important;
+    text-decoration: underline !important;
   }
+}
 
-  &.question {
-    padding: 1rem;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    grid-template-areas:
-      "card-content"
-      "card-footer";
-    gap: 0.25rem;
-
-    .c-card {
-      &_title {
-        a {
-          transition: 0.15s color ease;
-          &:hover {
-            color: $primary;
-            text-decoration: none;
-          }
-        }
-      }
-
-      &_footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: start;
-        font-size: 0.875rem;
-        gap: 1rem;
-
-        & > div + div {
-          margin-left: 0.25rem;
-        }
-      }
-    }
-
-    @include media-breakpoint-up(sm) {
-      grid-template-columns: 4fr 1fr;
-      grid-template-areas: "card-content card-footer";
-
-      .c-card {
-        &_footer {
-          justify-content: center;
-          align-items: center;
-          & > div + div {
-            margin-left: 0;
-          }
-        }
-      }
-    }
-  }
-
-  &.sidebar {
-    padding: 1.5rem;
-    h3,
-    .h3,
-    h4,
-    .h4 {
-      .c-icon {
-        margin-right: 0.25rem;
-      }
-    }
-  }
-
-  &.author {
-    h2,
-    .h2,
-    h3,
-    .h3,
-    h4,
-    .h4 {
-      a {
-        text-decoration: none;
-        &:hover,
-        &:focus {
-          text-decoration: underline;
-        }
-      }
-    }
-
-    .c-card {
-      &_inner.d-grid {
-        gap: 1rem;
-        grid-template-columns: 3rem auto 4rem;
-        grid-template-areas: "card-icon card-content card-footer";
-      }
-      &_icon {
-        align-self: center;
-        img {
-          width: 3rem;
-          height: 3rem;
-          border-radius: 50%;
-        }
-      }
-      &_footer {
-        .c-icon {
-          font-size: 1.5rem;
-        }
-      }
-    }
-    @include media-breakpoint-down(sm) {
-      .c-card {
-        &_inner.d-grid {
-          grid-template-columns: 3rem auto;
-        }
-        &_footer {
-          display: none;
-        }
-      }
-    }
-    &.no-footer {
-      .c-card {
-        &_inner.d-grid {
-          grid-template-columns: 3rem auto;
-        }
-      }
-    }
-
-    &.list {
-      .c-card {
-        &_inner.d-grid {
-          gap: 0.5rem;
-          grid-template-columns: 0.875rem 2rem auto;
-          grid-template-areas:
-            "card-num card-icon card-content"
-            "card-footer card-footer card-footer";
-        }
-        &_icon {
-          img {
-            width: 2rem;
-            height: 2rem;
-          }
-        }
-        &_footer {
-          display: block;
-          margin-top: 0.375rem;
-          .btn {
-            width: 100%;
-          }
-        }
-      }
-      @include media-breakpoint-down(sm) {
-        border: none;
-        position: relative;
-        &:before,
-        &:after {
-          content: "";
-          display: block;
-          position: absolute;
-          height: 0;
-          border-top: 1px solid $gray-200;
-          left: -50%;
-          right: -50%;
-        }
-        &:before {
-          top: 0;
-        }
-        &:after {
-          bottom: 0;
-        }
-        & + & {
-          &:before {
-            content: none;
-            display: none;
-          }
-        }
-        .c-card {
-          &_num {
-            justify-content: flex-start;
-            font-size: 0.875rem;
-          }
-          &_content {
-            h4,
-            .h4 {
-              font-size: 0.875rem;
-            }
-            p {
-              font-size: 0.75rem;
-            }
-          }
-        }
-      }
-      @include media-breakpoint-up(sm) {
-        .c-card {
-          &_inner.d-grid {
-            gap: 1rem;
-            grid-template-columns: 1.25rem 3.5rem auto 10rem;
-            grid-template-areas: "card-num card-icon card-content card-footer";
-          }
-          &_icon {
-            img {
-              width: 3.5rem;
-              height: 3.5rem;
-            }
-          }
-          &_footer {
-            margin-top: 0;
-          }
-        }
-      }
-    }
-  }
-
-  &.large {
-    @include media-breakpoint-up(md) {
-      padding: 2rem;
-    }
-  }
-
-  &.bg-secondary {
-    background: $secondary;
-    color: $white;
-  }
+.blog-post-card[theme="secondary"] {
+  --card-bg: var(--color-purple-100);
+  --card-bg-hover: var(--color-purple-300);
+  --card-shadow-hover: 0 4px 12px rgba(138, 43, 226, 0.2);
 }

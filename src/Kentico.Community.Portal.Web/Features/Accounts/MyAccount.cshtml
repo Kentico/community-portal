@@ -3,21 +3,21 @@
 <vc:page-heading page="Model.Page" />
 
 <main>
-    <div class="c-section pb-6">
+    <div class="section pb-6">
         <div class="container">
             <div class="grid gap-3">
-                <div class="g-col-12 g-col-lg-6 c-card bg-purple-100 rounded p-3">
+                <div class="g-col-12 g-col-lg-6 bg-purple-100 rounded p-3">
                     <partial name="~/Features/Accounts/_AvatarForm.cshtml" model="Model.AvatarForm" />
                 </div>
 
-                <div
-                    class="g-col-12 g-col-lg-6 c-card rounded bg-white border border-3 border-purple-100 d-flex flex-column gap-3 c-card nopic">
-                    <div class="c-card_inner overflow-y-auto">
+                <div class="g-col-12 g-col-lg-6 rounded bg-white border border-3 d-flex flex-column gap-3 p-3"
+                    style="--bs-border-color: var(--color-purple-100);">
+                    <div class="overflow-y-auto">
                         <h5>
                             Profile Information
                         </h5>
 
-                        <div class="c-card_content">
+                        <div>
                             <dl class="grid">
                                 <dt>Username:</dt>
                                 <dd>@Model.Username</dd>

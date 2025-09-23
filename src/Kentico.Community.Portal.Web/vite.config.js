@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import { spawn } from "child_process";
 import fs from "fs";
 import path from "path";
+import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 import appsettings from "./appsettings.json";
 import appsettingsDev from "./appsettings.Development.json";
@@ -53,12 +54,32 @@ export default defineConfig(async ({ mode }) => {
     // See https://github.com/Eptagone/Vite.AspNetCore/wiki#how-to-configure-a-subfolder-as-output-for-my-vite-assets
     base: "/dist/",
     publicDir: "",
+    plugins: [
+      /**
+       * There is an issue in Milkdown's css imports, dynamic dependencies, or Vite.js which results in the Vite generated
+       * q-and-a.css file not generating a new <style> element when the q-and-a.js module is loaded in the browser
+       * for production builds. This issue does not appear when Vite is used in local/dev/proxy mode.
+       *
+       * The css dependency is correctly identified in Vite, so this plugin embeds it in the q-and-a.js file
+       * and loads it into the DOM when the .js dependency is loaded.
+       *
+       * Without this plugin, we are limited to using v7.11 of Milkdown.
+       */
+      cssInjectedByJsPlugin({
+        relativeCSSInjection: true,
+        cssAssetsFilterFunction: function customCssAssetsFilterFunction(
+          outputAsset,
+        ) {
+          console.log(outputAsset);
+          return !outputAsset.fileName.includes("q-and-a");
+        },
+      }),
+    ],
     css: {
       preprocessorOptions: {
         scss: {
           /** https://sass-lang.com/documentation/breaking-changes/import/ */
           silenceDeprecations: [
-            "mixed-decls",
             "color-functions",
             "import",
             "global-builtin",

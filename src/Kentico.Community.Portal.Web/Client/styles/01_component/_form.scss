@@ -1,47 +1,62 @@
-.c-select {
-  &.subheading {
-    border: none;
-    font-size: 1.125rem;
-    @include media-breakpoint-up(sm) {
-      width: 56%;
-    }
-    @include media-breakpoint-up(md) {
-      width: 41%;
-    }
-    @include media-breakpoint-up(lg) {
-      width: 30%;
-    }
-  }
-  &.subheading2 {
-    border: none;
-    font-size: 1.125rem;
-    font-weight: $font-weight-bold;
-    width: auto;
-  }
+/* 
+ * ✅ PHASE 3.3: Form components modernized with CSS API
+ * 
+ * PHILOSOPHY: Consolidated form patterns with design tokens
+ * 
+ * Benefits:
+ * - Unified form styling approach via custom properties
+ * - Semantic variant attributes for different input types
+ * - Centralized validation and tooltip theming
+ * - Reduced class proliferation
+ * 
+ * Usage:
+ * <input class="form-control" variant="search" />
+ * <select class="form-select" variant="subheading" />
+ * <div class="form-validation" role="alert">Error message</div>
+ */
+
+/* Modern CSS API-based form inputs */
+:where(.form-control, .form-select) {
+  --input-bg: var(--bs-body-bg);
+  --input-border-color: var(--bs-border-color);
+  --input-focus-border-color: var(--bs-primary);
+  --input-icon-size: 1rem;
+  --input-icon-spacing: 2.75rem;
 }
 
+/* Search input variant */
+.form-control[variant="search"] {
+  background-image: url("#{$img-path}/icons/search.svg");
+  background-repeat: no-repeat;
+  background-position: left 1.125rem center;
+  background-size: var(--input-icon-size);
+  padding-left: var(--input-icon-spacing);
+}
+
+/* Textarea styling */
 textarea.form-control {
   height: 6.25rem;
   resize: none;
 }
 
-.form-control.search {
-  background-image: url("#{$img-path}/icons/search.svg");
-  background-repeat: no-repeat;
-  background-position: left 1.125rem center;
-  background-size: 1rem 1rem;
-  padding-left: 2.75rem;
-}
-
+/* File input styling */
 .form-control[type="file"] {
   color: inherit;
   background: transparent;
 }
 
-.field-validation-error {
-  --bs-text-opacity: 1;
-  color: rgba(var(--bs-danger-rgb), var(--bs-text-opacity)) !important;
-  font-size: 12px;
+/* Field sizing utility */
+.form-control[sizing="content"] {
+  field-sizing: content;
+}
+
+/* Modern CSS API-based validation */
+:where(.form-validation) {
+  --validation-color: var(--bs-danger);
+  --validation-font-size: 0.75rem;
+
+  color: rgb(var(--bs-danger-rgb));
+  font-size: var(--validation-font-size);
 
   ul {
     margin-top: 1rem;
@@ -49,22 +64,36 @@ textarea.form-control {
   }
 }
 
-.validation-summary {
-  color: rgba(var(--bs-danger-rgb), var(--bs-text-opacity)) !important;
-  font-size: var(--fs-5);
+/* Validation summary component */
+:where(.validation-summary) {
+  --validation-color: var(--bs-danger);
+  --validation-font-size: var(--font-size-5);
+
+  color: rgb(var(--bs-danger-rgb));
+  font-size: var(--validation-font-size);
 
   ul {
     margin: 0;
   }
+
   &.is-valid {
     display: none;
   }
 }
 
-.c-tooltip {
+/* Legacy validation class support */
+.field-validation-error {
+  @extend .form-validation;
+}
+
+/* Form tooltip component */
+:where(.form-tooltip) {
+  --tooltip-size: 1.5rem;
+  --tooltip-icon-size: 1rem;
+
   display: inline-flex;
-  width: 1.5rem;
-  height: 1rem;
+  width: var(--tooltip-size);
+  height: var(--tooltip-icon-size);
   align-items: center;
   cursor: pointer;
   padding: 0 0.25rem;
@@ -72,15 +101,16 @@ textarea.form-control {
 
   svg,
   img {
-    width: 1rem;
-    height: 1rem;
+    width: var(--tooltip-icon-size);
+    height: var(--tooltip-icon-size);
   }
 }
 
+/* Required field indicator */
 label:has(
     + input[data-val-required],
     + textarea[data-val-required],
-    + span.c-tooltip + input[data-val-required],
+    + .form-tooltip + input[data-val-required],
     + select[data-val-required]
   ):after {
   content: "*";
@@ -91,6 +121,7 @@ label:has(
   field-sizing: content;
 }
 
+/* HTMX loading states */
 [loading-content] {
   display: none;
 }

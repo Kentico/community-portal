@@ -52,9 +52,16 @@ public class BlogPostListWidget(
 
         };
 
+        string viewPath = props.ItemLayoutSourceParsed switch
+        {
+            ItemLayout.Minimal => "~/Components/PageBuilder/Widgets/BlogPostList/BlogPostList_Minimal.cshtml",
+            ItemLayout.Full => "~/Components/PageBuilder/Widgets/BlogPostList/BlogPostList_Full.cshtml",
+            _ => "~/Components/PageBuilder/Widgets/BlogPostList/BlogPostList_Minimal.cshtml"
+        };
+
         return Validate(props, posts)
             .Match(
-                vm => View("~/Components/PageBuilder/Widgets/BlogPostList/BlogPostList.cshtml", vm),
+                vm => View(viewPath, vm),
                 vm => View("~/Components/ComponentError.cshtml", vm));
     }
 
@@ -115,11 +122,12 @@ public class BlogPostListWidget(
 
             var url = await urlRetriever.Retrieve(page);
             var author = await GetAuthor(page);
-            var taxonomy = await GetTaxonomyName(props);
+            var blogTypeTag = await GetBlogPostTypeTag(page, props);
+            var dxTopics = await GetDXTopicsTags(page, props);
 
             var authorViewModel = new BlogPostAuthorViewModel(author);
 
-            vms.Add(new BlogPostViewModel(page, authorViewModel, url, taxonomy));
+            vms.Add(new BlogPostViewModel(page, authorViewModel, url, blogTypeTag, dxTopics));
         }
 
         return vms;
@@ -161,21 +169,33 @@ public class BlogPostListWidget(
         return new BlogPostListWidgetViewModel(props, posts);
     }
 
-    private async Task<Maybe<string>> GetTaxonomyName(BlogPostListWidgetProperties props)
+    private async Task<Maybe<string>> GetBlogPostTypeTag(BlogPostPage page, BlogPostListWidgetProperties props)
     {
         if (props.BlogPostSourceParsed == BlogPostSources.Post_Taxonomy)
         {
             return Maybe<string>.None;
         }
 
-        if (props.TagReferences.FirstOrDefault() is { } tagReference)
+        if (page.BlogPostPageBlogType.FirstOrDefault() is { } tagRef)
         {
-            var tags = await taxonomyRetriever.RetrieveTags([tagReference.Identifier], CultureInfo.CurrentCulture.Name);
+            var tags = await taxonomyRetriever.RetrieveTags([tagRef.Identifier], CultureInfo.CurrentCulture.Name);
 
             return tags.TryFirst().Map(t => t.Title);
         }
 
         return Maybe<string>.None;
+    }
+
+    private async Task<IEnumerable<string>> GetDXTopicsTags(BlogPostPage page, BlogPostListWidgetProperties props)
+    {
+        if (!props.ShowDXTopics)
+        {
+            return [];
+        }
+
+        var tags = await taxonomyRetriever.RetrieveTags(page.CoreTaxonomyDXTopics.Select(t => t.Identifier), CultureInfo.CurrentCulture.Name);
+
+        return tags.Select(t => t.Title);
     }
 }
 
@@ -253,11 +273,18 @@ public class BlogPostListWidgetProperties : IWidgetProperties
     [Range(1, 12)]
     public int PostLimit { get; set; } = 1;
 
+    [CheckBoxComponent(
+        Label = "Show DX Topics",
+        ExplanationText = "Display the selected blog posts' DX Topics taxonomy tags.",
+        Order = 5
+    )]
+    public bool ShowDXTopics { get; set; } = false;
+
     [DropDownComponent(
         Label = "Item Layout",
         ExplanationText = "How the content is presented",
         DataProviderType = typeof(EnumDropDownOptionsProvider<ItemLayout>),
-        Order = 5
+        Order = 6
     )]
     public string ItemLayoutSource { get; set; } = nameof(ItemLayout.Minimal);
     public ItemLayout ItemLayoutSourceParsed => EnumDropDownOptionsProvider<ItemLayout>.Parse(ItemLayoutSource, ItemLayout.Minimal);
@@ -308,16 +335,18 @@ public class BlogPostViewModel
     public BlogPostAuthorViewModel Author { get; }
     public string ShortDescription { get; }
     public string LinkPath { get; }
-    public Maybe<string> Taxonomy { get; }
+    public Maybe<string> BlogType { get; }
+    public IEnumerable<string> DXTopics { get; } = [];
 
-    public BlogPostViewModel(BlogPostPage page, BlogPostAuthorViewModel author, WebPageUrl url, Maybe<string> taxonomy)
+    public BlogPostViewModel(BlogPostPage page, BlogPostAuthorViewModel author, WebPageUrl url, Maybe<string> blogTypeTag, IEnumerable<string> dxTopics)
     {
         Title = page.BasicItemTitle;
         ShortDescription = page.BasicItemShortDescription;
         PublishedDate = page.BlogPostPagePublishedDate;
         Author = author;
         LinkPath = url.RelativePath;
-        Taxonomy = taxonomy;
+        BlogType = blogTypeTag;
+        DXTopics = dxTopics;
     }
 }
 

@@ -40,22 +40,22 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="ClassTableName" columnprecision="0" guid="b211147b-2e77-4f0d-9546-e18990108532" visible="true" order="15">
-        <settings>
-          <controlname>Kentico.Administration.TextInput</controlname>
-        </settings>
+      <field column="ClassHasUnmanagedDbSchema" guid="cfeb12da-2006-4f45-aa24-919142788451" order="15" />
+      <field column="ClassContentTypeType" guid="032be9ff-9648-4289-a55f-eba73d6ddce3" enabled="" order="16" />
+      <field column="ClassType" guid="e6e0f7a9-f910-4ba2-8520-e6ca86a1f88b" enabled="" />
+      <field column="ClassWebPageHasUrl" guid="f76db854-f389-421b-9c92-13bd12978c0c" enabled="" order="18" />
+      <field column="ClassShortName" guid="6eca5a7e-4abb-4e2a-b4f0-1f7d2dfc3b33" enabled="" order="19" />
+      <field allowempty="true" column="ClassTableNameMessage" columnprecision="0" columnsize="250" columntype="text" dummy="altform" guid="462c4ec7-bfa4-4027-9b21-1a7bd44299ee" system="true" visible="true" order="20">
         <properties>
-          <defaultvalue ismacro="true">{$base.class.generated.tableName$}</defaultvalue>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$base.class.create.tablename$}</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
       </field>
-      <field column="ClassHasUnmanagedDbSchema" guid="cfeb12da-2006-4f45-aa24-919142788451" />
-      <field column="ClassContentTypeType" guid="032be9ff-9648-4289-a55f-eba73d6ddce3" enabled="" order="17" />
-      <field column="ClassType" guid="e6e0f7a9-f910-4ba2-8520-e6ca86a1f88b" enabled="" order="18" />
-      <field column="ClassWebPageHasUrl" guid="f76db854-f389-421b-9c92-13bd12978c0c" enabled="" />
-      <field column="ClassShortName" guid="6eca5a7e-4abb-4e2a-b4f0-1f7d2dfc3b33" enabled="" />
+      <field column="ClassTableName" guid="b211147b-2e77-4f0d-9546-e18990108532" order="21" />
     </form>
   </FormDefinition>
   <FormDisplayName>ClassCreate</FormDisplayName>

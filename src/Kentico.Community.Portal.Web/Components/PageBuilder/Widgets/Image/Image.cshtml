@@ -17,23 +17,39 @@
         ImageSizes.Large => "--size-preferred: 80cqi",
         ImageSizes.Full_Width or _ => "--size-preferred: 100cqi",
     };
+
+    // CSS class selection for responsive behavior
+    // All image sizes use full width on mobile for better UX
+    string widthClass = "clamp-width-mobile-full";
+
+    // Sizes optimized for multi-device, multi-DPR scenarios
+    // All sizes use full width on mobile, then size-appropriate widths on desktop
+    string sizesAttribute = Model.Size switch
+    {
+        ImageSizes.Small => "(max-width: 767px) 100vw, 200px", // Mobile: full width, Desktop: 200px
+        ImageSizes.Medium => "(max-width: 767px) 100vw, 300px", // Mobile: full width, Desktop: 300px
+        ImageSizes.Large => "(max-width: 767px) 100vw, 450px", // Mobile: full width, Desktop: 450px
+        ImageSizes.Full_Width or _ => "(max-width: 767px) 100vw, 600px", // Mobile: full width, Desktop: 600px
+    };
 }
 
 <div class="d-flex align-content-center @containerClasses container-inline-size"
     xpc-preview-outline="@Model.ComponentName">
-    <figure class="figure clamp-width" style="@figureStyles">
+    <figure class="figure @widthClass" style="@figureStyles">
         @if (Model.LinkToFullsizeImage)
         {
             <a href="@Model.Image.Asset.Url">
                 <picture>
-                    <img class="img-fluid" xpc-image-asset="Model.Image" kxp-img="Model.Image.Asset" kxp-img-dimensions>
+                    <img class="img-fluid" xpc-image-asset="Model.Image" xpc-image-asset-responsive="true"
+                        sizes="@sizesAttribute">
                 </picture>
             </a>
         }
         else
         {
             <picture>
-                <img class="img-fluid" xpc-image-asset="Model.Image" kxp-img="Model.Image.Asset" kxp-img-dimensions>
+                <img class="img-fluid" xpc-image-asset="Model.Image" xpc-image-asset-responsive="true"
+                    sizes="@sizesAttribute">
             </picture>
         }
         @if (Model.ShowDescriptionAsCaption)

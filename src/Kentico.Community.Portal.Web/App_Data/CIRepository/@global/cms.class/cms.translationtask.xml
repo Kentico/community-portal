@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Translation task</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="TranslationTaskID" columntype="integer" enabled="true" guid="ffba7128-d473-4745-9d25-61371a9d122d" isPK="true" system="true" />
+      <field column="TranslationTaskDetail" columnprecision="0" columntype="longtext" enabled="true" guid="162e5c15-4899-41a1-a8a4-ef4f255e7ffd" system="true" />
+      <field column="TranslationTaskUserID" columnprecision="0" columntype="integer" enabled="true" guid="43f890e5-2fb4-4525-b073-3f96953b2e3c" refobjtype="cms.user" reftype="Required" system="true" />
+      <field column="TranslationTaskStatus" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="e74f77f2-3f8d-40fd-9e3c-9039506a729d" system="true">
+        <properties>
+          <defaultvalue>Pending</defaultvalue>
+        </properties>
+      </field>
+      <field column="TranslationTaskSourceLanguageID" columnprecision="0" columntype="integer" enabled="true" guid="8f40120e-4ad7-4185-93a3-a4fd91457c13" refobjtype="cms.contentlanguage" reftype="Required" system="true" />
+      <field column="TranslationTaskTargetLanguageID" columnprecision="0" columntype="integer" enabled="true" guid="e1e1c56d-e12e-4d0d-bb2a-43f600742300" refobjtype="cms.contentlanguage" reftype="Required" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>14562546-37a0-48c0-a03b-f691e571ba47</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.TranslationTask</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentEngine</CodeName>
+    <GUID>eb76ebd1-752f-4969-a5b6-1fb984cae224</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_TranslationTask</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

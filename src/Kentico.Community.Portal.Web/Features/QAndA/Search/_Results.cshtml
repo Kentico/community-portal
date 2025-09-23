@@ -5,75 +5,112 @@
 
 @foreach (var discussion in Model.Discussions)
 {
-    <div class="c-card question default-border overflow-y-auto d-grid @(discussion.HasAcceptedResponse ? "success" : "")">
-        <div class="c-card_content">
-            @if (discussion.HasAcceptedResponse)
-            {
-                <div class="fs-sm-4 text-success mb-1">
-                    <svg class="c-icon mt-1 me-2 ">
-                        <use xlink:href="/img/icons.svg#check" asp-append-version></use>
-                    </svg><small><b>Has Accepted Response</b></small>
-                </div>
-            }
-            <div class="c-card_title">
-                <h3 class="h3 mb-1">
-                    <a href="@discussion.LinkPath" rel="nofollow">@discussion.Title</a>
-                </h3>
-            </div>
-
-            <div class="mb-2 d-none d-sm-block">
-                <vc:author author="discussion.Author" />
-                <small>Discussion created<br> @discussion.DateCreated.ToString("d", View.Culture)
-                    @discussion.DateCreated.ToString("t")<br></small>
-            </div>
-
-            @if (discussion.Tags.Count > 0)
-            {
-                <div class="c-card_tags d-flex align-items-end mt-2">
-                    <div class="c-group tags">
-                        @foreach (string tag in discussion.Tags)
-                        {
-                            <span class="c-tag secondary invert" title="Topic - @tag" aria-label="Topic - @tag">
-                                @tag
-                            </span>
-                        }
+    <article
+        class="border rounded-3 p-3 d-grid overflow-y-auto gap-1 qa-question-card @(discussion.HasAcceptedResponse ? "qa-question-card--success" : "")"
+        style="grid-template-columns: 1fr; grid-template-areas: 'card-content' 'card-footer';"
+        aria-describedby="responses-@discussion.ID">
+        <div class="d-md-flex justify-content-between" style="grid-area: card-content;">
+            <div>
+                @if (discussion.HasAcceptedResponse)
+                {
+                    <div class="d-flex align-items-center text-success mb-2" role="status"
+                        aria-label="This question has an accepted answer">
+                        <svg class="me-2" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                            <use xlink:href="/img/icons.svg#check" asp-append-version></use>
+                        </svg>
+                        <small class="fw-bold">Has Accepted Response</small>
                     </div>
-                </div>
-            }
-        </div>
-        <div class="c-card_footer">
-            <div class="mb-2 d-sm-none">
-                <vc:author author="discussion.Author" />
-                <small>Discussion created<br> @discussion.DateCreated.ToString("d", View.Culture)
-                    @discussion.DateCreated.ToString("t")<br></small>
+                }
+
+                <header>
+                    <h3 class="h3">
+                        <a href="@discussion.LinkPath" rel="nofollow"
+                            class="text-dark text-decoration-none qa-question-link"
+                            aria-describedby="date-@discussion.ID author-@discussion.ID">
+                            @discussion.Title
+                        </a>
+                    </h3>
+
+                    <div class="d-none d-md-block">
+                        <div id="author-@discussion.ID" class="mb-2">
+                            <vc:author author="discussion.Author" />
+                        </div>
+                        <time id="date-@discussion.ID" datetime="@discussion.DateCreated.ToString("yyyy-MM-ddTHH:mm:ss")"
+                            class="text-muted small">
+                            Discussion created<br> @discussion.DateCreated.ToString("d", View.Culture)
+                            @discussion.DateCreated.ToString("t")
+                        </time>
+                    </div>
+                </header>
             </div>
-            <div class="text-end text-sm-center">
-                <span class="fs-4 fs-sm-1 text-secondary fw-bold lh-sm">@discussion.ResponseCount</span>
-                <br class="d-none d-sm-block">
-                <span class="fs-4 fs-sm-6">
-                    @{
-                        string text = discussion.ResponseCount switch
-                        {
-                            0 or > 1 => "Responses",
-                            1 => "Response",
-                            _ => ""
-                        };
-                        <text>@text</text>
-                    }
-                </span>
+            @{
+                string responseText = discussion.ResponseCount switch
+                {
+                    0 or > 1 => "responses",
+                    1 => "response",
+                    _ => ""
+                };
+            }
+            <div id="responses-@discussion.ID" class="d-none d-md-flex flex-column justify-content-between text-end ms-auto"
+                aria-label="@discussion.ResponseCount @responseText">
+                <div class="fs-5">
+                    <span class="text-secondary fw-bold lh-sm">@discussion.ResponseCount</span>
+                    @responseText
+                </div>
 
                 @if (discussion.ResponseCount > 0)
                 {
-                    <div>
-                        <small>Latest response
-                            <br>@discussion.LatestResponseDate.ToString("d", View.Culture)
-                            @discussion.LatestResponseDate.ToString("t")
-                        </small>
+                    <div class="mt-1">
+                        <time datetime="@discussion.LatestResponseDate.ToString("yyyy-MM-ddTHH:mm:ss")"
+                            class="text-muted small">
+                            Latest response<br>
+                            <span class="text-nowrap">@discussion.LatestResponseDate.ToString("d", View.Culture)
+                                @discussion.LatestResponseDate.ToString("t")
+                            </span>
+                        </time>
                     </div>
                 }
             </div>
         </div>
-    </div>
+        <footer style="grid-area: card-footer;" class="d-flex justify-content-between align-items-start">
+            <div>
+                <div class="d-md-none">
+                    <vc:author author="discussion.Author" />
+                    <time datetime="@discussion.DateCreated.ToString("yyyy-MM-ddTHH:mm:ss")" class="text-muted small">
+                        Discussion created<br> @discussion.DateCreated.ToString("d", View.Culture)
+                        @discussion.DateCreated.ToString("t")
+                    </time>
+                </div>
+                @if (discussion.Tags.Count > 0)
+                {
+                    <div class="d-flex align-items-end mt-2">
+                        <vc:tag-list tags="discussion.Tags" variant="Secondary" aria-label="Discussion topics" />
+                    </div>
+                }
+            </div>
+            <div id="responses-m-@discussion.ID" class="d-block d-md-none text-end text-md-center ms-auto"
+                aria-label="@discussion.ResponseCount @responseText">
+                <div class="fs-5 text-nowrap">
+                    <span class="text-secondary fw-bold lh-sm">@discussion.ResponseCount</span>
+                    @responseText
+                </div>
+
+
+                @if (discussion.ResponseCount > 0)
+                {
+                    <div class="mt-1">
+                        <time datetime="@discussion.LatestResponseDate.ToString("yyyy-MM-ddTHH:mm:ss")"
+                            class="text-muted small">
+                            Latest response<br>
+                            <span class="text-nowrap">@discussion.LatestResponseDate.ToString("d", View.Culture)
+                                @discussion.LatestResponseDate.ToString("t")
+                            </span>
+                        </time>
+                    </div>
+                }
+            </div>
+        </footer>
+    </article>
 }
 
 @if (Model.Discussions.Count == 0 && Model.TotalPages == 0)

@@ -1,3 +1,5 @@
+using CMS.ContentEngine;
+
 namespace Kentico.Community.Portal.Web.Rendering;
 
 public class ImageViewModel
@@ -8,6 +10,7 @@ public class ImageViewModel
     public int Width { get; }
     public int Height { get; }
     public string URL { get; }
+    public Maybe<ContentItemAsset> Asset { get; }
 
     public static ImageViewModel Create(ImageContent content) => new(content);
     public static Maybe<ImageViewModel> Create(IFeaturedImageFields item) =>
@@ -32,6 +35,7 @@ public class ImageViewModel
         Width = content.ImageContentAsset.Metadata.Width ?? 0;
         Height = content.ImageContentAsset.Metadata.Height ?? 0;
         URL = content.ImageContentAsset.Url;
+        Asset = content.ImageContentAsset;
     }
 }
 

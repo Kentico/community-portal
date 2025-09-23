@@ -1,7 +1,18 @@
 @import "00_core/font";
 @import "00_core/variables";
 
-// bootstrap
+// Bootstrap core imports (needed for utilities customization)
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+
+// Utilities API customization (must come after Bootstrap utilities map is defined)
+@import "00_core/utilities-config";
+
+// Complete Bootstrap import (will use our customized utilities)
 @import "bootstrap/scss/bootstrap";
 
 @import "00_core/bootstrap-override";
@@ -16,8 +27,7 @@
 @import "01_component/nav";
 @import "01_component/section";
 @import "01_component/card";
-@import "01_component/group";
-@import "01_component/tag";
+@import "01_component/badge";
 @import "01_component/footer";
 @import "01_component/list";
 @import "01_component/form";

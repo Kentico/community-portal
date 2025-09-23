@@ -27,11 +27,11 @@
             </a>
             <div class="d-block d-md-none">
                 <button class="btn position-relative p-2 mx-3" id="notificationBellMobile">
-                    <svg class="c-icon">
+                    <svg class="icon">
                         <use xlink:href="/img/icons.svg#bell" asp-append-version></use>
                     </svg>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none"
-                        notification-count>0</span>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill d-none"
+                        theme="danger" notification-count>0</span>
                 </button>
                 <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
@@ -63,14 +63,14 @@
                         <li class="nav-item dropdown">
                             <span class="nav-link active">
                                 <span test-id="username">@User.Identity.Name</span>
-                                <svg class="c-icon d-none d-md-block">
+                                <svg class="icon d-none d-md-block">
                                     <use xlink:href="/img/icons.svg#chevron-down" asp-append-version></use>
                                 </svg>
                             </span>
 
                             <button type="button" class="btn dropdown-toggle d-md-none" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <svg class="c-icon ">
+                                <svg class="icon">
                                     <use xlink:href="/img/icons.svg#chevron-down" asp-append-version></use>
                                 </svg>
                             </button>
@@ -92,12 +92,12 @@
                     }
                     <li class="nav-item d-flex align-items-center">
                         <button class="btn position-relative p-2 mx-3" id="notificationBell">
-                            <svg class="c-icon d-none d-md-block">
+                            <svg class="icon d-none d-md-block">
                                 <use xlink:href="/img/icons.svg#bell" asp-append-version></use>
                             </svg>
                             <span
                                 class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none"
-                                notification-count>0</span>
+                                theme="danger" notification-count>0</span>
                         </button>
                     </li>
                 </ul>

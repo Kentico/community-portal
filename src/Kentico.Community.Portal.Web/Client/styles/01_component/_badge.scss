@@ -1,0 +1,50 @@
+/* 
+ * ✅ PHASE 3.2a: Badge system modernized with CSS API
+ * 
+ * PHILOSOPHY: Simplified, essential variants only
+ * 
+ * Benefits:
+ * - Only 3 essential variants: primary, secondary, icon
+ * - CSS custom properties for dynamic theming
+ * - Semantic HTML attributes for theme variants
+ * - Icon badge gets proper spacing
+ * 
+ * Usage:
+ * <span class="badge" theme="primary">Filled Badge</span>
+ * <span class="badge outline" theme="primary">Outline Badge</span>
+ * <span class="badge icon" theme="primary">🔗</span>
+ */
+
+/* Base badge component with CSS API */
+.badge {
+  --badge-bg: transparent;
+  --bs-badge-color: var(--bs-dark);
+  --badge-border: var(--bs-dark);
+
+  background: var(--badge-bg);
+  border: 1px solid var(--badge-border);
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.badge[theme="primary"] {
+  --bs-badge-color: var(--bs-primary);
+  --badge-border: var(--bs-primary);
+}
+.badge[theme="secondary"] {
+  --badge-bg: var(--bs-white);
+  --bs-badge-font-weight: 500;
+  --bs-badge-color: var(--bs-secondary);
+  --badge-border: var(--bs-secondary);
+}
+.badge[theme="danger"] {
+  --bs-badge-color: var(--bs-white);
+  --badge-bg: var(--bs-danger);
+  --badge-border: var(--bs-danger);
+}
+.badge[theme="secondary-300"] {
+  --badge-border: var(--color-purple-300);
+  --badge-bg: var(--color-purple-300);
+  --bs-badge-color: var(--bs-dark);
+}

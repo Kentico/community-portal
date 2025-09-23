@@ -3,13 +3,21 @@
 }
 
 .clamp-width {
-  --internal-clamp-width-size-min: var(--size-min, 300px);
-  --internal-clamp-width-size-preferred: var(--size-preferred, max(50cqi, 50%));
-  --internal-clamp-width-size-max: var(--size-max, max(100cqi, 100%));
-
   width: clamp(
-    var(--internal-clamp-width-size-min),
-    var(--internal-clamp-width-size-preferred),
-    var(--internal-clamp-width-size-max)
+    var(--size-min, 200px),
+    var(--size-preferred, max(50cqi, 50%)),
+    var(--size-max, max(100cqi, 100%))
   );
+}
+
+.clamp-width-mobile-full {
+  /* On mobile (< 768px), use full width */
+  width: 100%;
+
+  /* On larger screens, use size-specific responsive widths */
+  @media (min-width: 768px) {
+    /* Default width that can be overridden by inline styles */
+    width: var(--size-preferred, 50%);
+    max-width: 100%;
+  }
 }

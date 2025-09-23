@@ -37,7 +37,6 @@ public class LinkListWidget(IMediator mediator) : ViewComponent
             .Match(
                 vm => props.DesignParsed switch
                 {
-                    LinkListDesign.Call_To_Actions => View("~/Components/PageBuilder/Widgets/LinkList/CallToActions.cshtml", vm),
                     LinkListDesign.List_In_Card => View("~/Components/PageBuilder/Widgets/LinkList/ListInCard.cshtml", vm),
                     LinkListDesign.Link_List or _ => View("~/Components/PageBuilder/Widgets/LinkList/LinkList.cshtml", vm)
                 },
@@ -88,8 +87,6 @@ public enum LinkListDesign
 {
     [Description("Link list")]
     Link_List,
-    [Description("Call to actions")]
-    Call_To_Actions,
     [Description("List in Card")]
     List_In_Card,
 }

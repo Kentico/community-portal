@@ -3,15 +3,14 @@
 <vc:page-heading page="Model.Page" />
 
 <main>
-    <div class="c-section pb-6">
-        <div class="container grid gap-3">
-            <div
-                class="g-col-12 g-col-lg-6 d-flex justify-content-center align-items-center c-card bg-purple-100 rounded p-3">
-
-                <div class="d-flex gap-3 flex-column align-items-center justify-content-center">
+    <div class="section pb-6">
+        <div class="container d-grid gap-4">
+            <!-- Hero panel -->
+            <div class="g-col-12">
+                <div class="rounded-4 p-5 d-flex flex-column align-items-center justify-content-center text-center"
+                    style="background: var(--color-purple-100);">
                     <vc:avatar member-id="Model.Member.Id" />
-
-                    <h3 class="text-center">
+                    <h2 class="mt-3 mb-0 fw-semibold">
                         @if (!string.IsNullOrWhiteSpace(Model.Member.FullName))
                         {
                             @Model.Member.FullName
@@ -24,209 +23,239 @@
                         {
                             <span class="badge bg-danger ms-2">Disabled</span>
                         }
-                    </h3>
+                    </h2>
                 </div>
-
             </div>
-            <div class="g-col-12 g-col-lg-6 c-card bg-white border border-3 rounded border-purple-100">
-                <div class="c-card_inner">
-                    <h5>About me</h5>
 
-                    @{
-                        var member = Model.Member;
-                    }
+            <!-- About / badges card -->
+            <div class="g-col-12 bg-white border border-3 rounded p-4"
+                style="--bs-border-color: var(--color-purple-100);">
+                <div class="d-flex flex-column gap-4">
+                    <div>
+                        <h5 class="mb-3">About me</h5>
 
-                    <div class="c-card_content">
-                        <dl class="grid">
-                            <dt>Username:</dt>
-                            <dd>@member.UserName</dd>
+                        @{
+                            var member = Model.Member;
+                        }
 
-                            @if (!string.IsNullOrWhiteSpace(member.FullName))
-                            {
-                                <dt>Name:</dt>
-                                <dd>@member.FullName</dd>
-                            }
-
-                            <dt>Joined:</dt>
-                            <dd>@member.Created.ToString("d", View.Culture)</dd>
-
-                            @if (!string.IsNullOrWhiteSpace(member.EmployerLink.Label))
-                            {
-                                <dt>Employer:</dt>
-                                <dd>
-                                    @member.EmployerLink.Label
-                                </dd>
-                            }
-
-                            @if (!string.IsNullOrWhiteSpace(member.EmployerLink.URL))
-                            {
-                                <dt>Employer website:</dt>
-                                <dd>
-                                    <a href="@member.EmployerLink.URL" rel="noopener nofollow">
-                                        @member.EmployerLink.URL
-                                    </a>
-                                </dd>
-                            }
-
-                            @if (!string.IsNullOrWhiteSpace(member.JobTitle))
-                            {
-                                <dt>Job title:</dt>
-                                <dd>@member.JobTitle</dd>
-                            }
-
-                            @if (!string.IsNullOrWhiteSpace(member.LinkedInIdentifier))
-                            {
-                                <dt>LinkedIn:</dt>
-                                <dd>
-                                    <a href="https://www.linkedin.com/in/@member.LinkedInIdentifier"
-                                        rel="noopener nofollow">
-                                        https://www.linkedin.com/in/@member.LinkedInIdentifier
-                                    </a>
-                                </dd>
-                            }
-                        </dl>
                         <div>
-                            <h5>My badges</h5>
-                            <div class="d-flex c-card_content">
-                                <vc:member-badges badges="@Model.MemberBadges" display-style="Full" />
+                            <dl class="grid">
+                                <dt>Username:</dt>
+                                <dd>@member.UserName</dd>
+
+                                @if (!string.IsNullOrWhiteSpace(member.FullName))
+                                {
+                                    <dt>Name:</dt>
+                                    <dd>@member.FullName</dd>
+                                }
+
+                                <dt>Joined:</dt>
+                                <dd>@member.Created.ToString("d", View.Culture)</dd>
+
+                                @if (!string.IsNullOrWhiteSpace(member.EmployerLink.Label))
+                                {
+                                    <dt>Employer:</dt>
+                                    <dd>
+                                        @member.EmployerLink.Label
+                                    </dd>
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(member.EmployerLink.URL))
+                                {
+                                    <dt>Employer website:</dt>
+                                    <dd>
+                                        <a href="@member.EmployerLink.URL" rel="noopener nofollow">
+                                            @member.EmployerLink.URL
+                                        </a>
+                                    </dd>
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(member.JobTitle))
+                                {
+                                    <dt>Job title:</dt>
+                                    <dd>@member.JobTitle</dd>
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(member.LinkedInIdentifier))
+                                {
+                                    <dt>LinkedIn:</dt>
+                                    <dd>
+                                        <a href="https://www.linkedin.com/in/@member.LinkedInIdentifier"
+                                            rel="noopener nofollow">
+                                            https://www.linkedin.com/in/@member.LinkedInIdentifier
+                                        </a>
+                                    </dd>
+                                }
+                            </dl>
+                            <div>
+                                <h5 class="mb-2">My badges</h5>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <vc:member-badges badges="@Model.MemberBadges" display-style="Full" />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row mt-5">
-            <div class="col">
-                <h2 class="h1 text-center k-dot">Community member activities</h2>
+            <div class="row mt-5">
+                <div class="col">
+                    <h2 class="h1 text-center k-dot">Community member activities</h2>
+                </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="d-flex overflow-auto">
-                <ul class="nav nav-tabs flex-nowrap" id="memberActivitiesTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="contributions-tab" data-bs-toggle="tab"
-                            data-bs-target="#contributions" type="button" role="tab" aria-controls="contributions"
-                            aria-selected="true">Community contributions</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="integrations-tab" data-bs-toggle="tab"
-                            data-bs-target="#integrations" type="button" role="tab" aria-controls="integrations"
-                            aria-selected="false">Integrations</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="blogposts-tab" data-bs-toggle="tab" data-bs-target="#blogposts"
-                            type="button" role="tab" aria-controls="blogposts" aria-selected="false">Community blog
-                            posts</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="questions-tab" data-bs-toggle="tab" data-bs-target="#questions"
-                            type="button" role="tab" aria-controls="questions" aria-selected="false">Q&amp;A
-                            discussions</button>
-                    </li>
-                </ul>
-            </div>
-            <div class="tab-content mt-4" id="memberActivitiesTabContent">
-                <div class="tab-pane fade show active" id="contributions" role="tabpanel"
-                    aria-labelledby="contributions-tab">
-                    <h3>Community contributions</h3>
-                    <div class="mb-3">
-                        <small>Content about Kentico or digital marketing outside the Kentico Community Portal from this
-                            member.</small>
-                    </div>
-                    @if (Model.Contributions.Count == 0)
-                    {
-                        <p>This member has not shared any <a href="/blog">contributions</a>.</p>
-                    }
-                    @foreach (var link in Model.Contributions)
-                    {
-                        <div class="c-card article nopic mt-3">
-                            <div class="c-card_inner d-grid">
-                                <div class="c-card_title d-flex justify-content-between">
+            <div class="container">
+                <div class="d-flex overflow-auto">
+                    <ul class="nav nav-tabs flex-nowrap" id="memberActivitiesTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="contributions-tab" data-bs-toggle="tab"
+                                data-bs-target="#contributions" type="button" role="tab" aria-controls="contributions"
+                                aria-selected="true">Community contributions</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="integrations-tab" data-bs-toggle="tab"
+                                data-bs-target="#integrations" type="button" role="tab" aria-controls="integrations"
+                                aria-selected="false">Integrations</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="blogposts-tab" data-bs-toggle="tab" data-bs-target="#blogposts"
+                                type="button" role="tab" aria-controls="blogposts" aria-selected="false">Community blog
+                                posts</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="questions-tab" data-bs-toggle="tab" data-bs-target="#questions"
+                                type="button" role="tab" aria-controls="questions" aria-selected="false">Q&amp;A
+                                discussions</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content mt-4" id="memberActivitiesTabContent">
+                    <div class="tab-pane fade show active" id="contributions" role="tabpanel"
+                        aria-labelledby="contributions-tab" x-data="{ searchTerm: '' }">
+                        <h3>Community contributions</h3>
+                        <div class="mb-3">
+                            <small>Content about Kentico or digital marketing outside the Kentico Community Portal from
+                                this
+                                member.</small>
+                        </div>
+                        @if (Model.Contributions.Count > 0)
+                        {
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Search contributions..."
+                                    x-model.debounce.200ms="searchTerm">
+                            </div>
+                        }
+                        @if (Model.Contributions.Count == 0)
+                        {
+                            <p>This member has not shared any <a href="/blog">contributions</a>.</p>
+                        }
+                        @foreach (var link in Model.Contributions)
+                        {
+                            <div class="bg-white border rounded mt-3 p-3" x-data='@link.MetadataJSON'
+                                x-show="!searchTerm || searchIndex.includes(searchTerm.toLowerCase())">
+                                <div class="d-flex justify-content-between">
                                     <h4>
-                                        <a class="slash" href="@link.Path">@link.Label</a>
+                                        <a class="text-dark text-decoration-none" href="@link.Path">@link.Label</a>
                                     </h4>
                                     <small class="me-1">@link.Date.ToString("d", View.Culture)</small>
                                 </div>
                             </div>
-                        </div>
-                    }
-                </div>
-                <div class="tab-pane fade" id="integrations" role="tabpanel" aria-labelledby="integrations-tab">
-                    <h3>Integrations</h3>
-                    <div class="mb-3">
-                        <small>Open-source Xperience by Kentico integration libraries authored by this member.</small>
+                        }
                     </div>
-                    @if (Model.Integrations.Count == 0)
-                    {
-                        <p>This member has not authored any <a href="/blog">integrations</a>.</p>
-                    }
-                    @foreach (var link in Model.Integrations)
-                    {
-                        <div class="c-card article nopic mt-3">
-                            <div class="c-card_inner d-grid">
-                                <div class="c-card_title d-flex justify-content-between">
+                    <div class="tab-pane fade" id="integrations" role="tabpanel" aria-labelledby="integrations-tab"
+                        x-data="{ searchTerm: '' }">
+                        <h3>Integrations</h3>
+                        <div class="mb-3">
+                            <small>Open-source Xperience by Kentico integration libraries authored by this
+                                member.</small>
+                        </div>
+                        @if (Model.Integrations.Count > 0)
+                        {
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Search integrations..."
+                                    x-model.debounce.200ms="searchTerm">
+                            </div>
+                        }
+                        @if (Model.Integrations.Count == 0)
+                        {
+                            <p>This member has not authored any <a href="/blog">integrations</a>.</p>
+                        }
+                        @foreach (var link in Model.Integrations)
+                        {
+                            <div class="bg-white border rounded mt-3 p-3" x-data='@link.MetadataJSON'
+                                x-show="!searchTerm || searchIndex.includes(searchTerm.toLowerCase())">
+                                <div class="d-flex justify-content-between">
                                     <h4>
-                                        <a class="slash" href="@link.Path">@link.Label</a>
+                                        <a class="text-dark text-decoration-none" href="@link.Path">@link.Label</a>
                                     </h4>
                                     <small class="me-1">@link.Date.ToString("d", View.Culture)</small>
                                 </div>
                             </div>
-                        </div>
-                    }
-                </div>
-                <div class="tab-pane fade" id="blogposts" role="tabpanel" aria-labelledby="blogposts-tab">
-                    <h3>Community blog posts</h3>
-                    <div class="mb-3">
-                        <small>Blog posts on the Kentico Community Portal authored by this member.</small>
+                        }
                     </div>
-                    @if (Model.BlogPostLinks.Count == 0)
-                    {
-                        <p>This member has not authored any <a href="/blog">blog posts</a>.</p>
-                    }
-                    @foreach (var link in Model.BlogPostLinks)
-                    {
-                        <div class="c-card article nopic mt-3">
-                            <div class="c-card_inner d-grid">
-                                <div class="c-card_title d-flex justify-content-between">
+                    <div class="tab-pane fade" id="blogposts" role="tabpanel" aria-labelledby="blogposts-tab"
+                        x-data="{ searchTerm: '' }">
+                        <h3>Community blog posts</h3>
+                        <div class="mb-3">
+                            <small>Blog posts on the Kentico Community Portal authored by this member.</small>
+                        </div>
+                        @if (Model.BlogPostLinks.Count > 0)
+                        {
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Search blog posts..."
+                                    x-model.debounce.200ms="searchTerm">
+                            </div>
+                        }
+                        @if (Model.BlogPostLinks.Count == 0)
+                        {
+                            <p>This member has not authored any <a href="/blog">blog posts</a>.</p>
+                        }
+                        @foreach (var link in Model.BlogPostLinks)
+                        {
+                            <div class="bg-white border rounded mt-3 p-3" x-data='@link.MetadataJSON'
+                                x-show="!searchTerm || searchIndex.includes(searchTerm.toLowerCase())">
+                                <div class="d-flex justify-content-between">
                                     <h4>
-                                        <a class="slash" href="@link.Path">@link.Title</a>
+                                        <a class="text-dark text-decoration-none" href="@link.Path">@link.Title</a>
                                     </h4>
                                     <small class="me-1">@link.PublishedDate.ToString("d", View.Culture)</small>
                                 </div>
-                                <div class="c-card_tags">
-                                    <div class="c-group tags">
-                                        <span class="c-tag info">@link.Taxonomy</span>
-                                    </div>
+                                <div class="mt-2">
+                                    <vc:tag-list tags="new[] { link.Taxonomy }" />
                                 </div>
                             </div>
-                        </div>
-                    }
-                </div>
-                <div class="tab-pane fade" id="questions" role="tabpanel" aria-labelledby="questions-tab">
-                    <h3>Q&amp;A discussions</h3>
-                    <div class="mb-3">
-                        <small>Q&amp;A discussions started by this member.</small>
+                        }
                     </div>
-                    @if (Model.QuestionsAsked.Count == 0)
-                    {
-                        <p>This member has not started any <a href="/q-and-a">discussions</a>.</p>
-                    }
-                    @foreach (var link in Model.QuestionsAsked)
-                    {
-                        <div class="c-card article nopic mt-3">
-                            <div class="c-card_inner">
-                                <div class="c-card_title d-flex justify-content-between">
+                    <div class="tab-pane fade" id="questions" role="tabpanel" aria-labelledby="questions-tab"
+                        x-data="{ searchTerm: '' }">
+                        <h3>Q&amp;A discussions</h3>
+                        <div class="mb-3">
+                            <small>Q&amp;A discussions started by this member.</small>
+                        </div>
+                        @if (Model.QuestionsAsked.Count > 0)
+                        {
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Search discussions..."
+                                    x-model.debounce.200ms="searchTerm">
+                            </div>
+                        }
+                        @if (Model.QuestionsAsked.Count == 0)
+                        {
+                            <p>This member has not started any <a href="/q-and-a">discussions</a>.</p>
+                        }
+                        @foreach (var link in Model.QuestionsAsked)
+                        {
+                            <div class="bg-white border rounded mt-3 p-3" x-data='@link.MetadataJSON'
+                                x-show="!searchTerm || searchIndex.includes(searchTerm.toLowerCase())">
+                                <div class="d-flex justify-content-between">
                                     <h4>
-                                        <a class="slash" href="@link.Path">@link.Label</a>
+                                        <a class="text-dark text-decoration-none" href="@link.Path">@link.Label</a>
                                     </h4>
                                     <small class="me-1">@link.Date.ToString("d", View.Culture)</small>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </main>

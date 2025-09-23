@@ -1,12 +1,12 @@
 @model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CommunityGroupCard.CommunityGroupViewModel
 
-<div class="c-card widget default-border">
-    <div class="c-card_inner">
-        <img xpc-image="Model.Banner" class="card-img-top" />
+<article class="border rounded-3 p-3 widget-card" aria-label="Community group: @Model.Title">
+    <img xpc-image="Model.Banner" class="card-img-top mb-3" />
+    <header>
         <h3 class="h3 mt-2 pt-1">
             @if (Model.URL.TryGetValue(out string? url))
             {
-                <a href="@url">@Model.Title</a>
+                <a href="@url" class="text-dark text-decoration-none">@Model.Title</a>
             }
             else
             {
@@ -14,7 +14,7 @@
             }
         </h3>
         <p class="mt-2">
-            <small>
+            <small class="text-muted">
                 @if (Model.Address.StateOrProvince.TryGetValue(out string? stateOrProvince))
                 {
                     <text>@Model.Address.City, @stateOrProvince,</text>
@@ -26,6 +26,6 @@
                 @Model.Address.Country
             </small>
         </p>
-        <p class="mt-2">@Model.Description</p>
-    </div>
-</div>
+    </header>
+    <p class="mt-2">@Model.Description</p>
+</article>

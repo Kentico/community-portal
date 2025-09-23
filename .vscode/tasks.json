@@ -180,6 +180,16 @@
       "detail": "Webpack development server"
     },
     {
+      "label": "npm: build (Web)",
+      "type": "npm",
+      "script": "build",
+      "group": "build",
+      "problemMatcher": [],
+      "path": "src/Kentico.Community.Portal.Web",
+      "dependsOn": ["npm: install (Web)"],
+      "detail": "Build Web client assets (CSS, JS) with Vite"
+    },
+    {
       "label": "Xperience: CI Store",
       "detail": "Updates the CI repository with all valid objects from the local database",
       "type": "shell",

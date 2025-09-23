@@ -2,6 +2,154 @@
 
 $img-path: "/img"; // This is the runtime path - see vite.config.js
 
+////******     CSS CUSTOM PROPERTIES & DESIGN TOKENS     ******//
+
+// Define custom property types for performance and validation
+@property --color-primary {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #f05a22;
+}
+
+@property --color-primary-dark {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #c64300;
+}
+
+@property --color-secondary {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #7f09b7;
+}
+
+@property --space-scale {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 1rem;
+}
+
+@property --font-size-base {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 1rem;
+}
+
+@property --radius-base {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 1rem;
+}
+
+// Design token system with CSS custom properties
+:root {
+  // Color System
+  --color-primary: #f05a22;
+  --color-primary-dark: #c64300;
+  --color-primary-light: rgba(240, 90, 34, 0.14);
+  --color-primary-opacity: rgba(240, 90, 34, 0.1);
+  --color-primary-opacity-2: rgba(240, 90, 34, 0.3);
+  --color-secondary: #7f09b7;
+
+  // Grayscale
+  --color-white: #fff;
+  --color-black: #000;
+  --color-gray-100: #f3f4f5;
+  --color-gray-200: #e5dedc;
+  --color-gray-300: #d1c4bf;
+  --color-gray-500: #908e8f;
+  --color-gray-600: #8c8c8c;
+  --color-gray-800: #343a40;
+  --color-gray-900: #231f20;
+
+  // Semantic Colors
+  --color-blue: #00b3fc;
+  --color-blue-light: #ebf5ff;
+  --color-purple: #7f09b7;
+  --color-purple-100: #f7f1ff;
+  --color-purple-300: #ebd8ff;
+  --color-purple-900: #283f8a;
+  --color-red: #b72929;
+  --color-orange: #f05a22;
+  --color-orange-dark: #c64300;
+  --color-yellow: #fdb600;
+  --color-green: #198754;
+
+  // Spacing Scale (based on 1rem = 16px)
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4.125rem;
+
+  // Typography Scale
+  --font-size-1: 2rem;
+  --font-size-2: 1.5rem;
+  --font-size-3: 1.25rem;
+  --font-size-4: 1.125rem;
+  --font-size-5: 1rem;
+  --font-size-6: 0.875rem;
+  --font-size-7: 0.75rem;
+
+  // Heading Sizes
+  --font-size-h1: 3rem;
+  --font-size-h2: 2rem;
+  --font-size-h3: 1.5rem;
+  --font-size-h4: 1rem;
+  --font-size-h5: 0.875rem;
+  --font-size-h6: 0.75rem;
+
+  // Font Weights
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  // Border Radius
+  --radius-sm: 0.25rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 1.75rem;
+
+  // Component-specific design tokens
+  --bg-target: var(--color-purple-100); // Used for target highlighting
+  --fallback-form-bg-color: var(--color-primary); // Used in fallback forms
+  --color-suggestion-background-highlighted: var(
+    --color-purple-100
+  ); // Used in form suggestions
+
+  // Layout-specific design tokens
+  --header-height: 12.5rem; // Used in content-wrapper calculations
+  --header-height-xl: 14rem; // Used in content-wrapper calculations
+
+  // Component size tokens
+  --icon-font-size: 1em; // Used in icon component
+  --avatar-size: 2rem; // Used in avatar component
+
+  // Semantic Size Tokens (from migration analysis)
+  // Avatar and Profile Images
+  --size-author-avatar: 3.125rem; /* 50px - for blog post author images */
+  --size-profile-large: 15.625rem; /* 250px - for large profile cards */
+  --size-profile-medium: 10rem; /* 160px - medium profile images */
+
+  // Icons and Small Images
+  --size-icon-small: 1.5rem; /* 24px - small tag icons in search results */
+  --size-icon-medium: 2rem; /* 32px - medium icons */
+  --size-icon-large: 2.5rem; /* 40px - large action icons */
+
+  // Container Constraints
+  --size-container-narrow: 18.75rem; /* 300px - narrow form containers */
+  --size-container-medium: 31.25rem; /* 500px - medium content containers */
+  --size-list-max-height: 21.875rem; /* 350px - scrollable list containers */
+  --size-list-medium-height: 18.75rem; /* 300px - medium height lists */
+
+  // Form and Input Sizing
+  --size-form-suggestion: 0.75rem; /* 12px - form suggestion border radius */
+  --size-input-padding: var(--space-2); /* 0.5rem - consistent input padding */
+}
+
 ////******     BOOTSTRAP CUSTOMIZATION     ******//
 
 $white: #fff !default;

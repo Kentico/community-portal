@@ -1,12 +1,10 @@
 using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Features.Community;
 using Kentico.Community.Portal.Web.Infrastructure;
-using Kentico.Community.Portal.Web.Membership;
 using Kentico.Content.Web.Mvc;
 using Kentico.Content.Web.Mvc.Routing;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 [assembly: RegisterPageTemplate(
@@ -38,15 +36,11 @@ public class CommunityLinksPageTemplateProperties : IPageTemplateProperties
 }
 
 public class CommunityLinksPageTemplateController(
-    IMediator mediator,
     IContentRetriever contentRetriever,
-    WebPageMetaService metaService,
-    IPageBuilderTemplatePropertiesRetriever propertiesRetriever) : Controller
+    WebPageMetaService metaService) : Controller
 {
-    private readonly IMediator mediator = mediator;
     private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly WebPageMetaService metaService = metaService;
-    private readonly IPageBuilderTemplatePropertiesRetriever propertiesRetriever = propertiesRetriever;
 
     public async Task<ActionResult> Index()
     {
@@ -58,12 +52,8 @@ public class CommunityLinksPageTemplateController(
 
         metaService.SetMeta(page);
 
-        var props = propertiesRetriever.Retrieve<CommunityLinksPageTemplateProperties>();
-        var resp = await mediator.Send(new LinkContentsCommunityQuery(props.LinkPublishDelayDays));
-
-        return new TemplateResult(new CommunityLinksPageViewModel(page, [.. resp.Select(i => new CommunityLinkViewModel(i.Content, i.Member))]));
+        return new TemplateResult(new CommunityLinksPageViewModel(page));
     }
 }
 
-public record CommunityLinksPageViewModel(CommunityLinksPage Page, IReadOnlyList<CommunityLinkViewModel> Links);
-public record CommunityLinkViewModel(LinkContent Content, Maybe<CommunityMember> Member);
+public record CommunityLinksPageViewModel(CommunityLinksPage Page);

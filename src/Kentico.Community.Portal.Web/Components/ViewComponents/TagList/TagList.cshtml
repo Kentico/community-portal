@@ -1,0 +1,25 @@
+@using Kentico.Community.Portal.Web.Components.ViewComponents.TagList
+
+@model TagListViewModel
+
+@if (!Model.Tags.Any())
+{
+    return;
+}
+
+<div class="d-flex flex-wrap gap-1" role="group" aria-label="@Model.ContainerAriaLabel">
+    @foreach (string tag in Model.Tags)
+    {
+        var themeValue = Model.Variant switch
+        {
+            TagListVariant.Primary => "primary",
+            TagListVariant.Secondary => "secondary",
+            TagListVariant.Secondary_300 => "secondary-300",
+            _ => "secondary"
+        };
+
+        <span class="badge outline text-nowrap" theme="@themeValue" role="img" aria-label="Topic: @tag">
+            @tag
+        </span>
+    }
+</div>

@@ -88,7 +88,7 @@ public class IntegrationItemViewModel
 
             string memberURL = linkGenerator.GetPathByAction(nameof(MemberController.MemberDetail), "Member", new { memberID = m.Id }) ?? "";
 
-            return new IntegrationAuthorLink(m.FullName, memberURL);
+            return new IntegrationAuthorLink(m.DisplayName, memberURL);
         }
     }
 }

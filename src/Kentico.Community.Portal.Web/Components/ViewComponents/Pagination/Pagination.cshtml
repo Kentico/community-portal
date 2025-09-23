@@ -6,14 +6,14 @@
         {
             <li class="page-item">
                 <a class="page-link" href='@Model.PageLinkPath(1, Context.Request)' aria-label="First">
-                    <svg class="c-icon">
+                    <svg class="icon">
                         <use xlink:href="/img/icons.svg#pagination-left-end" asp-append-version></use>
                     </svg>
                 </a>
             </li>
             <li class="page-item">
                 <a class="page-link" href='@Model.PageLinkPath(Model.Page - 1, Context.Request)' aria-label="Previous">
-                    <svg class="c-icon">
+                    <svg class="icon">
                         <use xlink:href="/img/icons.svg#pagination-left" asp-append-version></use>
                     </svg>
                 </a>
@@ -83,14 +83,14 @@
         {
             <li class="page-item">
                 <a class="page-link" href='@Model.PageLinkPath(Model.Page + 1, Context.Request)' aria-label="Next">
-                    <svg class="c-icon">
+                    <svg class="icon">
                         <use xlink:href="/img/icons.svg#pagination-right" asp-append-version></use>
                     </svg>
                 </a>
             </li>
             <li class="page-item">
                 <a href='@Model.PageLinkPath(Model.TotalPages, Context.Request)' class="page-link" aria-label="Last">
-                    <svg class="c-icon">
+                    <svg class="icon">
                         <use xlink:href="/img/icons.svg#pagination-right-end" asp-append-version></use>
                     </svg>
                 </a>

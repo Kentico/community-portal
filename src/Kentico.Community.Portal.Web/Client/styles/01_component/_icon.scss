@@ -1,28 +1,30 @@
-.c-icon {
-  --internal-font-size: var(--icon-font-size, 1em);
+/* 
+ * Modern CSS API approach for icons
+ * JUSTIFIED: Uses CSS custom properties for dynamic sizing - can't be replaced with static Bootstrap utilities
+ * Bootstrap equivalent would require multiple fixed-size classes (.icon-sm, .icon-md, .icon-lg)
+ */
+:where(.icon) {
+  --icon-size: var(--icon-font-size, 1em);
 
-  display: inline-block;
-  height: var(--internal-font-size);
-  width: var(--internal-font-size);
-  vertical-align: top;
+  height: var(--icon-size) !important;
+  width: var(--icon-size) !important;
+}
 
-  &.chevron {
-    margin-top: -2px;
-  }
+/* Context-specific styling using CSS API - preserves button icon behavior */
+:where(.btn .icon) {
+  --icon-size: 1.25rem;
+  /* Using custom margin instead of Bootstrap .mt-n1 to maintain precise button alignment */
+  margin-top: -3px;
+}
 
-  .btn & {
-    font-size: 1.25rem;
-    margin-top: -3px;
-  }
+:where(.btn-lg .icon) {
+  --icon-size: 1.375rem;
+  /* Could potentially use .me-1 (0.25rem) but staying consistent with custom approach */
+  margin-right: 0.25rem;
+  margin-top: 0;
+}
 
-  .btn-lg & {
-    font-size: 1.375rem;
-    margin-right: 0.25rem;
-    margin-top: 0;
-  }
-
-  .btn-social & {
-    font-size: 1.5rem;
-    margin-top: 0;
-  }
+:where(.btn-social .icon) {
+  --icon-size: 1.5rem;
+  margin-top: 0;
 }

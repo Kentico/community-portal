@@ -1,0 +1,26 @@
+////******     BOOTSTRAP UTILITIES API CUSTOMIZATION     ******//
+
+// Enable responsive sizing utilities (width, height) using Bootstrap's utilities API
+// This generates classes like .w-md-100, .h-lg-50, etc.
+// Reference: https://getbootstrap.com/docs/5.3/utilities/api/
+//
+// NOTE: This file must be imported AFTER Bootstrap functions/variables
+// but BEFORE Bootstrap utilities are generated
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "width": map-merge(
+        map-get($utilities, "width"),
+        (
+          responsive: true,
+        )
+      ),
+    "height": map-merge(
+        map-get($utilities, "height"),
+        (
+          responsive: true,
+        )
+      ),
+  )
+);

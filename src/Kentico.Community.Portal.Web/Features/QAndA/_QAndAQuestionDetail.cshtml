@@ -8,35 +8,24 @@
     <div>
         <h1 class="text-left k-dot h3">@Model.Title</h1>
 
-        <div class="c-card default-border mt-3 question mb-3">
-            <div class="c-card_inner">
-                <div class="c-card_content">
-                    <div class="mb-3 d-flex justify-content-between align-items-center" data-ktc-search-exclude>
-                        <vc:author author="Model.Author" />
-                        <span>@Model.DateCreated.ToString("yyyy/MM/dd") @Model.DateCreated.ToString("t")</span>
-                    </div>
-
-                    <div class="mb-3 member-generated-content overflow-auto" hx-disable>
-                        @Model.HTMLSanitizedContentHTML
-                    </div>
-                </div>
-
-                @if (Model.DXTopics.Count > 0)
-                {
-                    <div class="c-card_tags d-flex align-items-end">
-                        <span class="me-2 align-self-start">Tags:</span>
-                        <div class="c-group tags">
-                            @foreach (string topic in Model.DXTopics)
-                            {
-                                <span class="c-tag secondary invert" title="Topic - @topic" aria-label="Topic - @topic">
-                                    @topic
-                                </span>
-                            }
-                        </div>
-                    </div>
-                }
+        <article class="border rounded-3 p-3 mt-3 mb-3">
+            <div class="mb-3 d-flex justify-content-between align-items-center" data-ktc-search-exclude>
+                <vc:author author="Model.Author" />
+                <span>@Model.DateCreated.ToString("yyyy/MM/dd") @Model.DateCreated.ToString("t")</span>
             </div>
-        </div>
+
+            <div class="mb-3 member-generated-content overflow-auto w-100 text-break" hx-disable>
+                @Model.HTMLSanitizedContentHTML
+            </div>
+
+            @if (Model.DXTopics.Count > 0)
+            {
+                <div class="d-flex align-items-end">
+                    <span class="me-2 align-self-start">Tags:</span>
+                    <vc:tag-list tags="Model.DXTopics" variant="Secondary" aria-label="Question topics" />
+                </div>
+            }
+        </article>
     </div>
 
     <div class="d-flex gap-1 justify-content-end">

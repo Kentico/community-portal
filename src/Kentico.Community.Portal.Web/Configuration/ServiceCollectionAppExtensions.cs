@@ -102,7 +102,6 @@ public static class ServiceCollectionAppExtensions
         services
             .AddTransient<ILicenseFileService, LicenseFileService>()
             .AddHostedService<SupportRequestProcessorBackgroundService>()
-            .AddSingleton<ISupportEmailSender, SupportEmailSender>()
             .Configure<SupportRequestProcessingSettings>(config.GetSection("SupportRequestProcessing"));
 
     private static IServiceCollection AddQAndA(this IServiceCollection services) =>

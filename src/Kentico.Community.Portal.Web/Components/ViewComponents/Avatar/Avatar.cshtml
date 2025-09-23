@@ -9,14 +9,14 @@
         AvatarSize.Normal or _ => "border-5"
     };
 
-    string avatarSize = Model.Size switch
+    string avatarSizeToken = Model.Size switch
     {
-        AvatarSize.Small => "2rem",
-        AvatarSize.Normal or _ => "10rem"
+        AvatarSize.Small => "--avatar-size",
+        AvatarSize.Normal or _ => "--size-profile-medium"
     };
 }
 
-<div class="@avatarClasses border border-purple-300 d-flex justify-content-center align-items-center rounded-circle overflow-hidden"
-    style="--avatar-size: @avatarSize; width: var(--avatar-size); height: var(--avatar-size);">
+<div class="@avatarClasses border d-flex justify-content-center align-items-center rounded-circle overflow-hidden"
+    style="width: var(@avatarSizeToken); height: var(@avatarSizeToken); border-color: var(--color-purple-300);">
     <img src="" class="img-fluid" xpc-member-avatar="@Model.MemberID" alt="Avatar Image" />
 </div>

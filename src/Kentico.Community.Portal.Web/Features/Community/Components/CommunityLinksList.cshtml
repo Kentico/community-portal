@@ -1,0 +1,62 @@
+@using Kentico.Content.Web.Mvc
+
+@model Kentico.Community.Portal.Web.Features.Community.CommunityLinksListViewModel
+
+<div class="section pb-7" x-data="{ searchTerm: '', selectedMember: 'all' }">
+    <div class="container">
+        <form method="get" id="communityLinksSearchForm">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 col-lg-7">
+                    <div>
+                        <input type="text" class="form-control search rounded-pill"
+                            placeholder="Search by title or description" aria-label="Search"
+                            aria-describedby="submitSearch" x-model.debounce.200ms="searchTerm">
+                    </div>
+                    <div class="w-100 mt-3">
+                        <label for="contributorFilter" class="mb-0">Contributor</label>
+                        <select id="contributorFilter" class="form-select form-select-sm w-auto d-inline"
+                            x-model="selectedMember">
+                            <option value="all">(All)</option>
+                            @foreach (var member in Model.Members)
+                            {
+                                <option value="@member.Id">@member.DisplayName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <div class="row gx-lg-6 gx-xxl-7 mt-sm-n2 mt-lg-n4">
+            @foreach (var item in Model.Items)
+            {
+                <div class="col-sm-6 col-lg-4 mt-3 mt-sm-5 mt-lg-6" x-data='@item.MetadataJSON'
+                    x-show='search.includes(searchTerm.toLowerCase()) && (selectedMember === "all" || selectedMember == memberId)'>
+                    <article class="border rounded-3 p-3 d-flex flex-column h-100 widget-card"
+                        aria-label="Community link: @item.Title">
+                        <h4 class="h4 mt-2 pt-1">
+                            <a href="@item.URL" class="text-dark text-decoration-none" aria-label="Read @item.Title"
+                                rel="noopener noreferrer" target="_blank">
+                                @item.Title
+                            </a>
+                        </h4>
+                        <div class="d-flex justify-content-between mb-2">
+                            <time datetime="@item.PublishedDate.ToString("yyyy-MM-dd")" class="small text-muted">
+                                @item.PublishedDate.ToString("d", View.Culture)
+                            </time>
+                            @if (item.Author.TryGetValue(out var author))
+                            {
+                                <small class="text-muted">by
+                                    <a href="@author.URL" aria-label="View @author.Name's profile">@author.Name</a>
+                                </small>
+                            }
+                        </div>
+
+                        <p class="mt-2 flex-grow-1">@item.ShortDescription</p>
+                    </article>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -45,8 +45,8 @@
             {
                 <div class="fallback-content justify-content-center align-items-center flex-column position-absolute w-100 h-100"
                     x-cloak :class="{ 'd-flex': showDisabled, 'd-none': !showDisabled }">
-                    <div class="p-3 bg-white rounded text-center border border-2 border-gray-100"
-                        style="background-color: var(--section-bg-color, --bs-light-rgb)">
+                    <div class="p-3 bg-white rounded text-center border border-2"
+                        style="background-color: var(--section-bg-color, --bs-light-rgb); border-color: var(--color-gray-100);">
                         <p>Please login to answer this poll.</p>
                         <a class="btn btn-primary btn-sm" asp-controller="Authentication" asp-action="Login"
                             asp-route-returnURL="@Context.Request.Path">

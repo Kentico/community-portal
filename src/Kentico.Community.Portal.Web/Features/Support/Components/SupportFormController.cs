@@ -8,11 +8,9 @@ namespace Kentico.Community.Portal.Web.Features.Support;
 
 [Route("[controller]/[action]")]
 public class SupportFormController(
-    ISupportEmailSender emailSender,
     CaptchaValidator captchaValidator,
     AzureStorageClientFactory clientFactory) : Controller
 {
-    private readonly ISupportEmailSender emailSender = emailSender;
     private readonly CaptchaValidator captchaValidator = captchaValidator;
     private readonly AzureStorageClientFactory clientFactory = clientFactory;
 
@@ -54,8 +52,6 @@ public class SupportFormController(
             AuthorEmail = requestMessage.Email
         };
         _ = await queueClient.SendMessageAsync(JsonSerializer.Serialize(queueMessage), cancellationToken);
-
-        await emailSender.SendConfirmationEmail(requestMessage, cancellationToken);
 
         return ViewComponent(typeof(SupportFormViewComponent), new SupportFormViewModel() { IsSuccess = true });
     }

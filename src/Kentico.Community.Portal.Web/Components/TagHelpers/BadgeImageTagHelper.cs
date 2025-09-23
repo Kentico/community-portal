@@ -29,7 +29,8 @@ public class BadgeImageTagHelper : TagHelper
         output.TagName = "img";
 
         output.Attributes.SetAttribute("src", badgeURL);
-        output.Attributes.SetAttribute("class", "c-tag_badge align-text-top border border-1 rounded-circle");
+        output.Attributes.SetAttribute("class", "align-text-top border border-1 rounded-2 overflow-hidden");
+        output.Attributes.SetAttribute("style", "height: 1.5rem; width: 1.5rem; --bs-border-color: var(--bs-gray-600)");
         output.Attributes.SetAttribute("alt", $"{badge.MemberBadgeDisplayName} badge");
     }
 }

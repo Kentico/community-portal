@@ -20,7 +20,8 @@ public class MemberController(
     BlogSearchService blogSearchService,
     QAndASearchService qAndASearchService,
     AvatarImageService avatarImageService,
-    MemberBadgeService memberBadgeService) : Controller
+    MemberBadgeService memberBadgeService,
+    IJSEncoder jsEncoder) : Controller
 {
     private readonly IMediator mediator = mediator;
     private readonly AvatarImageService avatarImageService = avatarImageService;
@@ -28,6 +29,7 @@ public class MemberController(
     private readonly BlogSearchService search = blogSearchService;
     private readonly QAndASearchService qAndASearchService = qAndASearchService;
     private readonly MemberBadgeService memberBadgeService = memberBadgeService;
+    private readonly IJSEncoder jsEncoder = jsEncoder;
 
     [HttpGet("{memberID:int}")]
     public async Task<IActionResult> MemberDetail(int memberID)
@@ -61,11 +63,11 @@ public class MemberController(
         var model = new MemberDetailViewModel(member)
         {
             Page = new PortalPage("Community member profile", $"Learn about {member.UserName} and their contributions to the Kentico Community"),
-            BlogPostLinks = [.. blogResult.Hits.Select(h => new BlogPostLink(h.Url, h.Title, h.PublishedDate, h.BlogType))],
-            QuestionsAsked = [.. qandaResult.Hits.Select(h => new Link(h.Url, h.Title, h.PublishedDate))],
+            BlogPostLinks = [.. blogResult.Hits.Select(h => new BlogPostLink(h.Url, h.Title, h.PublishedDate, h.BlogType, jsEncoder))],
+            QuestionsAsked = [.. qandaResult.Hits.Select(h => new Link(h.Url, h.Title, h.PublishedDate, jsEncoder))],
             MemberBadges = badges,
-            Contributions = [.. contributionsResp.Items.Select(c => new Link(c.LinkContentPathOrURL, c.BasicItemTitle, c.LinkContentPublishedDate))],
-            Integrations = [.. integrationsResp.Items.Select(i => new Link(i.IntegrationContentRepositoryLinkURL, i.BasicItemTitle, i.IntegrationContentPublishedDate))],
+            Contributions = [.. contributionsResp.Items.Select(c => new Link(c.LinkContentPathOrURL, c.BasicItemTitle, c.LinkContentPublishedDate, jsEncoder))],
+            Integrations = [.. integrationsResp.Items.Select(i => new Link(i.IntegrationContentRepositoryLinkURL, i.BasicItemTitle, i.IntegrationContentPublishedDate, jsEncoder))],
         };
 
         return View("~/Features/Members/MemberDetail.cshtml", model);
@@ -140,5 +142,15 @@ public record BlogPostLink(
     string Path,
     string Title,
     DateTime PublishedDate,
-    string Taxonomy);
-public record Link(string Path, string Label, DateTime Date);
+    string Taxonomy,
+    IJSEncoder JSEncoder)
+{
+    public string SearchIndex { get; } = Title.ToLowerInvariant();
+    public string MetadataJSON { get; } = JSEncoder.EncodeToJson(new { searchIndex = Title.ToLowerInvariant() }).ToString() ?? "";
+}
+
+public record Link(string Path, string Label, DateTime Date, IJSEncoder JSEncoder)
+{
+    public string SearchIndex { get; } = Label.ToLowerInvariant();
+    public string MetadataJSON { get; } = JSEncoder.EncodeToJson(new { searchIndex = Label.ToLowerInvariant() }).ToString() ?? "";
+}

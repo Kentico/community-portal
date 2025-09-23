@@ -1,92 +1,73 @@
-#pageContent {
-  min-height: calc(100vh - 12.25rem);
+/* 
+ * Modern CSS API approach for sections
+ * JUSTIFIED: Complex responsive layout system with viewport-based calculations,
+ * background image handling, and sophisticated responsive typography that cannot 
+ * be replaced with static Bootstrap utilities
+ */
 
-  @include media-breakpoint-up(lg) {
-    min-height: calc(100vh - 13.75rem);
+:where(.section) {
+  /* Modern unified section component with CSS custom properties */
+  position: relative;
+  overflow: hidden;
+
+  /* CSS Custom Properties for dynamic behavior */
+  --section-padding-block: 2rem 1rem;
+  --section-bg-image: none;
+  --section-bg-size: cover;
+  --section-bg-position: center center;
+  --section-margin-top: 0;
+  --section-font-scale: 1;
+
+  /* Predefined background images using SCSS variables */
+  --error404-bg: url("#{$img-path}/bg/error404-bg.svg");
+  --hero-bg: url("#{$img-path}/bg/hero-bg.jpg");
+
+  /* Apply values */
+  padding: var(--section-padding-block);
+  margin-top: var(--section-margin-top);
+  background: var(--section-bg-image) no-repeat var(--section-bg-position);
+  background-size: var(--section-bg-size);
+
+  @include media-breakpoint-up(md) {
+    --section-padding-block: 3rem;
   }
 }
+.section--error-hero {
+  --section-padding-block: 20vw;
+  --section-margin-top: 1rem;
+  --section-bg-position: left center;
+  --section-bg-size: 209% auto;
+  --section-font-scale: 3;
 
-.c-section {
-  &.default {
-    padding: 2rem 0 1rem 0;
-    overflow: hidden;
-
-    @include media-breakpoint-up(md) {
-      padding: 3rem 0;
-    }
+  /* Custom typography scaling for error hero */
+  h1,
+  .h1 {
+    font-size: calc(1.5rem * var(--section-font-scale));
   }
 
-  &.hero {
-    padding: 3.75rem 0;
-    background: url("#{$img-path}/bg/hero-bg.jpg") no-repeat center center;
-    background-size: cover;
-
-    h1,
-    .h1 {
-      font-size: 1.5rem;
-    }
+  & + .section--default {
+    padding-top: 0;
   }
 
-  &.hero-widget {
-    padding: 5.5rem 0 0;
-
-    @include media-breakpoint-up(sm) {
-      background-size: auto 10rem;
-    }
-
-    @include media-breakpoint-up(md) {
-      padding: 7rem 0 1.5rem;
-      background-size: auto 17rem;
-    }
+  @include media-breakpoint-up(sm) {
+    --section-padding-block: 10vw;
+    --section-margin-top: 0;
+    --section-bg-position: center;
+    --section-bg-size: 90% auto;
+    --section-font-scale: 3.67;
   }
 
-  &.error-hero {
-    padding: 20vw 0;
-    margin-top: 1rem;
-    background: no-repeat left center;
-    background-size: 209% auto;
+  @include media-breakpoint-up(md) {
+    --section-padding-block: 16vw;
+    --section-font-scale: 5;
+  }
 
-    &.error404 {
-      background-image: url("#{$img-path}/bg/error404-bg.svg");
-    }
+  @include media-breakpoint-up(lg) {
+    --section-padding-block: 8.5vw;
+    --section-bg-size: 72% auto;
+  }
 
-    h1,
-    .h1 {
-      font-size: 4.5rem;
-    }
-
-    & + .c-section.default {
-      padding-top: 0;
-    }
-
-    @include media-breakpoint-up(sm) {
-      padding: 10vw 0;
-      margin-top: 0;
-      background-position: center;
-      background-size: 90% auto;
-
-      h1,
-      .h1 {
-        font-size: 5.5rem;
-      }
-    }
-
-    @include media-breakpoint-up(md) {
-      padding: 16vw 0;
-
-      h1,
-      .h1 {
-        font-size: 7.5rem;
-      }
-    }
-
-    @include media-breakpoint-up(lg) {
-      padding: 8.5vw 0;
-      background-size: 72% auto;
-    }
-
-    @include media-breakpoint-up(xxl) {
-      background-size: 60% auto;
-    }
+  @include media-breakpoint-up(xxl) {
+    --section-bg-size: 60% auto;
   }
 }

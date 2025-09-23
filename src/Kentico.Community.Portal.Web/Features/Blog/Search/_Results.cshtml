@@ -4,58 +4,145 @@
 
 @foreach (var post in Model.BlogPosts)
 {
-    <div id="post-@(post.ID)" class="c-card article nopic">
-        <div class="c-card_inner d-grid">
-            <div class="c-card_title d-flex justify-content-between">
-                <div>
-                    <h3 class="me-2">
-                        <a class="slash" href="@post.LinkPath">@post.Title</a>
-                    </h3>
-                    <small class="me-1">@post.Date.ToString("d", View.Culture)</small>
+    <article id="post-@(post.ID)" class="blog-post-card" theme="secondary" aria-labelledby="post-title-@(post.ID)">
+
+        <!-- Mobile Layout: Stacked (below 768px) -->
+        <div class="d-grid d-md-none gap-2 pt-2" style="grid-template-areas: 'title' 'footer' 'content' 'tags';">
+
+            <!-- Blog Post Title & Type Badge -->
+            <header style="grid-area: title;" class="d-flex justify-content-between align-items-start gap-3">
+                <div class="flex-grow-1">
+                    <h2 id="post-title-@(post.ID)" class="mb-1 fs-3 fw-semibold">
+                        <a href="@post.LinkPath" class="text-decoration-none blog-post-link text-dark"
+                            style="outline-offset: 2px;" aria-describedby="post-date-@(post.ID) post-author-@(post.ID)">
+                            @post.Title
+                        </a>
+                    </h2>
+                    <time id="post-date-@(post.ID)" datetime="@post.Date.ToString("yyyy-MM-dd")" class="small text-muted">
+                        @post.Date.ToString("d", View.Culture)
+                    </time>
                 </div>
-                <div class="c-card_tags p-0">
-                    <div class="c-group tags justify-content-end">
-                        <span class="c-tag secondary" title="Blog type - @post.BlogType"
-                            aria-label="Blog type - @post.BlogType">
+
+                <!-- Blog Type Badge -->
+                <div class="flex-shrink-0 p-0">
+                    <div class="d-flex justify-content-end">
+                        <span
+                            class="badge d-inline-flex align-items-center text-nowrap bg-secondary text-white py-1 px-2 rounded-pill small fw-medium"
+                            role="img" aria-label="Post type: @post.BlogType">
                             @post.BlogType
                         </span>
                     </div>
                 </div>
-            </div>
-            <div class="c-card_footer d-flex flex-sm-column align-items-end">
+            </header>
+
+            <!-- Author Information -->
+            <div style="grid-area: footer;" class="d-flex align-items-center">
                 @if (post.Author.ID > 0)
                 {
-                    <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
-                        class="c-tag secondary invert user">
-                        <img xpc-image="post.Author.Photo" style="max-width: 24px" class="c-tag_icon me-1" />
-                        <span>@post.Author.Name</span>
+                    <a id="post-author-@(post.ID)" asp-controller="Member" asp-action="MemberDetail"
+                        asp-route-memberID="@post.Author.ID"
+                        class="d-inline-flex align-items-center text-decoration-none author-link border border-secondary text-secondary bg-white rounded-pill p-1 small fw-medium"
+                        style="outline-offset: 2px;" aria-label="View profile of @post.Author.Name">
+                        <img xpc-image="post.Author.Photo" class="rounded me-1 icon" style="--icon-font-size: 1.2rem"
+                            role="presentation" />
+                        <span class="px-1">@post.Author.Name</span>
                     </a>
                 }
                 else
                 {
-                    <div>
-                        <img xpc-image="post.Author.Photo" style="max-width: 24px" class="c-tag_icon me-1" />
-                        <span>@post.Author.Name</span>
+                    <div id="post-author-@(post.ID)"
+                        class="d-inline-flex align-items-center bg-light text-dark rounded-pill p-1 small fw-medium" role="text"
+                        aria-label="Author: @post.Author.Name">
+                        <img xpc-image="post.Author.Photo" class="rounded me-1 icon" style="--icon-font-size: 1.2rem"
+                            role="presentation" />
+                        <span class="px-1">@post.Author.Name</span>
                     </div>
                 }
             </div>
-            <div class="c-card_content">
-                <p>@post.ShortDescription</p>
+
+            <!-- Blog Post Content -->
+            <div style="grid-area: content;" class="pt-2">
+                <p class="mb-0" id="post-excerpt-@(post.ID)">@post.ShortDescription</p>
             </div>
 
-            <div class="c-card_tags d-flex align-items-end">
-                <div class="c-group tags">
-                    @foreach (string tag in post.DXTopics)
-                    {
-                        <span class="c-tag secondary invert" title="Topic - @tag" aria-label="Topic - @tag">
-                            @tag
-                        </span>
-                    }
+            <!-- Topic Tags -->
+            @if (post.DXTopics.Any())
+            {
+                <div style="grid-area: tags;" class="pt-2">
+                    <vc:tag-list tags="post.DXTopics" variant="Secondary" aria-label="Post topics" />
                 </div>
+            }
+
+        </div>
+
+        <!-- Desktop Layout: Grid (768px and above) -->
+        <div class="d-none d-md-grid gap-3"
+            style="grid-template-columns: auto auto; grid-template-rows: auto auto; grid-template-areas: 'title title' 'content content' 'tags footer';">
+
+            <!-- Blog Post Title & Type Badge -->
+            <header style="grid-area: title;" class="d-flex justify-content-between align-items-start gap-3">
+                <div class="flex-grow-1">
+                    <h2 class="mb-1 fs-3 fw-semibold">
+                        <a href="@post.LinkPath" class="text-decoration-none blog-post-link text-dark"
+                            style="outline-offset: 2px;">
+                            @post.Title
+                        </a>
+                    </h2>
+                    <time datetime="@post.Date.ToString("yyyy-MM-dd")" class="small text-muted">
+                        @post.Date.ToString("d", View.Culture)
+                    </time>
+                </div>
+
+                <!-- Blog Type Badge -->
+                <div class="flex-shrink-0">
+                    <div class="d-flex justify-content-end">
+                        <span
+                            class="badge d-inline-flex align-items-center text-nowrap bg-secondary text-white py-1 px-2 rounded-pill small fw-medium"
+                            role="img" aria-label="Post type: @post.BlogType">
+                            @post.BlogType
+                        </span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Blog Post Content -->
+            <div style="grid-area: content;" class="pt-2">
+                <p class="mb-0">@post.ShortDescription</p>
+            </div>
+
+            <!-- Topic Tags -->
+            @if (post.DXTopics.Any())
+            {
+                <div style="grid-area: tags;" class="pt-2">
+                    <vc:tag-list tags="post.DXTopics" variant="Secondary" aria-label="Post topics" />
+                </div>
+            }
+
+            <!-- Author Information (Desktop - Bottom Right) -->
+            <div style="grid-area: footer;" class="d-flex justify-content-end align-items-end pt-2">
+                @if (post.Author.ID > 0)
+                {
+                    <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
+                        class="d-inline-flex align-items-center text-decoration-none author-link border border-secondary text-secondary bg-white rounded-pill text-nowrap p-1 small fw-medium"
+                        style="outline-offset: 2px;" aria-label="View profile of @post.Author.Name">
+                        <img xpc-image="post.Author.Photo" class="rounded me-1 icon" style="--icon-font-size: 1.2rem"
+                            role="presentation" />
+                        <span class="px-1">@post.Author.Name</span>
+                    </a>
+                }
+                else
+                {
+                    <div class="d-inline-flex align-items-center bg-light text-dark rounded-pill text-nowrap p-1 small fw-medium"
+                        role="text" aria-label="Author: @post.Author.Name">
+                        <img xpc-image="post.Author.Photo" class="rounded me-1 icon" style="--icon-font-size: 1.2rem"
+                            role="presentation" />
+                        <span class="px-1">@post.Author.Name</span>
+                    </div>
+                }
             </div>
 
         </div>
-    </div>
+    </article>
 }
 
 @if (Model.BlogPosts.Count == 0 && Model.TotalPages == 0)
@@ -66,6 +153,29 @@
 }
 
 <vc:pagination model="Model" />
+
+<style>
+    /* Component-specific styles for blog search results */
+    .blog-post-link:hover,
+    .blog-post-link:focus {
+        text-decoration: underline !important;
+    }
+
+    .author-link:focus,
+    .author-link:hover {
+        background-color: var(--bs-secondary) !important;
+        color: white !important;
+        border-color: var(--bs-secondary) !important;
+        outline: 2px solid var(--color-purple);
+        outline-offset: 2px;
+    }
+
+    /* Ensure badges are announced properly */
+    .badge[role="img"] {
+        display: inline-flex;
+        align-items: center;
+    }
+</style>
 
 <script type="module">
     asyncReady(async () => {
