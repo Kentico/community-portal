@@ -1,5 +1,4 @@
 using CMS.ContentEngine;
-using CMS.Core;
 using CMS.DataEngine;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
@@ -15,7 +14,7 @@ namespace Kentico.Community.Portal.Web.Features.QAndA.Events;
 public class QAndAAnswerSearchIndexTaskHandler(
     IChannelDataProvider channelProvider,
     IContentQueryExecutor executor,
-    IEventLogService log,
+    ILogger<QAndAAnswerSearchIndexTaskHandler> logger,
     ILuceneTaskLogger taskLogger) :
         IInfoObjectEventHandler<InfoObjectBeforeInsertEvent<QAndAAnswerDataInfo>>,
         IInfoObjectEventHandler<InfoObjectBeforeUpdateEvent<QAndAAnswerDataInfo>>,
@@ -23,7 +22,7 @@ public class QAndAAnswerSearchIndexTaskHandler(
 {
     private readonly IChannelDataProvider channelProvider = channelProvider;
     private readonly IContentQueryExecutor executor = executor;
-    private readonly IEventLogService log = log;
+    private readonly ILogger<QAndAAnswerSearchIndexTaskHandler> logger = logger;
     private readonly ILuceneTaskLogger taskLogger = taskLogger;
 
     public void Handle(InfoObjectBeforeInsertEvent<QAndAAnswerDataInfo> infoObjectEvent) =>
@@ -51,10 +50,7 @@ public class QAndAAnswerSearchIndexTaskHandler(
         var page = (await executor.GetMappedWebPageResult<QAndAQuestionPage>(b, cancellationToken: cancellationToken)).FirstOrDefault();
         if (page is null)
         {
-            log.LogWarning(
-                source: nameof(QAndAAnswerSearchIndexTaskHandler),
-                eventCode: "MISSING_QUESTION",
-                eventDescription: $"Could not find question web site page [{questionWebPageID}] for answer [{answer.QAndAAnswerDataGUID}].{Environment.NewLine}Skipping search index update.");
+            logger.LogWarning(new EventId(0, "MISSING_QUESTION"), "Missing question page {QuestionWebPageID} for answer {AnswerGuid}. Skipping search index update.", questionWebPageID, answer.QAndAAnswerDataGUID);
 
             return;
         }
@@ -62,10 +58,7 @@ public class QAndAAnswerSearchIndexTaskHandler(
         string? channelName = await channelProvider.GetChannelNameByWebsiteChannelID(page.SystemFields.WebPageItemWebsiteChannelId, cancellationToken);
         if (channelName is null)
         {
-            log.LogWarning(
-                source: nameof(QAndAAnswerSearchIndexTaskHandler),
-                eventCode: "INVALID_CHANNEL",
-                eventDescription: $"Could not retrieve a channel name for website channel [{page.SystemFields.WebPageItemWebsiteChannelId}] for answer [{answer.QAndAAnswerDataGUID}].{Environment.NewLine}Skipping search index update.");
+            logger.LogWarning(new EventId(0, "INVALID_CHANNEL"), "Could not retrieve channel name for website channel {WebsiteChannelID} for answer {AnswerGuid}. Skipping search index update.", page.SystemFields.WebPageItemWebsiteChannelId, answer.QAndAAnswerDataGUID);
 
             return;
         }

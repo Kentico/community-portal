@@ -5,6 +5,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
+using CMS.Core;
 using CMS.DataEngine;
 using CMS.Helpers;
 using Kentico.Community.Portal.Core.Modules;

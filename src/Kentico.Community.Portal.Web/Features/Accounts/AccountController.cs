@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using CMS.Core;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Infrastructure;
@@ -22,7 +21,7 @@ public class AccountController(
     MemberContactManager contactManager,
     MemberBadgeService memberBadgeService,
     AvatarImageService avatarImageService,
-    IEventLogService log,
+    ILogger<AccountController> logger,
     LinkGenerator linkGenerator) : Controller
 {
     private readonly WebPageMetaService metaService = metaService;
@@ -31,7 +30,7 @@ public class AccountController(
     private readonly MemberContactManager contactManager = contactManager;
     private readonly MemberBadgeService memberBadgeService = memberBadgeService;
     private readonly AvatarImageService avatarImageService = avatarImageService;
-    private readonly IEventLogService log = log;
+    private readonly ILogger<AccountController> logger = logger;
     private readonly LinkGenerator linkGenerator = linkGenerator;
 
     [HttpGet]
@@ -166,10 +165,8 @@ public class AccountController(
         }
         catch (Exception ex)
         {
-            log.LogException(nameof(UpdateAvatarImage), "UPDATE_AVATAR", ex);
-
+            logger.LogError(new EventId(0, "UPDATE_AVATAR_FAILURE"), ex, "Failed to update avatar for member {MemberID}", member.Id);
             ModelState.AddModelError(nameof(AvatarFormViewModel.AvatarImageFileAttachment), "There was a problem with the application and we could not update your avatar.");
-
             return PartialView("~/Features/Accounts/_AvatarForm.cshtml", model);
         }
 

@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using CMS.Core;
 using Kentico.Xperience.Lucene.Core.Indexing;
 using Kentico.Xperience.Lucene.Core.Search;
 using Lucene.Net.Analysis.Standard;
@@ -129,7 +128,7 @@ public class QAndASearchResult
 
 public class QAndASearchService(
     ILuceneSearchService luceneSearchService,
-    IEventLogService log,
+    ILogger<QAndASearchService> logger,
     QAndASearchIndexingStrategy qAndASearchStrategy,
     ILuceneIndexManager indexManager)
 {
@@ -137,7 +136,7 @@ public class QAndASearchService(
     private const int MAX_RESULTS = 1000;
 
     private readonly ILuceneSearchService luceneSearchService = luceneSearchService;
-    private readonly IEventLogService log = log;
+    private readonly ILogger<QAndASearchService> logger = logger;
     private readonly QAndASearchIndexingStrategy qAndASearchStrategy = qAndASearchStrategy;
     private readonly ILuceneIndexManager indexManager = indexManager;
 
@@ -171,8 +170,7 @@ public class QAndASearchService(
         }
         catch (Exception ex)
         {
-            log.LogException(nameof(QAndASearchService), "Q&A_SEARCH_FAILURE", ex);
-
+            logger.LogError(new EventId(0, "Q_AND_A_SEARCH_FAILURE"), ex, "Q&A search failed for query '{Query}'", request.SearchText);
             return QAndASearchResult.Empty(request);
         }
     }
@@ -200,7 +198,7 @@ public class QAndASearchService(
         {
             var (slop, term) = searchText switch
             {
-            ['"', .., '"'] => (0, searchText.Trim('"')),
+                ['"', .., '"'] => (0, searchText.Trim('"')),
                 _ => (PHRASE_SLOP, searchText)
             };
 

@@ -1,5 +1,4 @@
 using System.Web;
-using CMS.Core;
 using Htmx;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Registration;
@@ -21,14 +20,14 @@ public class AuthenticationController(
     UserManager<CommunityMember> userManager,
     WebPageMetaService metaService,
     IStringLocalizer<SharedResources> localizer,
-    IEventLogService log,
+    ILogger<AuthenticationController> logger,
     MemberContactManager contactManager) : Controller
 {
     private readonly SignInManager<CommunityMember> signInManager = signInManager;
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly WebPageMetaService metaService = metaService;
     private readonly IStringLocalizer<SharedResources> localizer = localizer;
-    private readonly IEventLogService log = log;
+    private readonly ILogger<AuthenticationController> logger = logger;
     private readonly MemberContactManager contactManager = contactManager;
 
     [HttpGet]
@@ -87,8 +86,7 @@ public class AuthenticationController(
         }
         catch (Exception ex)
         {
-            log.LogException(nameof(AuthenticationController), nameof(Login), ex);
-
+            logger.LogError(new EventId(0, "LOGIN_FAILURE"), ex, "Login failed for user input {UserIdentifier}", model.UserNameOrEmail);
             signInResult = SignInResult.Failed;
         }
 

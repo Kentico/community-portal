@@ -1,6 +1,5 @@
 ﻿using System.Text.RegularExpressions;
 using CMS.ContentEngine.Internal;
-using CMS.Core;
 using CMS.Helpers;
 using CMS.Websites.Routing;
 using Newtonsoft.Json;
@@ -11,14 +10,14 @@ namespace Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Licenses;
 /// Service for reading and processing license files from content hub assets.
 /// </summary>
 public partial class LicenseFileService(
-    IEventLogService eventLogService,
+    ILogger<LicenseFileService> logger,
     IWebsiteChannelContext websiteChannelContext,
     IContentItemAssetPathProvider contentItemAssetPathProvider,
     IProgressiveCache cache) : ILicenseFileService
 {
     private const int CacheMinutes = 10;
 
-    private readonly IEventLogService eventLogService = eventLogService;
+    private readonly ILogger<LicenseFileService> logger = logger;
     private readonly IWebsiteChannelContext websiteChannelContext = websiteChannelContext;
     private readonly IContentItemAssetPathProvider contentItemAssetPathProvider = contentItemAssetPathProvider;
     private readonly IProgressiveCache cache = cache;
@@ -86,8 +85,7 @@ public partial class LicenseFileService(
         }
         catch (Exception exception)
         {
-            eventLogService.LogEvent(EventTypeEnum.Error, nameof(LicenseFileService), nameof(GetLicenses),
-                exception.ToString());
+            logger.LogError(new EventId(0, "LICENSES_GET_FAILURE"), exception, "Failed to read and deserialize licenses file at path {FilePath}", filePath);
         }
 
         return result;

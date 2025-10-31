@@ -1,5 +1,4 @@
-﻿using CMS.Core;
-using Htmx;
+﻿using Htmx;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
@@ -21,8 +20,8 @@ public class QAndAQuestionController(
     IWebPageUrlRetriever urlRetriever,
     TimeProvider clock,
     IContentRetriever contentRetriever,
-    IEventLogService log,
-    IQAndAPermissionService permissionService) : PortalHandlerController(log)
+    ILogger<QAndAQuestionController> logger,
+    IQAndAPermissionService permissionService) : PortalHandlerController<QAndAQuestionController>(logger)
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly IMediator mediator = mediator;

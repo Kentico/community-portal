@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Send configuration contact group</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="SendConfigurationContactGroupID" columntype="integer" enabled="true" guid="a5e76f4c-2c8d-4fb1-9d15-e8f21aad7c6e" isPK="true" system="true" />
+      <field column="SendConfigurationContactGroupSendConfigurationID" columnprecision="0" columntype="integer" enabled="true" guid="b7c83a19-3e45-4e12-a8d7-9fc18bb6c732" refobjtype="emaillibrary.sendconfiguration" reftype="Binding" system="true" />
+      <field column="SendConfigurationContactGroupContactGroupID" columnprecision="0" columntype="integer" enabled="true" guid="d1c45f71-6a7e-47b5-bc4a-83e679fd1e88" refobjtype="om.contactgroup" reftype="Binding" system="true" />
+      <field column="SendConfigurationContactGroupType" columnprecision="0" columntype="integer" enabled="true" guid="f9e72c13-5b83-4d5c-bcb8-59e2b1d7a6f9" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>dc97ef8a-c0fd-4c92-9bdb-5fa9d32e7314</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>EmailLibrary.SendConfigurationContactGroup</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.EmailLibrary</CodeName>
+    <GUID>028f4adc-346c-434a-8992-408c8b45a986</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>EmailLibrary_SendConfigurationContactGroup</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

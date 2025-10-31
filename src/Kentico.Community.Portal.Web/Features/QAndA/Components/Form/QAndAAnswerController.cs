@@ -1,4 +1,3 @@
-using CMS.Core;
 using Htmx;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
@@ -19,7 +18,7 @@ public class QAndAAnswerController(
     IMediator mediator,
     IContentRetriever contentRetriever,
     IQAndAPermissionService permissionService,
-    IEventLogService log) : PortalHandlerController(log)
+    ILogger<QAndAAnswerController> logger) : PortalHandlerController<QAndAAnswerController>(logger)
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;

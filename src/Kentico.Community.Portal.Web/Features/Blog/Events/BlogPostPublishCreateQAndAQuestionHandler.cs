@@ -1,4 +1,3 @@
-using CMS.Core;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Membership;
@@ -16,13 +15,13 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
     IContentRetriever contentRetriever,
     IWebPageUrlRetriever pageUrlRetriever,
     TimeProvider clock,
-    IEventLogService log)
+    ILogger<BlogPostPublishCreateQAndAQuestionHandler> logger)
 {
     private readonly IMediator mediator = mediator;
     private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly IWebPageUrlRetriever pageUrlRetriever = pageUrlRetriever;
     private readonly TimeProvider clock = clock;
-    private readonly IEventLogService log = log;
+    private readonly ILogger<BlogPostPublishCreateQAndAQuestionHandler> logger = logger;
 
     public async Task Handle(PublishWebPageEventArgs args)
     {
@@ -88,6 +87,6 @@ public class BlogPostPublishCreateQAndAQuestionHandler(
             })
             .Match(
                 MonadUtilities.Noop,
-                err => log.LogError(nameof(BlogPostPublishCreateQAndAQuestionHandler), "UPDATE_BLOG_QUESTION", err));
+                err => logger.LogError(new EventId(0, "UPDATE_BLOG_QUESTION"), "Failed to update blog question relationship: {Error}", err));
     }
 }

@@ -1,5 +1,4 @@
-﻿using CMS.Core;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 
 namespace Kentico.Community.Portal.Web.Infrastructure.Search;
@@ -8,16 +7,16 @@ public class WebCrawlerService
 {
     private readonly HttpClient httpClient;
     private readonly IWebPageUrlRetriever urlRetriever;
-    private readonly IEventLogService log;
+    private readonly ILogger<WebCrawlerService> logger;
 
-    public WebCrawlerService(HttpClient httpClient, IWebPageUrlRetriever urlRetriever, IEventLogService log, IOptions<CommunityLuceneSearchOptions> searchOptions)
+    public WebCrawlerService(HttpClient httpClient, IWebPageUrlRetriever urlRetriever, ILogger<WebCrawlerService> logger, IOptions<CommunityLuceneSearchOptions> searchOptions)
     {
         this.httpClient = httpClient;
         this.httpClient.DefaultRequestHeaders.Add(HeaderNames.UserAgent, "SearchCrawler");
         this.httpClient.BaseAddress = new Uri(searchOptions.Value.WebCrawlerBaseUrl);
 
         this.urlRetriever = urlRetriever;
-        this.log = log;
+        this.logger = logger;
     }
 
     public async Task<string> CrawlWebPage(IWebPageFieldsSource page)
@@ -31,7 +30,7 @@ public class WebCrawlerService
         }
         catch (Exception ex)
         {
-            log.LogException(nameof(WebCrawlerService), nameof(CrawlWebPage), ex, $"Tree Path: {page.SystemFields.WebPageItemTreePath}");
+            logger.LogError(new EventId(0, "WEB_CRAWL_FAILURE"), ex, "Failed to crawl web page with tree path {TreePath}", page.SystemFields.WebPageItemTreePath);
         }
         return "";
     }
@@ -45,11 +44,7 @@ public class WebCrawlerService
         }
         catch (Exception ex)
         {
-            log.LogException(
-                nameof(WebCrawlerService),
-                nameof(CrawlPage),
-                ex,
-                $"Url: {url}");
+            logger.LogError(new EventId(0, "WEB_CRAWL_PAGE_FAILURE"), ex, "Failed to crawl url {Url}", url);
         }
         return "";
     }

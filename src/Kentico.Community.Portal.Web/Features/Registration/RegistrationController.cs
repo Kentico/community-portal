@@ -1,4 +1,3 @@
-using CMS.Core;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
@@ -16,7 +15,7 @@ public class RegistrationController(
     UserManager<CommunityMember> userManager,
     CaptchaValidator captchaValidator,
     IStringLocalizer<SharedResources> localizer,
-    IEventLogService log,
+    ILogger<RegistrationController> logger,
     IMemberEmailService emailService,
     ConsentManager consentManager) : Controller
 {
@@ -24,7 +23,7 @@ public class RegistrationController(
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly CaptchaValidator captchaValidator = captchaValidator;
     private readonly IStringLocalizer<SharedResources> localizer = localizer;
-    private readonly IEventLogService log = log;
+    private readonly ILogger<RegistrationController> logger = logger;
     private readonly IMemberEmailService emailService = emailService;
     private readonly ConsentManager consentManager = consentManager;
 
@@ -71,7 +70,7 @@ public class RegistrationController(
         }
         catch (Exception ex)
         {
-            log.LogException(nameof(RegistrationController), nameof(Register), ex);
+            logger.LogError(new EventId(0, "REGISTER_FAILURE"), ex, "Member registration failed for username {Username}", model.UserName);
             registerResult = IdentityResult.Failed([new() { Code = "Failure", Description = "Your registration was not successful." }]);
         }
 

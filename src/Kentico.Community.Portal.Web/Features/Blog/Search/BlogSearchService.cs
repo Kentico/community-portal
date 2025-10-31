@@ -1,5 +1,4 @@
-﻿using CMS.Core;
-using Kentico.Xperience.Lucene.Core.Indexing;
+﻿using Kentico.Xperience.Lucene.Core.Indexing;
 using Kentico.Xperience.Lucene.Core.Search;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
@@ -109,7 +108,7 @@ public class BlogSearchResults
 
 public class BlogSearchService(
     ILuceneSearchService luceneSearchService,
-    IEventLogService log,
+    ILogger<BlogSearchService> logger,
     BlogSearchIndexingStrategy blogSearchStrategy,
     ILuceneIndexManager indexManager)
 {
@@ -117,7 +116,7 @@ public class BlogSearchService(
     private const int MAX_RESULTS = 1000;
 
     private readonly ILuceneSearchService luceneSearchService = luceneSearchService;
-    private readonly IEventLogService log = log;
+    private readonly ILogger<BlogSearchService> logger = logger;
     private readonly BlogSearchIndexingStrategy blogSearchStrategy = blogSearchStrategy;
     private readonly ILuceneIndexManager indexManager = indexManager;
 
@@ -153,8 +152,7 @@ public class BlogSearchService(
         }
         catch (Exception ex)
         {
-            log.LogException(nameof(BlogSearchService), "BLOG_SEARCH_FAILURE", ex);
-
+            logger.LogError(new EventId(0, "BLOG_SEARCH_FAILURE"), ex, "Blog search failed for query '{Query}'", request.SearchText);
             return BlogSearchResults.Empty(request);
         }
     }
@@ -202,7 +200,7 @@ public class BlogSearchService(
         {
             var (slop, term) = searchText switch
             {
-            ['"', .., '"'] => (0, searchText.Trim('"')),
+                ['"', .., '"'] => (0, searchText.Trim('"')),
                 _ => (PHRASE_SLOP, searchText)
             };
 

@@ -1,8 +1,6 @@
-﻿using CMS.Core;
-using CMS.DataEngine;
+﻿using CMS.DataEngine;
 using CMS.Helpers;
 using CMS.Membership;
-
 using Kentico.Community.Portal.Core.Modules;
 
 namespace Kentico.Community.Portal.Web.Features.Members.Badges;
@@ -15,7 +13,7 @@ public class MemberBadgeAssignmentApplicationBackgroundService : ApplicationLife
     private readonly IProgressiveCache cache;
     private readonly IInfoProvider<MemberInfo> memberInfoProvider;
     private readonly IInfoProvider<MemberBadgeConfigurationInfo> memberBadgeConfigurationProvider;
-    private readonly IEventLogService log;
+    private readonly ILogger<MemberBadgeAssignmentApplicationBackgroundService> logger;
     private readonly TimeProvider clock;
 
     private static int RestartDelayMinutes { get; } = 10;
@@ -27,7 +25,7 @@ public class MemberBadgeAssignmentApplicationBackgroundService : ApplicationLife
         IProgressiveCache cache,
         IInfoProvider<MemberInfo> memberInfoProvider,
         IInfoProvider<MemberBadgeConfigurationInfo> memberBadgeConfigurationProvider,
-        IEventLogService log,
+        ILogger<MemberBadgeAssignmentApplicationBackgroundService> logger,
         TimeProvider clock)
     {
         this.serviceProvider = serviceProvider;
@@ -36,7 +34,7 @@ public class MemberBadgeAssignmentApplicationBackgroundService : ApplicationLife
         this.cache = cache;
         this.memberInfoProvider = memberInfoProvider;
         this.memberBadgeConfigurationProvider = memberBadgeConfigurationProvider;
-        this.log = log;
+        this.logger = logger;
         this.clock = clock;
 
         ShouldRestart = true;
@@ -88,7 +86,7 @@ public class MemberBadgeAssignmentApplicationBackgroundService : ApplicationLife
 
         if (config.MemberBadgeConfigurationIsLoggingVerbose)
         {
-            log.LogInformation("Member Badge Assignment", "EXECUTE", $"Running badge assignment for {assignmentRules.Count()} rules");
+            logger.LogInformation(new EventId(0, "EXECUTE"), "Running badge assignment for {RulesCount} rules", assignmentRules.Count());
         }
 
         var assignments = new Dictionary<string, string>();
@@ -108,11 +106,7 @@ public class MemberBadgeAssignmentApplicationBackgroundService : ApplicationLife
         if (config.MemberBadgeConfigurationIsLoggingVerbose)
         {
             string formattedMessage = string.Join(Environment.NewLine, assignments.Select(pair => $"{pair.Key}: {pair.Value}"));
-
-            log.LogInformation(
-                "Member Badge Assignment",
-                "BADGE_ASSIGNMENTS",
-                formattedMessage);
+            logger.LogInformation(new EventId(0, "BADGE_ASSIGNMENTS"), "Badge assignments summary:\n{Assignments}", formattedMessage);
         }
 
         // Once all assignments have executed, wait for the timer to expire and then returns control to the caller
@@ -170,7 +164,7 @@ public class MemberBadgeAssignmentApplicationBackgroundService : ApplicationLife
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {
-            log.LogException("Member Badge Assignment", "BADGE_ASSIGNMENT_FAILURE", ex);
+            logger.LogError(new EventId(0, "BADGE_ASSIGNMENT_FAILURE"), ex, "Member badge assignment rule {Rule} failed", assignmentRule.BadgeCodeName);
             return Result.Failure<int>("ASSIGNMENT_EXCEPTION");
         }
 

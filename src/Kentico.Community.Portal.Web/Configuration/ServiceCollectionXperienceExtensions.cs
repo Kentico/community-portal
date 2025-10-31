@@ -21,7 +21,6 @@ using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Web.Mvc;
 using Kentico.Xperience.Mjml;
 using Microsoft.AspNetCore.Localization.Routing;
-using XperienceCommunity.MCPServer;
 
 [assembly: RegisterModule(typeof(StorageInitializationModule))]
 
@@ -94,10 +93,6 @@ public static class ServiceCollectionXperienceExtensions
                 {
                     _ = c.AddKenticoMiniProfiler();
                 }
-            })
-            .IfDevelopment(env, c =>
-            {
-                _ = c.AddXperienceMCPServer();
             })
             .IfDevelopment(env, c =>
             {

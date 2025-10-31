@@ -122,11 +122,11 @@ public static class RateLimitingUtilities
     private static void LogEvent(OnRejectedContext context)
     {
         var httpContext = context.HttpContext;
-        var log = httpContext.RequestServices.GetRequiredService<IEventLogService>()!;
+        var logger = httpContext.RequestServices.GetRequiredService<ILoggerFactory>()
+            .CreateLogger("Kentico.Community.Portal.Web.RateLimiting");
         string requester = StandardPartitionKeySelector(httpContext);
-        var sb = new StringBuilder($"Rate limit exceeded.");
-        _ = sb
-            .AppendLine($"Requester: {requester}.");
+        var sb = new StringBuilder("Rate limit exceeded.");
+        _ = sb.AppendLine("Requester: {Requester}.");
         foreach (var (metaKey, metaValue) in context.Lease.GetAllMetadata())
         {
             _ = sb.AppendLine($"{metaKey}: {metaValue}");
@@ -141,11 +141,9 @@ public static class RateLimitingUtilities
             ? $"{prefix}{requester}"
             : $"{prefix}{requester[..maxRequesterLength]}";
 
-        log.LogWarning(
-            nameof(RateLimitingUtilities),
-            eventCode,
-            sb.ToString(),
-            new LoggingPolicy(TimeSpan.FromMinutes(10)));
-
+        // Interval policy equivalent of previous LoggingPolicy(TimeSpan.FromMinutes(10))
+        logger.LogWithIntervalPolicy(
+            LoggingIntervalPolicy.OncePerPeriod(eventCode, TimeSpan.FromMinutes(10)),
+            l => l.LogWarning(new EventId(0, eventCode), sb.ToString(), requester));
     }
 }

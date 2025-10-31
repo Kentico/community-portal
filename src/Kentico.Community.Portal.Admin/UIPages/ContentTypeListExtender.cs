@@ -1,5 +1,4 @@
 using CMS.ContentEngine;
-using CMS.Core;
 using CMS.DataEngine;
 using CSharpFunctionalExtensions;
 using Kentico.Community.Portal.Admin.UIPages;
@@ -8,14 +7,16 @@ using Kentico.Xperience.Admin.Base.Filters;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Kentico.Xperience.Admin.Base.Forms;
 using Kentico.Xperience.Admin.Base.UIPages;
+using Microsoft.Extensions.Logging;
 
 [assembly: PageExtender(typeof(ContentTypeListExtender))]
 
 namespace Kentico.Community.Portal.Admin.UIPages;
 
-public class ContentTypeListExtender(IEventLogService log) : PageExtender<ContentTypeList>
+public class ContentTypeListExtender(ILogger<ContentTypeListExtender> logger) : PageExtender<ContentTypeList>
 {
-    private readonly IEventLogService log = log;
+    private readonly ILogger<ContentTypeListExtender> logger = logger;
+    private static readonly HashSet<string> loggedOnce = [];
 
     public override async Task ConfigurePage()
     {
@@ -29,10 +30,10 @@ public class ContentTypeListExtender(IEventLogService log) : PageExtender<Conten
         }
         else
         {
-            log.LogWarning(
-                nameof(ContentTypeListExtender),
-                "DUPLICATE_FILTER",
-                loggingPolicy: LoggingPolicy.ONLY_ONCE);
+            if (loggedOnce.Add("DUPLICATE_FILTER"))
+            {
+                logger.LogWarning(new EventId(0, "DUPLICATE_FILTER"), "ContentTypeListExtender filter already present; skipping duplicate insertion");
+            }
         }
 
         var configs = pageConfig.ColumnConfigurations;
