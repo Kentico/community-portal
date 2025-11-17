@@ -2,40 +2,57 @@
 
 @model EmailConfirmationViewModel
 
-@if (Model.State == EmailConfirmationState.Success_Confirmed
-|| Model.State == EmailConfirmationState.Success_AlreadyConfirmed)
+@*
+    This view is returned as a partial and embedded in an existing layout, so it does not need its own <section> wrapper.
+    See PasswordRecoveryController.RequestRecoveryEmail
+*@
+@if (Model.State == EmailConfirmationState.Failure_NotYetConfirmed)
 {
-    <section class="section section--default">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-10 col-xxl-9">
-                    <div class="main">
-                        <h1 test-id="confirmationMessage" class="text-center k-dot">@Model.Message</h1>
+    <form hx-post hx-controller="Registration" hx-action="ResendVerificationEmail" hx-swap="outerHTML" hx-target=""
+        hx-route-username="@Model.Username" method="post" hx-disabled-elt="find fieldset">
+        <p>@Model.Message</p>
 
-                        <p class="text-center fs-1">
-                            @if (Model.State == EmailConfirmationState.Success_AlreadyConfirmed)
-                            {
-                                <text>Your email is already verified.</text> <br>
-                            }
-                            You may now
-                            <a asp-controller="Authentication" asp-action="Login" test-id="confirmationSignIn">sign in</a>.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        <fieldset hx-indicator="this">
+            <button type="submit" class="btn btn-primary mt-3" xpc-loading-button>
+                @Model.SendButtonText
+            </button>
+        </fieldset>
+    </form>
 
     return;
 }
 
-<form hx-post hx-controller="Registration" hx-action="ResendVerificationEmail" hx-swap="outerHTML" hx-target=""
-    hx-route-username="@Model.Username" method="post" hx-disabled-elt="find fieldset">
-    <p>@Model.Message</p>
+<section class="section section--default">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-xxl-9">
+                <div class="main">
+                    <h1 test-id="confirmationMessage" class="text-center k-dot">@Model.Message</h1>
 
-    <fieldset hx-indicator="this">
-        <button type="submit" class="btn btn-primary mt-3" xpc-loading-button>
-            @Model.SendButtonText
-        </button>
-    </fieldset>
-</form>
+                    @if (Model.State == EmailConfirmationState.Success_Confirmed || Model.State == EmailConfirmationState.Success_AlreadyConfirmed)
+                    {
+                        <p class="text-center fs-3">
+                            @if (Model.State == EmailConfirmationState.Success_AlreadyConfirmed)
+                            {
+                                <text>Your email is already verified.</text> <br>
+                            }
+                            
+                            You may now <a asp-controller="Authentication" asp-action="Login" test-id="confirmationSignIn">sign in</a>.
+                        </p>
+                    }
+                    else
+                    {
+                        <form class="text-center" hx-post hx-controller="Registration" hx-action="ResendVerificationEmail" hx-swap="outerHTML" hx-target=""
+                            hx-route-username="@Model.Username" method="post" hx-disabled-elt="find fieldset">
+                            <fieldset hx-indicator="this">
+                                <button type="submit" class="btn btn-primary mt-3" xpc-loading-button>
+                                    @Model.SendButtonText
+                                </button>
+                            </fieldset>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

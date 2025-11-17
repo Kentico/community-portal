@@ -1,5 +1,5 @@
 ---
-mode: "agent"
+agent: agent
 model: GPT-5
 tools: ['edit', 'search', 'runCommands', 'runTasks', 'kentico.docs.mcp/*', 'usages', 'problems', 'changes', 'todos']
 description: "Replace Xperience IEventLogService with .NET ILogger<T>"

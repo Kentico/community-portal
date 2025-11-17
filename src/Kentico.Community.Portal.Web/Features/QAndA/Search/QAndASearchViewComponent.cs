@@ -50,31 +50,26 @@ public class QAndASearchViewModel : IPagedViewModel
     [HiddenInput]
     public int Page { get; set; }
 
-    public Dictionary<string, string?> GetRouteData(int page)
+    public IEnumerable<KeyValuePair<string, string?>> GetRouteData(int page)
     {
-        var routeData = new Dictionary<string, string?>
-        {
-            ["page"] = page.ToString()
-        };
+        yield return new KeyValuePair<string, string?>("page", page.ToString());
 
         if (!string.IsNullOrWhiteSpace(Query))
         {
-            routeData["query"] = Query;
+            yield return new KeyValuePair<string, string?>("query", Query);
         }
         if (!string.IsNullOrWhiteSpace(SortBy))
         {
-            routeData["sortBy"] = SortBy;
+            yield return new KeyValuePair<string, string?>("sortBy", SortBy);
         }
-        if (DiscussionTypes.Any(t => t.IsSelected))
+        foreach (var type in DiscussionTypes.Where(t => t.IsSelected))
         {
-            routeData["discussionTypes"] = string.Join("&discussionTypes=", DiscussionTypes.Where(t => t.IsSelected).Select(t => t.Value)).Trim('&');
+            yield return new KeyValuePair<string, string?>("discussionTypes", type.Value);
         }
-        if (DXTopics.Any(g => g.Count > 0))
+        foreach (var topic in DXTopics.SelectMany(t => t.Facets).Where(f => f.IsSelected))
         {
-            routeData["dxTopics"] = string.Join("&dxTopics=", DXTopics.SelectMany(t => t.Facets).Where(f => f.IsSelected).Select(f => f.Value)).Trim('&');
+            yield return new KeyValuePair<string, string?>("dxTopics", topic.Value);
         }
-
-        return routeData;
     }
 
     public QAndASearchViewModel(QAndASearchRequest request, QAndASearchResult result, List<QAndADiscussionViewModel> discussions, QAndATaxonomiesQueryResponse taxonomies)

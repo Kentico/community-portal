@@ -106,7 +106,7 @@ public class RegistrationController(
             {
                 State = EmailConfirmationState.Failure_ConfirmationFailed,
                 Message = localizer["Email confirmation failed"],
-                SendButtonText = localizer["Send again"],
+                SendButtonText = localizer["Resend confirmation email"],
                 Username = ""
             });
         }
@@ -121,7 +121,7 @@ public class RegistrationController(
             return View("~/Features/Registration/EmailConfirmation.cshtml", new EmailConfirmationViewModel
             {
                 State = EmailConfirmationState.Success_AlreadyConfirmed,
-                Message = localizer["Your email is already verified"]
+                Message = localizer["Confirmation success"]
             });
         }
 
@@ -140,7 +140,7 @@ public class RegistrationController(
             return View("~/Features/Registration/EmailConfirmation.cshtml", new EmailConfirmationViewModel
             {
                 State = EmailConfirmationState.Success_Confirmed,
-                Message = localizer["Email confirmed"]
+                Message = localizer["Confirmation success"]
             });
         }
 
@@ -148,7 +148,7 @@ public class RegistrationController(
         {
             State = EmailConfirmationState.Failure_ConfirmationFailed,
             Message = localizer["Email confirmation failed"],
-            SendButtonText = localizer["Send again"],
+            SendButtonText = localizer["Resend confirmation email"],
             Username = member.UserName!
         });
     }

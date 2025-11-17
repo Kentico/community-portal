@@ -13,7 +13,7 @@ public static class ServiceCollectionLuceneSearchExtensions
                 _ = builder
                     .RegisterStrategy<BlogSearchIndexingStrategy>(BlogSearchIndexingStrategy.IDENTIFIER)
                     .RegisterStrategy<QAndASearchIndexingStrategy>(QAndASearchIndexingStrategy.IDENTIFIER);
-            })
+            }, config)
             .AddSingleton<WebScraperHtmlSanitizer>()
             .AddHttpClient<WebCrawlerService>()
             .Services

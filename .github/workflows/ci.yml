@@ -131,7 +131,7 @@ jobs:
       - name: Install Playwright Dependencies
         run: |
           # Must be path to the RELEASE build
-          ./test/Kentico.Community.Portal.Web.E2E.Tests/bin/Release/net8.0/playwright.ps1 install
+          ./test/Kentico.Community.Portal.Web.E2E.Tests/bin/Release/net9.0/playwright.ps1 install
 
       - name: Install Azurite from npm
         run: npm install -g azurite@3.33.0

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Recycle bin content item reference</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="RecycleBinContentItemReferenceID" columntype="integer" enabled="true" guid="d87c7179-fb40-488d-89d3-3a371983f523" isPK="true" system="true" />
+      <field column="RecycleBinContentItemReferenceGUID" columnprecision="0" columntype="guid" enabled="true" guid="e41ee09d-8711-475c-a02e-7939f3acb222" system="true" />
+      <field column="RecycleBinContentItemReferenceSourceCommonDataGUID" columnprecision="0" columntype="guid" enabled="true" guid="dce2e3e2-20b8-4e49-9da6-03ca19c00e00" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="RecycleBinContentItemReferenceTargetItemGUID" columnprecision="0" columntype="guid" enabled="true" guid="39c3a1a7-5578-4f54-b657-1f02e8e24ad3" system="true" />
+      <field column="RecycleBinContentItemReferenceGroupGUID" columnprecision="0" columntype="guid" enabled="true" guid="687b2af0-f487-42e0-99e5-78ca304a978a" system="true" />
+      <field allowempty="true" column="RecycleBinContentItemReferenceRecycleBinContentItemID" columnprecision="0" columntype="integer" enabled="true" guid="0eb4704c-c5a1-49d0-8ea0-d7b1dfec18c6" refobjtype="cms.recyclebincontentitem" reftype="Required" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>3983136b-b86d-44e7-a1eb-c14efdae125d</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.RecycleBinContentItemReference</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentEngine</CodeName>
+    <GUID>eb76ebd1-752f-4969-a5b6-1fb984cae224</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_RecycleBinContentItemReference</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

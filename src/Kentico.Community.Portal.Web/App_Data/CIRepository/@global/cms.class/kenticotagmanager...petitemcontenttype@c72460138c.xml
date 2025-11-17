@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Channel Code Snippet Item to Content Type Binding</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ChannelCodeSnippetItemContentTypeID" columntype="integer" enabled="true" guid="5715158e-4d54-48f2-8eed-641529b6676f" isPK="true" />
+      <field column="ChannelCodeSnippetItemID" columntype="integer" enabled="true" guid="f7d6fa6e-ab71-4efe-bbd9-6672c6b25d34" refobjtype="kenticotagmanager.channelcodesnippetitem" reftype="Binding" />
+      <field column="ContentTypeID" columntype="integer" enabled="true" guid="6cad934a-8e4c-4b55-b63a-2283262dc2f0" refobjtype="cms.class" reftype="Binding" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>398f132e-6122-475a-994c-181fa48ebe66</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>
+    <![CDATA[KenticoTagManager.ChannelCodeSnippetItemContentType]]>
+  </ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Integration.TagManager</CodeName>
+    <GUID>b44632ed-8ce7-4e51-b75a-e0d9fdbdead9</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>
+    <![CDATA[KenticoTagManager_ChannelCodeSnippetItemContentType]]>
+  </ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

@@ -37,31 +37,26 @@ public class BlogSearchViewModel : IPagedViewModel
     public int Page { get; set; } = 0;
     public int TotalPages { get; set; } = 0;
 
-    public Dictionary<string, string?> GetRouteData(int page)
+    public IEnumerable<KeyValuePair<string, string?>> GetRouteData(int page)
     {
-        var routeData = new Dictionary<string, string?>
-        {
-            ["page"] = page.ToString()
-        };
+        yield return new KeyValuePair<string, string?>("page", page.ToString());
 
         if (!string.IsNullOrWhiteSpace(Query))
         {
-            routeData["query"] = Query;
+            yield return new KeyValuePair<string, string?>("query", Query);
         }
         if (!string.IsNullOrWhiteSpace(SortBy))
         {
-            routeData["sortBy"] = SortBy;
+            yield return new KeyValuePair<string, string?>("sortBy", SortBy);
         }
-        if (BlogTypes.Any(t => t.IsSelected))
+        foreach (var type in BlogTypes.Where(t => t.IsSelected))
         {
-            routeData["blogTypes"] = string.Join("&blogTypes=", BlogTypes.Where(t => t.IsSelected).Select(t => t.Value)).Trim('&');
+            yield return new KeyValuePair<string, string?>("blogTypes", type.Value);
         }
-        if (DXTopics.Any(g => g.Count > 0))
+        foreach (var topic in DXTopics.SelectMany(t => t.Facets).Where(f => f.IsSelected))
         {
-            routeData["dxTopics"] = string.Join("&dxTopics=", DXTopics.SelectMany(t => t.Facets).Where(f => f.IsSelected).Select(f => f.Value)).Trim('&');
+            yield return new KeyValuePair<string, string?>("dxTopics", topic.Value);
         }
-
-        return routeData;
     }
 
     public BlogSearchViewModel(BlogSearchRequest request, BlogSearchResults result, BlogPostTaxonomiesQueryResponse taxonomies)

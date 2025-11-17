@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <UserSecretsId>3df470e6-54c4-41d8-b8f0-36955d9433d2</UserSecretsId>
+    <!-- This ensures Lucene index file modifications do not cause a hot reload when using dotnet watch -->
+    <!-- See https://github.com/dotnet/sdk/issues/44910#issuecomment-3533124997 -->
+    <DefaultItemExcludes>$(DefaultItemExcludes);**/App_Data/**</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>

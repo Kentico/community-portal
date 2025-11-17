@@ -41,7 +41,8 @@ Use these project-specific scopes to indicate the area of change:
 - **sln**: Solution-level changes (packages, dependencies, project
   configuration)
 - **<Filename>**: Documentation markdown file updates
-- **github**: Continuous Integration or Copilot changes
+- **copilot**: Copilot tool updates (anything changes in `.github` or
+  `.vscode/mcp.json`)
 - **vscode**: VS Code workspace configuration changes
 
 ## Description Guidelines

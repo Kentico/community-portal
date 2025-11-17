@@ -2,10 +2,11 @@
 
 ## .NET Runtime
 
-.NET 8.0 SDK or newer
+.NET 10.0 SDK (version `10.0.100`) required; projects target .NET 9.0
 
-- <https://dotnet.microsoft.com/en-us/download/dotnet/8.0>
-  - See `global.json` file for specific SDK requirements
+- <https://dotnet.microsoft.com/en-us/download/dotnet/10.0>
+  - Target framework: .NET 9.0 (`net9.0`)
+  - See `global.json` for the exact SDK version requirement
 
 ## Node.js Runtime
 
@@ -28,12 +29,13 @@
 ## C# Editor
 
 - [VS Code](https://code.visualstudio.com) (cross-platform, preferred)
+- [Cursor](https://cursor.com/) (cross-platform)
 - (**alternative**) Visual Studio (Windows only)
 - (**alternative**) Rider (cross-platform)
 
 ## Database
 
-- SQL Server 2019 or newer compatible database
+- SQL Server 2022 or newer compatible database
 
   - [SQL Server 2022 on Docker](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-setup?view=sql-server-ver15)
     (cross-platform, preferred)

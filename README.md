@@ -5,11 +5,11 @@
 
 ## Description
 
+Xperience by Kentico:
+[v30.12.0](https://docs.kentico.com/documentation/changelog#refresh-november-13-2025)
+
 Xperience by Kentico solution for the Kentico managed SaaS hosted Kentico
 Community website.
-
-This project is using Xperience by Kentico
-[v30.11.2](https://docs.kentico.com/documentation/changelog#hotfix-october-30-2025).
 
 ## Screenshots
 
@@ -58,6 +58,10 @@ This project is using Xperience by Kentico
 | Prod (XbyK SaaS) | <https://community.kentico.com>                                                         |
 
 ## Project Setup
+
+To get started running or working on this project, use the
+`/Report-Development-Dependencies` in your GitHub Copilot chat to report the
+current required tools and infrastructure.
 
 1. [Required Software](./docs/Required-Software.md)
 1. [Environment Setup](./docs/Environment-Setup.md)

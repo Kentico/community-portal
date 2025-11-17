@@ -152,6 +152,15 @@
       "detail": "Install Web npm dependencies"
     },
     {
+      "label": "npm: audit fix (Web)",
+      "type": "shell",
+      "options": {
+        "cwd": "src/Kentico.Community.Portal.Web"
+      },
+      "command": "npm audit fix",
+      "problemMatcher": []
+    },
+    {
       "label": "npm: install (Admin)",
       "type": "npm",
       "script": "install",
@@ -159,6 +168,15 @@
       "group": "none",
       "problemMatcher": [],
       "detail": "Install Admin npm dependencies"
+    },
+    {
+      "label": "npm: audit fix (Admin)",
+      "type": "shell",
+      "options": {
+        "cwd": "src/Kentico.Community.Portal.Admin/Client"
+      },
+      "command": "npm audit fix",
+      "problemMatcher": []
     },
     {
       "label": "npm: dev (Web)",
