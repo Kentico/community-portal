@@ -31,6 +31,11 @@ form,
       border-radius: 0.25em;
       padding: 0;
       margin-right: 8px;
+
+      &:disabled {
+        background-color: var(--bs-secondary-bg);
+        border-color: var(--color-gray-600);
+      }
     }
 
     .form-control:checked[type="checkbox"] {
@@ -45,7 +50,8 @@ form,
     }
   }
 
-  input[type="submit"] {
+  input[type="submit"],
+  button[type="submit"] {
     font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0;
@@ -75,6 +81,12 @@ form,
     &:hover {
       background-color: $purple-900;
       border-color: $purple-900;
+    }
+
+    &:disabled {
+      color: var(--bs-body-color);
+      background-color: var(--bs-secondary-bg);
+      border-color: var(--color-gray-600);
     }
   }
 }

@@ -83,8 +83,10 @@
                                 </li>
                                 <li class="nav-item w-md-100">
                                     <form asp-controller="Authentication" asp-action="Logout" method="post">
-                                        <button class="btn btn-outline-secondary text-uppercase w-100" type="submit"
-                                            test-id="logout">Logout</button>
+                                        <fieldset xpc-readonly-disabled>
+                                            <button class="btn btn-outline-secondary text-uppercase w-100" type="submit"
+                                                test-id="logout">Logout</button>
+                                        </fieldset>
                                     </form>
                                 </li>
                             </ul>

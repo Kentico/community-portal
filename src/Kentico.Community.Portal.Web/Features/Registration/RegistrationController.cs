@@ -1,3 +1,4 @@
+using CMS.Base;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
@@ -17,7 +18,8 @@ public class RegistrationController(
     IStringLocalizer<SharedResources> localizer,
     ILogger<RegistrationController> logger,
     IMemberEmailService emailService,
-    ConsentManager consentManager) : Controller
+    ConsentManager consentManager,
+    IReadOnlyModeProvider readOnlyProvider) : Controller
 {
     private readonly WebPageMetaService metaService = metaService;
     private readonly UserManager<CommunityMember> userManager = userManager;
@@ -26,6 +28,7 @@ public class RegistrationController(
     private readonly ILogger<RegistrationController> logger = logger;
     private readonly IMemberEmailService emailService = emailService;
     private readonly ConsentManager consentManager = consentManager;
+    private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
 
     [HttpGet]
     public ActionResult Register()
@@ -40,6 +43,11 @@ public class RegistrationController(
     [EnableRateLimiting(MemberRateLimitingConstants.Registration)]
     public async Task<IActionResult> Register(RegisterViewModel model)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return PartialView("~/Features/Registration/_RegisterForm.cshtml", model);
+        }
+
         var captchaResponse = await captchaValidator.ValidateCaptcha(model);
 
         if (!captchaResponse.IsSuccess)
@@ -156,6 +164,11 @@ public class RegistrationController(
     [HttpPost]
     public async Task<ActionResult> ResendVerificationEmail([FromQuery] string username)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return PartialView("~/Features/Registration/_VerifyEmail.cshtml");
+        }
+
         var member = await userManager.FindByNameAsync(username);
 
         if (member is null)

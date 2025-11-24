@@ -34,10 +34,20 @@ public class SingleColumnSectionProperties : ISectionProperties
         ExplanationText = "Determines the layout of the section columns",
         Tooltip = "Select a layout",
         DataProviderType = typeof(EnumDropDownOptionsProvider<Layouts>),
-        Order = 4
+        Order = 3
     )]
     public string Layout { get; set; } = nameof(Layouts.Standard);
     public Layouts LayoutParsed => EnumDropDownOptionsProvider<Layouts>.Parse(Layout, Layouts.Standard);
+
+    [DropDownComponent(
+        Label = "Alignment",
+        ExplanationText = "The alignment of content within the section. Individual widgets can override this.",
+        Tooltip = "Select an alignment",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<Alignments>),
+        Order = 4
+    )]
+    public string Alignment { get; set; } = nameof(Alignments.Left);
+    public Alignments AlignmentParsed => EnumDropDownOptionsProvider<Alignments>.Parse(Alignment, Alignments.Left);
 
     [DropDownComponent(
         Label = "Padding Top",
@@ -64,7 +74,7 @@ public class SingleColumnSectionProperties : ISectionProperties
         ExplanationText = "Determines the background color of the entire section",
         Tooltip = "Select a Background Color",
         DataProviderType = typeof(EnumDropDownOptionsProvider<BackgroundColors>),
-        Order = 8
+        Order = 7
     )]
     public string BackgroundColor { get; set; } = nameof(BackgroundColors.White);
     public BackgroundColors BackgroundColorParsed => EnumDropDownOptionsProvider<BackgroundColors>.Parse(BackgroundColor, BackgroundColors.White);
@@ -79,6 +89,17 @@ public enum Layouts
     [Description("Full width - Edge to edge")]
     FullWidth_EdgeToEdge,
 }
+
+public enum Alignments
+{
+    [Description("Left")]
+    Left,
+    [Description("Center")]
+    Center,
+    [Description("Right")]
+    Right,
+}
+
 
 public enum VerticalPaddings
 {
@@ -109,12 +130,14 @@ public class SingleColumnSectionViewModel
     public SingleColumnSectionViewModel(SingleColumnSectionProperties props)
     {
         Layout = props.LayoutParsed;
+        Alignment = props.AlignmentParsed;
         PaddingTop = props.PaddingTopParsed;
         PaddingBottom = props.PaddingBottomParsed;
         BackgroundColor = props.BackgroundColorParsed;
     }
 
     public Layouts Layout { get; set; }
+    public Alignments Alignment { get; set; }
     public VerticalPaddings PaddingTop { get; set; }
     public VerticalPaddings PaddingBottom { get; set; }
     public BackgroundColors BackgroundColor { get; set; }

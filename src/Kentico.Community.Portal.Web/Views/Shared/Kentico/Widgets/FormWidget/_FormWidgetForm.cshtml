@@ -4,11 +4,9 @@
 
 @model Kentico.Forms.Web.Mvc.Widgets.FormWidgetViewModel
 
-@{
-    if (Model.FormConfiguration == null)
-    {
-        <h3 class="no-form-selected">@ResHelper.GetString("kentico.formbuilder.widget.noformselected")</h3>
-    }
+@if (Model.FormConfiguration == null)
+{
+    <h3 class="no-form-selected">@ResHelper.GetString("kentico.formbuilder.widget.noformselected")</h3>
 }
 
 @* We replace the <form> with a <div> to prevent spam submissions of the programmatically functional form *@
@@ -22,6 +20,11 @@
             var button = Html.Kentico().FormSubmitButton(Model);
             @button
         }
+
+        @if (ReadOnlyModeProvider.IsReadOnly)
+        {
+            <vc:read-only-mode-notification />
+        }
     </div>
 
     return;
@@ -34,4 +37,9 @@
 
     var button = Html.Kentico().FormSubmitButton(Model);
     @button
+
+    @if (ReadOnlyModeProvider.IsReadOnly)
+    {
+        <vc:read-only-mode-notification />
+    }
 }

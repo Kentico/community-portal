@@ -9,7 +9,7 @@
 
     <form id="avatarImageUpdateForm" method="post" hx-post hx-controller="Account" hx-action="UpdateAvatarImage"
         hx-target="#avatarForm" hx-disabled-elt="find fieldset" enctype="multipart/form-data">
-        <fieldset hx-indicator="this">
+        <fieldset hx-indicator="this" xpc-readonly-disabled>
             <div asp-validation-summary="All" class="text-danger field-validation-error"></div>
 
             <div class="form-group">
@@ -34,6 +34,8 @@
                     </p>
                 </div>
             </div>
+
+            <vc:read-only-mode-notification />
         </fieldset>
 
         @if (Context.Request.IsHtmx() && ViewContext.ModelState.IsValid)

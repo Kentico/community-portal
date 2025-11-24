@@ -9,6 +9,13 @@
         Layouts.Standard or _ => "container",
     };
 
+    string alignmentClasses = Model.Alignment switch
+    {
+        Alignments.Right => "text-right",
+        Alignments.Center => "text-center",
+        Alignments.Left or _ => "text-left",
+    };
+
     string paddingTopClasses = Model.PaddingTop switch
     {
         VerticalPaddings.Small => "pt-1",
@@ -46,7 +53,7 @@
     };
 }
 
-<div class="@containerClasses @paddingTopClasses @paddingBottomClasses @backgroundColorClases"
+<div class="@containerClasses @paddingTopClasses @paddingBottomClasses @backgroundColorClases @alignmentClasses"
     xpc-preview-outline="Single Column Section">
     <div class="@rowClasses">
         <div class="@colClasses">

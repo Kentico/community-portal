@@ -4,7 +4,7 @@
 
 <form id="profileUpdateForm" method="post" hx-post hx-controller="Account" hx-action="UpdateProfile" hx-swap="outerHTML"
     hx-disabled-elt="find fieldset" test-id="profileUpdate">
-    <fieldset hx-indicator="this">
+    <fieldset hx-indicator="this" xpc-readonly-disabled>
 
         <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
 
@@ -78,6 +78,8 @@
         <button id="updateProfile" type="submit" class="btn btn-primary mt-3" xpc-loading-button>
             Update profile
         </button>
+
+        <vc:read-only-mode-notification />
     </fieldset>
 
     @if (Context.Request.IsHtmx() && ViewContext.ModelState.IsValid)

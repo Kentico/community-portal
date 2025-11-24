@@ -6,7 +6,7 @@
         <span x-text="maxTags - selectedTags.length"></span> tags remaining
     </span>
     <template x-for="tag in selectedTags" :key="tag.value">
-        <span class="badge bg-primary d-inline-flex align-items-center">
+        <span class="badge d-inline-flex align-items-center" theme="primary">
             <span x-text="tag.label"></span>
             <button type="button" class="btn-close btn-close-white ms-2" aria-label="Remove tag"
                 @@click="selectedTags = selectedTags.filter(t => t.value !== tag.value)"></button>

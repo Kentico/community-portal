@@ -17,7 +17,7 @@ available over the `/ui` headless endpoint path suffix.
 > Example Nitro URL:
 >
 > - <https://localhost:45039/api/headless/ui/>
-
+>
 > Example GraphQL HTTP Endpoint (including channel identifier):
 >
 > - <https://localhost:45039/api/headless/adf3284e-e886-4c35-965b-b921e17baf8a>

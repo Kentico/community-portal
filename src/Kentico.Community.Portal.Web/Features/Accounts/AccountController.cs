@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using CMS.Base;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Infrastructure;
@@ -22,7 +23,8 @@ public class AccountController(
     MemberBadgeService memberBadgeService,
     AvatarImageService avatarImageService,
     ILogger<AccountController> logger,
-    LinkGenerator linkGenerator) : Controller
+    LinkGenerator linkGenerator,
+    IReadOnlyModeProvider readOnlyProvider) : Controller
 {
     private readonly WebPageMetaService metaService = metaService;
     private readonly UserManager<CommunityMember> userManager = userManager;
@@ -32,6 +34,7 @@ public class AccountController(
     private readonly AvatarImageService avatarImageService = avatarImageService;
     private readonly ILogger<AccountController> logger = logger;
     private readonly LinkGenerator linkGenerator = linkGenerator;
+    private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
 
     [HttpGet]
     public async Task<ActionResult> MyAccount()
@@ -75,6 +78,11 @@ public class AccountController(
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> UpdateProfile(ProfileViewModel model)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
         if (!ModelState.IsValid)
         {
             return PartialView("~/Features/Accounts/_ProfileForm.cshtml", model);
@@ -109,6 +117,11 @@ public class AccountController(
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> UpdatePassword(UpdatePasswordViewModel model)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
         if (!ModelState.IsValid)
         {
             return PartialView("~/Features/Accounts/_PasswordForm.cshtml", model);
@@ -141,6 +154,11 @@ public class AccountController(
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> UpdateAvatarImage(AvatarFormViewModel model)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
         var member = await userManager.GetUserAsync(User);
         if (member is null)
         {
@@ -177,6 +195,11 @@ public class AccountController(
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> UpdateSelectedBadges(UpdateBadgesRequest request)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
         var member = await userManager.GetUserAsync(User);
         if (member is null)
         {

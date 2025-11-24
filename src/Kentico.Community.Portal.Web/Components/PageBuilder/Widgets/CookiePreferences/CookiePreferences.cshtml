@@ -8,41 +8,44 @@
 
 <form method="post" hx-post hx-route="@CookiesController.ROUTE_SET_PREFERENCES" hx-swap="outerHTML"
     hx-target="#@messageID" xpc-preview-outline="Cookie Preferences Widget">
+    <fieldset xpc-readonly-disabled>
 
-    <div class="container">
-        <div class="cookie-preferences">
-            <div class="cookie-preferences__levels">
-                <div class="cookie-preferences__selector">
-                    <div class="cookie-preferences__range-fill" id="range-fill"></div>
-                    <input id="CookieLevelSelected" name="CookieLevelSelected" type="range" min="1" max="4" step="1"
-                        class="cookie-preferences__range-slider" value="@Model.CookieLevelSelected" />
-                    <input type="hidden" name="ShowMessage" value="true">
-                    <input type="hidden" name="MessageID" value="@messageID">
+        <div class="container">
+            <div class="cookie-preferences">
+                <div class="cookie-preferences__levels">
+                    <div class="cookie-preferences__selector">
+                        <div class="cookie-preferences__range-fill" id="range-fill"></div>
+                        <input id="CookieLevelSelected" name="CookieLevelSelected" type="range" min="1" max="4" step="1"
+                            class="cookie-preferences__range-slider" value="@Model.CookieLevelSelected" />
+                        <input type="hidden" name="ShowMessage" value="true">
+                        <input type="hidden" name="MessageID" value="@messageID">
+                    </div>
+
+                    <ul class="cookie-preferences__options">
+                        <li class="cookie-preferences__option" data-value="1">
+                            <span class="cookie-preferences__option-header">@Model.NecessaryHeader</span>
+                            <span class="cookie-preferences__option-description">@Model.NecessaryDescription</span>
+                        </li>
+                        <li class="cookie-preferences__option" data-value="2">
+                            <span class="cookie-preferences__option-header">@Model.PreferenceHeader</span>
+                            <span class="cookie-preferences__option-description">@Model.PreferenceDescription</span>
+                        </li>
+                        <li class="cookie-preferences__option" data-value="3">
+                            <span class="cookie-preferences__option-header">@Model.AnalyticalHeader</span>
+                            <span class="cookie-preferences__option-description">@Model.AnalyticalDescription</span>
+                        </li>
+                        <li class="cookie-preferences__option" data-value="4">
+                            <span class="cookie-preferences__option-header">@Model.MarketingHeader</span>
+                            <span class="cookie-preferences__option-description">@Model.MarketingDescription</span>
+                        </li>
+                    </ul>
                 </div>
-
-                <ul class="cookie-preferences__options">
-                    <li class="cookie-preferences__option" data-value="1">
-                        <span class="cookie-preferences__option-header">@Model.NecessaryHeader</span>
-                        <span class="cookie-preferences__option-description">@Model.NecessaryDescription</span>
-                    </li>
-                    <li class="cookie-preferences__option" data-value="2">
-                        <span class="cookie-preferences__option-header">@Model.PreferenceHeader</span>
-                        <span class="cookie-preferences__option-description">@Model.PreferenceDescription</span>
-                    </li>
-                    <li class="cookie-preferences__option" data-value="3">
-                        <span class="cookie-preferences__option-header">@Model.AnalyticalHeader</span>
-                        <span class="cookie-preferences__option-description">@Model.AnalyticalDescription</span>
-                    </li>
-                    <li class="cookie-preferences__option" data-value="4">
-                        <span class="cookie-preferences__option-header">@Model.MarketingHeader</span>
-                        <span class="cookie-preferences__option-description">@Model.MarketingDescription</span>
-                    </li>
-                </ul>
+                <button class="btn btn-primary mt-4 cookie-preferences__button" type="submit" name="button">
+                    @Model.ButtonText
+                </button>
+                <div id="@messageID" class="cookie-preferences__message"></div>
+                <vc:read-only-mode-notification />
             </div>
-            <button class="btn btn-primary mt-4 cookie-preferences__button" type="submit" name="button">
-                @Model.ButtonText
-            </button>
-            <div id="@messageID" class="cookie-preferences__message"></div>
         </div>
-    </div>
+    </fieldset>
 </form>

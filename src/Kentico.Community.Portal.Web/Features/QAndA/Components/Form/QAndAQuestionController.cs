@@ -1,4 +1,5 @@
-﻿using Htmx;
+﻿using CMS.Base;
+using Htmx;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
@@ -21,7 +22,8 @@ public class QAndAQuestionController(
     TimeProvider clock,
     IContentRetriever contentRetriever,
     ILogger<QAndAQuestionController> logger,
-    IQAndAPermissionService permissionService) : PortalHandlerController<QAndAQuestionController>(logger)
+    IQAndAPermissionService permissionService,
+    IReadOnlyModeProvider readOnlyProvider) : PortalHandlerController<QAndAQuestionController>(logger)
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly IMediator mediator = mediator;
@@ -29,12 +31,18 @@ public class QAndAQuestionController(
     private readonly TimeProvider clock = clock;
     private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly IQAndAPermissionService permissionService = permissionService;
+    private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     [EnableRateLimiting(QAndARateLimitingConstants.CreateQuestion)]
     public async Task<IActionResult> CreateQuestion(QAndAQuestionFormSubmissionViewModel requestModel)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return ViewComponent(typeof(QAndAQuestionFormViewComponent), new { submission = requestModel });
+        }
+
         if (!ModelState.IsValid)
         {
             return ViewComponent(typeof(QAndAQuestionFormViewComponent), new { submission = requestModel });
@@ -79,6 +87,11 @@ public class QAndAQuestionController(
     [EnableRateLimiting(QAndARateLimitingConstants.UpdateQuestion)]
     public async Task<IActionResult> UpdateQuestion(QAndAQuestionFormSubmissionViewModel requestModel)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return ViewComponent(typeof(QAndAQuestionFormViewComponent), new { questionID = requestModel.EditedObjectID, submission = requestModel });
+        }
+
         if (!ModelState.IsValid)
         {
             return ViewComponent(typeof(QAndAQuestionFormViewComponent), new { questionID = requestModel.EditedObjectID, submission = requestModel });
@@ -137,6 +150,11 @@ public class QAndAQuestionController(
     [HttpPost]
     public async Task<IActionResult> DeleteQuestion(Guid questionID)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
         var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID], new RetrievePagesParameters { LinkedItemsMaxLevel = 1 });
         if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
         {

@@ -13,7 +13,7 @@
     hx-swap="outerHTML" hx-disabled-elt="find fieldset"
     x-data="{ selectedCount: @JSEncoder.EncodeToJson(badges.Count(x => x.IsSelected)), maxBadges: @maxBadges }">
 
-    <fieldset hx-indicator="this">
+    <fieldset hx-indicator="this" xpc-readonly-disabled>
         <h5>My badges</h5>
         <div class="form-group">
             <span class="d-inline-flex wrap gap-2 mt-1 flex-wrap">
@@ -23,9 +23,8 @@
                     string theme = badge.IsSelected ? "secondary-300" : "";
                     var alpineState = JSEncoder.EncodeToJson(new { selected = badge.IsSelected });
 
-                    <button id="badgeButton_@i" type="button"
-                        class="badge d-flex align-items-center gap-1 fw-medium" theme="@theme" 
-                        x-data='@alpineState' :theme="selected ? 'secondary-300' : ''"
+                    <button id="badgeButton_@i" type="button" class="badge d-flex align-items-center gap-1 fw-medium"
+                        theme="@theme" x-data='@alpineState' :theme="selected ? 'secondary-300' : ''"
                         :title="selected ? 'This badge is selected' : 'This badge is not selected'"
                         :aria-label="selected ? 'This badge is selected' : 'This badge is not selected'"
                         @@click="selected = !selected; selectedCount += selected ? 1 : -1">
@@ -53,6 +52,8 @@
 
             <small>Select up to @maxBadges badges which will be shown next to your name in the portal.</small>
         </p>
+
+        <vc:read-only-mode-notification />
     </fieldset>
 
     @if (Context.Request.IsHtmx() && ViewContext.ModelState.IsValid)

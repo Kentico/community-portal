@@ -13,28 +13,30 @@
 
 <form asp-route="@CookiesController.ROUTE_SET_PREFERENCES" hx-post hx-route="@CookiesController.ROUTE_SET_PREFERENCES"
     hx-swap="outerHTML" hx-target="#@messageId">
+    <fieldset xpc-readonly-disabled>
+        <div class="xpcookiebanner is-active position-relative" xp-cookie-banner>
+            <div class="xpcookiebanner__inner container">
+                <h5 class="xpcookiebanner__header">@Model.CookieBannerHeading</h5>
+                @Model.CookieBannerContentHTML
+                <div class="xpcookiebanner__ctas">
 
-    <div class="xpcookiebanner is-active position-relative" xp-cookie-banner>
-        <div class="xpcookiebanner__inner container">
-            <h5 class="xpcookiebanner__header">@Model.CookieBannerHeading</h5>
-            @Model.CookieBannerContentHTML
-            <div class="xpcookiebanner__ctas">
+                    <input type="hidden" name="CookieLevelSelected" value="4">
+                    <input type="hidden" name="ShowMessage" value="false">
 
-                <input type="hidden" name="CookieLevelSelected" value="4">
-                <input type="hidden" name="ShowMessage" value="false">
+                    <button type="submit" value="4" name="CookieLevelSelected"
+                        class="btn btn-primary-light xpcookiebanner__cta text-uppercase"
+                        data-tracking-code="CookieBar_Accept" cookie-cta>
+                        Accept All
+                    </button>
 
-                <button type="submit" value="4" name="CookieLevelSelected"
-                    class="btn btn-primary-light xpcookiebanner__cta text-uppercase"
-                    data-tracking-code="CookieBar_Accept" cookie-cta>
-                    Accept All
-                </button>
+                    <a href="@Model.CookiePolicyPagePath" class="xpcookiebanner__cta"
+                        data-tracking-code="CookieBar_More">
+                        Configure
+                    </a>
 
-                <a href="@Model.CookiePolicyPagePath" class="xpcookiebanner__cta" data-tracking-code="CookieBar_More">
-                    Configure
-                </a>
-
+                </div>
             </div>
+            <div id="@messageId" class="xpcookiebanner__message"></div>
         </div>
-        <div id="@messageId" class="xpcookiebanner__message"></div>
-    </div>
+    </fieldset>
 </form>

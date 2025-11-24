@@ -3,121 +3,125 @@
 <div class="bg-secondary text-white rounded-4 p-3 p-md-5" style="--bs-danger-rgb: #fff;">
     <form id="supportForm" method="post" hx-post hx-controller="SupportForm" hx-action="SubmitSupportForm"
         hx-trigger="captchaReady" hx-swap="outerHTML" hx-select="#supportForm" enctype="multipart/form-data">
-        <div class="row">
-            <div class="col-sm">
-                <label asp-for="FirstName" class="form-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="error"></span>
-            </div>
-            <div class="col-sm">
-                <label asp-for="LastName" class="form-label"></label>
-                <input asp-for="LastName" name="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="error"></span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <label asp-for="Company" class="form-label mt-3"></label>
-                <input class="form-control" asp-for="Company" />
-                <span asp-validation-for="Company" class="error"></span>
-            </div>
-            <div class="col-sm">
-                <label asp-for="Email" class="form-label mt-3"></label>
-                <input asp-for="Email" type="email" class="form-control" />
-                <span asp-validation-for="Email" class="error"></span>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-6">
-                <label asp-for="Issue" class="form-label mt-3"></label>
-                <input class="form-control" asp-for="Issue" />
-                <span asp-validation-for="Issue" class="error"></span>
-            </div>
-        </div>
-
-        <div>
-            <label asp-for="Description" class="form-label mt-3"></label>
-            <textarea class="form-control" asp-for="Description"></textarea>
-            <span asp-validation-for="Description" class="error"></span>
-        </div>
-        <div>
-            <label asp-for="Cause" class="form-label mt-3"></label>
-            <textarea class="form-control" asp-for="Cause"></textarea>
-        </div>
-        <div>
-            <label asp-for="AttemptedResolution" class="form-label mt-3"></label>
-            <textarea class="form-control" asp-for="AttemptedResolution"></textarea>
-        </div>
-
-        <div class="row">
-            <div class="col-sm">
-                <label asp-for="Version" class="form-label mt-3"></label>
-                <span class="form-tooltip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right"
-                    title="Version of product you are having issues with (e.g. 30.3.0)."
-                    aria-label="Version of product you are having issues with (e.g. 30.3.0).">
-                    <svg class="icon">
-                        <use xlink:href="/img/icons.svg#i-circle" asp-append-version></use>
-                    </svg>
-                </span>
-                <input class="form-control" asp-for="Version"
-                    pattern="(\d{1,2})|(\d{1,2}\.)|(\d{1,2}\.\d{1,2})|(\d{1,2}\.\d{1,2}\.)|(\d{1,2}\.\d{1,2}\.\d{1,2})" />
-                <span asp-validation-for="Version" class="error"></span>
-            </div>
-            <div class="col-sm">
-                <label asp-for="DeploymentModel" class="form-label mt-3">
-                </label>
-                <select class="form-select" aria-label="select deployment model" asp-for="DeploymentModel"
-                    id="DeploymentModel">
-                    <option selected value="">Choose a deployment model</option>
-                    <option value="Kentico Managed SaaS Service">Kentico Managed SaaS Service</option>
-                    <option value="Self-hosted on-premises">Private cloud (non-SaaS)</option>
-                </select>
-                <span asp-validation-for="DeploymentModel" class="error"></span>
-            </div>
-            <div class="col-sm d-flex align-items-end">
-                <div class="form-check mt-3">
-                    <input type="checkbox" class="form-check-input" asp-for="IsKenticoSaaSProductionIssue">
-                    <label class="form-check-label" asp-for="IsKenticoSaaSProductionIssue"></label>
+        <fieldset xpc-readonly-disabled>
+            <div class="row">
+                <div class="col-sm">
+                    <label asp-for="FirstName" class="form-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="error"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="LastName" class="form-label"></label>
+                    <input asp-for="LastName" name="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="error"></span>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-6">
-                <label asp-for="WebsiteURL" class="form-label mt-3">Website URL</label>
-                <input class="form-control" asp-for="WebsiteURL" />
-                <span asp-validation-for="WebsiteURL" class="error"></span>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-7">
-                <label asp-for="Attachment" class="form-label mt-3"></label>
-                <div class="d-flex">
-                    <label asp-for="Attachment" class="btn btn-outline-secondary">ATTACH&nbsp;FILE</label>
-                    <input class="form-control" asp-for="Attachment" />
+            <div class="row">
+                <div class="col-sm">
+                    <label asp-for="Company" class="form-label mt-3"></label>
+                    <input class="form-control" asp-for="Company" />
+                    <span asp-validation-for="Company" class="error"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="Email" class="form-label mt-3"></label>
+                    <input asp-for="Email" type="email" class="form-control" />
+                    <span asp-validation-for="Email" class="error"></span>
                 </div>
             </div>
-            <div class="col-sm-5">
-                <input asp-for="CaptchaToken" />
-            </div>
-        </div>
 
-        <div class="text-center">
-            <button id="supportFormSubmit" type="submit" class="btn btn-primary btn-lighter px-5 mt-4 uppercase">
-                Submit Form
-            </button>
-
-            @if (Context.Request.IsHtmx() && Model.IsSuccess)
-            {
-                <div class="alert alert-primary mt-3" role="alert">
-                    <h4 class="alert-heading">Your support case was submitted successfully.</h4>
-                    <hr>
-                    <p class="mb-0">You will receive a confirmation receipt in your inbox.</p>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label asp-for="Issue" class="form-label mt-3"></label>
+                    <input class="form-control" asp-for="Issue" />
+                    <span asp-validation-for="Issue" class="error"></span>
                 </div>
-            }
-        </div>
+            </div>
+
+            <div>
+                <label asp-for="Description" class="form-label mt-3"></label>
+                <textarea class="form-control" asp-for="Description"></textarea>
+                <span asp-validation-for="Description" class="error"></span>
+            </div>
+            <div>
+                <label asp-for="Cause" class="form-label mt-3"></label>
+                <textarea class="form-control" asp-for="Cause"></textarea>
+            </div>
+            <div>
+                <label asp-for="AttemptedResolution" class="form-label mt-3"></label>
+                <textarea class="form-control" asp-for="AttemptedResolution"></textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <label asp-for="Version" class="form-label mt-3"></label>
+                    <span class="form-tooltip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right"
+                        title="Version of product you are having issues with (e.g. 30.3.0)."
+                        aria-label="Version of product you are having issues with (e.g. 30.3.0).">
+                        <svg class="icon">
+                            <use xlink:href="/img/icons.svg#i-circle" asp-append-version></use>
+                        </svg>
+                    </span>
+                    <input class="form-control" asp-for="Version"
+                        pattern="(\d{1,2})|(\d{1,2}\.)|(\d{1,2}\.\d{1,2})|(\d{1,2}\.\d{1,2}\.)|(\d{1,2}\.\d{1,2}\.\d{1,2})" />
+                    <span asp-validation-for="Version" class="error"></span>
+                </div>
+                <div class="col-sm">
+                    <label asp-for="DeploymentModel" class="form-label mt-3">
+                    </label>
+                    <select class="form-select" aria-label="select deployment model" asp-for="DeploymentModel"
+                        id="DeploymentModel">
+                        <option selected value="">Choose a deployment model</option>
+                        <option value="Kentico Managed SaaS Service">Kentico Managed SaaS Service</option>
+                        <option value="Self-hosted on-premises">Private cloud (non-SaaS)</option>
+                    </select>
+                    <span asp-validation-for="DeploymentModel" class="error"></span>
+                </div>
+                <div class="col-sm d-flex align-items-end">
+                    <div class="form-check mt-3">
+                        <input type="checkbox" class="form-check-input" asp-for="IsKenticoSaaSProductionIssue">
+                        <label class="form-check-label" asp-for="IsKenticoSaaSProductionIssue"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <label asp-for="WebsiteURL" class="form-label mt-3">Website URL</label>
+                    <input class="form-control" asp-for="WebsiteURL" />
+                    <span asp-validation-for="WebsiteURL" class="error"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-7">
+                    <label asp-for="Attachment" class="form-label mt-3"></label>
+                    <div class="d-flex">
+                        <label asp-for="Attachment" class="btn btn-outline-secondary">ATTACH&nbsp;FILE</label>
+                        <input class="form-control" asp-for="Attachment" />
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <input asp-for="CaptchaToken" />
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button id="supportFormSubmit" type="submit" class="btn btn-primary btn-lighter px-5 mt-4 uppercase">
+                    Submit Form
+                </button>
+
+                @if (Context.Request.IsHtmx() && Model.IsSuccess)
+                {
+                    <div class="alert alert-primary mt-3" role="alert">
+                        <h4 class="alert-heading">Your support case was submitted successfully.</h4>
+                        <hr>
+                        <p class="mb-0">You will receive a confirmation receipt in your inbox.</p>
+                    </div>
+                }
+            </div>
+
+            <vc:read-only-mode-notification />
+        </fieldset>
     </form>
 </div>
 

@@ -11,11 +11,11 @@
     string badgeClasses = Model.DisplayStyle switch
     {
         BadgeDisplayStyle.Full => "badge d-flex align-items-center gap-1 fw-medium",
-        BadgeDisplayStyle.IconOnly or _ => "icon",
+        BadgeDisplayStyle.IconOnly or _ => "",
     };
 }
 
-<div class="flex wrap gap-1 mt-1 flex-wrap">
+<div class="d-flex wrap gap-1 mt-1 flex-wrap">
     @foreach (var badge in Model.Badges)
     {
         <span class="@badgeClasses" theme="secondary-300" title="@badge.MemberBadgeDescription"

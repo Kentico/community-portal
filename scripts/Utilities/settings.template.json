@@ -2,12 +2,31 @@
   "BackupSourceFolderPath": "/var/backups",
   "BackupSourcePathSeparator": "/",
   "BackupHostSourceFolderPath": "~/backups",
-  "CodeGenerationTypes": [
-    "ReusableContentTypes",
-    "PageContentTypes",
-    "Forms",
-    "ReusableFieldSchemas",
-    "EmailContentTypes"
-  ],
+  "CodeGenerationTypes": {
+    "ReusableContentTypes": {
+      "Include": "",
+      "Exclude": ""
+    },
+    "PageContentTypes": {
+      "Include": "",
+      "Exclude": ""
+    },
+    "Forms": {
+      "Include": "",
+      "Exclude": ""
+    },
+    "ReusableFieldSchemas": {
+      "Include": "",
+      "Exclude": ""
+    },
+    "EmailContentTypes": {
+      "Include": "",
+      "Exclude": ""
+    },
+    "Classes": {
+      "Include": "",
+      "Exclude": ""
+    }
+  },
   "CompressDeploymentPackage": true
 }

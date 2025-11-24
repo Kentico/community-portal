@@ -5,6 +5,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
+using CMS.Base;
 using CMS.Core;
 using CMS.DataEngine;
 using CMS.Helpers;
@@ -27,6 +28,7 @@ public class SupportRequestProcessorBackgroundService : ApplicationLifecycleBack
     private readonly IProgressiveCache cache;
     private readonly SupportRequestProcessingSettings settings;
     private readonly AzureStorageClientFactory clientFactory;
+    private readonly IReadOnlyModeProvider readOnlyProvider;
 
     private QueueClient queueClientPrimary = null!;
     private QueueClient queueClientDeadLetter = null!;
@@ -41,7 +43,8 @@ public class SupportRequestProcessorBackgroundService : ApplicationLifecycleBack
         IInfoProvider<SupportRequestConfigurationInfo> configurationProvider,
         IInfoProvider<SupportRequestProcessingEventInfo> eventProvider,
         IProgressiveCache cache,
-        IOptions<SupportRequestProcessingSettings> options)
+        IOptions<SupportRequestProcessingSettings> options,
+        IReadOnlyModeProvider readOnlyProvider)
     {
         this.logger = logger;
         this.configurationProvider = configurationProvider;
@@ -49,6 +52,7 @@ public class SupportRequestProcessorBackgroundService : ApplicationLifecycleBack
         this.cache = cache;
         settings = options.Value;
         this.clientFactory = clientFactory;
+        this.readOnlyProvider = readOnlyProvider;
         httpClient = httpClientFactory.CreateClient();
 
         ShouldRestart = true;
@@ -61,6 +65,11 @@ public class SupportRequestProcessorBackgroundService : ApplicationLifecycleBack
 
         while (!cancellationToken.IsCancellationRequested && await timer.WaitForNextTickAsync(cancellationToken))
         {
+            if (readOnlyProvider.IsReadOnly)
+            {
+                continue;
+            }
+
             var configuration = await GetConfiguration();
 
             if (settings.IsEnabled && (configuration?.SupportRequestConfigurationIsQueueProcessingEnabled ?? false))

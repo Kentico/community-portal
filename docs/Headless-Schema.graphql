@@ -1,0 +1,667 @@
+"""
+The purpose of the `cost` directive is to define a `weight` for GraphQL types, fields, and arguments. Static analysis can use these weights when calculating the overall cost of a query or response.
+"""
+directive @cost(
+  """
+  The `weight` argument defines what value to add to the overall cost for every appearance, or possible appearance, of a type, field, argument, etc.
+  """
+  weight: String!
+) on SCALAR | OBJECT | FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM | INPUT_FIELD_DEFINITION
+
+type KenticoCommunityCommunityGroupsHeadlessItem {
+  _system: _System!
+  communityGroupsHeadlessItemCTALabel: String
+  communityGroupsHeadlessItemCTALinkURL: String
+  communityGroupsHeadlessItemGroups(
+    """
+    pagination skip
+    """
+    skip: Int
+
+    """
+    pagination take
+    """
+    take: Int
+    sort: _KenticoCommunityCommunityGroupContentSorter
+    where: _KenticoCommunityCommunityGroupContentFilter
+  ): _KenticoCommunityCommunityGroupContentCollection!
+}
+
+type _KenticoCommunityCommunityGroupsHeadlessItemCollection {
+  items: [KenticoCommunityCommunityGroupsHeadlessItem!]!
+
+  """
+  Specified pagination skip.
+  """
+  skip: Int!
+
+  """
+  Specified pagination take.
+  """
+  take: Int!
+
+  """
+  The number of stored items regardless of the specified pagination.
+  """
+  totalCount: Int!
+}
+
+input _KenticoCommunityCommunityGroupsHeadlessItemSorter {
+  _system: _SystemFieldsSorter
+  communityGroupsHeadlessItemCTALabel: _Sorter
+  communityGroupsHeadlessItemCTALinkURL: _Sorter
+}
+
+input _KenticoCommunityCommunityGroupsHeadlessItemFilter {
+  _system: _SystemFieldsFilter
+  communityGroupsHeadlessItemCTALabel: _TextFilter
+  communityGroupsHeadlessItemCTALinkURL: _TextFilter
+}
+
+type KenticoCommunityCommunityGroupContent implements IBasicItemFields & ICoreTaxonomyFields & IFeaturedImageFields {
+  _system: _System!
+  basicItemTitle: String
+  basicItemShortDescription: String
+  coreTaxonomyDXTopics: [_Tag!]
+  featuredImageImageContent(
+    """
+    pagination skip
+    """
+    skip: Int
+
+    """
+    pagination take
+    """
+    take: Int
+    sort: _KenticoCommunityImageContentSorter
+    where: _KenticoCommunityImageContentFilter
+  ): _KenticoCommunityImageContentCollection!
+  communityGroupContentWebsiteURL: String
+  communityGroupContentDescriptionHTML: String
+  communityGroupContentAddressCity: String
+  communityGroupContentAddressStateOrProvince: String
+  communityGroupContentAddressCountry: String
+}
+
+type _KenticoCommunityCommunityGroupContentCollection {
+  items: [KenticoCommunityCommunityGroupContent!]!
+
+  """
+  Specified pagination skip.
+  """
+  skip: Int!
+
+  """
+  Specified pagination take.
+  """
+  take: Int!
+
+  """
+  The number of stored items regardless of the specified pagination.
+  """
+  totalCount: Int!
+}
+
+input _KenticoCommunityCommunityGroupContentSorter {
+  _system: _SystemFieldsSorter
+  basicItemTitle: _Sorter
+  basicItemShortDescription: _Sorter
+  communityGroupContentWebsiteURL: _Sorter
+  communityGroupContentDescriptionHTML: _Sorter
+  communityGroupContentAddressCity: _Sorter
+  communityGroupContentAddressStateOrProvince: _Sorter
+  communityGroupContentAddressCountry: _Sorter
+}
+
+input _KenticoCommunityCommunityGroupContentFilter {
+  _system: _SystemFieldsFilter
+  basicItemTitle: _TextFilter
+  basicItemShortDescription: _LongtextFilter
+  coreTaxonomyDXTopics: _TaxonomyFilter
+  communityGroupContentWebsiteURL: _TextFilter
+  communityGroupContentDescriptionHTML: _RichtexthtmlFilter
+  communityGroupContentAddressCity: _TextFilter
+  communityGroupContentAddressStateOrProvince: _TextFilter
+  communityGroupContentAddressCountry: _TextFilter
+}
+
+type KenticoCommunityImageContent implements IBasicItemFields & ICoreTaxonomyFields {
+  _system: _System!
+  basicItemTitle: String
+  basicItemShortDescription: String
+  coreTaxonomyDXTopics: [_Tag!]
+  imageContentAsset: _ContentItemAsset
+}
+
+type _KenticoCommunityImageContentCollection {
+  items: [KenticoCommunityImageContent!]!
+
+  """
+  Specified pagination skip.
+  """
+  skip: Int!
+
+  """
+  Specified pagination take.
+  """
+  take: Int!
+
+  """
+  The number of stored items regardless of the specified pagination.
+  """
+  totalCount: Int!
+}
+
+input _KenticoCommunityImageContentSorter {
+  _system: _SystemFieldsSorter
+  basicItemTitle: _Sorter
+  basicItemShortDescription: _Sorter
+}
+
+input _KenticoCommunityImageContentFilter {
+  _system: _SystemFieldsFilter
+  basicItemTitle: _TextFilter
+  basicItemShortDescription: _LongtextFilter
+  coreTaxonomyDXTopics: _TaxonomyFilter
+}
+
+type KenticoCommunityLinksFeedHeadlessItem implements IBasicItemFields & ICoreTaxonomyFields {
+  _system: _System!
+  basicItemTitle: String
+  basicItemShortDescription: String
+  coreTaxonomyDXTopics: [_Tag!]
+  linksFeedHeadlessItemLinksFeedLinkContents(
+    """
+    pagination skip
+    """
+    skip: Int
+
+    """
+    pagination take
+    """
+    take: Int
+    sort: _KenticoCommunityLinksFeedItemContentSorter
+    where: _KenticoCommunityLinksFeedItemContentFilter
+  ): _KenticoCommunityLinksFeedItemContentCollection!
+}
+
+type _KenticoCommunityLinksFeedHeadlessItemCollection {
+  items: [KenticoCommunityLinksFeedHeadlessItem!]!
+
+  """
+  Specified pagination skip.
+  """
+  skip: Int!
+
+  """
+  Specified pagination take.
+  """
+  take: Int!
+
+  """
+  The number of stored items regardless of the specified pagination.
+  """
+  totalCount: Int!
+}
+
+input _KenticoCommunityLinksFeedHeadlessItemSorter {
+  _system: _SystemFieldsSorter
+  basicItemTitle: _Sorter
+  basicItemShortDescription: _Sorter
+}
+
+input _KenticoCommunityLinksFeedHeadlessItemFilter {
+  _system: _SystemFieldsFilter
+  basicItemTitle: _TextFilter
+  basicItemShortDescription: _LongtextFilter
+  coreTaxonomyDXTopics: _TaxonomyFilter
+}
+
+type KenticoCommunityLinksFeedItemContent implements ICoreTaxonomyFields {
+  _system: _System!
+  linksFeedItemContentHeading: String
+  linksFeedItemContentDescription: String
+  linksFeedItemContentCTALabel: String
+  linksFeedItemContentCTAURL: String
+  coreTaxonomyDXTopics: [_Tag!]
+}
+
+type _KenticoCommunityLinksFeedItemContentCollection {
+  items: [KenticoCommunityLinksFeedItemContent!]!
+
+  """
+  Specified pagination skip.
+  """
+  skip: Int!
+
+  """
+  Specified pagination take.
+  """
+  take: Int!
+
+  """
+  The number of stored items regardless of the specified pagination.
+  """
+  totalCount: Int!
+}
+
+input _KenticoCommunityLinksFeedItemContentSorter {
+  _system: _SystemFieldsSorter
+  linksFeedItemContentHeading: _Sorter
+  linksFeedItemContentDescription: _Sorter
+  linksFeedItemContentCTALabel: _Sorter
+  linksFeedItemContentCTAURL: _Sorter
+}
+
+input _KenticoCommunityLinksFeedItemContentFilter {
+  _system: _SystemFieldsFilter
+  linksFeedItemContentHeading: _TextFilter
+  linksFeedItemContentDescription: _RichtexthtmlFilter
+  linksFeedItemContentCTALabel: _TextFilter
+  linksFeedItemContentCTAURL: _TextFilter
+  coreTaxonomyDXTopics: _TaxonomyFilter
+}
+
+type Query {
+  kenticoCommunityCommunityGroupsHeadlessItem(
+    """
+    content item GUID
+    """
+    id: UUID
+
+    """
+    GUID of specific language variant of content item
+    """
+    languageVariantId: UUID
+
+    """
+    content language
+    """
+    languageName: String
+
+    """
+    fallback to allowed languages
+    """
+    useLanguageFallbacks: Boolean
+  ): KenticoCommunityCommunityGroupsHeadlessItem
+  kenticoCommunityCommunityGroupsHeadlessItemCollection(
+    """
+    pagination skip
+    """
+    skip: Int
+
+    """
+    pagination take
+    """
+    take: Int
+
+    """
+    content language
+    """
+    languageName: String
+
+    """
+    fallback to allowed languages
+    """
+    useLanguageFallbacks: Boolean
+    sort: _KenticoCommunityCommunityGroupsHeadlessItemSorter
+    where: _KenticoCommunityCommunityGroupsHeadlessItemFilter
+  ): _KenticoCommunityCommunityGroupsHeadlessItemCollection!
+  kenticoCommunityLinksFeedHeadlessItem(
+    """
+    content item GUID
+    """
+    id: UUID
+
+    """
+    GUID of specific language variant of content item
+    """
+    languageVariantId: UUID
+
+    """
+    content language
+    """
+    languageName: String
+
+    """
+    fallback to allowed languages
+    """
+    useLanguageFallbacks: Boolean
+  ): KenticoCommunityLinksFeedHeadlessItem
+  kenticoCommunityLinksFeedHeadlessItemCollection(
+    """
+    pagination skip
+    """
+    skip: Int
+
+    """
+    pagination take
+    """
+    take: Int
+
+    """
+    content language
+    """
+    languageName: String
+
+    """
+    fallback to allowed languages
+    """
+    useLanguageFallbacks: Boolean
+    sort: _KenticoCommunityLinksFeedHeadlessItemSorter
+    where: _KenticoCommunityLinksFeedHeadlessItemFilter
+  ): _KenticoCommunityLinksFeedHeadlessItemCollection!
+}
+
+interface IBasicItemFields {
+  _system: _ISystem!
+  basicItemTitle: String
+  basicItemShortDescription: String
+}
+
+type _IBasicItemFieldsCollection {
+  items: [IBasicItemFields!]!
+
+  """
+  Specified pagination skip.
+  """
+  skip: Int!
+
+  """
+  Specified pagination take.
+  """
+  take: Int!
+
+  """
+  The number of stored items regardless of the specified pagination.
+  """
+  totalCount: Int!
+}
+
+input _IBasicItemFieldsSorter {
+  _system: _SystemFieldsSorter
+  basicItemTitle: _Sorter
+  basicItemShortDescription: _Sorter
+}
+
+input _IBasicItemFieldsFilter {
+  _system: _SystemFieldsFilter
+  basicItemTitle: _TextFilter
+  basicItemShortDescription: _LongtextFilter
+}
+
+interface ICoreTaxonomyFields {
+  _system: _ISystem!
+  coreTaxonomyDXTopics: [_Tag!]
+}
+
+type _ICoreTaxonomyFieldsCollection {
+  items: [ICoreTaxonomyFields!]!
+
+  """
+  Specified pagination skip.
+  """
+  skip: Int!
+
+  """
+  Specified pagination take.
+  """
+  take: Int!
+
+  """
+  The number of stored items regardless of the specified pagination.
+  """
+  totalCount: Int!
+}
+
+input _ICoreTaxonomyFieldsSorter {
+  _system: _SystemFieldsSorter
+}
+
+input _ICoreTaxonomyFieldsFilter {
+  _system: _SystemFieldsFilter
+  coreTaxonomyDXTopics: _TaxonomyFilter
+}
+
+interface IFeaturedImageFields {
+  _system: _ISystem!
+  featuredImageImageContent: _KenticoCommunityImageContentCollection!
+}
+
+type _IFeaturedImageFieldsCollection {
+  items: [IFeaturedImageFields!]!
+
+  """
+  Specified pagination skip.
+  """
+  skip: Int!
+
+  """
+  Specified pagination take.
+  """
+  take: Int!
+
+  """
+  The number of stored items regardless of the specified pagination.
+  """
+  totalCount: Int!
+}
+
+input _IFeaturedImageFieldsSorter {
+  _system: _SystemFieldsSorter
+}
+
+input _IFeaturedImageFieldsFilter {
+  _system: _SystemFieldsFilter
+}
+
+enum _Sorter {
+  ASC
+  DESC
+}
+
+interface _ISystem {
+  id: UUID!
+  languageVariantId: UUID!
+  contentType: String!
+  languageName: String!
+  firstPublished: DateTime
+  lastPublished: DateTime
+}
+
+type _System implements _ISystem {
+  id: UUID!
+  languageVariantId: UUID!
+  contentType: String!
+  languageName: String!
+  firstPublished: DateTime
+  lastPublished: DateTime
+}
+
+type _WebPageSystem implements _ISystem {
+  id: UUID!
+  languageVariantId: UUID!
+  contentType: String!
+  languageName: String!
+  firstPublished: DateTime
+  lastPublished: DateTime
+  url: String
+}
+
+input _SystemFieldsFilter {
+  id: _GuidFilter
+  languageVariantId: _GuidFilter
+  firstPublished: _DatetimeFilter
+  lastPublished: _DatetimeFilter
+}
+
+input _SystemFieldsSorter {
+  firstPublished: _Sorter
+  lastPublished: _Sorter
+}
+
+input _IntegerFilter {
+  eq: Int
+  neq: Int
+  gt: Int
+  gte: Int
+  lt: Int
+  lte: Int
+  in: [Int!]
+  nin: [Int!]
+}
+
+input _LongintegerFilter {
+  eq: Long
+  neq: Long
+  gt: Long
+  gte: Long
+  lt: Long
+  lte: Long
+}
+
+input _DoubleFilter {
+  gt: Float
+  lt: Float
+}
+
+input _DecimalFilter {
+  eq: Decimal
+  neq: Decimal
+  gt: Decimal
+  gte: Decimal
+  lt: Decimal
+  lte: Decimal
+}
+
+input _TextFilter {
+  eq: String
+  neq: String
+  in: [String!]
+  nin: [String!]
+  startsWith: String
+  nstartsWith: String
+  contains: String
+  ncontains: String
+}
+
+input _LongtextFilter {
+  eq: String
+  neq: String
+  in: [String!]
+  nin: [String!]
+  startsWith: String
+  nstartsWith: String
+  contains: String
+  ncontains: String
+}
+
+input _RichtexthtmlFilter {
+  eq: String
+  neq: String
+  in: [String!]
+  nin: [String!]
+  startsWith: String
+  nstartsWith: String
+  contains: String
+  ncontains: String
+}
+
+input _BooleanFilter {
+  eq: Boolean
+  neq: Boolean
+}
+
+input _DatetimeFilter {
+  eq: DateTime
+  neq: DateTime
+  gt: DateTime
+  gte: DateTime
+  lt: DateTime
+  lte: DateTime
+}
+
+input _DateFilter {
+  eq: Date
+  neq: Date
+  gt: Date
+  gte: Date
+  lt: Date
+  lte: Date
+}
+
+input _TimespanFilter {
+  eq: TimeSpan
+  neq: TimeSpan
+  gt: TimeSpan
+  gte: TimeSpan
+  lt: TimeSpan
+  lte: TimeSpan
+}
+
+input _GuidFilter {
+  eq: UUID
+  neq: UUID
+  in: [UUID!]
+  nin: [UUID!]
+}
+
+input _TaxonomyFilter {
+  containsAll: [String!]
+  containsAny: [String!]
+}
+
+scalar UUID @specifiedBy(url: "https://tools.ietf.org/html/rfc4122")
+
+"""
+The `DateTime` scalar represents an ISO-8601 compliant date time type.
+"""
+scalar DateTime @specifiedBy(url: "https://www.graphql-scalars.com/date-time")
+
+"""
+The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+"""
+The `Decimal` scalar type represents a decimal floating-point number.
+"""
+scalar Decimal
+
+"""
+The `Date` scalar represents an ISO-8601 compliant date type.
+"""
+scalar Date
+
+"""
+The `TimeSpan` scalar represents an ISO-8601 compliant duration type.
+"""
+scalar TimeSpan
+
+type _ContentItemAsset {
+  name: String
+  path: String
+  fileSize: Long!
+  fileType: String
+  width: Int
+  height: Int
+}
+
+type _Asset {
+  fileName: String
+  path: String
+  fileSize: Long!
+  fileType: String
+  width: Int!
+  height: Int!
+}
+
+type _WebPage {
+  url: String
+}
+
+type _Tag {
+  name: String
+  title: String
+  description: String
+}

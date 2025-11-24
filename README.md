@@ -60,8 +60,8 @@ Community website.
 ## Project Setup
 
 To get started running or working on this project, use the
-`/Report-Development-Dependencies` in your GitHub Copilot chat to report the
-current required tools and infrastructure.
+`/Report-Development-Dependencies` prompt in your GitHub Copilot chat to report
+the current required tools and infrastructure.
 
 1. [Required Software](./docs/Required-Software.md)
 1. [Environment Setup](./docs/Environment-Setup.md)

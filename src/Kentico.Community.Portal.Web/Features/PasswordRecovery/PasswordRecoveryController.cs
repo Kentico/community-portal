@@ -1,4 +1,5 @@
 ﻿using System.Web;
+using CMS.Base;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Registration;
 using Kentico.Community.Portal.Web.Infrastructure;
@@ -13,13 +14,15 @@ namespace Kentico.Community.Portal.Web.Features.PasswordRecovery;
 public class PasswordRecoveryController(
     UserManager<CommunityMember> userManager,
     WebPageMetaService metaService,
-    IMemberEmailService emailService) : Controller
+    IMemberEmailService emailService,
+    IReadOnlyModeProvider readOnlyProvider) : Controller
 {
     private const string VIEW_PATH_ERROR = "~/Features/PasswordRecovery/ResetPasswordError.cshtml";
 
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly WebPageMetaService metaService = metaService;
     private readonly IMemberEmailService emailService = emailService;
+    private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
 
     /// <summary>
     /// Step 1
@@ -43,6 +46,11 @@ public class PasswordRecoveryController(
     [EnableRateLimiting(MemberRateLimitingConstants.ForgotPassword)]
     public async Task<ActionResult> RequestRecoveryEmail(RequestRecoveryEmailViewModel model)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return PartialView("~/Features/PasswordRecovery/_RequestRecoveryEmailForm.cshtml", model);
+        }
+
         if (!ModelState.IsValid)
         {
             return PartialView("~/Features/PasswordRecovery/_RequestRecoveryEmailForm.cshtml", model);
@@ -162,6 +170,11 @@ public class PasswordRecoveryController(
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> SetNewPassword(SetNewPasswordViewModel model)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return PartialView("~/Features/PasswordRecovery/_SetNewPasswordForm.cshtml", model);
+        }
+
         if (!ModelState.IsValid)
         {
             return PartialView("~/Features/PasswordRecovery/_SetNewPasswordForm.cshtml", model);

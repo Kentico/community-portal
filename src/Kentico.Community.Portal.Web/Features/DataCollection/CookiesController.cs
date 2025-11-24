@@ -1,4 +1,5 @@
-﻿using EnumsNET;
+﻿using CMS.Base;
+using EnumsNET;
 
 using Kentico.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
@@ -9,16 +10,23 @@ namespace Kentico.Community.Portal.Web.Features.DataCollection;
 public class CookiesController(
     CookieConsentManager cookieConsentManager,
     ICookieAccessor cookies,
-    TimeProvider clock) : Controller
+    TimeProvider clock,
+    IReadOnlyModeProvider readOnlyProvider) : Controller
 {
     public const string ROUTE_SET_PREFERENCES = nameof(ROUTE_SET_PREFERENCES);
     private readonly CookieConsentManager cookieConsentManager = cookieConsentManager;
     private readonly ICookieAccessor cookies = cookies;
     private readonly TimeProvider clock = clock;
+    private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
 
     [HttpPost(Name = ROUTE_SET_PREFERENCES)]
     public IActionResult CookiePreferences(CookieBannerCompleteViewModel requestModel)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return PartialView("~/Features/DataCollection/CookieBannerComplete.cshtml", requestModel);
+        }
+
         if (!Enums.TryToObject<CookieConsentLevel>(requestModel.CookieLevelSelected, out var currentConsentValue, EnumValidation.IsDefined))
         {
             return NoContent();

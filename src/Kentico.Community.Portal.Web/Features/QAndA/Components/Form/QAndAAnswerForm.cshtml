@@ -25,7 +25,7 @@
         @Model.FormHelpMessageHTML
     </div>
 
-    <fieldset hx-indicator="this">
+    <fieldset hx-indicator="this" xpc-readonly-disabled>
         <div asp-validation-summary="All" class="alert alert-danger validation-summary"></div>
 
         <label for="@editorFieldID" class="form-label"><span class="text-secondary fw-bold">@User.Identity.Name</span>
@@ -74,6 +74,8 @@
                 </button>
             }
         </div>
+
+        <vc:read-only-mode-notification />
     </fieldset>
 
     <script type="module">

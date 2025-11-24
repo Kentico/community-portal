@@ -3,7 +3,7 @@
 <form id="signInForm" asp-route-returnUrl='@Context.Request.Query["ReturnUrl"]' method="post" class="needs-validation"
     hx-swap="outerHTML" hx-post hx-controller="Login" hx-route-returnUrl='@Context.Request.Query["ReturnUrl"]'
     hx-disabled-elt="find fieldset" test-id="signIn">
-    <fieldset hx-indicator="this">
+    <fieldset hx-indicator="this" xpc-readonly-disabled>
         <div asp-validation-summary="ModelOnly" class="alert alert-danger validation-summary"></div>
 
         <div class="mb-4">
@@ -25,8 +25,10 @@
             </div>
         </div>
 
-        <button id="signIn" type="submit" class="btn btn-primary w-100" xpc-loading-button>
-            Sign In
+        <button type="submit" class="btn btn-primary w-100" xpc-loading-button>
+            Sign in
         </button>
+
+        <vc:read-only-mode-notification />
     </fieldset>
 </form>

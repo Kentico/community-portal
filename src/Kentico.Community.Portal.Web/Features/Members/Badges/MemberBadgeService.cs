@@ -1,4 +1,5 @@
 ﻿using System.Collections.Frozen;
+using CMS.Base;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.Accounts;
 using Kentico.Community.Portal.Web.Features.QAndA.Search;
@@ -10,11 +11,13 @@ namespace Kentico.Community.Portal.Web.Features.Members.Badges;
 public class MemberBadgeService(
     IMemberBadgeInfoProvider memberBadgeInfoProvider,
     IMemberBadgeMemberInfoProvider memberBadgeMemberInfoProvider,
-    IContentRetriever contentRetriever)
+    IContentRetriever contentRetriever,
+    IReadOnlyModeProvider readOnlyProvider)
 {
     private readonly IMemberBadgeInfoProvider memberBadgeInfoProvider = memberBadgeInfoProvider;
     private readonly IMemberBadgeMemberInfoProvider memberBadgeMemberInfoProvider = memberBadgeMemberInfoProvider;
     private readonly IContentRetriever contentRetriever = contentRetriever;
+    private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
 
     public async Task<IReadOnlyList<MemberBadgeViewModel>> GetSelectedBadgesFor(int memberId)
     {
@@ -46,6 +49,11 @@ public class MemberBadgeService(
 
     public async Task UpdateSelectedBadgesFor(List<SelectedBadgeViewModel> badges, int memberId)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return;
+        }
+
         var badgesInDb = await memberBadgeMemberInfoProvider.Get()
             .WhereEquals(nameof(MemberBadgeMemberInfo.MemberBadgeMemberMemberId), memberId)
             .GetEnumerableTypedResultAsync();

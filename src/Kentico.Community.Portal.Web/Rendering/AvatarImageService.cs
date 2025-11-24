@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.Common;
+using CMS.Base;
 using CMS.DataEngine;
 using CMS.Helpers;
 using CMS.IO;
@@ -15,7 +16,8 @@ public class AvatarImageService(
     IWebHostEnvironment webHostEnvironment,
     IStoragePathService storagePathService,
     IInfoProvider<MemberInfo> memberProvider,
-    IProgressiveCache cache)
+    IProgressiveCache cache,
+    IReadOnlyModeProvider readOnlyProvider)
 {
     private const string STORAGE_FOLDER_NAME = "avatars";
 
@@ -23,6 +25,7 @@ public class AvatarImageService(
     private readonly IStoragePathService storagePathService = storagePathService;
     private readonly IInfoProvider<MemberInfo> memberProvider = memberProvider;
     private readonly IProgressiveCache cache = cache;
+    private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
 
     public async Task<FileInfo> GetAvatarImage(int memberID)
     {
@@ -37,6 +40,11 @@ public class AvatarImageService(
 
     public async Task UpdateAvatarImage(IFormFile avatarImageFile, int memberID)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return;
+        }
+
         string? currentFile = await GetAvatarFilePath(memberID);
 
         if (currentFile is not null &&

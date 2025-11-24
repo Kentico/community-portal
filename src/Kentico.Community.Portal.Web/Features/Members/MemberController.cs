@@ -62,7 +62,7 @@ public class MemberController(
 
         var model = new MemberDetailViewModel(member)
         {
-            Page = new PortalPage("Community member profile", $"Learn about {member.UserName} and their contributions to the Kentico Community"),
+            Page = new PortalPage("Community member profile", $"Learn about {member.FullName} and their contributions to the Kentico Community"),
             BlogPostLinks = [.. blogResult.Hits.Select(h => new BlogPostLink(h.Url, h.Title, h.PublishedDate, h.BlogType, jsEncoder))],
             QuestionsAsked = [.. qandaResult.Hits.Select(h => new Link(h.Url, h.Title, h.PublishedDate, jsEncoder))],
             MemberBadges = badges,

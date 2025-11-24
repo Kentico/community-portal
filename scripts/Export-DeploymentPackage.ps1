@@ -8,7 +8,11 @@ param (
     [Parameter(Mandatory = $false)]
     [string]$OutputPackagePath = "../DeploymentPackage.zip",
     # If present, the custom build number won't be used as a "Product version" suffix in the format yyyyMMddHHmm.
-    [switch]$KeepProductVersion
+    [switch]$KeepProductVersion,
+    # Marks the deployment package as zero-downtime ready (enables read-only mode support during SaaS deployment)
+    [switch]$ZeroDowntimeSupportEnabled,
+    # If specified, overrides the CompressDeploymentPackage setting from config
+    [switch]$CompressPackage
 )
 $ErrorActionPreference = "Stop"
 
@@ -25,7 +29,6 @@ Import-Module (Resolve-Path Utilities) `
 
 
 $scriptConfig = Get-ScriptConfig
-$CompressPackage = $scriptConfig.CompressDeploymentPackage
 
 $projectPath = Get-WebProjectPath
 $configuration = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Release" : "Debug"
@@ -111,8 +114,20 @@ Copy-Item -Force -Recurse "$ProjectCDRepositoryPath/*" -Destination $OutputCDRep
 
 $AssemblyPath = Join-Path $OutputFolderPath "$AssemblyName.dll" -Resolve
 $PackageMetadata = @{
-    AssemblyName = $AssemblyName
-    Version      = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($AssemblyPath).ProductVersion
+    AssemblyName                   = $AssemblyName
+    Version                        = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($AssemblyPath).ProductVersion
+    SupportsZeroDowntimeDeployment = $ZeroDowntimeSupportEnabled.IsPresent
+}
+
+if ($ZeroDowntimeSupportEnabled) {
+    Write-Status "Zero-downtime support enabled"
+}
+
+if (-not $PackageMetadata.ContainsKey('AssemblyName') -or [string]::IsNullOrWhiteSpace($PackageMetadata.AssemblyName)) {
+    throw "Package metadata AssemblyName missing or empty"
+}
+if (-not $PackageMetadata.ContainsKey('Version') -or [string]::IsNullOrWhiteSpace($PackageMetadata.Version)) {
+    throw "Package metadata Version missing or empty"
 }
 
 # Create all necessary metadata for cloud-based package deployment

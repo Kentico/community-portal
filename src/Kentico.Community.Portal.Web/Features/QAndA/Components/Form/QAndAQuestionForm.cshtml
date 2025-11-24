@@ -32,7 +32,7 @@
         hx-action="@(Model.EditedObjectID is null ? "CreateQuestion" : "UpdateQuestion")" hx-swap="outerHTML"
         hx-target="@rootElIdSelector" hx-trigger="submitReady" hx-disabled-elt="find fieldset"
         class="d-flex flex-column">
-        <fieldset hx-indicator="this">
+        <fieldset hx-indicator="this" xpc-readonly-disabled>
 
             <div asp-validation-summary="All" class="alert alert-danger validation-summary"></div>
 
@@ -99,6 +99,8 @@
                     </button>
                 }
             </div>
+
+            <vc:read-only-mode-notification />
         </fieldset>
 
         <script>

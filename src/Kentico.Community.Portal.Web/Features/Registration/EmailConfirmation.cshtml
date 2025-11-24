@@ -12,10 +12,12 @@
         hx-route-username="@Model.Username" method="post" hx-disabled-elt="find fieldset">
         <p>@Model.Message</p>
 
-        <fieldset hx-indicator="this">
+        <fieldset hx-indicator="this" xpc-readonly-disabled>
             <button type="submit" class="btn btn-primary mt-3" xpc-loading-button>
                 @Model.SendButtonText
             </button>
+
+            <vc:read-only-mode-notification />
         </fieldset>
     </form>
 

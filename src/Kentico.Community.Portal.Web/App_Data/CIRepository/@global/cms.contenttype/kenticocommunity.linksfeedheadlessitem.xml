@@ -1,138 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <cms.contenttype>
   <ClassContentTypeType>Headless</ClassContentTypeType>
-  <ClassDisplayName>Links feed headless item</ClassDisplayName>
+  <ClassDisplayName>Links Feed Headless Item</ClassDisplayName>
   <ClassFormDefinition>
     <form>
       <field column="ContentItemDataID" columntype="integer" enabled="true" guid="c58e721f-d469-4e5d-a159-aeb6cafd96c9" isPK="true" />
       <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="d3353c47-a8ea-45a6-ac28-847e2a6cfeb4" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
       <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="a3007867-8893-41db-b60a-2dcd6da75ad3" isunique="true" system="true" />
-      <field column="LinksFeedHeadlessItemTitle" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="df82400d-5f84-432b-a295-8ed1650cdade" visible="true">
+      <schema guid="668b6777-06f6-47eb-a04a-956ac74c7c52" name="668b6777-06f6-47eb-a04a-956ac74c7c52">
+        <properties />
+      </schema>
+      <schema guid="bdc7088f-b01e-4186-a83c-703214805501" name="bdc7088f-b01e-4186-a83c-703214805501">
+        <properties />
+      </schema>
+      <field allowempty="true" column="LinksFeedHeadlessItemLinksFeedLinkContents" columnprecision="0" columntype="contentitemreference" enabled="true" guid="43c12a7c-f48c-4a9a-a43a-7b50d6de620e" visible="true">
         <properties>
-          <explanationtext>
-            <![CDATA[The title of the feed, which can be used to add context to the visual presentation.]]>
-          </explanationtext>
+          <explanationtext>The items shared through this feed</explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Title</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.TextInput</controlname>
-        </settings>
-      </field>
-      <field allowempty="true" column="LinksFeedHeadlessItemImageContents" columnprecision="0" columntype="contentitemreference" enabled="true" guid="1f37d409-08b5-46ce-b15b-b8469b475a3c" visible="true">
-        <properties>
-          <explanationtext>
-            <![CDATA[An optional logo of the feed, used for branding purposes.]]>
-          </explanationtext>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Logo (optional)</fieldcaption>
+          <fieldcaption>Feed items</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
           <AllowedContentItemTypeIdentifiers>
-            <![CDATA[["40334c2a-0969-4e68-96eb-e0fb8d89b37e"]]]>
-          </AllowedContentItemTypeIdentifiers>
-          <controlname>Kentico.Administration.ContentItemSelector</controlname>
-          <MaximumItems>1</MaximumItems>
-          <SelectionType>contentTypes</SelectionType>
-        </settings>
-      </field>
-      <field allowempty="true" column="LinksFeedHeadlessItemLinkContents" columnprecision="0" columntype="contentitemreference" enabled="true" guid="43c12a7c-f48c-4a9a-a43a-7b50d6de620e" visible="true">
-        <properties>
-          <explanationtext>The links shared through this feed</explanationtext>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Links</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <AllowedContentItemTypeIdentifiers>
-            <![CDATA[["05bcb412-2000-455b-95fd-74dad14fbdae"]]]>
+            <![CDATA[["5ccbb481-1c26-49bd-950d-32ba806a69d4"]]]>
           </AllowedContentItemTypeIdentifiers>
           <controlname>Kentico.Administration.ContentItemSelector</controlname>
           <MinimumItems>1</MinimumItems>
           <SelectionType>contentTypes</SelectionType>
         </settings>
-      </field>
-      <field column="LinksFeedHeadlessItemShortDescription" columnprecision="0" columntype="richtexthtml" enabled="true" guid="87d8d010-9dc4-4e4f-afe3-57208abdc0bb" visible="true">
-        <properties>
-          <explanationtext>
-            <![CDATA[A short description of the feed to help consumers understand its purpose.]]>
-          </explanationtext>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Short description</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <ConfigurationName>Kentico.Administration.HeadlessStructuredContent</ConfigurationName>
-          <controlname>Kentico.Administration.RichTextEditor</controlname>
-        </settings>
-        <additionalactionsdata>
-          <AdditionalActionConfiguration>
-            <AdditionalActionIdentifier>Kentico.Administration.AiraTextRefinement</AdditionalActionIdentifier>
-            <AdditionalActionValues />
-          </AdditionalActionConfiguration>
-        </additionalactionsdata>
-      </field>
-      <field column="LinksFeedHeadlessItemHasFallbackCTA" columnprecision="0" columntype="boolean" enabled="true" guid="b5ae2408-e906-4866-810a-533ddc24f3e9" visible="true">
-        <properties>
-          <explanationtext>
-            <![CDATA[If true, the fallback call to action fields can be used when no links are available for the feed.]]>
-          </explanationtext>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Has fallback call to action?</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.Checkbox</controlname>
-        </settings>
-      </field>
-      <field allowempty="true" column="LinksFeedHeadlessItemFallbackCTALabel" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="1d4a596b-d595-4812-9167-050c7bc4250a" visible="true">
-        <properties>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Fallback CTA label</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.TextInput</controlname>
-        </settings>
-        <visibilityconditiondata>
-          <VisibilityConditionConfiguration>
-            <Identifier>Kentico.Administration.IsTrueVisibilityCondition</Identifier>
-            <Properties>
-              <PropertyName>LinksFeedHeadlessItemHasFallbackCTA</PropertyName>
-            </Properties>
-          </VisibilityConditionConfiguration>
-        </visibilityconditiondata>
-      </field>
-      <field allowempty="true" column="LinksFeedHeadlessItemFallbackCTALinkURL" columnprecision="0" columnsize="255" columntype="text" enabled="true" guid="3a00ca54-5c56-4a6a-a29e-b3de18dabb39" visible="true">
-        <properties>
-          <explanationtext>
-            <![CDATA[Must be an absolute URL. Can have optional query string or UTM tracking parameters.]]>
-          </explanationtext>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Fallback CTA link URL</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-        <settings>
-          <controlname>Kentico.Administration.TextInput</controlname>
-        </settings>
-        <validationrulesdata>
-          <ValidationRuleConfiguration>
-            <ValidationRuleIdentifier>Kentico.Community.Portal.ValidationRule.URL</ValidationRuleIdentifier>
-            <RuleValues>
-              <RequireHTTPS>true</RequireHTTPS>
-            </RuleValues>
-          </ValidationRuleConfiguration>
-        </validationrulesdata>
-        <visibilityconditiondata>
-          <VisibilityConditionConfiguration>
-            <Identifier>Kentico.Administration.IsTrueVisibilityCondition</Identifier>
-            <Properties>
-              <PropertyName>LinksFeedHeadlessItemHasFallbackCTA</PropertyName>
-            </Properties>
-          </VisibilityConditionConfiguration>
-        </visibilityconditiondata>
       </field>
     </form>
   </ClassFormDefinition>

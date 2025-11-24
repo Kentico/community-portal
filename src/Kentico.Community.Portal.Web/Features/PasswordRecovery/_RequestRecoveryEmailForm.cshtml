@@ -3,7 +3,7 @@
 <form id="RequestRecoveryEmail" method="post" class="needs-validation" hx-swap="outerHTML" hx-post
     hx-controller="PasswordRecovery" hx-action="RequestRecoveryEmail" hx-disabled-elt="find fieldset"
     test-id="RequestRecoveryEmail">
-    <fieldset hx-indicator="this">
+    <fieldset hx-indicator="this" xpc-readonly-disabled>
         <div asp-validation-summary="ModelOnly" class="alert alert-danger validation-summary"></div>
 
         <div class="mb-4">
@@ -15,6 +15,8 @@
         <button type="submit" class="btn btn-primary w-100" xpc-loading-button>
             Reset password
         </button>
+
+        <vc:read-only-mode-notification />
     </fieldset>
 
     @if (Context.Request.IsHtmx() && ViewContext.ModelState.IsValid)

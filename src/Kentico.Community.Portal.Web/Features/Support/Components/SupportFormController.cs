@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
+using CMS.Base;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Infrastructure.Storage;
 using Microsoft.AspNetCore.Mvc;
@@ -9,15 +10,22 @@ namespace Kentico.Community.Portal.Web.Features.Support;
 [Route("[controller]/[action]")]
 public class SupportFormController(
     CaptchaValidator captchaValidator,
-    AzureStorageClientFactory clientFactory) : Controller
+    AzureStorageClientFactory clientFactory,
+    IReadOnlyModeProvider readOnlyProvider) : Controller
 {
     private readonly CaptchaValidator captchaValidator = captchaValidator;
     private readonly AzureStorageClientFactory clientFactory = clientFactory;
+    private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> SubmitSupportForm([FromForm] SupportFormViewModel requestModel, CancellationToken cancellationToken)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return ViewComponent(typeof(SupportFormViewComponent), requestModel);
+        }
+
         var captchaResponse = await captchaValidator.ValidateCaptcha(requestModel);
 
         if (!captchaResponse.IsSuccess)

@@ -1,3 +1,4 @@
+using CMS.Base;
 using Htmx;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
@@ -18,13 +19,15 @@ public class QAndAAnswerController(
     IMediator mediator,
     IContentRetriever contentRetriever,
     IQAndAPermissionService permissionService,
-    ILogger<QAndAAnswerController> logger) : PortalHandlerController<QAndAAnswerController>(logger)
+    ILogger<QAndAAnswerController> logger,
+    IReadOnlyModeProvider readOnlyProvider) : PortalHandlerController<QAndAAnswerController>(logger)
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
     private readonly IMediator mediator = mediator;
     private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly IQAndAPermissionService permissionService = permissionService;
+    private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -32,6 +35,12 @@ public class QAndAAnswerController(
     public async Task<ActionResult> CreateAnswer(QAndAAnsweredViewModel requestModel)
     {
         var questionID = requestModel.ParentQuestionID;
+
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return ViewComponent(typeof(QAndAAnswerFormViewComponent), new { questionID });
+        }
+
         if (!ModelState.IsValid)
         {
             return ViewComponent(typeof(QAndAAnswerFormViewComponent), new { questionID });
@@ -69,6 +78,11 @@ public class QAndAAnswerController(
     public async Task<ActionResult> UpdateAnswer(QAndAAnsweredViewModel requestModel)
     {
         var questionID = requestModel.ParentQuestionID;
+
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return ViewComponent(typeof(QAndAAnswerFormViewComponent), new { questionID, answerID = requestModel.EditedObjectID });
+        }
 
         if (!ModelState.IsValid)
         {
@@ -145,6 +159,11 @@ public class QAndAAnswerController(
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> MarkApprovedAnswer(Guid questionID, int answerID)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
         var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID], new RetrievePagesParameters { LinkedItemsMaxLevel = 1 });
         if (questionPages.FirstOrDefault() is not QAndAQuestionPage parentQuestionPage)
         {
@@ -179,6 +198,11 @@ public class QAndAAnswerController(
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> DeleteAnswer(Guid questionID, int answerID)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
         var answer = await mediator.Send(new QAndAAnswerDataByIDQuery(answerID));
         if (answer is null)
         {

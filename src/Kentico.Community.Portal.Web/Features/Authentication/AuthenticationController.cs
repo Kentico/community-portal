@@ -1,4 +1,5 @@
 using System.Web;
+using CMS.Base;
 using Htmx;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Registration;
@@ -21,7 +22,8 @@ public class AuthenticationController(
     WebPageMetaService metaService,
     IStringLocalizer<SharedResources> localizer,
     ILogger<AuthenticationController> logger,
-    MemberContactManager contactManager) : Controller
+    MemberContactManager contactManager,
+    IReadOnlyModeProvider readOnlyProvider) : Controller
 {
     private readonly SignInManager<CommunityMember> signInManager = signInManager;
     private readonly UserManager<CommunityMember> userManager = userManager;
@@ -29,6 +31,7 @@ public class AuthenticationController(
     private readonly IStringLocalizer<SharedResources> localizer = localizer;
     private readonly ILogger<AuthenticationController> logger = logger;
     private readonly MemberContactManager contactManager = contactManager;
+    private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
 
     [HttpGet]
     public ActionResult Login()
@@ -43,6 +46,11 @@ public class AuthenticationController(
     [EnableRateLimiting(MemberRateLimitingConstants.Login)]
     public async Task<ActionResult> Login(LoginViewModel model, string? returnUrl = null)
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return PartialView("~/Features/Authentication/_LoginForm.cshtml", model);
+        }
+
         if (!ModelState.IsValid)
         {
             return PartialView("~/Features/Authentication/_LoginForm.cshtml", model);
@@ -126,6 +134,11 @@ public class AuthenticationController(
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Logout()
     {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
         await signInManager.SignOutAsync();
 
         _ = contactManager.ResetCurrentContact();

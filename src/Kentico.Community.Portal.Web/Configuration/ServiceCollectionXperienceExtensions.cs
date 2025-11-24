@@ -1,4 +1,5 @@
 using CMS;
+using CMS.Base;
 using CMS.Base.Configuration;
 using CMS.ContentEngine;
 using CMS.ContentSynchronization;
@@ -122,6 +123,7 @@ public static class ServiceCollectionXperienceExtensions
             {
                 options.DefaultCacheExpiration = TimeSpan.FromMinutes(10);
             })
+            .Configure<ReadOnlyModeOptions>(config.GetSection("ReadOnlyModeOptions"))
             .AddSingleton<IFormFieldContentItemReferenceExtractor, MarkdownContentItemReferenceExtractor>()
             .AddSingleton<IEmailActivityTrackingEvaluator, ConsentEmailActivityTrackingEvaluator>()
             .Decorate<ILocalizationService, ApplicationLocalizationService>();

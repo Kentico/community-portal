@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>Links Feed Item Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="3d13327a-17f6-4f87-8701-7149c25f0d22" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="2b86c121-e0fc-4dcc-b08d-69ccbbbb2be6" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="5bad368c-f11f-40ce-8bdf-39a39b729487" isunique="true" system="true" />
+      <field column="LinksFeedItemContentHeading" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="ea4d2a7b-1b89-48d1-9ecf-2d37a5e3da2e" visible="true">
+        <properties>
+          <explanationtext>The heading or title of the feed item</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Heading</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeintranslation>True</includeintranslation>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field column="LinksFeedItemContentDescription" columnprecision="0" columntype="richtexthtml" enabled="true" guid="5f896c64-451f-4ba0-a365-73a480a5769d" visible="true">
+        <properties>
+          <explanationtext>Description or body of the feed item</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Description</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeintranslation>True</includeintranslation>
+        </properties>
+        <settings>
+          <ConfigurationName>Kentico.Administration.HeadlessStructuredContent</ConfigurationName>
+          <controlname>Kentico.Administration.RichTextEditor</controlname>
+        </settings>
+        <additionalactionsdata>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextRefinement</AdditionalActionIdentifier>
+            <AdditionalActionValues />
+          </AdditionalActionConfiguration>
+        </additionalactionsdata>
+      </field>
+      <field column="LinksFeedItemContentCTALabel" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="ab2cfe96-15b1-4baa-817a-832cbc507820" visible="true">
+        <properties>
+          <explanationtext>The label for the CTA of the feed item</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>CTA label</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeintranslation>True</includeintranslation>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.MaximumLength</ValidationRuleIdentifier>
+            <RuleValues>
+              <MaxLength>50</MaxLength>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <field column="LinksFeedItemContentCTAURL" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="33d9e18c-698d-4158-b80a-540c8cdd104c" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[The URL of the feed item CTA. Must be absolute URL starting with https://]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>CTA URL</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeintranslation>True</includeintranslation>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Community.Portal.ValidationRule.URL</ValidationRuleIdentifier>
+            <RuleValues>
+              <RequireHTTPS>true</RequireHTTPS>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+      </field>
+      <schema guid="bdc7088f-b01e-4186-a83c-703214805501" name="bdc7088f-b01e-4186-a83c-703214805501">
+        <properties />
+      </schema>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>5ccbb481-1c26-49bd-950d-32ba806a69d4</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-chain</ClassIconClass>
+  <ClassName>KenticoCommunity.LinksFeedItemContent</ClassName>
+  <ClassShortName>KenticoCommunityLinksFeedItemContent</ClassShortName>
+  <ClassTableName>KenticoCommunity_LinksFeedItemContent</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

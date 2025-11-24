@@ -102,7 +102,7 @@ jobs:
       - name: Generate Deployment Package
         working-directory: "./scripts"
         run: |
-          ./Export-DeploymentPackage.ps1
+          ./Export-DeploymentPackage.ps1 -ZeroDowntimeSupportEnabled -CompressPackage
 
       - name: Upload Deployment Package to ${{ inputs.environment }}
         run: |
