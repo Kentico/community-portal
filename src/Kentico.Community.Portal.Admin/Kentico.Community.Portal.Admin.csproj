@@ -19,6 +19,8 @@
 
   <ItemGroup>
     <PackageReference Include="Kentico.Xperience.Admin" />
+    <!-- Explicit reference to override vulnerable transitive dependency from Kentico.Xperience.Admin -->
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" />
     <PackageReference Include="CsvHelper" />
   </ItemGroup>
 

@@ -8,6 +8,8 @@
   <ItemGroup>
     <PackageReference Include="CSharpFunctionalExtensions" />
     <PackageReference Include="Kentico.Xperience.WebApp" />
+    <!-- Explicit reference to override vulnerable transitive dependency from Kentico.Xperience.WebApp -->
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" />
     <PackageReference Include="Mediatr" />
     <PackageReference Include="Enums.NET" />
     <PackageReference Include="System.Linq.Async" />

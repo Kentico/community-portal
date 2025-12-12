@@ -20,6 +20,8 @@
     <PackageReference Include="Kentico.Xperience.AzureStorage" />
     <PackageReference Include="Kentico.Xperience.Cloud" />
     <PackageReference Include="Kentico.Xperience.ImageProcessing" />
+    <!-- Explicit reference to override vulnerable transitive dependency from Kentico.Xperience.ImageProcessing -->
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" />
     <PackageReference Include="Kentico.Xperience.Mjml" />
     <PackageReference Include="Kentico.Xperience.Lucene" />
     <PackageReference Include="Kentico.Xperience.MiniProfiler" />

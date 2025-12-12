@@ -40,17 +40,27 @@ jobs:
       STATUS_CHECK_URL: https://localhost:45039/status
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: "Install Node.js from package.json version"
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: "src/Kentico.Community.Portal.Web/package.json"
+          cache: "npm"
+          cache-dependency-path: "src/Kentico.Community.Portal.Web/package-lock.json"
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v5
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
       - name: Install dependencies
         run: dotnet restore --locked-mode
@@ -73,7 +83,7 @@ jobs:
             -DestinationPath "./database"
 
       - name: Install a SQL Server suite of tools (SQLEngine, SQLPackage)
-        uses: potatoqualitee/mssqlsuite@v1.8 # set as a commit hash for security
+        uses: potatoqualitee/mssqlsuite@v1.11
         with:
           install: sqlpackage, sqlengine, sqlclient
           sa-password: Pass@12345
@@ -119,6 +129,16 @@ jobs:
         run: |
           ./Restore-CI.ps1
 
+      - name: Run Unit Tests
+        run: |
+          dotnet test `
+            --test-modules ./test/Kentico.Community.Portal.Web.Tests/bin/Release/net10.0/Kentico.Community.Portal.Web.Tests.dll
+
+      - name: Run Integration Tests
+        run: |
+          dotnet test `
+            --test-modules ./test/Kentico.Community.Portal.Web.Integration.Tests/bin/Release/net10.0/Kentico.Community.Portal.Web.Integration.Tests.dll
+
       - name: Publish Application
         run: |
           dotnet publish `
@@ -128,10 +148,22 @@ jobs:
             --no-build `
             --no-restore
 
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key:
+            ${{ runner.os }}-playwright-${{ hashFiles('**/packages.lock.json')
+            }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
       - name: Install Playwright Dependencies
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: |
           # Must be path to the RELEASE build
-          ./test/Kentico.Community.Portal.Web.E2E.Tests/bin/Release/net9.0/playwright.ps1 install
+          ./test/Kentico.Community.Portal.Web.E2E.Tests/bin/Release/net10.0/playwright.ps1 install
 
       - name: Install Azurite from npm
         run: npm install -g azurite@3.33.0
@@ -174,10 +206,8 @@ jobs:
 
           # Run the E2E tests
           dotnet test `
-            -c Release `
-            --no-build `
-            --no-restore `
-            -s ./test/e2e.runsettings
+            --test-modules ./test/Kentico.Community.Portal.Web.E2E.Tests/bin/Release/net10.0/Kentico.Community.Portal.Web.E2E.Tests.dll `
+            --settings ./test/e2e.runsettings
 
           # Stop the background ASP.NET Core application
           Receive-Job -Name ${{ env.PROJECT_NAME }}

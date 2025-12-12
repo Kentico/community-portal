@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>Commerce.Promotion</CodeName>
+    <GUID>ab59f73e-52f1-43ec-b9cb-edbc91b011fa</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="PromotionID" guid="eab0124a-706e-4788-b112-b3e01e3f316b" enabled="" />
+      <field column="PromotionGUID" guid="8e08153e-ce43-4a33-a54d-1546d3882d20" enabled="" order="1" />
+      <field column="PromotionCreatedWhen" guid="1972decf-2692-46c5-b250-54940857d779" enabled="" order="2" />
+      <field column="PromotionCreatedByUserID" guid="cf2648d2-4fee-4636-99f2-2c5e2f4b669a" enabled="" order="3" />
+      <field column="PromotionModifiedWhen" guid="cdf9102f-8f1c-497d-afbb-8d6ab51d5d0d" enabled="" order="4" />
+      <field column="PromotionModifiedByUserID" guid="e8be80b6-50f0-4add-a4e5-511778b50ce1" enabled="" order="5" />
+      <field column="PromotionActiveFromWhen" guid="b0cb650c-4ac0-4477-866b-832897990847" enabled="" order="6" />
+      <field column="PromotionActiveToWhen" guid="fb428099-9edc-4822-b30e-d8aea0da75a0" enabled="" order="7" />
+      <field column="PromotionType" guid="8ac9828a-9999-4730-8d9c-f751dd076cc8" enabled="" order="8" />
+      <field column="PromotionRuleIdentifier" guid="64ad0f50-f11b-45af-bfc9-c99825ba0230" enabled="" order="9" />
+      <field column="PromotionRuleConfiguration" guid="8419163c-7f62-47f3-8c5f-fd034bef93b1" enabled="" order="10" />
+      <category name="General" order="11">
+        <properties>
+          <caption>
+            <![CDATA[{$digitalcommerce.promotions.edit.general.headline$}]]>
+          </caption>
+          <visible>true</visible>
+        </properties>
+      </category>
+      <field column="PromotionDisplayName" enabled="true" guid="8ae46dc2-c55c-4cc7-baca-0cce24a23240" visible="true" order="12">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.promotions.edit.displayname.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="PromotionName" enabled="true" guid="c1f9efa9-1109-4618-b221-be668bd8dfa0" visible="true" order="13">
+        <settings>
+          <controlname>Kentico.Administration.CodeName</controlname>
+          <HasAutomaticCodeNameGenerationOption>True</HasAutomaticCodeNameGenerationOption>
+          <IsCollapsed>True</IsCollapsed>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.promotioninfo.edit.name.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="PromotionDescription" enabled="true" guid="f6ffb212-fb11-476e-958a-66e75a3625d7" visible="true" order="14">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.promotions.edit.description.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit promotion</FormDisplayName>
+  <FormGUID>b17e8726-ced6-44c3-89f5-a7c3e07a7eec</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>edit</FormName>
+</cms.alternativeform>

@@ -8,7 +8,7 @@ Import-Module (Resolve-Path Utilities) `
     -Function Get-ScriptConfig, Invoke-ExpressionWithException, Write-Status `
     -Force
 
-$scriptPath = Join-Path $(Get-ScriptConfig).WorkspaceFolder "test/Kentico.Community.Portal.Web.E2E.Tests/bin/Debug/net9.0/playwright.ps1"
+$scriptPath = Join-Path $(Get-ScriptConfig).WorkspaceFolder "test/Kentico.Community.Portal.Web.E2E.Tests/bin/Debug/net10.0/playwright.ps1"
 
 if (-not (Test-Path $scriptPath)) {
     $errorMessage = "The file '$scriptPath' does not exist. Please run a Debug build of the E2E project before running this script."

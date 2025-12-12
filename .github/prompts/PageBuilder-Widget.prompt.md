@@ -1,6 +1,6 @@
 ---
-mode: "agent"
-tools: ["codebase", "findUsages"]
+agent: "agent"
+tools: ["search/codebase", "usages"]
 description: "Instructions to create a Page Builder widget"
 ---
 

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Promotion</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="PromotionID" columntype="integer" enabled="true" guid="eab0124a-706e-4788-b112-b3e01e3f316b" isPK="true" system="true" />
+      <field column="PromotionDisplayName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="8ae46dc2-c55c-4cc7-baca-0cce24a23240" system="true" />
+      <field column="PromotionName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="c1f9efa9-1109-4618-b221-be668bd8dfa0" system="true" />
+      <field column="PromotionGUID" columnprecision="0" columntype="guid" enabled="true" guid="8e08153e-ce43-4a33-a54d-1546d3882d20" system="true" />
+      <field allowempty="true" column="PromotionDescription" columnprecision="0" columntype="longtext" enabled="true" guid="f6ffb212-fb11-476e-958a-66e75a3625d7" system="true" />
+      <field column="PromotionCreatedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="1972decf-2692-46c5-b250-54940857d779" system="true" />
+      <field allowempty="true" column="PromotionCreatedByUserID" columnprecision="0" columntype="integer" enabled="true" guid="cf2648d2-4fee-4636-99f2-2c5e2f4b669a" refobjtype="cms.user" reftype="NotRequired" system="true" />
+      <field column="PromotionModifiedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="cdf9102f-8f1c-497d-afbb-8d6ab51d5d0d" system="true" />
+      <field allowempty="true" column="PromotionModifiedByUserID" columnprecision="0" columntype="integer" enabled="true" guid="e8be80b6-50f0-4add-a4e5-511778b50ce1" refobjtype="cms.user" reftype="NotRequired" system="true" />
+      <field allowempty="true" column="PromotionActiveFromWhen" columnprecision="7" columntype="datetime" enabled="true" guid="b0cb650c-4ac0-4477-866b-832897990847" system="true" />
+      <field allowempty="true" column="PromotionActiveToWhen" columnprecision="7" columntype="datetime" enabled="true" guid="fb428099-9edc-4822-b30e-d8aea0da75a0" system="true" />
+      <field column="PromotionType" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="8ac9828a-9999-4730-8d9c-f751dd076cc8" system="true" />
+      <field column="PromotionRuleIdentifier" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="64ad0f50-f11b-45af-bfc9-c99825ba0230" system="true" />
+      <field column="PromotionRuleConfiguration" columnprecision="0" columntype="longtext" enabled="true" guid="8419163c-7f62-47f3-8c5f-fd034bef93b1" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>ab59f73e-52f1-43ec-b9cb-edbc91b011fa</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>Commerce.Promotion</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Commerce</CodeName>
+    <GUID>4975d347-eb67-4a9c-a5d6-76997340b8ac</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Commerce_Promotion</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

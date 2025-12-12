@@ -5,6 +5,7 @@
     </NUnit>
     <!-- General run configuration -->
     <RunConfiguration>
+        <TestCaseFilter>FullyQualifiedName~E2E.Tests</TestCaseFilter>
         <EnvironmentVariables>
             <!-- For debugging selectors, it's recommend to set the following environment variable -->
             <!-- <DEBUG>pw:api</DEBUG> -->

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Order promotion</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="OrderPromotionID" columntype="integer" enabled="true" guid="ee1cf65b-05b9-4921-995c-beb83ae10f5d" isPK="true" system="true" />
+      <field allowempty="true" column="OrderPromotionPromotionID" columnprecision="0" columntype="integer" enabled="true" guid="c7d00b11-cf56-4d17-8e03-6d5e6e443869" refobjtype="commerce.promotion" reftype="NotRequired" system="true" />
+      <field column="OrderPromotionOrderID" columnprecision="0" columntype="integer" enabled="true" guid="d1d1d3dc-c6a1-4b63-9929-43a347545f8a" refobjtype="commerce.order" reftype="Required" system="true" />
+      <field allowempty="true" column="OrderPromotionOrderItemID" columnprecision="0" columntype="integer" enabled="true" guid="267e1c41-be75-4f99-ac65-07ae0d093e65" refobjtype="commerce.orderitem" reftype="Required" system="true" />
+      <field column="OrderPromotionPromotionDisplayName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="e7abfdfc-65a0-46de-9168-9634f5e8ffd4" system="true" />
+      <field column="OrderPromotionDiscountAmount" columnprecision="4" columnsize="19" columntype="decimal" enabled="true" guid="0ec45993-cb89-43b2-8a33-acf71d7ccfd3" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="OrderPromotionPromotionType" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="a30f9d2e-ffdf-4249-80d7-9bafd96d00a3" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>e5af20e2-61c8-4d37-be94-e38b0c217de8</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>Commerce.OrderPromotion</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Commerce</CodeName>
+    <GUID>4975d347-eb67-4a9c-a5d6-76997340b8ac</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Commerce_OrderPromotion</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

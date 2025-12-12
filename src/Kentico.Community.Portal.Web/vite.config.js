@@ -84,6 +84,7 @@ export default defineConfig(async ({ mode }) => {
             "import",
             "global-builtin",
             "legacy-js-api",
+            "if-function",
           ],
         },
       },

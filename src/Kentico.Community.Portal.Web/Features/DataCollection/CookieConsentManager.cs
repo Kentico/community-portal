@@ -28,7 +28,7 @@ public class CookieConsentManager(
     /// Sets current cookie consent level, internally sets system CookieLevel and agrees or revokes profiling consent.
     /// </summary>
     /// <param name="level">Cookie consent level to set</param>
-    public void SetCurrentCookieConsentLevel(CookieConsentLevel level)
+    public async Task SetCurrentCookieConsentLevel(CookieConsentLevel level)
     {
         // Get current level and continue only if it has to be changed
         var originalLevel = Enum.TryParse<CookieConsentLevel>(cookies.Get(CookieNames.COOKIE_CONSENT_LEVEL), out var consent)
@@ -73,9 +73,9 @@ public class CookieConsentManager(
         var currentContact = ContactManagementContext.GetCurrentContact();
 
         // Get consents
-        var preferenceCookiesConsent = consentInfoProvider.Get(PREFERENCE_COOKIES_CONSENT_NAME);
-        var analyticalCookiesConsent = consentInfoProvider.Get(ANALYTICAL_COOKIES_CONSENT_NAME);
-        var marketingCookiesConsent = consentInfoProvider.Get(MARKETING_COOKIES_CONSENT_NAME);
+        var preferenceCookiesConsent = await consentInfoProvider.GetAsync(PREFERENCE_COOKIES_CONSENT_NAME);
+        var analyticalCookiesConsent = await consentInfoProvider.GetAsync(ANALYTICAL_COOKIES_CONSENT_NAME);
+        var marketingCookiesConsent = await consentInfoProvider.GetAsync(MARKETING_COOKIES_CONSENT_NAME);
 
         if (preferenceCookiesConsent == null || analyticalCookiesConsent == null || marketingCookiesConsent == null)
         {

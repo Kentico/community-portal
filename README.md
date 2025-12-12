@@ -6,7 +6,7 @@
 ## Description
 
 Xperience by Kentico:
-[v30.12.0](https://docs.kentico.com/documentation/changelog#refresh-november-13-2025)
+[v31.0.0](https://docs.kentico.com/documentation/changelog#release-december-9-2025)
 
 Xperience by Kentico solution for the Kentico managed SaaS hosted Kentico
 Community website.

@@ -80,39 +80,33 @@ button,
     padding: 0.75rem 2rem;
   }
 }
+/** Cannot currently be customized through BS theming/SCSS **/
 .btn-primary {
-  color: $white;
-  &:disabled {
-    background-color: $disabled;
-    border-color: $disabled;
-  }
+  /* text colors */
+  --bs-btn-color: #{$white};
+  --bs-btn-active-color: #{$white};
+  --bs-btn-disabled-color: rgba(255, 255, 255, 0.65);
+
+  /* base + borders */
+  --bs-btn-bg: #{$primary};
+  --bs-btn-border-color: #{$primary};
 }
 .btn-primary,
 .btn-outline-primary {
-  --bs-btn-disabled-color: #fff;
+  --bs-btn-hover-color: #{$white};
 
-  &:hover {
-    border-color: $primary-dark;
-    background-color: $primary-dark;
-    color: $white;
-  }
-  &:focus {
-    background-color: $primary-focus;
-    border-color: $primary-focus;
-    color: $white;
-  }
-}
-.btn-invisible-primary {
-  background: transparent;
-  border-color: transparent;
-  color: $primary;
-  &:hover {
-    background: $primary-opacity;
-    color: $primary;
-  }
-  &:focus {
-    background: $primary-opacity-2;
-    color: $primary;
+  /* darker hover */
+  --bs-btn-hover-bg: #{$orange-dark};
+  --bs-btn-hover-border-color: #{$orange-dark};
+
+  /* even darker active */
+  --bs-btn-active-color: #{$white};
+  --bs-btn-active-bg: #{$orange-darker};
+  --bs-btn-active-border-color: #{$orange-darker};
+
+  &:disabled {
+    background-color: $disabled;
+    border-color: $disabled;
   }
 }
 .btn-primary-light {

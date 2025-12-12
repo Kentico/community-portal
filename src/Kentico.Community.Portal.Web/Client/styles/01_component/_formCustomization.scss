@@ -50,8 +50,7 @@ form,
     }
   }
 
-  input[type="submit"],
-  button[type="submit"] {
+  input[type="submit"] {
     font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0;
@@ -75,14 +74,22 @@ form,
       border-color 0.15s ease-in-out,
       box-shadow 0.15s ease-in-out;
     color: $white;
-    background-color: $purple;
-    border-color: $purple;
+    background-color: $secondary;
+    border-color: $secondary;
 
     &:hover {
-      background-color: $purple-900;
-      border-color: $purple-900;
+      background-color: $secondary;
+      border-color: $secondary;
     }
 
+    &:disabled {
+      color: var(--bs-body-color);
+      background-color: var(--bs-secondary-bg);
+      border-color: var(--color-gray-600);
+    }
+  }
+
+  button[type="submit"] {
     &:disabled {
       color: var(--bs-body-color);
       background-color: var(--bs-secondary-bg);

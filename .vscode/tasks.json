@@ -105,7 +105,7 @@
       "label": ".NET: test (Solution)",
       "command": "dotnet",
       "type": "process",
-      "args": ["test", "-s", "./test/basic.runsettings"],
+      "args": ["test", "--settings", "./test/basic.runsettings"],
       "problemMatcher": "$msCompile",
       "isTestCommand": true
     },
@@ -113,7 +113,7 @@
       "label": ".NET: test (E2E)",
       "command": "dotnet",
       "type": "process",
-      "args": ["test", "-s", "./test/e2e.runsettings", "--no-build"],
+      "args": ["test", "--settings", "./test/e2e.runsettings", "--no-build"],
       "dependsOn": [
         ".NET: build (Test E2E)",
         ".NET: test (Install Playwright Dependencies)"

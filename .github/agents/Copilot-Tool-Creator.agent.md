@@ -2,7 +2,7 @@
 name: 'Copilot-tool-creator'
 argument-hint: 'Details about the tool'
 description: Generates prompt, instruction, agent, and other context documents for Copilot
-tools: ['search', 'fetch', 'edit', 'changes', 'runCommands', 'githubRepo', 'problems', 'todos']
+tools: ['search', 'fetch', 'edit', 'changes', 'execute/getTerminalOutput', 'execute/runInTerminal', 'read/terminalLastCommand', 'read/terminalSelection', 'githubRepo', 'problems', 'todo']
 ---
 
 # Instructions

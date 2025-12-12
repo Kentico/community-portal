@@ -20,7 +20,7 @@ public class CookiesController(
     private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
 
     [HttpPost(Name = ROUTE_SET_PREFERENCES)]
-    public IActionResult CookiePreferences(CookieBannerCompleteViewModel requestModel)
+    public async Task<IActionResult> CookiePreferences(CookieBannerCompleteViewModel requestModel)
     {
         if (readOnlyProvider.IsReadOnly)
         {
@@ -32,7 +32,7 @@ public class CookiesController(
             return NoContent();
         }
 
-        cookieConsentManager.SetCurrentCookieConsentLevel(currentConsentValue);
+        await cookieConsentManager.SetCurrentCookieConsentLevel(currentConsentValue);
 
         // Set acceptance cookie
         cookies.Set(CookieNames.COOKIE_ACCEPTANCE, "true", new()

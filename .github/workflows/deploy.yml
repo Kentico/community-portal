@@ -35,17 +35,27 @@ jobs:
       PROJECT_NAME: Kentico.Community.Portal.Web
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: "Install Node.js from package.json version"
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: "src/Kentico.Community.Portal.Web/package.json"
+          cache: "npm"
+          cache-dependency-path: "src/Kentico.Community.Portal.Web/package-lock.json"
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v5
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
       - name: Install dependencies
         run: dotnet restore --locked-mode
@@ -68,7 +78,7 @@ jobs:
             -DestinationPath "./database"
 
       - name: Install a SQL Server suite of tools (SQLEngine, SQLPackage)
-        uses: potatoqualitee/mssqlsuite@v1.8 # set as a commit hash for security
+        uses: potatoqualitee/mssqlsuite@v1.11
         with:
           install: sqlpackage, sqlengine, sqlclient
           sa-password: Pass@12345
