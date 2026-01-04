@@ -4,6 +4,7 @@ using System.Security.Claims;
 using CMS.ContentEngine;
 using CMS.Helpers;
 using Kentico.Community.Portal.Core.Modules;
+using Kentico.Community.Portal.Core.Modules.Membership;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Content.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
@@ -29,17 +30,13 @@ public class ContentAuthorizationFilter(
     IContentQueryExecutor executor,
     IProgressiveCache cache,
     IWebPageDataContextRetriever dataContextRetriever,
-    UserManager<CommunityMember> userManager,
-    IMemberBadgeInfoProvider memberBadgeProvider,
-    IMemberBadgeMemberInfoProvider memberBadgeMemberProvider)
+    UserManager<CommunityMember> userManager)
     : IAsyncAuthorizationFilter
 {
     private readonly IContentQueryExecutor executor = executor;
     private readonly IProgressiveCache cache = cache;
     private readonly IWebPageDataContextRetriever dataContextRetriever = dataContextRetriever;
     private readonly UserManager<CommunityMember> userManager = userManager;
-    private readonly IMemberBadgeInfoProvider memberBadgeProvider = memberBadgeProvider;
-    private readonly IMemberBadgeMemberInfoProvider memberBadgeMemberProvider = memberBadgeMemberProvider;
 
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
@@ -83,7 +80,7 @@ public class ContentAuthorizationFilter(
          * This should never happen, but let's check anyway
          */
         var member = await userManager.GetUserAsync(context.HttpContext.User);
-        if (member is null)
+        if (member is null || !member.Enabled || member.IsUnderModeration)
         {
             context.Result = new UnauthorizedResult();
 
@@ -99,12 +96,17 @@ public class ContentAuthorizationFilter(
             return;
         }
         if (tags.Any(t => t.Identifier.Equals(SystemTaxonomies.ContentAuthorizationTaxonomy.MVPTag.GUID)) &&
-            await IsAuthorizedByBadge(member, PortalMemberBadges.MVP))
+            member.ProgramStatus == ProgramStatuses.MVP)
         {
             return;
         }
         if (tags.Any(t => t.Identifier.Equals(SystemTaxonomies.ContentAuthorizationTaxonomy.CommunityLeaderTag.GUID)) &&
-            await IsAuthorizedByBadge(member, PortalMemberBadges.COMMUNITY_LEADER))
+            member.ProgramStatus == ProgramStatuses.CommunityLeader)
+        {
+            return;
+        }
+        if (tags.Any(t => t.Identifier.Equals(SystemTaxonomies.ContentAuthorizationTaxonomy.InternalEmployeeTag.GUID)) &&
+            member.IsInternalEmployee)
         {
             return;
         }
@@ -116,18 +118,6 @@ public class ContentAuthorizationFilter(
         context.Result = new EmptyResult(); // Continue processing to reach StatusCodePagesWithReExecute
 
         return;
-    }
-
-    private async Task<bool> IsAuthorizedByBadge(CommunityMember member, string badgeName)
-    {
-        var badges = await memberBadgeProvider.GetAllMemberBadgesCached();
-        int mvpBadgeID = badges
-            .TryFirst(badge => string.Equals(badge.MemberBadgeCodeName, badgeName, StringComparison.OrdinalIgnoreCase))
-            .Map(b => b.MemberBadgeID)
-            .GetValueOrDefault();
-        var badgeRelationships = await memberBadgeMemberProvider.GetAllMemberBadgeRelationshipsCached();
-
-        return badgeRelationships.HasEntry(member.Id, mvpBadgeID);
     }
 
     private async Task<ImmutableList<TagReference>> GetWebPageContentAuthorizationTags(RoutedWebPage page)

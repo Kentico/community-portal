@@ -68,17 +68,6 @@ namespace Kentico.Community.Portal.Core.Forms
 
 
 		/// <summary>
-		/// HiddenMemberID.
-		/// </summary>
-		[DatabaseField]
-		public int HiddenMemberID
-		{
-			get => ValidationHelper.GetInteger(GetValue(nameof(HiddenMemberID)), 0);
-			set => SetValue(nameof(HiddenMemberID), value);
-		}
-
-
-		/// <summary>
 		/// ActivityDate.
 		/// </summary>
 		[DatabaseField]
@@ -204,16 +193,6 @@ namespace Kentico.Community.Portal.Core.Forms
 			{
 				get => mInstance.MemberEmail;
 				set => mInstance.MemberEmail = value;
-			}
-
-
-			/// <summary>
-			/// HiddenMemberID.
-			/// </summary>
-			public int HiddenMemberID
-			{
-				get => mInstance.HiddenMemberID;
-				set => mInstance.HiddenMemberID = value;
 			}
 
 

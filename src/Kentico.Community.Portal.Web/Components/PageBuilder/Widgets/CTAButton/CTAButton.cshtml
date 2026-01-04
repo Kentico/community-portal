@@ -8,10 +8,26 @@
         HorizontalAlignments.Center => "text-center",
         HorizontalAlignments.Left or _ => ""
     };
+
+    string topMarginClass = Model.TopMargin switch
+    {
+        MarginSizes.Small => "pt-3",
+        MarginSizes.Medium => "pt-4",
+        MarginSizes.Large => "pt-5",
+        MarginSizes.None or _ => "pt-1"
+    };
+
+    string bottomMarginClass = Model.BottomMargin switch
+    {
+        MarginSizes.Small => "pb-3",
+        MarginSizes.Medium => "pb-4",
+        MarginSizes.Large => "pb-5",
+        MarginSizes.None or _ => "pb-1"
+    };
 }
 
-<p class="@horizontalAlignmentClass" xpc-preview-outline="CTA Widget">
+<div class="@horizontalAlignmentClass @topMarginClass @bottomMarginClass" xpc-preview-outline="CTA Widget">
     <a href="@(Model.LinkURL ?? "#")" class="btn btn-primary btn-lg px-4 d-inline ">
         @Model.Text
     </a>
-</p>
+</div>

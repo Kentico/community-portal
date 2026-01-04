@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 [assembly: RegisterFormComponent(
     HiddenMemberEmailComponent.IDENTIFIER,
     typeof(HiddenMemberEmailComponent),
-    "Hidden member email",
+    "Member email (hidden)",
     Description = "Stores the current member email value as a hidden field",
     IconClass = KenticoIcons.MASK,
     ViewName = "~/Components/FormBuilder/HiddenMemberEmail/HiddenMemberEmail.cshtml")]

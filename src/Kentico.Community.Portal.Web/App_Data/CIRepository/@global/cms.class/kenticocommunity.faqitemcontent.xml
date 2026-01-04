@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>FAQ Item Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="12902219-2900-4458-a979-974bfa4f9d8e" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="e0715bb3-ac71-4851-970c-6f1635ccb783" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="44b08e2e-5757-4f6a-8e0f-f6ba759602a9" isunique="true" system="true" />
+      <field column="FAQItemContentQuestion" columnsize="200" columntype="text" enabled="true" guid="9438fd1a-0f3d-4ff0-b23e-553a87219896" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Question</fieldcaption>
+          <fielddescription>The question displayed in the FAQ accordion header</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+          <WatermarkText>Ex: What is your refund policy?</WatermarkText>
+        </settings>
+      </field>
+      <field column="FAQItemContentAnswerMarkdown" columntype="longtext" enabled="true" guid="500f34b3-3c9d-401f-b6f9-d3dacc3d9b9f" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Answer</fieldcaption>
+          <fielddescription>The answer displayed in the FAQ accordion body</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Community.FormComponent.Markdown</controlname>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>922a910f-e0b0-4e8a-aff6-00dfe0fceddf</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-question-circle</ClassIconClass>
+  <ClassName>KenticoCommunity.FAQItemContent</ClassName>
+  <ClassShortName>KenticoCommunityFAQItemContent16t6q7xr</ClassShortName>
+  <ClassTableName>KenticoCommunity_FAQItemContent</ClassTableName>
+  <ClassType>Content</ClassType>
+</cms.class>

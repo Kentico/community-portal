@@ -1,5 +1,6 @@
 using CMS.Membership;
 using Kentico.Community.Portal.Core.Modules;
+using Kentico.Community.Portal.Web.Membership;
 
 namespace Kentico.Community.Portal.Web.Features.Members.Badges;
 
@@ -17,7 +18,8 @@ public class KenticoEmployeeMemberBadgeAssignmentRule : IMemberBadgeAssignmentRu
 
         foreach (var member in enabledMembers)
         {
-            if (!member.MemberEmail.EndsWith("@kentico.com", StringComparison.OrdinalIgnoreCase)
+            var communityMember = CommunityMember.FromMemberInfo(member);
+            if (!communityMember.IsInternalEmployee
                 || memberBadgeRelationships.HasEntry(member.MemberID, memberBadge.MemberBadgeID))
             {
                 continue;

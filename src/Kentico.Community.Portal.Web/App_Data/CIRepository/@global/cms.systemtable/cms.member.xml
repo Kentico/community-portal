@@ -22,6 +22,11 @@
       <field allowempty="true" column="MemberAvatarFileExtension" columnprecision="0" columnsize="5" columntype="text" enabled="true" guid="295972d6-2114-46d3-9703-066154c1fb17" />
       <field allowempty="true" column="MemberAdministratorNotes" columnprecision="0" columntype="longtext" enabled="true" guid="652d625f-c20e-46bd-9f8c-838d3dfaf01c" />
       <field allowempty="true" column="MemberModerationStatus" columnprecision="0" columnsize="15" columntype="text" enabled="true" guid="5fe75ef9-0e15-4d2d-a4ab-1e186d1861c6" />
+      <field column="MemberProgramStatus" columnprecision="0" columnsize="20" columntype="text" enabled="true" guid="ab44a32d-7a34-4c76-966c-26897b7596c4">
+        <properties>
+          <defaultvalue>None</defaultvalue>
+        </properties>
+      </field>
       <field allowempty="true" column="MemberEmployerLink" columnprecision="0" columntype="link" enabled="true" guid="b832e3a2-04c2-40c8-8c29-ed4f5bd736ee" />
       <field allowempty="true" column="MemberJobTitle" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="55ab4c14-3279-4126-9066-4b8c270176d9" />
       <field allowempty="true" column="MemberTimeZone" columnprecision="0" columnsize="10" columntype="text" enabled="true" guid="0bb26afb-8926-485a-8043-804d98220d72" />

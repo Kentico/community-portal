@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.EmailBuilder.Widgets.CTA;
 using Kentico.EmailBuilder.Web.Mvc;

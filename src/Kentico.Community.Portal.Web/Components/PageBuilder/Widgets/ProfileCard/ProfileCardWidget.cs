@@ -2,9 +2,12 @@ using CMS.ContentEngine;
 using CMS.DataEngine;
 using CMS.Membership;
 using Kentico.Community.Portal.Admin;
+using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.ProfileCard;
+using Kentico.Community.Portal.Web.Features.Members;
+using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.PageBuilder.Web.Mvc;
@@ -21,32 +24,34 @@ using Microsoft.AspNetCore.Mvc;
     propertiesType: typeof(ProfileCardWidgetProperties),
     Description = "Card featuring a community member's profile",
     IconClass = KenticoIcons.ID_CARD,
-    AllowCache = true
+    AllowCache = false
 )]
 
 namespace Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.ProfileCard;
 
-public class ProfileCardWidget(IMediator mediator, MarkdownRenderer markdownRenderer) : ViewComponent
+public class ProfileCardWidget(IMediator mediator, MarkdownRenderer markdownRenderer, MemberBadgeService memberBadgeService) : ViewComponent
 {
     public const string NAME = "Profile card";
     public const string IDENTIFIER = "Kentico.Community.Portal.Web.Widgets.ProfileCard";
 
     private readonly IMediator mediator = mediator;
     private readonly MarkdownRenderer markdownRenderer = markdownRenderer;
+    private readonly MemberBadgeService memberBadgeService = memberBadgeService;
 
     public async Task<IViewComponentResult> InvokeAsync(ComponentViewModel<ProfileCardWidgetProperties> vm)
     {
         var props = vm.Properties;
         var resp = await mediator.Send(new MemberProfileContentsQuery(props.ProfileReferences.Select(p => p.Identifier).FirstOrDefault()));
 
-        return Validate(resp, vm.Properties)
-            .Match(
-                vm => View("~/Components/PageBuilder/Widgets/ProfileCard/ProfileCard.cshtml", vm),
-                vm => View("~/Components/ComponentError.cshtml", vm)
-            );
+        var result = await Validate(resp, vm.Properties);
+
+        return result.Match(
+            vm => View("~/Components/PageBuilder/Widgets/ProfileCard/ProfileCard.cshtml", vm),
+            vm => View("~/Components/ComponentError.cshtml", vm)
+        );
     }
 
-    private Result<ProfileCardWidgetViewModel, ComponentErrorViewModel> Validate(Maybe<MemberProfileContentsQueryResponse> respM, ProfileCardWidgetProperties props)
+    private async Task<Result<ProfileCardWidgetViewModel, ComponentErrorViewModel>> Validate(Maybe<MemberProfileContentsQueryResponse> respM, ProfileCardWidgetProperties props)
     {
         if (!props.ProfileReferences.Any() || !respM.TryGetValue(out var resp))
         {
@@ -58,15 +63,19 @@ public class ProfileCardWidget(IMediator mediator, MarkdownRenderer markdownRend
             return Result.Failure<ProfileCardWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "One of your selected profiles does not have a photo."));
         }
 
-        return new ProfileCardWidgetViewModel(resp, props, markdownRenderer);
+        var allBadges = resp.Member.TryGetValue(out var member)
+            ? await memberBadgeService.GetAllBadgesFor(member.Id)
+            : [];
+
+        return new ProfileCardWidgetViewModel(resp, props, markdownRenderer, allBadges);
     }
 }
 
 public class ProfileCardWidgetProperties : BaseWidgetProperties
 {
     [ContentItemSelectorComponent(MemberProfileContent.CONTENT_TYPE_NAME,
-        Label = "Profiles",
-        ExplanationText = "The member profiles to feature",
+        Label = "Profile",
+        ExplanationText = "The member profile to feature",
         MinimumItems = 1,
         MaximumItems = 1,
         Order = 1
@@ -74,7 +83,7 @@ public class ProfileCardWidgetProperties : BaseWidgetProperties
     public IEnumerable<ContentItemReference> ProfileReferences { get; set; } = [];
 
     [MarkdownComponent(
-        Label = "Profile",
+        Label = "Description",
         ExplanationText = "If provided, this markdown replaces the default content from the Member's profile.",
         Order = 2)]
     [TrackContentItemReference(typeof(MarkdownContentItemReferenceExtractor))]
@@ -83,7 +92,7 @@ public class ProfileCardWidgetProperties : BaseWidgetProperties
 
 public class ProfileCardWidgetViewModel : BaseWidgetViewModel
 {
-    public ProfileCardWidgetViewModel(MemberProfileContentsQueryResponse resp, ProfileCardWidgetProperties props, MarkdownRenderer markdownRenderer)
+    public ProfileCardWidgetViewModel(MemberProfileContentsQueryResponse resp, ProfileCardWidgetProperties props, MarkdownRenderer markdownRenderer, IReadOnlyList<MemberBadgeViewModel> allBadges)
     {
         var (content, member) = resp;
 
@@ -99,6 +108,9 @@ public class ProfileCardWidgetViewModel : BaseWidgetViewModel
             .TryFirst()
             .Map(ImageViewModel.Create);
         Member = member;
+        MemberBadges = [.. allBadges.Where(b => b.IsSelected)];
+        CommunityProgramBadge = allBadges
+            .TryFirst(b => b.MemberBadgeCodeName is PortalMemberBadges.MVP or PortalMemberBadges.COMMUNITY_LEADER);
 
         ProfileHTML = Maybe.From(props.ProfileMarkdown)
             .MapNullOrWhiteSpaceAsNone()
@@ -109,6 +121,8 @@ public class ProfileCardWidgetViewModel : BaseWidgetViewModel
     public string ShortName { get; }
     public Maybe<ImageViewModel> Photo { get; }
     public Maybe<CommunityMember> Member { get; }
+    public IReadOnlyList<MemberBadgeViewModel> MemberBadges { get; }
+    public Maybe<MemberBadgeViewModel> CommunityProgramBadge { get; }
     public Maybe<HtmlString> ProfileHTML { get; }
 
     protected override string WidgetName => ProfileCardWidget.NAME;

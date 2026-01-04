@@ -1,4 +1,5 @@
 using CMS.ContentEngine;
+using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Files;
 using Kentico.Content.Web.Mvc;

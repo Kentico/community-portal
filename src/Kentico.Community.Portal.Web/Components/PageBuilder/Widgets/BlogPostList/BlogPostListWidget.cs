@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using CMS.ContentEngine;
 using CMS.Websites.Routing;
+using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList;

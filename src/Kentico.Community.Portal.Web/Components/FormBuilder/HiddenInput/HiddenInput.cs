@@ -2,6 +2,7 @@
 using CMS.DataEngine;
 using CMS.Websites.Routing;
 using EnumsNET;
+using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.FormBuilder;
 using Kentico.Community.Portal.Web.Infrastructure;

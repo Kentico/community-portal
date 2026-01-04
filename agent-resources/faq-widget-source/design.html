@@ -1,0 +1,130 @@
+<!-- Bootstrap 5.3 FAQ group: independent accordions + Expand/Collapse All -->
+
+<div class="container my-4">
+  <div
+    class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3"
+  >
+    <h2 class="h4 mb-0">FAQs</h2>
+
+    <!-- Show this only when you have >1 accordion in the group -->
+    <div class="btn-group" role="group" aria-label="FAQ controls">
+      <button
+        type="button"
+        class="btn btn-outline-secondary btn-sm"
+        id="faqExpandAll"
+      >
+        Expand all
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-secondary btn-sm"
+        id="faqCollapseAll"
+      >
+        Collapse all
+      </button>
+    </div>
+  </div>
+
+  <!-- NOTE: No data-bs-parent anywhere => multiple items can stay open -->
+  <div class="accordion" id="faqGroup">
+    <div class="accordion-item">
+      <h3 class="accordion-header" id="faq-h-1">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#faq-c-1"
+          aria-expanded="false"
+          aria-controls="faq-c-1"
+        >
+          What is your refund policy?
+        </button>
+      </h3>
+      <div
+        id="faq-c-1"
+        class="accordion-collapse collapse"
+        aria-labelledby="faq-h-1"
+      >
+        <div class="accordion-body">
+          Refunds are available within 30 days of purchase, subject to
+          eligibility.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h3 class="accordion-header" id="faq-h-2">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#faq-c-2"
+          aria-expanded="false"
+          aria-controls="faq-c-2"
+        >
+          How do I contact support?
+        </button>
+      </h3>
+      <div
+        id="faq-c-2"
+        class="accordion-collapse collapse"
+        aria-labelledby="faq-h-2"
+      >
+        <div class="accordion-body">
+          Use the contact form in the Support section or email
+          support@example.com.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h3 class="accordion-header" id="faq-h-3">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#faq-c-3"
+          aria-expanded="false"
+          aria-controls="faq-c-3"
+        >
+          Do you offer team billing?
+        </button>
+      </h3>
+      <div
+        id="faq-c-3"
+        class="accordion-collapse collapse"
+        aria-labelledby="faq-h-3"
+      >
+        <div class="accordion-body">
+          Yes—team billing is available on Pro plans and above.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Requires Bootstrap 5.3 JS bundle loaded (includes Collapse).
+  (function () {
+    const group = document.getElementById("faqGroup");
+    if (!group) return;
+
+    const collapseEls = group.querySelectorAll(".accordion-collapse");
+    const expandAllBtn = document.getElementById("faqExpandAll");
+    const collapseAllBtn = document.getElementById("faqCollapseAll");
+
+    // If you want: hide the controls when only 1 item exists
+    const controls = expandAllBtn?.closest(".btn-group");
+    if (controls && collapseEls.length <= 1) controls.classList.add("d-none");
+
+    function setAll(expand) {
+      collapseEls.forEach((el) => {
+        const inst = bootstrap.Collapse.getOrCreateInstance(el, { toggle: false });
+        expand ? inst.show() : inst.hide();
+      });
+    }
+
+    expandAllBtn?.addEventListener("click", () => setAll(true));
+    collapseAllBtn?.addEventListener("click", () => setAll(false));
+  })();
+</script>

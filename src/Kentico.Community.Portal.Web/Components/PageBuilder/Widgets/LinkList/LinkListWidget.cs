@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using CMS.ContentEngine;
+using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.LinkList;
 using Kentico.Community.Portal.Web.Features.Community;

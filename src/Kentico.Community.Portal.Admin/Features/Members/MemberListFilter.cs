@@ -1,7 +1,9 @@
 using CMS.DataEngine;
 using CMS.Membership;
 using CSharpFunctionalExtensions;
+using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Core.Modules;
+using Kentico.Community.Portal.Core.Modules.Membership;
 using Kentico.Xperience.Admin.Base.Filters;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Kentico.Xperience.Admin.Base.Forms;
@@ -17,13 +19,31 @@ namespace Kentico.Community.Portal.Admin.Features.Members;
 public class MemberListFilter
 {
     [DropDownComponent(
-        Label = "Status",
-        Options = "Enabled\r\nDisabled")]
+        Label = "State",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<MemberStates>))]
     [FilterCondition(
-        BuilderType = typeof(MemberStatusWhereConditionBuilder),
+        BuilderType = typeof(MemberInfoWhereConditionBuilder),
         ColumnName = nameof(MemberInfo.MemberEnabled)
     )]
-    public string Status { get; set; } = "";
+    public string State { get; set; } = "";
+
+    [DropDownComponent(
+        Label = "Moderation status",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<ModerationStatuses>))]
+    [FilterCondition(
+        BuilderType = typeof(MemberInfoWhereConditionBuilder),
+        ColumnName = CommunityMemberInfoExtensions.FIELD_MODERATION_STATUS
+    )]
+    public string ModerationStatus { get; set; } = "";
+
+    [DropDownComponent(
+        Label = "Program status",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<ProgramStatuses>))]
+    [FilterCondition(
+        BuilderType = typeof(MemberInfoWhereConditionBuilder),
+        ColumnName = CommunityMemberInfoExtensions.FIELD_PROGRAM_STATUS
+    )]
+    public string ProgramStatus { get; set; } = "";
 
     [GeneralSelectorComponent(
         dataProviderType: typeof(MemberBadgeGeneralSelectorDataProvider),
@@ -63,7 +83,7 @@ public class MemberListFilter
 
 }
 
-public class MemberStatusWhereConditionBuilder : IWhereConditionBuilder
+public class MemberInfoWhereConditionBuilder : IWhereConditionBuilder
 {
     public Task<IWhereCondition> Build(string columnName, object value)
     {
@@ -75,16 +95,20 @@ public class MemberStatusWhereConditionBuilder : IWhereConditionBuilder
 
         var whereCondition = new WhereCondition();
 
-        if (value is null || value is not string status)
+        if (value is null || value is not string strValue)
         {
             return Task.FromResult<IWhereCondition>(whereCondition);
         }
 
-        whereCondition = status switch
+        whereCondition = (columnName, strValue) switch
         {
-            "Disabled" => new WhereCondition().WhereEquals(nameof(MemberInfo.MemberEnabled), 0),
-            "Enabled" => new WhereCondition().WhereEquals(nameof(MemberInfo.MemberEnabled), 1),
-            "" or _ => new WhereCondition("1 = 1"),
+            (nameof(MemberInfo.MemberEnabled), "Disabled") => new WhereCondition().WhereEquals(nameof(MemberInfo.MemberEnabled), 0),
+            (nameof(MemberInfo.MemberEnabled), "Enabled") => new WhereCondition().WhereEquals(nameof(MemberInfo.MemberEnabled), 1),
+            (CommunityMemberInfoExtensions.FIELD_MODERATION_STATUS, _) =>
+                new WhereCondition().WhereEquals(CommunityMemberInfoExtensions.FIELD_MODERATION_STATUS, strValue),
+            (CommunityMemberInfoExtensions.FIELD_PROGRAM_STATUS, _) =>
+                new WhereCondition().WhereEquals(CommunityMemberInfoExtensions.FIELD_PROGRAM_STATUS, strValue),
+            (_, "") or _ => new WhereCondition("1 = 1"),
         };
 
         return Task.FromResult<IWhereCondition>(whereCondition);

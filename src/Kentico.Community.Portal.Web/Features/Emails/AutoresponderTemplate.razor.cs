@@ -1,6 +1,6 @@
 using CMS.EmailMarketing;
+using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Core.Emails;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Features.Emails;
 using Kentico.EmailBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;

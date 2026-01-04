@@ -61,7 +61,7 @@ public class PasswordRecoveryController(
         {
             return PartialView("~/Features/PasswordRecovery/_RequestRecoveryEmailForm.cshtml", new RequestRecoveryEmailViewModel());
         }
-        if (member.IsUnderModeration())
+        if (member.IsUnderModeration)
         {
             return View("~/Features/Registration/_ModerationStatus.cshtml");
         }
@@ -128,7 +128,7 @@ public class PasswordRecoveryController(
 
             return View(VIEW_PATH_ERROR);
         }
-        if (member.IsUnderModeration())
+        if (member.IsUnderModeration)
         {
             return View("~/Features/Registration/_ModerationStatus.cshtml");
         }
@@ -188,7 +188,7 @@ public class PasswordRecoveryController(
             return PartialView("~/Features/PasswordRecovery/_SetNewPasswordForm.cshtml", model);
         }
 
-        if (member.IsUnderModeration())
+        if (member.IsUnderModeration)
         {
             return View("~/Features/Registration/_ModerationStatus.cshtml");
         }

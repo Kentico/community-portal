@@ -49,7 +49,7 @@ public static partial class SystemTaxonomies
         }
         public record CommunityMemberTag : ISystemTag
         {
-            public static Guid GUID { get; } = new("83b28847-6c4d-40d1-9d76-4214c740c3c3");
+            public static Guid GUID { get; } = new("a4f6a51e-27b5-4f0d-8f96-2c3519e0b1d0");
             public static string CodeName { get; } = "CommunityMember";
 
             public Guid TagGUID => GUID;

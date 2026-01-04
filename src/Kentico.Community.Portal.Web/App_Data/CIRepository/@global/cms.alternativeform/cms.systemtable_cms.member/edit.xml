@@ -139,6 +139,25 @@ Archived
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
+      <field column="MemberProgramStatus" enabled="true" guid="ab44a32d-7a34-4c76-966c-26897b7596c4" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+None
+MVP
+CommunityLeader;Community Leader
+]]>
+          </Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
+        <properties>
+          <explanationtext>Controls access to content and experiences</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Program status</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
       <field column="MemberEmployerLink" enabled="true" guid="b832e3a2-04c2-40c8-8c29-ed4f5bd736ee" visible="true">
         <settings>
           <controlname>Kentico.Community.Portal.Admin.FormComponent.Link</controlname>

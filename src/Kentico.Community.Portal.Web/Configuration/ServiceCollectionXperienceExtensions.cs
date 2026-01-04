@@ -20,6 +20,7 @@ using Kentico.EmailBuilder.Web.Mvc;
 using Kentico.OnlineMarketing.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Web.Mvc;
+using Kentico.Xperience.ManagementApi;
 using Kentico.Xperience.Mjml;
 using Microsoft.AspNetCore.Localization.Routing;
 
@@ -98,6 +99,15 @@ public static class ServiceCollectionXperienceExtensions
             .IfDevelopment(env, c =>
             {
                 _ = c.Configure<ContentSynchronizationOptions>(config.GetSection("ContentSynchronizationOptions"));
+            })
+            .IfDevelopment(env, c =>
+            {
+                string? secret = config.GetSection("Kentico.Xperience.ManagementApi").GetValue<string>("Secret");
+
+                if (!string.IsNullOrWhiteSpace(secret))
+                {
+                    _ = c.AddKenticoManagementApi(options => options.Secret = secret);
+                }
             })
             .Configure<CookieLevelOptions>(options =>
             {

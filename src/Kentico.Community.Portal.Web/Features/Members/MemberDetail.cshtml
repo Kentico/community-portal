@@ -17,7 +17,7 @@
                     {
                         @Model.Member.UserName
                     }
-                    @if (Model.Member.IsUnderModeration())
+                    @if (Model.Member.IsUnderModeration)
                     {
                         <span class="badge bg-danger ms-2">Disabled</span>
                     }
@@ -100,8 +100,8 @@
                     </div>
                 </div>
                 <div class="container">
-                    <div class="d-flex justify-content-center overflow-auto">
-                        <ul class="nav nav-tabs flex-nowrap" id="memberActivitiesTab" role="tablist">
+                    <div class="overflow-auto">
+                        <ul class="nav nav-tabs flex-nowrap d-flex justify-content-md-center" id="memberActivitiesTab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="contributions-tab" data-bs-toggle="tab"
                                     data-bs-target="#contributions" type="button" role="tab"

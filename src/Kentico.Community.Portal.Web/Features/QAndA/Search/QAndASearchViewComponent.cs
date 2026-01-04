@@ -66,6 +66,10 @@ public class QAndASearchViewModel : IPagedViewModel
         {
             yield return new KeyValuePair<string, string?>("discussionTypes", type.Value);
         }
+        foreach (var type in DiscussionStates.Where(t => t.IsSelected))
+        {
+            yield return new KeyValuePair<string, string?>("discussionStates", type.Value);
+        }
         foreach (var topic in DXTopics.SelectMany(t => t.Facets).Where(f => f.IsSelected))
         {
             yield return new KeyValuePair<string, string?>("dxTopics", topic.Value);

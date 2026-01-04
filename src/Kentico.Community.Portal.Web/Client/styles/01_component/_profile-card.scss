@@ -1,0 +1,181 @@
+:where(.profile-card) {
+  --profile-card-bg: var(--color-white);
+  --profile-card-bg-hover: var(--color-gray-100);
+  --profile-card-border: var(--bs-gray-300);
+  --profile-card-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.05);
+  --profile-card-shadow-hover:
+    0 8px 24px rgba(138, 43, 226, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+  --profile-card-radius: var(--bs-border-radius-xl, 1.5rem);
+  --profile-card-padding: 2rem;
+  --profile-avatar-size: 120px;
+  --profile-primary: var(--bs-primary, #f05a22);
+  --profile-text: var(--color-gray-900);
+  --profile-text-muted: var(--color-gray-600);
+
+  container-name: profile-card;
+  container-type: inline-size;
+}
+
+.profile-card__container {
+  background: var(--profile-card-bg);
+  border: 1px solid var(--profile-card-border);
+  border-radius: var(--profile-card-radius);
+  box-shadow: var(--profile-card-shadow);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 480px;
+  margin: 0 auto;
+
+  &:hover {
+    box-shadow: var(--profile-card-shadow-hover);
+    transform: translateY(-4px);
+  }
+}
+
+.profile-card__header {
+  background: linear-gradient(
+    135deg,
+    var(--color-white) 0%,
+    var(--color-purple-100) 100%
+  );
+  display: flex;
+  justify-content: center;
+  position: relative;
+  padding: 2.5rem 1.5rem 3rem;
+}
+
+.profile-card__avatar-wrapper {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.profile-card__avatar {
+  width: var(--profile-avatar-size);
+  height: var(--profile-avatar-size);
+  border-radius: 50%;
+  border: 4px solid var(--color-white);
+  object-fit: cover;
+  display: block;
+}
+
+.profile-card__badges {
+  position: absolute;
+  bottom: -1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.375rem 0.75rem;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: var(--bs-border-radius-pill, 50rem);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(8px);
+  border: 1px solid color-mix(in srgb, var(--color-gray-300) 30%, transparent);
+}
+
+.profile-card__badge-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.25rem;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-card__body {
+  padding: var(--profile-card-padding);
+}
+
+.profile-card__content {
+  margin-bottom: 1.5rem;
+}
+
+.profile-card__name {
+  font-size: 1.75rem;
+  color: var(--profile-text);
+  margin: 0 0 1rem;
+  line-height: 1.2;
+}
+
+.profile-card__meta {
+  margin: 1.25rem 0;
+}
+
+.profile-card__meta-item {
+  color: var(--profile-text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.profile-card__meta-icon {
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  max-width: 20px !important;
+  max-height: 20px !important;
+  flex-shrink: 0;
+  color: var(--profile-primary);
+  margin-top: 0.125rem;
+  display: block;
+}
+
+.profile-card__bio {
+  color: var(--profile-text);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.profile-card__link {
+  color: var(--profile-primary);
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--color-primary-dark);
+  }
+}
+
+.profile-card__actions {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.profile-card__button-icon {
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  flex-shrink: 0;
+  display: block;
+}
+
+// Container Query Responsive Design
+@container profile-card (min-width: 400px) {
+  .profile-card__actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .profile-card__container,
+  .profile-card__button,
+  .profile-card__link {
+    transition: none;
+  }
+
+  .profile-card__container:hover,
+  .profile-card__button:hover {
+    transform: none;
+  }
+}

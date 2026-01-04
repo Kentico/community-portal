@@ -1,0 +1,174 @@
+@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CommunityProgramTargetsReport.CommunityProgramTargetsReportWidgetViewModel
+
+@{
+  bool IsQuarterly(string label) => label.Contains("(Q", StringComparison.OrdinalIgnoreCase);
+
+  string GetQuarterGroupKey(string label)
+  {
+    int idx = label.LastIndexOf(" (Q", StringComparison.OrdinalIgnoreCase);
+    return idx > 0 ? label[..idx] : label;
+  }
+
+  int? GetQuarterIndex(string label)
+  {
+    int idx = label.LastIndexOf(" (Q", StringComparison.OrdinalIgnoreCase);
+    if (idx < 0)
+    {
+      return null;
+    }
+
+    string part = label[(idx + 3)..].TrimEnd(')', ' ');
+    return int.TryParse(part, out int q) ? q : null;
+  }
+}
+
+<div class="card" xpc-preview-outline="@Model.ComponentName">
+  <div class="card-body">
+    @if (!string.IsNullOrWhiteSpace(Model.Heading))
+    {
+      <h3 class="card-title">@Model.Heading</h3>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+      <div class="alert alert-danger mb-0" role="alert">@Model.ErrorMessage</div>
+    }
+    else
+    {
+
+      <p class="card-text">
+        <text><strong>Program:</strong> @Model.ProgramStatusDisplay</text>
+      </p>
+
+      var annualGoals = Model.Goals.Where(g => !IsQuarterly(g.Label)).ToList();
+      var quarterlyGoals = Model.Goals.Where(g => IsQuarterly(g.Label)).ToList();
+
+      <div class="table-responsive">
+        <table class="table table-sm align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col">Progress</th>
+              <th scope="col" class="text-end">Current</th>
+              <th scope="col" class="text-end">Target</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var item in annualGoals)
+            {
+              <tr>
+                <td>@item.Label</td>
+                <td style="min-width: 180px;">
+                  @if (!item.IsConfigured)
+                  {
+                    <span class="text-muted">Not configured</span>
+                  }
+                  else
+                  {
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="progress flex-grow-1" role="progressbar" aria-label="@item.Label progress" aria-valuenow="@item.Percent" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar" style="width: @item.Percent%"></div>
+                      </div>
+                      <span class="small text-nowrap">@item.Percent%</span>
+                    </div>
+                  }
+                </td>
+                <td class="text-end">@item.Current</td>
+                <td class="text-end">@item.Target</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      @if (quarterlyGoals.Count > 0)
+      {
+        <div class="table-responsive mt-3">
+          <table class="table table-sm align-middle mb-0">
+            <thead>
+              <tr>
+                <th scope="col">Quarterly targets</th>
+                <th scope="col">Progress</th>
+                <th scope="col" class="text-end">Current</th>
+                <th scope="col" class="text-end">Target</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach (var group in quarterlyGoals.GroupBy(g => GetQuarterGroupKey(g.Label)))
+              {
+                var itemsByQuarter = group
+                  .Select(g => (Quarter: GetQuarterIndex(g.Label), Item: g))
+                  .Where(x => x.Quarter is not null)
+                  .ToDictionary(x => x.Quarter!.Value, x => x.Item);
+
+                <tr class="table-light">
+                  <td colspan="4"><strong>@group.Key</strong></td>
+                </tr>
+
+                @for (int q = 1; q <= 4; q++)
+                {
+                  var item = itemsByQuarter.TryGetValue(q, out var found)
+                    ? found
+                    : Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CommunityProgramTargetsReport.CommunityProgramTargetsReportProgress.Empty($"{group.Key} (Q{q})") with { IsConfiguredOverride = false };
+
+                  <tr>
+                    <td class="ps-4">Q@(q)</td>
+                    <td style="min-width: 180px;">
+                      @if (!item.IsConfigured)
+                      {
+                        <span class="text-muted">Not configured</span>
+                      }
+                      else
+                      {
+                        <div class="d-flex align-items-center gap-2">
+                          <div class="progress flex-grow-1" role="progressbar" aria-label="@item.Label progress" aria-valuenow="@item.Percent" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" style="width: @item.Percent%"></div>
+                          </div>
+                          <span class="small text-nowrap">@item.Percent%</span>
+                        </div>
+                      }
+                    </td>
+                    <td class="text-end">@item.Current</td>
+                    <td class="text-end">@item.Target</td>
+                  </tr>
+                }
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+
+      @if (Model.BadgeRequirements.Count > 0)
+      {
+        <div class="table-responsive mt-3">
+          <table class="table table-sm align-middle mb-0">
+            <thead>
+              <tr>
+                <th scope="col">Badge requirement</th>
+                <th scope="col" class="text-end">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach (var badge in Model.BadgeRequirements)
+              {
+                <tr>
+                  <td>@badge.Label</td>
+                  <td class="text-end">
+                    @if (badge.IsSatisfied)
+                    {
+                      <span class="text-success">Met</span>
+                    }
+                    else
+                    {
+                      <span class="text-danger">Missing</span>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    }
+  </div>
+</div>

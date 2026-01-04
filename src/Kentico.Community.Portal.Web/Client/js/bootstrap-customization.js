@@ -13,12 +13,20 @@ import Tab from "bootstrap/js/dist/tab";
 export default function setup() {
   bindBootstrapComponents();
   bindToastComponent();
+  bindFAQWidgets();
 }
 
 function bindBootstrapComponents() {
-  document
-    .querySelectorAll("[data-bs-toggle='tooltip']")
-    .forEach((el) => new Tooltip(el));
+  document.querySelectorAll("[data-bs-toggle='tooltip']").forEach((el) => {
+    const tooltipTitle =
+      el.getAttribute("data-bs-title") ?? el.getAttribute("title") ?? "";
+
+    if (tooltipTitle.trim().length === 0) {
+      return;
+    }
+
+    new Tooltip(el);
+  });
 
   document
     .querySelectorAll("[data-bs-toggle-collapse]")
@@ -104,4 +112,19 @@ function bindToastComponent() {
       }),
     );
   });
+}
+
+function bindFAQWidgets() {
+  // Execute all registered FAQ widget initialization callbacks
+  if (window.faqInitCallbacks && Array.isArray(window.faqInitCallbacks)) {
+    window.faqInitCallbacks.forEach((callback) => {
+      try {
+        callback(Collapse);
+      } catch (error) {
+        console.error("Error initializing FAQ widget:", error);
+      }
+    });
+    // Clear callbacks after execution
+    window.faqInitCallbacks = [];
+  }
 }

@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Security.Claims;
 using CMS.DataEngine.Internal;
 using CMS.Membership;
+using Kentico.Community.Portal.Core.Modules.Membership;
 using Kentico.Membership;
 using Vogen;
 
@@ -34,7 +35,27 @@ public class CommunityMember : ApplicationUser
     public string Bio { get; set; } = "";
     public string TimeZone { get; set; } = "";
 
-    public bool IsUnderModeration() => ModerationStatus != ModerationStatuses.None;
+    public ProgramStatuses ProgramStatus { get; set; } = ProgramStatuses.None;
+
+    public bool IsUnderModeration =>
+        ModerationStatus != ModerationStatuses.None;
+
+    /*
+     * Note that EmailConfirmed and Enabled are the same value/state with Xperience's membership
+     * https://docs.kentico.com/documentation/developers-and-admins/development/registration-and-authentication#applicationuser.enabled
+     *
+     * Once confirmed / enabled, members cannot change their email address themselves.
+     * If this functionality is added in the future, 
+     * WE MUST CHANGE THIS CHECK OR ENABLE TRUE EMAIL CONFIRMATION by resetting the security stamp after an email change
+     * or having a unique state in the database for unconfirmed email addresses.
+     */
+    public bool IsInternalEmployee =>
+        Email is not null &&
+        EmailConfirmed &&
+        Email.EndsWith("@kentico.com", StringComparison.OrdinalIgnoreCase);
+
+    public bool IsCommunityProgramMember =>
+        ProgramStatus != ProgramStatuses.None;
 
     public override void MapToMemberInfo(MemberInfo target)
     {
@@ -64,6 +85,8 @@ public class CommunityMember : ApplicationUser
         _ = target.SetValue("MemberCountry", Country);
         _ = target.SetValue("MemberBio", Bio);
         _ = target.SetValue("MemberTimeZone", TimeZone);
+
+        _ = target.SetValue("MemberProgramStatus", ProgramStatus.ToString());
     }
 
     public override void MapFromMemberInfo(MemberInfo source)
@@ -83,6 +106,11 @@ public class CommunityMember : ApplicationUser
         Country = source.GetValue("MemberCountry", "");
         Bio = source.GetValue("MemberBio", "");
         TimeZone = source.GetValue("MemberTimeZone", "");
+        EmailConfirmed = source.MemberEnabled;
+
+        ProgramStatus = Enum.TryParse<ProgramStatuses>(source.GetValue("MemberProgramStatus", ""), out var programStatus)
+            ? programStatus
+            : ProgramStatuses.None;
     }
 
     public static CommunityMember FromMemberInfo(MemberInfo memberInfo)
@@ -119,10 +147,3 @@ public static class MemberInfoExtensions
         CommunityMember.FromMemberInfo(member);
 }
 
-public enum ModerationStatuses
-{
-    None,
-    Spam,
-    Flagged,
-    Archived
-}

@@ -1,5 +1,7 @@
+using Kentico.Community.Portal.Web.Middleware;
 using Kentico.Web.Mvc;
 using Kentico.Xperience.Cloud;
+using Kentico.Xperience.ManagementApi;
 using Vite.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,9 +27,11 @@ app
     .IfDevelopment(env, b => b.UseDeveloperExceptionPage())
     .IfNotDevelopment(env, b => b.UseExceptionHandler("/error/500"))
     .UseStaticFiles()
+    .IfDevelopment(env, b => b.UseMiddleware<RemoveXFrameOptionsMiddleware>())
     .UseCors()
     .UseCookiePolicy()
     .UseAuthentication()
+    .IfDevelopment(env, b => b.UseKenticoManagementApi())
     .UseKenticoCloud()
     .UseKentico()
     .UseAppMiniProfiler(app, config, env)

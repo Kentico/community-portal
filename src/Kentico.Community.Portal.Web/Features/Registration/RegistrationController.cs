@@ -1,4 +1,5 @@
 using CMS.Base;
+using Kentico.Community.Portal.Core.Modules.Membership;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
@@ -119,7 +120,7 @@ public class RegistrationController(
             });
         }
 
-        if (member.IsUnderModeration())
+        if (member.IsUnderModeration)
         {
             return View("~/Features/Registration/_ModerationStatus.cshtml");
         }

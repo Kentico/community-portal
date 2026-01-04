@@ -32,8 +32,6 @@ public class CommunityLeaderActivityListWidget(IMediator mediator) : ViewCompone
     public async Task<IViewComponentResult> InvokeAsync(ComponentViewModel<CommunityLeaderActivityListWidgetProperties> _)
     {
         var communityMemberID = CommunityMember.GetMemberIDFromClaim(HttpContext);
-        var resp = await mediator.Send(new CommunityLeaderActivitiesQuery());
-
         var bizForm = FormParser.GetFormByClassName(FormClassName.From(CommunityLeaderActivityItem.CLASS_NAME));
 
         if (!bizForm.TryGetValue(out var form))
@@ -41,15 +39,104 @@ public class CommunityLeaderActivityListWidget(IMediator mediator) : ViewCompone
             return View("~/Components/ComponentError.cshtml");
         }
 
+        var activityTypesMap = FormParser.GetFormFieldOptions(form, nameof(CommunityLeaderActivityItem.ActivityType));
+        var impactMap = FormParser.GetFormFieldOptions(form, nameof(CommunityLeaderActivityItem.Impact));
+        var effortMap = FormParser.GetFormFieldOptions(form, nameof(CommunityLeaderActivityItem.Effort));
+        var satisfactionMap = FormParser.GetFormFieldOptions(form, nameof(CommunityLeaderActivityItem.Satisfaction));
+
+        CommunityLeaderActivitiesQueryResponse resp;
+
+#if DEBUG
+        if (HttpContext.Request.Query.ContainsKey("fakeActivities"))
+        {
+            var seed = HttpContext.Request.Query.TryGetValue("seed", out var seedValue) && int.TryParse(seedValue, out var parsedSeed)
+                ? parsedSeed
+                : 0;
+
+            resp = GenerateFakeActivitiesResponse(
+                count: 1300,
+                year: DateTime.Now.Year,
+                activityTypesMap: activityTypesMap,
+                impactMap: impactMap,
+                effortMap: effortMap,
+                satisfactionMap: satisfactionMap,
+                seed: seed);
+        }
+        else
+        {
+            resp = await mediator.Send(new CommunityLeaderActivitiesQuery());
+        }
+#else
+        resp = await mediator.Send(new CommunityLeaderActivitiesQuery());
+#endif
+
         return View("~/Components/PageBuilder/Widgets/Activities/CommunityLeaderActivityList.cshtml",
             new CommunityLeaderActivityListWidgetViewModel(resp, communityMemberID.Value)
             {
-                ActivitTypesMap = FormParser.GetFormFieldOptions(form, nameof(CommunityLeaderActivityItem.ActivityType)),
-                ImpactMap = FormParser.GetFormFieldOptions(form, nameof(CommunityLeaderActivityItem.Impact)),
-                EfforMap = FormParser.GetFormFieldOptions(form, nameof(CommunityLeaderActivityItem.Effort)),
-                SatisfactionMap = FormParser.GetFormFieldOptions(form, nameof(CommunityLeaderActivityItem.Satisfaction))
+                ActivitTypesMap = activityTypesMap,
+                ImpactMap = impactMap,
+                EfforMap = effortMap,
+                SatisfactionMap = satisfactionMap
             });
     }
+
+#if DEBUG
+    private static CommunityLeaderActivitiesQueryResponse GenerateFakeActivitiesResponse(
+        int count,
+        int year,
+        IReadOnlyDictionary<string, string> activityTypesMap,
+        IReadOnlyDictionary<string, string> impactMap,
+        IReadOnlyDictionary<string, string> effortMap,
+        IReadOnlyDictionary<string, string> satisfactionMap,
+        int seed)
+    {
+        var rng = new Random(seed);
+
+        var memberNames = Enumerable.Range(1, 25)
+            .Select(i => new KeyValuePair<int, string>(1000 + i, $"Fake Member {i}"))
+            .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+        var memberIds = memberNames.Keys.ToArray();
+        var activityTypeKeys = activityTypesMap.Keys.DefaultIfEmpty("Social").ToArray();
+        var impactKeys = impactMap.Keys.DefaultIfEmpty("3").ToArray();
+        var effortKeys = effortMap.Keys.DefaultIfEmpty("2").ToArray();
+        var satisfactionKeys = satisfactionMap.Keys.DefaultIfEmpty("3").ToArray();
+
+        static DateTime RandomDateInYear(Random rng, int year)
+        {
+            var start = new DateTime(year, 1, 1);
+            var endExclusive = start.AddYears(1);
+            var rangeDays = (endExclusive - start).Days;
+            return start.AddDays(rng.Next(rangeDays)).AddMinutes(rng.Next(0, 24 * 60));
+        }
+
+        var items = new List<CommunityLeaderActivityItem>(capacity: count);
+
+        for (int i = 1; i <= count; i++)
+        {
+            var item = new CommunityLeaderActivityItem
+            {
+                MemberID = memberIds[rng.Next(memberIds.Length)],
+                ActivityDate = RandomDateInYear(rng, year),
+                ActivityType = activityTypeKeys[rng.Next(activityTypeKeys.Length)],
+                URL = $"https://example.com/community-leader/activity/{i}",
+                ShortDescription = $"Fake activity #{i}",
+                Impact = impactKeys[rng.Next(impactKeys.Length)],
+                Effort = effortKeys[rng.Next(effortKeys.Length)],
+                Satisfaction = satisfactionKeys[rng.Next(satisfactionKeys.Length)],
+            };
+
+            items.Add(item);
+        }
+
+        var ordered = items.OrderByDescending(i => i.ActivityDate).ToList();
+
+        return new(
+            ordered.GroupBy(i => i.MemberID).ToDictionary(g => g.Key, g => g.ToImmutableList()),
+            [.. ordered],
+            memberNames);
+    }
+#endif
 }
 
 public class CommunityLeaderActivityListWidgetProperties : BaseWidgetProperties { }

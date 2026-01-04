@@ -43,18 +43,20 @@ public class QAndAQuestionCreateCommandHandler(
             .Where(t => request.DXTopics.Contains(t.Identifier))
             .Select(t => new TagReference() { Identifier = t.Identifier })
             .ToList();
-        var now = clock.GetUtcNow().DateTime;
+        var questionDate = request.LinkedBlogPost
+            .Map(p => p.BlogPostPagePublishedDate)
+            .GetValueOrDefault(clock.GetUtcNow().DateTime);
 
         var itemData = new ContentItemData(new Dictionary<string, object>
         {
-            { nameof(QAndAQuestionPage.QAndAQuestionPageDateCreated), now },
-            { nameof(QAndAQuestionPage.QAndAQuestionPageDateModified), now },
+            { nameof(QAndAQuestionPage.QAndAQuestionPageDateCreated), questionDate },
+            { nameof(QAndAQuestionPage.QAndAQuestionPageDateModified), questionDate },
             { nameof(QAndAQuestionPage.BasicItemTitle), request.QuestionTitle },
             // Content is not sanitized because it can include fenced code blocks.
             { nameof(QAndAQuestionPage.QAndAQuestionPageContent), request.QuestionContent },
             { nameof(QAndAQuestionPage.QAndAQuestionPageAuthorMemberID), request.MemberAuthor.Id },
             { nameof(QAndAQuestionPage.QAndAQuestionPageAcceptedAnswerDataGUID), Guid.Empty },
-            { nameof(QAndAQuestionPage.CoreTaxonomyDXTopics), validTags },
+            { nameof(QAndAQuestionPage.CoreTaxonomyDXTopics), validTags }
         });
         itemData.SetValue<IEnumerable<TagReference>>(
             nameof(QAndAQuestionPage.QAndAQuestionPageDiscussionType),

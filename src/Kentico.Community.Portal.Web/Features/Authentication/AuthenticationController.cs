@@ -66,7 +66,7 @@ public class AuthenticationController(
             {
                 signInResult = SignInResult.Failed;
             }
-            else if (member.IsUnderModeration())
+            else if (member.IsUnderModeration)
             {
                 return View("~/Features/Registration/_ModerationStatus.cshtml");
             }

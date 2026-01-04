@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CTAButton;
 using Kentico.PageBuilder.Web.Mvc;
@@ -49,6 +50,26 @@ public class CTAButtonWidgetProperties : BaseWidgetProperties
     )]
     public string HorizontalAlignment { get; set; } = nameof(HorizontalAlignments.Left);
     public HorizontalAlignments HorizontalAlignmentParsed => EnumDropDownOptionsProvider<HorizontalAlignments>.Parse(HorizontalAlignment, HorizontalAlignments.Left);
+
+    [DropDownComponent(
+        Label = "Top Margin",
+        ExplanationText = "The top margin of the CTA",
+        Tooltip = "Select a margin size",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<MarginSizes>),
+        Order = 4
+    )]
+    public string TopMargin { get; set; } = nameof(MarginSizes.Medium);
+    public MarginSizes TopMarginParsed => EnumDropDownOptionsProvider<MarginSizes>.Parse(TopMargin, MarginSizes.None);
+
+    [DropDownComponent(
+        Label = "Bottom Margin",
+        ExplanationText = "The bottom margin of the CTA",
+        Tooltip = "Select a margin size",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<MarginSizes>),
+        Order = 5
+    )]
+    public string BottomMargin { get; set; } = nameof(MarginSizes.Medium);
+    public MarginSizes BottomMarginParsed => EnumDropDownOptionsProvider<MarginSizes>.Parse(BottomMargin, MarginSizes.None);
 }
 
 public enum HorizontalAlignments
@@ -59,9 +80,23 @@ public enum HorizontalAlignments
     Center
 }
 
+public enum MarginSizes
+{
+    [Description("None")]
+    None,
+    [Description("Small")]
+    Small,
+    [Description("Medium")]
+    Medium,
+    [Description("Large")]
+    Large
+}
+
 public class CTAButtonWidgetViewModel(CTAButtonWidgetProperties props)
 {
     public string Text { get; set; } = props.Text;
     public string LinkURL { get; set; } = props.LinkURL;
     public HorizontalAlignments HorizontalAlignment { get; set; } = props.HorizontalAlignmentParsed;
+    public MarginSizes TopMargin { get; set; } = props.TopMarginParsed;
+    public MarginSizes BottomMargin { get; set; } = props.BottomMarginParsed;
 }

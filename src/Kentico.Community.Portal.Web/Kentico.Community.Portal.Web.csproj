@@ -4,7 +4,7 @@
     <UserSecretsId>3df470e6-54c4-41d8-b8f0-36955d9433d2</UserSecretsId>
     <!-- This ensures Lucene index file modifications do not cause a hot reload when using dotnet watch -->
     <!-- See https://github.com/dotnet/sdk/issues/44910#issuecomment-3533124997 -->
-    <DefaultItemExcludes>$(DefaultItemExcludes);**/App_Data/**</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);**/App_Data/**;**/$StorageAssets/**;</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,14 +20,14 @@
     <PackageReference Include="Kentico.Xperience.AzureStorage" />
     <PackageReference Include="Kentico.Xperience.Cloud" />
     <PackageReference Include="Kentico.Xperience.ImageProcessing" />
-    <!-- Explicit reference to override vulnerable transitive dependency from Kentico.Xperience.ImageProcessing -->
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" />
+    <PackageReference Include="Kentico.Xperience.ManagementApi" />
     <PackageReference Include="Kentico.Xperience.Mjml" />
     <PackageReference Include="Kentico.Xperience.Lucene" />
     <PackageReference Include="Kentico.Xperience.MiniProfiler" />
     <PackageReference Include="Kentico.Xperience.SendGrid" />
     <PackageReference Include="Kentico.Xperience.WebApp" />
     <PackageReference Include="Kentico.Xperience.TagManager" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" />
     <PackageReference Include="Markdig" />
     <PackageReference Include="Microsoft.Identity.Web" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />

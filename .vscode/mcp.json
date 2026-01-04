@@ -3,6 +3,23 @@
     "kentico.docs.mcp": {
       "type": "http",
       "url": "https://docs.kentico.com/mcp"
+    },
+    "kentico-cm-mcp": {
+      "type": "http",
+      "url": "https://ai.kentico.com/content-model-mcp"
+    },
+    "xperience-management-api": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["@kentico/management-api-mcp@31.0.1-preview"],
+      "env": {
+        "NODE_OPTIONS": "--use-system-ca",
+        "NODE_TLS_REJECT_UNAUTHORIZED": "0",
+        "CACHE_OPENAPI": "false",
+        "MANAGEMENT_API_URL": "https://localhost:45039/kentico-api/management",
+        "MANAGEMENT_API_SECRET": "rrvpzpu18m5385tfw1h9j5luxton5vyv"
+      }
     }
-  }
+  },
+  "inputs": []
 }

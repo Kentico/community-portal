@@ -1,3 +1,4 @@
+using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Heading;
 using Kentico.PageBuilder.Web.Mvc;

@@ -70,7 +70,7 @@
       </h2>
     }
 
-    <div class="row @columnsClass row-gap-5 @bodyAlignmentClass">
+    <div class="row @columnsClass gy-5 @bodyAlignmentClass">
       @foreach (int i in Enumerable.Range(1, Model.WidgetZoneCount))
       {
         string columnClass = Model.Layout switch
@@ -80,7 +80,7 @@
           _ => "col"
         };
 
-        <div class="@columnClass">
+        <div class="@columnClass d-flex flex-column gap-3">
           <widget-zone />
         </div>
       }

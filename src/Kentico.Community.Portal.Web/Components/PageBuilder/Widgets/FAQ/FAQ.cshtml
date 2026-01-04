@@ -1,0 +1,119 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.FAQ
+@using Kentico.Community.Portal.Web.Rendering
+@inject MarkdownRenderer markdownRenderer
+
+@model FAQWidgetViewModel
+
+<div xpc-preview-outline="FAQ Widget" xpc-preview-outline-remove-element="true">
+    @if (Model.HasLabel || (Model.IsFromGroup && Model.ShowGroupDescription && Model.HasGroupDescription))
+    {
+        <div
+            class="@(Model.ShowExpandCollapseControls && Model.FAQItems.Count > 1 ? "d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3" : "mb-3")">
+            @if (Model.HasLabel)
+            {
+                string slug = View.SlugHelper.GenerateSlug($"faq-{Model.DisplayLabel}");
+
+                <div class="@(Model.ShowExpandCollapseControls && Model.FAQItems.Count > 1 ? "" : "mb-3")">
+                    <h3 id="@slug" class="mb-0">
+                        @Model.DisplayLabel
+                        <a title="Navigate to this heading" aria-label="Navigate to this heading" class="heading-link"
+                            href="#@(slug)"></a>
+                    </h3>
+
+                    @if (Model.IsFromGroup && Model.ShowGroupDescription && Model.HasGroupDescription)
+                    {
+                        <p class="text-muted mb-0 mt-1">@Model.GroupDescription</p>
+                    }
+                </div>
+            }
+            else if (Model.IsFromGroup && Model.ShowGroupDescription && Model.HasGroupDescription)
+            {
+                <p class="text-muted mb-0">@Model.GroupDescription</p>
+            }
+
+            @if (Model.ShowExpandCollapseControls && Model.FAQItems.Count > 1)
+            {
+                <div class="btn-group" role="group" aria-label="FAQ controls">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-faq-action="expand"
+                        data-faq-target="faq-accordion-@Model.WidgetInstanceID">
+                        Expand all
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-faq-action="collapse"
+                        data-faq-target="faq-accordion-@Model.WidgetInstanceID">
+                        Collapse all
+                    </button>
+                </div>
+            }
+        </div>
+    }
+    else if (Model.ShowExpandCollapseControls && Model.FAQItems.Count > 1)
+    {
+        <div class="d-flex justify-content-end mb-3">
+            <div class="btn-group" role="group" aria-label="FAQ controls">
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-faq-action="expand"
+                    data-faq-target="faq-accordion-@Model.WidgetInstanceID">
+                    Expand all
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-faq-action="collapse"
+                    data-faq-target="faq-accordion-@Model.WidgetInstanceID">
+                    Collapse all
+                </button>
+            </div>
+        </div>
+    }
+
+    <div class="accordion" id="faq-accordion-@Model.WidgetInstanceID">
+        @foreach (var (item, index) in Model.FAQItems.Select((item, index) => (item, index)))
+        {
+            var itemId = $"faq-item-{Model.WidgetInstanceID}-{index}";
+            var headerId = $"{itemId}-header";
+            var collapseId = $"{itemId}-collapse";
+
+            <div class="accordion-item">
+                <h4 class="accordion-header" id="@headerId">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#@collapseId" aria-expanded="false" aria-controls="@collapseId">
+                        @item.FAQItemContentQuestion
+                    </button>
+                </h4>
+                <div id="@collapseId" class="accordion-collapse collapse" aria-labelledby="@headerId">
+                    <div class="accordion-body">
+                        @markdownRenderer.Render(item.FAQItemContentAnswerMarkdown ?? "")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script type="module">
+    const accordionId = "faq-accordion-@Model.WidgetInstanceID";
+
+    // Register initialization callback to be executed when Bootstrap is ready
+    if (!window.faqInitCallbacks) {
+        window.faqInitCallbacks = [];
+    }
+
+    window.faqInitCallbacks.push((Collapse) => {
+        const accordion = document.getElementById(accordionId);
+
+        if (!accordion) {
+            console.warn(`FAQ accordion with id "${accordionId}" not found`);
+            return;
+        }
+
+        const collapseElements = accordion.querySelectorAll(".accordion-collapse");
+        const expandBtn = document.querySelector(`[data-faq-action="expand"][data-faq-target="${accordionId}"]`);
+        const collapseBtn = document.querySelector(`[data-faq-action="collapse"][data-faq-target="${accordionId}"]`);
+
+        function setAllAccordions(shouldExpand) {
+            collapseElements.forEach(el => {
+                const instance = Collapse.getOrCreateInstance(el, { toggle: false });
+                shouldExpand ? instance.show() : instance.hide();
+            });
+        }
+
+        expandBtn?.addEventListener("click", () => setAllAccordions(true));
+        collapseBtn?.addEventListener("click", () => setAllAccordions(false));
+    });
+</script>

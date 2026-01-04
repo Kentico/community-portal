@@ -19,7 +19,8 @@ public class MemberListExtender : PageExtender<MemberList>
 
         var configs = Page.PageConfiguration.ColumnConfigurations
                 .AddColumn("MemberFirstName", caption: "First name")
-                .AddColumn("MemberLastName", caption: "Last name");
+                .AddColumn("MemberLastName", caption: "Last name")
+                .AddColumn("MemberModerationStatus", caption: "Moderation status");
 
         configs.Insert(0, new ColumnConfiguration
         {
