@@ -20,15 +20,13 @@ public partial class ImageWidget : ComponentBase
 {
     public const string IDENTIFIER = "KenticoCommunity.EmailBuilder.Widgets.Image";
 
-    private EmailContext? emailContext;
-
     [Inject] public required IEmailContextAccessor EmailContextAccessor { get; set; }
     [Inject] public required IContentRetriever ContentRetriever { get; set; }
 
     [Parameter] public required ImageWidgetProperties Properties { get; set; }
 
     public Maybe<ImageContent> Model { get; set; }
-    public EmailContext EmailContext => emailContext ??= EmailContextAccessor.GetContext();
+    public EmailContext EmailContext => field ??= EmailContextAccessor.GetContext();
 
     protected override async Task OnInitializedAsync()
     {

@@ -20,14 +20,12 @@ public partial class CTAWidget : ComponentBase
 {
     public const string IDENTIFIER = "KenticoCommunity.EmailBuilder.Widgets.CTA";
 
-    private EmailContext? emailContext;
-
     [Inject] public required IEmailContextAccessor EmailContextAccessor { get; set; }
 
     [Parameter]
     public required CTAWidgetProperties Properties { get; set; }
 
-    public EmailContext EmailContext => emailContext ??= EmailContextAccessor.GetContext();
+    public EmailContext EmailContext => field ??= EmailContextAccessor.GetContext();
 }
 
 public class CTAWidgetProperties : IEmailWidgetProperties

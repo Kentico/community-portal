@@ -68,6 +68,41 @@
       </field>
       <field column="PromotionRuleConfiguration" guid="8419163c-7f62-47f3-8c5f-fd034bef93b1" enabled="" />
       <field column="PromotionRuleIdentifier" guid="64ad0f50-f11b-45af-bfc9-c99825ba0230" enabled="" order="14" />
+      <field column="PromotionRedemptionMethod" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="89854be9-1e3c-46af-8817-11dc04a68cc0" system="true" visible="true" order="15">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.promotioninfo.edit.redemptionmethod.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.RadioGroup</controlname>
+          <Inline>False</Inline>
+          <Options>
+<![CDATA[
+Automatic;{$digitalcommerce.promotioninfo.edit.redemptionmethod.automatic$}
+GenericCode;{$digitalcommerce.promotioninfo.edit.redemptionmethod.genericcode$}
+]]>
+          </Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
+      </field>
+      <field column="PromotionDiscountCode" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="b59a46cf-c54f-4c72-bcf8-088ec13a523a" system="true" visible="true" order="16">
+        <properties>
+          <explanationtext>
+            <![CDATA[{$digitalcommerce.promotioninfo.edit.discountcode.textbelow$}]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.promotioninfo.edit.discountcode.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
     </form>
   </FormDefinition>
   <FormDisplayName>Create promotion</FormDisplayName>

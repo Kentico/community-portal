@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassCodeGenerationSettings>
+    <Data>
+      <LastModifiedColumn>DiscussionMemberNotificationSettingsDateModified</LastModifiedColumn>
+      <ObjectType>
+        <![CDATA[KenticoCommunity.DiscussionMemberNotificationSettings]]>
+      </ObjectType>
+      <UseGuidHashtable>False</UseGuidHashtable>
+      <UseIdHashtable>False</UseIdHashtable>
+      <UseNameHashtable>False</UseNameHashtable>
+    </Data>
+  </ClassCodeGenerationSettings>
+  <ClassDisplayName>Discussion Member Notification Settings</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="DiscussionMemberNotificationSettingsID" columntype="integer" enabled="true" guid="3c1f5ef3-6f68-467a-95c6-82f10c49bf44" isPK="true" />
+      <field column="DiscussionMemberNotificationSettingsDateCreated" columnprecision="3" columntype="datetime" enabled="true" guid="6b236934-f921-4156-9421-0f81a008577f" />
+      <field column="DiscussionMemberNotificationSettingsDateModified" columnprecision="3" columntype="datetime" enabled="true" guid="2761b71d-8aef-43fc-9943-1c63f7de4514" />
+      <field column="DiscussionMemberNotificationSettingsMemberID" columnprecision="0" columntype="integer" enabled="true" guid="d0a7c03a-2b16-4d4a-bd58-f5071937484b" refobjtype="cms.member" reftype="Required" />
+      <field column="DiscussionMemberNotificationSettingsFrequencyType" columnprecision="0" columnsize="15" columntype="text" enabled="true" guid="a0256628-3d6c-4ee4-be41-0ba6b61dec84">
+        <properties>
+          <defaultvalue>Weekly</defaultvalue>
+        </properties>
+      </field>
+      <field column="DiscussionMemberNotificationSettingsLatestDiscussionEventID" columnprecision="0" columntype="integer" enabled="true" guid="21ce4241-a93e-4923-b1b0-61b0124a76a3" refobjtype="kenticocommunity.discussionevent" reftype="Required">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="DiscussionMemberNotificationSettingsAutoSubscribeEnabled" columnprecision="0" columntype="boolean" enabled="true" guid="58f80de2-3813-4323-ae9c-e3bc6d74ad2d" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>fdd53e90-6ce9-4317-a010-edbe011b5f02</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>
+    <![CDATA[KenticoCommunity.DiscussionMemberNotificationSettings]]>
+  </ClassName>
+  <ClassResourceID>
+    <CodeName>KenticoCommunity</CodeName>
+    <GUID>5e10e4ec-a038-4b97-a9f6-c17724896c89</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>
+    <![CDATA[KenticoCommunity_DiscussionMemberNotificationSettings]]>
+  </ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

@@ -5,7 +5,7 @@ namespace Kentico.Community.Portal.Core;
 
 public interface IContentQueryExecutionOptionsCreator
 {
-    ContentQueryExecutionOptions Create();
+    public ContentQueryExecutionOptions Create();
 }
 
 public class DefaultContentQueryExecutionOptionsCreator(

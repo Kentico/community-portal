@@ -22,6 +22,7 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Message</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeintranslation>True</includeintranslation>
         </properties>
         <settings>
           <controlname>Kentico.Administration.RichTextEditor</controlname>
@@ -32,6 +33,12 @@
             <RuleValues />
           </ValidationRuleConfiguration>
         </validationrulesdata>
+        <additionalactionsdata>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextRefinement</AdditionalActionIdentifier>
+            <AdditionalActionValues />
+          </AdditionalActionConfiguration>
+        </additionalactionsdata>
       </field>
     </form>
   </ClassFormDefinition>

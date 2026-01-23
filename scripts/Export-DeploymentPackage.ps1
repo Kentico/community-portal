@@ -23,17 +23,15 @@ Import-Module (Resolve-Path Utilities) `
     Get-WebProjectPath, `
     Get-ScriptConfig, `
     Write-Status, `
-    Get-ScriptConfig, `
     Write-Notification `
     -Force
 
 
 $scriptConfig = Get-ScriptConfig
-
 $projectPath = Get-WebProjectPath
 $configuration = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Release" : "Debug"
 $launchProfile = $Env:ASPNETCORE_ENVIRONMENT -eq "CI" ? "Portal.WebCI" : "Portal.Web"
-$AssemblyName = $(Get-ScriptConfig).WebProjectAssemblyName
+$AssemblyName = $scriptConfig.WebProjectAssemblyName
 
 $OutputFolderPath = "../bin/CloudDeployment/"
 $MetadataFilePath = Join-Path $OutputFolderPath "cloud-metadata.json"

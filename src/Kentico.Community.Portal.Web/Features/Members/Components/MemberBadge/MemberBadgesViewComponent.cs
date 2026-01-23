@@ -1,3 +1,4 @@
+using Kentico.Community.Portal.Core.Modules;
 using Microsoft.AspNetCore.Mvc;
 using static Kentico.Community.Portal.Web.Features.Members.Badges.MemberBadgeService;
 
@@ -24,6 +25,7 @@ public class MemberBadgeViewModel
     public string MemberBadgeCodeName { get; } = string.Empty;
     public string MemberBadgeDescription { get; } = string.Empty;
     public bool IsSelected { get; init; }
+    public bool AlwaysSelected { get; init; }
     public int BadgeId { get; }
 
     public static MemberBadgeViewModel Create(MemberBadgeAggregate aggregate, bool isSelected) =>
@@ -41,6 +43,7 @@ public class MemberBadgeViewModel
         MemberBadgeDescription = aggregate.MemberBadge.MemberBadgeShortDescription;
         BadgeImageUrl = Maybe.From(aggregate.Image).Map(i => i?.URL!).MapNullOrWhiteSpaceAsNone();
         IsSelected = aggregate.IsSelected;
+        AlwaysSelected = PortalMemberBadges.IsAlwaysSelected(aggregate.MemberBadge);
     }
 }
 

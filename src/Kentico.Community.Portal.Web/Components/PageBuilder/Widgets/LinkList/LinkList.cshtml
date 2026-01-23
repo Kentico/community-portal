@@ -15,8 +15,43 @@
     @foreach (var link in Model.Links)
     {
       <li>
-        <a href="@link.LinkContentPathOrURL"> @link.BasicItemTitle </a>
-        <p><small>@link.BasicItemShortDescription</small></p>
+        <a href="@link.PathOrURL"> @link.Title </a>
+        <p><small>@link.ShortDescription</small></p>
+        @if (Model.ShowPublishedDate || Model.ShowAuthor)
+        {
+          <p>
+            <small class="text-muted">
+              @if (Model.ShowPublishedDate)
+              {
+                <time datetime="@link.PublishedDate.ToString("yyyy-MM-dd")">
+                  @link.PublishedDate.ToString("d", View.Culture)
+                </time>
+              }
+              @if (Model.ShowAuthor && link.MemberID > 0)
+              {
+                @if (Model.ShowPublishedDate)
+                {
+                  <span> • </span>
+                }
+                @if (!string.IsNullOrWhiteSpace(link.AuthorFullName))
+                {
+                  <a asp-controller="Member" asp-action="MemberDetail"
+                    asp-route-memberID="@link.MemberID">@link.AuthorFullName</a>
+                }
+                else
+                {
+                  <span>Member ID: @link.MemberID</span>
+                }
+              }
+            </small>
+          </p>
+        }
+        @if (Model.ShowDXTopics && link.DXTopics.Any())
+        {
+          <div class="mb-3">
+            <vc:tag-list tags="link.DXTopics" />
+          </div>
+        }
       </li>
     }
   </ul>

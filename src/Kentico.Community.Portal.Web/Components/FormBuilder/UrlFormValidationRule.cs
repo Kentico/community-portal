@@ -1,5 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Kentico.Forms.Web.Mvc;
 
 [assembly: RegisterFormBuilderValidationRule(

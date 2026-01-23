@@ -4,7 +4,9 @@ using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Components.ViewComponents.Pagination;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Infrastructure.Search;
+using Kentico.Community.Portal.Web.Membership;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Features.QAndA.Search;
@@ -12,15 +14,18 @@ namespace Kentico.Community.Portal.Web.Features.QAndA.Search;
 public class QAndASearchViewComponent(
     QAndASearchService searchService,
     MemberBadgeService memberBadgeService,
-    IMediator mediator) : ViewComponent
+    IMediator mediator,
+    UserManager<CommunityMember> userManager) : ViewComponent
 {
     private readonly QAndASearchService searchService = searchService;
     private readonly MemberBadgeService memberBadgeService = memberBadgeService;
     private readonly IMediator mediator = mediator;
+    private readonly UserManager<CommunityMember> userManager = userManager;
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
         var request = new QAndASearchRequest(HttpContext.Request);
+        var currentMember = await userManager.CurrentUser(HttpContext);
 
         var searchResult = searchService.SearchQAndA(request);
         var taxonomies = await mediator.Send(new QAndATaxonomiesQuery());

@@ -39,6 +39,6 @@ public static class SystemChannels
 
 public interface ISystemChannel
 {
-    Guid ChannelGUID { get; }
-    string ChannelName { get; }
+    public Guid ChannelGUID { get; }
+    public string ChannelName { get; }
 }

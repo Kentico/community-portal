@@ -1,5 +1,59 @@
 # Architecture Decision Record
 
+## 2026-01-13 - Q&A discussion notifications & subscriptions
+
+A feature of Kentico's previous membership portal (DevNet) was notification
+emails when a forum post you were watching was updated. This made it easy for
+members to stay up to date with discussions relevant to them and enabled members
+to revive old posts with new conversations.
+
+This feature was native to Kentico Portal Engine and needed to be designed and
+implemented from scratch in the Kentico Community Portal.
+
+### Solution - Notification sub-system
+
+Building an entire notification system would enable alerts for members across
+channels and UIs in addition to notifications about things other than Q&A
+discussions.
+
+The portal already has a tray UI on the website that displays pre-authored
+notifications (sourced from the Content hub) about various portal features, but
+this feature is very limited in functionality. Adding a notification sub-system
+would enable this notification tray to be fully featured.
+
+This sub-system would require a substantial amount of design and development.
+
+### Solution - Q&A discussion email notifications
+
+Re-implementing the functionailty that existed in DevNet would keep the scope
+limited while providing the functionality that kept members engaged in
+discussions over time.
+
+It would also help identify the amount of use and engagement more advanced
+membership experiences would generate.
+
+There is a risk members will expect to see discussion notifications in the
+website alert tray and be confused about that missing feature.
+
+### Selected solution
+
+We re-implemented the DevNet functionality, limiting capabilities where it makes
+sense to better align with Xperience by Kentico's out-of-the-box capabilities.
+
+Notifications will only be sent through email, using scheduled tasks and member
+notification preferences to determine when emails are sent.
+
+Q&A discussion subscriptions will be maintained separately which enables future
+expansion into other channels for notifications (e.g. web alert tray).
+
+A current limitation that could introduce performance scaling problems is that
+all notification emails are sent at the same time for each notification
+frequency. If many members pick the same frequency and there are many
+notifications, processing time and resource usage could grow significantly. In
+the future we could allow members to pick the time of day or day of week to
+receive regular notification emails, reducing the likelihood of many emails
+being sent at the same time.
+
 ## 2025-09-04 - Spam controls for Q&A discussions
 
 The Kentico Community Portal has received spam postings in Q&A discussions

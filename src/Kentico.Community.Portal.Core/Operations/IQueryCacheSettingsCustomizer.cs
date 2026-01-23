@@ -18,5 +18,5 @@ public interface IQueryCacheSettingsCustomizer<TQuery, TResponse>
     /// <param name="creator"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    CacheSettings CustomizeCacheSettings(DefaultQueryCacheSettings settings, IQueryCacheKeysCreator<TQuery, TResponse> creator, TQuery query);
+    public CacheSettings CustomizeCacheSettings(DefaultQueryCacheSettings settings, IQueryCacheKeysCreator<TQuery, TResponse> creator, TQuery query);
 }

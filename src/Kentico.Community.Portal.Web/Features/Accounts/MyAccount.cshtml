@@ -1,3 +1,4 @@
+@using Kentico.Community.Portal.Web.Components.TagHelpers
 @model Kentico.Community.Portal.Web.Features.Accounts.MyAccountViewModel
 
 <vc:page-heading page="Model.Page" />
@@ -5,7 +6,7 @@
 <main>
     <div class="section pb-6">
         <div class="container">
-            <div class="grid gap-3">
+            <div class="grid" style="--bs-gap: 2.25rem 1.5rem;">
                 <div class="g-col-12 g-col-lg-6 bg-purple-100 rounded p-3">
                     <partial name="~/Features/Accounts/_AvatarForm.cshtml" model="Model.AvatarForm" />
                 </div>
@@ -13,9 +14,9 @@
                 <div class="g-col-12 g-col-lg-6 rounded bg-white border border-3 d-flex flex-column gap-3 p-3"
                     style="--bs-border-color: var(--color-purple-100);">
                     <div class="overflow-y-auto">
-                        <h5>
+                        <h4>
                             Profile Information
-                        </h5>
+                        </h4>
 
                         <div>
                             <dl class="grid">
@@ -26,7 +27,8 @@
                                 <dd>@Model.Email</dd>
 
                                 <dt>Joined:</dt>
-                                <dd>@Model.DateCreated.ToString("d", View.Culture)</dd>
+                                <dd><time xpc-datetime="Model.DateCreated"
+                                        xpc-datetime-format="@DateTimeFormat.Date"></time></dd>
 
                                 <dt>Public profile:</dt>
                                 <dd>
@@ -46,6 +48,16 @@
 
                 <div class="g-col-12 g-col-lg-6">
                     <partial name="~/Features/Accounts/_PasswordForm.cshtml" model="Model.PasswordInfo" />
+                </div>
+
+                <div class="g-col-12 g-col-lg-6">
+                    <partial name="~/Features/Accounts/_DiscussionSubscriptions.cshtml"
+                        model="Model.NotificationsForm.SubscribedDiscussions" />
+                </div>
+                <div class="g-col-12 g-col-lg-6">
+                    <partial name="~/Features/Accounts/_DiscussionNotificationsForm.cshtml"
+                        model="Model.NotificationsForm" />
+
                 </div>
             </div>
         </div>

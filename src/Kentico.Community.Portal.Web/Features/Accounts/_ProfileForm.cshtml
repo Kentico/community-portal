@@ -5,6 +5,12 @@
 <form id="profileUpdateForm" method="post" hx-post hx-controller="Account" hx-action="UpdateProfile" hx-swap="outerHTML"
     hx-disabled-elt="find fieldset" test-id="profileUpdate">
     <fieldset hx-indicator="this" xpc-readonly-disabled>
+        <h4>My profile</h4>
+
+        <small class="form-text text-muted d-block py-1">
+            Update your public profile information. Use the <strong>Public profile</strong> link above to view your
+            profile.
+        </small>
 
         <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
 
@@ -72,6 +78,25 @@
             <div>
                 <input asp-for="EmployerWebsiteURL" class="form-control" test-id="EmployerWebsiteURL">
                 <span asp-validation-for="EmployerWebsiteURL" class="text-danger field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label asp-for="TimeZone" class="control-label form-label mt-3"></label>
+                <span class="form-tooltip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right"
+                    title="All dates across the website and in email notifications will be displayed in your selected local time zone."
+                    aria-label="All dates across the website and in email notifications will be displayed in your selected local time zone.">
+                    <svg class="icon">
+                        <use xlink:href="/img/icons.svg#i-circle" asp-append-version></use>
+                    </svg>
+                </span>
+            </div>
+            <div>
+                <select asp-for="TimeZone" asp-items="Model.TimeZoneOptions" class="form-select" test-id="TimeZone">
+                    <option value="">-- Select a time zone --</option>
+                </select>
+                <span asp-validation-for="TimeZone" class="text-danger field-validation-error"></span>
             </div>
         </div>
 

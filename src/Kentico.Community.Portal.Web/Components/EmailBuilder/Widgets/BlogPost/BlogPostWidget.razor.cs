@@ -22,8 +22,6 @@ public partial class BlogPostWidget : ComponentBase
 {
     public const string IDENTIFIER = "KenticoCommunity.EmailBuilder.Widgets.BlogPost";
 
-    private EmailContext? emailContext;
-
     [Inject] public required IContentQueryExecutor QueryExecutor { get; set; }
     [Inject] public required ITaxonomyRetriever TaxonomyRetriever { get; set; }
     [Inject] public required IEmailContextAccessor EmailContextAccessor { get; set; }
@@ -34,7 +32,7 @@ public partial class BlogPostWidget : ComponentBase
     public Maybe<BlogPostPage> Model { get; set; } = Maybe<BlogPostPage>.None;
     public Dictionary<Guid, Tag> BlogTypes { get; set; } = [];
     public Dictionary<Guid, Tag> DXTopics { get; set; } = [];
-    public EmailContext EmailContext => emailContext ??= EmailContextAccessor.GetContext();
+    public EmailContext EmailContext => field ??= EmailContextAccessor.GetContext();
 
     protected override async Task OnInitializedAsync()
     {

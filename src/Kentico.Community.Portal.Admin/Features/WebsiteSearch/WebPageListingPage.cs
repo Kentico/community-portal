@@ -118,12 +118,6 @@ public class WebPageListingPage(IPageLinkGenerator pageLinkGenerator, IConversio
 
 }
 
-public class TableRowLinkProps
-{
-    public string Path { get; set; } = "";
-    public string Label { get; set; } = "";
-}
-
 public class WebPageListMultiFilter
 {
     [GeneralSelectorComponent(

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Immutable;
 using CMS.DataEngine;
 using CMS.Membership;
@@ -53,7 +52,7 @@ public class CommunityProgramsActivityListWidget(IMediator mediator, TimeProvide
 #if DEBUG
         if (HttpContext.Request.Query.ContainsKey("fakeActivities"))
         {
-            var seed = HttpContext.Request.Query.TryGetValue("seed", out var seedValue) && int.TryParse(seedValue, out var parsedSeed)
+            int seed = HttpContext.Request.Query.TryGetValue("seed", out var seedValue) && int.TryParse(seedValue, out int parsedSeed)
             ? parsedSeed
             : 0;
 
@@ -141,6 +140,8 @@ public class CommunityProgramsActivityListWidgetViewModel : BaseWidgetViewModel
         status switch
         {
             ProgramStatuses.CommunityLeader => "Community Leader",
+            ProgramStatuses.None => "None",
+            ProgramStatuses.MVP => "MVP",
             _ => status.ToString()
         };
 }
@@ -183,7 +184,7 @@ public class CommunityProgramsActivitiesQueryHandler(
             .OrderByDescending(nameof(CommunityProgramActivity_2026Item.ActivityDate))
             .GetEnumerableTypedResultAsync();
 
-        var memberIds = items.Select(i => i.MemberID)
+        int[] memberIds = items.Select(i => i.MemberID)
             .Distinct()
             .ToArray();
 

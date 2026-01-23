@@ -2,7 +2,7 @@ using CMS.Base;
 using CMS.Core;
 using Kentico.Community.Portal.Admin.Features.MemberBadges;
 using Kentico.Community.Portal.Admin.Features.Members;
-using Kentico.Community.Portal.Admin.Features.QAndA;
+using Kentico.Community.Portal.Admin.UIPages;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
 using Kentico.Xperience.Admin.Base.UIPages;

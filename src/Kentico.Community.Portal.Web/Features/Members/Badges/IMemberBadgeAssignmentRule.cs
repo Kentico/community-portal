@@ -5,8 +5,8 @@ namespace Kentico.Community.Portal.Web.Features.Members.Badges;
 
 public interface IMemberBadgeAssignmentRule
 {
-    string BadgeCodeName { get; }
-    Task<IReadOnlyList<NewMemberBadgeRelationship>> Assign(
+    public string BadgeCodeName { get; }
+    public Task<IReadOnlyList<NewMemberBadgeRelationship>> Assign(
         MemberBadgeInfo memberBadge,
         MemberBadgeRelationshipDictionary memberBadgeRelationships,
         IReadOnlyList<MemberInfo> enabledMembers,

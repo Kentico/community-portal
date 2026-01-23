@@ -49,7 +49,7 @@ public class CommunityLeaderActivityListWidget(IMediator mediator) : ViewCompone
 #if DEBUG
         if (HttpContext.Request.Query.ContainsKey("fakeActivities"))
         {
-            var seed = HttpContext.Request.Query.TryGetValue("seed", out var seedValue) && int.TryParse(seedValue, out var parsedSeed)
+            int seed = HttpContext.Request.Query.TryGetValue("seed", out var seedValue) && int.TryParse(seedValue, out int parsedSeed)
                 ? parsedSeed
                 : 0;
 
@@ -96,17 +96,17 @@ public class CommunityLeaderActivityListWidget(IMediator mediator) : ViewCompone
             .Select(i => new KeyValuePair<int, string>(1000 + i, $"Fake Member {i}"))
             .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-        var memberIds = memberNames.Keys.ToArray();
-        var activityTypeKeys = activityTypesMap.Keys.DefaultIfEmpty("Social").ToArray();
-        var impactKeys = impactMap.Keys.DefaultIfEmpty("3").ToArray();
-        var effortKeys = effortMap.Keys.DefaultIfEmpty("2").ToArray();
-        var satisfactionKeys = satisfactionMap.Keys.DefaultIfEmpty("3").ToArray();
+        int[] memberIds = memberNames.Keys.ToArray();
+        string[] activityTypeKeys = activityTypesMap.Keys.DefaultIfEmpty("Social").ToArray();
+        string[] impactKeys = impactMap.Keys.DefaultIfEmpty("3").ToArray();
+        string[] effortKeys = effortMap.Keys.DefaultIfEmpty("2").ToArray();
+        string[] satisfactionKeys = satisfactionMap.Keys.DefaultIfEmpty("3").ToArray();
 
         static DateTime RandomDateInYear(Random rng, int year)
         {
             var start = new DateTime(year, 1, 1);
             var endExclusive = start.AddYears(1);
-            var rangeDays = (endExclusive - start).Days;
+            int rangeDays = (endExclusive - start).Days;
             return start.AddDays(rng.Next(rangeDays)).AddMinutes(rng.Next(0, 24 * 60));
         }
 

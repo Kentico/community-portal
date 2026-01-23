@@ -16,8 +16,6 @@ namespace Kentico.Community.Portal.Web.Components.FormBuilder;
 
 public class DateInputComponent(TimeProvider timeProvider) : FormComponent<DateInputProperties, DateTime?>, IHideableComponent
 {
-    private string valueInternal = "";
-
     public const string IDENTIFIER = "CommunityPortal.FormComponent.DateInput";
     private readonly TimeProvider timeProvider = timeProvider;
 
@@ -26,9 +24,9 @@ public class DateInputComponent(TimeProvider timeProvider) : FormComponent<DateI
     {
         get
         {
-            if (!string.IsNullOrWhiteSpace(valueInternal))
+            if (!string.IsNullOrWhiteSpace(field))
             {
-                return valueInternal;
+                return field;
             }
 
             if (Properties.UseCurrentDateAsDefault)
@@ -41,10 +39,10 @@ public class DateInputComponent(TimeProvider timeProvider) : FormComponent<DateI
                 return Properties.DefaultValue.Value.ToString("yyyy-MM-dd");
             }
 
-            return valueInternal;
+            return field;
         }
-        set => valueInternal = value;
-    }
+        set;
+    } = "";
 
     public override string LabelForPropertyName => nameof(Value);
 

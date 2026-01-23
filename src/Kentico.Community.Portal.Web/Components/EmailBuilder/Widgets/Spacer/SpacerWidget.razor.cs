@@ -20,13 +20,11 @@ public partial class SpacerWidget : ComponentBase
 {
     public const string IDENTIFIER = "KenticoCommunity.EmailBuilder.Widgets.Spacer";
 
-    private EmailContext? emailContext;
-
     [Inject] public required IEmailContextAccessor EmailContextAccessor { get; set; }
 
     [Parameter] public SpacerWidgetProperties Properties { get; set; } = null!;
 
-    public EmailContext EmailContext => emailContext ??= EmailContextAccessor.GetContext();
+    public EmailContext EmailContext => field ??= EmailContextAccessor.GetContext();
 
     protected override async Task OnInitializedAsync()
     {

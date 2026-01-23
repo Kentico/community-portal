@@ -68,6 +68,41 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
+      <field column="PromotionRedemptionMethod" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="371d80b4-8e97-4fb6-a6fd-432b7dd96226" system="true" visible="true" order="15">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.promotioninfo.edit.redemptionmethod.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.RadioGroup</controlname>
+          <Inline>False</Inline>
+          <Options>
+<![CDATA[
+Automatic;{$digitalcommerce.promotioninfo.edit.redemptionmethod.automatic$}
+GenericCode;{$digitalcommerce.promotioninfo.edit.redemptionmethod.genericcode$}
+]]>
+          </Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
+      </field>
+      <field column="PromotionDiscountCode" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="0783e459-8be6-4d39-b4e8-b92ab547781a" system="true" visible="true" order="16">
+        <properties>
+          <explanationtext>
+            <![CDATA[{$digitalcommerce.promotioninfo.edit.discountcode.textbelow$}]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.promotioninfo.edit.discountcode.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
     </form>
   </FormDefinition>
   <FormDisplayName>Edit promotion</FormDisplayName>

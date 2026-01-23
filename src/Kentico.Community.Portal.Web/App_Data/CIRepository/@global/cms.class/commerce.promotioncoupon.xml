@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>PromotionCoupon</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="PromotionCouponID" columntype="integer" enabled="true" guid="775cf4ea-2277-4bcd-b441-48289caf795d" isPK="true" system="true" />
+      <field column="PromotionCouponGUID" columnprecision="0" columntype="guid" enabled="true" guid="e5c328ae-951e-4dea-8f6f-9fb58af7f658" system="true" />
+      <field column="PromotionCouponCode" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="55373324-7f08-4213-bd26-57856783c4ea" system="true" />
+      <field column="PromotionCouponPromotionID" columnprecision="0" columntype="integer" enabled="true" guid="06d9baf2-d0d5-4e2b-a8b0-64a81d18f030" refobjtype="commerce.promotion" reftype="Required" system="true" />
+      <field column="PromotionCouponCreatedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="ec47d76e-bf43-4cd8-b8e8-8668cb53b555" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>a63e1ad0-217e-4dfc-ae03-dd5f23e25cc9</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>Commerce.PromotionCoupon</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Commerce</CodeName>
+    <GUID>4975d347-eb67-4a9c-a5d6-76997340b8ac</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Commerce_PromotionCoupon</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

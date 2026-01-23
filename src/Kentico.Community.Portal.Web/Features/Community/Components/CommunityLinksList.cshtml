@@ -1,4 +1,5 @@
 @using Kentico.Content.Web.Mvc
+@using Kentico.Community.Portal.Web.Components.TagHelpers
 
 @model Kentico.Community.Portal.Web.Features.Community.CommunityLinksListViewModel
 
@@ -42,9 +43,8 @@
                             </a>
                         </h4>
                         <div class="d-flex justify-content-between mb-2">
-                            <time datetime="@item.PublishedDate.ToString("yyyy-MM-dd")" class="small text-muted">
-                                @item.PublishedDate.ToString("d", View.Culture)
-                            </time>
+                            <time xpc-datetime="item.PublishedDate" xpc-datetime-format="Date"
+                                class="small text-muted"></time>
                             @if (item.Author.TryGetValue(out var author))
                             {
                                 <small class="text-muted">by

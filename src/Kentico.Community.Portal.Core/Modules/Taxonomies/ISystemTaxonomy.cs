@@ -5,10 +5,10 @@ namespace Kentico.Community.Portal.Core.Modules;
 /// </summary>
 public interface ISystemTaxonomy
 {
-    Guid TaxonomyGUID { get; }
-    string TaxonomyName { get; }
+    public Guid TaxonomyGUID { get; }
+    public string TaxonomyName { get; }
 
-    IReadOnlyList<ISystemTag> ProtectedTags { get; }
+    public IReadOnlyList<ISystemTag> ProtectedTags { get; }
 }
 
 /// <summary>
@@ -16,6 +16,6 @@ public interface ISystemTaxonomy
 /// </summary>
 public interface ISystemTag
 {
-    Guid TagGUID { get; }
-    string TagName { get; }
+    public Guid TagGUID { get; }
+    public string TagName { get; }
 }

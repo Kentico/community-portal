@@ -1,6 +1,7 @@
 ﻿using CMS.Base;
 using Htmx;
 using Kentico.Community.Portal.Core.Modules;
+using Kentico.Community.Portal.Web.Features.QAndA.Notifications;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Content.Web.Mvc;
@@ -23,7 +24,8 @@ public class QAndAQuestionController(
     IContentRetriever contentRetriever,
     ILogger<QAndAQuestionController> logger,
     IQAndAPermissionService permissionService,
-    IReadOnlyModeProvider readOnlyProvider) : PortalHandlerController<QAndAQuestionController>(logger)
+    IReadOnlyModeProvider readOnlyProvider,
+    QAndANotificationSettingsManager notificationsManager) : PortalHandlerController<QAndAQuestionController>(logger)
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly IMediator mediator = mediator;
@@ -31,6 +33,7 @@ public class QAndAQuestionController(
     private readonly TimeProvider clock = clock;
     private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly IQAndAPermissionService permissionService = permissionService;
+    private readonly QAndANotificationSettingsManager notificationSettingsManager = notificationsManager;
     private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
 
     [HttpPost]
@@ -72,6 +75,23 @@ public class QAndAQuestionController(
             SystemTaxonomies.QAndADiscussionTypeTaxonomy.QuestionTag.GUID,
             requestModel.SelectedTags,
             Maybe<BlogPostPage>.None))
+            .TapTry(async (id) =>
+            {
+                var questionPages = await contentRetriever.RetrievePages<QAndAQuestionPage>(
+                    new RetrievePagesParameters { LinkedItemsMaxLevel = 1 },
+                    q => q.Where(w => w.WhereEquals(nameof(QAndAQuestionPage.SystemFields.WebPageItemID), id)),
+                    RetrievalCacheSettings.CacheDisabled);
+                if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
+                {
+                    return;
+                }
+
+                bool autoSubscribe = await notificationSettingsManager.GetAutoSubscribeEnabled(member.Id);
+                if (autoSubscribe)
+                {
+                    await notificationSettingsManager.SubscribeToDiscussion(member.Id, questionPage);
+                }
+            })
             .Match(
                 _ =>
                 {
@@ -109,8 +129,13 @@ public class QAndAQuestionController(
         }
 
         var member = await userManager.CurrentUser(HttpContext);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
         bool canManageContent = await permissionService.HasPermission(HttpContext, questionPage, QAndAQuestionPermissionType.Edit);
-        if (questionPage.QAndAQuestionPageAuthorMemberID != member!.Id && !canManageContent)
+        if (questionPage.QAndAQuestionPageAuthorMemberID != member.Id && !canManageContent)
         {
             return Forbid();
         }
@@ -146,8 +171,8 @@ public class QAndAQuestionController(
     }
 
 
-    [ValidateAntiForgeryToken]
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteQuestion(Guid questionID)
     {
         if (readOnlyProvider.IsReadOnly)
@@ -161,7 +186,13 @@ public class QAndAQuestionController(
             return NotFound();
         }
 
-        bool canManageContent = await permissionService.HasPermission(HttpContext, questionPage, QAndAQuestionPermissionType.Delete);
+        var member = await userManager.CurrentUser(HttpContext);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        bool canManageContent = await permissionService.HasPermission(member, questionPage, QAndAQuestionPermissionType.Delete);
         if (!canManageContent)
         {
             return Forbid();
@@ -182,5 +213,40 @@ public class QAndAQuestionController(
                 return Ok().AsStatusCodeResult();
             },
             LogAndReturnErrorAsync("QUESTION_DELETE"));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [EnableRateLimiting(QAndARateLimitingConstants.UpdateQuestionSubscription)]
+    public async Task<IActionResult> UpdateQuestionSubscription(Guid questionID, bool isSubscribed)
+    {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
+        var member = await userManager.CurrentUser(HttpContext);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID], new RetrievePagesParameters { LinkedItemsMaxLevel = 1 });
+        if (questionPages.FirstOrDefault() is not QAndAQuestionPage questionPage)
+        {
+            return NotFound();
+        }
+
+        var result = await (isSubscribed
+           ? notificationSettingsManager.SubscribeToDiscussion(member.Id, questionPage)
+           : notificationSettingsManager.UnsubscribeFromDiscussion(member.Id, questionPage));
+
+        if (result.IsFailure)
+        {
+            return LogAndReturnError("UPDATE_SUBSCRIPTION")(result.Error);
+        }
+
+        // Return updated button partial for HTMX swap
+        return PartialView("~/Features/QAndA/_QAndASubscribeButton.cshtml", (questionID, isSubscribed));
     }
 }

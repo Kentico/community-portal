@@ -66,7 +66,19 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="PromotionCreatedWhen" enabled="true" guid="1972decf-2692-46c5-b250-54940857d779" visible="true" order="14">
+      <field allowempty="true" column="PromotionRedeemedCount" columnprecision="0" columntype="integer" dummy="altform" enabled="true" guid="440a1241-e30e-4eae-aaea-5f075c472fea" system="true" visible="true" order="14">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.promotions.edit.properties.redeemed$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.NumberWithLabel</controlname>
+        </settings>
+      </field>
+      <field column="PromotionCreatedWhen" enabled="true" guid="1972decf-2692-46c5-b250-54940857d779" visible="true" order="15">
         <settings>
           <controlname>Kentico.Administration.DateTimeString</controlname>
         </settings>
@@ -78,7 +90,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="PromotionCreatedBy" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="f6acfa6b-43a6-4c9b-b358-1f18641ed9ba" system="true" visible="true" order="15">
+      <field column="PromotionCreatedBy" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="f6acfa6b-43a6-4c9b-b358-1f18641ed9ba" system="true" visible="true" order="16">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>
@@ -90,7 +102,7 @@
           <controlname>Kentico.Administration.TextWithLabel</controlname>
         </settings>
       </field>
-      <field column="PromotionModifiedWhen" enabled="true" guid="cdf9102f-8f1c-497d-afbb-8d6ab51d5d0d" visible="true" order="16">
+      <field column="PromotionModifiedWhen" enabled="true" guid="cdf9102f-8f1c-497d-afbb-8d6ab51d5d0d" visible="true" order="17">
         <settings>
           <controlname>Kentico.Administration.DateTimeString</controlname>
         </settings>
@@ -102,7 +114,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field allowempty="true" column="PromotionModifiedBy" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="cd5bc893-481e-46d3-a151-22973397de62" system="true" visible="true" order="17">
+      <field allowempty="true" column="PromotionModifiedBy" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="cd5bc893-481e-46d3-a151-22973397de62" system="true" visible="true" order="18">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>

@@ -4,7 +4,7 @@ using CMS.Core;
 using CMS.DataEngine;
 using CMS.Websites.Internal;
 using Kentico.Community.Portal.Admin.Features.Members;
-using Kentico.Community.Portal.Admin.Features.QAndA;
+using Kentico.Community.Portal.Admin.UIPages;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Content;
 using Kentico.Xperience.Admin.Base;

@@ -52,7 +52,6 @@ public class CommunityReCaptchaFormComponent(
     private readonly ILocalizationService localizationService = localizationService;
     private readonly CaptchaValidator validator = validator;
     private readonly ReCaptchaSettings captchaOptions = captchaOptions.Value;
-    private string mLanguage = "";
     private bool? mSkipRecaptcha;
 
 
@@ -74,17 +73,17 @@ public class CommunityReCaptchaFormComponent(
     {
         get
         {
-            if (string.IsNullOrEmpty(mLanguage))
+            if (string.IsNullOrEmpty(field))
             {
                 var currentCulture = CultureInfo.CurrentCulture;
 
-                mLanguage = mFullLanguageCodes.Value.Contains(currentCulture.Name) ? currentCulture.Name : currentCulture.TwoLetterISOLanguageName;
+                field = mFullLanguageCodes.Value.Contains(currentCulture.Name) ? currentCulture.Name : currentCulture.TwoLetterISOLanguageName;
             }
 
-            return mLanguage;
+            return field;
         }
-        set => mLanguage = value;
-    }
+        set;
+    } = "";
 
 
     /// <summary>

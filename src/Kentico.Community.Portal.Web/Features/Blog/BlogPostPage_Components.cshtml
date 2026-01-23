@@ -1,3 +1,4 @@
+@using Kentico.Community.Portal.Web.Components.TagHelpers
 @using Kentico.Community.Portal.Web.Features.Blog
 
 @model TemplateViewModel<BlogPostPageTemplateProperties>
@@ -20,7 +21,8 @@
                             <div class="col col-md-6 offset-md-3">
                                 <div class="text-center py-5 my-4">
                                     <h1>@post.Title</h1>
-                                    <div class="text-muted">@post.PublishedDate.ToString("MMM d, yyyy")</div>
+                                    <time xpc-datetime="post.PublishedDate" xpc-datetime-format="@DateTimeFormat.Date"
+                                        class="text-muted"></time>
                                     <div class="d-flex align-items-center justify-content-center mt-3">
                                         <div class="me-3">
                                             <img xpc-image="post.Author.Photo" class="rounded-circle"
@@ -55,22 +57,21 @@
                         [
                             SI.Grid,
                             SI.SingleColumn
-                        ]" 
-                        area-options-allowed-widgets="
-                        [ 
-                            WI.BlogPostList,
-                            WI.CTAButton,
-                            WI.File,
-                            WI.Heading,
-                            WI.Image,
-                            WI.LinkList,
-                            WI.Markdown,
-                            WI.Video,
-                            WI.ProfileCard,
-                            WI.Embed,
-                            WI.FallbackForm,
-                            WI.Poll
-                        ]" allow-widget-output-cache="View.CacheEnabled"
+                        ]" area-options-allowed-widgets="
+                           [ 
+                                  WI.BlogPostList,
+                                  WI.CTAButton,
+                                  WI.File,
+                                  WI.Heading,
+                                  WI.Image,
+                                  WI.LinkList,
+                                  WI.Markdown,
+                                  WI.Video,
+                                  WI.ProfileCard,
+                                  WI.Embed,
+                                  WI.FallbackForm,
+                                  WI.Poll
+                              ]" allow-widget-output-cache="View.CacheEnabled"
                         widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
                 </div>
 

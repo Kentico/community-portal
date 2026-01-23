@@ -37,7 +37,7 @@ public class BlogPostContentAutoPopulateHandler(
         }
 
         string name = await nameProvider.Get(title);
-        var parameters = new CreateContentItemParameters(BlogPostContent.CONTENT_TYPE_NAME, name, title, args.ContentLanguageName, PortalWebSiteChannel.DEFAULT_WORKSPACE)
+        var parameters = new CreateContentItemParameters(BlogPostContent.CONTENT_TYPE_NAME, name, title, args.ContentLanguageName, PortalWebSiteChannel.WORKSPACE_BLOG)
         {
             IsSecured = false,
             VersionStatus = VersionStatus.InitialDraft

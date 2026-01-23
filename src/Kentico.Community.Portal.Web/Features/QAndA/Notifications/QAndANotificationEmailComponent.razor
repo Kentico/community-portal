@@ -1,0 +1,50 @@
+@using EnumsNET
+@using Kentico.Community.Portal.Web.Features.QAndA.Notifications
+@using Kentico.Community.Portal.Web.Components
+@using Kentico.Community.Portal.Web.Membership
+@using Kentico.Content.Web.Mvc
+@using System.ComponentModel
+
+<table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif;">
+    <thead>
+        <tr style="background-color: #f8f9fa;">
+            <th style="padding: 12px; text-align: left; border: 1px solid #dee2e6; font-weight: 600;">Discussion</th>
+            <th style="padding: 12px; text-align: left; border: 1px solid #dee2e6; font-weight: 600;">Event</th>
+            <th style="padding: 12px; text-align: left; border: 1px solid #dee2e6; font-weight: 600;">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var notification in Notifications)
+        {
+            string eventDescription = notification.Event switch
+            {
+                QAndANotificationEventType.ResponseCreated => $"New response by {notification.AnswerAuthorName}",
+                QAndANotificationEventType.AnswerAccepted => $"Answer accepted",
+                _ => "New activity"
+            };
+
+            <tr>
+                <td style="padding: 12px; border: 1px solid #dee2e6;">
+                    <p>
+                        <a href="@notification.QuestionPageURL.AbsoluteUrl" style="color: #0066cc; text-decoration: none;">
+                            @notification.QuestionPage.BasicItemTitle
+                        </a>
+                    </p>
+                </td>
+                <td style="padding: 12px; border: 1px solid #dee2e6;">
+                    <p>@eventDescription</p>
+                </td>
+                <td style="padding: 12px; border: 1px solid #dee2e6;">
+                    <p>
+                        <DateTimeComponent DateTime="notification.EventDate" Member="Member" />
+                    </p>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter] public required IEnumerable<QAndANotification> Notifications { get; set; } = [];
+    [Parameter] public required CommunityMember Member { get; set; }
+}

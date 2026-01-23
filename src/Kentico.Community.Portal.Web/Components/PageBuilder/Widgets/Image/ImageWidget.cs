@@ -91,17 +91,27 @@ public class ImageWidgetProperties : BaseWidgetProperties
     public string Size { get; set; } = nameof(ImageSizes.Full_Width);
     public ImageSizes SizeParsed => EnumDropDownOptionsProvider<ImageSizes>.Parse(Size, ImageSizes.Full_Width);
 
+    [DropDownComponent(
+        Label = "Image Theme",
+        ExplanationText = "Visual styling applied to the image. Shadow is recommended for most screenshots.",
+        Tooltip = "Select a theme",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<ImageThemes>),
+        Order = 6
+    )]
+    public string Theme { get; set; } = nameof(ImageThemes.Shadow);
+    public ImageThemes ThemeParsed => EnumDropDownOptionsProvider<ImageThemes>.Parse(Theme, ImageThemes.None);
+
     [CheckBoxComponent(
         Label = "Show description as caption?",
         ExplanationText = "If true, a caption will appear below the image, populated by the image's description field.",
-        Order = 6
+        Order = 7
     )]
     public bool ShowDescriptionAsCaption { get; set; } = false;
 
     [CheckBoxComponent(
         Label = "Link image to full size file?",
         ExplanationText = "If true, the image will be linked to a full resolution version of the image.",
-        Order = 7)]
+        Order = 8)]
     public bool LinkToFullsizeImage { get; set; } = true;
 }
 
@@ -112,6 +122,7 @@ public class ImageWidgetViewModel : BaseWidgetViewModel
     public ImageAssetViewModel Image { get; }
     public bool ShowDescriptionAsCaption { get; }
     public bool LinkToFullsizeImage { get; }
+    public ImageThemes Theme { get; }
     public ImageAlignments Alignment { get; }
     public ImageSizes Size { get; }
 
@@ -120,6 +131,7 @@ public class ImageWidgetViewModel : BaseWidgetViewModel
         Image = image;
         ShowDescriptionAsCaption = props.ShowDescriptionAsCaption;
         LinkToFullsizeImage = props.LinkToFullsizeImage;
+        Theme = props.ThemeParsed;
         Alignment = props.AlignmentParsed;
         Size = props.SizeParsed;
     }
@@ -145,4 +157,14 @@ public enum ImageSizes
     Large,
     [Description("Full width")]
     Full_Width,
+}
+
+public enum ImageThemes
+{
+    [Description("None")]
+    None,
+    [Description("Shadow")]
+    Shadow,
+    [Description("Border")]
+    Border,
 }

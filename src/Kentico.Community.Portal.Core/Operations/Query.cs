@@ -6,7 +6,7 @@ namespace Kentico.Community.Portal.Core.Operations;
 public interface IQuery<out TResult> : IRequest<TResult> { }
 public interface IChannelContentQuery
 {
-    string ChannelName { get; }
+    public string ChannelName { get; }
 }
 public abstract record WebPageRoutedQuery<TResult>(RoutedWebPage Page) : IQuery<TResult>, ICacheByValueQuery
 {
@@ -25,5 +25,5 @@ public abstract record WebPageByIDQuery<TResult>(int WebPageID) : IQuery<TResult
 
 public interface ICacheByValueQuery
 {
-    string CacheValueKey { get; }
+    public string CacheValueKey { get; }
 }

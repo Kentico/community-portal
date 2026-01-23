@@ -1,0 +1,60 @@
+@using Kentico.Community.Portal.Web.Features.Accounts
+
+@model QAndANotificationsFormViewModel
+
+<form id="qandaNotificationsForm" method="post" hx-post hx-controller="Account" hx-action="UpdateQAndANotifications"
+    hx-swap="outerHTML" hx-disabled-elt="find fieldset" style="min-height: 500px">
+
+    <fieldset hx-indicator="this" xpc-readonly-disabled>
+        <h4>Discussion Notification settings</h4>
+
+        <small class="form-text text-muted d-block py-1">
+            Choose how often you want to receive email notifications for watched questions. You will only receive an
+            email if there are updates to your subscribed discussions.<br />
+            To disable notification emails, select <strong>Never</strong> for your frequency.
+        </small>
+
+        <div class="form-group">
+            <div>
+                <label for="notificationFrequency" class="control-label form-label mt-3">
+                    Notification Frequency
+                </label>
+            </div>
+            <div>
+                <select id="notificationFrequency" name="SelectedFrequency" class="form-select">
+                    @foreach (var option in Model.FrequencyOptions)
+                    {
+                        <option value="@option.Value" selected="@option.Selected">
+                            @option.Text
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-check mt-3">
+            <input class="form-check-input" type="checkbox" id="autoSubscribe" name="AutoSubscribeEnabled" value="true"
+                checked="@Model.AutoSubscribeEnabled" />
+            <label class="form-check-label" for="autoSubscribe">
+                Automatically manage subscriptions
+            </label>
+            <small class="form-text text-muted d-block">
+                When enabled, you'll automatically subscribe to questions you ask and questions you answer. You'll also
+                be automatically unsubscribed when you approve an answer to your question.
+            </small>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3" xpc-loading-button>
+            Update notification settings
+        </button>
+
+        <vc:read-only-mode-notification />
+    </fieldset>
+
+    @if (Context.Request.IsHtmx() && ViewContext.ModelState.IsValid)
+    {
+        <xpc-alert dismissable="true">
+            Notification settings updated.
+        </xpc-alert>
+    }
+</form>

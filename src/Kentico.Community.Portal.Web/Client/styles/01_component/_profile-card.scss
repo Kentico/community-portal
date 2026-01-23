@@ -7,7 +7,7 @@
   --profile-card-shadow-hover:
     0 8px 24px rgba(138, 43, 226, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
   --profile-card-radius: var(--bs-border-radius-xl, 1.5rem);
-  --profile-card-padding: 2rem;
+  --profile-card-padding: 1rem;
   --profile-avatar-size: 120px;
   --profile-primary: var(--bs-primary, #f05a22);
   --profile-text: var(--color-gray-900);
@@ -24,7 +24,7 @@
   box-shadow: var(--profile-card-shadow);
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  max-width: 480px;
+  max-width: 325px;
   margin: 0 auto;
 
   &:hover {
@@ -42,7 +42,7 @@
   display: flex;
   justify-content: center;
   position: relative;
-  padding: 2.5rem 1.5rem 3rem;
+  padding: 1rem 0rem 1rem;
 }
 
 .profile-card__avatar-wrapper {
@@ -90,18 +90,14 @@
 }
 
 .profile-card__content {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .profile-card__name {
   font-size: 1.75rem;
   color: var(--profile-text);
-  margin: 0 0 1rem;
+  margin: 0.5rem 0 1rem;
   line-height: 1.2;
-}
-
-.profile-card__meta {
-  margin: 1.25rem 0;
 }
 
 .profile-card__meta-item {
@@ -143,7 +139,7 @@
 }
 
 .profile-card__actions {
-  padding-top: 1.5rem;
+  padding-top: 1rem;
   border-top: 1px solid var(--color-gray-200);
 }
 

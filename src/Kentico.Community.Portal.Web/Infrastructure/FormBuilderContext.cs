@@ -4,7 +4,7 @@ namespace Kentico.Community.Portal.Web.Infrastructure;
 
 public interface IFormBuilderContext
 {
-    FormBuilderMode Mode { get; }
+    public FormBuilderMode Mode { get; }
 }
 
 public class FormBuilderContext(IHttpContextAccessor contextAccessor) : IFormBuilderContext

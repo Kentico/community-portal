@@ -18,14 +18,12 @@ public partial class RichTextWidget : ComponentBase
 {
     public const string IDENTIFIER = "KenticoCommunity.EmailBuilder.Widgets.RichText";
 
-    private EmailContext? emailContext;
-
     [Inject] public required IEmailContextAccessor EmailContextAccessor { get; set; }
 
     [Parameter] public RichTextWidgetProperties Properties { get; set; } = null!;
 
     public MarkupString RenderedText => new(Properties.Text);
-    public EmailContext EmailContext => emailContext ??= EmailContextAccessor.GetContext();
+    public EmailContext EmailContext => field ??= EmailContextAccessor.GetContext();
 
 }
 

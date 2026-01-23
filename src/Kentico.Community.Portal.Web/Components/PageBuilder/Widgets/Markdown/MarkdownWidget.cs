@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Kentico.Community.Portal.Admin;
 using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Web.Components;
@@ -37,11 +38,7 @@ public class MarkdownWidget(MarkdownRenderer markdownRenderer) : ViewComponent
                 {props.Markdown}
                 ```
                 """,
-            MarkdownStyles.Note => $"""
-                :::note
-                {props.Markdown}
-                :::
-                """,
+            MarkdownStyles.Note => props.Markdown,
             MarkdownStyles.Standard or _ => props.Markdown,
         };
         var html = markdownRenderer.RenderUnsafe(markdown);
@@ -65,7 +62,7 @@ public class MarkdownWidget(MarkdownRenderer markdownRenderer) : ViewComponent
             return Result.Failure<MarkdownWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "The given markdown generated no HTML."));
         }
 
-        return new MarkdownWidgetViewModel(html);
+        return new MarkdownWidgetViewModel(html, props);
     }
 }
 
@@ -86,12 +83,11 @@ public class MarkdownWidgetProperties : BaseWidgetProperties
         <p>Sets the style of the rendered Markdown</p>
         <ul>
             <li>Standard - normal markdown (default)</li>
-            <li>Note - a presentational callout with special colors, size, or layout</li>
+            <li>Note - wraps content in a styled alert box for emphasis</li>
             <li>Code - content is wrapped in a code block (deprecated - use /code tool in editor)</li>
         </ul>
         """,
         ExplanationTextAsHtml = true,
-        Tooltip = "Select a style",
         DataProviderType = typeof(EnumDropDownOptionsProvider<MarkdownStyles>),
         Order = 3
     )]
@@ -104,18 +100,80 @@ public class MarkdownWidgetProperties : BaseWidgetProperties
         Order = 4)]
     [VisibleIfEqualTo(nameof(MarkdownStyle), nameof(MarkdownStyles.Code))]
     public string MarkdownCodeLanguage { get; set; } = "";
+
+    [DropDownComponent(
+        Label = "Note style",
+        ExplanationText = "Visual style variant for the note",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<NoteStyles>),
+        Order = 5
+    )]
+    [VisibleIfEqualTo(nameof(MarkdownStyle), nameof(MarkdownStyles.Note))]
+    public string NoteStyle { get; set; } = nameof(NoteStyles.Info);
+    public NoteStyles NoteStyleParsed => EnumDropDownOptionsProvider<NoteStyles>.Parse(NoteStyle, NoteStyles.Info);
+
+    [CheckBoxComponent(
+        Label = "Use default title",
+        ExplanationText = "Uses default title based on note style (\"Note\" for Info, \"Warning\" for Warning)",
+        Order = 6)]
+    [VisibleIfEqualTo(nameof(MarkdownStyle), nameof(MarkdownStyles.Note))]
+    public bool UseDefaultNoteTitle { get; set; }
+
+    [TextInputComponent(
+        Label = "Note title",
+        ExplanationText = "Optional heading for the note (e.g., 'An important tip:')",
+        Order = 7)]
+    [VisibleIfEqualTo(nameof(MarkdownStyle), nameof(MarkdownStyles.Note))]
+    [VisibleIfEqualTo(nameof(UseDefaultNoteTitle), false)]
+    public string NoteTitle { get; set; } = "";
 }
 
 public enum MarkdownStyles
 {
+    [Description("Standard")]
     Standard,
+    [Description("Note")]
     Note,
+    [Description("Code (deprecated)")]
     Code
 }
 
-public class MarkdownWidgetViewModel(HtmlString html) : BaseWidgetViewModel
+public enum NoteStyles
+{
+    [Description("Info")]
+    Info,
+    [Description("Warning")]
+    Warning
+}
+
+public class MarkdownWidgetViewModel : BaseWidgetViewModel
 {
     protected override string WidgetName { get; } = MarkdownWidget.NAME;
 
-    public HtmlString HTML { get; } = html;
+    public HtmlString HTML { get; }
+    public bool EnableNote { get; }
+    public NoteStyles NoteStyle { get; }
+    public string NoteTitle { get; }
+    public bool HasNoteTitle { get; }
+
+    public MarkdownWidgetViewModel(HtmlString html, MarkdownWidgetProperties properties)
+    {
+        HTML = html;
+        EnableNote = properties.MarkdownStyleParsed == MarkdownStyles.Note;
+        NoteStyle = properties.NoteStyleParsed;
+
+        // Determine the note title
+        string noteTitle = properties.UseDefaultNoteTitle
+            ? GetDefaultNoteTitle(properties.NoteStyleParsed)
+            : properties.NoteTitle;
+
+        NoteTitle = noteTitle;
+        HasNoteTitle = !string.IsNullOrWhiteSpace(noteTitle);
+    }
+
+    private static string GetDefaultNoteTitle(NoteStyles style) => style switch
+    {
+        NoteStyles.Info => "Note",
+        NoteStyles.Warning => "Warning",
+        _ => "Note"
+    };
 };

@@ -20,29 +20,39 @@ on:
       - "**.js"
       - "**.razor"
 
+# Cancel in-progress runs when a new commit is pushed
+concurrency:
+  group:
+    ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build_and_test:
     name: Build and Test
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Fail if workflow takes longer than expected
     defaults:
       run:
         shell: pwsh
 
     env:
       ASPNETCORE_ENVIRONMENT: CI
-      NODE_VERSION: ""
       DATABASE_BACKUP_FILENAME: ""
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
       DOTNET_NOLOGO: 1
+      NO_COLOR: 1
+      DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION: false
       PROJECT_NAME: Kentico.Community.Portal.Web
       ASPNETCORE_URLS: https://localhost:45039;https://localhost:45040
       STATUS_CHECK_URL: https://localhost:45039/status
+      SQL_SA_PASSWORD: Pass@12345
 
     steps:
+      # === Environment Setup ===
       - uses: actions/checkout@v6
 
-      - name: "Install Node.js from package.json version"
+      - name: Setup Node.js (from package.json)
         uses: actions/setup-node@v6
         with:
           node-version-file: "src/Kentico.Community.Portal.Web/package.json"
@@ -62,6 +72,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
+      # === Build ===
       - name: Install dependencies
         run: dotnet restore --locked-mode
 
@@ -71,6 +82,7 @@ jobs:
             -c Release `
             --no-restore
 
+      # === Database Setup ===
       - name: Get Database Backup Name
         run: |
           $latestBackup = Get-ChildItem -Path "./database" -Filter "*.zip" | Select-Object -ExpandProperty BaseName
@@ -82,42 +94,44 @@ jobs:
             -Path "./database/${{ env.DATABASE_BACKUP_FILENAME }}.zip" `
             -DestinationPath "./database"
 
-      - name: Install a SQL Server suite of tools (SQLEngine, SQLPackage)
-        uses: potatoqualitee/mssqlsuite@v1.11
+      - name: Install SQL Server (2022)
+        uses: potatoqualitee/mssqlsuite@v1.12
         with:
           install: sqlpackage, sqlengine, sqlclient
-          sa-password: Pass@12345
+          sa-password: ${{ env.SQL_SA_PASSWORD }}
           version: 2022
 
-      - name: Restore Database .bak
+      - name: Restore Database from Backup
         run: |
+          Write-Output "Copying database backup to SQL container..."
           docker cp "./database/${{ env.DATABASE_BACKUP_FILENAME }}" sql:/var/backups/Kentico.Community.bak
           docker exec -u root sql bash -c "chown mssql:mssql /var/backups/Kentico.Community.bak"
           docker exec -u root sql bash -c "chmod 644 /var/backups/Kentico.Community.bak"
 
-          # First, get the logical file names from the backup
-          Write-Output "Getting logical file names from backup..."
+          Write-Output "Verifying backup file contents..."
           $fileList = sqlcmd `
             -S localhost `
             -d master `
             -U "sa" `
-            -P "Pass@12345" `
+            -P "${{ env.SQL_SA_PASSWORD }}" `
             -N o `
             -C `
             -Q "RESTORE FILELISTONLY FROM DISK = '/var/backups/Kentico.Community.bak'"
 
-          Write-Output "Backup file contents:"
           Write-Output $fileList
 
-          # Now restore the database
+          Write-Output "Restoring database..."
           sqlcmd `
             -S localhost `
             -d master `
             -U "sa" `
-            -P "Pass@12345" `
+            -P "${{ env.SQL_SA_PASSWORD }}" `
             -N o `
             -C `
             -i ./database/backup-restore.sql
+
+          Write-Output "✓ Database restored successfully"
+          "## ✓ Database Restored" >> $env:GITHUB_STEP_SUMMARY
 
       - name: Restore License Key
         working-directory: "./scripts"
@@ -128,25 +142,36 @@ jobs:
         working-directory: "./scripts"
         run: |
           ./Restore-CI.ps1
+          "## ✓ CI Repository Restored" >> $env:GITHUB_STEP_SUMMARY
 
+      # === Testing ===
       - name: Run Unit Tests
+        working-directory: "./scripts"
         run: |
-          dotnet test `
-            --test-modules ./test/Kentico.Community.Portal.Web.Tests/bin/Release/net10.0/Kentico.Community.Portal.Web.Tests.dll
+          Write-Output "## 🧪 Unit Tests" >> $env:GITHUB_STEP_SUMMARY
+
+          $summary = ./Run-Unit-Tests.ps1 -ProjectPath "../test/Kentico.Community.Portal.Web.Tests/Kentico.Community.Portal.Web.Tests.csproj"
+          $summary >> $env:GITHUB_STEP_SUMMARY
 
       - name: Run Integration Tests
+        working-directory: "./scripts"
         run: |
-          dotnet test `
-            --test-modules ./test/Kentico.Community.Portal.Web.Integration.Tests/bin/Release/net10.0/Kentico.Community.Portal.Web.Integration.Tests.dll
+          Write-Output "## 🔗 Integration Tests" >> $env:GITHUB_STEP_SUMMARY
 
+          $summary = ./Run-Integration-Tests.ps1 -ProjectPath "../test/Kentico.Community.Portal.Web.Integration.Tests/Kentico.Community.Portal.Web.Integration.Tests.csproj"
+          $summary >> $env:GITHUB_STEP_SUMMARY
+
+      # === E2E Testing ===
       - name: Publish Application
         run: |
+          Write-Output "Publishing application..."
           dotnet publish `
             ./src/${{ env.PROJECT_NAME }} `
             -c Release `
             -o ./publish `
             --no-build `
             --no-restore
+          Write-Output "✓ Application published to ./publish"
 
       - name: Cache Playwright browsers
         id: playwright-cache
@@ -162,54 +187,48 @@ jobs:
       - name: Install Playwright Dependencies
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: |
+          Write-Output "Installing Playwright browsers..."
           # Must be path to the RELEASE build
           ./test/Kentico.Community.Portal.Web.E2E.Tests/bin/Release/net10.0/playwright.ps1 install
+          Write-Output "✓ Playwright browsers installed"
 
-      - name: Install Azurite from npm
-        run: npm install -g azurite@3.33.0
-      - name: Run Azurite in Background
-        run: azurite -s -l ./.azurite &
+      - name: Cache Azurite
+        id: azurite-cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-azurite-3.35.0
 
-      - name: Run Application and E2E Tests
+      - name: Install Azurite
+        if: steps.azurite-cache.outputs.cache-hit != 'true'
+        run: npm install -g azurite@3.35.0
+
+      - name: Start Azurite (Background)
         run: |
-          # Run the ASP.NET Core app as a background job
-          cd ./publish
-          Start-Job -ScriptBlock { dotnet ./${{ env.PROJECT_NAME }}.dll } -Name ${{ env.PROJECT_NAME }}
-          Receive-Job -Name ${{ env.PROJECT_NAME }}
-          cd ../
+          azurite -s -l ./.azurite &
+          Write-Output "✓ Azurite storage emulator started"
 
-          # The ASP.NET Core app can take a few seconds to start, so we delay running tests
-          #   until it is ready, and fail if we go over a maximum wait time
-          $limit = 10
-          $attempts = 0
-          $success = $false
+      - name: Run E2E Tests (with App)
+        working-directory: "./scripts"
+        run: |
+          Write-Output "## 🎭 E2E Tests" >> $env:GITHUB_STEP_SUMMARY
 
-          while ($attempts -lt $limit -and -not $success) {
-              Start-Sleep -Seconds 1
-              try {
-                  $response = Invoke-WebRequest -Uri ${{ env.STATUS_CHECK_URL }} -Method Get -SkipCertificateCheck
-                  if ($response.StatusCode -eq 200) {
-                      Write-Output "Application is ready."
-                      $success = $true
-                  }
-              }
-              catch {
-                  Write-Output "Attempt $attempts - Application not ready yet."
-              }
-              $attempts++
-          }
+          $summary = ./Run-E2E-Tests.ps1 `
+            -PublishPath "../publish" `
+            -AppDllName "${{ env.PROJECT_NAME }}.dll" `
+            -StatusCheckUrl "${{ env.STATUS_CHECK_URL }}" `
+            -TestProjectPath "../test/Kentico.Community.Portal.Web.E2E.Tests/Kentico.Community.Portal.Web.E2E.Tests.csproj" `
+            -TestSettings "../test/e2e.runsettings" `
+            -MaxWaitSeconds 30
+          $summary >> $env:GITHUB_STEP_SUMMARY
 
-          if (-not $success) {
-              Write-Output "Application did not respond in time."
-              exit 1
-          }
-
-          # Run the E2E tests
-          dotnet test `
-            --test-modules ./test/Kentico.Community.Portal.Web.E2E.Tests/bin/Release/net10.0/Kentico.Community.Portal.Web.E2E.Tests.dll `
-            --settings ./test/e2e.runsettings
-
-          # Stop the background ASP.NET Core application
-          Receive-Job -Name ${{ env.PROJECT_NAME }}
-          Stop-Job -Name ${{ env.PROJECT_NAME }}
-          Remove-Job -Name ${{ env.PROJECT_NAME }}
+      # === Artifacts (on failure) ===
+      - name: Upload Application Logs (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: application-logs-${{ github.run_number }}
+          path: |
+            publish/app-*.log
+          retention-days: 7
+          if-no-files-found: ignore

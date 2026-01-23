@@ -1,3 +1,4 @@
+@using Kentico.Community.Portal.Web.Components.TagHelpers
 @using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList
 @using Kentico.Community.Portal.Web.Features.Blog
 
@@ -12,33 +13,41 @@
     @foreach (var post in Model.BlogPosts)
     {
         <article class="border rounded-3 p-4 mt-3 blog-post-card" aria-label="Blog post: @post.Title">
-            <div class="text-center mb-3">
-                <partial name="~/Features/Blog/_BlogHero.cshtml" />
-            </div>
+            @if (Model.ShowHero)
+            {
+                <div class="text-center mb-3">
+                    <partial name="~/Features/Blog/_BlogHero.cshtml" />
+                </div>
+            }
 
             <header class="mb-3">
                 <h3 class="h3 mb-2">@post.Title</h3>
                 <div class="small text-muted mb-2">
-                    <time datetime="@post.PublishedDate.ToString("yyyy-MM-dd")">@post.PublishedDate.ToString("d",
-                                            View.Culture)</time>
-            </div>
-            <div class="small text-muted">
-                by
-                @if (post.Author.ID > 0)
-                    {
-                        <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
-                            class="text-decoration-none">@post.Author.Name</a>
-                    }
-                    else
-                    {
-                        @post.Author.Name
-                    }
+                    <time xpc-datetime="post.PublishedDate" xpc-datetime-format="@DateTimeFormat.Date"></time>
                 </div>
+            @if (Model.ShowAuthor)
+                {
+                    <div class="small text-muted">
+                        by
+                        @if (post.Author.ID > 0)
+                        {
+                            <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
+                                class="text-decoration-none">@post.Author.Name</a>
+                        }
+                        else
+                        {
+                            @post.Author.Name
+                        }
+                    </div>
+                }
             </header>
 
-            <div class="mb-3">
-                <p class="mb-0">@post.ShortDescription</p>
-            </div>
+            @if (Model.ShowDescription)
+            {
+                <div class="mb-3">
+                    <p class="mb-0">@post.ShortDescription</p>
+                </div>
+            }
 
             <footer>
                 <a class="btn btn-outline-primary btn-sm d-inline-flex align-items-center" href="@post.LinkPath">

@@ -20,7 +20,7 @@ in Page Builder Preview with a component outline.
         {
             var formWidgetService = Service.Resolve<IKenticoFormWidgetService>();
 
-            var model = formWidgetService.GetViewModel(Model, ViewData);
+            var model = await formWidgetService.GetViewModel(Model, ViewData);
 
             if (model != null)
             {

@@ -1,0 +1,26 @@
+@using Kentico.Community.Portal.Web.Membership
+@using Kentico.Community.Portal.Web.Rendering
+
+@inject DateTimeDisplayService dateTimeDisplayService
+
+<time datetime="@DateTime.ToString("yyyy-MM-ddTHH:mmZ")">
+    @DisplayDateTime.ToString("yyyy-MM-dd HH:mm") @Abbreviation
+</time>
+
+@code {
+    [Parameter]
+    public required DateTime DateTime { get; set; }
+
+    [Parameter]
+    public required CommunityMember Member { get; set; }
+
+    private DateTime DisplayDateTime { get; set; }
+    private string Abbreviation { get; set; } = "";
+
+    protected override void OnParametersSet()
+    {
+        var (localDateTime, abbreviation, _) = dateTimeDisplayService.ConvertToUserTimezone(DateTime, Member.TimeZone);
+        DisplayDateTime = localDateTime;
+        Abbreviation = abbreviation;
+    }
+}

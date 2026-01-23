@@ -43,7 +43,7 @@ public class BlogPostsBySmartFolderQueryHandler(WebPageQueryTools tools) : WebPa
 
         var pages = await Executor.GetMappedWebPageResult<BlogPostPage>(postsQuery, DefaultQueryOptions, cancellationToken);
 
-        return new([.. pages.OrderBy(p => contentItemIDs.IndexOf(p.BlogPostPageBlogPostContent.FirstOrDefault()?.SystemFields.ContentItemID ?? 0))]);
+        return new([.. pages]);
     }
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(BlogPostsBySmartFolderQuery query, BlogPostsBySmartFolderQueryResponse result, ICacheDependencyKeysBuilder builder) =>

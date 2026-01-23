@@ -1,10 +1,12 @@
 using System.Reflection;
 using CMS.DataEngine;
+using Kentico.Community.Portal.Admin.Infrastructure;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Infrastructure;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Forms;
+using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Heading;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Licenses;
 using Kentico.Community.Portal.Web.Components.ViewComponents.Navigation;
 using Kentico.Community.Portal.Web.Features.Blog.Events;
@@ -12,11 +14,13 @@ using Kentico.Community.Portal.Web.Features.DataCollection;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Features.QAndA.Events;
+using Kentico.Community.Portal.Web.Features.QAndA.Notifications;
 using Kentico.Community.Portal.Web.Features.SEO;
 using Kentico.Community.Portal.Web.Features.Support;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Infrastructure.Storage;
 using Kentico.Community.Portal.Web.Rendering;
+using Kentico.Xperience.Admin.Base.Forms;
 using Sidio.Sitemap.AspNetCore;
 using Sidio.Sitemap.Core.Services;
 using Slugify;
@@ -38,7 +42,7 @@ public static class ServiceCollectionAppExtensions
             .AddQAndA()
             .AddBlogs()
             .AddMemberBadges()
-            .AddNotifications()
+            .AddQAndADiscussionNotifications()
             .AddMigrations();
 
     private static IServiceCollection AddOperations(this IServiceCollection services, IConfiguration config) =>
@@ -72,11 +76,14 @@ public static class ServiceCollectionAppExtensions
         services
             .AddSingleton(s => new MarkdownRenderer())
             .AddSingleton<ISlugHelper>(_ => new SlugHelper(new SlugHelperConfiguration()))
+            .AddScoped<IHeadingContext, HeadingContext>()
             .AddScoped<ViewService>()
+            .AddScoped<DateTimeDisplayService>()
             .AddScoped<AvatarImageService>()
             .AddScoped<ClientAssets>()
             .AddScoped<IJSEncoder, JSEncoder>()
-            .AddScoped<IFormBuilderContext, FormBuilderContext>();
+            .AddScoped<IFormBuilderContext, FormBuilderContext>()
+            .AddScoped<IRazorComponentRenderer, RazorComponentRenderer>();
 
     private static IServiceCollection AddSEO(this IServiceCollection services) =>
         services
@@ -95,7 +102,9 @@ public static class ServiceCollectionAppExtensions
             .AddSingleton(TimeProvider.System)
             .AddSingleton<IStoragePathService, StoragePathService>()
             .AddScoped<CaptchaValidator>()
-            .Configure<ReCaptchaSettings>(config.GetSection("ReCaptcha"));
+            .Configure<ReCaptchaSettings>(config.GetSection("ReCaptcha"))
+            .AddSingleton<IObjectDisplayOptionsProvider, DefaultObjectDisplayOptionsProvider>()
+            .AddSingleton<IObjectsRetriever, CustomObjectsRetriever>();
 
 
     private static IServiceCollection AddSupport(this IServiceCollection services, IConfiguration config) =>
@@ -133,11 +142,13 @@ public static class ServiceCollectionAppExtensions
             .AddTransient<IMemberBadgeAssignmentRule, MemberProfileLevel1BadgeAssignmentRule>()
             .AddTransient<IMemberBadgeAssignmentRule, MemberAnniversary1YearMemberBadgeAssignmentRule>()
             .AddTransient<IMemberBadgeAssignmentRule, MemberAnniversary2YearMemberBadgeAssignmentRule>()
-            .AddTransient<IMemberBadgeAssignmentRule, MemberAnniversary3YearMemberBadgeAssignmentRule>()
-            .AddHostedService<MemberBadgeAssignmentApplicationBackgroundService>();
+            .AddTransient<IMemberBadgeAssignmentRule, MemberAnniversary3YearMemberBadgeAssignmentRule>();
 
-    private static IServiceCollection AddNotifications(this IServiceCollection services) =>
-        services;
+    private static IServiceCollection AddQAndADiscussionNotifications(this IServiceCollection services) =>
+        services
+            .AddTransient<QAndANotificationsProcessor>()
+            .AddTransient<QAndANotificationLogger>()
+            .AddTransient<QAndANotificationSettingsManager>();
 
     private static IServiceCollection AddMigrations(this IServiceCollection services) =>
         services;

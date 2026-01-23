@@ -62,7 +62,7 @@ public class CaptchaValidator(IOptions<ReCaptchaSettings> options, IHttpClientFa
 
 public interface ICaptchaClientResponse
 {
-    string CaptchaToken { get; set; }
+    public string CaptchaToken { get; set; }
 }
 
 public class CaptchaValidationResult

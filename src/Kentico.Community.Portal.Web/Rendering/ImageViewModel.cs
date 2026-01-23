@@ -1,4 +1,5 @@
 using CMS.ContentEngine;
+using Kentico.Content.Web.Mvc;
 
 namespace Kentico.Community.Portal.Web.Rendering;
 
@@ -34,7 +35,7 @@ public class ImageViewModel
         AltText = content.BasicItemShortDescription;
         Width = content.ImageContentAsset.Metadata.Width ?? 0;
         Height = content.ImageContentAsset.Metadata.Height ?? 0;
-        URL = content.ImageContentAsset.Url;
+        URL = content.ImageContentAsset.RelativePathTrimmed();
         Asset = content.ImageContentAsset;
     }
 }

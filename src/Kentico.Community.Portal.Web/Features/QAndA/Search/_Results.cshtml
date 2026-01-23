@@ -9,7 +9,7 @@
         class="border rounded-3 p-3 d-grid overflow-y-auto gap-1 qa-question-card @(discussion.HasAcceptedResponse ? "qa-question-card--success" : "")"
         style="grid-template-columns: 1fr; grid-template-areas: 'card-content' 'card-footer';"
         aria-describedby="responses-@discussion.ID">
-        <div class="d-md-flex justify-content-between" style="grid-area: card-content;">
+        <div class="d-md-flex justify-content-between gap-1" style="grid-area: card-content;">
             <div>
                 @if (discussion.HasAcceptedResponse)
                 {
@@ -35,10 +35,8 @@
                         <div id="author-@discussion.ID" class="mb-2">
                             <vc:author author="discussion.Author" />
                         </div>
-                        <time id="date-@discussion.ID" datetime="@discussion.DateCreated.ToString("yyyy-MM-ddTHH:mm:ss")"
-                            class="text-muted small">
-                            Discussion created<br> @discussion.DateCreated.ToString("d", View.Culture)
-                            @discussion.DateCreated.ToString("t")
+                        Discussion created<br>
+                        <time id="date-@discussion.ID" xpc-datetime="discussion.DateCreated" class="text-muted small">
                         </time>
                     </div>
                 </header>
@@ -61,12 +59,8 @@
                 @if (discussion.ResponseCount > 0)
                 {
                     <div class="mt-1">
-                        <time datetime="@discussion.LatestResponseDate.ToString("yyyy-MM-ddTHH:mm:ss")"
-                            class="text-muted small">
-                            Latest response<br>
-                            <span class="text-nowrap">@discussion.LatestResponseDate.ToString("d", View.Culture)
-                                @discussion.LatestResponseDate.ToString("t")
-                            </span>
+                        Latest response<br>
+                        <time xpc-datetime="discussion.LatestResponseDate" class="text-muted small">
                         </time>
                     </div>
                 }
@@ -76,9 +70,8 @@
             <div>
                 <div class="d-md-none">
                     <vc:author author="discussion.Author" />
-                    <time datetime="@discussion.DateCreated.ToString("yyyy-MM-ddTHH:mm:ss")" class="text-muted small">
-                        Discussion created<br> @discussion.DateCreated.ToString("d", View.Culture)
-                        @discussion.DateCreated.ToString("t")
+                    Discussion created<br>
+                    <time xpc-datetime="discussion.DateCreated" class="text-muted small">
                     </time>
                 </div>
                 @if (discussion.Tags.Count > 0)
@@ -99,12 +92,8 @@
                 @if (discussion.ResponseCount > 0)
                 {
                     <div class="mt-1">
-                        <time datetime="@discussion.LatestResponseDate.ToString("yyyy-MM-ddTHH:mm:ss")"
-                            class="text-muted small">
-                            Latest response<br>
-                            <span class="text-nowrap">@discussion.LatestResponseDate.ToString("d", View.Culture)
-                                @discussion.LatestResponseDate.ToString("t")
-                            </span>
+                        Latest response<br>
+                        <time xpc-datetime="discussion.LatestResponseDate" class="text-muted small">
                         </time>
                     </div>
                 }

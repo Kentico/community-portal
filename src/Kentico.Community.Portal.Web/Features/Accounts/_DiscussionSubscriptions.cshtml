@@ -1,0 +1,67 @@
+@using Kentico.Community.Portal.Web.Components.TagHelpers
+@using Kentico.Community.Portal.Web.Features.Accounts
+
+@model IReadOnlyList<SubscribedDiscussionViewModel>
+
+<div id="qandaWatchedQuestions" x-data="{ filter: '' }">
+    <h4>Discussion subscriptions (@Model.Count)
+    </h4>
+
+    <small class="form-text text-muted pt-1 pb-3 d-block">
+        Manage your Q&A discussion subscriptions by searching this list or clicking the bell to unsubscribe from
+        updates.
+    </small>
+
+    @if (Model.Count > 0)
+    {
+        <div class="mb-2">
+            <input type="text" name="qandaWatchedQuestionsFilter" x-model="filter" class="form-control form-control-sm"
+                placeholder="Filter by title..." />
+        </div>
+        <ul class="list-group mt-2 p-1" style="max-height: 350px; overflow-y: auto;">
+            @foreach (var subscription in Model)
+            {
+                var data = JSEncoder.EncodeToJson(new { title = subscription.Title.ToLowerInvariant() });
+
+                <li class="list-group-item justify-content-between align-items-start gap-2" x-data='@data'
+                    :class="(filter === '' || title.includes(filter.toLowerCase())) ? 'd-flex' : 'd-none'">
+                    <div class="flex-grow-1">
+                        <a href="@subscription.QuestionURL" target="_blank" class="text-decoration-none">
+                            @subscription.Title
+                        </a>
+                        <div class="text-muted small">
+                            <span>Created:
+                                <time xpc-datetime="subscription.DateCreated" xpc-datetime-format="@DateTimeFormat.Date"></time>
+                            </span>
+                            <span class="ms-2">Modified:
+                                <time xpc-datetime="subscription.DateModified"
+                                    xpc-datetime-format="@DateTimeFormat.Date"></time>
+                            </span>
+                        </div>
+                    </div>
+                    <form method="post" hx-post hx-controller="Account" hx-action="UnsubscribeDiscussion"
+                        hx-route-webPageItemID="@subscription.WebPageItemID" hx-target="#qandaWatchedQuestions"
+                        hx-swap="outerHTML">
+                        <fieldset hx-indicator="this" xpc-readonly-disabled>
+                            <button type="submit" class="btn btn-sm btn-outline-danger flex-shrink-0" xpc-loading-button
+                                xpc-readonly-disabled title="Unsubscribe">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M5.164 14H15c-1.5-1-2-5.902-2-7 0-.264-.02-.523-.06-.776L5.164 14m6.288-10.617A5 5 0 0 0 8.995 1.1a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 .898-.335 4.342-1.278 6.113l9.73-9.73M10 15a2 2 0 1 1-4 0zm-9.375.625a.53.53 0 0 0 .75.75l14.75-14.75a.53.53 0 0 0-.75-.75z" />
+                                </svg>
+                            </button>
+                        </fieldset>
+                    </form>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="text-muted mt-2">
+            You are not subscribed to any questions. Click the bell icon on any Q&A question to start receiving
+            notifications.
+        </p>
+    }
+</div>

@@ -57,9 +57,22 @@ public class MemberBadgeService(
         var badgesInDb = await memberBadgeMemberInfoProvider.Get()
             .WhereEquals(nameof(MemberBadgeMemberInfo.MemberBadgeMemberMemberId), memberId)
             .GetEnumerableTypedResultAsync();
+        var badgeInfos = await memberBadgeInfoProvider.GetAllMemberBadgesCached();
+        var badgeInfoDict = badgeInfos.ToDictionary(b => b.MemberBadgeID);
 
         foreach (var badge in badges)
         {
+            if (!badgeInfoDict.TryGetValue(badge.BadgeId, out var badgeInfo))
+            {
+                continue;
+            }
+
+            // Skip always-selected badges - they're immutable
+            if (PortalMemberBadges.IsAlwaysSelected(badgeInfo))
+            {
+                continue;
+            }
+
             await badgesInDb
                 .TryFirst(x => x.MemberBadgeMemberMemberBadgeId == badge.BadgeId)
                 .Execute(async b =>
@@ -91,7 +104,8 @@ public class MemberBadgeService(
             results.Add(new MemberBadgeAggregate(b.MemberBadge, b.Image, item.IsSelected));
         }
 
-        return results;
+        // Always-selected badges appear first
+        return [.. results.OrderBy(a => !PortalMemberBadges.IsAlwaysSelected(a.MemberBadge))];
     }
 
     private async Task<FrozenDictionary<int, MemberBadgetWithMediaAsset>> GetMemberBadgesWithMediaAssets()

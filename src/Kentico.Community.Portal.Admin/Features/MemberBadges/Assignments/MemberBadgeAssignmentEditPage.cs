@@ -71,11 +71,13 @@ internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formIte
             }
             else if (badge.IsAssigned && !memberBadgeRelationships.HasEntry(MemberID, badge.MemberBadgeID))
             {
+                bool isAlwaysSelected = PortalMemberBadges.IsAlwaysSelected(badge.MemberBadgeCodeName);
+
                 assignedBadges.Add(new MemberBadgeMemberInfo
                 {
                     MemberBadgeMemberMemberBadgeId = badge.MemberBadgeID,
                     MemberBadgeMemberMemberId = MemberID,
-                    MemberBadgeMemberIsSelected = false,
+                    MemberBadgeMemberIsSelected = isAlwaysSelected,
                     MemberBadgeMemberCreatedDate = clock.GetUtcNow().DateTime
                 });
             }
@@ -83,10 +85,14 @@ internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formIte
 
         var removeUnassignedBadgesQuery = memberBadgeMemberInfoProvider
             .Get()
-            .WhereIn(nameof(MemberBadgeMemberInfo.MemberBadgeMemberMemberBadgeId), deletedBadgeIds);
+            .WhereIn(nameof(MemberBadgeMemberInfo.MemberBadgeMemberMemberBadgeId), deletedBadgeIds)
+            .WhereEquals(nameof(MemberBadgeMemberInfo.MemberBadgeMemberMemberId), MemberID);
 
         memberBadgeMemberInfoProvider.BulkDelete(removeUnassignedBadgesQuery);
         memberBadgeMemberInfoProvider.BulkInsert(assignedBadges);
+
+        // Clear cache since bulk operations bypass normal cache invalidation
+        memberBadgeMemberInfoProvider.ClearCache();
 
         var successResponse = NavigateTo(pageLinkGenerator
             .GetPath<MemberBadgeAssignmentListingPage>())
@@ -107,7 +113,7 @@ internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formIte
             string? badgeImageUrl = await RetrieveMediaAssetUrl(badge);
             bool isAssigned = assignedBadges.Any(x => x.MemberBadgeMemberMemberBadgeId == badge.MemberBadgeID);
 
-            var assignmentModel = new MemberBadgeAssignmentModel(badge, isAssigned, badgeImageUrl);
+            var assignmentModel = new MemberBadgeAssignmentModel(badge, isAssigned, badgeImageUrl, badge.MemberBadgeCodeName);
 
             if (badge.MemberBadgeIsRuleAssigned)
             {

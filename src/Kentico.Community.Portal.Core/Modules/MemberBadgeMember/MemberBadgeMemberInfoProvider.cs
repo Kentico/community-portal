@@ -9,6 +9,7 @@ public interface IMemberBadgeMemberInfoProvider : IInfoProvider<MemberBadgeMembe
 {
     public Task<MemberBadgeRelationshipDictionary> GetAllMemberBadgeRelationshipsCached();
     public Task<ImmutableList<MemberBadgeMemberInfo>> GetAllMemberBadgesForMemberCached(int memberID);
+    public void ClearCache();
 }
 
 public class MemberBadgeMemberInfoProvider(IProgressiveCache cache, IInfoProvider<MemberBadgeMemberInfo> infoProvider) : IMemberBadgeMemberInfoProvider
@@ -61,6 +62,9 @@ public class MemberBadgeMemberInfoProvider(IProgressiveCache cache, IInfoProvide
     public void BulkUpdate(IEnumerable<KeyValuePair<string, object>> values, IWhereCondition where, bool useApi = false) => infoProvider.BulkUpdate(values, where, useApi);
     public void BulkUpdate(string updateExpression, QueryDataParameters updateParameters, IWhereCondition where) => infoProvider.BulkUpdate(updateExpression, updateParameters, where);
     public void BulkDelete(IWhereCondition where, BulkDeleteSettings? settings = null) => infoProvider.BulkDelete(where, settings);
+
+    public void ClearCache() =>
+        CacheHelper.TouchKey($"{MemberBadgeMemberInfo.OBJECT_TYPE}|all");
 }
 
 public record MemberBadgeRelationship(int BadgeID, int MemberID, bool IsSelected);

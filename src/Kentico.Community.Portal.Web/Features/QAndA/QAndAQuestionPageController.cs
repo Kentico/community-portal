@@ -3,6 +3,7 @@ using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Features.QAndA;
+using Kentico.Community.Portal.Web.Features.QAndA.Notifications;
 using Kentico.Community.Portal.Web.Features.QAndA.Search;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
@@ -29,7 +30,8 @@ public class QAndAQuestionPageController(
     IMediator mediator,
     MemberBadgeService memberBadgeService,
     IContentRetriever contentRetriever,
-    MarkdownRenderer markdownRenderer) : Controller
+    MarkdownRenderer markdownRenderer,
+    QAndANotificationSettingsManager notificationSettingsManager) : Controller
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly IQAndAPermissionService permissionService = permissionService;
@@ -38,6 +40,7 @@ public class QAndAQuestionPageController(
     private readonly MarkdownRenderer markdownRenderer = markdownRenderer;
     private readonly MemberBadgeService memberBadgeService = memberBadgeService;
     private readonly IContentRetriever contentRetriever = contentRetriever;
+    private readonly QAndANotificationSettingsManager notificationSettingsManager = notificationSettingsManager;
 
     [HttpGet]
     public async Task<ActionResult> Index()
@@ -126,7 +129,14 @@ public class QAndAQuestionPageController(
         var author = await GetAuthor(question.QAndAQuestionPageAuthorMemberID);
         var permissions = await permissionService.GetPermissions(currentMember, question);
 
-        return new(question, permissions, currentMember, taxonomiesResp, author, markdownRenderer);
+        bool isSubscribed = false;
+        if (currentMember is not null)
+        {
+            var webPageItemIDs = await notificationSettingsManager.GetSubscribedWebPageItemIDs(currentMember);
+            isSubscribed = webPageItemIDs.Contains(question.SystemFields.WebPageItemID);
+        }
+
+        return new(question, permissions, currentMember, taxonomiesResp, author, markdownRenderer, isSubscribed);
     }
 
     private async Task<QAndAPostAnswerViewModel> MapAnswer(QAndAQuestionPage question, QAndAAnswerDataInfo answer, CommunityMember? currentMember, IQAndAPermissionService permissionService)
@@ -202,6 +212,7 @@ public class QAndAPostQuestionViewModel
     public HtmlSanitizedHtmlString HTMLSanitizedContentHTML { get; set; } = HtmlSanitizedHtmlString.Empty;
     public QAndAQuestionPermissions Permissions { get; set; } = QAndAQuestionPermissions.NoPermissions;
     public IReadOnlyList<string> DXTopics { get; } = [];
+    public bool IsSubscribed { get; set; }
 
     public QAndAPostQuestionViewModel(
         QAndAQuestionPage question,
@@ -209,7 +220,8 @@ public class QAndAPostQuestionViewModel
         CommunityMember? currentMember,
         QAndATaxonomiesQueryResponse taxonomiesResp,
         QAndAAuthorViewModel author,
-        MarkdownRenderer markdownRenderer
+        MarkdownRenderer markdownRenderer,
+        bool isSubscribed
     )
     {
         bool ownsQuestion = currentMember?.Id == question.QAndAQuestionPageAuthorMemberID;
@@ -221,6 +233,7 @@ public class QAndAPostQuestionViewModel
         DateModified = question.QAndAQuestionPageDateModified;
         Author = author;
         Permissions = permissions;
+        IsSubscribed = isSubscribed;
         var tagRefs = question.CoreTaxonomyDXTopics.Select(t => t.Identifier);
         DXTopics = [.. taxonomiesResp
             .DXTopicsAll

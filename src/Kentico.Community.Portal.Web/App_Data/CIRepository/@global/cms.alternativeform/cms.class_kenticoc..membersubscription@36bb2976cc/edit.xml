@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>KenticoCommunity.DiscussionMemberSubscription</CodeName>
+    <GUID>e7d80055-7bf4-4327-a0e4-5de116f67c1a</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="DiscussionMemberSubscriptionID" guid="12667bee-5ddb-4bb3-b083-18e39f72250c" enabled="" />
+      <field column="DiscussionMemberSubscriptionMemberID" guid="9ea992f8-fc55-474f-abfd-9e8f483708b8" visible="true" enabled="" refobjtype="" reftype="">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>cms.member</ObjectType>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Member</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="DiscussionMemberSubscriptionWebPageItemID" guid="317e3fb1-b4db-4816-8c9d-c2650b98a1e0" visible="true" enabled="">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>cms.webpageitem</ObjectType>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Web page</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="DiscussionMemberSubscriptionDateModified" guid="c42ec89c-3913-45f3-a043-f14b8bbb1d9f" visible="true" enabled="">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeString</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Modified on</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit</FormDisplayName>
+  <FormGUID>e461387a-6769-4e48-b412-4ec8bc1faf3c</FormGUID>
+  <FormIsCustom>True</FormIsCustom>
+  <FormName>Edit</FormName>
+</cms.alternativeform>

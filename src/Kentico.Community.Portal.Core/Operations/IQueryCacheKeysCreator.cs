@@ -13,12 +13,12 @@ public interface IQueryCacheKeysCreator<TQuery, TResponse> where TQuery : IQuery
     /// <param name="query"></param>
     /// <param name="response"></param>
     /// <returns></returns>
-    string[] DependencyKeys(TQuery query, TResponse response);
+    public string[] DependencyKeys(TQuery query, TResponse response);
 
     /// <summary>
     /// Creates the name of the cached data from the <paramref name="query"/>
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    object[] ItemNameParts(TQuery query);
+    public object[] ItemNameParts(TQuery query);
 }

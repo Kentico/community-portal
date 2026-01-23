@@ -21,14 +21,14 @@ import Select, {
 import { Tooltip } from 'react-tooltip';
 import { MemberBadgeAssigmentModel } from './MemberBadgeAssignmentModel';
 
-export interface MemberBadgesAssignmentComponentClientProperties
-  extends FormComponentProps {
+export interface MemberBadgesAssignmentComponentClientProperties extends FormComponentProps {
   value: MemberBadgeAssigmentModel[];
 }
 
 interface OptionType {
   value: number;
   label: string;
+  codeName: string;
   iconUrl: string | null;
   description: string;
   isAssigned: boolean;
@@ -69,6 +69,7 @@ export const MemberBadgesAssignmentFormComponent = (
     const initialOptions: OptionType[] = props.value.map((badge) => ({
       value: badge.memberBadgeID,
       label: badge.memberBadgeDisplayName,
+      codeName: badge.memberBadgeCodeName,
       iconUrl: badge.badgeImageRelativePath,
       description: badge.memberBadgeDescription,
       isAssigned: badge.isAssigned,
@@ -87,6 +88,7 @@ export const MemberBadgesAssignmentFormComponent = (
         memberBadgeID: x.value,
         memberBadgeDescription: x.description,
         memberBadgeDisplayName: x.label,
+        memberBadgeCodeName: x.codeName,
         isAssigned: true,
         badgeImageRelativePath: x.iconUrl,
       };
@@ -102,6 +104,7 @@ export const MemberBadgesAssignmentFormComponent = (
         memberBadgeID: x.value,
         memberBadgeDescription: x.description,
         memberBadgeDisplayName: x.label,
+        memberBadgeCodeName: x.codeName,
         isAssigned: false,
         badgeImageRelativePath: x.iconUrl,
       };

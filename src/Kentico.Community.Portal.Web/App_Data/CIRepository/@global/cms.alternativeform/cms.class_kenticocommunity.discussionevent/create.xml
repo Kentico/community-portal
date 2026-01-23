@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>KenticoCommunity.DiscussionEvent</CodeName>
+    <GUID>86748fe4-78c8-4999-808b-7d0a2c3c1656</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="DiscussionEventID" guid="e562ad4c-81ea-4f88-ad42-38eb3b974f4f" enabled="" />
+      <field column="DiscussionEventDateModified" guid="d77baec7-89bf-4075-a3aa-00d5c3023974" enabled="" order="1" />
+      <field column="DiscussionEventFromMemberID" enabled="true" guid="8736dacc-b858-4f58-b36f-ecf493a78b16" visible="true" refobjtype="" reftype="" order="2">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>cms.member</ObjectType>
+        </settings>
+        <properties>
+          <explanationtext>
+            <![CDATA[The member the event was initiated from. Example: discussion comment author.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Member</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="DiscussionEventType" enabled="true" guid="d7e6518f-38ea-4c0f-8952-648258f7c177" visible="true" order="3">
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+ResponseCreated;Response created
+AnswerAccepted;Answer accepted
+]]>
+          </Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
+        <properties>
+          <explanationtext>
+            <![CDATA[Type of the event. Matches DiscussionEventType enum.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Type</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="DiscussionEventWebPageItemID" enabled="true" guid="86703cb5-dc74-47f2-bf0d-dd6172a39af3" visible="true" order="4">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>cms.webpageitem</ObjectType>
+        </settings>
+        <properties>
+          <explanationtext>The discussion web page.</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Web page</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="DiscussionEventWebsiteChannelID" enabled="true" guid="aeef9d92-2bd0-4175-b1d2-0b99d9de3d05" visible="true" refobjtype="" reftype="" order="5">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>cms.websitechannel</ObjectType>
+        </settings>
+        <properties>
+          <defaultvalue>0</defaultvalue>
+          <explanationtext>
+            <![CDATA[The discussion web page's website channel.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Website channel</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Create</FormDisplayName>
+  <FormGUID>737c4fc2-439e-4c95-b82e-abd3b3179d88</FormGUID>
+  <FormIsCustom>True</FormIsCustom>
+  <FormName>Create</FormName>
+</cms.alternativeform>

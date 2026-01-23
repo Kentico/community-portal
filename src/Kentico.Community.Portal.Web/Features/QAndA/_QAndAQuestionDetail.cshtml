@@ -11,7 +11,7 @@
         <article class="border rounded-3 p-3 mt-3 mb-3">
             <div class="mb-3 d-flex justify-content-between align-items-center" data-ktc-search-exclude>
                 <vc:author author="Model.Author" />
-                <span>@Model.DateCreated.ToString("yyyy/MM/dd") @Model.DateCreated.ToString("t")</span>
+                <time xpc-datetime="Model.DateCreated" class="text-muted small"></time>
             </div>
 
             <div class="mb-3 member-generated-content overflow-auto w-100 text-break" hx-disable>
@@ -28,24 +28,30 @@
         </article>
     </div>
 
-    <div class="d-flex gap-1 justify-content-end">
-        @if (Model.Permissions.Edit)
+    <div class="d-flex gap-1 align-items-center">
+        @if (User.Identity?.IsAuthenticated == true)
         {
-            <button type="button" class="btn btn-sm btn-outline-secondary" hx-get hx-controller="QAndAQuestion"
-                hx-action="DisplayEditQuestionForm" hx-route-questionID="@Model.ID" hx-swap="outerHTML"
-                hx-target="#@wrapperElId">
-                Edit Question
-            </button>
+            <partial name="~/Features/QAndA/_QAndASubscribeButton.cshtml" model="@((Model.ID, Model.IsSubscribed))" />
         }
-        @if (Model.Permissions.Delete)
-        {
-            <form method="post" hx-post hx-controller="QAndAQuestion" hx-action="DeleteQuestion"
-                hx-confirm="Do you want to delete this question?" hx-route-questionID="@Model.ID">
-                <button type="submit" class="btn btn-sm btn-outline-danger">
-                    Delete
+        <div class="d-flex gap-1 ms-auto">
+            @if (Model.Permissions.Edit)
+            {
+                <button type="button" class="btn btn-sm btn-outline-secondary" hx-get hx-controller="QAndAQuestion"
+                    hx-action="DisplayEditQuestionForm" hx-route-questionID="@Model.ID" hx-swap="outerHTML"
+                    hx-target="#@wrapperElId">
+                    Edit Question
                 </button>
-            </form>
-        }
+            }
+            @if (Model.Permissions.Delete)
+            {
+                <form method="post" hx-post hx-controller="QAndAQuestion" hx-action="DeleteQuestion"
+                    hx-confirm="Do you want to delete this question?" hx-route-questionID="@Model.ID">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                        Delete
+                    </button>
+                </form>
+            }
+        </div>
     </div>
 </div>
 

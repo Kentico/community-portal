@@ -8,9 +8,9 @@ public interface IStoragePathService
         Member
     }
 
-    bool ShouldMapAzureStorage { get; }
+    public bool ShouldMapAzureStorage { get; }
 
-    string GetStoragePathPrefix(StorageAssetType assetType);
-    string GetStorageFilePath(string filePath, StorageAssetType assetType);
-    string GetContainerPath(StorageAssetType assetType);
+    public string GetStoragePathPrefix(StorageAssetType assetType);
+    public string GetStorageFilePath(string filePath, StorageAssetType assetType);
+    public string GetContainerPath(StorageAssetType assetType);
 }

@@ -1,3 +1,4 @@
+@using Kentico.Community.Portal.Web.Components.TagHelpers
 @using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList
 @using Kentico.Community.Portal.Web.Features.Blog
 
@@ -17,38 +18,54 @@
                     <h4 class="mb-0 flex-grow-1 me-3">
                         <a class="text-dark text-decoration-none" href="@post.LinkPath">@post.Title</a>
                     </h4>
-                    @if (post.Author.ID > 0)
+                    @if (Model.ShowAuthor)
                     {
-                        <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
-                            class="d-inline-flex align-items-center text-decoration-none border border-secondary text-secondary bg-white rounded-pill px-2 py-1 text-nowrap flex-shrink-0">
-                            <img xpc-image="post.Author.Photo" class="rounded me-1 d-inline-block m-0 icon" style="--icon-font-size: 1.2rem" xpc-image-responsive="false" />
-                            <span>@post.Author.Name</span>
-                        </a>
-                    }
-                    else
-                    {
-                        <div class="d-inline-flex align-items-center bg-light text-dark rounded-pill px-2 py-1 text-nowrap flex-shrink-0">
-                            <img xpc-image="post.Author.Photo" class="rounded me-1 d-inline-block m-0 icon" style="--icon-font-size: 1.2rem" xpc-image-responsive="false" />
-                            <span>@post.Author.Name</span>
-                        </div>
+                        @if (post.Author.ID > 0)
+                        {
+                            <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
+                                class="d-inline-flex align-items-center text-decoration-none border border-secondary text-secondary bg-white rounded-pill px-2 py-1 text-nowrap flex-shrink-0">
+                                <img xpc-image="post.Author.Photo" class="rounded me-1 d-inline-block m-0 icon"
+                                    style="--icon-font-size: 1.2rem" xpc-image-responsive="false" />
+                                <span>@post.Author.Name</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <div
+                                class="d-inline-flex align-items-center bg-light text-dark rounded-pill px-2 py-1 text-nowrap flex-shrink-0">
+                                <img xpc-image="post.Author.Photo" class="rounded me-1 d-inline-block m-0 icon"
+                                    style="--icon-font-size: 1.2rem" xpc-image-responsive="false" />
+                                <span>@post.Author.Name</span>
+                            </div>
+                        }
                     }
                 </div>
-                
+
                 <div class="d-flex align-items-center">
-                    <time datetime="@post.PublishedDate.ToString("yyyy-MM-dd")" class="small text-muted">
-                        @post.PublishedDate.ToString("d", View.Culture)
-                    </time>
+                    <time xpc-datetime="post.PublishedDate" xpc-datetime-format="@DateTimeFormat.Date" class="small"></time>
                 </div>
             </header>
 
-            <div class="mb-3">
-                <p class="mb-0">@post.ShortDescription</p>
-            </div>
+            @if (Model.ShowDescription)
+            {
+                <div class="mb-3">
+                    <p class="mb-0">@post.ShortDescription</p>
+                </div>
+            }
 
-            @if (post.BlogType.TryGetValue(out string? taxonomy))
+            @if (Model.ShowBlogType && post.BlogType.TryGetValue(out string? taxonomy))
             {
                 <footer class="mt-auto d-flex flex-column gap-3">
                     <vc:tag-list tags="new[] { taxonomy }" />
+                    @if (Model.ShowDXTopics)
+                    {
+                        <vc:tag-list tags="post.DXTopics" />
+                    }
+                </footer>
+            }
+            else if (Model.ShowDXTopics)
+            {
+                <footer class="mt-auto d-flex flex-column gap-3">
                     <vc:tag-list tags="post.DXTopics" />
                 </footer>
             }

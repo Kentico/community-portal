@@ -7,10 +7,15 @@ using Kentico.Community.Portal.Core.Operations;
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 public record QAndAQuestionDeleteCommand(QAndAQuestionPage Question) : ICommand<Result>;
-public class QAndAQuestionDeleteCommandHandler(WebPageCommandTools tools, IInfoProvider<UserInfo> users, IInfoProvider<QAndAAnswerDataInfo> provider) : WebPageCommandHandler<QAndAQuestionDeleteCommand, Result>(tools)
+public class QAndAQuestionDeleteCommandHandler(
+    WebPageCommandTools tools,
+    IInfoProvider<UserInfo> users,
+    IInfoProvider<QAndAAnswerDataInfo> provider,
+    IInfoProvider<DiscussionMemberSubscriptionInfo> subscriptionProvider) : WebPageCommandHandler<QAndAQuestionDeleteCommand, Result>(tools)
 {
     private readonly IInfoProvider<UserInfo> users = users;
     private readonly IInfoProvider<QAndAAnswerDataInfo> provider = provider;
+    private readonly IInfoProvider<DiscussionMemberSubscriptionInfo> subscriptionProvider = subscriptionProvider;
 
     public override async Task<Result> Handle(QAndAQuestionDeleteCommand request, CancellationToken cancellationToken)
     {
@@ -20,6 +25,13 @@ public class QAndAQuestionDeleteCommandHandler(WebPageCommandTools tools, IInfoP
         try
         {
             using var transaction = new CMSTransactionScope();
+
+            // Remove all subscriptions before deleting
+            subscriptionProvider.BulkDelete(
+                new WhereCondition().WhereEquals(
+                    nameof(DiscussionMemberSubscriptionInfo.DiscussionMemberSubscriptionWebPageItemID),
+                    request.Question.SystemFields.WebPageItemID));
+
             provider.BulkDelete(new WhereCondition().WhereEquals(nameof(QAndAAnswerDataInfo.QAndAAnswerDataQuestionWebPageItemID), request.Question.SystemFields.WebPageItemID));
 
             await webPageManager.Delete(new DeleteWebPageParameters(request.Question.SystemFields.WebPageItemID, PortalWebSiteChannel.DEFAULT_LANGUAGE), cancellationToken);

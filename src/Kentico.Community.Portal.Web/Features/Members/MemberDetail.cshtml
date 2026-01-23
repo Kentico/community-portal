@@ -1,3 +1,4 @@
+@using Kentico.Community.Portal.Web.Components.TagHelpers
 @model Kentico.Community.Portal.Web.Features.Members.MemberDetailViewModel
 
 <vc:page-heading page="Model.Page" />
@@ -46,7 +47,8 @@
                                 }
 
                                 <dt>Joined:</dt>
-                                <dd>@member.Created.ToString("d", View.Culture)</dd>
+                                <dd><time xpc-datetime="Model.Member.Created"
+                                        xpc-datetime-format="@DateTimeFormat.Date"></time></dd>
 
                                 @if (!string.IsNullOrWhiteSpace(member.EmployerLink.Label))
                                 {
@@ -101,7 +103,8 @@
                 </div>
                 <div class="container">
                     <div class="overflow-auto">
-                        <ul class="nav nav-tabs flex-nowrap d-flex justify-content-md-center" id="memberActivitiesTab" role="tablist">
+                        <ul class="nav nav-tabs flex-nowrap d-flex justify-content-md-center" id="memberActivitiesTab"
+                            role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="contributions-tab" data-bs-toggle="tab"
                                     data-bs-target="#contributions" type="button" role="tab"
@@ -145,7 +148,7 @@
                             }
                             @if (Model.Contributions.Count == 0)
                             {
-                                <p>This member has not shared any <a href="/blog">contributions</a>.</p>
+                                <p>This member has not shared any <a href="/community/contributions">contributions</a>.</p>
                             }
                             @foreach (var link in Model.Contributions)
                             {
@@ -155,7 +158,8 @@
                                         <h4>
                                             <a class="text-dark text-decoration-none" href="@link.Path">@link.Label</a>
                                         </h4>
-                                        <small class="me-1">@link.Date.ToString("d", View.Culture)</small>
+                                        <small class="me-1"><time xpc-datetime="link.Date"
+                                                xpc-datetime-format="@DateTimeFormat.Date"></time></small>
                                     </div>
                                 </div>
                             }
@@ -176,7 +180,8 @@
                             }
                             @if (Model.Integrations.Count == 0)
                             {
-                                <p>This member has not authored any <a href="/blog">integrations</a>.</p>
+                                <p>This member has not authored any <a href="/resource-hub/integrations">integrations</a>.
+                                </p>
                             }
                             @foreach (var link in Model.Integrations)
                             {
@@ -186,7 +191,8 @@
                                         <h4>
                                             <a class="text-dark text-decoration-none" href="@link.Path">@link.Label</a>
                                         </h4>
-                                        <small class="me-1">@link.Date.ToString("d", View.Culture)</small>
+                                        <small class="me-1"><time xpc-datetime="link.Date"
+                                                xpc-datetime-format="@DateTimeFormat.Date"></time></small>
                                     </div>
                                 </div>
                             }
@@ -216,7 +222,8 @@
                                         <h4>
                                             <a class="text-dark text-decoration-none" href="@link.Path">@link.Title</a>
                                         </h4>
-                                        <small class="me-1">@link.PublishedDate.ToString("d", View.Culture)</small>
+                                        <small class="me-1"><time xpc-datetime="link.PublishedDate"
+                                                xpc-datetime-format="@DateTimeFormat.Date"></time></small>
                                     </div>
                                     <div class="mt-2">
                                         <vc:tag-list tags="new[] { link.Taxonomy }" />
@@ -249,7 +256,7 @@
                                         <h4>
                                             <a class="text-dark text-decoration-none" href="@link.Path">@link.Label</a>
                                         </h4>
-                                        <small class="me-1">@link.Date.ToString("d", View.Culture)</small>
+                                        <small class="me-1"><time xpc-datetime="link.Date"></time></small>
                                     </div>
                                 </div>
                             }

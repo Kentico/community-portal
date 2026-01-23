@@ -3,7 +3,8 @@ using CMS.Core;
 using CMS.DataEngine;
 using CMS.Websites.Internal;
 using Kentico.Community.Portal.Admin.Features.Members;
-using Kentico.Community.Portal.Admin.Features.QAndA;
+using Kentico.Community.Portal.Admin.Features.QAndA.Answers;
+using Kentico.Community.Portal.Admin.UIPages;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Content;
 using Kentico.Community.Portal.Core.Modules;
@@ -127,9 +128,9 @@ public class MemberQAndAAnswersListPage(
             return new TableRowLinkProps() { Label = label, Path = "" };
         }
 
-        string pageUrl = pageLinkGenerator.GetPath<QAndAEditPage>(new()
+        string pageUrl = pageLinkGenerator.GetPath<AnswerDataEditPage>(new()
         {
-            { typeof(QAndASectionPage), answerID },
+            { typeof(AnswerDataSectionPage), answerID },
         });
 
         return new TableRowLinkProps()

@@ -274,21 +274,64 @@ public class BlogPostListWidgetProperties : IWidgetProperties
     [Range(1, 12)]
     public int PostLimit { get; set; } = 1;
 
-    [CheckBoxComponent(
-        Label = "Show DX Topics",
-        ExplanationText = "Display the selected blog posts' DX Topics taxonomy tags.",
-        Order = 5
-    )]
-    public bool ShowDXTopics { get; set; } = false;
-
     [DropDownComponent(
         Label = "Item Layout",
         ExplanationText = "How the content is presented",
         DataProviderType = typeof(EnumDropDownOptionsProvider<ItemLayout>),
-        Order = 6
+        Order = 5
     )]
     public string ItemLayoutSource { get; set; } = nameof(ItemLayout.Minimal);
     public ItemLayout ItemLayoutSourceParsed => EnumDropDownOptionsProvider<ItemLayout>.Parse(ItemLayoutSource, ItemLayout.Minimal);
+
+    [CheckBoxComponent(
+        Label = "Show DX Topics",
+        ExplanationText = "Display the selected blog posts' DX Topics taxonomy tags.",
+        Order = 6
+    )]
+    [VisibleIfEqualTo(
+        nameof(ItemLayoutSource),
+        nameof(ItemLayout.Minimal),
+        StringComparison.OrdinalIgnoreCase
+    )]
+    public bool ShowDXTopics { get; set; } = false;
+
+    [CheckBoxComponent(
+        Label = "Show Description",
+        ExplanationText = "Display the blog post description.",
+        Order = 7
+    )]
+    public bool ShowDescription { get; set; } = true;
+
+    [CheckBoxComponent(
+        Label = "Show Author",
+        ExplanationText = "Display the blog post author.",
+        Order = 8
+    )]
+    public bool ShowAuthor { get; set; } = true;
+
+    [CheckBoxComponent(
+        Label = "Show Blog Type",
+        ExplanationText = "Display the blog post type tag.",
+        Order = 9
+    )]
+    [VisibleIfEqualTo(
+        nameof(ItemLayoutSource),
+        nameof(ItemLayout.Minimal),
+        StringComparison.OrdinalIgnoreCase
+    )]
+    public bool ShowBlogType { get; set; } = true;
+
+    [CheckBoxComponent(
+        Label = "Show Hero",
+        ExplanationText = "Display the blog post hero image.",
+        Order = 10
+    )]
+    [VisibleIfEqualTo(
+        nameof(ItemLayoutSource),
+        nameof(ItemLayout.Full),
+        StringComparison.OrdinalIgnoreCase
+    )]
+    public bool ShowHero { get; set; } = true;
 }
 
 public enum BlogPostSources
@@ -319,12 +362,22 @@ public class BlogPostListWidgetViewModel : BaseWidgetViewModel
     public IReadOnlyList<BlogPostViewModel> BlogPosts { get; set; } = [];
     public ItemLayout Layout { get; set; } = ItemLayout.Minimal;
     public string BlogType { get; set; } = "";
+    public bool ShowDescription { get; set; }
+    public bool ShowAuthor { get; set; }
+    public bool ShowBlogType { get; set; }
+    public bool ShowHero { get; set; }
+    public bool ShowDXTopics { get; set; }
 
     public BlogPostListWidgetViewModel(BlogPostListWidgetProperties props, IReadOnlyList<BlogPostViewModel> posts)
     {
         Heading = Maybe.From(props.Heading).MapNullOrWhiteSpaceAsNone();
         BlogPosts = posts;
         Layout = props.ItemLayoutSourceParsed;
+        ShowDescription = props.ShowDescription;
+        ShowAuthor = props.ShowAuthor;
+        ShowBlogType = props.ShowBlogType;
+        ShowHero = props.ShowHero;
+        ShowDXTopics = props.ShowDXTopics;
     }
 }
 

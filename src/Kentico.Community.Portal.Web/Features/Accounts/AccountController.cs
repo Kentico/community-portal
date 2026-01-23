@@ -1,15 +1,19 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using CMS.Base;
+using EnumsNET;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
+using Kentico.Community.Portal.Web.Features.QAndA.Notifications;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Community.Portal.Web.Rendering;
+using Kentico.Content.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Kentico.Community.Portal.Web.Features.Accounts;
 
@@ -24,7 +28,10 @@ public class AccountController(
     AvatarImageService avatarImageService,
     ILogger<AccountController> logger,
     LinkGenerator linkGenerator,
-    IReadOnlyModeProvider readOnlyProvider) : Controller
+    IReadOnlyModeProvider readOnlyProvider,
+    QAndANotificationSettingsManager notificationsManager,
+    IContentRetriever contentRetriever,
+    IWebPageUrlRetriever urlRetriever) : Controller
 {
     private readonly WebPageMetaService metaService = metaService;
     private readonly UserManager<CommunityMember> userManager = userManager;
@@ -34,7 +41,10 @@ public class AccountController(
     private readonly AvatarImageService avatarImageService = avatarImageService;
     private readonly ILogger<AccountController> logger = logger;
     private readonly LinkGenerator linkGenerator = linkGenerator;
+    private readonly QAndANotificationSettingsManager notificationsManager = notificationsManager;
     private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
+    private readonly IContentRetriever contentRetriever = contentRetriever;
+    private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
 
     [HttpGet]
     public async Task<ActionResult> MyAccount()
@@ -62,13 +72,15 @@ public class AccountController(
                 JobTitle = member.JobTitle,
                 EmployerName = member.EmployerLink.Label,
                 EmployerWebsiteURL = member.EmployerLink.URL,
+                TimeZone = member.TimeZone,
             },
             DateCreated = member.Created,
             AvatarForm = new()
             {
                 MemberID = member.Id
             },
-            BadgesForm = new(await memberBadgeService.GetAllBadgesFor(member.Id))
+            BadgesForm = new(await memberBadgeService.GetAllBadgesFor(member.Id)),
+            NotificationsForm = await GetNotificationsFormViewModel(member)
         };
 
         return View("~/Features/Accounts/MyAccount.cshtml", vm);
@@ -100,6 +112,7 @@ public class AccountController(
         member.JobTitle = model.JobTitle ?? "";
         member.EmployerLink.Label = model.EmployerName ?? "";
         member.EmployerLink.URL = model.EmployerWebsiteURL ?? "";
+        member.TimeZone = model.TimeZone ?? "";
 
         _ = await userManager.UpdateAsync(member);
 
@@ -110,6 +123,7 @@ public class AccountController(
             FirstName = member.FirstName,
             LastName = member.LastName,
             LinkedInIdentifier = member.LinkedInIdentifier,
+            TimeZone = member.TimeZone,
         });
     }
 
@@ -206,6 +220,7 @@ public class AccountController(
             return Unauthorized();
         }
 
+        // Include always-selected badges in the total count limit
         if (request.Badges.Count(x => x.IsSelected) > BadgesFormViewModel.MAX_SELECTED_BADGES)
         {
             return ValidationProblem();
@@ -216,18 +231,123 @@ public class AccountController(
 
         return PartialView("~/Features/Accounts/_BadgesForm.cshtml", new BadgesFormViewModel(badges));
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult> UpdateQAndANotifications(QAndANotificationsFormViewModel model)
+    {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
+        var member = await userManager.GetUserAsync(User);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        await notificationsManager.UpdateMemberSettings(member.Id, model.SelectedFrequency, model.AutoSubscribeEnabled);
+
+        var updatedModel = await GetNotificationsFormViewModel(member);
+        updatedModel.SelectedFrequency = model.SelectedFrequency;
+        updatedModel.AutoSubscribeEnabled = model.AutoSubscribeEnabled;
+
+        return PartialView("~/Features/Accounts/_DiscussionNotificationsForm.cshtml", updatedModel);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult> UnsubscribeDiscussion(int webPageItemID)
+    {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
+        var member = await userManager.GetUserAsync(User);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        var questionPages = await contentRetriever.RetrievePages<QAndAQuestionPage>(
+            RetrievePagesParameters.Default,
+            q => q.Where(w => w.WhereEquals(
+                nameof(QAndAQuestionPage.SystemFields.WebPageItemID),
+                webPageItemID)),
+            RetrievalCacheSettings.CacheDisabled);
+
+        if (questionPages.FirstOrDefault() is QAndAQuestionPage questionPage)
+        {
+            _ = await notificationsManager.UnsubscribeFromDiscussion(member.Id, questionPage);
+        }
+
+        var model = await GetNotificationsFormViewModel(member);
+        return PartialView("~/Features/Accounts/_DiscussionSubscriptions.cshtml", model.SubscribedDiscussions);
+    }
+
+    private async Task<QAndANotificationsFormViewModel> GetNotificationsFormViewModel(CommunityMember member)
+    {
+        var webPageItemIDs = await notificationsManager.GetSubscribedWebPageItemIDs(member);
+        int[] subscribedItemIDsArray = [.. webPageItemIDs];
+        var subscribedDiscussions = subscribedItemIDsArray.Length > 0
+            ? await contentRetriever.RetrievePages<QAndAQuestionPage>(
+                RetrievePagesParameters.Default,
+                q => q.Where(w => w.WhereIn(
+                    nameof(QAndAQuestionPage.SystemFields.WebPageItemID),
+                    subscribedItemIDsArray)),
+                RetrievalCacheSettings.CacheDisabled)
+            : [];
+
+        var frequency = await notificationsManager.GetMemberFrequency(member.Id);
+        bool autoSubscribeEnabled = await notificationsManager.GetAutoSubscribeEnabled(member.Id);
+
+        var subscribedDiscussionModels = new List<SubscribedDiscussionViewModel>();
+        foreach (var q in subscribedDiscussions.OrderByDescending(q => q.QAndAQuestionPageDateCreated))
+        {
+            var pageUrl = await urlRetriever.Retrieve(q);
+
+            subscribedDiscussionModels.Add(new SubscribedDiscussionViewModel
+            {
+                WebPageItemID = q.SystemFields.WebPageItemID,
+                Title = q.BasicItemTitle,
+                QuestionURL = pageUrl.RelativePath.RelativePathTrimmed(),
+                DateCreated = q.QAndAQuestionPageDateCreated,
+                DateModified = q.QAndAQuestionPageDateModified
+            });
+        }
+
+        return new QAndANotificationsFormViewModel(frequency, autoSubscribeEnabled, subscribedDiscussionModels);
+    }
 }
 
 public record UpdateBadgesRequest(List<SelectedBadgeViewModel> Badges);
 
-public record BadgesFormViewModel(IReadOnlyList<MemberBadgeViewModel> Badges)
+public class BadgesFormViewModel
 {
     public const int MAX_SELECTED_BADGES = 5;
+
+    public IReadOnlyList<MemberBadgeViewModel> Badges { get; }
+    public IReadOnlyList<MemberBadgeViewModel> AlwaysSelectedBadges { get; }
+    public IReadOnlyList<MemberBadgeViewModel> SelectableBadges { get; }
+    public int InitialSelectedCount { get; }
+    public int RemainingSlots { get; }
+
+    public BadgesFormViewModel(IReadOnlyList<MemberBadgeViewModel> badges)
+    {
+        Badges = badges;
+        AlwaysSelectedBadges = [.. badges.Where(x => x.AlwaysSelected)];
+        SelectableBadges = [.. badges.Where(x => !x.AlwaysSelected)];
+        InitialSelectedCount = badges.Count(x => x.IsSelected && !x.AlwaysSelected);
+        RemainingSlots = MAX_SELECTED_BADGES - badges.Count(x => x.AlwaysSelected);
+    }
 }
 
 public class SelectedBadgeViewModel
 {
     public int BadgeId { get; set; }
+    public string BadgeCodeName { get; set; } = "";
     public bool IsSelected { get; set; }
 }
 
@@ -242,7 +362,7 @@ public class MyAccountViewModel
     public BadgesFormViewModel BadgesForm { get; set; } = new([]);
     public DateTime DateCreated { get; set; }
     public UpdatePasswordViewModel PasswordInfo { get; set; } = new();
-    public AvatarFormViewModel AvatarForm { get; set; } = new();
+    public AvatarFormViewModel AvatarForm { get; set; } = new(); public QAndANotificationsFormViewModel NotificationsForm { get; set; } = new();
 }
 
 public class ProfileViewModel
@@ -278,6 +398,16 @@ public class ProfileViewModel
     [MaxLength(40, ErrorMessage = "Employer website URL cannot be longer than 40 characters.")]
     [Url(ErrorMessage = "Must be a valid URL")]
     public string? EmployerWebsiteURL { get; set; } = "";
+
+    [DataType(DataType.Text)]
+    [DisplayName("Time zone")]
+    [MaxLength(100, ErrorMessage = "Time zone cannot be longer than 100 characters.")]
+    public string? TimeZone { get; set; } = "";
+
+    [BindNever]
+    public IReadOnlyList<SelectListItem> TimeZoneOptions { get; } = TimeZoneInfo.GetSystemTimeZones()
+        .Select(tz => new SelectListItem(tz.DisplayName, tz.Id))
+        .ToList();
 }
 
 public class UpdatePasswordViewModel
@@ -316,4 +446,44 @@ public class AvatarFormViewModel
     // 100 kb
     [MaxFileSize(MAX_FILE_SIZE)]
     public IFormFile? AvatarImageFileAttachment { get; set; }
+}
+
+public class QAndANotificationsFormViewModel
+{
+    public QAndANotificationFrequencyType SelectedFrequency { get; set; }
+    public bool AutoSubscribeEnabled { get; set; }
+    public IReadOnlyList<SubscribedDiscussionViewModel> SubscribedDiscussions { get; } = [];
+    public IReadOnlyList<SelectListItem> FrequencyOptions { get; } = [];
+
+    public QAndANotificationsFormViewModel()
+    {
+    }
+
+    public QAndANotificationsFormViewModel(
+        QAndANotificationFrequencyType selectedFrequency,
+        bool autoSubscribeEnabled,
+        IReadOnlyList<SubscribedDiscussionViewModel> subscribedDiscussions)
+    {
+        SelectedFrequency = selectedFrequency;
+        AutoSubscribeEnabled = autoSubscribeEnabled;
+        SubscribedDiscussions = subscribedDiscussions;
+        FrequencyOptions = Enums
+            .GetMembers<QAndANotificationFrequencyType>(EnumMemberSelection.All)
+            .Select(e => new SelectListItem
+            {
+                Value = e.Value.ToString(),
+                Text = e.Attributes.OfType<DescriptionAttribute>().FirstOrDefault()?.Description ?? e.Name,
+                Selected = e.Value == selectedFrequency
+            })
+            .ToList();
+    }
+}
+
+public class SubscribedDiscussionViewModel
+{
+    public int WebPageItemID { get; set; }
+    public string Title { get; set; } = "";
+    public string QuestionURL { get; set; } = "";
+    public DateTime DateCreated { get; set; }
+    public DateTime DateModified { get; set; }
 }

@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using CMS.ContactManagement;
 using CMS.ContentEngine.Internal;
 using CMS.DataEngine;
@@ -6,8 +7,10 @@ using CMS.EmailLibrary;
 using CMS.EmailLibrary.Internal;
 using CMS.EmailMarketing;
 using CMS.EmailMarketing.Internal;
+using EnumsNET;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.Emails;
+using Kentico.Community.Portal.Web.Features.QAndA.Notifications;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Xperience.Admin.DigitalMarketing.Internal;
 
@@ -27,6 +30,41 @@ public class MemberEmailConfiguration
         new(
             new() { { "TOKEN_PasswordResetURL", resetURL } },
             SystemEmails.PasswordRecoveryConfirmation.EmailConfigurationName);
+
+    public class DiscussionNotificationEmailData
+    {
+        public DiscussionNotificationEmailData(
+            string tableHTML,
+            int count,
+            string baseURL,
+            QAndANotificationFrequencyType frequency)
+        {
+            TableHTML = tableHTML;
+            BaseURL = baseURL;
+            Count = count.ToString();
+
+            var enumMember = Enums.GetMember(frequency);
+            Frequency = enumMember?.Attributes.OfType<DescriptionAttribute>().FirstOrDefault()?.Description
+                ?? enumMember?.Name
+                ?? "";
+        }
+
+        public string TableHTML { get; }
+        public string BaseURL { get; }
+        public string Count { get; }
+        public string Frequency { get; }
+    }
+    public static MemberEmailConfiguration QAndADiscussionNotification(DiscussionNotificationEmailData data) =>
+        new(
+            new()
+            {
+                { "TOKEN_NotificationTableHTML", data.TableHTML },
+                { "TOKEN_NotificationCount", data.Count.ToString() },
+                { "TOKEN_NotificationFrequency", data.Frequency },
+                { "TOKEN_BaseURL", data.BaseURL },
+            },
+            SystemEmails.QAndADiscussionNotification.EmailConfigurationName
+        );
 
     private MemberEmailConfiguration(Dictionary<string, string> contextItems, string configurationName)
     {
@@ -51,7 +89,8 @@ public class MemberEmailService(
     IInfoProvider<ContentItemInfo> contentItems,
     IInfoProvider<EmailChannelInfo> emailChannels,
     IInfoProvider<EmailChannelSenderInfo> emailChannelSenders,
-    IEmailUnsubscriptionUrlGenerator emailUnsubscriptionUrlGenerator
+    IEmailUnsubscriptionUrlGenerator emailUnsubscriptionUrlGenerator,
+    IInfoProvider<ContactInfo> contactProvider
 ) : IMemberEmailService
 {
     private readonly IInfoProvider<EmailConfigurationInfo> emailConfigurationProvider = emailConfigurationProvider;
@@ -65,6 +104,7 @@ public class MemberEmailService(
     private readonly IInfoProvider<EmailChannelInfo> emailChannels = emailChannels;
     private readonly IInfoProvider<EmailChannelSenderInfo> emailChannelSenders = emailChannelSenders;
     private readonly IEmailUnsubscriptionUrlGenerator emailUnsubscriptionUrlGenerator = emailUnsubscriptionUrlGenerator;
+    private readonly IInfoProvider<ContactInfo> contactProvider = contactProvider;
 
     public async Task SendEmail(CommunityMember member, MemberEmailConfiguration configuration)
     {
@@ -85,7 +125,9 @@ public class MemberEmailService(
             .GetAsync(configuration.EmailConfigurationName);
         string unsubscriptionUrl = await emailUnsubscriptionUrlGenerator.GenerateSignedUrl(emailConfig, "/Kentico.Emails/Unsubscribe", recipient.Email, Guid.NewGuid(), false);
 
-        var currentContact = ContactManagementContext.CurrentContact;
+        var currentContact = ContactManagementContext.GetCurrentContact(true)
+            ?? (await contactProvider.Get().WhereEquals(nameof(ContactInfo.ContactEmail), recipient.Email).GetEnumerableTypedResultAsync()).FirstOrDefault()
+            ?? new ContactInfo { ContactEmail = recipient.Email };
 
         var markupBuilder = await markupBuilderFactory.Create(emailConfig);
         string mergedTemplate = await markupBuilder
@@ -105,23 +147,18 @@ public class MemberEmailService(
         var data = await dataRetriever
             .GetContentItemData(contentItem, contentLanguage.ContentLanguageID, false);
         var emailFieldValues = new EmailContentTypeSpecificFieldValues(data);
-        string plainTextBody = await contentResolver.Resolve(
-            emailConfig,
-            emailFieldValues.EmailPlainText,
-            EmailContentFilterType.Sending,
-            dataContext);
+
+        /* Use the custom content filter directly instead of the IEmailContentResolver because the resolver adds built-in filters only meant for the email body (e.g. tracking links/pixels) */
+        var tokenFilter = new CustomTokenValueEmailContentFilter();
+        string subject = await tokenFilter.Apply(emailFieldValues.EmailSubject, emailConfig, dataContext);
+        string plainTextBody = await tokenFilter.Apply(emailFieldValues.EmailPlainText, emailConfig, dataContext);
 
         var emailChannel = (await emailChannels.Get()
             .WhereEquals(
                 nameof(EmailChannelInfo.EmailChannelID),
                 emailConfig.EmailConfigurationEmailChannelID)
             .GetEnumerableTypedResultAsync())
-            .FirstOrDefault();
-
-        if (emailChannel is null)
-        {
-            throw new Exception($"There is not email channel for the email configuration [{emailConfig.EmailConfigurationID}]");
-        }
+            .FirstOrDefault() ?? throw new Exception($"There is not email channel for the email configuration [{emailConfig.EmailConfigurationID}]");
 
         var sender = await emailChannelSenders
             .GetAsync(emailFieldValues.EmailSenderID);
@@ -132,7 +169,7 @@ public class MemberEmailService(
         {
             From = $"\"{sender.EmailChannelSenderDisplayName}\" <{senderEmail}>",
             Recipients = recipient.Email,
-            Subject = emailFieldValues.EmailSubject,
+            Subject = subject,
             Body = emailBody,
             PlainTextBody = plainTextBody,
             EmailConfigurationID = emailConfig.EmailConfigurationID,
@@ -142,27 +179,24 @@ public class MemberEmailService(
         await emailService.SendEmail(emailMessage);
     }
 
-    private Func<IServiceProvider, Task> SetEmailContext(Guid mailoutGuid, ContactInfo currentContact, string contactEmail, EmailConfigurationInfo emailConfiguration) =>
+    private static Func<IServiceProvider, Task> SetEmailContext(Guid mailoutGuid, ContactInfo currentContact, string contactEmail, EmailConfigurationInfo emailConfiguration) =>
         async (serviceProvider) =>
         {
-            var recipientContextAccessor = serviceProvider.GetRequiredService<IEmailRecipientContextAccessor>();
             var emailRecipientContextProvider = serviceProvider.GetRequiredService<IEmailRecipientContextProvider>();
-            var recipientContactGroupContextAccessor = serviceProvider.GetRequiredService<IEmailRecipientContactGroupContextAccessor>();
+            var recipientContextAccessor = serviceProvider.GetRequiredService<IEmailRecipientContextAccessor>();
+            var recipientContactGroupAccessor = serviceProvider.GetRequiredService<IEmailRecipientContactGroupContextAccessor>();
 
             var emailRecipientContext = await emailRecipientContextProvider.Get(currentContact.ContactID, contactEmail, emailConfiguration, mailoutGuid, default);
 
             recipientContextAccessor.SetContext(emailRecipientContext);
-
-            var groupNames = currentContact.ContactGroups.Select(g => g.ContactGroupName).ToList();
-            var recipientContactGroupContext = new EmailRecipientContactGroupContext() { ContactGroupNames = groupNames };
-
-            var recipientContactGroupAccessor = serviceProvider.GetRequiredService<IEmailRecipientContactGroupContextAccessor>();
 
             if (recipientContactGroupAccessor is not EmailRecipientContactGroupContextAccessor accessor)
             {
                 return;
             }
 
+            var groupNames = currentContact.ContactGroups.Select(g => g.ContactGroupName).ToList();
+            var recipientContactGroupContext = new EmailRecipientContactGroupContext() { ContactGroupNames = groupNames };
             accessor.Context = recipientContactGroupContext;
         };
 }

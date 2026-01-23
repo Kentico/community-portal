@@ -11,13 +11,15 @@
 <div id="@wrapperElId" class="my-3" q-and-a-answer style="--bg-target: var(--bs-purple-100)"
     data-accepted="@JSEncoder.EncodeToJson(Model.IsAcceptedAnswer)" data-created="@Model.DateCreated.Ticks">
     <article class="border rounded-3 p-3 @(Model.IsAcceptedAnswer ? "border-success" : "")">
-        <div class="mb-3 d-flex justify-content-between" data-ktc-search-exclude>
+        <div class="mb-3 d-flex justify-content-between gap-1" data-ktc-search-exclude>
             <vc:author author="Model.Author" />
 
             <div>
-                <span class="text-nowrap">@Model.DateCreated.ToString("yyyy/MM/dd")
-                    @Model.DateCreated.ToString("t") <a href="#@wrapperElId" class="answer-link"
-                        title="Navigate to this answer" aria-label="Navigate to this answer"></a></span>
+                <div class="d-flex align-items-center">
+                    <time xpc-datetime="Model.DateCreated" class="text-nowrap"></time>
+                    <a href="#@wrapperElId" class="answer-link ps-1" title="Navigate to this answer"
+                        aria-label="Navigate to this answer"></a>
+                </div>
 
                 @if (Model.IsAcceptedAnswer)
                 {

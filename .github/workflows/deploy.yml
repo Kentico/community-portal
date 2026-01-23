@@ -16,28 +16,40 @@ on:
           - qa
           - uat
           - prod
+      archive_package:
+        description: "Archive deployment package as artifact"
+        required: false
+        default: false
+        type: boolean
+
+# Prevent concurrent deployments to the same environment
+concurrency:
+  group: deploy-${{ inputs.environment }}
+  cancel-in-progress: false
 
 jobs:
   createDeploymentPackage:
     name: Create SaaS Deployment Package
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     defaults:
       run:
         shell: pwsh
 
     env:
       ASPNETCORE_ENVIRONMENT: CI
-      NODE_VERSION: ""
       DATABASE_BACKUP_FILENAME: ""
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
       DOTNET_NOLOGO: 1
       PROJECT_NAME: Kentico.Community.Portal.Web
+      SQL_SA_PASSWORD: Pass@12345
 
     steps:
+      # === Environment Setup ===
       - uses: actions/checkout@v6
 
-      - name: "Install Node.js from package.json version"
+      - name: Setup Node.js (from package.json)
         uses: actions/setup-node@v6
         with:
           node-version-file: "src/Kentico.Community.Portal.Web/package.json"
@@ -57,6 +69,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
+      # === Build ===
       - name: Install dependencies
         run: dotnet restore --locked-mode
 
@@ -66,6 +79,7 @@ jobs:
             -c Release `
             --no-restore
 
+      # === Database Setup ===
       - name: Get Database Backup Name
         run: |
           $latestBackup = Get-ChildItem -Path "./database" -Filter "*.zip" | Select-Object -ExpandProperty BaseName
@@ -77,27 +91,32 @@ jobs:
             -Path "./database/${{ env.DATABASE_BACKUP_FILENAME }}.zip" `
             -DestinationPath "./database"
 
-      - name: Install a SQL Server suite of tools (SQLEngine, SQLPackage)
-        uses: potatoqualitee/mssqlsuite@v1.11
+      - name: Install SQL Server (2022)
+        uses: potatoqualitee/mssqlsuite@v1.12
         with:
           install: sqlpackage, sqlengine, sqlclient
-          sa-password: Pass@12345
+          sa-password: ${{ env.SQL_SA_PASSWORD }}
           version: 2022
 
-      - name: Restore Database .bak
+      - name: Restore Database from Backup
         run: |
+          Write-Output "Copying database backup to SQL container..."
           docker cp "./database/${{ env.DATABASE_BACKUP_FILENAME }}" sql:/var/backups/Kentico.Community.bak
           docker exec -u root sql bash -c "chown mssql:mssql /var/backups/Kentico.Community.bak"
           docker exec -u root sql bash -c "chmod 644 /var/backups/Kentico.Community.bak"
 
+          Write-Output "Restoring database..."
           sqlcmd `
             -S localhost `
             -d master `
             -U "sa" `
-            -P "Pass@12345" `
+            -P "${{ env.SQL_SA_PASSWORD }}" `
             -N o `
             -C `
             -i ./database/backup-restore.sql
+
+          Write-Output "✓ Database restored successfully"
+          "## ✓ Database Restored" >> $env:GITHUB_STEP_SUMMARY
 
       - name: Restore License Key
         working-directory: "./scripts"
@@ -108,18 +127,42 @@ jobs:
         working-directory: "./scripts"
         run: |
           ./Restore-CI.ps1
+          "## ✓ CI Repository Restored" >> $env:GITHUB_STEP_SUMMARY
 
+      # === Package Generation ===
       - name: Generate Deployment Package
         working-directory: "./scripts"
         run: |
+          Write-Output "Generating deployment package with zero-downtime support..."
           ./Export-DeploymentPackage.ps1 -ZeroDowntimeSupportEnabled -CompressPackage
+          Write-Output "✓ Deployment package created"
+          "## 📦 Deployment Package Created" >> $env:GITHUB_STEP_SUMMARY
 
+      # === Deployment ===
       - name: Upload Deployment Package to ${{ inputs.environment }}
         run: |
+          Write-Output "Uploading deployment package to ${{ inputs.environment }}..."
+          Write-Output "Reason: ${{ inputs.reason }}"
+
           $headers = @{ Authorization = "Bearer ${{ secrets.XPERIENCE_PORTAL_DEPLOYMENT_PAT }}" }
-          Invoke-RestMethod `
+          $response = Invoke-RestMethod `
             -Uri https://xperience-portal.com/api/deployment/upload/${{ secrets.XPERIENCE_PORTAL_PROJECT_GUID }}/${{ inputs.environment }} `
             -Method Post `
             -InFile './DeploymentPackage.zip' `
             -ContentType "application/zip" `
             -Headers $headers
+
+          Write-Output "✓ Package uploaded successfully to ${{ inputs.environment }}"
+          "## ✅ Deployed to ${{ inputs.environment }}" >> $env:GITHUB_STEP_SUMMARY
+          "**Reason:** ${{ inputs.reason }}" >> $env:GITHUB_STEP_SUMMARY
+
+      - name: Archive Deployment Package
+        if: ${{ inputs.archive_package }}
+        uses: actions/upload-artifact@v4
+        with:
+          name:
+            deployment-package-${{ inputs.environment }}-${{ github.run_number
+            }}
+          path: DeploymentPackage.zip
+          retention-days: 30
+          compression-level: 0 # Already compressed

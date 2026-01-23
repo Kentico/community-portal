@@ -8,12 +8,14 @@ public static class SystemEmails
     public static SupportRequestConfirmationEmail SupportRequestConfirmation { get; } = new();
     public static PasswordRecoveryConfirmationEmail PasswordRecoveryConfirmation { get; } = new();
     public static RegistrationConfirmationEmail RegistrationConfirmation { get; } = new();
+    public static QAndADiscussionNotificationEmail QAndADiscussionNotification { get; } = new();
 
     public static readonly ImmutableList<ISystemEmailConfiguration> ProtectedEmails =
     [
         SupportRequestConfirmation,
         PasswordRecoveryConfirmation,
-        RegistrationConfirmation
+        RegistrationConfirmation,
+        QAndADiscussionNotification
     ];
 
     public static bool Includes(EmailConfigurationInfo config) =>
@@ -43,6 +45,16 @@ public static class SystemEmails
     {
         public static Guid GUID { get; } = new Guid("225d32b8-7089-4c24-8f7f-177ca9f27317");
         public const string CodeName = "MemberRegistrationEmailConfirmation-qz9jyy5q";
+
+        public Guid EmailConfigurationGUID => GUID;
+
+        public string EmailConfigurationName => CodeName;
+    }
+
+    public record QAndADiscussionNotificationEmail : ISystemEmailConfiguration
+    {
+        public static Guid GUID { get; } = new Guid("17ac6ad9-d0cb-4e82-a64f-b63589c6e53d");
+        public const string CodeName = "QAndADiscussionNotification-x49wqflo";
 
         public Guid EmailConfigurationGUID => GUID;
 

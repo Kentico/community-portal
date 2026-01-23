@@ -39,11 +39,18 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Description</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeintranslation>True</includeintranslation>
         </properties>
         <settings>
           <ConfigurationName>Kentico.Administration.WebsitesStructuredContent</ConfigurationName>
           <controlname>Kentico.Administration.RichTextEditor</controlname>
         </settings>
+        <additionalactionsdata>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextRefinement</AdditionalActionIdentifier>
+            <AdditionalActionValues />
+          </AdditionalActionConfiguration>
+        </additionalactionsdata>
       </field>
       <field column="CommunityGroupContentAddressCity" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="964b2173-823c-4486-bf9a-96ca806a0c78" visible="true">
         <properties>

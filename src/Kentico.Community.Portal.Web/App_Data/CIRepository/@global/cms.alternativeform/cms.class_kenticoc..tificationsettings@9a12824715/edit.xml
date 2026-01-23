@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>KenticoCommunity.DiscussionMemberNotificationSettings</CodeName>
+    <GUID>fdd53e90-6ce9-4317-a010-edbe011b5f02</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="DiscussionMemberNotificationSettingsID" guid="3c1f5ef3-6f68-467a-95c6-82f10c49bf44" enabled="" />
+      <field column="DiscussionMemberNotificationSettingsDateModified" guid="2761b71d-8aef-43fc-9943-1c63f7de4514" enabled="" order="1" />
+      <field column="DiscussionMemberNotificationSettingsMemberID" enabled="true" guid="d0a7c03a-2b16-4d4a-bd58-f5071937484b" visible="true" refobjtype="" reftype="" order="2">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>cms.member</ObjectType>
+        </settings>
+        <properties>
+          <explanationtext>The member who will receive notifications.</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Member</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="DiscussionMemberNotificationSettingsFrequencyType" enabled="true" guid="a0256628-3d6c-4ee4-be41-0ba6b61dec84" visible="true" order="3">
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+Never;Never
+DailyOnce;Daily Once
+DailyTwice;Daily Twice
+Weekly;Weekly
+Monthly;Monthly
+]]>
+          </Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
+        <properties>
+          <explanationtext>
+            <![CDATA[How often the member should receive notification emails.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Frequency</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="DiscussionMemberNotificationSettingsLatestDiscussionEventID" enabled="true" guid="21ce4241-a93e-4923-b1b0-61b0124a76a3" visible="true" refobjtype="" reftype="" order="4">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>kenticocommunity.discussionevent</ObjectType>
+        </settings>
+        <properties>
+          <explanationtext>
+            <![CDATA[The latest discussion event that has been included in notifications.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Latest event</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="DiscussionMemberNotificationSettingsDateCreated" guid="6b236934-f921-4156-9421-0f81a008577f" enabled="" order="5" />
+      <field column="DiscussionMemberNotificationSettingsAutoSubscribeEnabled" enabled="true" guid="93726d81-ff3b-4623-a10e-b42622027409" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.Checkbox</controlname>
+        </settings>
+        <properties>
+          <defaultvalue>False</defaultvalue>
+          <explanationtext>
+            <![CDATA[If true, any new discussion engagement (e.g. new response, new discussion) will subscribe the member to the discussion.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Auto-subscribe enabled?</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit</FormDisplayName>
+  <FormGUID>185f2497-2502-4770-a817-d6f12afec71c</FormGUID>
+  <FormIsCustom>True</FormIsCustom>
+  <FormName>Edit</FormName>
+</cms.alternativeform>

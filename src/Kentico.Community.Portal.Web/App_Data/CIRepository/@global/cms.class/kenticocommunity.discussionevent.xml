@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassCodeGenerationSettings>
+    <Data>
+      <LastModifiedColumn>DiscussionEventDateModified</LastModifiedColumn>
+      <ObjectType>KenticoCommunity.DiscussionEvent</ObjectType>
+      <UseGuidHashtable>False</UseGuidHashtable>
+      <UseIdHashtable>False</UseIdHashtable>
+      <UseNameHashtable>False</UseNameHashtable>
+    </Data>
+  </ClassCodeGenerationSettings>
+  <ClassDisplayName>Discussion Event</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="DiscussionEventID" columntype="integer" enabled="true" guid="e562ad4c-81ea-4f88-ad42-38eb3b974f4f" isPK="true" />
+      <field column="DiscussionEventType" columnprecision="0" columnsize="25" columntype="text" enabled="true" guid="d7e6518f-38ea-4c0f-8952-648258f7c177" />
+      <field column="DiscussionEventDateModified" columnprecision="3" columntype="datetime" enabled="true" guid="d77baec7-89bf-4075-a3aa-00d5c3023974" />
+      <field column="DiscussionEventWebPageItemID" columnprecision="0" columntype="integer" enabled="true" guid="86703cb5-dc74-47f2-bf0d-dd6172a39af3">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="DiscussionEventWebsiteChannelID" columnprecision="0" columntype="integer" enabled="true" guid="aeef9d92-2bd0-4175-b1d2-0b99d9de3d05" refobjtype="cms.websitechannel" reftype="Required" />
+      <field column="DiscussionEventFromMemberID" columnprecision="0" columntype="integer" enabled="true" guid="8736dacc-b858-4f58-b36f-ecf493a78b16" refobjtype="cms.member" reftype="RequiredHasDefault">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>86748fe4-78c8-4999-808b-7d0a2c3c1656</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>KenticoCommunity.DiscussionEvent</ClassName>
+  <ClassResourceID>
+    <CodeName>KenticoCommunity</CodeName>
+    <GUID>5e10e4ec-a038-4b97-a9f6-c17724896c89</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>KenticoCommunity_DiscussionEvent</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

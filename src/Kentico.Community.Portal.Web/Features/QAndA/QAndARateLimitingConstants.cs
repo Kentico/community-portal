@@ -6,22 +6,27 @@ namespace Kentico.Community.Portal.Web.Features.QAndA;
 public static class QAndARateLimitingConstants
 {
     /// <summary>
-    /// Rate limiting policy for creating new questions - 3 per 10 minutes per user
+    /// Rate limiting policy for creating new questions
     /// </summary>
     public const string CreateQuestion = "QAndA_CreateQuestion";
 
     /// <summary>
-    /// Rate limiting policy for creating new answers - 10 per 5 minutes per user
+    /// Rate limiting policy for creating new answers
     /// </summary>
     public const string CreateAnswer = "QAndA_CreateAnswer";
 
     /// <summary>
-    /// Rate limiting policy for updating questions - 5 per 5 minutes per user
+    /// Rate limiting policy for updating questions
     /// </summary>
     public const string UpdateQuestion = "QAndA_UpdateQuestion";
 
     /// <summary>
-    /// Rate limiting policy for updating answers - 10 per 5 minutes per user
+    /// Rate limiting policy for updating answers
     /// </summary>
     public const string UpdateAnswer = "QAndA_UpdateAnswer";
+
+    /// <summary>
+    /// Rate limiting policy for updating question subscribe/unsubscribe
+    /// </summary>
+    public const string UpdateQuestionSubscription = "QAndA_UpdateQuestionSubscription";
 }

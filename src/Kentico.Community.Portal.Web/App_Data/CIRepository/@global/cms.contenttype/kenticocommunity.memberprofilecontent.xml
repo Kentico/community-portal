@@ -9,9 +9,13 @@
       <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="443dd8d3-8f37-4623-8638-714236688c49" isunique="true" system="true" />
       <field column="MemberProfileContentFullName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="cd5938b9-c995-4b76-9660-e36851ed4816" visible="true">
         <properties>
+          <explanationtext>
+            <![CDATA[The full name of the community member, used for presentation purposes.]]>
+          </explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Full name</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeintranslation>True</includeintranslation>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
@@ -19,8 +23,11 @@
       </field>
       <field allowempty="true" column="MemberProfileContentPhotoImageContent" columnprecision="0" columntype="contentitemreference" enabled="true" guid="56aab8e5-d071-4371-a678-3cd7bfb55f5b" visible="true">
         <properties>
+          <explanationtext>
+            <![CDATA[Curated profile image for the community member, used instead of their member avatar.]]>
+          </explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Image</fieldcaption>
+          <fieldcaption>Photo</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
@@ -35,9 +42,12 @@
       </field>
       <field column="MemberProfileContentMemberID" columnprecision="0" columntype="integer" enabled="true" guid="893cbc96-8685-4110-b94e-7d3a508a3419" visible="true">
         <properties>
-          <explanationtext>Optional</explanationtext>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Member</fieldcaption>
+          <defaultvalue>0</defaultvalue>
+          <explanationtext>
+            <![CDATA[Select the member account to connect this member to their self-managed profile on the Kentico Community Portal. <br>Example: <a href="https://community.kentico.com/member/19">https://community.kentico.com/member/19</a>.]]>
+          </explanationtext>
+          <explanationtextashtml>True</explanationtextashtml>
+          <fieldcaption>(Optional) Member</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>

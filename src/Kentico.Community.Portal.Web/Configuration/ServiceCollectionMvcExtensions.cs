@@ -97,6 +97,8 @@ public static class ServiceCollectionMvcExtensions
                     (type, factory) => factory.Create(typeof(SharedResources));
             })
             .Services
+            .AddServerSideBlazor() // Add Blazor services for component rendering
+            .Services
             .AddSingleton<IHtmlGenerator, BootstrapHTMLGenerator>()
             .AddHttpContextAccessor()
             .AddHttpClient()
@@ -141,6 +143,15 @@ public static class ServiceCollectionMvcExtensions
                             permitLimit: 10,
                             segmentsPerWindow: 5,
                             window: TimeSpan.FromMinutes(5)
+                        )
+                    )
+                    .AddPolicy(
+                        QAndARateLimitingConstants.UpdateQuestionSubscription,
+                        httpContext => RateLimitingUtilities.CreateSlidingWindowPartition(
+                            httpContext,
+                            permitLimit: 10,
+                            segmentsPerWindow: 5,
+                            window: TimeSpan.FromMinutes(2)
                         )
                     )
                     // Authentication and Member Management Policies (Public - stronger limits)

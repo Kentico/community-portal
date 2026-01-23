@@ -56,7 +56,7 @@ public class PasswordRecoveryController(
             return PartialView("~/Features/PasswordRecovery/_RequestRecoveryEmailForm.cshtml", model);
         }
 
-        var member = await userManager.FindByEmailAsync(model.Email);
+        var member = await userManager.FindByEmailAsync(model.Email.Trim());
         if (member is null)
         {
             return PartialView("~/Features/PasswordRecovery/_RequestRecoveryEmailForm.cshtml", new RequestRecoveryEmailViewModel());

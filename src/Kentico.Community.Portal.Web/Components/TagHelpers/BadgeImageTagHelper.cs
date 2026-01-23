@@ -28,9 +28,12 @@ public class BadgeImageTagHelper : TagHelper
         }
         output.TagName = "img";
 
+        string borderColor = badge.AlwaysSelected ? "var(--bs-secondary);" : "var(--bs-gray-600)";
+        string borderWidth = badge.AlwaysSelected ? "border-2" : "border-1";
+
         output.Attributes.SetAttribute("src", badgeURL);
-        output.Attributes.SetAttribute("class", "align-text-top border border-1 rounded-2 overflow-hidden");
-        output.Attributes.SetAttribute("style", "height: 1.5rem; width: 1.5rem; --bs-border-color: var(--bs-gray-600)");
+        output.Attributes.SetAttribute("class", $"align-text-top border {borderWidth} rounded-2 overflow-hidden");
+        output.Attributes.SetAttribute("style", $"height: 1.5rem; width: 1.5rem; --bs-border-color: {borderColor}");
         output.Attributes.SetAttribute("alt", $"{badge.MemberBadgeDisplayName} badge");
     }
 }

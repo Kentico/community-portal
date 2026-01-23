@@ -1,5 +1,6 @@
 using CMS.ContentEngine;
 using Kentico.Community.Portal.Web.Rendering;
+using Kentico.Content.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -108,12 +109,12 @@ public class ImageTagHelper(IPageBuilderDataContextRetriever pageBuilderDataCont
             {
                 // Use actual width from Xperience metadata, fallback to max width
                 int actualWidth = variantMetadata.Width ?? maxWidth;
-                srcsetParts.Add($"{variantUrl} {actualWidth}w");
+                srcsetParts.Add($"{variantUrl.RelativePathTrimmed()} {actualWidth}w");
             }
         }
 
         // Always include the original image as the largest option
-        srcsetParts.Add($"{asset.Url} {originalWidth}w");
+        srcsetParts.Add($"{asset.Url.RelativePathTrimmed()} {originalWidth}w");
 
         return string.Join(", ", srcsetParts);
     }

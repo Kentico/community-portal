@@ -6,35 +6,79 @@
 
 @{
     int maxBadges = BadgesFormViewModel.MAX_SELECTED_BADGES;
-    var badges = Model.Badges;
 }
 
 <form id="badgesUpdateForm" method="post" hx-post hx-controller="Account" hx-action="UpdateSelectedBadges"
     hx-swap="outerHTML" hx-disabled-elt="find fieldset"
-    x-data="{ selectedCount: @JSEncoder.EncodeToJson(badges.Count(x => x.IsSelected)), maxBadges: @maxBadges }">
+    x-data="{ selectedCount: @Model.InitialSelectedCount, maxBadges: @Model.RemainingSlots }">
 
     <fieldset hx-indicator="this" xpc-readonly-disabled>
-        <h5>My badges</h5>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h4 class="mb-0">My badges</h4>
+            <small class="text-muted">
+                <span x-text="@Model.AlwaysSelectedBadges.Count + selectedCount"></span> of @maxBadges selected
+            </small>
+        </div>
+
+        @if (Model.AlwaysSelectedBadges.Any())
+        {
+            <div class="form-group mb-3">
+                <p class="mb-1"><small class="text-muted">These badges are always displayed
+                        (@Model.AlwaysSelectedBadges.Count of
+                        @maxBadges):</small></p>
+                <span class="d-inline-flex wrap gap-2 mt-1 flex-wrap">
+                    @for (int i = 0; i < Model.AlwaysSelectedBadges.Count; i++)
+                    {
+                        var badge = Model.AlwaysSelectedBadges[i];
+                        int badgeIndex = i;
+
+                        <span class="badge d-flex align-items-center gap-1 fw-medium" theme="secondary-300"
+                            title="This badge is always selected" aria-label="This badge is always selected">
+
+                            <img xpc-badge="@badge" />
+
+                            @badge.MemberBadgeDisplayName
+                            <input type="hidden" id="Badges_@(badgeIndex)__BadgeId" name="Badges[@badgeIndex].BadgeId"
+                                value="@badge.BadgeId" />
+                            <input type="hidden" id="Badges_@(badgeIndex)__BadgeCodeName"
+                                name="Badges[@badgeIndex].BadgeCodeName" value="@badge.MemberBadgeCodeName" />
+                            <input type="hidden" id="Badges_@(badgeIndex)__IsSelected" name="Badges[@badgeIndex].IsSelected"
+                                value="true" />
+                        </span>
+                    }
+                </span>
+            </div>
+        }
+
         <div class="form-group">
+            @if (Model.AlwaysSelectedBadges.Any())
+            {
+                <p class="mb-1"><small class="text-muted">Select up to @Model.RemainingSlots additional
+                        badge@(Model.RemainingSlots != 1 ? "s" : ""):</small></p>
+            }
             <span class="d-inline-flex wrap gap-2 mt-1 flex-wrap">
-                @for (int i = 0; i < badges.Count; i++)
+                @for (int i = 0; i < Model.SelectableBadges.Count; i++)
                 {
-                    var badge = badges[i];
+                    var badge = Model.SelectableBadges[i];
+                    int badgeIndex = Model.AlwaysSelectedBadges.Count + i;
                     string theme = badge.IsSelected ? "secondary-300" : "";
                     var alpineState = JSEncoder.EncodeToJson(new { selected = badge.IsSelected });
+                    string titleText = badge.IsSelected ? "This badge is selected" : "This badge is not selected";
 
-                    <button id="badgeButton_@i" type="button" class="badge d-flex align-items-center gap-1 fw-medium"
-                        theme="@theme" x-data='@alpineState' :theme="selected ? 'secondary-300' : ''"
-                        :title="selected ? 'This badge is selected' : 'This badge is not selected'"
-                        :aria-label="selected ? 'This badge is selected' : 'This badge is not selected'"
+                    <button id="badgeButton_@badgeIndex" type="button"
+                        class="badge d-flex align-items-center gap-1 fw-medium" theme="@theme" x-data='@alpineState'
+                        :theme="selected ? 'secondary-300' : ''" title="@titleText" aria-label="@titleText"
                         @@click="selected = !selected; selectedCount += selected ? 1 : -1">
 
                         <img xpc-badge="@badge" />
 
                         @badge.MemberBadgeDisplayName
-                        <input type="hidden" id="Badges_@(i)__BadgeId" name="Badges[@i].BadgeId" value="@badge.BadgeId" />
-                        <input type="hidden" x-model="selected" id="Badges_@(i)__IsSelected" name="Badges[@i].IsSelected"
-                            value="@badge.IsSelected" />
+                        <input type="hidden" id="Badges_@(badgeIndex)__BadgeId" name="Badges[@badgeIndex].BadgeId"
+                            value="@badge.BadgeId" />
+                        <input type="hidden" id="Badges_@(badgeIndex)__BadgeCodeName"
+                            name="Badges[@badgeIndex].BadgeCodeName" value="@badge.MemberBadgeCodeName" />
+                        <input type="hidden" x-model="selected" id="Badges_@(badgeIndex)__IsSelected"
+                            name="Badges[@badgeIndex].IsSelected" value="@badge.IsSelected" />
                     </button>
                 }
             </span>
@@ -50,7 +94,17 @@
                 Update badges
             </button>
 
-            <small>Select up to @maxBadges badges which will be shown next to your name in the portal.</small>
+            <span>
+                <small>Show off your accomplishments and Kentico Community Portal participation.</small><br>
+                @if (Model.AlwaysSelectedBadges.Any())
+                {
+                    <small>Up to @maxBadges total badges will be shown next to your name in the portal.</small>
+                }
+                else
+                {
+                    <small>Select up to @maxBadges badges which will be shown next to your name in the portal.</small>
+                }
+            </span>
         </p>
 
         <vc:read-only-mode-notification />

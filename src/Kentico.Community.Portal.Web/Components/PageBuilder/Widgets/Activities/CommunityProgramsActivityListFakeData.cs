@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
 using Kentico.Community.Portal.Core.Modules.Membership;
 
 namespace Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CommunityProgramsActivityList;
@@ -31,17 +28,17 @@ internal static class CommunityProgramsActivityListFakeData
             })
             .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-        var memberIds = memberNames.Keys.ToArray();
-        var activityTypeKeys = activityTypesMap.Keys.DefaultIfEmpty("Social").ToArray();
-        var impactKeys = impactMap.Keys.DefaultIfEmpty("3").ToArray();
-        var effortKeys = effortMap.Keys.DefaultIfEmpty("2").ToArray();
-        var satisfactionKeys = satisfactionMap.Keys.DefaultIfEmpty("3").ToArray();
+        int[] memberIds = memberNames.Keys.ToArray();
+        string[] activityTypeKeys = activityTypesMap.Keys.DefaultIfEmpty("Social").ToArray();
+        string[] impactKeys = impactMap.Keys.DefaultIfEmpty("3").ToArray();
+        string[] effortKeys = effortMap.Keys.DefaultIfEmpty("2").ToArray();
+        string[] satisfactionKeys = satisfactionMap.Keys.DefaultIfEmpty("3").ToArray();
 
         static DateTime RandomDateInYear(Random rng, int year)
         {
             var start = new DateTime(year, 1, 1);
             var endExclusive = start.AddYears(1);
-            var rangeDays = (endExclusive - start).Days;
+            int rangeDays = (endExclusive - start).Days;
             return start.AddDays(rng.Next(rangeDays)).AddMinutes(rng.Next(0, 24 * 60));
         }
 
@@ -49,7 +46,7 @@ internal static class CommunityProgramsActivityListFakeData
 
         for (int i = 1; i <= count; i++)
         {
-            var memberId = memberIds[rng.Next(memberIds.Length)];
+            int memberId = memberIds[rng.Next(memberIds.Length)];
 
             items.Add(new(
                 MemberID: memberId,

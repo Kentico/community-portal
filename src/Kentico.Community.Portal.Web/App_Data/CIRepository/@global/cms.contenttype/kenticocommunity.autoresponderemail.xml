@@ -10,9 +10,11 @@
       <field allowempty="true" column="EmailSenderID" columntype="integer" enabled="true" guid="ef1926a3-1b21-4da1-a122-7b187912d05d" refobjtype="emaillibrary.emailchannelsender" reftype="NotRequired" system="true" />
       <field allowempty="true" column="EmailTemplateID" columntype="integer" enabled="true" guid="0afd3eb3-cf92-482b-8852-91c671d0cca8" refobjtype="emaillibrary.emailtemplate" reftype="NotRequired" system="true" />
       <field allowempty="true" column="EmailPlainText" columntype="longtext" enabled="true" guid="e0dd9bc1-c801-488c-8d13-edfdce431ce5" system="true" />
-      <field allowempty="true" column="EmailSubject" columnsize="450" columntype="text" enabled="true" guid="d61b0bb2-0ed0-4d29-807c-e9c35a2c1dfe" visible="true">
+      <field allowempty="true" column="EmailSubject" columnprecision="0" columnsize="450" columntype="text" enabled="true" guid="d61b0bb2-0ed0-4d29-807c-e9c35a2c1dfe" visible="true">
         <properties>
+          <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$digitalmarketing.emails.edit.subject$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
@@ -23,6 +25,18 @@
             <RuleValues />
           </ValidationRuleConfiguration>
         </validationrulesdata>
+        <additionalactionsdata>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraEmailSubjectSuggestion</AdditionalActionIdentifier>
+            <AdditionalActionValues>
+              <BodyFieldNames>
+                <string>AutoresponderEmailBodyContentHTML</string>
+                <string>AutoresponderEmailTitle</string>
+                <string>EmailPreviewText</string>
+              </BodyFieldNames>
+            </AdditionalActionValues>
+          </AdditionalActionConfiguration>
+        </additionalactionsdata>
       </field>
       <field allowempty="true" column="EmailPreviewText" columntype="longtext" enabled="true" guid="459d7891-0cbd-4dab-ac4c-078218c3e8f7" visible="true">
         <properties>
@@ -57,6 +71,12 @@
           </ConfigurationName>
           <controlname>Kentico.Administration.RichTextEditor</controlname>
         </settings>
+        <additionalactionsdata>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextRefinement</AdditionalActionIdentifier>
+            <AdditionalActionValues />
+          </AdditionalActionConfiguration>
+        </additionalactionsdata>
       </field>
       <field column="AutoresponderEmailUTMParameters" columnprecision="0" columntype="utmparameters" enabled="true" guid="077f0b86-5e35-4149-91d8-3958381e4ccc" visible="true">
         <properties>

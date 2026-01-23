@@ -43,8 +43,8 @@ public class MemberController(
         var member = memberInfo.AsCommunityMember();
 
         metaService.SetMeta(new WebPageMeta(
-            $"Community member profile - {member.UserName}",
-            $"Learn about {member.UserName} and their contributions to the Kentico Community"));
+            $"Community member profile - {member.DisplayName}",
+            $"Learn about {member.DisplayName} and their contributions to the Kentico Community"));
 
         var blogResult = search.SearchBlog(new BlogSearchRequest("publishdate", 50)
         {

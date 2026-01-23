@@ -1,5 +1,6 @@
 using CMS.Base;
 using Htmx;
+using Kentico.Community.Portal.Web.Features.QAndA.Notifications;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Content.Web.Mvc;
@@ -20,13 +21,17 @@ public class QAndAAnswerController(
     IContentRetriever contentRetriever,
     IQAndAPermissionService permissionService,
     ILogger<QAndAAnswerController> logger,
-    IReadOnlyModeProvider readOnlyProvider) : PortalHandlerController<QAndAAnswerController>(logger)
+    IReadOnlyModeProvider readOnlyProvider,
+    QAndANotificationSettingsManager notificationsManager,
+    QAndANotificationLogger notificationLogger) : PortalHandlerController<QAndAAnswerController>(logger)
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
     private readonly IMediator mediator = mediator;
     private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly IQAndAPermissionService permissionService = permissionService;
+    private readonly QAndANotificationSettingsManager notificationSettingsManager = notificationsManager;
+    private readonly QAndANotificationLogger notificationLogger = notificationLogger;
     private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
 
     [HttpPost]
@@ -62,6 +67,16 @@ public class QAndAAnswerController(
 
         return await mediator
             .Send(new QAndAAnswerCreateCommand(member, requestModel.Content, parentQuestionPage))
+            .TapTry(async (id) =>
+            {
+                bool autoSubscribe = await notificationSettingsManager.GetAutoSubscribeEnabled(member.Id);
+                if (autoSubscribe)
+                {
+                    await notificationSettingsManager.SubscribeToDiscussion(member.Id, parentQuestionPage);
+                }
+                var answer = await mediator.Send(new QAndAAnswerDataByIDQuery(id));
+                await notificationLogger.NotifyNewAnswer(answer);
+            })
             .Match(async id =>
             {
                 string questionPath = (await urlRetriever.Retrieve(parentQuestionPage)).RelativePathTrimmed();
@@ -176,7 +191,13 @@ public class QAndAAnswerController(
             return NotFound();
         }
 
-        bool hasPermission = await permissionService.HasPermission(HttpContext, parentQuestionPage, answer, QAndAAnswerPermissionType.MarkApprovedAnswer);
+        var member = await userManager.CurrentUser(HttpContext);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        bool hasPermission = await permissionService.HasPermission(member, parentQuestionPage, answer, QAndAAnswerPermissionType.MarkApprovedAnswer);
         if (!hasPermission)
         {
             return Forbid();
@@ -184,6 +205,15 @@ public class QAndAAnswerController(
 
         return await mediator
             .Send(new QAndAQuestionMarkAnsweredCommand(parentQuestionPage, answer))
+            .TapTry(async () =>
+            {
+                bool autoSubscribe = await notificationSettingsManager.GetAutoSubscribeEnabled(member.Id);
+                if (autoSubscribe)
+                {
+                    await notificationSettingsManager.UnsubscribeFromDiscussion(member.Id, parentQuestionPage);
+                }
+                await notificationLogger.NotifyAcceptedAnswer(answer);
+            })
             .Match(async () =>
             {
                 string questionPath = (await urlRetriever.Retrieve(parentQuestionPage)).RelativePathTrimmed();

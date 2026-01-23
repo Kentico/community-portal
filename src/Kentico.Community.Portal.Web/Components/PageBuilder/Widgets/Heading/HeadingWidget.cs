@@ -4,7 +4,6 @@ using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Heading;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using Slugify;
 
 [assembly: RegisterWidget(
     identifier: HeadingWidget.IDENTIFIER,
@@ -17,12 +16,12 @@ using Slugify;
 
 namespace Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Heading;
 
-public class HeadingWidget(ISlugHelper slugHelper) : ViewComponent
+public class HeadingWidget(IHeadingContext headingContext) : ViewComponent
 {
     public const string IDENTIFIER = "CommunityPortal.HeadingWidget";
     public const string NAME = "Heading";
 
-    private readonly ISlugHelper slugHelper = slugHelper;
+    private readonly IHeadingContext headingContext = headingContext;
 
     public IViewComponentResult Invoke(ComponentViewModel<HeadingWidgetProperties> cvm)
     {
@@ -41,7 +40,7 @@ public class HeadingWidget(ISlugHelper slugHelper) : ViewComponent
             return Result.Failure<HeadingWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "No heading has been set for this widget."));
         }
 
-        return new HeadingWidgetViewModel(props, slugHelper);
+        return new HeadingWidgetViewModel(props, headingContext);
     }
 }
 
@@ -94,13 +93,13 @@ public class HeadingWidgetViewModel : BaseWidgetViewModel
     public string HeadingText { get; }
     public Maybe<string> HeadingAnchorSlug { get; }
 
-    public HeadingWidgetViewModel(HeadingWidgetProperties props, ISlugHelper slugHelper)
+    public HeadingWidgetViewModel(HeadingWidgetProperties props, IHeadingContext headingContext)
     {
         HeadingText = props.HeadingText;
         HeadingAlignment = props.HeadingAlignmentsParsed;
         HeadingLevel = props.HeadingLevelsParsed;
         HeadingAnchorSlug = props.ShowHeadingAnchor
-            ? slugHelper.GenerateSlug(HeadingText)
+            ? headingContext.GetUniqueSlug(HeadingText)
             : Maybe.None;
     }
 }

@@ -20,15 +20,50 @@
 
         <div class="@itemClass">
             <h4 class="h4 mb-2 text-primary">
-                <a href="@link.LinkContentPathOrURL" id="link-@link.SystemFields.ContentItemGUID.ToString("N")"
-                    class="text-decoration-none" aria-describedby="desc-@link.SystemFields.ContentItemGUID.ToString("N")">
-                    @link.BasicItemTitle
+                <a href="@link.PathOrURL" id="link-@link.ContentItemGUID.ToString("N")" class="text-decoration-none"
+                    aria-describedby="desc-@link.ContentItemGUID.ToString("N")">
+                    @link.Title
                 </a>
             </h4>
 
-            <p class="mb-0 small text-muted" id="desc-@link.SystemFields.ContentItemGUID.ToString("N")">
-                @link.BasicItemShortDescription
+            @if (Model.ShowPublishedDate || Model.ShowAuthor)
+            {
+                <div class="small text-muted mb-2">
+                    @if (Model.ShowPublishedDate)
+                    {
+                        <time datetime="@link.PublishedDate.ToString("yyyy-MM-dd")">
+                            @link.PublishedDate.ToString("d", View.Culture)
+                        </time>
+                    }
+                    @if (Model.ShowAuthor && link.MemberID > 0)
+                    {
+                        @if (Model.ShowPublishedDate)
+                        {
+                            <span> • </span>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(link.AuthorFullName))
+                        {
+                            <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@link.MemberID"
+                                class="text-decoration-none">@link.AuthorFullName</a>
+                        }
+                        else
+                        {
+                            <span>Member ID: @link.MemberID</span>
+                        }
+                    }
+                </div>
+            }
+
+            <p class="mb-0 small text-muted" id="desc-@link.ContentItemGUID.ToString("N")">
+                @link.ShortDescription
             </p>
+
+            @if (Model.ShowDXTopics && link.DXTopics.Any())
+            {
+                <div class="mt-2">
+                    <vc:tag-list tags="link.DXTopics" />
+                </div>
+            }
         </div>
     }
 </aside>

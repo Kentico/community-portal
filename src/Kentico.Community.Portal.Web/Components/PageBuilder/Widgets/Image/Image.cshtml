@@ -31,6 +31,13 @@
         ImageSizes.Large => "(max-width: 767px) 100vw, 450px", // Mobile: full width, Desktop: 450px
         ImageSizes.Full_Width or _ => "(max-width: 767px) 100vw, 600px", // Mobile: full width, Desktop: 600px
     };
+
+    string themeClasses = Model.Theme switch
+    {
+        ImageThemes.Shadow => "shadow",
+        ImageThemes.Border => "border border-3 border-purple-300",
+        ImageThemes.None or _ => "",
+    };
 }
 
 <div class="d-flex align-content-center @containerClasses container-inline-size"
@@ -40,7 +47,7 @@
         {
             <a href="@Model.Image.Asset.Url">
                 <picture>
-                    <img class="img-fluid" xpc-image-asset="Model.Image" xpc-image-asset-responsive="true"
+                    <img class="img-fluid @themeClasses" xpc-image-asset="Model.Image" xpc-image-asset-responsive="true"
                         sizes="@sizesAttribute">
                 </picture>
             </a>
@@ -48,7 +55,7 @@
         else
         {
             <picture>
-                <img class="img-fluid" xpc-image-asset="Model.Image" xpc-image-asset-responsive="true"
+                <img class="img-fluid @themeClasses" xpc-image-asset="Model.Image" xpc-image-asset-responsive="true"
                     sizes="@sizesAttribute">
             </picture>
         }

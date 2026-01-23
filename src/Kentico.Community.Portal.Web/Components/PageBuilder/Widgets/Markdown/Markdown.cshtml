@@ -1,5 +1,36 @@
-@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Markdown.MarkdownWidgetViewModel
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Markdown
+
+@model MarkdownWidgetViewModel
+
+@{
+    string noteStyleClass = Model.NoteStyle switch
+    {
+        NoteStyles.Info => "alert-secondary",
+        NoteStyles.Warning => "alert-primary",
+        _ => "alert-secondary"
+    };
+
+    string noteBgColor = Model.NoteStyle switch
+    {
+        NoteStyles.Info => "var(--bs-purple-100)",
+        NoteStyles.Warning => "var(--bs-primary-light)",
+        _ => "var(--bs-purple-100)"
+    };
+}
 
 <div xpc-preview-outline="@Model.ComponentName" xpc-preview-outline-remove-element="true">
-    @Model.HTML
+    @if (Model.EnableNote)
+    {
+        <div class="alert @noteStyleClass" role="alert" style="--bs-alert-bg: @noteBgColor;">
+            @if (Model.HasNoteTitle)
+            {
+                <h4 class="alert-heading">@Model.NoteTitle</h4>
+            }
+            @Model.HTML
+        </div>
+    }
+    else
+    {
+        @Model.HTML
+    }
 </div>

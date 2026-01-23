@@ -27,6 +27,13 @@ const config = ({ env }) => ({
             // bootstrap form validation
             "is-valid",
             "is-invalid",
+            // bootstrap tooltip
+            "tooltip",
+            "tooltip-inner",
+            "tooltip-arrow",
+            "bs-tooltip-auto",
+            "fade",
+            "show",
           ],
           greedy: [
             // Bootstrap forms

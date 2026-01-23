@@ -18,9 +18,8 @@
                             @post.Title
                         </a>
                     </h2>
-                    <time id="post-date-@(post.ID)" datetime="@post.Date.ToString("yyyy-MM-dd")" class="small text-muted">
-                        @post.Date.ToString("d", View.Culture)
-                    </time>
+                    <time id="post-date-@(post.ID)" xpc-datetime="post.Date" xpc-datetime-format="Date"
+                        class="text-muted small"></time>
                 </div>
 
                 <!-- Blog Type Badge -->
@@ -88,9 +87,7 @@
                             @post.Title
                         </a>
                     </h2>
-                    <time datetime="@post.Date.ToString("yyyy-MM-dd")" class="small text-muted">
-                        @post.Date.ToString("d", View.Culture)
-                    </time>
+                    <time xpc-datetime="post.Date" xpc-datetime-format="Date" class="text-muted small"></time>
                 </div>
 
                 <!-- Blog Type Badge -->
