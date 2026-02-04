@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>KenticoCommunity.QAndAAnswerReaction</CodeName>
+    <GUID>362ad51d-d743-4304-9428-677e0934d024</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="QAndAAnswerReactionID" guid="97e40e9a-0d67-448c-a92a-2fd509e1620d" enabled="" />
+      <field column="QAndAAnswerReactionGUID" guid="d40fa9c6-b461-4db1-b264-4f5f39c5f913" enabled="" />
+      <field column="QAndAAnswerReactionDateModified" guid="724f81db-5a45-48e3-bda5-8a836c8b2917" enabled="" order="2" />
+      <field column="QAndAAnswerReactionAnswerID" enabled="true" guid="85163750-5b52-4865-a9f3-b17fe2e3e5f1" visible="true" refobjtype="" reftype="" order="3">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>kenticocommunity.qandaanswerdata</ObjectType>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Answer</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="QAndAAnswerReactionMemberID" enabled="true" guid="072cbc0c-b665-4b2e-90e7-9a54c5c7b442" visible="true" refobjtype="" reftype="" order="4">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>cms.member</ObjectType>
+        </settings>
+        <properties>
+          <defaultvalue>0</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Member</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="QAndAAnswerReactionType" enabled="true" guid="29fb31ea-5a95-45a0-9b15-4ae4b41c6545" visible="true" order="5">
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>Upvote</Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Type</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Create</FormDisplayName>
+  <FormGUID>30788050-3c63-4fb8-80b9-ad4fa9b36f3c</FormGUID>
+  <FormIsCustom>True</FormIsCustom>
+  <FormName>Create</FormName>
+</cms.alternativeform>

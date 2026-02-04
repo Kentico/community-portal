@@ -28,3 +28,20 @@
   --icon-size: 1.5rem;
   margin-top: 0;
 }
+
+:where(.btn-primary) {
+  svg {
+    fill: #fff;
+  }
+}
+
+:where(.btn-outline-primary) {
+  svg {
+    fill: $primary;
+  }
+  &:hover {
+    svg {
+      fill: #fff;
+    }
+  }
+}

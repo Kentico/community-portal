@@ -1,5 +1,5 @@
 import postcssPresentEnv from "postcss-preset-env";
-import { purgeCSSPlugin } from "@fullhuman/postcss-purgecss";
+import purgeCSSPlugin from "@fullhuman/postcss-purgecss";
 
 /** @type { import('postcss-load-config').ConfigFn} */
 const config = ({ env }) => ({

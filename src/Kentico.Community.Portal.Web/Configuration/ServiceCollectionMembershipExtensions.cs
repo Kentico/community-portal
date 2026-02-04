@@ -37,7 +37,7 @@ public static class ServiceCollectionMembershipExtensions
             .Decorate<IMemberToContactMapper, CommunityMemberToContactMapper>()
             .ConfigureApplicationCookie(options =>
             {
-                options.ExpireTimeSpan = TimeSpan.FromDays(1);
+                options.ExpireTimeSpan = TimeSpan.FromDays(14);
                 options.SlidingExpiration = true;
                 options.LoginPath = new PathString("/authentication/login");
                 options.AccessDeniedPath = new PathString("/authentication/login");

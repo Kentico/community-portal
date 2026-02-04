@@ -25,7 +25,6 @@ namespace Kentico.Community.Portal.Admin.Features.MemberBadges;
 [UIEvaluatePermission(SystemPermissions.UPDATE)]
 internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formItemCollectionProvider,
     IFormDataBinder formDataBinder,
-    IPageLinkGenerator pageLinkGenerator,
     IMemberBadgeMemberInfoProvider memberBadgeMemberInfoProvider,
     IContentQueryExecutor contentQueryExecutor,
     IMemberBadgeInfoProvider memberBadgeProvider,
@@ -37,7 +36,6 @@ internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formIte
     [PageParameter(typeof(IntPageModelBinder))]
     public int MemberID { get; set; }
 
-    private readonly IPageLinkGenerator pageLinkGenerator = pageLinkGenerator;
     private readonly IMemberBadgeMemberInfoProvider memberBadgeMemberInfoProvider = memberBadgeMemberInfoProvider;
     private readonly IContentQueryExecutor contentQueryExecutor = contentQueryExecutor;
     private readonly IMemberBadgeInfoProvider memberBadgeProvider = memberBadgeProvider;
@@ -94,11 +92,7 @@ internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formIte
         // Clear cache since bulk operations bypass normal cache invalidation
         memberBadgeMemberInfoProvider.ClearCache();
 
-        var successResponse = NavigateTo(pageLinkGenerator
-            .GetPath<MemberBadgeAssignmentListingPage>())
-            .AddSuccessMessage("Badge assigment updated.");
-
-        return await Task.FromResult<ICommandResponse>(successResponse);
+        return Response().AddSuccessMessage("Badge assigment updated.");
     }
 
     private async Task<MemberBadgesAssignmentConfigurationModel> GetConfigurationModel()

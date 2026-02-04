@@ -63,9 +63,18 @@ function buildConfig(baseConfig, opts, argv) {
           exclude: [/node_modules/],
           loader: 'babel-loader',
         },
+        // This rule is for Crepe, which has css imports that should not be processed
+        // by postcss or tailwind
         {
           test: /\.css$/i,
+          include: path.resolve(__dirname, 'node_modules/@milkdown'),
           use: ['css-loader'],
+        },
+        // All other admin custom CSS will be tailwind based using globals.css
+        {
+          test: /\.css$/i,
+          exclude: path.resolve(__dirname, 'node_modules/@milkdown'),
+          use: ['style-loader', 'css-loader', 'postcss-loader'],
         },
       ],
     },

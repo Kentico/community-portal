@@ -12,6 +12,14 @@ export function registerAnswerListComponent(Alpine) {
       const sortedAnswers = answers.sort((a, b) => {
         const createdA = a.getAttribute("data-created");
         const createdB = b.getAttribute("data-created");
+        const reactionsA = parseInt(
+          a.getAttribute("data-reactions") || "0",
+          10,
+        );
+        const reactionsB = parseInt(
+          b.getAttribute("data-reactions") || "0",
+          10,
+        );
 
         if (orderDirection === "acceptedAnswer") {
           const isAcceptedA = a.getAttribute("data-accepted") === "true";
@@ -20,6 +28,10 @@ export function registerAnswerListComponent(Alpine) {
           if (isAcceptedA && !isAcceptedB) return -1;
           if (!isAcceptedA && isAcceptedB) return 1;
           return createdA - createdB;
+        }
+
+        if (orderDirection === "mostUpvotes") {
+          return reactionsB - reactionsA;
         }
 
         return orderDirection === "newest"

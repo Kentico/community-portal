@@ -110,11 +110,11 @@ public class QAndAQuestionPageController(
         QAndAQuestionPage question,
         CommunityMember? currentMember)
     {
-        var res = await mediator.Send(new QAndAAnswerDatasByQuestionQuery(question.SystemFields.WebPageItemID));
+        var res = await mediator.Send(new QAndAAnswerDatasByQuestionQuery(question.SystemFields.WebPageItemID, currentMember?.Id));
         var vms = new List<QAndAPostAnswerViewModel>();
-        foreach (var answer in res.Items)
+        foreach (var answerData in res.Items)
         {
-            var answerModel = await MapAnswer(question, answer, currentMember, permissionService);
+            var answerModel = await MapAnswer(question, answerData.Answer, currentMember, permissionService, answerData);
             vms.Add(answerModel);
         }
 
@@ -136,16 +136,30 @@ public class QAndAQuestionPageController(
             isSubscribed = webPageItemIDs.Contains(question.SystemFields.WebPageItemID);
         }
 
-        return new(question, permissions, currentMember, taxonomiesResp, author, markdownRenderer, isSubscribed);
+        var model = new QAndAPostQuestionViewModel(question, permissions, currentMember, taxonomiesResp, author, markdownRenderer, isSubscribed);
+
+        // Load reaction data (always show count, even for unauthenticated users)
+        var reactionData = await mediator.Send(new QAndAQuestionReactionsQuery(question.SystemFields.WebPageItemID, currentMember?.Id));
+        model.Reactions = new(question.SystemFields.WebPageItemGUID, reactionData, permissions);
+
+        return model;
     }
 
-    private async Task<QAndAPostAnswerViewModel> MapAnswer(QAndAQuestionPage question, QAndAAnswerDataInfo answer, CommunityMember? currentMember, IQAndAPermissionService permissionService)
+    private async Task<QAndAPostAnswerViewModel> MapAnswer(
+        QAndAQuestionPage question,
+        QAndAAnswerDataInfo answer,
+        CommunityMember? currentMember,
+        IQAndAPermissionService permissionService,
+        AnswerWithReactionsData? reactionData = null)
     {
         var permissions = await permissionService.GetPermissions(currentMember, question, answer);
 
         var author = await GetAuthor(answer.QAndAAnswerDataAuthorMemberID);
+        var reactionQueryResult = reactionData is null
+            ? await mediator.Send(new QAndAAnswerReactionsQuery(answer.QAndAAnswerDataID, currentMember?.Id))
+            : reactionData.Reactions;
 
-        return new QAndAPostAnswerViewModel
+        var model = new QAndAPostAnswerViewModel
         {
             ID = answer.QAndAAnswerDataID,
             GUID = answer.QAndAAnswerDataGUID,
@@ -156,7 +170,10 @@ public class QAndAQuestionPageController(
             DateModified = answer.QAndAAnswerDataDateModified,
             IsAcceptedAnswer = answer.QAndAAnswerDataGUID == question.QAndAQuestionPageAcceptedAnswerDataGUID,
             Permissions = permissions,
+            Reactions = new(answer.QAndAAnswerDataID, reactionQueryResult, permissions, question.SystemFields.WebPageItemGUID)
         };
+
+        return model;
     }
 
     private async Task<QAndAAuthorViewModel> GetAuthor(int memberID)
@@ -213,6 +230,7 @@ public class QAndAPostQuestionViewModel
     public QAndAQuestionPermissions Permissions { get; set; } = QAndAQuestionPermissions.NoPermissions;
     public IReadOnlyList<string> DXTopics { get; } = [];
     public bool IsSubscribed { get; set; }
+    public QAndAQuestionReactionViewModel Reactions { get; set; } = QAndAQuestionReactionViewModel.Empty;
 
     public QAndAPostQuestionViewModel(
         QAndAQuestionPage question,
@@ -253,6 +271,53 @@ public class QAndAPostAnswerViewModel
     public DateTime DateModified { get; set; }
     public bool IsAcceptedAnswer { get; set; }
     public QAndAAnswerPermissions Permissions { get; set; } = QAndAAnswerPermissions.NoPermissions;
+    public QAndADiscussionReactionViewModel Reactions { get; set; } = QAndADiscussionReactionViewModel.Empty;
+}
+
+public class QAndADiscussionReactionViewModel
+{
+    public int AnswerID { get; }
+    public Guid ParentQuestionID { get; }
+    public bool CurrentMemberHasReacted { get; }
+    public int ReactionCount { get; }
+    public IReadOnlyList<string> MembersWhoReacted { get; } = [];
+    public QAndAAnswerPermissions Permissions { get; set; } = QAndAAnswerPermissions.NoPermissions;
+
+    public static QAndADiscussionReactionViewModel Empty { get; } = new();
+
+    public QAndADiscussionReactionViewModel(int answerID, AnswerReactionsData data, QAndAAnswerPermissions permissions, Guid parentQuestionID)
+    {
+        AnswerID = answerID;
+        ParentQuestionID = parentQuestionID;
+        CurrentMemberHasReacted = data.CurrentMemberHasReacted;
+        ReactionCount = data.TotalCount;
+        MembersWhoReacted = data.MembersWhoReacted;
+        Permissions = permissions;
+    }
+
+    private QAndADiscussionReactionViewModel() { }
+}
+
+public class QAndAQuestionReactionViewModel
+{
+    public Guid QuestionID { get; }
+    public bool CurrentMemberHasReacted { get; }
+    public int ReactionCount { get; }
+    public IReadOnlyList<string> MembersWhoReacted { get; } = [];
+    public QAndAQuestionPermissions Permissions { get; set; } = QAndAQuestionPermissions.NoPermissions;
+
+    public static QAndAQuestionReactionViewModel Empty { get; } = new();
+
+    public QAndAQuestionReactionViewModel(Guid questionID, QuestionReactionsData data, QAndAQuestionPermissions permissions)
+    {
+        QuestionID = questionID;
+        CurrentMemberHasReacted = data.CurrentMemberHasReacted;
+        ReactionCount = data.TotalCount;
+        MembersWhoReacted = data.MembersWhoReacted;
+        Permissions = permissions;
+    }
+
+    private QAndAQuestionReactionViewModel() { }
 }
 
 public class QAndAAuthorViewModel

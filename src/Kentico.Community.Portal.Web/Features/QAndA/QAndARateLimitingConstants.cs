@@ -29,4 +29,14 @@ public static class QAndARateLimitingConstants
     /// Rate limiting policy for updating question subscribe/unsubscribe
     /// </summary>
     public const string UpdateQuestionSubscription = "QAndA_UpdateQuestionSubscription";
+
+    /// <summary>
+    /// Rate limiting policy for toggling answer reactions (upvotes)
+    /// </summary>
+    public const string UpdateAnswerReaction = "QAndA_UpdateAnswerReaction";
+
+    /// <summary>
+    /// Rate limiting policy for toggling question reactions (upvotes)
+    /// </summary>
+    public const string UpdateQuestionReaction = "QAndA_UpdateQuestionReaction";
 }

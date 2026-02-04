@@ -24,6 +24,7 @@ using Kentico.Xperience.Admin.Base.Forms;
 using Sidio.Sitemap.AspNetCore;
 using Sidio.Sitemap.Core.Services;
 using Slugify;
+using XperienceCommunity.ComponentRegistry;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -104,8 +105,8 @@ public static class ServiceCollectionAppExtensions
             .AddScoped<CaptchaValidator>()
             .Configure<ReCaptchaSettings>(config.GetSection("ReCaptcha"))
             .AddSingleton<IObjectDisplayOptionsProvider, DefaultObjectDisplayOptionsProvider>()
-            .AddSingleton<IObjectsRetriever, CustomObjectsRetriever>();
-
+            .AddSingleton<IObjectsRetriever, CustomObjectsRetriever>()
+            .AddComponentRegistry();
 
     private static IServiceCollection AddSupport(this IServiceCollection services, IConfiguration config) =>
         services

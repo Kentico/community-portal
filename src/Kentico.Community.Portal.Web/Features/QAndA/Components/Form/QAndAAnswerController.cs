@@ -1,5 +1,6 @@
 using CMS.Base;
 using Htmx;
+using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Features.QAndA.Notifications;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
@@ -262,5 +263,57 @@ public class QAndAAnswerController(
                 Response.Htmx(h => h.WithToastSuccess("Answer successfully deleted."));
                 return Ok().AsStatusCodeResult();
             }, LogAndReturnError("ANSWER_DELETE"));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [EnableRateLimiting(QAndARateLimitingConstants.UpdateAnswerReaction)]
+    public async Task<ActionResult> UpdateAnswerReaction(Guid questionID, int answerID)
+    {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
+        var member = await userManager.CurrentUser(HttpContext);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID], new RetrievePagesParameters { LinkedItemsMaxLevel = 1 });
+        if (questionPages.FirstOrDefault() is not QAndAQuestionPage parentQuestionPage)
+        {
+            return NotFound();
+        }
+
+        var answer = await mediator.Send(new QAndAAnswerDataByIDQuery(answerID));
+        if (answer is null)
+        {
+            return NotFound();
+        }
+
+        // Check if member has already reacted
+        var reactionData = await mediator.Send(new QAndAAnswerReactionsQuery(answerID, member.Id));
+
+        if (reactionData.CurrentMemberHasReacted)
+        {
+            // Delete the reaction (upreact)
+            await mediator.Send(new QAndAAnswerReactionDeleteCommand(member.Id, answerID, DiscussionReactionTypes.Upvote));
+        }
+        else
+        {
+            // Create the reaction (upvote)
+            await mediator.Send(new QAndAAnswerReactionCreateCommand(member.Id, answerID, DiscussionReactionTypes.Upvote));
+        }
+
+        var permissions = await permissionService.GetPermissions(member, parentQuestionPage, answer);
+
+        // Fetch updated reaction data
+        var updatedReactionData = await mediator.Send(new QAndAAnswerReactionsQuery(answerID, member.Id));
+
+        var viewModel = new QAndADiscussionReactionViewModel(answer.QAndAAnswerDataID, updatedReactionData, permissions, parentQuestionPage.SystemFields.WebPageItemGUID);
+
+        return PartialView("~/Features/QAndA/_QAndAAnswerReaction.cshtml", viewModel);
     }
 }

@@ -3,6 +3,7 @@ using CMS.Helpers;
 using CMS.Membership;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
+using Kentico.Community.Portal.Core.Modules.Membership;
 using Kentico.Community.Portal.Web.Membership;
 using Microsoft.AspNetCore.Identity;
 
@@ -22,16 +23,16 @@ public enum QAndAAnswerPermissionType
     MarkApprovedAnswer
 }
 
-public record QAndAQuestionPermissions(bool Edit, bool Delete, bool Answer)
+public record QAndAQuestionPermissions(bool Edit, bool Delete, bool Answer, bool CanReact)
 {
-    public static QAndAQuestionPermissions NoPermissions { get; } = new(false, false, false);
-    public bool CanInteract => Edit || Answer || Delete;
+    public static QAndAQuestionPermissions NoPermissions { get; } = new(false, false, false, false);
+    public bool CanInteract => Edit || Answer || Delete || CanReact;
 }
 
-public record QAndAAnswerPermissions(bool Edit, bool Delete, bool MarkApprovedAnswer)
+public record QAndAAnswerPermissions(bool Edit, bool Delete, bool MarkApprovedAnswer, bool CanReact)
 {
-    public static QAndAAnswerPermissions NoPermissions { get; } = new(false, false, false);
-    public bool CanInteract => Edit || Delete || MarkApprovedAnswer;
+    public static QAndAAnswerPermissions NoPermissions { get; } = new(false, false, false, false);
+    public bool CanInteract => Edit || Delete || MarkApprovedAnswer || CanReact;
 }
 
 /// <summary>
@@ -66,15 +67,11 @@ public interface IQAndAPermissionService
 public class QAndAPermissionService(
     UserManager<CommunityMember> userManager,
     IProgressiveCache cache,
-    IInfoProvider<UserInfo> userInfoProvider,
-    IMemberBadgeInfoProvider memberBadgeProvider,
-    IMemberBadgeMemberInfoProvider memberBadgeMemberProvider) : IQAndAPermissionService
+    IInfoProvider<UserInfo> userInfoProvider) : IQAndAPermissionService
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly IProgressiveCache cache = cache;
     private readonly IInfoProvider<UserInfo> userInfoProvider = userInfoProvider;
-    private readonly IMemberBadgeInfoProvider memberBadgeProvider = memberBadgeProvider;
-    private readonly IMemberBadgeMemberInfoProvider memberBadgeMemberProvider = memberBadgeMemberProvider;
 
     /// <inheritdoc/>
     public async Task<bool> HasPermission(HttpContext httpContext, QAndAQuestionPage question, QAndAQuestionPermissionType permissionType)
@@ -109,8 +106,9 @@ public class QAndAPermissionService(
         bool delete = await HasPermission(communityMember, question, QAndAQuestionPermissionType.Delete);
         bool edit = await HasPermission(communityMember, question, QAndAQuestionPermissionType.Edit);
         bool submitAnswer = await HasPermission(communityMember, question, QAndAQuestionPermissionType.SubmitAnswer);
+        bool canReact = question.QAndAQuestionPageAuthorMemberID != communityMember.Id;
 
-        return new QAndAQuestionPermissions(edit, delete, submitAnswer);
+        return new QAndAQuestionPermissions(edit, delete, submitAnswer, canReact);
     }
 
     public async Task<bool> HasPermission(HttpContext httpContext, QAndAQuestionPage question, QAndAAnswerDataInfo answer, QAndAAnswerPermissionType permissionType)
@@ -158,8 +156,9 @@ public class QAndAPermissionService(
         bool delete = await HasPermission(communityMember, question, answer, QAndAAnswerPermissionType.Delete);
         bool edit = await HasPermission(communityMember, question, answer, QAndAAnswerPermissionType.Edit);
         bool markApprovedAnswer = await HasPermission(communityMember, question, answer, QAndAAnswerPermissionType.MarkApprovedAnswer);
+        bool canReact = answer.QAndAAnswerDataAuthorMemberID != communityMember.Id;
 
-        return new QAndAAnswerPermissions(edit, delete, markApprovedAnswer);
+        return new QAndAAnswerPermissions(edit, delete, markApprovedAnswer, canReact);
     }
 
     /// <summary>
@@ -202,30 +201,6 @@ public class QAndAPermissionService(
         await GetCmsUser(communityMember)
             .Map(user => user.IsInRole(PortalWebSiteChannel.ROLE_COMMUNITY_MANAGER))
             .GetValueOrDefault(() => false)
-        || await IsAuthorizedByBadge(communityMember, PortalMemberBadges.MVP)
-        || await IsAuthorizedByBadge(communityMember, PortalMemberBadges.COMMUNITY_LEADER);
-
-    /// <summary>
-    /// Checks if a community member has a specific badge assigned
-    /// This logic is based on the ContentAuthorizationFilter implementation
-    /// </summary>
-    /// <param name="member">The community member</param>
-    /// <param name="badgeName">The badge code name to check for</param>
-    /// <returns>True if the member has the badge</returns>
-    private async Task<bool> IsAuthorizedByBadge(CommunityMember member, string badgeName)
-    {
-        var badges = await memberBadgeProvider.GetAllMemberBadgesCached();
-        int badgeID = badges
-            .TryFirst(badge => string.Equals(badge.MemberBadgeCodeName, badgeName, StringComparison.OrdinalIgnoreCase))
-            .Map(b => b.MemberBadgeID)
-            .GetValueOrDefault();
-
-        if (badgeID == 0)
-        {
-            return false;
-        }
-
-        var badgeRelationships = await memberBadgeMemberProvider.GetAllMemberBadgeRelationshipsCached();
-        return badgeRelationships.HasEntry(member.Id, badgeID);
-    }
+        || communityMember.ProgramStatus == ProgramStatuses.MVP
+        || communityMember.ProgramStatus == ProgramStatuses.CommunityLeader;
 }

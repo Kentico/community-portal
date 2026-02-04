@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>KenticoCommunity.QAndAQuestionReaction</CodeName>
+    <GUID>e0b1acdd-fa86-44dc-a036-7804a5eafd36</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="QAndAQuestionReactionID" guid="372c9097-38a2-40de-9964-20eec8fe0517" enabled="" />
+      <field column="QAndAQuestionReactionGUID" guid="74784619-1f40-4e6e-a93e-0b2cf89bc79e" enabled="" />
+      <field column="QAndAQuestionReactionDateModified" guid="f708f508-5dbf-45d3-9b94-2e2bdf6b732b" enabled="" order="2" />
+      <field column="QAndAQuestionReactionMemberID" enabled="true" guid="ea0e6364-25ab-4e02-be4d-0b7057df4aa3" visible="true" refobjtype="" reftype="">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>cms.member</ObjectType>
+        </settings>
+        <properties>
+          <defaultvalue>0</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Member</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="QAndAQuestionReactionWebPageItemID" enabled="true" guid="f705ab6a-274a-490c-b6c0-aeb7c8fbe02a" visible="true" order="4">
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>cms.webpageitem</ObjectType>
+        </settings>
+        <properties>
+          <defaultvalue>0</defaultvalue>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Question</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="QAndAQuestionReactionType" enabled="true" guid="ec17843a-bf50-4762-be48-4389340f3f77" visible="true" order="5">
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>Upvote</Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Type</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Create</FormDisplayName>
+  <FormGUID>fb6a85f8-fe43-42c8-9f82-09e17dd91c2a</FormGUID>
+  <FormIsCustom>True</FormIsCustom>
+  <FormName>Create</FormName>
+</cms.alternativeform>

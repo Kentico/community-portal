@@ -25,33 +25,37 @@
                     <vc:tag-list tags="Model.DXTopics" variant="Secondary" aria-label="Question topics" />
                 </div>
             }
-        </article>
-    </div>
+            <div class="d-flex justify-content-between mt-3 flex-wrap gap-2">
+                <div class="d-flex gap-2">
+                    <partial name="~/Features/QAndA/_QAndAQuestionReaction.cshtml" model="@Model.Reactions" />
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <partial name="~/Features/QAndA/_QAndASubscribeButton.cshtml"
+                            model="@((Model.ID, Model.IsSubscribed))" />
+                    }
+                </div>
 
-    <div class="d-flex gap-1 align-items-center">
-        @if (User.Identity?.IsAuthenticated == true)
-        {
-            <partial name="~/Features/QAndA/_QAndASubscribeButton.cshtml" model="@((Model.ID, Model.IsSubscribed))" />
-        }
-        <div class="d-flex gap-1 ms-auto">
-            @if (Model.Permissions.Edit)
-            {
-                <button type="button" class="btn btn-sm btn-outline-secondary" hx-get hx-controller="QAndAQuestion"
-                    hx-action="DisplayEditQuestionForm" hx-route-questionID="@Model.ID" hx-swap="outerHTML"
-                    hx-target="#@wrapperElId">
-                    Edit Question
-                </button>
-            }
-            @if (Model.Permissions.Delete)
-            {
-                <form method="post" hx-post hx-controller="QAndAQuestion" hx-action="DeleteQuestion"
-                    hx-confirm="Do you want to delete this question?" hx-route-questionID="@Model.ID">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">
-                        Delete
-                    </button>
-                </form>
-            }
-        </div>
+                <div class="d-flex gap-2">
+                    @if (Model.Permissions.Edit)
+                    {
+                        <button type="button" class="btn btn-sm btn-outline-secondary" hx-get hx-controller="QAndAQuestion"
+                            hx-action="DisplayEditQuestionForm" hx-route-questionID="@Model.ID" hx-swap="outerHTML"
+                            hx-target="#@wrapperElId">
+                            Edit Question
+                        </button>
+                    }
+                    @if (Model.Permissions.Delete)
+                    {
+                        <form method="post" hx-post hx-controller="QAndAQuestion" hx-action="DeleteQuestion"
+                            hx-confirm="Do you want to delete this question?" hx-route-questionID="@Model.ID">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                Delete
+                            </button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </article>
     </div>
 </div>
 

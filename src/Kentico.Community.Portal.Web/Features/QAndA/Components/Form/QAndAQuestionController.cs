@@ -249,4 +249,50 @@ public class QAndAQuestionController(
         // Return updated button partial for HTMX swap
         return PartialView("~/Features/QAndA/_QAndASubscribeButton.cshtml", (questionID, isSubscribed));
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [EnableRateLimiting(QAndARateLimitingConstants.UpdateQuestionReaction)]
+    public async Task<IActionResult> UpdateQuestionReaction(Guid questionID)
+    {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
+        var member = await userManager.CurrentUser(HttpContext);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID], new RetrievePagesParameters { LinkedItemsMaxLevel = 1 });
+        if (questionPages.FirstOrDefault() is not QAndAQuestionPage parentQuestionPage)
+        {
+            return NotFound();
+        }
+
+        int webPageItemId = parentQuestionPage.SystemFields.WebPageItemID;
+        var currentReactionData = await mediator.Send(new QAndAQuestionReactionsQuery(webPageItemId, member.Id));
+
+        if (currentReactionData.CurrentMemberHasReacted)
+        {
+            // Delete the reaction (unreact)
+            _ = await mediator.Send(new QAndAQuestionReactionDeleteCommand(member.Id, webPageItemId, DiscussionReactionTypes.Upvote));
+        }
+        else
+        {
+            // Create the reaction (upvote)
+            _ = await mediator.Send(new QAndAQuestionReactionCreateCommand(member.Id, webPageItemId, DiscussionReactionTypes.Upvote));
+        }
+
+        var permissions = await permissionService.GetPermissions(member, parentQuestionPage);
+
+        // Fetch updated reaction data - force fresh query by using a new mediator call
+        var updatedReactionData = await mediator.Send(new QAndAQuestionReactionsQuery(webPageItemId, member.Id));
+
+        var viewModel = new QAndAQuestionReactionViewModel(parentQuestionPage.SystemFields.WebPageItemGUID, updatedReactionData, permissions);
+
+        return PartialView("~/Features/QAndA/_QAndAQuestionReaction.cshtml", viewModel);
+    }
 }

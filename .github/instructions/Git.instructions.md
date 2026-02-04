@@ -1,7 +1,3 @@
----
-applyTo: "**"
----
-
 # Git Commit Message Conventions
 
 When authoring git commit messages, always follow the project's established

@@ -1,0 +1,123 @@
+@import 'tailwindcss';
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}
+
+/* Override Xperience admin styles with increased specificity */
+@layer utilities {
+  .contact-maintenance-wrapper {
+    --background: 0 0% 100% !important;
+    --foreground: 222.2 84% 4.9% !important;
+    --card: 0 0% 100% !important;
+    --card-foreground: 222.2 84% 4.9% !important;
+    --muted: 210 40% 96.1% !important;
+    --muted-foreground: 215.4 16.3% 46.9% !important;
+    --destructive: 0 84.2% 60.2% !important;
+    --destructive-foreground: 210 40% 98% !important;
+    --border: 214.3 31.8% 91.4% !important;
+    --input: 214.3 31.8% 91.4% !important;
+    --primary: 222.2 47.4% 11.2% !important;
+    --primary-foreground: 210 40% 98% !important;
+
+    display: block;
+    box-sizing: border-box;
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .contact-maintenance-wrapper * {
+    box-sizing: border-box;
+  }
+
+  .contact-maintenance-wrapper h1,
+  .contact-maintenance-wrapper h2,
+  .contact-maintenance-wrapper h3,
+  .contact-maintenance-wrapper p,
+  .contact-maintenance-wrapper div,
+  .contact-maintenance-wrapper th,
+  .contact-maintenance-wrapper td {
+    color: inherit;
+  }
+
+  .member-badges-wrapper {
+    --background: 0 0% 100% !important;
+    --foreground: 222.2 84% 4.9% !important;
+    --card: 0 0% 100% !important;
+    --card-foreground: 222.2 84% 4.9% !important;
+    --muted: 210 40% 96.1% !important;
+    --muted-foreground: 215.4 16.3% 46.9% !important;
+    --border: 214.3 31.8% 91.4% !important;
+    --primary: 222.2 47.4% 11.2% !important;
+    --primary-foreground: 210 40% 98% !important;
+    --ring: 222.2 84% 4.9% !important;
+    --popover: 0 0% 100% !important;
+    --accent: 210 40% 96.1% !important;
+
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .member-badges-wrapper * {
+    box-sizing: border-box;
+  }
+
+  .member-badges-wrapper h1,
+  .member-badges-wrapper h2,
+  .member-badges-wrapper h3,
+  .member-badges-wrapper p,
+  .member-badges-wrapper div {
+    color: inherit;
+  }
+}

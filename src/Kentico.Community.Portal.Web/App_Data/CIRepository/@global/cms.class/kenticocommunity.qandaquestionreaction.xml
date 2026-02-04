@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassCodeGenerationSettings>
+    <Data>
+      <GUIDColumn>QAndAQuestionReactionGUID</GUIDColumn>
+      <LastModifiedColumn>QAndAQuestionReactionDateModified</LastModifiedColumn>
+      <ObjectType>KenticoCommunity.QAndAQuestionReaction</ObjectType>
+      <UseGuidHashtable>False</UseGuidHashtable>
+      <UseIdHashtable>False</UseIdHashtable>
+      <UseNameHashtable>False</UseNameHashtable>
+    </Data>
+  </ClassCodeGenerationSettings>
+  <ClassDisplayName>
+    <![CDATA[Q&A Question reaction]]>
+  </ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="QAndAQuestionReactionID" columntype="integer" enabled="true" guid="372c9097-38a2-40de-9964-20eec8fe0517" isPK="true" />
+      <field column="QAndAQuestionReactionGUID" columnprecision="0" columntype="guid" enabled="true" guid="74784619-1f40-4e6e-a93e-0b2cf89bc79e" />
+      <field column="QAndAQuestionReactionWebPageItemID" columnprecision="0" columntype="integer" enabled="true" guid="f705ab6a-274a-490c-b6c0-aeb7c8fbe02a" />
+      <field column="QAndAQuestionReactionMemberID" columnprecision="0" columntype="integer" enabled="true" guid="ea0e6364-25ab-4e02-be4d-0b7057df4aa3" refobjtype="cms.member" reftype="Required" />
+      <field column="QAndAQuestionReactionType" columnprecision="0" columnsize="20" columntype="text" enabled="true" guid="b2b21315-5bb3-4491-954c-ecdcf56cd2ae" />
+      <field column="QAndAQuestionReactionDateModified" columnprecision="3" columntype="datetime" enabled="true" guid="f708f508-5dbf-45d3-9b94-2e2bdf6b732b" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>e0b1acdd-fa86-44dc-a036-7804a5eafd36</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>KenticoCommunity.QAndAQuestionReaction</ClassName>
+  <ClassResourceID>
+    <CodeName>KenticoCommunity</CodeName>
+    <GUID>5e10e4ec-a038-4b97-a9f6-c17724896c89</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>KenticoCommunity_QAndAQuestionReaction</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

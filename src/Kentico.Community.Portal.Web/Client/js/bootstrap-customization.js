@@ -14,6 +14,7 @@ export default function setup() {
   bindBootstrapComponents();
   bindToastComponent();
   bindFAQWidgets();
+  bindHTMXTooltipReinitialization();
 }
 
 function bindBootstrapComponents() {
@@ -127,4 +128,33 @@ function bindFAQWidgets() {
     // Clear callbacks after execution
     window.faqInitCallbacks = [];
   }
+}
+
+function bindHTMXTooltipReinitialization() {
+  // Hide tooltips before HTMX swap to prevent orphaned tooltip elements
+  document.body.addEventListener("htmx:beforeSwap", function (event) {
+    document
+      .querySelectorAll('[data-bs-toggle="tooltip"]')
+      .forEach((tooltip) => {
+        const instance = Tooltip.getInstance(tooltip);
+        if (instance) {
+          instance.hide();
+        }
+      });
+  });
+
+  // Reinitialize tooltips after HTMX swap
+  document.body.addEventListener("htmx:afterSwap", function (event) {
+    if (event.detail.xhr.status < 400) {
+      document
+        .querySelectorAll('[data-bs-toggle="tooltip"]')
+        .forEach((tooltip) => {
+          const instance = Tooltip.getInstance(tooltip);
+          if (instance) {
+            instance.dispose();
+          }
+          new Tooltip(tooltip);
+        });
+    }
+  });
 }

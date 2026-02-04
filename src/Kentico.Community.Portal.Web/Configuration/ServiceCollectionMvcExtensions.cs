@@ -154,6 +154,24 @@ public static class ServiceCollectionMvcExtensions
                             window: TimeSpan.FromMinutes(2)
                         )
                     )
+                    .AddPolicy(
+                        QAndARateLimitingConstants.UpdateAnswerReaction,
+                        httpContext => RateLimitingUtilities.CreateSlidingWindowPartition(
+                            httpContext,
+                            permitLimit: 10,
+                            segmentsPerWindow: 10,
+                            window: TimeSpan.FromMinutes(1)
+                        )
+                    )
+                    .AddPolicy(
+                        QAndARateLimitingConstants.UpdateQuestionReaction,
+                        httpContext => RateLimitingUtilities.CreateSlidingWindowPartition(
+                            httpContext,
+                            permitLimit: 10,
+                            segmentsPerWindow: 10,
+                            window: TimeSpan.FromMinutes(1)
+                        )
+                    )
                     // Authentication and Member Management Policies (Public - stronger limits)
                     .AddPolicy(
                         MemberRateLimitingConstants.Login,

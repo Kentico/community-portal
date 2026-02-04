@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassCodeGenerationSettings>
+    <Data>
+      <GUIDColumn>QAndAAnswerReactionGUID</GUIDColumn>
+      <LastModifiedColumn>QAndAAnswerReactionDateModified</LastModifiedColumn>
+      <ObjectType>KenticoCommunity.QAndAAnswerReaction</ObjectType>
+      <UseGuidHashtable>False</UseGuidHashtable>
+      <UseIdHashtable>False</UseIdHashtable>
+      <UseNameHashtable>False</UseNameHashtable>
+    </Data>
+  </ClassCodeGenerationSettings>
+  <ClassDisplayName>
+    <![CDATA[Q&A Answer Reaction]]>
+  </ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="QAndAAnswerReactionID" columntype="integer" enabled="true" guid="97e40e9a-0d67-448c-a92a-2fd509e1620d" isPK="true" />
+      <field column="QAndAAnswerReactionGUID" columnprecision="0" columntype="guid" enabled="true" guid="d40fa9c6-b461-4db1-b264-4f5f39c5f913" />
+      <field column="QAndAAnswerReactionAnswerID" columnprecision="0" columntype="integer" enabled="true" guid="85163750-5b52-4865-a9f3-b17fe2e3e5f1" refobjtype="kenticocommunity.qandaanswerdata" reftype="Binding">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="QAndAAnswerReactionMemberID" columnprecision="0" columntype="integer" enabled="true" guid="072cbc0c-b665-4b2e-90e7-9a54c5c7b442" refobjtype="cms.member" reftype="Binding" />
+      <field column="QAndAAnswerReactionType" columnprecision="0" columnsize="20" columntype="text" enabled="true" guid="213094ca-6465-40c4-b8b5-4513a2dd20a0" />
+      <field column="QAndAAnswerReactionDateModified" columnprecision="3" columntype="datetime" enabled="true" guid="724f81db-5a45-48e3-bda5-8a836c8b2917" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>362ad51d-d743-4304-9428-677e0934d024</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>KenticoCommunity.QAndAAnswerReaction</ClassName>
+  <ClassResourceID>
+    <CodeName>KenticoCommunity</CodeName>
+    <GUID>5e10e4ec-a038-4b97-a9f6-c17724896c89</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>KenticoCommunity_QAndAAnswerReaction</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

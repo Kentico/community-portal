@@ -1,0 +1,66 @@
+@using Kentico.Community.Portal.Web.Features.QAndA
+
+@model QAndAQuestionReactionViewModel
+
+@{
+    string reactionFormId = $"reactionForm_{Model.QuestionID:N}";
+    var toolTipAttrs = Html.Raw(BuildTooltipAttrs());
+}
+
+@if (Model.Permissions.CanReact)
+{
+    <form id="@reactionFormId" method="post" hx-post hx-controller="QAndAQuestion" hx-action="UpdateQuestionReaction"
+        hx-route-questionID="@Model.QuestionID" hx-swap="outerHTML" hx-target="#@reactionFormId">
+        <fieldset xpc-readonly-disabled>
+            <button type="submit"
+                class="btn btn-sm @(Model.CurrentMemberHasReacted ? "btn-primary" : "btn-outline-primary")" @(toolTipAttrs)>
+                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="currentColor">
+                    <path
+                        d="M3.47 7.78a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0l4.25 4.25a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018L9 4.81v7.44a.75.75 0 0 1-1.5 0V4.81L4.53 7.78a.75.75 0 0 1-1.06 0Z">
+                    </path>
+                </svg>
+                @Model.ReactionCount
+            </button>
+        </fieldset>
+    </form>
+}
+else
+{
+    <span class="badge rounded-pill text-bg-light" @(toolTipAttrs) disabled>
+        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16">
+            <path
+                d="M3.47 7.78a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0l4.25 4.25a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018L9 4.81v7.44a.75.75 0 0 1-1.5 0V4.81L4.53 7.78a.75.75 0 0 1-1.06 0Z">
+            </path>
+        </svg>
+        <span class="px-1">@Model.ReactionCount</span>
+    </span>
+}
+
+@{
+    string BuildTooltipAttrs()
+    {
+        // Always include member list if reactions exist
+        var memberList = Model.ReactionCount > 0
+        ? $"Upvoted by: {Html.Encode(string.Join(", ", Model.MembersWhoReacted))}"
+        : "";
+
+        // Case 1: Can react - show only member list (or empty if no reactions)
+        if (Model.Permissions.CanReact)
+        {
+            return string.IsNullOrEmpty(memberList)
+            ? ""
+            : $"data-bs-toggle='tooltip' data-bs-html='true' data-bs-delay='1000' data-bs-placement='top' data-bs-title='{memberList}'";
+        }
+
+        // Case 2 & 3: Cannot react - combine member list with disable reason
+        var reason = User.Identity?.IsAuthenticated ?? false
+        ? "You cannot react to your own question"
+        : "Sign in to upvote questions";
+
+        var message = !string.IsNullOrEmpty(memberList)
+        ? $"{reason}<br>{memberList}"
+        : reason;
+
+        return $"data-bs-toggle='tooltip' data-bs-html='true' data-bs-delay='1000' data-bs-placement='top' data-bs-title='{message}'";
+    }
+}

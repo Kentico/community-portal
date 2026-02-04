@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>KenticoCommunity.QAndAQuestionReaction</CodeName>
+    <GUID>e0b1acdd-fa86-44dc-a036-7804a5eafd36</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="QAndAQuestionReactionID" guid="372c9097-38a2-40de-9964-20eec8fe0517" enabled="" />
+      <field column="QAndAQuestionReactionGUID" guid="74784619-1f40-4e6e-a93e-0b2cf89bc79e" enabled="" />
+      <field column="QAndAQuestionReactionWebPageItemID" guid="f705ab6a-274a-490c-b6c0-aeb7c8fbe02a" enabled="" />
+      <field column="QAndAQuestionReactionMemberID" guid="ea0e6364-25ab-4e02-be4d-0b7057df4aa3" enabled="" />
+      <field column="QAndAQuestionReactionDateModified" guid="f708f508-5dbf-45d3-9b94-2e2bdf6b732b" enabled="" order="4" />
+      <field column="QAndAQuestionReactionType" enabled="true" guid="1240baae-ca40-4c7f-a07a-53fbc6266010" visible="true" order="5">
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>Upvote</Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Type</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit</FormDisplayName>
+  <FormGUID>9f26122b-93c8-4a10-a1ba-50db86e3afcb</FormGUID>
+  <FormIsCustom>True</FormIsCustom>
+  <FormName>Edit</FormName>
+</cms.alternativeform>

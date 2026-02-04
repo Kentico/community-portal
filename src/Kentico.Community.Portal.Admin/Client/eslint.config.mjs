@@ -91,6 +91,7 @@ export default [
       'react/prefer-es6-class': ['error', 'always'],
       'react/jsx-uses-react': 'off',
       'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-require-imports': 'error',
 
