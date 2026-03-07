@@ -34,7 +34,7 @@ public class DateTimeDisplayService
 
             return (localDateTime, abbreviatedTz, tz.StandardName);
         }
-        catch (TimeZoneNotFoundException)
+        catch (Exception e) when (e is TimeZoneNotFoundException or ArgumentException)
         {
             // Fallback to UTC if timezone is invalid
             return (utcDateTime, "UTC", "UTC");

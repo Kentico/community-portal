@@ -6,7 +6,6 @@ using CMS.Membership;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Emails;
 using Kentico.Community.Portal.Core.Modules;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Features.Emails;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.EmailBuilder.Web.Mvc;
@@ -14,12 +13,14 @@ using Microsoft.AspNetCore.Components;
 using static Kentico.Community.Portal.Web.Components.EmailBuilder.EmailFooter;
 using static Kentico.Community.Portal.Web.Components.EmailBuilder.EmailHeader;
 
+using Icons = Kentico.Xperience.Admin.Base.Icons;
+
 [assembly: RegisterEmailTemplate(
     identifier: NewsletterTemplate.IDENTIFIER,
     name: "Newsletter",
     componentType: typeof(NewsletterTemplate),
     Description = "Default template for the Kentico Community Newsletter",
-    IconClass = KenticoIcons.NEWSPAPER,
+    IconClass = Icons.Newspaper,
     ContentTypeNames = [NewsletterEmail.CONTENT_TYPE_NAME])]
 
 namespace Kentico.Community.Portal.Web.Features.Emails;

@@ -8,12 +8,12 @@
 
 <main class="py-4 py-md-5">
     <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"
-        widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
-    
+                   widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
+
     @if (User.Identity is { IsAuthenticated: true })
     {
         <vc:page-heading page="new(templateModel)" />
-        
+
         <section>
             <div class="container">
                 <div class="row justify-content-center">
@@ -38,9 +38,7 @@
                             <div class="p-4 p-lg-5 text-center">
                                 <h2 class="mb-4">Please sign in</h2>
                                 <p class="mb-4">To post a new discussion, you need to sign in to your account first.</p>
-                                <a asp-controller="Authentication" asp-action="Login" 
-                                   asp-route-returnUrl="@Context.Request.Path" 
-                                   class="btn btn-primary">Sign in</a>
+                                <a href="/login?returnURL=@Context.Request.Path"                 class="btn btn-primary">Sign in</a>
                             </div>
                         </div>
                     </div>
@@ -50,5 +48,5 @@
     }
 
     <editable-area area-identifier="bottom" allow-widget-output-cache="View.CacheEnabled"
-        widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
+                   widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
 </main>

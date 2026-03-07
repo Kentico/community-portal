@@ -5,8 +5,8 @@
 
 ## Description
 
-Xperience by Kentico:
-[v31.1.1](https://docs.kentico.com/documentation/changelog#hotfix-january-31-2026)
+Xperience by Kentico
+[v31.2.2](https://docs.kentico.com/documentation/changelog#hotfix-march-5-2026).
 
 Xperience by Kentico solution for the Kentico managed SaaS hosted Kentico
 Community website.

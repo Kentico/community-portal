@@ -1,0 +1,23 @@
+@using Kentico.Community.Portal.Web.Features.Members.Components.MemberProfileDisplay
+@model ProfileRenderModel
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0"><i class="bi bi-exclamation-triangle-fill me-2"></i>Account Suspended</h3>
+                </div>
+                <div class="card-body text-center py-5">
+                    <p class="lead mb-4">
+                        This account has violated our Terms of Use and is no longer accessible.
+                    </p>
+                    <p class="text-muted">
+                        Profile information cannot be displayed for suspended accounts.
+                    </p>
+                    <a href="/" class="btn btn-outline-secondary mt-3">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

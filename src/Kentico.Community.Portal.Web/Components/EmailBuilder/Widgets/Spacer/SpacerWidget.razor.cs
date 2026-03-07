@@ -1,10 +1,10 @@
 using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Core.Emails;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.EmailBuilder.Widgets.Spacer;
 using Kentico.EmailBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Components;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterEmailWidget(
     identifier: SpacerWidget.IDENTIFIER,

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Virtual Email</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="VirtualEmailID" columntype="integer" enabled="true" guid="d98a7dab-833c-45bb-aa1d-cfd99eb674f6" isPK="true" />
+      <field column="VirtualEmailGUID" columntype="guid" enabled="true" guid="20b6d035-7fff-42d5-8ee3-626ef100e8d8" />
+      <field allowempty="true" column="VirtualEmailSender" columntype="text" enabled="true" guid="9790f4dc-250a-41fb-863c-82d1ab530f3f" />
+      <field allowempty="true" column="VirtualEmailRecipientsTo" columntype="text" enabled="true" guid="16c774d2-97ed-4b5a-adea-9585d9177f9e" />
+      <field allowempty="true" column="VirtualEmailRecipientsCc" columntype="text" enabled="true" guid="9cf8cc91-fa3f-4b7f-9f15-f3d168237558" />
+      <field allowempty="true" column="VirtualEmailRecipientsBcc" columntype="text" enabled="true" guid="0cc1d1a5-81ba-42ee-95b6-880a442f4b00" />
+      <field allowempty="true" column="VirtualEmailSubject" columntype="text" enabled="true" guid="db87c3de-0453-4781-bf6a-85013530f05f" />
+      <field allowempty="true" column="VirtualEmailBodyHTML" columnprecision="0" columnsize="5000" columntype="longtext" enabled="true" guid="d820436f-842a-4c0e-b069-7a04c48d3b82" />
+      <field allowempty="true" column="VirtualEmailBodyPlainText" columnprecision="0" columnsize="5000" columntype="longtext" enabled="true" guid="b658f347-c7e7-452e-9dd0-511a9a1e07b4" />
+      <field column="VirtualEmailSentUTCDate" columntype="datetime" enabled="true" guid="b3051e5d-bf08-4ff8-9777-6bc21e319d54" />
+      <field allowempty="true" column="VirtualEmailStatus" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="3b65a8bc-c773-4fa7-9a82-51cf4f4a6087" />
+      <field allowempty="true" column="VirtualEmailErrorMessage" columnprecision="0" columnsize="5000" columntype="longtext" enabled="true" guid="98c44742-17a8-4a04-b268-9e08ea70ba38" />
+      <field allowempty="true" column="VirtualEmailChannelName" columntype="text" enabled="true" guid="8eedc655-e985-4d4a-934b-5e68dab081af" />
+      <field allowempty="true" column="VirtualEmailEmailConfigurationID" columntype="integer" enabled="true" guid="9dad48fe-0912-49ad-9e13-aa4456d9ba8a" refobjtype="emaillibrary.emailconfiguration" reftype="NotRequired" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>b9cf0583-79b0-463a-b626-102d04c9c3f2</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>Kentico.VirtualEmail</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Integration.VirtualInbox</CodeName>
+    <GUID>01bba2c3-a2ba-48ae-9278-106dc9ac2591</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Kentico_VirtualEmail</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

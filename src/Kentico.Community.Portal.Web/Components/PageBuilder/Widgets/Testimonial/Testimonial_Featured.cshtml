@@ -1,0 +1,83 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Testimonial
+@model TestimonialWidgetViewModel
+
+@{
+    string wrapperThemeClass = Model.Theme switch
+    {
+        TestimonialThemes.Neutral => "testimonial-widget--neutral",
+        TestimonialThemes.Secondary => "testimonial-widget--secondary",
+        TestimonialThemes.Primary or _ => "testimonial-widget--primary",
+    };
+
+    string themeAttribute = Model.Theme switch
+    {
+        TestimonialThemes.Neutral => "neutral",
+        TestimonialThemes.Secondary => "secondary",
+        TestimonialThemes.Primary or _ => "primary",
+    };
+
+    string layoutClass = Model.Layout switch
+    {
+        TestimonialLayouts.Simple => "testimonial-widget--simple",
+        TestimonialLayouts.Featured or _ => "testimonial-widget--featured",
+    };
+
+}
+
+<article class="testimonial-widget @layoutClass @wrapperThemeClass card border-0 shadow-sm" data-theme="@themeAttribute"
+         xpc-preview-outline="@Model.ComponentName">
+    <div class="card-body p-4 p-lg-5">
+        @if (Model.ShouldShowTitle)
+        {
+            <h3 class="testimonial-widget__title h4 mb-3 mt-0">@Model.Title</h3>
+        }
+
+        @if (Model.HasMessage)
+        {
+            <blockquote class="testimonial-widget__quote @(Model.ShouldShowAttribution ? "mb-4" : "mb-0") fs-5">
+                “@Model.Message”
+            </blockquote>
+        }
+
+        @if (Model.ShouldShowAttribution)
+        {
+            <div class="testimonial-widget__attribution d-flex align-items-center gap-3">
+                @if (Model.ShowPhoto && Model.HasPhoto)
+                {
+                    @if (Model.UseMemberAvatar)
+                    {
+                        <img src="" class="testimonial-widget__photo rounded-circle flex-shrink-0"
+                             xpc-member-avatar="@Model.MemberID" alt="@Model.Name" />
+                    }
+                    else
+                    {
+                        <img class="testimonial-widget__photo rounded-circle flex-shrink-0" xpc-image-asset="Model.Photo"
+                             xpc-image-asset-responsive="true" sizes="64px" alt="@Model.Name" />
+                    }
+                }
+
+                <div class="d-flex flex-column gap-1">
+                    @if (Model.ShouldShowName)
+                    {
+                        @if (Model.ShouldLinkName)
+                        {
+                            <a href="@Model.MemberProfileUrl"
+                               class="testimonial-widget__name fw-semibold m-0 d-inline-block text-decoration-none">@Model.Name</a>
+                        }
+                        else
+                        {
+                            <p class="testimonial-widget__name fw-semibold m-0">@Model.Name</p>
+                        }
+                    }
+
+                    @if (Model.ShouldShowEmployment)
+                    {
+                        <p class="testimonial-widget__employment m-0 small">
+                            @Model.Employment
+                        </p>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</article>

@@ -22,11 +22,12 @@
                                 <div class="text-center py-5 my-4">
                                     <h1>@post.Title</h1>
                                     <time xpc-datetime="post.PublishedDate" xpc-datetime-format="@DateTimeFormat.Date"
-                                        class="text-muted"></time>
+                                          class="text-muted">
+                                    </time>
                                     <div class="d-flex align-items-center justify-content-center mt-3">
                                         <div class="me-3">
                                             <img xpc-image="post.Author.Photo" class="rounded-circle"
-                                                style="width: 50px; height: 50px;" />
+                                                 style="width: 50px; height: 50px;" />
                                         </div>
                                         <div>
                                             @if (post.Author.LinkProfilePath.TryGetValue(out string? p1))
@@ -50,7 +51,7 @@
                 </section>
             </section>
 
-            <section class="section section--default">
+            <section class="section section--default ps-0 pe-0">
                 <div role="main" class="t-article_body">
                     <editable-area area-identifier="main" area-options-default-section-identifier="@SI.SingleColumn"
                         area-options-allowed-sections="
@@ -58,21 +59,24 @@
                             SI.Grid,
                             SI.SingleColumn
                         ]" area-options-allowed-widgets="
-                           [ 
-                                  WI.BlogPostList,
-                                  WI.CTAButton,
-                                  WI.File,
-                                  WI.Heading,
-                                  WI.Image,
-                                  WI.LinkList,
-                                  WI.Markdown,
-                                  WI.Video,
-                                  WI.ProfileCard,
-                                  WI.Embed,
-                                  WI.FallbackForm,
-                                  WI.Poll
-                              ]" allow-widget-output-cache="View.CacheEnabled"
-                        widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
+                        [
+                            WI.BlogPostList,
+                            WI.CTAButton,
+                            WI.File,
+                            WI.Heading,
+                            WI.Image,
+                            WI.LinkList,
+                            WI.Markdown,
+                            WI.Video,
+                            WI.ProfileCard,
+                            WI.Embed,
+                            WI.FallbackForm,
+                            WI.Poll,
+                            WI.Testimonial,
+                            WI.Integration
+                        ]"
+                    allow-widget-output-cache="View.CacheEnabled"
+                     widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
                 </div>
 
                 <div class="container">
@@ -98,26 +102,24 @@
                                     <p>Share on:</p>
                                     <div class="d-flex justify-content-center gap-2">
                                         <a href="https://twitter.com/intent/tweet?url=@post.AbsoluteURL" target="_blank"
-                                            rel="noopener noreferrer" title="Twitter"
-                                            class="btn btn-secondary btn-social border-0 bg-twitter">
+                                               rel="noopener noreferrer" title="Twitter"
+                                               class="btn btn-secondary btn-social border-0 bg-twitter">
                                             <svg class="icon">
-                                                <use xlink:href="/img/icons.svg#brand-twitter" asp-append-version></use>
+                                                <use xlink:href="/img/icons.svg#brand-twitter" asp-append-version />
                                             </svg>
                                         </a>
                                         <a href="https://www.facebook.com/sharer/sharer.php?u=@post.AbsoluteURL"
-                                            target="_blank" rel="noopener noreferrer" title="Facebook"
-                                            class="btn btn-secondary btn-social border-0 bg-facebook">
+                                               target="_blank" rel="noopener noreferrer" title="Facebook"
+                                               class="btn btn-secondary btn-social border-0 bg-facebook">
                                             <svg class="icon">
-                                                <use xlink:href="/img/icons.svg#brand-facebook" asp-append-version>
-                                                </use>
+                                                <use xlink:href="/img/icons.svg#brand-facebook" asp-append-version />
                                             </svg>
                                         </a>
                                         <a href="https://www.linkedin.com/shareArticle?url=@post.AbsoluteURL"
-                                            target="_blank" rel="noopener noreferrer" title="LinkedIn"
-                                            class="btn btn-secondary btn-social border-0 bg-linkedin">
+                                               target="_blank" rel="noopener noreferrer" title="LinkedIn"
+                                               class="btn btn-secondary btn-social border-0 bg-linkedin">
                                             <svg class="icon">
-                                                <use xlink:href="/img/icons.svg#brand-linkedin" asp-append-version>
-                                                </use>
+                                                <use xlink:href="/img/icons.svg#brand-linkedin" asp-append-version />
                                             </svg>
                                         </a>
                                     </div>
@@ -130,12 +132,12 @@
                                         @if (post.Author.Photo.TryGetValue(out var photo))
                                         {
                                             <img xpc-image="photo" class="rounded-circle"
-                                                style="width: 50px; height: 50px;" />
+                                                 style="width: 50px; height: 50px;" />
                                         }
                                         else
                                         {
                                             <img src="/img/profile-photo-default.png" alt="@post.Author.Name"
-                                                class="rounded-circle" style="width: 50px; height: 50px;" />
+                                                 class="rounded-circle" style="width: 50px; height: 50px;" />
                                         }
                                     </div>
                                     <div>

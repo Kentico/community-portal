@@ -1,0 +1,41 @@
+@if (User.Identity?.IsAuthenticated != true)
+{
+    <li class="nav-item d-none d-md-block ms-3">
+        <a class="btn btn-primary text-uppercase" href="/login?returnURL=@Context.Request.Path" test-id="signInLinkNav">
+            Sign in
+        </a>
+    </li>
+
+    return;
+}
+
+<li class="nav-item dropdown">
+    <span class="nav-link active">
+        <span test-id="username">@User.Identity.Name</span>
+        <svg class="icon d-none d-md-block">
+            <use xlink:href="/img/icons.svg#chevron-down" asp-append-version />
+        </svg>
+    </span>
+
+    <button type="button" class="btn dropdown-toggle d-md-none" data-bs-toggle="dropdown" aria-expanded="false">
+        <svg class="icon">
+            <use xlink:href="/img/icons.svg#chevron-down" asp-append-version />
+        </svg>
+    </button>
+    <ul class="dropdown-menu gap-3 flex-row flex-md-column justify-content-around border border-1 bg-white">
+        <li class="nav-item">
+            <a href="/my-account" class="btn btn-primary text-uppercase">
+                My Account
+            </a>
+        </li>
+        <li class="nav-item w-md-100">
+            <form asp-controller="Logout" asp-action="Logout" method="post" test-id="logoutForm">
+                <fieldset xpc-readonly-disabled>
+                    <button class="btn btn-outline-secondary text-uppercase w-100" type="submit">
+                        Logout
+                    </button>
+                </fieldset>
+            </form>
+        </li>
+    </ul>
+</li>

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Contact management - Profile</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ProfileID" columntype="integer" enabled="true" guid="906c3158-5553-4d5b-b7d1-3d1726938051" isPK="true" system="true" />
+      <field column="ProfileName" columnprecision="0" columnsize="10" columntype="text" enabled="true" guid="f498df58-9ab0-4411-bcda-2660af4a00ac" system="true" />
+      <field column="ProfileGuid" columnprecision="0" columntype="guid" enabled="true" guid="0251350e-ca81-412b-ad42-668c005c16e3" system="true" />
+      <field allowempty="true" column="ProfileDisplayName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="8aadccfa-722b-4528-990b-64602d9755c6" system="true" />
+      <field column="ProfileIsVerified" columnprecision="0" columntype="boolean" enabled="true" guid="68312550-3303-4c5e-b6dd-14cb72c5368e" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>ee3f7746-558d-4836-942f-a6240679ef50</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.Profile</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContactManagement</CodeName>
+    <GUID>0e4beef1-989c-4687-80ca-ae21fec09734</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>OM_Profile</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

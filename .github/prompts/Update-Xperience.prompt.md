@@ -37,10 +37,13 @@ If any precondition fails: output a clear message and stop.
 2. Identify all `<PackageVersion Include="Kentico.Xperience.*" Version="X" />`
    entries where `Version` equals `currentVersion`.
 3. Replace their `Version` with `latestVersion`.
-4. Do NOT change packages whose versions are intentionally different (examples
+4. If a referenced package is a `-preview` or `-prerelease` version and the
+   version number matches the other `Kentico.Xperience.*` packages, try to
+   update it to a new `-preview` or `-prerelease` version as well.
+5. Do NOT change packages whose versions are intentionally different (examples
    today: `Kentico.Xperience.Lucene`, `Kentico.Xperience.MiniProfiler`,
    `Kentico.Xperience.TagManager`). These are outside the scope of this task.
-5. Run restore:
+6. Run restore:
    ```pwsh
    dotnet restore
    ```
@@ -54,9 +57,10 @@ If any precondition fails: output a clear message and stop.
    npm install <package>@latest --save
    ```
    or if dev dependency: `--save-dev`.
-3. After updates, execute VS Code task: `npm: install (Admin)` (ensures lockfile
+3. Always use `--save-exact` for all packages.
+4. After updates, execute VS Code task: `npm: install (Admin)` (ensures lockfile
    consistency for Admin client).
-4. After installation, run `npm: audit fix (Admin)` (attempts to resolve package
+5. After installation, run `npm: audit fix (Admin)` (attempts to resolve package
    vulnerabilities) and do not block workflow unless critical
 
 ## Build & Breaking Change Detection

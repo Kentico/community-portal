@@ -129,14 +129,14 @@ public class BlogSearchIndexingStrategy(
         page
             .BlogPostPageAuthorContent
             .TryFirst()
-            .Execute(author =>
+            .Tap(author =>
             {
                 indexModel.AuthorMemberID = author.AuthorContentMemberID;
                 indexModel.AuthorName = author.FullName;
                 author.AuthorContentPhotoImageContent
                     .TryFirst()
                     .Map(i => new ImageAssetViewModelSerializable(i))
-                    .Execute(i => indexModel.AuthorAvatarImage = i);
+                    .Tap(i => indexModel.AuthorAvatarImage = i);
             });
 
         var taxonomies = await mediator.Send(new BlogPostTaxonomiesQuery());
@@ -146,7 +146,7 @@ public class BlogSearchIndexingStrategy(
             .Map(t => t.Identifier)
             .Bind(id => taxonomies.Types
                 .TryFirst(t => t.Guid == id))
-            .Execute(tag =>
+            .Tap(tag =>
             {
                 indexModel.BlogType = tag.DisplayName;
                 indexModel.BlogTypeFacet = tag.NormalizedName;

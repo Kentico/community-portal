@@ -25,14 +25,14 @@
                 <div class="small text-muted mb-2">
                     <time xpc-datetime="post.PublishedDate" xpc-datetime-format="@DateTimeFormat.Date"></time>
                 </div>
-            @if (Model.ShowAuthor)
+                @if (Model.ShowAuthor)
                 {
                     <div class="small text-muted">
                         by
                         @if (post.Author.ID > 0)
                         {
                             <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
-                                class="text-decoration-none">@post.Author.Name</a>
+                               class="text-decoration-none">@post.Author.Name</a>
                         }
                         else
                         {
@@ -53,7 +53,7 @@
                 <a class="btn btn-outline-primary btn-sm d-inline-flex align-items-center" href="@post.LinkPath">
                     Read More
                     <svg class="ms-2" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                        <use xlink:href="/img/icons.svg#chevron-right" asp-append-version></use>
+                        <use xlink:href="/img/icons.svg#chevron-right" asp-append-version />
                     </svg>
                 </a>
             </footer>

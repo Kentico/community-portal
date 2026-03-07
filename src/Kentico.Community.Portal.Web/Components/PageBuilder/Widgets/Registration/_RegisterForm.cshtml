@@ -1,0 +1,63 @@
+@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Registration.RegisterViewModel
+
+@if (Context.Request.IsHtmx() && ViewContext.ModelState.IsValid)
+{
+    <partial name="~/Components/PageBuilder/Widgets/Registration/_VerifyEmail.cshtml" model="true" />
+    return;
+}
+
+<form id="registerForm" method="post" class="needs-validation" hx-swap="outerHTML" hx-post hx-controller="RegistrationWidget"
+      hx-action="Register" hx-trigger="captchaReady" hx-disabled-elt="find fieldset" test-id="registerForm">
+    <fieldset hx-indicator="this" xpc-readonly-disabled>
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger validation-summary"></div>
+
+        <div class="mb-4">
+            <label asp-for="UserName" class="form-label"></label>
+            <input asp-for="UserName" class="form-control rounded-4" test-id="userName" />
+            <span asp-validation-for="UserName" class="invalid-feedback"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control rounded-4" test-id="email" />
+            <span asp-validation-for="Email" class="invalid-feedback"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control rounded-4" test-id="password" />
+            <span asp-validation-for="Password" class="invalid-feedback"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="PasswordConfirmation" class="form-label"></label>
+            <input asp-for="PasswordConfirmation" class="form-control rounded-4" test-id="passwordConfirmation" />
+            <span asp-validation-for="PasswordConfirmation" class="invalid-feedback"></span>
+        </div>
+
+        <div class="mb-4">
+            <div class="form-check">
+                <input class="form-check-input" asp-for="ConsentAgreement" test-id="consentAgreement" />
+                <label class="form-check-label" asp-for="ConsentAgreement">
+                    <vc:consent consent-name="KenticoCommunityPortalTracking" />
+                </label>
+                <span asp-validation-for="ConsentAgreement" class="invalid-feedback"></span>
+            </div>
+        </div>
+
+        <input asp-for="CaptchaToken" />
+        <button id="register" type="submit" class="btn btn-primary w-100" xpc-loading-button>
+            Register
+        </button>
+
+        <vc:read-only-mode-notification />
+    </fieldset>
+
+    <script type="module">
+        asyncReady(async () => {
+            const recaptcha = await import('@ClientAssets.ViteAssetPath("js/recaptcha.js")');
+
+            recaptcha.initCaptcha({ formElemID: 'registerForm' });
+        });
+    </script>
+</form>

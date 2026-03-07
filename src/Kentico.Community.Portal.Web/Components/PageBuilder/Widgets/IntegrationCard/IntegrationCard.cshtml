@@ -1,0 +1,111 @@
+@using Kentico.Content.Web.Mvc
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.IntegrationCard
+
+@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.IntegrationCard.IntegrationCardWidgetViewModel
+
+@{
+    bool hasLogo = Model.Logo.TryGetValue(out var logo) && Model.ShowLogo;
+    bool hasRepositoryLink = Model.RepositoryURL.TryGetValue(out string? repositoryURL);
+    bool hasLibraryLink = Model.LibraryURL.TryGetValue(out string? libraryURL);
+    bool hasAnyLinks = hasRepositoryLink || hasLibraryLink;
+    bool useButtonLinks = Model.LinkStyle == IntegrationCardLinkStyles.Buttons;
+
+    string linkContainerClasses = useButtonLinks
+        ? "d-grid gap-2"
+        : "d-flex flex-wrap gap-3";
+
+    string linkClasses = useButtonLinks
+        ? "btn btn-sm btn-outline-primary px-3 py-2"
+        : "text-primary text-decoration-none widget-card-link";
+}
+
+<article class="border rounded-3 p-4 d-flex flex-column widget-card " aria-label="Integration: @Model.Title"
+         xpc-preview-outline="Integration Card Widget">
+    <h3 class="mt-0">@Model.Title</h3>
+    @if (hasLogo && hasAnyLinks)
+    {
+        <div class="d-flex align-items-center gap-5 mt-2">
+            <div class="flex-shrink-0">
+                <img xpc-image="logo" class="img-fluid" style="max-width: 75px; max-height: 75px;"
+                     alt="@Model.Title logo" />
+            </div>
+            <div class="flex-grow-1 @linkContainerClasses">
+                @if (hasRepositoryLink)
+                {
+                    <a class="@linkClasses" href="@repositoryURL" aria-label="View @Model.Title source code repository"
+                           rel="noopener noreferrer" target="_blank">
+                        Repository
+                        @if (!useButtonLinks)
+                        {
+                            <svg class="ms-1" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                                <use xlink:href="/img/icons.svg#chevron-right" asp-append-version />
+                            </svg>
+                        }
+                    </a>
+                }
+                @if (hasLibraryLink)
+                {
+                    <a class="@linkClasses" href="@libraryURL" aria-label="View @Model.Title library documentation"
+                           rel="noopener noreferrer" target="_blank">
+                        Library
+                        @if (!useButtonLinks)
+                        {
+                            <svg class="ms-1" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                                <use xlink:href="/img/icons.svg#chevron-right" asp-append-version />
+                            </svg>
+                        }
+                    </a>
+                }
+            </div>
+        </div>
+    }
+    else if (hasLogo)
+    {
+        <div class="mb-2">
+            <img xpc-image="logo" class="img-fluid" style="max-width: 75px; max-height: 75px;" alt="@Model.Title logo" />
+        </div>
+    }
+
+    @if (Model.ShowAuthor && Model.AuthorLink.TryGetValue(out var link))
+    {
+        <p class="mt-2 mb-0">
+            <small>
+                by <a href="@link.URL" aria-label="View @link.Label's profile">@link.Label</a>
+            </small>
+        </p>
+    }
+
+    <p class="mt-4 mb-0 flex-grow-1">@Model.ShortDescription</p>
+
+    @if (hasAnyLinks && !hasLogo)
+    {
+        <div class="@linkContainerClasses mt-3">
+            @if (hasRepositoryLink)
+            {
+                <a class="@linkClasses" href="@repositoryURL" aria-label="View @Model.Title source code repository"
+                       rel="noopener noreferrer" target="_blank">
+                    Repository
+                    @if (!useButtonLinks)
+                    {
+                        <svg class="ms-1" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                            <use xlink:href="/img/icons.svg#chevron-right" asp-append-version />
+                        </svg>
+                    }
+                </a>
+            }
+            @if (hasLibraryLink)
+            {
+                <a class="@linkClasses" href="@libraryURL" aria-label="View @Model.Title library documentation"
+                       rel="noopener noreferrer" target="_blank">
+                    Library
+                    @if (!useButtonLinks)
+                    {
+                        <svg class="ms-1" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                            <use xlink:href="/img/icons.svg#chevron-right" asp-append-version />
+                        </svg>
+                    }
+                </a>
+            }
+        </div>
+    }
+</article>

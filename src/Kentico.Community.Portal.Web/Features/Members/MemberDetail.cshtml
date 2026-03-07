@@ -1,5 +1,13 @@
 @using Kentico.Community.Portal.Web.Components.TagHelpers
+@using Kentico.Community.Portal.Core.Modules.Membership
 @model Kentico.Community.Portal.Web.Features.Members.MemberDetailViewModel
+
+@if (Model.Member.ModerationStatus is ModerationStatuses.Flagged or ModerationStatuses.Spam)
+{
+    <vc:page-heading page="Model.Page" />
+    <vc:member-profile-display profile="Model.Member" />
+    return;
+}
 
 <vc:page-heading page="Model.Page" />
 
@@ -36,55 +44,7 @@
                         }
 
                         <div>
-                            <dl class="grid">
-                                <dt>Username:</dt>
-                                <dd>@member.UserName</dd>
-
-                                @if (!string.IsNullOrWhiteSpace(member.FullName))
-                                {
-                                    <dt>Name:</dt>
-                                    <dd>@member.FullName</dd>
-                                }
-
-                                <dt>Joined:</dt>
-                                <dd><time xpc-datetime="Model.Member.Created"
-                                        xpc-datetime-format="@DateTimeFormat.Date"></time></dd>
-
-                                @if (!string.IsNullOrWhiteSpace(member.EmployerLink.Label))
-                                {
-                                    <dt>Employer:</dt>
-                                    <dd>
-                                        @member.EmployerLink.Label
-                                    </dd>
-                                }
-
-                                @if (!string.IsNullOrWhiteSpace(member.EmployerLink.URL))
-                                {
-                                    <dt>Employer website:</dt>
-                                    <dd>
-                                        <a href="@member.EmployerLink.URL" rel="noopener nofollow">
-                                            @member.EmployerLink.URL
-                                        </a>
-                                    </dd>
-                                }
-
-                                @if (!string.IsNullOrWhiteSpace(member.JobTitle))
-                                {
-                                    <dt>Job title:</dt>
-                                    <dd>@member.JobTitle</dd>
-                                }
-
-                                @if (!string.IsNullOrWhiteSpace(member.LinkedInIdentifier))
-                                {
-                                    <dt>LinkedIn:</dt>
-                                    <dd>
-                                        <a href="https://www.linkedin.com/in/@member.LinkedInIdentifier"
-                                            rel="noopener nofollow">
-                                            https://www.linkedin.com/in/@member.LinkedInIdentifier
-                                        </a>
-                                    </dd>
-                                }
-                            </dl>
+                            <vc:member-profile-display profile="Model.Member" />
                             <div>
                                 <h5 class="mb-2">My badges</h5>
                                 <div class="d-flex flex-wrap gap-2">

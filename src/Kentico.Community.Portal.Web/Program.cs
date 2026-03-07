@@ -17,7 +17,7 @@ builder.Services
     .AddAppXperienceMembership()
     .AddAppLuceneSearch(config)
     .AddAppMvc(env)
-    .AddApp(config);
+    .AddApp(config, env);
 
 var app = builder.Build();
 
@@ -46,6 +46,7 @@ app
     .UseStatusCodePagesWithReExecute("/error/{0}")
     .IfNotDevelopment(env, b => b.UseHsts())
     .UseAuthorization()
+    .IfDevelopment(env, b => app.MapMcp("/mcp"))
     .UseKenticoRoutes(app)
     .UseAppRoutes()
     .IfDevelopment(env, b => b.UseViteDevelopmentServer(true));

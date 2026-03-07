@@ -5,6 +5,8 @@ using Kentico.Content.Web.Mvc.Routing;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
 using Microsoft.AspNetCore.Mvc;
 
+using Icons = Kentico.Xperience.Admin.Base.Icons;
+
 [assembly: RegisterPageTemplate(
     identifier: "KenticoCommunity.HomePage_Default",
     name: "Home Page - Default",
@@ -12,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
     customViewName: "~/Features/Home/HomePage_Default.cshtml",
     ContentTypeNames = [HomePage.CONTENT_TYPE_NAME],
     Description = "",
-    IconClass = ""
+    IconClass = Icons.Home
 )]
 
 [assembly: RegisterWebPageRoute(

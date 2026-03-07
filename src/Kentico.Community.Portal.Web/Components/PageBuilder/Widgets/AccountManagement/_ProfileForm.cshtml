@@ -1,0 +1,116 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.AccountManagement
+
+@model ProfileViewModel
+
+<form id="profileUpdateForm" method="post" hx-post hx-controller="AccountManagementWidget" hx-action="UpdateProfile" hx-swap="outerHTML"
+      hx-disabled-elt="find fieldset" test-id="profileUpdate">
+    <fieldset hx-indicator="this" xpc-readonly-disabled>
+        <h4>My profile</h4>
+
+        <small class="form-text text-muted d-block py-1">
+            Update your public profile information. Use the <strong>Public profile</strong> link above to view your
+            profile.
+        </small>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
+
+        <div class="form-group">
+            <div>
+                <label asp-for="FirstName" class="control-label form-label mt-3"></label>
+            </div>
+            <div>
+                <input asp-for="FirstName" class="form-control" test-id="firstName" />
+                <span asp-validation-for="FirstName" class="text-danger field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label asp-for="LastName" class="control-label form-label mt-3"></label>
+            </div>
+            <div>
+                <input asp-for="LastName" class="form-control" test-id="lastName" />
+                <span asp-validation-for="LastName" class="text-danger field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label asp-for="LinkedInIdentifier" class="control-label form-label mt-3"></label>
+                <span class="form-tooltip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right"
+                      title="The last segment of your LinkedIn profile URL. This should not be the full URL. Ex: the 'abc' in https://www.linkedin.com/in/abc"
+                      aria-label="The last segment of your LinkedIn profile URL. This should not be the full URL. Ex: the 'abc' in https://www.linkedin.com/in/abc">
+                    <svg class="icon">
+                        <use xlink:href="/img/icons.svg#i-circle" asp-append-version />
+                    </svg>
+                </span>
+            </div>
+            <div>
+                <input asp-for="LinkedInIdentifier" class="form-control" test-id="linkedInIdentifier" />
+                <span asp-validation-for="LinkedInIdentifier" class="text-danger field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label asp-for="JobTitle" class="control-label form-label mt-3"></label>
+            </div>
+            <div>
+                <input asp-for="JobTitle" class="form-control" test-id="JobTitle" />
+                <span asp-validation-for="JobTitle" class="text-danger field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label asp-for="EmployerName" class="control-label form-label mt-3"></label>
+            </div>
+            <div>
+                <input asp-for="EmployerName" class="form-control" test-id="EmployerName" />
+                <span asp-validation-for="EmployerName" class="text-danger field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label asp-for="EmployerWebsiteURL" class="control-label form-label mt-3"></label>
+            </div>
+            <div>
+                <input asp-for="EmployerWebsiteURL" class="form-control" test-id="EmployerWebsiteURL" />
+                <span asp-validation-for="EmployerWebsiteURL" class="text-danger field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label asp-for="TimeZone" class="control-label form-label mt-3"></label>
+                <span class="form-tooltip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right"
+                      title="All dates across the website and in email notifications will be displayed in your selected local time zone."
+                      aria-label="All dates across the website and in email notifications will be displayed in your selected local time zone.">
+                    <svg class="icon">
+                        <use xlink:href="/img/icons.svg#i-circle" asp-append-version />
+                    </svg>
+                </span>
+            </div>
+            <div>
+                <select asp-for="TimeZone" asp-items="Model.TimeZoneOptions" class="form-select" test-id="TimeZone">
+                    <option value="">-- Select a time zone --</option>
+                </select>
+                <span asp-validation-for="TimeZone" class="text-danger field-validation-error"></span>
+            </div>
+        </div>
+
+        <button id="updateProfile" type="submit" class="btn btn-primary mt-3" xpc-loading-button>
+            Update profile
+        </button>
+
+        <vc:read-only-mode-notification />
+    </fieldset>
+
+    @if (Context.Request.IsHtmx() && ViewContext.ModelState.IsValid)
+    {
+        <xpc-alert dismissable="true">
+            Profile updated.
+        </xpc-alert>
+    }
+</form>

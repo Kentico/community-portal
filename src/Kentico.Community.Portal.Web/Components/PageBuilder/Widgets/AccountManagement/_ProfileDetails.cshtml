@@ -1,0 +1,32 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.AccountManagement
+@using Kentico.Community.Portal.Web.Components.TagHelpers
+
+@model MyAccountViewModel
+
+<div class="overflow-y-auto">
+    <h4>
+        Profile Information
+    </h4>
+
+    <div>
+        <dl class="grid">
+            <dt>Username:</dt>
+            <dd>@Model.Username</dd>
+
+            <dt>Email:</dt>
+            <dd>@Model.Email</dd>
+
+            <dt>Joined:</dt>
+            <dd>
+                <time xpc-datetime="Model.DateCreated" xpc-datetime-format="@DateTimeFormat.Date"></time>
+            </dd>
+
+            <dt>Public profile:</dt>
+            <dd>
+                <a href="@Model.ProfileLinkURL">
+                    @Model.ProfileLinkURL
+                </a>
+            </dd>
+        </dl>
+    </div>
+</div>

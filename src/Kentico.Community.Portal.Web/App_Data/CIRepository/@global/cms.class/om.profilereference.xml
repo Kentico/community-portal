@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Contact management - Profile reference</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ProfileReferenceID" columntype="integer" enabled="true" guid="9bc03857-f6ea-40f2-9f34-31d80435f788" isPK="true" system="true" />
+      <field column="ProfileReferenceProfileID" columnprecision="0" columntype="integer" enabled="true" guid="c6a972f2-a896-4b25-adc5-5b9bd3e12d82" refobjtype="om.profile" reftype="Required" system="true" />
+      <field column="ProfileReferenceContactID" columnprecision="0" columntype="integer" enabled="true" guid="b962ec76-4663-427d-82cc-24b8a2644d20" refobjtype="om.contact" reftype="Required" system="true" />
+      <field allowempty="true" column="ProfileReferenceMemberID" columnprecision="0" columntype="integer" enabled="true" guid="394f901c-b75f-4e0b-a6b8-58bacabb280f" refobjtype="cms.member" reftype="NotRequired" system="true" />
+      <field allowempty="true" column="ProfileReferenceCustomerID" columnprecision="0" columntype="integer" enabled="true" guid="ca10878f-4537-49a5-8dd5-331886dab755" refobjtype="commerce.customer" reftype="NotRequired" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>0e3ccb66-f996-4a05-b32a-32c7af62d3a0</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.ProfileReference</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContactManagement</CodeName>
+    <GUID>0e4beef1-989c-4687-80ca-ae21fec09734</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>OM_ProfileReference</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

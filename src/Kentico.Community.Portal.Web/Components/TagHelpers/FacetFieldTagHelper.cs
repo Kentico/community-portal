@@ -27,7 +27,7 @@ public class FacetFieldTagHelper : TagHelper
 
         output.Attributes
             .TryFirst(a => string.Equals(a.Name, "name", StringComparison.OrdinalIgnoreCase))
-            .Execute(a =>
+            .Tap(a =>
             {
                 string id = !(Mobile ?? false)
                     ? $"{a.Value}-{Facet.Value}"

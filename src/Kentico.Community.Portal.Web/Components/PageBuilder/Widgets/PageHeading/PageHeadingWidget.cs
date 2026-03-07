@@ -1,8 +1,8 @@
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.PageHeading;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: PageHeadingWidget.IDENTIFIER,

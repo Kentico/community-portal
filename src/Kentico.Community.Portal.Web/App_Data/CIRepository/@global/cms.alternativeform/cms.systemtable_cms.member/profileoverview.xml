@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>CMS.Member</CodeName>
+    <GUID>07c5d145-7cbc-4c75-9a96-6d4948bf6c73</GUID>
+    <ObjectType>cms.systemtable</ObjectType>
+  </FormClassID>
+  <FormDefinition>
+    <form>
+      <field column="MemberID" guid="97a619c1-37d6-4490-8dee-6ac70551d421" enabled="" />
+      <field column="MemberEnabled" guid="1454d95c-81bb-4956-bda2-75edda984071" enabled="" order="1" />
+      <field column="MemberCreated" guid="c5075420-a7c7-4307-922d-82f711b8a689" enabled="" order="2" />
+      <field column="MemberGuid" guid="926897c7-71e2-47b3-b3b7-b456596e7da3" enabled="" order="3" />
+      <field column="MemberPassword" guid="61911700-cd6c-4d73-943a-985a57342b4f" enabled="" order="4" />
+      <field column="MemberIsExternal" guid="5cf88feb-d217-4a33-8039-63b46bf2c672" enabled="" order="5" />
+      <field column="MemberSecurityStamp" guid="d127bfec-d965-4888-8836-0b22ef2e1010" enabled="" order="6" />
+      <field column="MemberEmail" enabled="true" guid="3e50549b-a12d-4c19-8df7-380efa3a8d40" visible="true" order="7">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.members.edit.email$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberName" enabled="true" guid="f8b13f5b-c254-4f3a-8b8c-df10f5619300" visible="true" order="8">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.members.edit.name$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberFirstName" guid="077b5d08-4a4c-4fc0-b665-ed82507046bd" enabled="" />
+      <field column="MemberLastName" guid="22a169e9-34c1-4d93-a314-b55913e184e6" enabled="" />
+      <field column="MemberLinkedInIdentifier" guid="440be370-f12c-47c0-9841-e30cb1d9d4ff" enabled="" />
+      <field column="MemberAvatarFileExtension" guid="295972d6-2114-46d3-9703-066154c1fb17" enabled="" />
+      <field column="MemberAdministratorNotes" guid="652d625f-c20e-46bd-9f8c-838d3dfaf01c" enabled="" />
+      <field column="MemberModerationStatus" guid="5fe75ef9-0e15-4d2d-a4ab-1e186d1861c6" enabled="" />
+      <field column="MemberProgramStatus" guid="ab44a32d-7a34-4c76-966c-26897b7596c4" enabled="" />
+      <field column="MemberEmployerLink" guid="b832e3a2-04c2-40c8-8c29-ed4f5bd736ee" enabled="" />
+      <field column="MemberJobTitle" guid="55ab4c14-3279-4126-9066-4b8c270176d9" enabled="" />
+      <field column="MemberTimeZone" guid="0bb26afb-8926-485a-8043-804d98220d72" enabled="" />
+      <field column="MemberCountry" guid="6a6c1d8a-04c9-4827-b1b2-e31e2ba0d24d" enabled="" />
+      <field column="MemberBio" guid="0da3128f-f405-4dee-976a-1619ff66e597" enabled="" />
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Profile overview - registration information</FormDisplayName>
+  <FormGUID>52ad69db-5f7e-45e9-b5b9-0f30b07d1a2e</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>ProfileOverview</FormName>
+</cms.alternativeform>

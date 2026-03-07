@@ -68,11 +68,31 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="PromotionRedemptionMethod" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="371d80b4-8e97-4fb6-a6fd-432b7dd96226" system="true" visible="true" order="15">
+      <field column="PromotionCustomerEligibility" enabled="true" guid="99235eca-5861-49d0-892a-171d10c6e321" visible="true" order="15">
+        <settings>
+          <controlname>Kentico.Administration.RadioGroup</controlname>
+          <Inline>False</Inline>
+          <Options>
+<![CDATA[
+all;{$digitalcommerce.promotion.edit.customereligibility.options.all$}
+registered;{$digitalcommerce.promotion.edit.customereligibility.options.registered$}
+]]>
+          </Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+        </settings>
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>
-            <![CDATA[{$digitalcommerce.promotioninfo.edit.redemptionmethod.caption$}]]>
+            <![CDATA[{$digitalcommerce.promotion.edit.customereligibility.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="PromotionRedemptionMethod" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="371d80b4-8e97-4fb6-a6fd-432b7dd96226" system="true" visible="true" order="16">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalcommerce.promotion.edit.redemptionmethod.caption$}]]>
           </fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
@@ -81,21 +101,21 @@
           <Inline>False</Inline>
           <Options>
 <![CDATA[
-Automatic;{$digitalcommerce.promotioninfo.edit.redemptionmethod.automatic$}
-GenericCode;{$digitalcommerce.promotioninfo.edit.redemptionmethod.genericcode$}
+Automatic;{$digitalcommerce.promotion.edit.redemptionmethod.automatic$}
+GenericCode;{$digitalcommerce.promotion.edit.redemptionmethod.genericcode$}
 ]]>
           </Options>
           <OptionsValueSeparator>;</OptionsValueSeparator>
         </settings>
       </field>
-      <field column="PromotionDiscountCode" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="0783e459-8be6-4d39-b4e8-b92ab547781a" system="true" visible="true" order="16">
+      <field column="PromotionDiscountCode" columnprecision="0" columnsize="200" columntype="text" dummy="altform" enabled="true" guid="0783e459-8be6-4d39-b4e8-b92ab547781a" system="true" visible="true" order="17">
         <properties>
           <explanationtext>
-            <![CDATA[{$digitalcommerce.promotioninfo.edit.discountcode.textbelow$}]]>
+            <![CDATA[{$digitalcommerce.promotion.edit.discountcode.textbelow$}]]>
           </explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>
-            <![CDATA[{$digitalcommerce.promotioninfo.edit.discountcode.caption$}]]>
+            <![CDATA[{$digitalcommerce.promotion.edit.discountcode.caption$}]]>
           </fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>

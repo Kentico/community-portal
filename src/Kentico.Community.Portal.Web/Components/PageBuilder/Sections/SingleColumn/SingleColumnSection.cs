@@ -1,10 +1,10 @@
 using System.ComponentModel;
 using Kentico.Community.Portal.Core.Components;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Sections.SingleColumn;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterSection(
     identifier: SingleColumnSection.IDENTIFIER,
@@ -85,9 +85,11 @@ public enum Layouts
 {
     [Description("Standard")]
     Standard,
-    [Description("Full width - Content contained")]
+    [Description("Full width - Content standard")]
+    FullWidth_ContentStandard,
+    [Description("Full width - Content wide")]
     FullWidth_ContentContained,
-    [Description("Full width - Edge to edge")]
+    [Description("Full width - Content edge to edge")]
     FullWidth_EdgeToEdge,
 }
 

@@ -9,14 +9,14 @@
                 <div class="col-sm-10 col-lg-7">
                     <div>
                         <input type="text" class="form-control search rounded-pill"
-                            placeholder="Search by name or description"
-                            aria-label="Search integrations by name or description" aria-describedby="submitSearch"
-                            x-model="searchTerm">
+                               placeholder="Search by name or description"
+                               aria-label="Search integrations by name or description" aria-describedby="submitSearch"
+                               x-model="searchTerm">
                     </div>
                     <div class="w-100 mt-3">
                         <label for="integrationType">Filter by type</label>
                         <select id="integrationType" class="form-select form-select-sm w-auto d-inline"
-                            x-model="searchType" aria-label="Filter integrations by type">
+                                x-model="searchType" aria-label="Filter integrations by type">
                             <option value="all">(All types)</option>
                             @foreach (var type in Model.IntegrationTypes)
                             {
@@ -36,14 +36,14 @@
             @foreach (var item in Model.Items)
             {
                 <div class="col-sm-6 col-lg-4 mt-3 mt-sm-5 mt-lg-6" x-data='@item.MetadataJSON'
-                    x-show='(title.includes(searchTerm.toLowerCase()) || description.includes(searchTerm.toLowerCase())) && (searchType === "all" || searchType === type)'>
+                     x-show='(title.includes(searchTerm.toLowerCase()) || description.includes(searchTerm.toLowerCase())) && (searchType === "all" || searchType === type)'>
                     <article class="border rounded-3 p-3 d-flex flex-column h-100 widget-card"
-                        aria-label="Integration: @item.Title">
+                             aria-label="Integration: @item.Title">
                         @if (item.Logo.TryGetValue(out var logo))
                         {
                             <div class="text-center mb-3">
                                 <img xpc-image="logo" class="img-fluid" style="max-width: 60px; max-height: 60px;"
-                                    alt="@item.Title logo" />
+                                     alt="@item.Title logo" />
                             </div>
                         }
                         <h3 class="h3 mt-2 pt-1">@item.Title</h3>
@@ -82,22 +82,22 @@
                             @if (item.RepositoryURL.TryGetValue(out string? repositoryURL))
                             {
                                 <a class="text-primary text-decoration-none widget-card-link" href="@repositoryURL"
-                                    aria-label="View @item.Title source code repository" rel="noopener noreferrer"
-                                    target="_blank">
+                                       aria-label="View @item.Title source code repository" rel="noopener noreferrer"
+                                       target="_blank">
                                     Repository
                                     <svg class="ms-1" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                                        <use xlink:href="/img/icons.svg#chevron-right" asp-append-version></use>
+                                        <use xlink:href="/img/icons.svg#chevron-right" asp-append-version />
                                     </svg>
                                 </a>
                             }
                             @if (item.LibraryURL.TryGetValue(out string? libraryURL))
                             {
                                 <a class="text-primary text-decoration-none widget-card-link" href="@libraryURL"
-                                    aria-label="View @item.Title library documentation" rel="noopener noreferrer"
-                                    target="_blank">
+                                       aria-label="View @item.Title library documentation" rel="noopener noreferrer"
+                                       target="_blank">
                                     Library
                                     <svg class="ms-1" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                                        <use xlink:href="/img/icons.svg#chevron-right" asp-append-version></use>
+                                        <use xlink:href="/img/icons.svg#chevron-right" asp-append-version />
                                     </svg>
                                 </a>
                             }

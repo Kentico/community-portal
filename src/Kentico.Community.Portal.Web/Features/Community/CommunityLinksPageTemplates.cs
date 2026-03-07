@@ -1,4 +1,3 @@
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Features.Community;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
@@ -7,14 +6,15 @@ using Kentico.PageBuilder.Web.Mvc.PageTemplates;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
+using Icons = Kentico.Xperience.Admin.Base.Icons;
+
 [assembly: RegisterPageTemplate(
     identifier: "KenticoCommunity.CommunityLinksPage_Default",
     name: "Community Links Page - Default",
     propertiesType: typeof(CommunityLinksPageTemplateProperties),
     customViewName: "~/Features/Community/CommunityLinksPage_Default.cshtml",
     ContentTypeNames = [CommunityLinksPage.CONTENT_TYPE_NAME],
-    Description = "",
-    IconClass = KenticoIcons.TABLE
+    IconClass = Icons.Table
 )]
 
 [assembly: RegisterWebPageRoute(

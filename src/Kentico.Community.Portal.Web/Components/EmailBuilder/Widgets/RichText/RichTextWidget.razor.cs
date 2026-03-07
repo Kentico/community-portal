@@ -1,8 +1,8 @@
 using CMS.ContentEngine;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.EmailBuilder.Widgets.RichText;
 using Kentico.EmailBuilder.Web.Mvc;
 using Microsoft.AspNetCore.Components;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterEmailWidget(
     identifier: RichTextWidget.IDENTIFIER,

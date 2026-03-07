@@ -75,7 +75,7 @@ internal class MemberBadgeAssignmentListingPage : ListingPage
             .AddColumn("MemberBadgesRuleAssignedCount", "Rule Assigned Badges")
             .AddColumn("MemberBadgesManuallyAssignedCount", "Manually Assigned Badges");
 
-        PageConfiguration.FilterFormModel = new MemberListFilter();
+        PageConfiguration.FilterConfiguration.FormModel = new MemberListFilter();
     }
 
     private SimpleStatusNamedComponentCellProps GetStateCellModel(object isEnabled, IDataContainer dataContainer) =>

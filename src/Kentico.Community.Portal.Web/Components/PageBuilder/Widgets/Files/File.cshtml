@@ -30,12 +30,12 @@
 
 <div class="d-flex @paddingClasses @alignmentClasses" xpc-preview-outline="@Model.ComponentName">
     <a href="@Model.Asset.Url" id="@Model.AnchorSlug" class="d-flex align-items-center @linkClasses"
-        aria-label="@Model.ShortDescription">
+           aria-label="@Model.ShortDescription">
         @if (Model.Design == LinkDesigns.Image)
         {
             <div class="d-flex flex-column align-items-center">
                 <svg class="icon" style="--icon-font-size: 3em;" aria-hidden="true">
-                    <use xlink:href="/img/icons.svg#file" asp-append-version></use>
+                    <use xlink:href="/img/icons.svg#file" asp-append-version />
                 </svg>
                 <span>@Model.Label</span>
             </div>
@@ -44,7 +44,7 @@
         {
             @Model.Label
             <svg class="icon ms-1" style="--icon-font-size: 0.75em;" aria-hidden="true">
-                <use xlink:href="/img/icons.svg#external-link" asp-append-version></use>
+                <use xlink:href="/img/icons.svg#external-link" asp-append-version />
             </svg>
         }
     </a>

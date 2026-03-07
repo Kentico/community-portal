@@ -75,40 +75,39 @@ public class CommunityMember : ApplicationUser
             target.MemberPassword = originalPasswordHash;
         }
 
-        _ = target.SetValue("MemberFirstName", FirstName);
-        _ = target.SetValue("MemberLastName", LastName);
-        _ = target.SetValue("MemberLinkedInIdentifier", LinkedInIdentifier);
-        _ = target.SetValue("MemberAvatarFileExtension", AvatarFileExtension);
-        _ = target.SetValue("MemberModerationStatus", ModerationStatus.ToString());
-        _ = target.SetValue("MemberEmployerLink", JsonDataTypeConverter.ConvertToString(EmployerLink, "{ }", CultureInfo.InvariantCulture));
-        _ = target.SetValue("MemberJobTitle", JobTitle);
-        _ = target.SetValue("MemberCountry", Country);
-        _ = target.SetValue("MemberBio", Bio);
-        _ = target.SetValue("MemberTimeZone", TimeZone);
-
-        _ = target.SetValue("MemberProgramStatus", ProgramStatus.ToString());
+        target.MemberFirstName = FirstName;
+        target.MemberLastName = LastName;
+        target.MemberLinkedInIdentifier = LinkedInIdentifier;
+        target.MemberAvatarFileExtension = AvatarFileExtension;
+        target.MemberModerationStatus = ModerationStatus.ToString();
+        target.MemberEmployerLink = (string)JsonDataTypeConverter.ConvertToString(EmployerLink, "{ }", CultureInfo.InvariantCulture);
+        target.MemberJobTitle = JobTitle;
+        target.MemberCountry = Country;
+        target.MemberBio = Bio;
+        target.MemberTimeZone = TimeZone;
+        target.MemberProgramStatus = ProgramStatus.ToString();
     }
 
     public override void MapFromMemberInfo(MemberInfo source)
     {
         base.MapFromMemberInfo(source);
 
-        FirstName = source.GetValue("MemberFirstName", "");
-        LastName = source.GetValue("MemberLastName", "");
-        LinkedInIdentifier = source.GetValue("MemberLinkedInIdentifier", "");
+        FirstName = source.MemberFirstName;
+        LastName = source.MemberLastName;
+        LinkedInIdentifier = source.MemberLinkedInIdentifier;
         Created = source.MemberCreated;
-        AvatarFileExtension = source.GetValue("MemberAvatarFileExtension", "");
-        ModerationStatus = Enum.TryParse<ModerationStatuses>(source.GetValue("MemberModerationStatus", ""), out var status)
+        AvatarFileExtension = source.MemberAvatarFileExtension;
+        ModerationStatus = Enum.TryParse<ModerationStatuses>(source.MemberModerationStatus, out var status)
             ? status
             : ModerationStatuses.None;
-        EmployerLink = JsonDataTypeConverter.ConvertToModel(source.GetValue("MemberEmployerLink", "{ }"), new LinkDataType(), CultureInfo.InvariantCulture);
-        JobTitle = source.GetValue("MemberJobTitle", "");
-        Country = source.GetValue("MemberCountry", "");
-        Bio = source.GetValue("MemberBio", "");
-        TimeZone = source.GetValue("MemberTimeZone", "");
+        EmployerLink = JsonDataTypeConverter.ConvertToModel(source.MemberEmployerLink, new LinkDataType(), CultureInfo.InvariantCulture);
+        JobTitle = source.MemberJobTitle;
+        Country = source.MemberCountry;
+        Bio = source.MemberBio;
+        TimeZone = source.MemberTimeZone;
         EmailConfirmed = source.MemberEnabled;
 
-        ProgramStatus = Enum.TryParse<ProgramStatuses>(source.GetValue("MemberProgramStatus", ""), out var programStatus)
+        ProgramStatus = Enum.TryParse<ProgramStatuses>(source.MemberProgramStatus, out var programStatus)
             ? programStatus
             : ProgramStatuses.None;
     }
@@ -143,7 +142,73 @@ public readonly partial struct CommunityMemberID;
 
 public static class MemberInfoExtensions
 {
+    public const string FIELD_PROGRAM_STATUS = "MemberProgramStatus";
+
     public static CommunityMember AsCommunityMember(this MemberInfo member) =>
         CommunityMember.FromMemberInfo(member);
+
+    extension(MemberInfo member)
+    {
+        public string MemberFirstName
+        {
+            get => member.GetValue("MemberFirstName", "") ?? "";
+            set => member.SetValue("MemberFirstName", value);
+        }
+
+        public string MemberLastName
+        {
+            get => member.GetValue("MemberLastName", "") ?? "";
+            set => member.SetValue("MemberLastName", value);
+        }
+
+        public string MemberLinkedInIdentifier
+        {
+            get => member.GetValue("MemberLinkedInIdentifier", "") ?? "";
+            set => member.SetValue("MemberLinkedInIdentifier", value);
+        }
+
+        public string MemberAvatarFileExtension
+        {
+            get => member.GetValue("MemberAvatarFileExtension", "") ?? "";
+            set => member.SetValue("MemberAvatarFileExtension", value);
+        }
+
+        public string MemberModerationStatus
+        {
+            get => member.GetValue("MemberModerationStatus", "") ?? "";
+            set => member.SetValue("MemberModerationStatus", value);
+        }
+
+        public string MemberEmployerLink
+        {
+            get => member.GetValue("MemberEmployerLink", "{ }") ?? "{ }";
+            set => member.SetValue("MemberEmployerLink", value);
+        }
+
+        public string MemberJobTitle
+        {
+            get => member.GetValue("MemberJobTitle", "") ?? "";
+            set => member.SetValue("MemberJobTitle", value);
+        }
+
+        public string MemberCountry
+        {
+            get => member.GetValue("MemberCountry", "") ?? "";
+            set => member.SetValue("MemberCountry", value);
+        }
+
+        public string MemberBio
+        {
+            get => member.GetValue("MemberBio", "") ?? "";
+            set => member.SetValue("MemberBio", value);
+        }
+
+        public string MemberTimeZone
+        {
+            get => member.GetValue("MemberTimeZone", "") ?? "";
+            set => member.SetValue("MemberTimeZone", value);
+        }
+    }
 }
+
 

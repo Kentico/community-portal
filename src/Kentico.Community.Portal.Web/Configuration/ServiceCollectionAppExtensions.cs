@@ -5,6 +5,7 @@ using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Infrastructure;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
+using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Forms;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Heading;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Licenses;
@@ -21,16 +22,16 @@ using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Infrastructure.Storage;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Xperience.Admin.Base.Forms;
+using Kentico.Xperience.VirtualInbox.MCP;
 using Sidio.Sitemap.AspNetCore;
 using Sidio.Sitemap.Core.Services;
 using Slugify;
-using XperienceCommunity.ComponentRegistry;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionAppExtensions
 {
-    public static IServiceCollection AddApp(this IServiceCollection services, IConfiguration config) =>
+    public static IServiceCollection AddApp(this IServiceCollection services, IConfiguration config, IWebHostEnvironment env) =>
         services
             .AddScoped<CookieConsentManager>()
             .AddScoped<ConsentManager>()
@@ -44,7 +45,8 @@ public static class ServiceCollectionAppExtensions
             .AddBlogs()
             .AddMemberBadges()
             .AddQAndADiscussionNotifications()
-            .AddMigrations();
+            .AddMigrations()
+            .AddMcp(env);
 
     private static IServiceCollection AddOperations(this IServiceCollection services, IConfiguration config) =>
         services
@@ -84,7 +86,9 @@ public static class ServiceCollectionAppExtensions
             .AddScoped<ClientAssets>()
             .AddScoped<IJSEncoder, JSEncoder>()
             .AddScoped<IFormBuilderContext, FormBuilderContext>()
-            .AddScoped<IRazorComponentRenderer, RazorComponentRenderer>();
+            .AddScoped<IRazorComponentRenderer, RazorComponentRenderer>()
+            .AddScoped<IPageBuilderContext, PageBuilderContext>()
+            .AddSingleton<IWidgetPropertiesSerializer, WidgetPropertiesSerializer>();
 
     private static IServiceCollection AddSEO(this IServiceCollection services) =>
         services
@@ -105,8 +109,7 @@ public static class ServiceCollectionAppExtensions
             .AddScoped<CaptchaValidator>()
             .Configure<ReCaptchaSettings>(config.GetSection("ReCaptcha"))
             .AddSingleton<IObjectDisplayOptionsProvider, DefaultObjectDisplayOptionsProvider>()
-            .AddSingleton<IObjectsRetriever, CustomObjectsRetriever>()
-            .AddComponentRegistry();
+            .AddSingleton<IObjectsRetriever, CustomObjectsRetriever>();
 
     private static IServiceCollection AddSupport(this IServiceCollection services, IConfiguration config) =>
         services
@@ -153,6 +156,16 @@ public static class ServiceCollectionAppExtensions
 
     private static IServiceCollection AddMigrations(this IServiceCollection services) =>
         services;
+
+    private static IServiceCollection AddMcp(this IServiceCollection services, IWebHostEnvironment env) =>
+        services.IfDevelopment(env, s =>
+        {
+            _ = s
+            .AddMcpServer()
+            .WithHttpTransport()
+            .WithComponentRegistryTools()
+            .WithVirtualInboxTools();
+        });
 
     private static IServiceCollection AddClosedGenericTypes(
         this IServiceCollection services,

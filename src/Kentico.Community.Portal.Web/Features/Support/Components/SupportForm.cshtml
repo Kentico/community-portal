@@ -2,7 +2,7 @@
 
 <div class="bg-secondary text-white rounded-4 p-3 p-md-5" style="--bs-danger-rgb: #fff;">
     <form id="supportForm" method="post" hx-post hx-controller="SupportForm" hx-action="SubmitSupportForm"
-        hx-trigger="captchaReady" hx-swap="outerHTML" hx-select="#supportForm" enctype="multipart/form-data">
+          hx-trigger="captchaReady" hx-swap="outerHTML" hx-select="#supportForm" enctype="multipart/form-data">
         <fieldset xpc-readonly-disabled>
             <div class="row">
                 <div class="col-sm">
@@ -55,21 +55,21 @@
                 <div class="col-sm">
                     <label asp-for="Version" class="form-label mt-3"></label>
                     <span class="form-tooltip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right"
-                        title="Version of product you are having issues with (e.g. 30.3.0)."
-                        aria-label="Version of product you are having issues with (e.g. 30.3.0).">
+                          title="Version of product you are having issues with (e.g. 30.3.0)."
+                          aria-label="Version of product you are having issues with (e.g. 30.3.0).">
                         <svg class="icon">
-                            <use xlink:href="/img/icons.svg#i-circle" asp-append-version></use>
+                            <use xlink:href="/img/icons.svg#i-circle" asp-append-version />
                         </svg>
                     </span>
                     <input class="form-control" asp-for="Version"
-                        pattern="(\d{1,2})|(\d{1,2}\.)|(\d{1,2}\.\d{1,2})|(\d{1,2}\.\d{1,2}\.)|(\d{1,2}\.\d{1,2}\.\d{1,2})" />
+                           pattern="(\d{1,2})|(\d{1,2}\.)|(\d{1,2}\.\d{1,2})|(\d{1,2}\.\d{1,2}\.)|(\d{1,2}\.\d{1,2}\.\d{1,2})" />
                     <span asp-validation-for="Version" class="error"></span>
                 </div>
                 <div class="col-sm">
                     <label asp-for="DeploymentModel" class="form-label mt-3">
                     </label>
                     <select class="form-select" aria-label="select deployment model" asp-for="DeploymentModel"
-                        id="DeploymentModel">
+                            id="DeploymentModel">
                         <option selected value="">Choose a deployment model</option>
                         <option value="Kentico Managed SaaS Service">Kentico Managed SaaS Service</option>
                         <option value="Self-hosted on-premises">Private cloud (non-SaaS)</option>
@@ -78,7 +78,7 @@
                 </div>
                 <div class="col-sm d-flex align-items-end">
                     <div class="form-check mt-3">
-                        <input type="checkbox" class="form-check-input" asp-for="IsKenticoSaaSProductionIssue">
+                        <input type="checkbox" class="form-check-input" asp-for="IsKenticoSaaSProductionIssue" />
                         <label class="form-check-label" asp-for="IsKenticoSaaSProductionIssue"></label>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                 {
                     <div class="alert alert-primary mt-3" role="alert">
                         <h4 class="alert-heading">Your support case was submitted successfully.</h4>
-                        <hr>
+                        <hr />
                         <p class="mb-0">You will receive a confirmation receipt in your inbox.</p>
                     </div>
                 }

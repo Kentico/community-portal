@@ -89,7 +89,7 @@ function buildConfig(baseConfig, opts, argv) {
       chunkFormat: false,
     },
     devServer: {
-      port: 3019,
+      port: 3099,
       server: {
         type: 'https',
         options: {

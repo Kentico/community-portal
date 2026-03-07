@@ -1,5 +1,4 @@
 using CMS.ContentEngine;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CommunityGroupCard;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.PageBuilder.Web.Mvc;
@@ -7,6 +6,7 @@ using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Kentico.Xperience.Admin.Base.Forms;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: CommunityGroupCardWidget.IDENTIFIER,

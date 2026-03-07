@@ -2,18 +2,6 @@
 
 @model NavigationViewModel
 
-@{
-    string? GetCurrentClass(MenuItemViewModel item)
-    {
-        return item.IsActive ? "active" : null;
-    }
-
-    string? GetAriaAttribute(MenuItemViewModel item)
-    {
-        return item.IsActive ? "aria-current=page" : null;
-    }
-}
-
 <header id="header" class="sticky-top" data-ktc-search-exclude>
     @if (View.PageBuilderMode != ApplicationPageBuilderMode.Edit)
     {
@@ -23,19 +11,19 @@
     <nav class="navbar navbar-expand-md c-main-navbar">
         <div id="navbar-container" class="container-xxl">
             <a class="navbar-brand" href="/">
-                <img src="/img/logo.svg" alt="Kentico">
+                <img src="/img/logo.svg" alt="Kentico" />
             </a>
             <div class="d-block d-md-none">
                 <button class="btn position-relative p-2 mx-3" id="notificationBellMobile">
                     <svg class="icon">
-                        <use xlink:href="/img/icons.svg#bell" asp-append-version></use>
+                        <use xlink:href="/img/icons.svg#bell" asp-append-version />
                     </svg>
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill d-none"
-                        theme="danger" notification-count>0</span>
+                          theme="danger" notification-count>0</span>
                 </button>
                 <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                        data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                        aria-label="Toggle navigation">
                     <span class="navbar-toggler-bar"></span>
                     <span class="navbar-toggler-bar"></span>
                     <span class="navbar-toggler-bar"></span>
@@ -43,63 +31,17 @@
             </div>
             <div class="d-none d-md-block">
                 <ul class="c-main-nav navbar-nav ms-auto">
-                    @foreach (var item in Model.NavItems)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link @GetCurrentClass(item)" @GetAriaAttribute(item)
-                                href="@item.Url">@item.Caption</a>
-                        </li>
-                    }
+                    <partial name="~/Components/ViewComponents/Navigation/_NavItems.cshtml" model="Model.NavItems" />
+                    <partial name="~/Components/ViewComponents/Navigation/_NavAuth.cshtml" />
 
-                    @if (User.Identity?.IsAuthenticated != true)
-                    {
-                        <li class="nav-item d-none d-md-block ms-3">
-                            <a class="btn btn-primary text-uppercase" asp-controller="Authentication" asp-action="Login"
-                                asp-route-returnURL="@Context.Request.Path" test-id="signIn">Sign in</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item dropdown">
-                            <span class="nav-link active">
-                                <span test-id="username">@User.Identity.Name</span>
-                                <svg class="icon d-none d-md-block">
-                                    <use xlink:href="/img/icons.svg#chevron-down" asp-append-version></use>
-                                </svg>
-                            </span>
-
-                            <button type="button" class="btn dropdown-toggle d-md-none" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <svg class="icon">
-                                    <use xlink:href="/img/icons.svg#chevron-down" asp-append-version></use>
-                                </svg>
-                            </button>
-                            <ul
-                                class="dropdown-menu gap-3 flex-row flex-md-column justify-content-around border border-1 bg-white">
-                                <li class="nav-item">
-                                    <a asp-controller="Account" asp-action="MyAccount"
-                                        class="btn btn-primary text-uppercase">My
-                                        Account</a>
-                                </li>
-                                <li class="nav-item w-md-100">
-                                    <form asp-controller="Authentication" asp-action="Logout" method="post">
-                                        <fieldset xpc-readonly-disabled>
-                                            <button class="btn btn-outline-secondary text-uppercase w-100" type="submit"
-                                                test-id="logout">Logout</button>
-                                        </fieldset>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    }
                     <li class="nav-item d-flex align-items-center">
                         <button class="btn position-relative p-2 mx-3" id="notificationBell">
                             <svg class="icon d-none d-md-block">
-                                <use xlink:href="/img/icons.svg#bell" asp-append-version></use>
+                                <use xlink:href="/img/icons.svg#bell" asp-append-version />
                             </svg>
                             <span
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none"
-                                theme="danger" notification-count>0</span>
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none"
+                            theme="danger" notification-count>0</span>
                         </button>
                     </li>
                 </ul>
@@ -109,28 +51,24 @@
 
     <div class="collapse navbar-collapse position-static d-md-none" id="navbarNavDropdown">
         <ul class="c-main-nav navbar-nav ms-auto">
-            @foreach (var item in Model.NavItems)
-            {
-                <li class="nav-item">
-                    <a class="nav-link @GetCurrentClass(item)" @GetAriaAttribute(item) href="@item.Url">@item.Caption</a>
-                </li>
-            }
+            <partial name="~/Components/ViewComponents/Navigation/_NavItems.cshtml" model="Model.NavItems" />
 
             @if (User.Identity?.IsAuthenticated != true)
             {
                 <li class="nav-item with-btn">
-                    <a class="btn btn-primary btn-lg text-uppercase" asp-controller="Authentication" asp-action="Login"
-                        asp-route-returnURL="@Context.Request.Path" test-id="signInMobile">Sign in</a>
+                    <a class="btn btn-primary btn-lg text-uppercase" href="/login?returnURL=@Context.Request.Path"
+                       test-id="signInMobile">Sign in</a>
                 </li>
             }
             else
             {
                 <li class="nav-item d-flex justify-content-around py-3">
-                    <a asp-controller="Account" asp-action="MyAccount" class="btn btn-primary text-uppercase">My
-                        Account</a>
-                    <form asp-controller="Authentication" asp-action="Logout" method="post">
+                    <a href="/my-account" class="btn btn-primary text-uppercase">
+                        My Account
+                    </a>
+                    <form asp-controller="Logout" asp-action="Logout" method="post">
                         <button class="btn btn-outline-secondary text-uppercase w-100" type="submit"
-                            test-id="logoutMobile">Logout</button>
+                                test-id="logoutMobile">Logout</button>
                     </form>
                 </li>
             }

@@ -10,6 +10,8 @@ using MediatR;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 
+using Icons = Kentico.Xperience.Admin.Base.Icons;
+
 [assembly: RegisterPageTemplate(
     identifier: "KenticoCommunity.BlogPostPage_Components",
     name: "Blog Post Page - Components",
@@ -17,7 +19,7 @@ using Microsoft.AspNetCore.Mvc;
     customViewName: "~/Features/Blog/BlogPostPage_Components.cshtml",
     ContentTypeNames = [BlogPostPage.CONTENT_TYPE_NAME],
     Description = "Requires the blog post page to be built with Page Builder components",
-    IconClass = ""
+    IconClass = Icons.LListArticle
 )]
 
 [assembly: RegisterWebPageRoute(
@@ -70,7 +72,7 @@ public class BlogPostPageTemplateController(
             return new(author, Url);
         }
         var authors = await contentRetriever.RetrieveContent<AuthorContent>(
-            new RetrieveContentParameters(),
+            RetrieveContentParameters.Default,
             p => p.Where(w => w.WhereEquals(nameof(AuthorContent.AuthorContentCodeName), AuthorContent.KENTICO_AUTHOR_CODE_NAME)),
             new RetrievalCacheSettings($"{nameof(AuthorContent.AuthorContentCodeName)}|{AuthorContent.KENTICO_AUTHOR_CODE_NAME}"));
 

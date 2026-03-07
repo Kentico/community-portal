@@ -5,6 +5,8 @@ using Kentico.Content.Web.Mvc.Routing;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
 using Microsoft.AspNetCore.Mvc;
 
+using Icons = Kentico.Xperience.Admin.Base.Icons;
+
 [assembly: RegisterPageTemplate(
     identifier: "KenticoCommunity.SupportPage_Default",
     name: "Support Page - Default",
@@ -12,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
     customViewName: "~/Features/Support/SupportPage_Default.cshtml",
     ContentTypeNames = [SupportPage.CONTENT_TYPE_NAME],
     Description = "",
-    IconClass = ""
+    IconClass = Icons.LifeBelt
 )]
 
 [assembly: RegisterWebPageRoute(

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>AIRA Conversation attachment</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="AiraConversationAttachmentID" columntype="integer" enabled="true" guid="1612973b-2091-4877-9b93-ce03346688f9" isPK="true" system="true" />
+      <field column="AiraConversationAttachmentConversationID" columnprecision="0" columntype="integer" enabled="true" guid="b9d5bec7-8089-496c-b58a-dbd205543682" refobjtype="aira.conversation" reftype="Required" system="true" />
+      <field column="AiraConversationAttachmentGUID" columnprecision="0" columntype="guid" enabled="true" guid="437f3a03-1e41-4b03-9d7f-bc618c0edde4" system="true" />
+      <field column="AiraConversationAttachmentCreatedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="fb32a9e5-8cf6-48fa-aa2e-c1174719a779" system="true" />
+      <field column="AiraConversationAttachmentMimeType" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="b08043f4-9a10-45cd-b714-67799d6eb2e0" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>0756727b-8570-44f6-8147-224d25422225</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>aira.conversationattachment</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Aira</CodeName>
+    <GUID>4d122518-44fc-4caa-a058-4b59bbc6f1a7</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Aira_ConversationAttachment</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

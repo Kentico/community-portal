@@ -151,7 +151,7 @@ public class RSSFeedController(
 
             page.BlogPostPageAuthorContent
                 .TryFirst()
-                .Execute(author =>
+                .Tap(author =>
                 {
                     item.Authors.Add(new SyndicationPerson() { Name = author.FullName });
                 });
@@ -159,7 +159,7 @@ public class RSSFeedController(
             post.BlogPostContentBlogType
                 .TryFirst()
                 .Bind(tr => blogTags.Types.TryFirst(i => i.Guid == tr.Identifier))
-                .Execute(tag => item.Categories.Add(new SyndicationCategory(tag.DisplayName)));
+                .Tap(tag => item.Categories.Add(new SyndicationCategory(tag.DisplayName)));
 
             items.Add(item);
         }
@@ -202,7 +202,7 @@ public class RSSFeedController(
             page.CoreTaxonomyDXTopics
                 .Select(t => qAndATags.DXTopicsAll.TryFirst(i => i.Guid == t.Identifier))
                 .ToList()
-                .ForEach(i => i.Execute(tag => item.Categories.Add(new SyndicationCategory(tag.DisplayName))));
+                .ForEach(i => i.Tap(tag => item.Categories.Add(new SyndicationCategory(tag.DisplayName))));
 
             items.Add(item);
         }

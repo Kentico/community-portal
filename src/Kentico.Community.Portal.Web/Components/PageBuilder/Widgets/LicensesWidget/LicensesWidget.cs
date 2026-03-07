@@ -1,11 +1,11 @@
 ﻿using CMS.ContentEngine;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Licenses;
 using Kentico.Content.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: LicensesWidget.IDENTIFIER,

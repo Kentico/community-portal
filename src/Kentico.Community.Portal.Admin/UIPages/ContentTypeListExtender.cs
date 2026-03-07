@@ -24,9 +24,9 @@ public class ContentTypeListExtender(ILogger<ContentTypeListExtender> logger) : 
 
         var pageConfig = Page.PageConfiguration;
 
-        if (pageConfig.FilterFormModel is null)
+        if (pageConfig.FilterConfiguration.FormModel is null)
         {
-            pageConfig.FilterFormModel = new ContentTypeListMultiFilter();
+            pageConfig.FilterConfiguration.FormModel = new ContentTypeListMultiFilter();
         }
         else
         {

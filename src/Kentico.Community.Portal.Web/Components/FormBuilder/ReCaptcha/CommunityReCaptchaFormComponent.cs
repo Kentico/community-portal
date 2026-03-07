@@ -1,15 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-
 using CMS.Core;
 using CMS.FormEngine;
 using CMS.Helpers;
 using CMS.Helpers.Internal;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.FormBuilder.ReCaptcha;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Forms.Web.Mvc;
 using Microsoft.Extensions.Options;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterFormComponent(
     identifier: CommunityReCaptchaFormComponent.IDENTIFIER,

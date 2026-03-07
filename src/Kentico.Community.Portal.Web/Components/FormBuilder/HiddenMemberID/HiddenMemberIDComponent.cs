@@ -1,10 +1,10 @@
 using System.Security.Claims;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.FormBuilder;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Forms.Web.Mvc;
 using Microsoft.AspNetCore.Identity;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterFormComponent(
     HiddenMemberIDComponent.IDENTIFIER,

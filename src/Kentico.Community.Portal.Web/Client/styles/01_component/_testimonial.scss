@@ -1,0 +1,97 @@
+.testimonial-widget {
+  --testimonial-bg: var(--color-white);
+  --testimonial-border: var(--color-gray-200);
+  --testimonial-title: var(--color-gray-900);
+  --testimonial-text: var(--color-gray-900);
+  --testimonial-muted: var(--color-gray-600);
+  --testimonial-accent: var(--color-gray-300);
+
+  background-color: var(--testimonial-bg);
+  border-color: var(--testimonial-border);
+}
+
+.testimonial-widget--primary {
+  --testimonial-bg: var(--color-primary-light);
+  --testimonial-border: var(--color-primary-opacity-2);
+  --testimonial-title: var(--color-primary-dark);
+  --testimonial-text: var(--color-gray-900);
+  --testimonial-muted: var(--color-gray-800);
+  --testimonial-accent: var(--color-primary);
+}
+
+.testimonial-widget--secondary {
+  --testimonial-bg: var(--color-purple-100);
+  --testimonial-border: var(--color-purple-300);
+  --testimonial-title: var(--color-purple-900);
+  --testimonial-text: var(--color-gray-900);
+  --testimonial-muted: var(--color-gray-800);
+  --testimonial-accent: var(--color-purple);
+}
+
+.testimonial-widget--neutral {
+  --testimonial-bg: var(--color-white);
+  --testimonial-border: var(--color-gray-200);
+  --testimonial-title: var(--color-gray-900);
+  --testimonial-text: var(--color-gray-900);
+  --testimonial-muted: var(--color-gray-700);
+  --testimonial-accent: var(--color-gray-900);
+}
+
+.testimonial-widget__title {
+  color: var(--testimonial-title);
+}
+
+.testimonial-widget__quote {
+  color: var(--testimonial-text);
+  line-height: 1.55;
+}
+
+.testimonial-widget__name {
+  color: var(--testimonial-text);
+}
+
+.testimonial-widget__employment {
+  color: var(--testimonial-muted);
+}
+
+.testimonial-widget__attribution {
+  min-height: 2.5rem;
+}
+
+.testimonial-widget__photo {
+  width: 6rem;
+  height: 6rem;
+  object-fit: cover;
+}
+
+.testimonial-widget__photo--small {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.testimonial-widget--featured {
+  border-radius: var(--radius-lg);
+
+  .card-body {
+    border-left: 0.35rem solid var(--testimonial-accent);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--testimonial-bg) 92%, white) 0%,
+      var(--testimonial-bg) 100%
+    );
+  }
+
+  .testimonial-widget__quote {
+    font-weight: 500;
+    line-height: 1.65;
+  }
+
+  .testimonial-widget__name,
+  .testimonial-widget__employment {
+    line-height: 1.25;
+  }
+}
+
+.testimonial-widget--simple {
+  border-color: var(--testimonial-border);
+}

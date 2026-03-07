@@ -20,8 +20,10 @@ using Kentico.EmailBuilder.Web.Mvc;
 using Kentico.OnlineMarketing.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Web.Mvc;
+using Kentico.Xperience.ComponentRegistry;
 using Kentico.Xperience.ManagementApi;
 using Kentico.Xperience.Mjml;
+using Kentico.Xperience.VirtualInbox;
 using Microsoft.AspNetCore.Localization.Routing;
 
 [assembly: RegisterModule(typeof(StorageInitializationModule))]
@@ -81,15 +83,15 @@ public static class ServiceCollectionXperienceExtensions
             .AddMjmlForEmails()
             .AddKenticoTagManager(config)
             .AddPreviewComponentOutlines()
+            .AddComponentRegistry()
             .Configure<EmailQueueOptions>(o =>
             {
                 o.ArchiveDuration = 14;
             })
             .IfDevelopment(env, c =>
             {
-                _ = c.Configure<SmtpOptions>(config.GetSection("SmtpOptions"))
-                    .AddXperienceSmtp()
-                    .Configure<SystemEmailOptions>(config.GetSection("SystemEmailOptions"));
+                _ = c.AddVirtualInboxClient(config)
+                .Configure<SystemEmailOptions>(config.GetSection("SystemEmailOptions"));
 
                 if (config.GetSection("Kentico.Xperience.MiniProfiler.Custom").GetValue<bool>("IsEnabled"))
                 {

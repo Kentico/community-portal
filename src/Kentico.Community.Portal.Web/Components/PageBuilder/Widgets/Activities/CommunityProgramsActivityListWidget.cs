@@ -5,13 +5,13 @@ using CMS.OnlineForms;
 using Kentico.Community.Portal.Core.Forms;
 using Kentico.Community.Portal.Core.Modules.Membership;
 using Kentico.Community.Portal.Core.Operations;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CommunityProgramsActivityList;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Forms;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.PageBuilder.Web.Mvc;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: CommunityProgramsActivityListWidget.IDENTIFIER,

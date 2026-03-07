@@ -69,5 +69,5 @@ public class IntegrationContentsQueryHandler(ContentItemQueryTools tools, IInfoP
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(IntegrationContentsQuery query, IntegrationContentsQueryResponse result, ICacheDependencyKeysBuilder builder) =>
         builder
             .AllContentItems(IntegrationContent.CONTENT_TYPE_NAME)
-            .Collection(result.Items, (m, b) => m.IntegrationAuthor.Execute(a => b.Object(MemberInfo.OBJECT_TYPE, a.Id)));
+            .Collection(result.Items, (m, b) => m.IntegrationAuthor.Tap(a => b.Object(MemberInfo.OBJECT_TYPE, a.Id)));
 }

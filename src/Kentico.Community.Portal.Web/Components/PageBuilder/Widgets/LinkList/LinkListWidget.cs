@@ -3,7 +3,6 @@ using CMS.ContentEngine;
 using CMS.DataEngine;
 using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Core.Modules;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.LinkList;
 using Kentico.Community.Portal.Web.Features.Community;
 using Kentico.Community.Portal.Web.Features.Members;
@@ -15,6 +14,7 @@ using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Kentico.Xperience.Admin.Base.Forms;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: LinkListWidget.IDENTIFIER,
@@ -22,7 +22,7 @@ using Microsoft.AspNetCore.Mvc;
     name: LinkListWidget.NAME,
     propertiesType: typeof(LinkListWidgetProperties),
     Description = "A list of labeled URL links",
-    IconClass = KenticoIcons.DIALOG_WINDOW_COGWHEEL)]
+    IconClass = KenticoIcons.LIST_BULLETS)]
 
 namespace Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.LinkList;
 

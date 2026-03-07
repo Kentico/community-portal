@@ -1,0 +1,21 @@
+@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Registration.RegisterWidgetViewModel
+
+<div class="row g-0 border rounded-4 overflow-hidden">
+    <div class="col-md-6">
+        <div class="p-4 p-lg-5">
+            <h3 class="mb-4">Create an account</h3>
+            <partial name="~/Components/PageBuilder/Widgets/Registration/_RegisterForm.cshtml"
+                     model="Model.RegisterModel" />
+        </div>
+    </div>
+
+    <div class="col-md-6 bg-light">
+        <div class="p-4 p-lg-5">
+            <h3>Already have an account?</h3>
+            <p class="mb-4">Sign in to your account to continue.</p>
+            <a href="/login" id="signIn" class="btn btn-outline-secondary mb-4" test-id="registrationSignInLink">
+                Sign in
+            </a>
+        </div>
+    </div>
+</div>

@@ -4,7 +4,6 @@
 		<Nullable>enable</Nullable>
 
 		<IsPackable>false</IsPackable>
-		<IsTestProject>true</IsTestProject>
 
 		<EnableNUnitRunner>true</EnableNUnitRunner>
 		<OutputType>Exe</OutputType>
@@ -13,7 +12,7 @@
 	<ItemGroup>
 		<PackageReference Include="Kentico.Xperience.Core.Tests" />
 		<PackageReference Include="Magick.NET-Q8-AnyCPU" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="MimeKit" />
 		<PackageReference Include="NSubstitute" />
 		<PackageReference Include="NUnit" />
 		<PackageReference Include="NUnit3TestAdapter" />

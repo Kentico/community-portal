@@ -52,7 +52,7 @@ public static class ApplicationBuilderUtilityExtensions
         return app;
     }
 
-    public static WebApplication UseKenticoRoutes(this IApplicationBuilder b, WebApplication app)
+    public static WebApplication UseKenticoRoutes(this IApplicationBuilder _, WebApplication app)
     {
         app.Kentico().MapRoutes();
 

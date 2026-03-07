@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using Kentico.Community.Portal.Core.Components;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Sections.Grid;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using XperienceCommunity.KenticoComponentIcons;
 using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 
 [assembly: RegisterSection(

@@ -1,10 +1,10 @@
 using CMS.ContentEngine;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.EmailBuilder.Widgets.Image;
 using Kentico.Content.Web.Mvc;
 using Kentico.EmailBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Components;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterEmailWidget(
     identifier: ImageWidget.IDENTIFIER,

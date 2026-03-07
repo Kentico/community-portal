@@ -12,6 +12,6 @@ public class AutomationProcessContactsTabExtender : PageExtender<AutomationProce
     {
         await base.ConfigurePage();
 
-        Page.PageConfiguration.FilterFormModel = new AutomationStepListFilter();
+        Page.PageConfiguration.FilterConfiguration.FormModel = new AutomationStepListFilter();
     }
 }

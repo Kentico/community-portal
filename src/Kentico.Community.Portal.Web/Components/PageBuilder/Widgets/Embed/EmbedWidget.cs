@@ -2,13 +2,13 @@ using System.ComponentModel;
 using CMS.ContentEngine;
 using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Core.Modules;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Embed;
 using Kentico.Content.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: EmbedWidget.IDENTIFIER,

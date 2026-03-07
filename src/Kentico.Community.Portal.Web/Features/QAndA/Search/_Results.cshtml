@@ -14,9 +14,9 @@
                 @if (discussion.HasAcceptedResponse)
                 {
                     <div class="d-flex align-items-center text-success mb-2" role="status"
-                        aria-label="This question has an accepted answer">
+                         aria-label="This question has an accepted answer">
                         <svg class="me-2" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                            <use xlink:href="/img/icons.svg#check" asp-append-version></use>
+                            <use xlink:href="/img/icons.svg#check" asp-append-version />
                         </svg>
                         <small class="fw-bold">Has Accepted Response</small>
                     </div>
@@ -25,8 +25,8 @@
                 <header>
                     <h3 class="h3">
                         <a href="@discussion.LinkPath" rel="nofollow"
-                            class="text-dark text-decoration-none qa-question-link"
-                            aria-describedby="date-@discussion.ID author-@discussion.ID">
+                               class="text-dark text-decoration-none qa-question-link"
+                               aria-describedby="date-@discussion.ID author-@discussion.ID">
                             @discussion.Title
                         </a>
                     </h3>
@@ -50,7 +50,7 @@
                 };
             }
             <div id="responses-@discussion.ID" class="d-none d-md-flex flex-column justify-content-between text-end ms-auto"
-                aria-label="@discussion.ResponseCount @responseText">
+                 aria-label="@discussion.ResponseCount @responseText">
                 <div class="fs-5">
                     <span class="text-secondary fw-bold lh-sm">@discussion.ResponseCount</span>
                     @responseText
@@ -82,7 +82,7 @@
                 }
             </div>
             <div id="responses-m-@discussion.ID" class="d-block d-md-none text-end text-md-center ms-auto"
-                aria-label="@discussion.ResponseCount @responseText">
+                 aria-label="@discussion.ResponseCount @responseText">
                 <div class="fs-5 text-nowrap">
                     <span class="text-secondary fw-bold lh-sm">@discussion.ResponseCount</span>
                     @responseText
@@ -113,11 +113,9 @@
 
 <script type="module">
     asyncReady(async () => {
-        const path = @JSEncoder.EncodeToJson(ClientAssets.ViteAssetPath("js/search.js"));
-        const search = await import(path);
+    const path = @JSEncoder.EncodeToJson(ClientAssets.ViteAssetPath("js/search.js"));
+    const search = await import(path);
 
-        search.initSearch({
-            formElemID: 'search'
-        });
+    search.initSearch({ formElemID: 'search' });
     });
 </script>

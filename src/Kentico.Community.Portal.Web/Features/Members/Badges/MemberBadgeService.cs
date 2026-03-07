@@ -1,7 +1,7 @@
 ﻿using System.Collections.Frozen;
 using CMS.Base;
 using Kentico.Community.Portal.Core.Modules;
-using Kentico.Community.Portal.Web.Features.Accounts;
+using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.AccountManagement;
 using Kentico.Community.Portal.Web.Features.QAndA.Search;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Content.Web.Mvc;
@@ -75,7 +75,7 @@ public class MemberBadgeService(
 
             await badgesInDb
                 .TryFirst(x => x.MemberBadgeMemberMemberBadgeId == badge.BadgeId)
-                .Execute(async b =>
+                .Tap(async b =>
                 {
                     b.MemberBadgeMemberIsSelected = badge.IsSelected;
                     await memberBadgeMemberInfoProvider.SetAsync(b);

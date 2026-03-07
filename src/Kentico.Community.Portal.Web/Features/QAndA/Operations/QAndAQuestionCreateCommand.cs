@@ -63,7 +63,7 @@ public class QAndAQuestionCreateCommandHandler(
             [new() { Identifier = request.DiscussionTypeTagIdentifier }]);
 
         request.LinkedBlogPost
-            .Execute(post =>
+            .Tap(post =>
             {
                 itemData.SetValue<IEnumerable<ContentItemReference>>(
                     nameof(QAndAQuestionPage.QAndAQuestionPageBlogPostPages),

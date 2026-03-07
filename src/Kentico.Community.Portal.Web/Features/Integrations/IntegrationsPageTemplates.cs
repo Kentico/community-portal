@@ -5,6 +5,8 @@ using Kentico.Content.Web.Mvc.Routing;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
 using Microsoft.AspNetCore.Mvc;
 
+using Icons = Kentico.Xperience.Admin.Base.Icons;
+
 [assembly: RegisterPageTemplate(
     identifier: "KenticoCommunity.IntegrationsLandingPage_Default",
     name: "Integrations Landing Page - Default",
@@ -12,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
     customViewName: "~/Features/Integrations/IntegrationsLandingPage_Default.cshtml",
     ContentTypeNames = [IntegrationsLandingPage.CONTENT_TYPE_NAME],
     Description = "",
-    IconClass = ""
+    IconClass = Icons.Cogwheels
 )]
 
 [assembly: RegisterWebPageRoute(

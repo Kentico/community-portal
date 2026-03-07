@@ -4,7 +4,6 @@ using CMS.Membership;
 using Kentico.Community.Portal.Admin;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.ProfileCard;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
@@ -16,6 +15,7 @@ using Kentico.Xperience.Admin.Base.Forms;
 using MediatR;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: ProfileCardWidget.IDENTIFIER,
@@ -165,7 +165,7 @@ public class MemberProfileContentQueryHandler(ContentItemQueryTools tools, IInfo
 
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(MemberProfileContentsQuery query, Maybe<MemberProfileContentsQueryResponse> result, ICacheDependencyKeysBuilder builder)
     {
-        result.Execute(r => builder
+        result.Tap(r => builder
             .ContentItem(r.Profile.SystemFields.ContentItemID)
             .Object(MemberInfo.OBJECT_TYPE, r.Profile.MemberProfileContentMemberID));
 

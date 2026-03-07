@@ -1,0 +1,53 @@
+@using Kentico.Community.Portal.Web.Features.Members.Components.MemberProfileDisplay
+@using Kentico.Community.Portal.Web.Components.TagHelpers
+@model ProfileRenderModel
+
+@{
+    var profileInfo = Model.ProfileData;
+}
+
+<dl class="grid">
+    <dt>Username:</dt>
+    <dd>@profileInfo.UserName</dd>
+
+    @if (!Model.HidePersonalDetails && !string.IsNullOrWhiteSpace(profileInfo.FullName))
+    {
+        <dt>Name:</dt>
+        <dd>@profileInfo.FullName</dd>
+    }
+
+    <dt>Joined:</dt>
+    <dd><time xpc-datetime="profileInfo.Created" xpc-datetime-format="@DateTimeFormat.Date"></time></dd>
+
+    @if (!Model.HidePersonalDetails && !string.IsNullOrWhiteSpace(profileInfo.EmployerLink.Label))
+    {
+        <dt>Employer:</dt>
+        <dd>@profileInfo.EmployerLink.Label</dd>
+    }
+
+    @if (!Model.HidePersonalDetails && !string.IsNullOrWhiteSpace(profileInfo.EmployerLink.URL))
+    {
+        <dt>Employer website:</dt>
+        <dd>
+            <a href="@profileInfo.EmployerLink.URL" rel="noopener nofollow">
+                @profileInfo.EmployerLink.URL
+            </a>
+        </dd>
+    }
+
+    @if (!Model.HidePersonalDetails && !string.IsNullOrWhiteSpace(profileInfo.JobTitle))
+    {
+        <dt>Job title:</dt>
+        <dd>@profileInfo.JobTitle</dd>
+    }
+
+    @if (!Model.HidePersonalDetails && !string.IsNullOrWhiteSpace(profileInfo.LinkedInIdentifier))
+    {
+        <dt>LinkedIn:</dt>
+        <dd>
+            <a href="https://www.linkedin.com/in/@profileInfo.LinkedInIdentifier" rel="noopener nofollow">
+                https://www.linkedin.com/in/@profileInfo.LinkedInIdentifier
+            </a>
+        </dd>
+    }
+</dl>

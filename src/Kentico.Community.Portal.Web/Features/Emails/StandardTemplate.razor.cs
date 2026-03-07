@@ -1,18 +1,19 @@
 using CMS.EmailMarketing;
 using Kentico.Community.Portal.Core.Emails;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Features.Emails;
 using Kentico.EmailBuilder.Web.Mvc;
 using Microsoft.AspNetCore.Components;
 using static Kentico.Community.Portal.Web.Components.EmailBuilder.EmailFooter;
 using static Kentico.Community.Portal.Web.Components.EmailBuilder.EmailHeader;
 
+using Icons = Kentico.Xperience.Admin.Base.Icons;
+
 [assembly: RegisterEmailTemplate(
     identifier: StandardTemplate.IDENTIFIER,
     name: "Standard",
     componentType: typeof(StandardTemplate),
     Description = "Supports full Email Builder.",
-    IconClass = KenticoIcons.LAYOUTS,
+    IconClass = Icons.Layouts,
     ContentTypeNames = [AutoresponderEmail.CONTENT_TYPE_NAME])]
 
 namespace Kentico.Community.Portal.Web.Features.Emails;

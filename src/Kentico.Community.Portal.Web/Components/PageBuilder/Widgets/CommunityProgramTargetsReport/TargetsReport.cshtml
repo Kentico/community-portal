@@ -1,0 +1,191 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CommunityProgramTargetsReport
+
+@model TargetReportsViewModel
+
+<div id="targetsReport" class="card" xpc-preview-outline="@Model.ComponentName">
+    <div class="card-body">
+        @if (!string.IsNullOrWhiteSpace(Model.Heading))
+        {
+            <h3 class="card-title">@Model.Heading</h3>
+        }
+
+        @if (Model.IsInternalEmployee)
+        {
+            <div class="mb-3">
+                <form method="post" hx-post hx-controller="TargetsReport" hx-action="RenderWidget"
+                      hx-trigger="change from:#memberSelect" hx-swap="outerHTML" hx-select="#results" hx-target="#results">
+                    <label for="memberSelect" class="form-label">Member Emulation (Admin Only)</label>
+                    <select id="memberSelect" class="form-select" name="EmulatedMemberID">
+                        <option value="">(Select a member)</option>
+                        @foreach (var member in Model.AvailableMembers)
+                        {
+                            <option value="@member.MemberId">
+                                @member.DisplayName (@member.ProgramStatus)
+                            </option>
+                        }
+                    </select>
+
+                    @* Protected widget properties *@
+                    <page-data />
+                    <xpc-widget-properties properties="Model.Properties" />
+                </form>
+            </div>
+        }
+
+        <div id="results">
+            @if (Model.IsEmulating)
+            {
+                var emulatedMember = Model.AvailableMembers.FirstOrDefault(m => m.MemberId == Model.EmulatedMemberID);
+                if (emulatedMember != null)
+                {
+                    <div class="alert alert-info" role="alert">
+                        Viewing scorecard for: <strong>@emulatedMember.DisplayName</strong>
+                    </div>
+                }
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+            {
+                <div class="alert alert-danger mb-0" role="alert">@Model.ErrorMessage</div>
+            }
+            else
+            {
+                <p class="card-text">
+                    <text><strong>Program:</strong> @Model.ProgramStatusDisplay</text>
+                </p>
+
+                var annualGoals = Model.Goals.Where(g => !Model.IsQuarterly(g.Label)).ToList();
+                var quarterlyGoals = Model.Goals.Where(g => Model.IsQuarterly(g.Label)).ToList();
+
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Category</th>
+                                <th scope="col">Progress</th>
+                                <th scope="col" class="text-end">Current</th>
+                                <th scope="col" class="text-end">Target</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in annualGoals)
+                            {
+                                <tr>
+                                    <td>@item.Label</td>
+                                    <td style="min-width: 180px;">
+                                        @if (!item.IsConfigured)
+                                        {
+                                            <span class="text-muted">Not configured</span>
+                                        }
+                                        else
+                                        {
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="progress flex-grow-1" role="progressbar" aria-label="@item.Label progress"
+                                                    aria-valuenow="@item.Percent" aria-valuemin="0" aria-valuemax="100">
+                                                    <div class="progress-bar" style="width: @item.Percent%"></div>
+                                                </div>
+                                                <span class="small text-nowrap">@item.Percent%</span>
+                                            </div>
+                                        }
+                                    </td>
+                                    <td class="text-end">@item.Current</td>
+                                    <td class="text-end">@item.Target</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                @if (quarterlyGoals.Count > 0)
+                {
+                    <div class="table-responsive mt-3">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Quarterly targets</th>
+                                    <th scope="col">Progress</th>
+                                    <th scope="col" class="text-end">Current</th>
+                                    <th scope="col" class="text-end">Target</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var group in quarterlyGoals.GroupBy(g => Model.GetQuarterGroupKey(g.Label)))
+                                {
+                                    var itemsByQuarter = group
+                                    .Select(g => (Quarter: Model.GetQuarterIndex(g.Label), Item: g))
+                                    .Where(x => x.Quarter is not null)
+                                    .ToDictionary(x => x.Quarter!.Value, x => x.Item);
+
+                                    <tr class="table-light">
+                                        <td colspan="4"><strong>@group.Key</strong></td>
+                                    </tr>
+
+                                    @for (int q = 1; q <= 4; q++)
+                                    {
+                                        var item = itemsByQuarter.TryGetValue(q, out var found)
+                                        ? found
+                                        : CommunityProgramTargetsReportProgress.Empty($"{group.Key}                  (Q{q})") with { IsConfiguredOverride = false };
+
+                                        <tr>
+                                            <td class="ps-4">Q@(q)</td>
+                                            <td style="min-width: 180px;">
+                                                @if (!item.IsConfigured)
+                                                {
+                                                    <span class="text-muted">Not configured</span>
+                                                }
+                                                else
+                                                {
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <div class="progress flex-grow-1" role="progressbar" aria-label="@item.Label progress"
+                                                            aria-valuenow="@item.Percent" aria-valuemin="0" aria-valuemax="100">
+                                                            <div class="progress-bar" style="width: @item.Percent%"></div>
+                                                        </div>
+                                                        <span class="small text-nowrap">@item.Percent%</span>
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td class="text-end">@item.Current</td>
+                                            <td class="text-end">@item.Target</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+
+                @if (Model.BadgeRequirements.Count > 0)
+                {
+                    <div class="table-responsive mt-3">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Badge requirement</th>
+                                    <th scope="col" class="text-end">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var badge in Model.BadgeRequirements)
+                                {
+                                    <tr>
+                                        <td>@badge.Label</td>
+                                        <td class="text-end">
+                                            @if (badge.IsSatisfied)
+                                            {
+                                                <span class="text-success">Met</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-danger">Missing</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            }
+        </div>
+     </div>
+</div>

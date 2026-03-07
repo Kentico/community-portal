@@ -5,6 +5,8 @@ using Kentico.Content.Web.Mvc.Routing;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
 using Microsoft.AspNetCore.Mvc;
 
+using Icons = Kentico.Xperience.Admin.Base.Icons;
+
 [assembly: RegisterPageTemplate(
     identifier: "KenticoCommunity.QAndANewQuestionPage_Default",
     name: "Q&A New Question Page - Default",
@@ -12,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
     customViewName: "~/Features/QAndA/QAndANewQuestionPage_Default.cshtml",
     ContentTypeNames = [QAndANewQuestionPage.CONTENT_TYPE_NAME],
     Description = "",
-    IconClass = ""
+    IconClass = Icons.QuestionCircle
 )]
 
 [assembly: RegisterWebPageRoute(

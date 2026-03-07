@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Contact management - Profile merge</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ProfileMergeID" columntype="integer" enabled="true" guid="ef5d5653-5f5e-425a-ab1f-5d96a8a6a937" isPK="true" system="true" />
+      <field column="ProfileMergeProfileID" columnprecision="0" columntype="integer" enabled="true" guid="7ac88792-e2ce-45ff-a354-c3be3103a1c8" refobjtype="om.profile" reftype="Required" system="true" />
+      <field column="ProfileMergeGuid" columnprecision="0" columntype="guid" enabled="true" guid="5d9237d6-de07-4e2f-8846-634b6bbb87d7" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>4b076b8e-9a65-4f2c-982f-5726692085f4</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.ProfileMerge</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContactManagement</CodeName>
+    <GUID>0e4beef1-989c-4687-80ca-ae21fec09734</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>OM_ProfileMerge</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

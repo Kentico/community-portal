@@ -1,8 +1,8 @@
 using Kentico.Community.Portal.Core.Emails;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.EmailBuilder.Widgets.PrimaryContent;
 using Kentico.EmailBuilder.Web.Mvc;
 using Microsoft.AspNetCore.Components;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterEmailWidget(
     identifier: PrimaryContentWidget.IDENTIFIER,

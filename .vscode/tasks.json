@@ -105,7 +105,16 @@
       "label": ".NET: test (Solution)",
       "command": "dotnet",
       "type": "process",
-      "args": ["test", "--settings", "./test/basic.runsettings"],
+      "args": [
+        "test",
+        // https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-nunit-runner-intro
+        "--settings",
+        "./test/basic.runsettings",
+        // Ensures MTP does not report error for skipping E2E tests
+        // https://learn.microsoft.com/en-us/dotnet/core/testing/microsoft-testing-platform-exit-codes
+        "-p:TestingPlatformCommandLineArguments=\"--ignore-exit-code 8\"",
+        "--no-build"
+      ],
       "problemMatcher": "$msCompile",
       "isTestCommand": true
     },
@@ -113,7 +122,16 @@
       "label": ".NET: test (E2E)",
       "command": "dotnet",
       "type": "process",
-      "args": ["test", "--settings", "./test/e2e.runsettings", "--no-build"],
+      "args": [
+        "test",
+        // https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-nunit-runner-intro
+        "--settings",
+        "./test/e2e.runsettings",
+        // Ensures MTP does not report error for skipping non-E2E tests
+        // https://learn.microsoft.com/en-us/dotnet/core/testing/microsoft-testing-platform-exit-codes
+        "-p:TestingPlatformCommandLineArguments=\"--ignore-exit-code 8\"",
+        "--no-build"
+      ],
       "dependsOn": [
         ".NET: build (Test E2E)",
         ".NET: test (Install Playwright Dependencies)"

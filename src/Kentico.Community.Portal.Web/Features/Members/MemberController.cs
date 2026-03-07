@@ -1,4 +1,5 @@
 using CMS.Helpers;
+using Kentico.Community.Portal.Core.Modules.Membership;
 using Kentico.Community.Portal.Web.Features.Blog.Search;
 using Kentico.Community.Portal.Web.Features.Community;
 using Kentico.Community.Portal.Web.Features.Integrations;
@@ -21,8 +22,11 @@ public class MemberController(
     QAndASearchService qAndASearchService,
     AvatarImageService avatarImageService,
     MemberBadgeService memberBadgeService,
-    IJSEncoder jsEncoder) : Controller
+    IJSEncoder jsEncoder,
+    IWebHostEnvironment webHostEnvironment) : Controller
 {
+    private const string DEFAULT_AVATAR_RELATIVE_PATH = "img/profile-photo-default.png";
+
     private readonly IMediator mediator = mediator;
     private readonly AvatarImageService avatarImageService = avatarImageService;
     private readonly WebPageMetaService metaService = metaService;
@@ -30,6 +34,7 @@ public class MemberController(
     private readonly QAndASearchService qAndASearchService = qAndASearchService;
     private readonly MemberBadgeService memberBadgeService = memberBadgeService;
     private readonly IJSEncoder jsEncoder = jsEncoder;
+    private readonly IWebHostEnvironment webHostEnvironment = webHostEnvironment;
 
     [HttpGet("{memberID:int}")]
     public async Task<IActionResult> MemberDetail(int memberID)
@@ -77,11 +82,12 @@ public class MemberController(
     [Route("avatar/{memberID:int}")]
     public async Task<ActionResult> GetAvatarImage(int memberID)
     {
-        var file = await avatarImageService.GetAvatarImage(memberID);
+        var memberRecord = await mediator.Send(new MemberByIDQuery(memberID));
+        var profileFile = await ResolveAvatarFile(memberRecord);
 
-        long lastModified = file.LastWriteTime.Ticks;
-        long length = file.Length;
-        string eTagNew = $"\"{lastModified}-{length}\"";
+        long ticksModified = profileFile.LastWriteTime.Ticks;
+        long fileLength = profileFile.Length;
+        string eTagValue = $"\"{ticksModified}-{fileLength}\"";
 
         Response.Headers.CacheControl = "public";
 
@@ -91,18 +97,51 @@ public class MemberController(
          */
         if (Request.Headers.TryGetValue("If-None-Match", out var value))
         {
-            string? eTagOld = value.First();
-            if (string.Equals(eTagOld, eTagNew))
+            string? existingETag = value.First();
+            if (string.Equals(existingETag, eTagValue))
             {
                 return new StatusCodeResult(304);
             }
         }
 
         return File(
-            file.OpenRead(),
-            MimeTypeHelper.GetMimetype(file.Extension),
-            file.LastWriteTime,
-            entityTag: new EntityTagHeaderValue(eTagNew));
+            profileFile.OpenRead(),
+            MimeTypeHelper.GetMimetype(profileFile.Extension),
+            profileFile.LastWriteTime,
+            entityTag: new EntityTagHeaderValue(eTagValue));
+    }
+
+    private async Task<CMS.IO.FileInfo> ResolveAvatarFile(CMS.Membership.MemberInfo? memberRecord)
+    {
+        if (memberRecord is not null)
+        {
+            var communityProfile = memberRecord.AsCommunityMember();
+            bool requiresDefaultAvatar =
+                communityProfile.ModerationStatus is ModerationStatuses.Spam
+                or ModerationStatuses.Flagged;
+
+            if (requiresDefaultAvatar)
+            {
+                return GetDefaultAvatarFile();
+            }
+
+            return await avatarImageService.GetAvatarImage(memberRecord.MemberID);
+        }
+
+        return GetDefaultAvatarFile();
+    }
+
+    private CMS.IO.FileInfo GetDefaultAvatarFile()
+    {
+        string absolutePath = Path.Combine(webHostEnvironment.WebRootPath, DEFAULT_AVATAR_RELATIVE_PATH);
+        var fileInfo = CMS.IO.StorageHelper.GetFileInfo(absolutePath);
+
+        if (fileInfo is null || !fileInfo.Exists)
+        {
+            throw new FileNotFoundException($"Default avatar file not found at path: {absolutePath}");
+        }
+
+        return fileInfo;
     }
 }
 

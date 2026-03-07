@@ -1,9 +1,10 @@
+using System.Text.Encodings.Web;
 using Kentico.Community.Portal.Core.Components;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Heading;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: HeadingWidget.IDENTIFIER,
@@ -79,6 +80,14 @@ public class HeadingWidgetProperties : BaseWidgetProperties
         Order = 6
     )]
     public bool ShowHeadingAnchor { get; set; } = true;
+
+    [TextInputComponent(
+        Label = "Anchor override",
+        ExplanationText = "Optional custom anchor ID. If empty, anchor is auto-generated from heading text. If populated, this exact value is used as the HTML id attribute. Must be unique on the page and contain only valid ID characters (letters, numbers, hyphens, underscores). No validation is performed - use with caution.",
+        WatermarkText = "custom-anchor-id",
+        Order = 7
+    )]
+    public string AnchorOverride { get; set; } = "";
 }
 
 public enum HeadingLevels { H1, H2, H3, H4, H5, H6 }
@@ -98,8 +107,25 @@ public class HeadingWidgetViewModel : BaseWidgetViewModel
         HeadingText = props.HeadingText;
         HeadingAlignment = props.HeadingAlignmentsParsed;
         HeadingLevel = props.HeadingLevelsParsed;
-        HeadingAnchorSlug = props.ShowHeadingAnchor
-            ? headingContext.GetUniqueSlug(HeadingText)
-            : Maybe.None;
+
+        string rawSlug;
+        if (!props.ShowHeadingAnchor)
+        {
+            HeadingAnchorSlug = Maybe.None;
+            return;
+        }
+        else if (!string.IsNullOrWhiteSpace(props.AnchorOverride))
+        {
+            // Use custom anchor exactly as provided, bypassing auto-generation
+            rawSlug = props.AnchorOverride.Trim();
+        }
+        else
+        {
+            // Auto-generate anchor from heading text with uniqueness logic
+            rawSlug = headingContext.GetUniqueSlug(HeadingText);
+        }
+
+        // HTML encode the slug to prevent XSS
+        HeadingAnchorSlug = HtmlEncoder.Default.Encode(rawSlug);
     }
 }

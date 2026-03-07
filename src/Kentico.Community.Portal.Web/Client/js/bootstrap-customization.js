@@ -133,8 +133,8 @@ function bindFAQWidgets() {
 function bindHTMXTooltipReinitialization() {
   // Hide tooltips before HTMX swap to prevent orphaned tooltip elements
   document.body.addEventListener("htmx:beforeSwap", function (event) {
-    document
-      .querySelectorAll('[data-bs-toggle="tooltip"]')
+    [...document.querySelectorAll('[data-bs-toggle="tooltip"]')]
+      .filter((el) => !!el.getAttribute("title"))
       .forEach((tooltip) => {
         const instance = Tooltip.getInstance(tooltip);
         if (instance) {
@@ -146,8 +146,8 @@ function bindHTMXTooltipReinitialization() {
   // Reinitialize tooltips after HTMX swap
   document.body.addEventListener("htmx:afterSwap", function (event) {
     if (event.detail.xhr.status < 400) {
-      document
-        .querySelectorAll('[data-bs-toggle="tooltip"]')
+      [...document.querySelectorAll('[data-bs-toggle="tooltip"]')]
+        .filter((el) => !!el.getAttribute("title"))
         .forEach((tooltip) => {
           const instance = Tooltip.getInstance(tooltip);
           if (instance) {

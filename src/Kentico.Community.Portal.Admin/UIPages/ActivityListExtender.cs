@@ -19,6 +19,6 @@ public class ActivityListExtender : PageExtender<ActivityList>
                 .AddColumn(nameof(ActivityTypeInfo.ActivityTypeName))
                 .AddColumn(nameof(ChannelInfo.ChannelName)));
 
-        Page.PageConfiguration.FilterFormModel = new ActivityListFilter();
+        Page.PageConfiguration.FilterConfiguration.FormModel = new ActivityListFilter();
     }
 }

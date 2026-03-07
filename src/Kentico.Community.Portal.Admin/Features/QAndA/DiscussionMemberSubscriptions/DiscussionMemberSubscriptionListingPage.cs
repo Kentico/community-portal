@@ -1,9 +1,9 @@
 using CMS.Membership;
+using CMS.Websites.Internal;
 using Kentico.Community.Portal.Admin.Features.QAndA;
 using Kentico.Community.Portal.Admin.Features.QAndA.DiscussionMemberSubscriptions;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Xperience.Admin.Base;
-using CMS.Websites.Internal;
 
 [assembly: UIPage(
     parentType: typeof(QAndAApplicationPage),

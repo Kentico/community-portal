@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Reusable</ClassContentTypeType>
+  <ClassDisplayName>Testimonial Content</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="83d25703-16a8-4db9-9b38-ad71541a0cb0" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="77bfa43d-b3fe-4c20-b91c-c76e1fe3d45f" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="9800efef-b37e-4aca-81b9-69a96fd3fea2" isunique="true" system="true" />
+      <field column="TestimonialContentMessage" columnprecision="0" columntype="longtext" enabled="true" guid="49aaacca-44b3-412c-9c4b-9aa49bf3d06e" visible="true">
+        <properties>
+          <explanationtext>The testimonial content.</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Message</fieldcaption>
+          <fielddescription>The testimonial content.</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>10</MaxRowsNumber>
+          <MinRowsNumber>4</MinRowsNumber>
+        </settings>
+      </field>
+      <field column="TestimonialContentDataSource" columnprecision="0" columnsize="20" columntype="text" enabled="true" guid="2eb553d1-5edb-4587-89f3-212d68ad8ce8" visible="true">
+        <properties>
+          <defaultvalue>Member</defaultvalue>
+          <explanationtext>
+            <![CDATA[Controls visibility conditions for Name, Job Title, and Photo fields. Select Custom to show those fields.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Data Source</fieldcaption>
+          <fielddescription>
+            <![CDATA[Select whether testimonial attribution comes from a member profile or custom values.]]>
+          </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+Member;Member
+Custom;Custom
+]]>
+          </Options>
+          <OptionsValueSeparator>;</OptionsValueSeparator>
+          <Placeholder>(select)</Placeholder>
+        </settings>
+      </field>
+      <field allowempty="true" column="TestimonialContentName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="18fc1f63-1b0a-4e2d-bb10-c4ca91757828" visible="true">
+        <properties>
+          <explanationtext>Visible only when Data Source equals Custom.</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Name</fieldcaption>
+          <fielddescription>Full name of person giving testimonial.</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <visibilityconditiondata>
+          <VisibilityConditionConfiguration>
+            <Identifier>Kentico.Administration.IsEqualToString</Identifier>
+            <Properties>
+              <PropertyName>TestimonialContentDataSource</PropertyName>
+              <Value>Custom</Value>
+              <CaseSensitive>true</CaseSensitive>
+            </Properties>
+          </VisibilityConditionConfiguration>
+        </visibilityconditiondata>
+      </field>
+      <field allowempty="true" column="TestimonialContentJobTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="e9f66b07-5513-4465-8c47-92be006d7d78" visible="true">
+        <properties>
+          <explanationtext>Visible only when Data Source equals Custom.</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Job Title</fieldcaption>
+          <fielddescription>Job title of person giving testimonial.</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <visibilityconditiondata>
+          <VisibilityConditionConfiguration>
+            <Identifier>Kentico.Administration.IsEqualToString</Identifier>
+            <Properties>
+              <PropertyName>TestimonialContentDataSource</PropertyName>
+              <Value>Custom</Value>
+              <CaseSensitive>true</CaseSensitive>
+            </Properties>
+          </VisibilityConditionConfiguration>
+        </visibilityconditiondata>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>338dd1e2-33c7-45d4-be87-80827ad5b288</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-bubbles</ClassIconClass>
+  <ClassName>KenticoCommunity.TestimonialContent</ClassName>
+  <ClassShortName>KenticoCommunityTestimonialContentRobtz9lv</ClassShortName>
+  <ClassTableName>KenticoCommunity_TestimonialContent</ClassTableName>
+  <ClassType>Content</ClassType>
+</cms.contenttype>

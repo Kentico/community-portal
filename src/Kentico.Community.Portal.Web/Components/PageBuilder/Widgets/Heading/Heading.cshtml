@@ -1,6 +1,5 @@
 @using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Heading
 @using Microsoft.AspNetCore.Mvc.Rendering
-@using System.Text.Encodings.Web
 
 @model HeadingWidgetViewModel
 
@@ -12,14 +11,18 @@
         HeadingAlignments.Left or _ => "text-start"
     };
 
+    string idAttribute = Model.HeadingAnchorSlug.HasValue
+        ? $"""id="{Model.HeadingAnchorSlug.GetValueOrDefault("")}" """
+        : "";
+
     var (open, close) = Model.HeadingLevel switch
     {
-        HeadingLevels.H1 => ($"""<h1 id="{Model.HeadingAnchorSlug}" class="heading {headingClasses}">""", "</h1>"),
-        HeadingLevels.H2 => ($"""<h2 id="{Model.HeadingAnchorSlug}" class="heading {headingClasses}">""", "</h2>"),
-        HeadingLevels.H3 => ($"""<h3 id="{Model.HeadingAnchorSlug}" class="heading {headingClasses}">""", "</h3>"),
-        HeadingLevels.H4 => ($"""<h4 id="{Model.HeadingAnchorSlug}" class="heading {headingClasses}">""", "</h4>"),
-        HeadingLevels.H5 => ($"""<h5 id="{Model.HeadingAnchorSlug}" class="heading {headingClasses}">""", "</h5>"),
-        HeadingLevels.H6 or _ => ($"""<h6 id="{Model.HeadingAnchorSlug}">""", "</h6>"),
+        HeadingLevels.H1 => ($"""<h1 {idAttribute}class="heading {headingClasses}">""", "</h1>"),
+        HeadingLevels.H2 => ($"""<h2 {idAttribute}class="heading {headingClasses}">""", "</h2>"),
+        HeadingLevels.H3 => ($"""<h3 {idAttribute}class="heading {headingClasses}">""", "</h3>"),
+        HeadingLevels.H4 => ($"""<h4 {idAttribute}class="heading {headingClasses}">""", "</h4>"),
+        HeadingLevels.H5 => ($"""<h5 {idAttribute}class="heading {headingClasses}">""", "</h5>"),
+        HeadingLevels.H6 or _ => ($"""<h6 {idAttribute}class="heading {headingClasses}">""", "</h6>"),
     };
 }
 
@@ -29,7 +32,7 @@
         @Model.HeadingText
         if (Model.HeadingAnchorSlug.TryGetValue(out string? slug))
         {
-            <a title="Navigate to this heading" aria-label="Navigate to this heading" class="heading-link" href="#@(slug)"></a>
+            <a title="Navigate to this heading" aria-label="Navigate to this heading" class="heading-link" href="#@slug"></a>
         }
     }
     @Html.Raw(close)

@@ -180,7 +180,7 @@ public class QAndASearchIndexingStrategy(
             .Map(t => t.Identifier)
             .Bind(id => taxonomies.Types
                 .TryFirst(t => t.Guid == id))
-            .Execute(tag =>
+            .Tap(tag =>
             {
                 indexModel.DiscussionType = tag.DisplayName;
                 indexModel.DiscussionTypeFacet = tag.NormalizedName;

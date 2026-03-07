@@ -7,7 +7,7 @@
     <div class="d-none d-lg-block">
         <a href="/q-and-a/new-question" rel="nofollow" class="btn btn-outline-primary w-100 d-inline-block">
             <svg class="icon me-1">
-                <use xlink:href="/img/icons.svg#plus-circle" asp-append-version></use>
+                <use xlink:href="/img/icons.svg#plus-circle" asp-append-version />
             </svg>
             <span class="text-uppercase">New discussion</span>
         </a>
@@ -31,48 +31,48 @@
                 <input class="form-check-input" type="checkbox" name="discussionTypes" xpc-facet-field="discussionType" />
                 <label class="form-check-label" for="discussionTypes-@discussionType.Value">@discussionType.Label
                     (@discussionType.Count)</label>
-            </div>
-        }
-    </div>
-
-    <div>
-        <h4>Answers @(Model.DiscussionStatesSelected > 0 ? $"({Model.DiscussionStatesSelected})" : "")</h4>
-        @foreach (var state in Model.DiscussionStates)
-        {
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="discussionStates" xpc-facet-field="state" />
-                <label class="form-check-label" for="discussionStates-@state.Value">@state.Label (@state.Count)</label>
-            </div>
-        }
-    </div>
-
-    <div id="dxTopicsFilters" x-data="{ search: ''}">
-        <h4>Topic @(Model.DXTopicsSelectedCount > 0 ? $"({Model.DXTopicsSelectedCount})" : "")</h4>
-        <input type="search" id="filterSearch" class="form-control mb-2" placeholder="Search..." x-model="search">
-        <div class="facet-list p-2 border rounded-start" style="max-height: 350px; overflow-y: auto;">
-            @for (int x = 0; x < Model.DXTopics.Count; x++)
-            {
-                var topic = Model.DXTopics[x];
-                if (topic.Facets.Count == 0)
-                {
-                    continue;
-                }
-                <div id="topic-@(topic.Value)" class="mb-2">
-                    <h5>@topic.Label @(topic.Count > 0 ? $"({topic.Count})" : "")</h5>
-                    <div class="child-facet-list mb-2">
-                        @foreach (var child in topic.Facets)
-                        {
-                            <div id="facet-@(child.Value)" class="form-check mb-2 last:mb-0"
-                                x-show="!search || '@child.Label.ToLowerInvariant()'.includes(search.toLowerCase())">
-                                <input class="form-check-input" type="checkbox" name="dxTopics" xpc-facet-field="child" />
-                                <label class="form-check-label" for="dxTopics-@child.Value">
-                                    @child.Label (@child.Count)
-                                </label>
-                            </div>
-                        }
-                    </div>
                 </div>
             }
         </div>
-    </div>
-</section>
+
+        <div>
+            <h4>Answers @(Model.DiscussionStatesSelected > 0 ? $"({Model.DiscussionStatesSelected})" : "")</h4>
+            @foreach (var state in Model.DiscussionStates)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="discussionStates" xpc-facet-field="state" />
+                    <label class="form-check-label" for="discussionStates-@state.Value">@state.Label (@state.Count)</label>
+                </div>
+            }
+        </div>
+
+        <div id="dxTopicsFilters" x-data="{ search: ''}">
+            <h4>Topic @(Model.DXTopicsSelectedCount > 0 ? $"({Model.DXTopicsSelectedCount})" : "")</h4>
+            <input type="search" id="filterSearch" class="form-control mb-2" placeholder="Search..." x-model="search">
+            <div class="facet-list p-2 border rounded-start" style="max-height: 350px; overflow-y: auto;">
+                @for (int x = 0; x < Model.DXTopics.Count; x++)
+                {
+                    var topic = Model.DXTopics[x];
+                    if (topic.Facets.Count == 0)
+                    {
+                        continue;
+                    }
+                    <div id="topic-@(topic.Value)" class="mb-2">
+                        <h5>@topic.Label @(topic.Count > 0 ? $"({topic.Count})" : "")</h5>
+                        <div class="child-facet-list mb-2">
+                            @foreach (var child in topic.Facets)
+                            {
+                                <div id="facet-@(child.Value)" class="form-check mb-2 last:mb-0"
+                                     x-show="!search || '@child.Label.ToLowerInvariant()'.includes(search.toLowerCase())">
+                                    <input class="form-check-input" type="checkbox" name="dxTopics" xpc-facet-field="child" />
+                                    <label class="form-check-label" for="dxTopics-@child.Value">
+                                        @child.Label (@child.Count)
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>

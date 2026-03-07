@@ -1,0 +1,21 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.AccountRecovery
+
+@model AccountRecoveryWidgetViewModel
+
+<div class="row g-0 border rounded-4 overflow-hidden">
+    <div class="col-md-6">
+        <div class="p-4 p-lg-5">
+            <h3 class="mb-4">Enter your email</h3>
+            <partial name="~/Components/PageBuilder/Widgets/AccountRecovery/_AccountRecoveryForm.cshtml"
+                     model="Model.Form" />
+        </div>
+    </div>
+
+    <div class="col-md-6 bg-light">
+        <div class="p-4 p-lg-5">
+            <h3>Remember your password?</h3>
+            <p class="mb-4">Sign in to your account to continue.</p>
+            <a href="/login" class="btn btn-outline-secondary mb-4">Sign in</a>
+        </div>
+    </div>
+</div>

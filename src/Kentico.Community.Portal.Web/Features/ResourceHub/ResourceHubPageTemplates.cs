@@ -5,6 +5,8 @@ using Kentico.Content.Web.Mvc.Routing;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
 using Microsoft.AspNetCore.Mvc;
 
+using Icons = Kentico.Xperience.Admin.Base.Icons;
+
 [assembly: RegisterPageTemplate(
     identifier: "KenticoCommunity.ResourceHubPage_Default",
     name: "ResourceHub Page - Default",
@@ -12,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
     customViewName: "~/Features/ResourceHub/ResourceHubPage_Default.cshtml",
     ContentTypeNames = [ResourceHubPage.CONTENT_TYPE_NAME],
     Description = "",
-    IconClass = ""
+    IconClass = Icons.Notebook
 )]
 
 [assembly: RegisterWebPageRoute(

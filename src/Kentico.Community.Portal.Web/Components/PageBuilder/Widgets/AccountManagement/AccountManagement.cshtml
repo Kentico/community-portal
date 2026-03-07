@@ -1,0 +1,47 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.AccountManagement
+@using Kentico.Community.Portal.Web.Components.TagHelpers
+
+@model AccountManagementWidgetViewModel
+
+@{
+    var account = Model.Account;
+}
+
+<div class="py-4 py-md-5">
+    <div class="container">
+        <div class="grid" style="--bs-gap: 2.25rem 1.5rem;">
+            <div class="g-col-12 g-col-lg-6 bg-purple-100 rounded p-3">
+                <partial name="~/Components/PageBuilder/Widgets/AccountManagement/_AvatarForm.cshtml"
+                         model="account.AvatarForm" />
+            </div>
+
+            <div class="g-col-12 g-col-lg-6 rounded bg-white border border-3 d-flex flex-column gap-3 p-3"
+                 style="--bs-border-color: var(--color-purple-100);">
+                
+                <partial name="~/Components/PageBuilder/Widgets/AccountManagement/_ProfileDetails.cshtml"
+                         model="account" />
+                <partial name="~/Components/PageBuilder/Widgets/AccountManagement/_BadgesForm.cshtml"
+                         model="account.BadgesForm" />
+            </div>
+
+            <div class="g-col-12 g-col-lg-6">
+                <partial name="~/Components/PageBuilder/Widgets/AccountManagement/_ProfileForm.cshtml"
+                         model="account.Profile" />
+            </div>
+
+            <div class="g-col-12 g-col-lg-6">
+                <partial name="~/Components/PageBuilder/Widgets/AccountManagement/_PasswordForm.cshtml"
+                         model="account.PasswordInfo" />
+            </div>
+
+            <div class="g-col-12 g-col-lg-6">
+                <partial name="~/Components/PageBuilder/Widgets/AccountManagement/_DiscussionSubscriptions.cshtml"
+                         model="account.NotificationsForm.SubscribedDiscussions" />
+            </div>
+            <div class="g-col-12 g-col-lg-6">
+                <partial name="~/Components/PageBuilder/Widgets/AccountManagement/_DiscussionNotificationsForm.cshtml"
+                         model="account.NotificationsForm" />
+            </div>
+        </div>
+    </div>
+</div>

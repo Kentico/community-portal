@@ -1,0 +1,29 @@
+@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.AccountRecovery.AccountRecoveryFormViewModel
+
+<form id="RequestRecoveryEmail" method="post" class="needs-validation" hx-swap="outerHTML" hx-post
+      hx-controller="AccountRecoveryWidget" hx-action="RequestRecoveryEmail" hx-disabled-elt="find fieldset"
+      test-id="requestRecoveryEmailForm">
+    <fieldset hx-indicator="this" xpc-readonly-disabled>
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger validation-summary"></div>
+
+        <div class="mb-4">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control rounded-4" test-id="email">
+                <span asp-validation-for="Email" class="invalid-feedback"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" xpc-loading-button>
+                Request recovery email
+            </button>
+
+            <vc:read-only-mode-notification />
+        </fieldset>
+
+        @if (Context.Request.IsHtmx() && ViewContext.ModelState.IsValid)
+        {
+            <xpc-alert test-id="accountRecoveryConfirmation">
+                If an account exists with the email address provided, you will receive an email with password recovery
+                instructions.
+            </xpc-alert>
+        }
+    </form>

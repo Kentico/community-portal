@@ -3,7 +3,6 @@ using CMS.DataEngine;
 using CMS.Websites.Routing;
 using EnumsNET;
 using Kentico.Community.Portal.Core.Components;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.FormBuilder;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
@@ -12,6 +11,7 @@ using Kentico.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http.Extensions;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterFormComponent(
     "DancingGoat.HiddenInput",

@@ -1,7 +1,6 @@
 using System.ComponentModel;
 using Kentico.Community.Portal.Admin;
 using Kentico.Community.Portal.Core.Components;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.FallbackForm;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Forms;
 using Kentico.Community.Portal.Web.Rendering;
@@ -11,6 +10,7 @@ using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Kentico.Xperience.Admin.Websites.FormAnnotations;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: FallbackFormWidget.IDENTIFIER,

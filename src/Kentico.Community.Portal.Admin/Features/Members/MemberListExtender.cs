@@ -41,9 +41,9 @@ public class MemberListExtender : PageExtender<MemberList>
             .TryFirst(c => string.Equals(c.Name, nameof(MemberInfo.MemberCreated)))
             .Execute(c => c.Sorting.DefaultDirection = SortTypeEnum.Desc);
 
-        if (Page.PageConfiguration.FilterFormModel is null)
+        if (Page.PageConfiguration.FilterConfiguration.FormModel is null)
         {
-            Page.PageConfiguration.FilterFormModel = new MemberListFilter();
+            Page.PageConfiguration.FilterConfiguration.FormModel = new MemberListFilter();
         }
     }
 }

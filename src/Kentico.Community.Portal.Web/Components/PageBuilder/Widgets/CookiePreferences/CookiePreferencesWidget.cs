@@ -1,5 +1,4 @@
 using CMS.Helpers;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CookiePreferences;
 using Kentico.Community.Portal.Web.Features.DataCollection;
 using Kentico.PageBuilder.Web.Mvc;
@@ -7,6 +6,7 @@ using Kentico.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: CookiePreferencesWidget.IDENTIFIER,
@@ -14,7 +14,8 @@ using Microsoft.AspNetCore.Mvc.ViewComponents;
     name: "Cookie preferences",
     propertiesType: typeof(CookiePreferencesWidgetProperties),
     Description = "Displays a cookie preferences.",
-    IconClass = KenticoIcons.COOKIE)]
+    IconClass = KenticoIcons.COOKIE,
+    AllowCache = false)]
 
 namespace Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CookiePreferences;
 

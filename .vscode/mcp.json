@@ -11,7 +11,7 @@
     "xperience-management-api": {
       "type": "stdio",
       "command": "npx",
-      "args": ["@kentico/management-api-mcp@31.0.1-preview"],
+      "args": ["@kentico/management-api-mcp@31.2.2-preview"],
       "env": {
         "NODE_OPTIONS": "--use-system-ca",
         "NODE_TLS_REJECT_UNAUTHORIZED": "0",
@@ -19,6 +19,20 @@
         "MANAGEMENT_API_URL": "https://localhost:45039/kentico-api/management",
         "MANAGEMENT_API_SECRET": "rrvpzpu18m5385tfw1h9j5luxton5vyv"
       }
+    },
+    "community-portal": {
+      "type": "http",
+      "url": "http://localhost:45041/mcp"
+    },
+    "io.github.ChromeDevTools/chrome-devtools-mcp": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "--registry",
+        "https://registry.npmjs.org",
+        "chrome-devtools-mcp@0.17.1",
+        "--no-usage-statistics"
+      ]
     }
   },
   "inputs": []

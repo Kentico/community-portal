@@ -43,7 +43,7 @@ public class WebPageListingPage(IPageLinkGenerator pageLinkGenerator, IConversio
     {
         await base.ConfigurePage();
 
-        PageConfiguration.FilterFormModel = new WebPageListMultiFilter();
+        PageConfiguration.FilterConfiguration.FormModel = new WebPageListMultiFilter();
 
         PageConfiguration.QueryModifiers
             .AddModifier((query, settings) =>

@@ -14,6 +14,6 @@ public class HomePageTests : CommunityPageTests
         TestContext.Out.WriteLine("Validate content renders");
 
         await Expect(Page.Locator("#gridsection-updates")).ToBeVisibleAsync();
-        await Expect(Page.Locator(".error-hero")).Not.ToBeVisibleAsync();
+        await Expect(Page.Locator(".section--error-hero")).Not.ToBeVisibleAsync();
     }
 }

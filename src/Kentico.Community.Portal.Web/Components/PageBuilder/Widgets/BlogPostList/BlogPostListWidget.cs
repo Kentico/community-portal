@@ -5,7 +5,6 @@ using CMS.ContentEngine;
 using CMS.Websites.Routing;
 using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Core.Modules;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList;
 using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.Members;
@@ -16,6 +15,7 @@ using Kentico.Xperience.Admin.Base.Forms;
 using Kentico.Xperience.Admin.Websites.FormAnnotations;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: BlogPostListWidget.IDENTIFIER,

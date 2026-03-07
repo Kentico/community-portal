@@ -1,8 +1,8 @@
 using CMS.DataEngine;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.FormBuilder;
 using Kentico.Forms.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterFormComponent(
     DateInputComponent.IDENTIFIER,

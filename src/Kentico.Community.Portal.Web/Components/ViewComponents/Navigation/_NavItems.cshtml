@@ -1,0 +1,22 @@
+@using Kentico.Community.Portal.Web.Components.ViewComponents.Navigation
+
+@model IEnumerable<MenuItemViewModel>
+
+@{
+    string? GetCurrentClass(MenuItemViewModel item)
+    {
+        return item.IsActive ? "active" : null;
+    }
+
+    string? GetAriaAttribute(MenuItemViewModel item)
+    {
+        return item.IsActive ? "aria-current=page" : null;
+    }
+}
+
+@foreach (var item in Model)
+{
+    <li class="nav-item">
+        <a class="nav-link @GetCurrentClass(item)" @GetAriaAttribute(item) href="@item.Url">@item.Caption</a>
+    </li>
+}

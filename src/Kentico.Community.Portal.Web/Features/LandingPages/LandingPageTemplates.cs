@@ -5,6 +5,8 @@ using Kentico.Content.Web.Mvc.Routing;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
 using Microsoft.AspNetCore.Mvc;
 
+using Icons = Kentico.Xperience.Admin.Base.Icons;
+
 [assembly: RegisterPageTemplate(
     identifier: "KenticoCommunity.LandingPage_Default",
     name: "Landing Page - Default",
@@ -12,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
     customViewName: "~/Features/LandingPages/LandingPage_Default.cshtml",
     ContentTypeNames = [LandingPage.CONTENT_TYPE_NAME],
     Description = "Default Landing Page template with a heading",
-    IconClass = "xp-l-header-text"
+    IconClass = Icons.LHeaderText
 )]
 
 [assembly: RegisterPageTemplate(
@@ -22,7 +24,7 @@ using Microsoft.AspNetCore.Mvc;
     customViewName: "~/Features/LandingPages/LandingPage_Empty.cshtml",
     ContentTypeNames = [LandingPage.CONTENT_TYPE_NAME],
     Description = "Landing Page template with no content and a single Editable Area",
-    IconClass = "xp-l-text"
+    IconClass = Icons.LText
 )]
 
 [assembly: RegisterWebPageRoute(

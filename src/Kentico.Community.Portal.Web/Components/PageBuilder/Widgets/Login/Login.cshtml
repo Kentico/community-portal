@@ -1,0 +1,22 @@
+@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Login.LoginWidgetViewModel
+
+<div class="row g-0 border rounded-4 overflow-hidden">
+    <div class="col-md-6">
+        <div class="p-4 p-lg-5">
+            <h3 class="mb-4">Sign in</h3>
+            <partial name="~/Components/PageBuilder/Widgets/Login/_LoginForm.cshtml" model="Model.LoginModel" />
+        </div>
+    </div>
+
+    <div class="col-md-6 bg-light">
+        <div class="p-4 p-lg-5">
+            <h3>New to the Kentico Community?</h3>
+            <p class="mb-4">It only takes a moment to get started.</p>
+            <a id="register" href="/register" class="btn btn-outline-secondary mb-4" test-id="registerLink">Register</a>
+
+            <div class="border-top pt-4">
+                <a id="accountRecovery" href="/account-recovery" test-id="accountRecoveryLink">Forgot your password?</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -20,6 +20,6 @@ public class ContactActivityListExtender : PageExtender<ContactActivityList>
                 .AddColumn(nameof(ActivityTypeInfo.ActivityTypeName))
                 .AddColumn(nameof(ChannelInfo.ChannelName)));
 
-        Page.PageConfiguration.FilterFormModel = new ActivityListFilter();
+        Page.PageConfiguration.FilterConfiguration.FormModel = new ActivityListFilter();
     }
 }

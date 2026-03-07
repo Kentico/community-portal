@@ -2,7 +2,6 @@ using System.ComponentModel;
 using CMS.ContentEngine;
 using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Core.Operations;
-using Kentico.Community.Portal.Web.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Forms;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.PollForm;
 using Kentico.Community.Portal.Web.Rendering;
@@ -13,6 +12,7 @@ using Kentico.Xperience.Admin.Base.Forms;
 using MediatR;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
+using XperienceCommunity.KenticoComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: PollWidget.IDENTIFIER,
