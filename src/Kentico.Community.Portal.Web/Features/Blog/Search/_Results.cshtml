@@ -14,12 +14,12 @@
                 <div class="flex-grow-1">
                     <h2 id="post-title-@(post.ID)" class="mb-1 fs-3 fw-semibold">
                         <a href="@post.LinkPath" class="text-decoration-none blog-post-link text-dark"
-                            style="outline-offset: 2px;" aria-describedby="post-date-@(post.ID) post-author-@(post.ID)">
+                               style="outline-offset: 2px;" aria-describedby="post-date-@(post.ID) post-author-@(post.ID)">
                             @post.Title
                         </a>
                     </h2>
                     <time id="post-date-@(post.ID)" xpc-datetime="post.Date" xpc-datetime-format="Date"
-                        class="text-muted small"></time>
+                          class="text-muted small"></time>
                 </div>
 
                 <!-- Blog Type Badge -->
@@ -39,21 +39,21 @@
                 @if (post.Author.ID > 0)
                 {
                     <a id="post-author-@(post.ID)" asp-controller="Member" asp-action="MemberDetail"
-                        asp-route-memberID="@post.Author.ID"
-                        class="d-inline-flex align-items-center text-decoration-none author-link border border-secondary text-secondary bg-white rounded-pill p-1 small fw-medium"
-                        style="outline-offset: 2px;" aria-label="View profile of @post.Author.Name">
+                           asp-route-memberID="@post.Author.ID"
+                           class="d-inline-flex align-items-center text-decoration-none author-link border border-secondary text-secondary bg-white rounded-pill p-1 small fw-medium"
+                           style="outline-offset: 2px;" aria-label="View profile of @post.Author.Name">
                         <img xpc-image="post.Author.Photo" class="rounded me-1 icon" style="--icon-font-size: 1.2rem"
-                            role="presentation" />
+                             role="presentation" />
                         <span class="px-1">@post.Author.Name</span>
                     </a>
                 }
                 else
                 {
                     <div id="post-author-@(post.ID)"
-                        class="d-inline-flex align-items-center bg-light text-dark rounded-pill p-1 small fw-medium" role="text"
-                        aria-label="Author: @post.Author.Name">
+                         class="d-inline-flex align-items-center bg-light text-dark rounded-pill p-1 small fw-medium" role="text"
+                         aria-label="Author: @post.Author.Name">
                         <img xpc-image="post.Author.Photo" class="rounded me-1 icon" style="--icon-font-size: 1.2rem"
-                            role="presentation" />
+                             role="presentation" />
                         <span class="px-1">@post.Author.Name</span>
                     </div>
                 }
@@ -76,14 +76,14 @@
 
         <!-- Desktop Layout: Grid (768px and above) -->
         <div class="d-none d-md-grid gap-3"
-            style="grid-template-columns: auto auto; grid-template-rows: auto auto; grid-template-areas: 'title title' 'content content' 'tags footer';">
+             style="grid-template-columns: auto auto; grid-template-rows: auto auto; grid-template-areas: 'title title' 'content content' 'tags footer';">
 
             <!-- Blog Post Title & Type Badge -->
             <header style="grid-area: title;" class="d-flex justify-content-between align-items-start gap-3">
                 <div class="flex-grow-1">
                     <h2 class="mb-1 fs-3 fw-semibold">
                         <a href="@post.LinkPath" class="text-decoration-none blog-post-link text-dark"
-                            style="outline-offset: 2px;">
+                               style="outline-offset: 2px;">
                             @post.Title
                         </a>
                     </h2>
@@ -120,19 +120,19 @@
                 @if (post.Author.ID > 0)
                 {
                     <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
-                        class="d-inline-flex align-items-center text-decoration-none author-link border border-secondary text-secondary bg-white rounded-pill text-nowrap p-1 small fw-medium"
-                        style="outline-offset: 2px;" aria-label="View profile of @post.Author.Name">
+                           class="d-inline-flex align-items-center text-decoration-none author-link border border-secondary text-secondary bg-white rounded-pill text-nowrap p-1 small fw-medium"
+                           style="outline-offset: 2px;" aria-label="View profile of @post.Author.Name">
                         <img xpc-image="post.Author.Photo" class="rounded me-1 icon" style="--icon-font-size: 1.2rem"
-                            role="presentation" />
+                             role="presentation" />
                         <span class="px-1">@post.Author.Name</span>
                     </a>
                 }
                 else
                 {
                     <div class="d-inline-flex align-items-center bg-light text-dark rounded-pill text-nowrap p-1 small fw-medium"
-                        role="text" aria-label="Author: @post.Author.Name">
+                         role="text" aria-label="Author: @post.Author.Name">
                         <img xpc-image="post.Author.Photo" class="rounded me-1 icon" style="--icon-font-size: 1.2rem"
-                            role="presentation" />
+                             role="presentation" />
                         <span class="px-1">@post.Author.Name</span>
                     </div>
                 }
@@ -142,7 +142,13 @@
     </article>
 }
 
-@if (Model.BlogPosts.Count == 0 && Model.TotalPages == 0)
+@if (Model.SearchResultState == SearchResultStates.IndexUnavailable)
+{
+    <div class="d-flex justify-content-center mt-5">
+        <p>The search index is being updated. Please try again in a few minutes.</p>
+    </div>
+}
+else if (Model.SearchResultState == SearchResultStates.NoResults)
 {
     <div class="d-flex justify-content-center mt-5">
         <p>No results could be found.</p>
@@ -176,11 +182,11 @@
 
 <script type="module">
     asyncReady(async () => {
-        const path = @JSEncoder.EncodeToJson(ClientAssets.ViteAssetPath("js/search.js"));
-        const search = await import(path);
+    const path = @JSEncoder.EncodeToJson(ClientAssets.ViteAssetPath("js/search.js"));
+    const search = await import(path);
 
-        search.initSearch({
-            formElemID: 'search'
-        });
+    search.initSearch({
+    formElemID: 'search'
+    });
     });
 </script>

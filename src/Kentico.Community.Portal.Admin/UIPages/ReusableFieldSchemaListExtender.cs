@@ -22,10 +22,10 @@ public class ReusableFieldSchemaListExtender(IReusableFieldSchemaManager schemaM
 
         configs
             .TryFirst(c => string.Equals(c.Name, nameof(ReusableFieldSchema.DisplayName), StringComparison.OrdinalIgnoreCase))
-            .Execute(c => c.MaxWidth = 35);
+            .Tap(c => c.MaxWidth = 35);
         configs
             .TryFirst(c => string.Equals(c.Name, nameof(ReusableFieldSchema.Name), StringComparison.OrdinalIgnoreCase))
-            .Execute(c => c.MaxWidth = 35);
+            .Tap(c => c.MaxWidth = 35);
 
         _ = configs.AddColumn("usedByContentTypes", "Used by (Content Types)", minWidth: 50, maxWidth: 100, formatter: (data, dc) =>
         {

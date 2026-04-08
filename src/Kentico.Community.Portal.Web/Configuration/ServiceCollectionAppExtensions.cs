@@ -22,7 +22,6 @@ using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Infrastructure.Storage;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Xperience.Admin.Base.Forms;
-using Kentico.Xperience.VirtualInbox.MCP;
 using Sidio.Sitemap.AspNetCore;
 using Sidio.Sitemap.Core.Services;
 using Slugify;
@@ -31,7 +30,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionAppExtensions
 {
-    public static IServiceCollection AddApp(this IServiceCollection services, IConfiguration config, IWebHostEnvironment env) =>
+    public static IServiceCollection AddApp(this IServiceCollection services, IConfiguration config) =>
         services
             .AddScoped<CookieConsentManager>()
             .AddScoped<ConsentManager>()
@@ -46,7 +45,7 @@ public static class ServiceCollectionAppExtensions
             .AddMemberBadges()
             .AddQAndADiscussionNotifications()
             .AddMigrations()
-            .AddMcp(env);
+            .AddMcp(config);
 
     private static IServiceCollection AddOperations(this IServiceCollection services, IConfiguration config) =>
         services
@@ -157,15 +156,21 @@ public static class ServiceCollectionAppExtensions
     private static IServiceCollection AddMigrations(this IServiceCollection services) =>
         services;
 
-    private static IServiceCollection AddMcp(this IServiceCollection services, IWebHostEnvironment env) =>
-        services.IfDevelopment(env, s =>
+    private static IServiceCollection AddMcp(this IServiceCollection services, IConfiguration config)
+    {
+        if (!config.GetValue<bool>("Kentico:VirtualInbox:Enabled"))
         {
-            _ = s
+            return services;
+        }
+
+        _ = services
             .AddMcpServer()
             .WithHttpTransport()
             .WithComponentRegistryTools()
             .WithVirtualInboxTools();
-        });
+
+        return services;
+    }
 
     private static IServiceCollection AddClosedGenericTypes(
         this IServiceCollection services,

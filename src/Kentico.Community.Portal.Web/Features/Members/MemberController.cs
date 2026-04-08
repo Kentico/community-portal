@@ -64,12 +64,17 @@ public class MemberController(
         var badges = await memberBadgeService.GetAllBadgesFor(member.Id);
         var integrationsResp = await mediator.Send(new IntegrationContentsByMemberIDQuery(member.Id));
         var contributionsResp = await mediator.Send(new LinkContentsByMemberIDQuery(member.Id));
+        var acceptedAnswersResp = await mediator.Send(new MemberAcceptedAnswerDiscussionsQuery(member.Id));
+        var upvotes = await mediator.Send(new MemberTotalUpvotesQuery(member.Id));
 
         var model = new MemberDetailViewModel(member)
         {
             Page = new PortalPage("Community member profile", $"Learn about {member.FullName} and their contributions to the Kentico Community"),
             BlogPostLinks = [.. blogResult.Hits.Select(h => new BlogPostLink(h.Url, h.Title, h.PublishedDate, h.BlogType, jsEncoder))],
             QuestionsAsked = [.. qandaResult.Hits.Select(h => new Link(h.Url, h.Title, h.PublishedDate, jsEncoder))],
+            AcceptedAnswerDiscussions = [.. acceptedAnswersResp.Items.Select(d => new Link(d.Url, d.Title, d.Date, jsEncoder))],
+            AnswerUpvotes = upvotes.AnswerUpvotes,
+            QuestionUpvotes = upvotes.QuestionUpvotes,
             MemberBadges = badges,
             Contributions = [.. contributionsResp.Items.Select(c => new Link(c.LinkContentPathOrURL, c.BasicItemTitle, c.LinkContentPublishedDate, jsEncoder))],
             Integrations = [.. integrationsResp.Items.Select(i => new Link(i.IntegrationContentRepositoryLinkURL, i.BasicItemTitle, i.IntegrationContentPublishedDate, jsEncoder))],
@@ -150,6 +155,9 @@ public class MemberDetailViewModel(CommunityMember member)
     public required PortalPage Page { get; init; }
     public CommunityMember Member { get; init; } = member;
     public IReadOnlyList<Link> QuestionsAsked { get; init; } = [];
+    public IReadOnlyList<Link> AcceptedAnswerDiscussions { get; init; } = [];
+    public int AnswerUpvotes { get; init; }
+    public int QuestionUpvotes { get; init; }
     public IReadOnlyList<BlogPostLink> BlogPostLinks { get; init; } = [];
     public IReadOnlyList<Link> Contributions { get; init; } = [];
     public IReadOnlyList<Link> Integrations { get; init; } = [];

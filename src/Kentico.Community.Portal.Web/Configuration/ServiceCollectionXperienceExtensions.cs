@@ -23,7 +23,6 @@ using Kentico.Web.Mvc;
 using Kentico.Xperience.ComponentRegistry;
 using Kentico.Xperience.ManagementApi;
 using Kentico.Xperience.Mjml;
-using Kentico.Xperience.VirtualInbox;
 using Microsoft.AspNetCore.Localization.Routing;
 
 [assembly: RegisterModule(typeof(StorageInitializationModule))]
@@ -32,7 +31,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionXperienceExtensions
 {
-    public static IServiceCollection AddAppXperience(this IServiceCollection services, IConfiguration config, IWebHostEnvironment env) =>
+    public static IServiceCollection AddAppXperience(this IServiceCollection services, IConfiguration config) =>
         services
             .AddKentico(features =>
             {
@@ -84,33 +83,11 @@ public static class ServiceCollectionXperienceExtensions
             .AddKenticoTagManager(config)
             .AddPreviewComponentOutlines()
             .AddComponentRegistry()
-            .Configure<EmailQueueOptions>(o =>
-            {
-                o.ArchiveDuration = 14;
-            })
-            .IfDevelopment(env, c =>
-            {
-                _ = c.AddVirtualInboxClient(config)
-                .Configure<SystemEmailOptions>(config.GetSection("SystemEmailOptions"));
-
-                if (config.GetSection("Kentico.Xperience.MiniProfiler.Custom").GetValue<bool>("IsEnabled"))
-                {
-                    _ = c.AddKenticoMiniProfiler();
-                }
-            })
-            .IfDevelopment(env, c =>
-            {
-                _ = c.Configure<ContentSynchronizationOptions>(config.GetSection("ContentSynchronizationOptions"));
-            })
-            .IfDevelopment(env, c =>
-            {
-                string? secret = config.GetSection("Kentico.Xperience.ManagementApi").GetValue<string>("Secret");
-
-                if (!string.IsNullOrWhiteSpace(secret))
-                {
-                    _ = c.AddKenticoManagementApi(options => options.Secret = secret);
-                }
-            })
+            .AddVirtualInboxServices(config)
+            .AddMiniProfiler(config)
+            .Configure<EmailQueueOptions>(config.GetSection("EmailQueueOptions"))
+            .AddContentSynchronization(config)
+            .AddManagementApi(config)
             .Configure<CookieLevelOptions>(options =>
             {
                 options.CookieConfigurations.Add(CookieNames.COOKIE_CONSENT_LEVEL, CookieLevel.System);
@@ -139,4 +116,32 @@ public static class ServiceCollectionXperienceExtensions
             .AddSingleton<IFormFieldContentItemReferenceExtractor, MarkdownContentItemReferenceExtractor>()
             .AddSingleton<IEmailActivityTrackingEvaluator, ConsentEmailActivityTrackingEvaluator>()
             .Decorate<ILocalizationService, ApplicationLocalizationService>();
+
+    private static IServiceCollection AddVirtualInboxServices(this IServiceCollection services, IConfiguration config) =>
+        services
+            .IfConfigured(config, "Kentico:VirtualInbox:Enabled", s =>
+            {
+                _ = s.AddVirtualInboxClient(config)
+                    .Configure<SystemEmailOptions>(config.GetSection("SystemEmailOptions"));
+            })
+            .IfNotConfigured(config, "Kentico:VirtualInbox:Enabled", s => _ = s.AddVirtualInboxCore());
+
+    private static IServiceCollection AddMiniProfiler(this IServiceCollection services, IConfiguration config) =>
+        services.IfConfigured(config, "Kentico.Xperience.MiniProfiler.Custom:IsEnabled", s => _ = s.AddKenticoMiniProfiler());
+
+    private static IServiceCollection AddContentSynchronization(this IServiceCollection services, IConfiguration config) =>
+        services.Configure<ContentSynchronizationOptions>(config.GetSection("ContentSynchronizationOptions"));
+
+    private static IServiceCollection AddManagementApi(this IServiceCollection services, IConfiguration config)
+    {
+        string? secret = config.GetSection("Kentico.Xperience.ManagementApi").GetValue<string>("Secret");
+
+        if (string.IsNullOrWhiteSpace(secret))
+        {
+            return services;
+        }
+
+        _ = services.AddKenticoManagementApi(options => options.Secret = secret);
+        return services;
+    }
 }

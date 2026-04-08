@@ -56,6 +56,18 @@
   transform: translateY(-1px);
 }
 
+.qa-question-card__vote-kpi-count {
+  color: var(--bs-body-color);
+  font-size: inherit;
+  font-weight: 700;
+}
+
+.qa-question-card__vote-divider {
+  width: 1px;
+  height: 0.85rem;
+  background: var(--bs-border-color);
+}
+
 // Widget card component with hover effects
 :where(.widget-card) {
   --card-bg: var(--bs-body-bg);

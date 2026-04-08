@@ -4,8 +4,8 @@ applyTo: "**/*.cs;**/*.cshtml"
 
 These are conventions to follow when working with Xperience by Kentico.
 
-If you are not 100% confident how an Xperience feature or API works, search the
-Kentico docs for details on the topic.
+If you are not 100% confident how an Xperience feature or API works, use the
+kentico.docs.mcp MCP server for details on the topic.
 
 # Querying
 
@@ -22,6 +22,24 @@ returning) are available.
 Register page templates and define page template controllers for a single web
 page content type in the same `.cs` file, naming them
 `<ContentTypeName>Templates`.
+
+# Components
+
+When selecting icons for registration attributes for the following components,
+always select an icon from `Kentico.Xperience.ComponentIcons.KenticoIcons`.
+
+- Page Builder widgets, sections
+- Email Builder widgets, sections
+- Form Builder components, sections
+- Personalization condition types
+
+For the following components always select an icon from
+`Kentico.Xperience.Admin.Base.Icons`
+
+- Page Builder templates
+- Email Builder templates
+- Admin UI components
+- Admin UI categories, page templates, pages and Page Extenders
 
 # Logging
 

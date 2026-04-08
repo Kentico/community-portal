@@ -1,4 +1,3 @@
-@using EnumsNET
 @using Kentico.Community.Portal.Web.Features.QAndA.Search
 
 @model QAndASearchViewModel
@@ -25,15 +24,15 @@
                     <div class="d-flex flex-lg-row flex-column gap-2 w-100">
                         <input asp-for="Query" type="search" class="form-control search rounded-pill flex-grow-1"
                                placeholder="Search by tag, name or phrase" aria-label="Search"
-                               aria-describedby="submitSearch">
-                            <button class="btn btn-primary text-uppercase" type="submit" id="submitSearch">Search</button>
-                        </div>
-
-                        <partial name="~/Features/QAndA/Search/_FiltersMobile.cshtml" model="Model" />
+                               aria-describedby="submitSearch" search-field>
+                        <button class="btn btn-primary text-uppercase" type="submit" id="submitSearch">Search</button>
                     </div>
 
-                    <partial name="~/Features/QAndA/Search/_Results.cshtml" model="Model" />
-                </section>
-            </fieldset>
-        </form>
-    </div>
+                    <partial name="~/Features/QAndA/Search/_FiltersMobile.cshtml" model="Model" />
+                </div>
+
+                <partial name="~/Features/QAndA/Search/_Results.cshtml" model="Model" />
+            </section>
+        </fieldset>
+    </form>
+</div>

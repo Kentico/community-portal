@@ -4,7 +4,7 @@ using Kentico.Community.Portal.Web.Components.PageBuilder.Sections.SingleColumn;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using XperienceCommunity.KenticoComponentIcons;
+using Kentico.Xperience.ComponentIcons;
 
 [assembly: RegisterSection(
     identifier: SingleColumnSection.IDENTIFIER,
@@ -12,7 +12,7 @@ using XperienceCommunity.KenticoComponentIcons;
     name: "1 column",
     propertiesType: typeof(SingleColumnSectionProperties),
     Description = "Single-column section with one full-width zone.",
-    IconClass = KenticoIcons.SQUARE)]
+    IconClass = KenticoIcons.RECTANGLE_PARAGRAPH)]
 
 namespace Kentico.Community.Portal.Web.Components.PageBuilder.Sections.SingleColumn;
 

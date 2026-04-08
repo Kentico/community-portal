@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Campaign reference</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="CampaignReferenceID" columntype="integer" enabled="true" guid="dab2f237-5137-4be5-83b3-a4a1c63597df" isPK="true" system="true" />
+      <field column="CampaignReferenceGUID" columnprecision="0" columntype="guid" enabled="true" guid="db927baf-5b7d-4977-8e4f-05df35912e60" system="true" />
+      <field column="CampaignReferenceCampaignID" columnprecision="0" columntype="integer" enabled="true" guid="178a8797-bb66-4063-a22a-945e3f0cfb79" refobjtype="om.campaign" reftype="Required" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field allowempty="true" column="CampaignReferenceCustomerJourneyID" columnprecision="0" columntype="integer" enabled="true" guid="61da353f-9868-4ccd-a2fa-0bc239cd2028" refobjtype="om.customerjourney" reftype="Binding" system="true" />
+      <field allowempty="true" column="CampaignReferenceFormID" columnprecision="0" columntype="integer" enabled="true" guid="e09418f4-44f4-4e68-9a21-d6610172e4c5" refobjtype="cms.form" reftype="Binding" system="true" />
+      <field allowempty="true" column="CampaignReferenceAutomationProcessID" columnprecision="0" columntype="integer" enabled="true" guid="becb155c-fcca-49eb-9144-eb04caf5f089" refobjtype="ma.automationprocess" reftype="Binding" system="true" />
+      <field allowempty="true" column="CampaignReferenceContentItemID" columnprecision="0" columntype="integer" enabled="true" guid="36950415-a9d1-4b49-a817-60e87e8be9ef" refobjtype="cms.contentitem" reftype="Binding" system="true" />
+      <field allowempty="true" column="CampaignReferenceWebPageItemID" columnprecision="0" columntype="integer" enabled="true" guid="5e741d84-1abc-43df-a975-63e385081791" refobjtype="cms.webpageitem" reftype="Binding" system="true" />
+      <field allowempty="true" column="CampaignReferenceEmailID" columnprecision="0" columntype="integer" enabled="true" guid="c3e2fd56-0b76-46be-acc9-cfcf6f2df0a9" refobjtype="emaillibrary.emailconfiguration" reftype="Binding" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>144c24ee-425d-4d11-a5a4-d7762dd69724</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.CampaignReference</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Campaigns</CodeName>
+    <GUID>2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>OM_CampaignReference</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

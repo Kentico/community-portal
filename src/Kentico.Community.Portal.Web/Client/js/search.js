@@ -108,4 +108,24 @@ export function initSearch({ formElemID }) {
       copyValueAndDisableField(e.target, selector);
     });
   }
+
+  /**
+   * Reset page to 1 when filter fields change
+   * Prevents users from staying on page 2+ with no results after changing filters
+   */
+  const pageInput = formEl.querySelector('input[name*="Page"]');
+  if (pageInput instanceof HTMLInputElement) {
+    const filterElements = formEl.querySelectorAll(
+      "[facet-field], [select-field], [search-field]",
+    );
+
+    filterElements.forEach((el) => {
+      el.addEventListener("change", () => {
+        pageInput.value = "1";
+      });
+      el.addEventListener("click", () => {
+        pageInput.value = "1";
+      });
+    });
+  }
 }

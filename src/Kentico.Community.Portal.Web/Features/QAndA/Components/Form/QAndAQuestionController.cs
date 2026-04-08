@@ -1,11 +1,15 @@
 ﻿using CMS.Base;
 using Htmx;
+using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
+using Kentico.Community.Portal.Web.Features.QAndA.Search;
 using Kentico.Community.Portal.Web.Features.QAndA.Notifications;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Content.Web.Mvc;
 using Kentico.Xperience.Admin.Base;
+using Kentico.Xperience.Lucene;
+using Kentico.Xperience.Lucene.Core.Indexing;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -25,7 +29,9 @@ public class QAndAQuestionController(
     ILogger<QAndAQuestionController> logger,
     IQAndAPermissionService permissionService,
     IReadOnlyModeProvider readOnlyProvider,
-    QAndANotificationSettingsManager notificationsManager) : PortalHandlerController<QAndAQuestionController>(logger)
+    QAndANotificationSettingsManager notificationsManager,
+    IChannelDataProvider channelProvider,
+    ILuceneTaskLogger luceneTaskLogger) : PortalHandlerController<QAndAQuestionController>(logger)
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly IMediator mediator = mediator;
@@ -35,6 +41,8 @@ public class QAndAQuestionController(
     private readonly IQAndAPermissionService permissionService = permissionService;
     private readonly QAndANotificationSettingsManager notificationSettingsManager = notificationsManager;
     private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
+    private readonly IChannelDataProvider channelProvider = channelProvider;
+    private readonly ILuceneTaskLogger luceneTaskLogger = luceneTaskLogger;
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -278,13 +286,23 @@ public class QAndAQuestionController(
         if (currentReactionData.CurrentMemberHasReacted)
         {
             // Delete the reaction (unreact)
-            _ = await mediator.Send(new QAndAQuestionReactionDeleteCommand(member.Id, webPageItemId, DiscussionReactionTypes.Upvote));
+            var deleteResult = await mediator.Send(new QAndAQuestionReactionDeleteCommand(member.Id, webPageItemId, DiscussionReactionTypes.Upvote));
+            if (deleteResult.IsFailure)
+            {
+                return LogAndReturnError("QUESTION_REACTION_UPDATE")(deleteResult.Error);
+            }
         }
         else
         {
             // Create the reaction (upvote)
-            _ = await mediator.Send(new QAndAQuestionReactionCreateCommand(member.Id, webPageItemId, DiscussionReactionTypes.Upvote));
+            var createResult = await mediator.Send(new QAndAQuestionReactionCreateCommand(member.Id, webPageItemId, DiscussionReactionTypes.Upvote));
+            if (createResult.IsFailure)
+            {
+                return LogAndReturnError("QUESTION_REACTION_UPDATE")(createResult.Error);
+            }
         }
+
+        await QueueQuestionSearchIndexUpdate(parentQuestionPage);
 
         var permissions = await permissionService.GetPermissions(member, parentQuestionPage);
 
@@ -294,5 +312,34 @@ public class QAndAQuestionController(
         var viewModel = new QAndAQuestionReactionViewModel(parentQuestionPage.SystemFields.WebPageItemGUID, updatedReactionData, permissions);
 
         return PartialView("~/Features/QAndA/_QAndAQuestionReaction.cshtml", viewModel);
+    }
+
+    private async Task QueueQuestionSearchIndexUpdate(QAndAQuestionPage questionPage)
+    {
+        string? channelName = await channelProvider.GetChannelNameByWebsiteChannelID(questionPage.SystemFields.WebPageItemWebsiteChannelId);
+        if (channelName is null)
+        {
+            Logger.LogWarning(new EventId(0, "INVALID_CHANNEL"), "Could not retrieve channel name for website channel {WebsiteChannelID} for question {QuestionGuid}. Skipping search index update.", questionPage.SystemFields.WebPageItemWebsiteChannelId, questionPage.SystemFields.WebPageItemGUID);
+
+            return;
+        }
+
+        var pageItem = new IndexEventWebPageItemModel
+        {
+            ItemID = questionPage.SystemFields.WebPageItemID,
+            ItemGuid = questionPage.SystemFields.WebPageItemGUID,
+            LanguageName = PortalWebSiteChannel.DEFAULT_LANGUAGE,
+            ContentTypeName = QAndAQuestionPage.CONTENT_TYPE_NAME,
+            Name = questionPage.SystemFields.WebPageItemName,
+            IsSecured = questionPage.SystemFields.ContentItemIsSecured,
+            ContentTypeID = questionPage.SystemFields.ContentItemContentTypeID,
+            ContentLanguageID = questionPage.SystemFields.ContentItemCommonDataContentLanguageID,
+            WebsiteChannelName = channelName,
+            WebPageItemTreePath = questionPage.SystemFields.WebPageItemTreePath,
+            ParentID = questionPage.SystemFields.WebPageItemParentID,
+            Order = questionPage.SystemFields.WebPageItemOrder,
+        };
+
+        luceneTaskLogger.LogIndexTask(new LuceneQueueItem(pageItem, LuceneTaskType.UPDATE, QAndASearchIndexModel.IndexName));
     }
 }

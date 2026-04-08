@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>OM.Campaign</CodeName>
+    <GUID>3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f</GUID>
+    <ObjectType>cms.class</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="CampaignID" guid="1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d" enabled="" />
+      <field column="CampaignGUID" guid="4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a" enabled="" order="1" />
+      <field column="CampaignLastModified" guid="5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b" enabled="" order="2" />
+      <field column="CampaignDisplayName" enabled="true" guid="0e7b9a4d-5c2f-4b1a-8d3e-1a6f2c9b7d40" visible="true" order="3">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>
+            <![CDATA[{$digitalmarketing.campaigns.edit.displayname.caption$}]]>
+          </fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="CampaignName" enabled="true" guid="2f8d4b31-0c3c-4a62-9e9c-7c3b5d2e1a77" visible="true" order="4">
+        <settings>
+          <controlname>Kentico.Administration.CodeName</controlname>
+          <HasAutomaticCodeNameGenerationOption>False</HasAutomaticCodeNameGenerationOption>
+          <IsCollapsed>True</IsCollapsed>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Code name</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="CampaignBrief" enabled="true" guid="6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>100</MaxRowsNumber>
+          <MinRowsNumber>5</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$digitalmarketing.campaigns.edit.brief.caption$}</fieldcaption>
+          <fielddescription>{$digitalmarketing.campaigns.edit.brief.tooltip$}</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>Edit campaign</FormDisplayName>
+  <FormGUID>b65accba-8bde-48fb-a06e-0ca927b8e257</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>edit</FormName>
+</cms.alternativeform>

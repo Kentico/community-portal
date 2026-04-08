@@ -7,7 +7,7 @@ using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Kentico.Xperience.Admin.Base.Forms;
 using Microsoft.AspNetCore.Mvc;
-using XperienceCommunity.KenticoComponentIcons;
+using Kentico.Xperience.ComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: FAQWidget.IDENTIFIER,

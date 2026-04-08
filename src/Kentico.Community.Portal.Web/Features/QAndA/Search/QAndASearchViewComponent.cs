@@ -52,6 +52,8 @@ public class QAndASearchViewModel : IPagedViewModel
     public int DiscussionStatesSelected { get; }
     public int TotalAppliedFilters { get; }
     public int TotalPages { get; set; }
+    public SearchResultStates SearchResultState { get; }
+
     [HiddenInput]
     public int Page { get; set; }
 
@@ -88,6 +90,7 @@ public class QAndASearchViewModel : IPagedViewModel
         SortBy = request.SortBy;
         Query = request.SearchText;
         TotalPages = result.TotalPages;
+        SearchResultState = result.State;
 
         DXTopics = [.. BuildGroups(taxonomies.DXTopicsHierarchy, result, request)];
         DXTopicsSelectedCount = DXTopics.TryFirst().Map(t => t.Facets.Count).GetValueOrDefault();
@@ -190,6 +193,12 @@ public class QAndADiscussionViewModel
     public bool HasAcceptedResponse { get; }
     public QAndAAuthorViewModel Author { get; } = new();
     public IReadOnlyList<string> Tags { get; }
+    public int QuestionUpvotes { get; }
+    public int AnswerUpvotes { get; }
+    public bool HasQuestionUpvotes => QuestionUpvotes > 0;
+    public bool HasAnswerUpvotes => AnswerUpvotes > 0;
+    public bool HasAnyUpvotes => HasQuestionUpvotes || HasAnswerUpvotes;
+    public string DiscussionUpvoteSummary => BuildDiscussionUpvoteSummary();
 
     public QAndADiscussionViewModel(QAndASearchIndexModel result)
     {
@@ -203,6 +212,27 @@ public class QAndADiscussionViewModel
         LinkPath = result.Url;
         ID = result.ID;
         Tags = result.DXTopics;
+        QuestionUpvotes = result.QuestionUpvoteCount;
+        AnswerUpvotes = result.AnswerUpvoteCount;
+    }
+
+    private string BuildDiscussionUpvoteSummary()
+    {
+        var upvoteParts = new List<string>(2);
+
+        if (HasQuestionUpvotes)
+        {
+            string questionUpvoteText = QuestionUpvotes == 1 ? "discussion upvote" : "discussion upvotes";
+            upvoteParts.Add($"{QuestionUpvotes} {questionUpvoteText}");
+        }
+
+        if (HasAnswerUpvotes)
+        {
+            string answerUpvoteText = AnswerUpvotes == 1 ? "response upvote" : "response upvotes";
+            upvoteParts.Add($"{AnswerUpvotes} {answerUpvoteText}");
+        }
+
+        return string.Join(" and ", upvoteParts);
     }
 }
 

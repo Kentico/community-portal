@@ -8,5 +8,5 @@ public partial class BlogPostPage
     /// Linked items query depth to retrieve a fully hydrated object graph
     /// </summary>
     /// <value></value>
-    public const int FullQueryDepth = 3;
+    public const int FullQueryDepth = 2;
 }

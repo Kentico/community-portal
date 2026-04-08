@@ -74,7 +74,7 @@ public class QAndAQuestionCreateCommandHandler(
         var webPageParameters = new CreateWebPageParameters(displayName, PortalWebSiteChannel.DEFAULT_LANGUAGE, contentItemParameters)
         {
             ParentWebPageItemID = request.QuestionParent.WebPageItemID,
-            RequiresAuthentication = false,
+            AccessSettings = ContentAccessSettings.Public(),
             VersionStatus = VersionStatus.Published
         };
 

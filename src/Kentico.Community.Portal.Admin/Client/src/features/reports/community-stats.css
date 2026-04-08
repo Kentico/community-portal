@@ -1,0 +1,56 @@
+.community-stats-dashboard {
+  --community-surface: var(--color-paper-background);
+  --community-border: var(--color-border-low-emphasis);
+  --community-text: var(--color-text-default-on-light);
+  color: var(--community-text);
+  font-family: var(--font-family-default);
+  background: var(--color-background-default);
+}
+
+.community-stats-dashboard * {
+  box-sizing: border-box;
+}
+
+.community-stats-dashboard .community-stats-surface {
+  background: var(--community-surface);
+  border-color: var(--community-border);
+}
+
+.community-stats-dashboard .community-stats-hero-panel {
+  background: var(--community-surface);
+}
+
+.community-stats-dashboard .community-stats-eyebrow {
+  width: fit-content;
+  border: 1px solid var(--community-border);
+  background: color-mix(in srgb, var(--community-surface) 72%, transparent);
+  color: var(--community-text);
+  font-family: var(--font-family-heading);
+}
+
+.community-stats-dashboard .community-stats-chart {
+  width: 100%;
+}
+
+.community-stats-dashboard button:disabled {
+  cursor: progress;
+  opacity: 0.72;
+}
+
+.community-stats-dashboard .community-stats-chart-lg {
+  min-height: 420px;
+}
+
+.community-stats-dashboard .community-stats-chart-md {
+  min-height: 300px;
+}
+
+@media (max-width: 768px) {
+  .community-stats-dashboard .community-stats-chart-lg {
+    min-height: 320px;
+  }
+
+  .community-stats-dashboard .community-stats-chart-md {
+    min-height: 260px;
+  }
+}

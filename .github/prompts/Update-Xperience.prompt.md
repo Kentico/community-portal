@@ -21,22 +21,19 @@ If any precondition fails: output a clear message and stop.
 
 ## Determine Current and Latest Xperience Version
 
-1. Read `README.md` and extract the project's Xperience by Kentico version
-2. Store captured semantic version as `currentVersion`.
-3. Query NuGet for latest published stable version of `Kentico.Xperience.Core`:
-   PowerShell example:
-   ```pwsh
-   $latestVersion = (Find-Package -Name Kentico.Xperience.Core -Source https://api.nuget.org/v3/index.json | Sort-Object Version -Descending | Select-Object -First 1 -ExpandProperty Version)
-   ```
-4. Compare `latestVersion` > `currentVersion` (semantic comparison). If NOT
-   greater: report "No new Xperience version available" and STOP.
+1. Run `dotnet tool restore` at the repository root
+2. Run `dotnet tool run dotnet-outdated -inc Kentico.Xperience.WebApp` and
+   analyze the output to identify if Xperience by Kentico packages are outdated
+3. If there are no out of date packages: report "No new Xperience version
+   available" and STOP.
 
 ## Update NuGet Packages
 
 1. Open `Directory.Packages.props`.
 2. Identify all `<PackageVersion Include="Kentico.Xperience.*" Version="X" />`
-   entries where `Version` equals `currentVersion`.
-3. Replace their `Version` with `latestVersion`.
+   entries where `Version` equals the current version.
+3. Replace their `Version` with the latest version reported by
+   `dotnet-outdated`.
 4. If a referenced package is a `-preview` or `-prerelease` version and the
    version number matches the other `Kentico.Xperience.*` packages, try to
    update it to a new `-preview` or `-prerelease` version as well.
@@ -62,6 +59,8 @@ If any precondition fails: output a clear message and stop.
    consistency for Admin client).
 5. After installation, run `npm: audit fix (Admin)` (attempts to resolve package
    vulnerabilities) and do not block workflow unless critical
+6. Also look for related Xperience packages in the `mcp.json` file and ensure
+   their version is updated to match
 
 ## Build & Breaking Change Detection
 
@@ -86,13 +85,16 @@ If any precondition fails: output a clear message and stop.
 1. Replace existing version line with new version:
    `This project is using Xperience by Kentico vNEW_VERSION (changelog: https://docs.kentico.com/documentation/changelog#ANCHOR).`
 2. Determine `ANCHOR`:
-   - Visit `https://docs.kentico.com/documentation/changelog` and find anchor
-     for the release/hotfix containing `latestVersion`.
-   - Use pattern `#hotfix-<month-lowercase>-<day>-<year>` or
-     `#release-<month-lowercase>-<day>-<year>` depending on listing. Insert full
-     URL.
-3. If anchor not confidently derivable, temporarily link to base changelog URL
-   and note TODO; still proceed with commit (user can adjust later).
+   - Review the RSS feed for product updates
+     <https://docs.kentico.com/feeds/xbyk-releases.xml>.
+   - Find the RSS item for the hotfix or Refresh applied to the project
+   - Replace the README link with the full URL for this RSS item.
+
+## Database backup
+
+1. Run ./scripts/Backup-Database.ps1 script to generate a database backup
+2. The script creates a new .zip in ./database
+3. Delete the old .zip and keep the new one
 
 ## Final Validation
 
@@ -152,6 +154,7 @@ RunTask(".NET: build (Solution)")
 if BuildFailed(): Stop("Breaking changes detected")
 RunTask("Xperience: Application Update")
 UpdateReadmeVersion(latestVersion)
+BackupDatabase()
 StageAndCommit(latestVersion)
 ReportSummary()
 ```
@@ -176,9 +179,8 @@ update Xperience by Kentico packages in the repository. tasks:
 - build_solution: description: Use VS Code tasks to perform a solution build.
 - check_breaking_changes: description: Check for breaking changes after the
   updates.
-- run_update_script: description: Use VS Code task to run
-  `Update-Xperience.ps1 -AgentMode` (non-interactive update applying
-  `--skip-confirmation`).
+- run_update_script: description: Run `Update-Xperience.ps1 -AgentMode`
+  (non-interactive update applying `--skip-confirmation`).
 - update_readme: description: Update the Xperience version and link in the
   README to match the package updates.
 - stage_and_commit: description: Stage the updates in Git and create a commit

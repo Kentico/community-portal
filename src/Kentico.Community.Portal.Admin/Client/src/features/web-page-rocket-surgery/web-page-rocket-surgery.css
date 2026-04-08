@@ -1,0 +1,137 @@
+.rocket-surgery {
+  color: var(--color-text-default-on-light);
+  background: var(--color-background-default);
+  padding: var(--spacing-m, 1rem) var(--spacing-l, 1.5rem) var(--spacing-xl, 2rem);
+  max-width: 900px;
+}
+
+.rocket-surgery__description {
+  font-size: var(--font-size-s);
+  color: var(--color-text-low-emphasis);
+  margin-bottom: var(--spacing-l, 1.5rem);
+}
+
+.rocket-surgery__warning {
+  padding: var(--spacing-s) var(--spacing-m);
+  background: var(--color-background-warning, #fffbea);
+  border: 1px solid var(--color-border-warning, #f5c518);
+  border-radius: var(--radius-m, 4px);
+  font-size: var(--font-size-s);
+  margin-bottom: var(--spacing-l, 1.5rem);
+}
+
+.rocket-surgery__section {
+  background: var(--color-paper-background);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-l, 8px);
+  padding: var(--spacing-l, 1.5rem);
+  margin-bottom: var(--spacing-l, 1.5rem);
+}
+
+.rocket-surgery__section-description {
+  font-size: var(--font-size-s);
+  color: var(--color-text-low-emphasis);
+  margin-bottom: var(--spacing-m, 1rem);
+}
+
+.rocket-surgery__section-note {
+  font-size: var(--font-size-s);
+  color: var(--color-text-low-emphasis);
+  padding: var(--spacing-xs) var(--spacing-m);
+  background: var(--color-background-highlighted);
+  border-left: 3px solid var(--color-border-default);
+  border-radius: var(--radius-s, 2px);
+  margin-bottom: var(--spacing-m, 1rem);
+}
+
+.rocket-surgery__section-description code,
+.rocket-surgery__section-label code {
+  font-family: monospace;
+  font-size: 0.9em;
+  background: var(--color-background-highlighted);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.rocket-surgery__section-label {
+  display: block;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-hint);
+  margin-bottom: var(--spacing-xs, 0.5rem);
+}
+
+.rocket-surgery__json-viewer {
+  margin-bottom: var(--spacing-m, 1rem);
+}
+
+.rocket-surgery__code-block {
+  background: var(--color-background-highlighted);
+  border: 1px solid var(--color-border-low-emphasis);
+  border-radius: var(--radius-m, 4px);
+  padding: var(--spacing-m, 1rem);
+  font-family: monospace;
+  font-size: var(--font-size-xs);
+  line-height: 1.6;
+  overflow: auto;
+  max-height: 300px;
+  color: var(--color-text-default-on-light);
+  white-space: pre;
+  word-break: break-all;
+}
+
+.rocket-surgery__empty-state {
+  font-size: var(--font-size-s);
+  color: var(--color-text-hint);
+  font-style: italic;
+  padding: var(--spacing-s);
+}
+
+.rocket-surgery__edit-area {
+  margin-top: var(--spacing-m, 1rem);
+}
+
+.rocket-surgery__textarea {
+  width: 100%;
+  font-family: monospace;
+  font-size: var(--font-size-xs);
+  line-height: 1.6;
+  padding: var(--spacing-s, 0.5rem) var(--spacing-m, 1rem);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-m, 4px);
+  background: var(--color-background-default);
+  color: var(--color-text-default-on-light);
+  resize: vertical;
+  box-sizing: border-box;
+  margin-bottom: var(--spacing-s, 0.5rem);
+}
+
+.rocket-surgery__textarea:focus {
+  outline: none;
+  border-color: var(--color-focus, var(--color-primary));
+  box-shadow: 0 0 0 2px var(--color-focus-shadow, rgba(0, 115, 182, 0.2));
+}
+
+.rocket-surgery__textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--color-background-highlighted);
+}
+
+.rocket-surgery__textarea--invalid {
+  border-color: var(--color-border-error, #d93025);
+}
+
+.rocket-surgery__validation-error {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-error, #d93025);
+  margin-bottom: var(--spacing-s, 0.5rem);
+}
+
+.rocket-surgery__actions {
+  display: flex;
+  gap: var(--spacing-s, 0.5rem);
+  margin-top: var(--spacing-s, 0.5rem);
+}

@@ -80,6 +80,7 @@ ClientBin/
 *.[Pp]ublish.xml
 # *.pfx
 *.publishsettings
+*.lscache
 
 # SQL Server files
 App_Data/*.mdf
@@ -129,6 +130,7 @@ DeploymentPackage.zip
 
 !/src/Kentico.Community.Portal.Web/App_Data/CIRepository
 
+/src/Kentico.Community.Portal.Web/$LuceneLocks/
 /src/Kentico.Community.Portal.Web/App_Data/LuceneSearch/*
 /src/Kentico.Community.Portal.Web/App_Data/AzureCache/*
 /src/Kentico.Community.Portal.Web/App_Data/AzureTemp/*
@@ -139,7 +141,3 @@ DeploymentPackage.zip
 
 # Configuration
 /scripts/Utilities/settings.local.json
-
-# MCP server definitions
-claude_desktop_config.json
-mcp_config.json

@@ -46,7 +46,7 @@ public class ContentTypeListExtender(ILogger<ContentTypeListExtender> logger) : 
         {
             configs
                 .TryFirst(c => string.Equals(c.Name, nameof(ContentTypeInfo.ClassContentTypeType), StringComparison.OrdinalIgnoreCase))
-                .Execute(c =>
+                .Tap(c =>
                 {
                     int index = configs.IndexOf(c);
                     index = Math.Min(index + 1, configs.Count - 1);

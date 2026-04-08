@@ -5,7 +5,7 @@ using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using XperienceCommunity.KenticoComponentIcons;
+using Kentico.Xperience.ComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: LicensesWidget.IDENTIFIER,

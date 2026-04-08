@@ -1,3 +1,4 @@
+using CMS.ContentEngine;
 using CMS.DataEngine;
 using CMS.Membership;
 using CMS.Websites.Internal;
@@ -50,7 +51,7 @@ public class QAndAMonthFolderQueryHandler(
         int monthFolderID = await webPageManager.CreateFolder(new CreateFolderParameters(monthName, PortalWebSiteChannel.DEFAULT_LANGUAGE)
         {
             ParentWebPageItemID = yearFolder.WebPageItemID,
-            RequiresAuthentication = false
+            AccessSettings = ContentAccessSettings.Public()
         }, CancellationToken.None);
 
         monthFolders = await webPageFolderRetriever.Retrieve(
@@ -80,7 +81,7 @@ public class QAndAMonthFolderQueryHandler(
         int yearFolderID = await webPageManager.CreateFolder(new CreateFolderParameters(yearName, PortalWebSiteChannel.DEFAULT_LANGUAGE)
         {
             ParentWebPageItemID = request.ParentPage.SystemFields.WebPageItemID,
-            RequiresAuthentication = false
+            AccessSettings = ContentAccessSettings.Public(),
         }, CancellationToken.None);
 
         yearFolders = await webPageFolderRetriever.Retrieve(

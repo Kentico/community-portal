@@ -21,6 +21,8 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Website URL</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
+          <includeintranslation>False</includeintranslation>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
@@ -39,6 +41,7 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Description</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
           <includeintranslation>True</includeintranslation>
         </properties>
         <settings>
@@ -50,6 +53,12 @@
             <AdditionalActionIdentifier>Kentico.Administration.AiraTextRefinement</AdditionalActionIdentifier>
             <AdditionalActionValues />
           </AdditionalActionConfiguration>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextGeneration</AdditionalActionIdentifier>
+            <AdditionalActionValues>
+              <FieldDescription />
+            </AdditionalActionValues>
+          </AdditionalActionConfiguration>
         </additionalactionsdata>
       </field>
       <field column="CommunityGroupContentAddressCity" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="964b2173-823c-4486-bf9a-96ca806a0c78" visible="true">
@@ -57,6 +66,8 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Address City</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
+          <includeintranslation>False</includeintranslation>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
@@ -67,6 +78,8 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>State or Province</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
+          <includeintranslation>False</includeintranslation>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
@@ -86,6 +99,8 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Address Country</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
+          <includeintranslation>False</includeintranslation>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>

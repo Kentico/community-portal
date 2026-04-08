@@ -13,7 +13,13 @@
       <field column="MemberPassword" guid="61911700-cd6c-4d73-943a-985a57342b4f" enabled="" order="2" />
       <field column="MemberIsExternal" guid="5cf88feb-d217-4a33-8039-63b46bf2c672" enabled="" order="3" />
       <field column="MemberSecurityStamp" guid="d127bfec-d965-4888-8836-0b22ef2e1010" enabled="" order="4" />
-      <field column="MemberName" enabled="true" guid="f8b13f5b-c254-4f3a-8b8c-df10f5619300" visible="true">
+      <category name="General" order="5">
+        <properties>
+          <caption>{$base.members.edit.general.category$}</caption>
+          <visible>true</visible>
+        </properties>
+      </category>
+      <field column="MemberName" enabled="true" guid="f8b13f5b-c254-4f3a-8b8c-df10f5619300" visible="true" order="6">
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
@@ -23,7 +29,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberEmail" enabled="true" guid="3e50549b-a12d-4c19-8df7-380efa3a8d40" visible="true" order="6">
+      <field column="MemberEmail" enabled="true" guid="3e50549b-a12d-4c19-8df7-380efa3a8d40" visible="true" order="7">
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
@@ -47,7 +53,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberEnabled" enabled="true" guid="1454d95c-81bb-4956-bda2-75edda984071" visible="true" order="7">
+      <field column="MemberEnabled" enabled="true" guid="1454d95c-81bb-4956-bda2-75edda984071" visible="true" order="8">
         <settings>
           <controlname>Kentico.Administration.Checkbox</controlname>
         </settings>
@@ -57,8 +63,26 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberGuid" guid="926897c7-71e2-47b3-b3b7-b456596e7da3" enabled="" order="8" />
-      <field column="MemberFirstName" enabled="true" guid="077b5d08-4a4c-4fc0-b665-ed82507046bd" visible="true">
+      <field column="MemberGuid" guid="926897c7-71e2-47b3-b3b7-b456596e7da3" enabled="" order="9" />
+      <category name="Membership_roles" order="10">
+        <properties>
+          <caption>{$base.members.edit.roles.category$}</caption>
+          <visible>true</visible>
+        </properties>
+      </category>
+      <field allowempty="true" column="MemberRole" columnprecision="0" columntype="objectids" dummy="altform" enabled="true" guid="fd908b23-e075-4bfb-acaa-b3f9025a7245" system="true" visible="true" order="11">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.members.edit.roles$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.ObjectIdSelector</controlname>
+          <MaximumItems>0</MaximumItems>
+          <ObjectType>cms.memberrole</ObjectType>
+        </settings>
+      </field>
+      <field column="MemberFirstName" enabled="true" guid="077b5d08-4a4c-4fc0-b665-ed82507046bd" visible="true" order="12">
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
@@ -68,7 +92,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberLastName" enabled="true" guid="22a169e9-34c1-4d93-a314-b55913e184e6" visible="true">
+      <field column="MemberLastName" enabled="true" guid="22a169e9-34c1-4d93-a314-b55913e184e6" visible="true" order="13">
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
@@ -78,7 +102,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberLinkedInIdentifier" enabled="true" guid="440be370-f12c-47c0-9841-e30cb1d9d4ff" visible="true">
+      <field column="MemberLinkedInIdentifier" enabled="true" guid="440be370-f12c-47c0-9841-e30cb1d9d4ff" visible="true" order="14">
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
@@ -91,7 +115,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberAvatarFileExtension" guid="295972d6-2114-46d3-9703-066154c1fb17" visible="true" enabled="">
+      <field column="MemberAvatarFileExtension" guid="295972d6-2114-46d3-9703-066154c1fb17" visible="true" enabled="" order="15">
         <settings>
           <controlname>Kentico.Administration.TextWithLabel</controlname>
         </settings>
@@ -101,7 +125,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberAdministratorNotes" enabled="true" guid="652d625f-c20e-46bd-9f8c-838d3dfaf01c" visible="true">
+      <field column="MemberAdministratorNotes" enabled="true" guid="652d625f-c20e-46bd-9f8c-838d3dfaf01c" visible="true" order="16">
         <settings>
           <controlname>Kentico.Administration.TextArea</controlname>
           <CopyButtonVisible>False</CopyButtonVisible>
@@ -117,7 +141,7 @@
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberModerationStatus" enabled="true" guid="5fe75ef9-0e15-4d2d-a4ab-1e186d1861c6" visible="true">
+      <field column="MemberModerationStatus" enabled="true" guid="5fe75ef9-0e15-4d2d-a4ab-1e186d1861c6" visible="true" order="17">
         <settings>
           <controlname>Kentico.Administration.DropDownSelector</controlname>
           <Options>
@@ -139,7 +163,7 @@ Archived
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberProgramStatus" enabled="true" guid="ab44a32d-7a34-4c76-966c-26897b7596c4" visible="true">
+      <field column="MemberProgramStatus" enabled="true" guid="ab44a32d-7a34-4c76-966c-26897b7596c4" visible="true" order="18">
         <settings>
           <controlname>Kentico.Administration.DropDownSelector</controlname>
           <Options>
@@ -158,7 +182,7 @@ CommunityLeader;Community Leader
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberEmployerLink" enabled="true" guid="b832e3a2-04c2-40c8-8c29-ed4f5bd736ee" visible="true">
+      <field column="MemberEmployerLink" enabled="true" guid="b832e3a2-04c2-40c8-8c29-ed4f5bd736ee" visible="true" order="19">
         <settings>
           <controlname>Kentico.Community.Portal.Admin.FormComponent.Link</controlname>
         </settings>
@@ -168,7 +192,7 @@ CommunityLeader;Community Leader
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberJobTitle" enabled="true" guid="55ab4c14-3279-4126-9066-4b8c270176d9" visible="true">
+      <field column="MemberJobTitle" enabled="true" guid="55ab4c14-3279-4126-9066-4b8c270176d9" visible="true" order="20">
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
@@ -178,7 +202,7 @@ CommunityLeader;Community Leader
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberTimeZone" enabled="true" guid="0bb26afb-8926-485a-8043-804d98220d72" visible="true">
+      <field column="MemberTimeZone" enabled="true" guid="0bb26afb-8926-485a-8043-804d98220d72" visible="true" order="21">
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
@@ -188,7 +212,7 @@ CommunityLeader;Community Leader
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberCountry" enabled="true" guid="6a6c1d8a-04c9-4827-b1b2-e31e2ba0d24d" visible="true">
+      <field column="MemberCountry" enabled="true" guid="6a6c1d8a-04c9-4827-b1b2-e31e2ba0d24d" visible="true" order="22">
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
@@ -198,7 +222,7 @@ CommunityLeader;Community Leader
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberBio" enabled="true" guid="0da3128f-f405-4dee-976a-1619ff66e597" visible="true">
+      <field column="MemberBio" enabled="true" guid="0da3128f-f405-4dee-976a-1619ff66e597" visible="true" order="23">
         <settings>
           <controlname>Kentico.Administration.TextArea</controlname>
           <CopyButtonVisible>False</CopyButtonVisible>

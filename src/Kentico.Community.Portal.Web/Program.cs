@@ -13,11 +13,11 @@ builder.Services
     // Customizes options configured via SaaS, so register this first
     .AddAppAdminAuthentication(config)
     .AddAppXperienceSaaS(config, env)
-    .AddAppXperience(config, env)
+    .AddAppXperience(config)
     .AddAppXperienceMembership()
     .AddAppLuceneSearch(config)
     .AddAppMvc(env)
-    .AddApp(config, env);
+    .AddApp(config);
 
 var app = builder.Build();
 
@@ -46,9 +46,9 @@ app
     .UseStatusCodePagesWithReExecute("/error/{0}")
     .IfNotDevelopment(env, b => b.UseHsts())
     .UseAuthorization()
-    .IfDevelopment(env, b => app.MapMcp("/mcp"))
     .UseKenticoRoutes(app)
-    .UseAppRoutes()
+    .UseAppRoutes(config)
+    .UseAppMcp(app, config)
     .IfDevelopment(env, b => b.UseViteDevelopmentServer(true));
 
 app.Run();

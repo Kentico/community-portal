@@ -73,13 +73,15 @@ public class WebPageListingPage(IPageLinkGenerator pageLinkGenerator, IConversio
                 modelRetriever: WebPageLinkModelRetriever,
                 caption: "Name",
                 searchable: true,
-                minWidth: 25)
+                minWidth: 25,
+                maxWidth: 50)
             .AddColumn(nameof(DataClassInfo.ClassDisplayName),
                 "Content Type",
-                maxWidth: 5)
+                maxWidth: 25)
             .AddColumn(nameof(ContentLanguageInfo.ContentLanguageDisplayName),
                 "Language",
-                maxWidth: 5)
+                minWidth: 10,
+                maxWidth: 25)
             .AddColumn(nameof(ChannelInfo.ChannelDisplayName),
                 "Channel",
                 maxWidth: 10)

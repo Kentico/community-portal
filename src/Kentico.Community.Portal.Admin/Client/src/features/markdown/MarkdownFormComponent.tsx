@@ -236,12 +236,12 @@ function debounce(
   func: (...args: unknown[]) => void,
   delay: number,
 ): (...args: unknown[]) => void {
-  let timeoutId: NodeJS.Timeout | undefined;
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
   return (...args) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
-      func.apply(this, args);
+      func(...args);
     }, delay);
   };
 }

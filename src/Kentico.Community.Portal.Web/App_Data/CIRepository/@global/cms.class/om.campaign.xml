@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Campaigns - Campaign</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="CampaignID" columntype="integer" enabled="true" guid="1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d" isPK="true" system="true" />
+      <field column="CampaignName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="2f8d4b31-0c3c-4a62-9e9c-7c3b5d2e1a77" system="true" />
+      <field column="CampaignDisplayName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="0e7b9a4d-5c2f-4b1a-8d3e-1a6f2c9b7d40" system="true" />
+      <field column="CampaignGUID" columnprecision="0" columntype="guid" enabled="true" guid="4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a" system="true" />
+      <field column="CampaignLastModified" columnprecision="7" columntype="datetime" enabled="true" guid="5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b" system="true" />
+      <field allowempty="true" column="CampaignBrief" columnprecision="0" columntype="longtext" enabled="true" guid="6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.Campaign</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Campaigns</CodeName>
+    <GUID>2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>OM_Campaign</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

@@ -130,8 +130,10 @@ export const DataExportComponent = (props: DataExportComponentProps) => {
 function getDashCaseDateSuffix() {
   const date = new Date();
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-  const day = String(date.getDate()).padStart(2, '0');
+  const monthNumber = date.getMonth() + 1;
+  const dayNumber = date.getDate();
+  const month = monthNumber < 10 ? `0${monthNumber}` : `${monthNumber}`;
+  const day = dayNumber < 10 ? `0${dayNumber}` : `${dayNumber}`;
 
   return `${year}-${month}-${day}`;
 }

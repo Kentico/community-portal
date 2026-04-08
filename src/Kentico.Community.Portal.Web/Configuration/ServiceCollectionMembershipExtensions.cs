@@ -1,4 +1,5 @@
 using Kentico.Community.Portal.Web.Features.Members;
+using Kentico.Community.Portal.Web.Features.Testing;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Membership;
 using Kentico.OnlineMarketing.Web.Mvc;
@@ -14,7 +15,7 @@ public static class ServiceCollectionMembershipExtensions
             .Configure<SecurityStampValidatorOptions>(options => options.ValidationInterval = TimeSpan.Zero)
             .AddAuthentication()
             .Services
-            .AddIdentity<CommunityMember, NoOpApplicationRole>(options =>
+            .AddIdentity<CommunityMember, ApplicationRole>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
@@ -29,11 +30,12 @@ public static class ServiceCollectionMembershipExtensions
             })
             .AddDefaultTokenProviders()
             .AddUserStore<ApplicationUserStore<CommunityMember>>()
-            .AddRoleStore<NoOpApplicationRoleStore>()
+            .AddRoleStore<ApplicationRoleStore<ApplicationRole>>()
             .AddUserManager<UserManager<CommunityMember>>()
             .AddSignInManager<SignInManager<CommunityMember>>()
             .Services
             .AddScoped<MemberContactManager>()
+            .AddScoped<RecipientListManager>()
             .Decorate<IMemberToContactMapper, CommunityMemberToContactMapper>()
             .ConfigureApplicationCookie(options =>
             {
@@ -45,5 +47,6 @@ public static class ServiceCollectionMembershipExtensions
                 options.Cookie.SameSite = SameSiteMode.Lax;
             })
             .AddAuthorization()
-            .AddSingleton<IMemberEmailService, MemberEmailService>();
+            .AddSingleton<IMemberEmailService, MemberEmailService>()
+            .AddScoped<E2EMemberModerationService>();
 }

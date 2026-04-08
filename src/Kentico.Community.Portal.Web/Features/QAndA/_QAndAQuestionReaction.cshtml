@@ -13,11 +13,10 @@
         hx-route-questionID="@Model.QuestionID" hx-swap="outerHTML" hx-target="#@reactionFormId">
         <fieldset xpc-readonly-disabled>
             <button type="submit"
-                class="btn btn-sm @(Model.CurrentMemberHasReacted ? "btn-primary" : "btn-outline-primary")" @(toolTipAttrs)>
-                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="currentColor">
-                    <path
-                        d="M3.47 7.78a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0l4.25 4.25a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018L9 4.81v7.44a.75.75 0 0 1-1.5 0V4.81L4.53 7.78a.75.75 0 0 1-1.06 0Z">
-                    </path>
+                class="badge outline rounded-pill d-inline-flex align-items-center justify-content-center gap-2 px-2 py-1 text-nowrap qa-upvote-btn @(Model.CurrentMemberHasReacted ? "selected" : "")"
+                theme="secondary" @(toolTipAttrs)>
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                    <use xlink:href="/img/icons.svg#thumbs-up" asp-append-version />
                 </svg>
                 @Model.ReactionCount
             </button>
@@ -26,14 +25,14 @@
 }
 else
 {
-    <span class="badge rounded-pill text-bg-light" @(toolTipAttrs) disabled>
-        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16">
-            <path
-                d="M3.47 7.78a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0l4.25 4.25a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018L9 4.81v7.44a.75.75 0 0 1-1.5 0V4.81L4.53 7.78a.75.75 0 0 1-1.06 0Z">
-            </path>
+    <button type="button" disabled
+        class="badge outline rounded-pill d-inline-flex align-items-center justify-content-center gap-2 px-2 py-1 text-nowrap qa-upvote-btn"
+        theme="secondary" @(toolTipAttrs)>
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <use xlink:href="/img/icons.svg#thumbs-up" asp-append-version />
         </svg>
-        <span class="px-1">@Model.ReactionCount</span>
-    </span>
+        @Model.ReactionCount
+    </button>
 }
 
 @{
@@ -44,18 +43,19 @@ else
         ? $"Upvoted by: {Html.Encode(string.Join(", ", Model.MembersWhoReacted))}"
         : "";
 
-        // Case 1: Can react - show only member list (or empty if no reactions)
+        // Case 1: Can react - show "be first" prompt or member list
         if (Model.Permissions.CanReact)
         {
-            return string.IsNullOrEmpty(memberList)
-            ? ""
-            : $"data-bs-toggle='tooltip' data-bs-html='true' data-bs-delay='1000' data-bs-placement='top' data-bs-title='{memberList}'";
+            var title = string.IsNullOrEmpty(memberList)
+            ? "Be the first to upvote this discussion"
+            : memberList;
+            return $"data-bs-toggle='tooltip' data-bs-html='true' data-bs-delay='1000' data-bs-placement='top' data-bs-title='{title}'";
         }
 
         // Case 2 & 3: Cannot react - combine member list with disable reason
         var reason = User.Identity?.IsAuthenticated ?? false
-        ? "You cannot react to your own question"
-        : "Sign in to upvote questions";
+        ? "You cannot upvote your own discussion"
+        : "Sign in to upvote discussions";
 
         var message = !string.IsNullOrEmpty(memberList)
         ? $"{reason}<br>{memberList}"

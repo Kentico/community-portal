@@ -15,7 +15,7 @@
     <div class="section pb-6 pt-0">
         <div class="container grid gap-4">
             <div class="g-col-12 g-col-lg-6 rounded-4 p-5 d-flex flex-column align-items-center justify-content-center text-center"
-                style="background: var(--color-purple-100);">
+                 style="background: var(--color-purple-100);">
                 <vc:avatar member-id="Model.Member.Id" />
                 <h2 class="mt-3 mb-0 fw-semibold">
                     @if (!string.IsNullOrWhiteSpace(Model.Member.FullName))
@@ -34,10 +34,10 @@
             </div>
 
             <div class="g-col-12 g-col-lg-6 bg-white border border-3 rounded p-4"
-                style="--bs-border-color: var(--color-purple-100);">
+                 style="--bs-border-color: var(--color-purple-100);">
                 <div class="d-flex flex-column gap-4 overflow-x-auto">
                     <div>
-                        <h5 class="mb-3">About me</h5>
+                        <h4 class="mb-3">About me</h4>
 
                         @{
                             var member = Model.Member;
@@ -46,11 +46,37 @@
                         <div>
                             <vc:member-profile-display profile="Model.Member" />
                             <div>
-                                <h5 class="mb-2">My badges</h5>
+                                <h4 class="mb-2">My badges</h4>
                                 <div class="d-flex flex-wrap gap-2">
                                     <vc:member-badges badges="@Model.MemberBadges" display-style="Full" />
                                 </div>
                             </div>
+                            @if (Model.AnswerUpvotes + Model.QuestionUpvotes > 0)
+                            {
+                                <div class="mt-4 mb-3">
+                                    <h4 class="mb-2">Discussion upvotes</h4>
+                                    <div class="table-responsive border">
+                                        <table class="table table-sm table-bordered align-middle mb-0 small">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th scope="col">Source</th>
+                                                    <th scope="col" class="text-end">Count</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row" class="fw-medium">Discussions</th>
+                                                    <td class="text-end fw-semibold">@Model.QuestionUpvotes</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" class="fw-medium">Responses</th>
+                                                    <td class="text-end fw-semibold">@Model.AnswerUpvotes</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -67,163 +93,201 @@
                             role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="contributions-tab" data-bs-toggle="tab"
-                                    data-bs-target="#contributions" type="button" role="tab"
-                                    aria-controls="contributions" aria-selected="true">Community contributions</button>
+                                        data-bs-target="#contributions" type="button" role="tab"
+                                        aria-controls="contributions" aria-selected="true">Community contributions</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="integrations-tab" data-bs-toggle="tab"
-                                    data-bs-target="#integrations" type="button" role="tab" aria-controls="integrations"
-                                    aria-selected="false">Integrations</button>
+                                        data-bs-target="#integrations" type="button" role="tab" aria-controls="integrations"
+                                        aria-selected="false">Integrations</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="blogposts-tab" data-bs-toggle="tab"
-                                    data-bs-target="#blogposts" type="button" role="tab" aria-controls="blogposts"
-                                    aria-selected="false">Community blog
+                                        data-bs-target="#blogposts" type="button" role="tab" aria-controls="blogposts"
+                                        aria-selected="false">Community blog
                                     posts</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="questions-tab" data-bs-toggle="tab"
-                                    data-bs-target="#questions" type="button" role="tab" aria-controls="questions"
-                                    aria-selected="false">Q&amp;A
-                                    discussions</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="tab-content mt-4" id="memberActivitiesTabContent">
-                        <div class="tab-pane fade show active" id="contributions" role="tabpanel"
-                            aria-labelledby="contributions-tab" x-data="{ searchTerm: '' }">
-                            <h3>Community contributions</h3>
-                            <div class="mb-3">
-                                <small>Content about Kentico or digital marketing outside the Kentico Community Portal
-                                    from
-                                    this
-                                    member.</small>
-                            </div>
-                            @if (Model.Contributions.Count > 0)
-                            {
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Search contributions..."
-                                        x-model.debounce.200ms="searchTerm">
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="questions-tab" data-bs-toggle="tab"
+                                            data-bs-target="#questions" type="button" role="tab" aria-controls="questions"
+                                            aria-selected="false">Q&amp;A
+                                        discussions</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="accepted-answers-tab" data-bs-toggle="tab"
+                                                data-bs-target="#accepted-answers" type="button" role="tab"
+                                                aria-controls="accepted-answers" aria-selected="false">Accepted
+                                            responses</button>
+                                        </li>
+                                    </ul>
                                 </div>
-                            }
-                            @if (Model.Contributions.Count == 0)
-                            {
-                                <p>This member has not shared any <a href="/community/contributions">contributions</a>.</p>
-                            }
-                            @foreach (var link in Model.Contributions)
-                            {
-                                <div class="bg-white border rounded mt-3 p-3" x-data='@link.MetadataJSON'
-                                    x-show="!searchTerm || searchIndex.includes(searchTerm.toLowerCase())">
-                                    <div class="d-flex justify-content-between">
-                                        <h4>
-                                            <a class="text-dark text-decoration-none" href="@link.Path">@link.Label</a>
-                                        </h4>
-                                        <small class="me-1"><time xpc-datetime="link.Date"
-                                                xpc-datetime-format="@DateTimeFormat.Date"></time></small>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                        <div class="tab-pane fade" id="integrations" role="tabpanel" aria-labelledby="integrations-tab"
-                            x-data="{ searchTerm: '' }">
-                            <h3>Integrations</h3>
-                            <div class="mb-3">
-                                <small>Open-source Xperience by Kentico integration libraries authored by this
-                                    member.</small>
-                            </div>
-                            @if (Model.Integrations.Count > 0)
-                            {
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Search integrations..."
-                                        x-model.debounce.200ms="searchTerm">
-                                </div>
-                            }
-                            @if (Model.Integrations.Count == 0)
-                            {
-                                <p>This member has not authored any <a href="/resource-hub/integrations">integrations</a>.
-                                </p>
-                            }
-                            @foreach (var link in Model.Integrations)
-                            {
-                                <div class="bg-white border rounded mt-3 p-3" x-data='@link.MetadataJSON'
-                                    x-show="!searchTerm || searchIndex.includes(searchTerm.toLowerCase())">
-                                    <div class="d-flex justify-content-between">
-                                        <h4>
-                                            <a class="text-dark text-decoration-none" href="@link.Path">@link.Label</a>
-                                        </h4>
-                                        <small class="me-1"><time xpc-datetime="link.Date"
-                                                xpc-datetime-format="@DateTimeFormat.Date"></time></small>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                        <div class="tab-pane fade" id="blogposts" role="tabpanel" aria-labelledby="blogposts-tab"
-                            x-data="{ searchTerm: '' }">
-                            <h3>Community blog posts</h3>
-                            <div class="mb-3">
-                                <small>Blog posts on the Kentico Community Portal authored by this member.</small>
-                            </div>
-                            @if (Model.BlogPostLinks.Count > 0)
-                            {
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Search blog posts..."
-                                        x-model.debounce.200ms="searchTerm">
-                                </div>
-                            }
-                            @if (Model.BlogPostLinks.Count == 0)
-                            {
-                                <p>This member has not authored any <a href="/blog">blog posts</a>.</p>
-                            }
-                            @foreach (var link in Model.BlogPostLinks)
-                            {
-                                <div class="bg-white border rounded mt-3 p-3" x-data='@link.MetadataJSON'
-                                    x-show="!searchTerm || searchIndex.includes(searchTerm.toLowerCase())">
-                                    <div class="d-flex justify-content-between">
-                                        <h4>
-                                            <a class="text-dark text-decoration-none" href="@link.Path">@link.Title</a>
-                                        </h4>
-                                        <small class="me-1"><time xpc-datetime="link.PublishedDate"
-                                                xpc-datetime-format="@DateTimeFormat.Date"></time></small>
-                                    </div>
-                                    <div class="mt-2">
-                                        <vc:tag-list tags="new[] { link.Taxonomy }" />
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                        <div class="tab-pane fade" id="questions" role="tabpanel" aria-labelledby="questions-tab"
-                            x-data="{ searchTerm: '' }">
-                            <h3>Q&amp;A discussions</h3>
-                            <div class="mb-3">
-                                <small>Q&amp;A discussions started by this member.</small>
-                            </div>
-                            @if (Model.QuestionsAsked.Count > 0)
-                            {
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Search discussions..."
-                                        x-model.debounce.200ms="searchTerm">
-                                </div>
-                            }
-                            @if (Model.QuestionsAsked.Count == 0)
-                            {
-                                <p>This member has not started any <a href="/q-and-a">discussions</a>.</p>
-                            }
-                            @foreach (var link in Model.QuestionsAsked)
-                            {
-                                <div class="bg-white border rounded mt-3 p-3" x-data='@link.MetadataJSON'
-                                    x-show="!searchTerm || searchIndex.includes(searchTerm.toLowerCase())">
-                                    <div class="d-flex justify-content-between">
-                                        <h4>
-                                            <a class="text-dark text-decoration-none" href="@link.Path">@link.Label</a>
-                                        </h4>
-                                        <small class="me-1"><time xpc-datetime="link.Date"></time></small>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
+                                <div class="tab-content mt-4" id="memberActivitiesTabContent">
+                                    <div class="tab-pane fade show active" id="contributions" role="tabpanel"
+                                         aria-labelledby="contributions-tab" x-data="{ searchTerm: '' }">
+                                        <h3>Community contributions</h3>
+                                        <div class="mb-3">
+                                            <small>Content about Kentico or digital marketing outside the Kentico Community Portal
+                                                from
+                                                this
+                                                member.</small>
+                                            </div>
+                                            @if (Model.Contributions.Count > 0)
+                                            {
+                                                <div class="mb-3">
+                                                    <input type="text" class="form-control" placeholder="Search contributions..."
+                                                           x-model.debounce.200ms="searchTerm">
+                                                </div>
+                                            }
+                                            @if (Model.Contributions.Count == 0)
+                                            {
+                                                <p>This member has not shared any <a href="/community/contributions">contributions</a>.</p>
+                                            }
+                                            @foreach (var link in Model.Contributions)
+                                            {
+                                                <div class="bg-white border rounded mt-3 p-3" x-data='@link.MetadataJSON'
+                                                     x-show="!searchTerm || searchIndex.includes(searchTerm.toLowerCase())">
+                                                    <div class="d-flex justify-content-between">
+                                                        <h4>
+                                                            <a class="text-dark text-decoration-none" href="@link.Path">@link.Label</a>
+                                                        </h4>
+                                                        <small class="me-1"><time xpc-datetime="link.Date"
+                                                                                      xpc-datetime-format="@DateTimeFormat.Date"></time></small>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div class="tab-pane fade" id="integrations" role="tabpanel" aria-labelledby="integrations-tab"
+                                                 x-data="{ searchTerm: '' }">
+                                                <h3>Integrations</h3>
+                                                <div class="mb-3">
+                                                    <small>Open-source Xperience by Kentico integration libraries authored by this
+                                                        member.</small>
+                                                    </div>
+                                                    @if (Model.Integrations.Count > 0)
+                                                    {
+                                                        <div class="mb-3">
+                                                            <input type="text" class="form-control" placeholder="Search integrations..."
+                                                                   x-model.debounce.200ms="searchTerm">
+                                                        </div>
+                                                    }
+                                                    @if (Model.Integrations.Count == 0)
+                                                    {
+                                                        <p>This member has not authored any <a href="/resource-hub/integrations">integrations</a>.
+                                                        </p>
+                                                    }
+                                                    @foreach (var link in Model.Integrations)
+                                                    {
+                                                        <div class="bg-white border rounded mt-3 p-3" x-data='@link.MetadataJSON'
+                                                             x-show="!searchTerm || searchIndex.includes(searchTerm.toLowerCase())">
+                                                            <div class="d-flex justify-content-between">
+                                                                <h4>
+                                                                    <a class="text-dark text-decoration-none" href="@link.Path">@link.Label</a>
+                                                                </h4>
+                                                                <small class="me-1"><time xpc-datetime="link.Date"
+                                                                                              xpc-datetime-format="@DateTimeFormat.Date"></time></small>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                    <div class="tab-pane fade" id="blogposts" role="tabpanel" aria-labelledby="blogposts-tab"
+                                                         x-data="{ searchTerm: '' }">
+                                                        <h3>Community blog posts</h3>
+                                                        <div class="mb-3">
+                                                            <small>Blog posts on the Kentico Community Portal authored by this member.</small>
+                                                        </div>
+                                                        @if (Model.BlogPostLinks.Count > 0)
+                                                        {
+                                                            <div class="mb-3">
+                                                                <input type="text" class="form-control" placeholder="Search blog posts..."
+                                                                       x-model.debounce.200ms="searchTerm">
+                                                            </div>
+                                                        }
+                                                        @if (Model.BlogPostLinks.Count == 0)
+                                                        {
+                                                            <p>This member has not authored any <a href="/blog">blog posts</a>.</p>
+                                                        }
+                                                        @foreach (var link in Model.BlogPostLinks)
+                                                        {
+                                                            <div class="bg-white border rounded mt-3 p-3" x-data='@link.MetadataJSON'
+                                                                 x-show="!searchTerm || searchIndex.includes(searchTerm.toLowerCase())">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <h4>
+                                                                        <a class="text-dark text-decoration-none" href="@link.Path">@link.Title</a>
+                                                                    </h4>
+                                                                    <small class="me-1"><time xpc-datetime="link.PublishedDate"
+                                                                                                  xpc-datetime-format="@DateTimeFormat.Date"></time></small>
+                                                                    </div>
+                                                                    <div class="mt-2">
+                                                                        <vc:tag-list tags="new[] { link.Taxonomy }" />
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div class="tab-pane fade" id="questions" role="tabpanel" aria-labelledby="questions-tab"
+                                                             x-data="{ searchTerm: '' }">
+                                                            <h3>Q&amp;A discussions</h3>
+                                                            <div class="mb-3">
+                                                                <small>Q&amp;A discussions started by this member.</small>
+                                                            </div>
+                                                            @if (Model.QuestionsAsked.Count > 0)
+                                                            {
+                                                                <div class="mb-3">
+                                                                    <input type="text" class="form-control" placeholder="Search discussions..."
+                                                                           x-model.debounce.200ms="searchTerm">
+                                                                </div>
+                                                            }
+                                                            @if (Model.QuestionsAsked.Count == 0)
+                                                            {
+                                                                <p>This member has not started any <a href="/q-and-a">discussions</a>.</p>
+                                                            }
+                                                            @foreach (var link in Model.QuestionsAsked)
+                                                            {
+                                                                <div class="bg-white border rounded mt-3 p-3" x-data='@link.MetadataJSON'
+                                                                     x-show="!searchTerm || searchIndex.includes(searchTerm.toLowerCase())">
+                                                                    <div class="d-flex justify-content-between">
+                                                                        <h4>
+                                                                            <a class="text-dark text-decoration-none" href="@link.Path">@link.Label</a>
+                                                                        </h4>
+                                                                        <small class="me-1"><time xpc-datetime="link.Date"></time></small>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div class="tab-pane fade" id="accepted-answers" role="tabpanel"
+                                                             aria-labelledby="accepted-answers-tab" x-data="{ searchTerm: '' }">
+                                                            <h3>Accepted responses</h3>
+                                                            <div class="mb-3">
+                                                                <small>Q&amp;A discussions where this member provided the accepted response.</small>
+                                                            </div>
+                                                            @if (Model.AcceptedAnswerDiscussions.Count > 0)
+                                                            {
+                                                                <div class="mb-3">
+                                                                    <input type="text" class="form-control" placeholder="Search discussions..."
+                                                                           x-model.debounce.200ms="searchTerm">
+                                                                </div>
+                                                            }
+                                                            @if (Model.AcceptedAnswerDiscussions.Count == 0)
+                                                            {
+                                                                <p>This member has not provided any accepted responses in <a
+                                                                    href="/q-and-a">discussions</a>.</p>
+                                                                }
+                                                                @foreach (var link in Model.AcceptedAnswerDiscussions)
+                                                                {
+                                                                    <div class="bg-white border rounded mt-3 p-3" x-data='@link.MetadataJSON'
+                                                                         x-show="!searchTerm || searchIndex.includes(searchTerm.toLowerCase())">
+                                                                        <div class="d-flex justify-content-between">
+                                                                            <h4>
+                                                                                <a class="text-dark text-decoration-none" href="@link.Path">@link.Label</a>
+                                                                            </h4>
+                                                                            <small class="me-1"><time xpc-datetime="link.Date"
+                                                                                                          xpc-datetime-format="@DateTimeFormat.Date"></time></small>
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </main>

@@ -1,0 +1,30 @@
+.qr-code-generator {
+  --qr-generator-surface: var(--color-paper-background);
+  --qr-generator-border: var(--color-border-low-emphasis);
+  --qr-generator-preview-surface: var(--tile-toolbar-background);
+  color: var(--color-text-default-on-light);
+  background: var(--color-background-default);
+}
+
+.qr-code-generator__surface {
+  background: var(--qr-generator-surface);
+  border-color: var(--qr-generator-border);
+}
+
+.qr-code-generator__preview-frame {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid var(--qr-generator-border);
+  background: var(--qr-generator-preview-surface);
+  box-shadow: var(--shadow-xs);
+}
+
+.qr-code-generator__canvas {
+  display: block;
+  border-radius: var(--radius-l, 8px);
+  border: 1px solid var(--color-border-default, #dfdfdf);
+  background-color: #ffffff;
+}

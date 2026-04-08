@@ -56,7 +56,7 @@
 
   "github.copilot.chat.commitMessageGeneration.instructions": [
     {
-      "file": ".github/instructions/Git.instructions.md"
+      "file": ".agent-resources/instructions/Git.instructions.md"
     }
   ],
 
@@ -181,7 +181,8 @@
     "xargs": false,
     "eval": false,
     "Invoke-Expression": false,
-    "iex": false
+    "iex": false,
+    "dotnet tool": true
   },
   "chat.agent.maxRequests": 50,
   "chat.customAgentInSubagent.enabled": true,
@@ -241,6 +242,7 @@
         "copilot/gpt-5.1-codex",
         "copilot/gpt-5.2"
       ]
-    }
+    },
+    "chat.plugins.marketplaces": ["Kentico/xperience-by-kentico-kenticopilot"]
   }
 }

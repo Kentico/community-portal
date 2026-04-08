@@ -35,11 +35,11 @@ public class MemberListExtender : PageExtender<MemberList>
 
         configs
             .TryFirst(c => string.Equals(c.Name, nameof(MemberInfo.MemberName), StringComparison.OrdinalIgnoreCase))
-            .Execute(c => c.Sorting.DefaultDirection = null);
+            .Tap(c => c.Sorting.DefaultDirection = null);
 
         configs
             .TryFirst(c => string.Equals(c.Name, nameof(MemberInfo.MemberCreated)))
-            .Execute(c => c.Sorting.DefaultDirection = SortTypeEnum.Desc);
+            .Tap(c => c.Sorting.DefaultDirection = SortTypeEnum.Desc);
 
         if (Page.PageConfiguration.FilterConfiguration.FormModel is null)
         {

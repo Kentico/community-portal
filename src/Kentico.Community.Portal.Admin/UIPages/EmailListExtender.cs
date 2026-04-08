@@ -18,7 +18,7 @@ public class EmailListExtender : PageExtender<EmailList>
 
         configs
             .TryFirst(c => string.Equals(c.Name, nameof(EmailConfigurationInfo.EmailConfigurationLastModified), StringComparison.OrdinalIgnoreCase))
-            .Execute(c =>
+            .Tap(c =>
             {
                 c.Sorting = new SortingConfiguration
                 {

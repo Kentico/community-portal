@@ -15,6 +15,7 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$digitalmarketing.emails.edit.subject$}</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>True</includeincontentgeneration>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
@@ -27,38 +28,82 @@
         </validationrulesdata>
         <additionalactionsdata>
           <AdditionalActionConfiguration>
-            <AdditionalActionIdentifier>Kentico.Administration.AiraEmailSubjectSuggestion</AdditionalActionIdentifier>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextGeneration</AdditionalActionIdentifier>
             <AdditionalActionValues>
-              <BodyFieldNames>
-                <string>NewsletterEmailIntroContentHTML</string>
-                <string>NewsletterEmailOutroContentHTML</string>
-                <string>EmailPreviewText</string>
-                <string>NewsletterEmailTitle</string>
-              </BodyFieldNames>
+              <FieldDescription>
+<![CDATA[
+Email subject line.
+
+Length: Mobile shows 33–50 chars, desktop up to 70. Avg is 6 words, but 2–4 word subject lines outperform — shorter = more attention-grabbing.
+Front-load: Put the value/hook first — truncation cuts from the right.
+Complement preview text: Subject = hook/title, preview = extension. Never repeat each other.
+Personalization: First name alone doesn't move the needle much — deeper segmentation + behavioral relevance drives real lift.
+Action-oriented language: Lead with a strong verb. "Start learning Python today" vastly outperforms "Python course information." 
+Urgency/scarcity: Must be authentic and specific — vague "ends soon" doesn't work; concrete deadlines do. False urgency destroys trust.
+Curiosity/questions: Prompts recipients to think and opens with the expectation of an answer — but the email must deliver on the premise or you erode trust.
+Spam triggers to avoid: Multiple exclamation points, excessive emojis, ALL CAPS — max 1 emoji, and it should supplement words, not replace them.
+]]>
+              </FieldDescription>
             </AdditionalActionValues>
           </AdditionalActionConfiguration>
         </additionalactionsdata>
       </field>
-      <field allowempty="true" column="EmailPreviewText" columntype="longtext" enabled="true" guid="6188e091-d4ce-4d3a-b824-b93bbb68f0c0" visible="true">
+      <field allowempty="true" column="EmailPreviewText" columnprecision="0" columntype="longtext" enabled="true" guid="6188e091-d4ce-4d3a-b824-b93bbb68f0c0" visible="true">
         <properties>
+          <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$digitalmarketing.emails.edit.previewtext$}</fieldcaption>
           <fielddescription>
             <![CDATA[{$digitalmarketing.emails.edit.previewtext.tooltip$}]]>
           </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>True</includeincontentgeneration>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextArea</controlname>
         </settings>
+        <additionalactionsdata>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextGeneration</AdditionalActionIdentifier>
+            <AdditionalActionValues>
+              <FieldDescription>
+<![CDATA[
+Email preview text.
+
+Length: 40–90 chars. Mobile truncates early, so front-load the most useful context.
+Complement, don't repeat: Subject line + preview text should work together. If the subject is the hook, the preview should add context about the issue's highlights.
+Focus on value: Signal what readers will get from this newsletter issue, such as featured articles, useful links, or community discussions.
+]]>
+              </FieldDescription>
+            </AdditionalActionValues>
+          </AdditionalActionConfiguration>
+        </additionalactionsdata>
       </field>
       <field column="NewsletterEmailTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="69a51fec-7828-4db4-b37b-8d98a4a598b9" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Title</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>True</includeincontentgeneration>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
+        <additionalactionsdata>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextGeneration</AdditionalActionIdentifier>
+            <AdditionalActionValues>
+              <FieldDescription>
+<![CDATA[
+Newsletter title.
+
+Separate from the email subject line, this field is the heading shown inside the email.
+Write a concise, issue-specific heading that reflects the newsletter's theme or main takeaway.
+Keep it scannable and useful for readers who already opened the email.
+]]>
+              </FieldDescription>
+            </AdditionalActionValues>
+          </AdditionalActionConfiguration>
+        </additionalactionsdata>
       </field>
       <field column="NewsletterEmailIssueNumber" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="854a83f9-6232-460e-9a5f-5fb79036406d" visible="true">
         <properties>
@@ -85,6 +130,7 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Content</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>True</includeincontentgeneration>
         </properties>
         <settings>
           <ConfigurationName>Kentico.Administration.EmailContent</ConfigurationName>
@@ -94,6 +140,20 @@
           <AdditionalActionConfiguration>
             <AdditionalActionIdentifier>Kentico.Administration.AiraTextRefinement</AdditionalActionIdentifier>
             <AdditionalActionValues />
+          </AdditionalActionConfiguration>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextGeneration</AdditionalActionIdentifier>
+            <AdditionalActionValues>
+              <FieldDescription>
+<![CDATA[
+Newsletter intro content.
+
+Open the issue clearly and quickly. Help readers understand what this edition covers and why it is worth their attention.
+Set up the curated content naturally by previewing the mix of blog posts, links, and discussions included below.
+Write in a human, editorial voice that feels welcoming and concise rather than promotional or robotic.
+]]>
+              </FieldDescription>
+            </AdditionalActionValues>
           </AdditionalActionConfiguration>
         </additionalactionsdata>
       </field>
@@ -149,6 +209,7 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Outro Content</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>True</includeincontentgeneration>
         </properties>
         <settings>
           <ConfigurationName>Kentico.Administration.EmailContent</ConfigurationName>
@@ -158,6 +219,20 @@
           <AdditionalActionConfiguration>
             <AdditionalActionIdentifier>Kentico.Administration.AiraTextRefinement</AdditionalActionIdentifier>
             <AdditionalActionValues />
+          </AdditionalActionConfiguration>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextGeneration</AdditionalActionIdentifier>
+            <AdditionalActionValues>
+              <FieldDescription>
+<![CDATA[
+Newsletter outro content.
+
+Close the email cleanly and reinforce the value of staying engaged with the community.
+End with one clear next step, such as reading more, exploring related content, or joining the conversation.
+Keep the tone warm and concise so the close feels natural after the curated content above.
+]]>
+              </FieldDescription>
+            </AdditionalActionValues>
           </AdditionalActionConfiguration>
         </additionalactionsdata>
       </field>

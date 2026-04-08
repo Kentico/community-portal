@@ -27,6 +27,7 @@ public class AccountManagementWidgetController(
     ILogger<AccountManagementWidgetController> logger,
     IReadOnlyModeProvider readOnlyProvider,
     QAndANotificationSettingsManager notificationsManager,
+    RecipientListManager recipientListManager,
     IContentRetriever contentRetriever,
     IWebPageUrlRetriever urlRetriever) : Controller
 {
@@ -37,6 +38,7 @@ public class AccountManagementWidgetController(
     private readonly AvatarImageService avatarImageService = avatarImageService;
     private readonly ILogger<AccountManagementWidgetController> logger = logger;
     private readonly QAndANotificationSettingsManager notificationsManager = notificationsManager;
+    private readonly RecipientListManager recipientListManager = recipientListManager;
     private readonly IReadOnlyModeProvider readOnlyProvider = readOnlyProvider;
     private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
@@ -240,6 +242,65 @@ public class AccountManagementWidgetController(
 
         var model = await GetNotificationsFormViewModel(member);
         return PartialView("~/Components/PageBuilder/Widgets/AccountManagement/_DiscussionSubscriptions.cshtml", model.SubscribedDiscussions);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult> SubscribeRecipientList(int recipientListID)
+    {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
+        var member = await userManager.GetUserAsync(User);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        await recipientListManager.Subscribe(member.Email!, recipientListID);
+
+        return PartialView("~/Components/PageBuilder/Widgets/AccountManagement/_EmailSubscriptionsForm.cshtml",
+            await GetEmailSubscriptionsViewModel(member.Email!));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult> UnsubscribeRecipientList(int recipientListID)
+    {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
+        var member = await userManager.GetUserAsync(User);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        await recipientListManager.Unsubscribe(member.Email!, recipientListID);
+
+        return PartialView("~/Components/PageBuilder/Widgets/AccountManagement/_EmailSubscriptionsForm.cshtml",
+            await GetEmailSubscriptionsViewModel(member.Email!));
+    }
+
+    private async Task<EmailSubscriptionsViewModel> GetEmailSubscriptionsViewModel(string memberEmail)
+    {
+        var allLists = await recipientListManager.GetRecipientLists();
+        var subscribedIDs = await recipientListManager.GetSubscribedRecipientListIDs(memberEmail);
+        var subscribedSet = subscribedIDs.ToHashSet();
+
+        var items = allLists.Select(rl => new RecipientListItemViewModel
+        {
+            RecipientListID = rl.ContactGroupID,
+            DisplayName = rl.ContactGroupDisplayName,
+            Description = rl.ContactGroupDescription,
+            IsSubscribed = subscribedSet.Contains(rl.ContactGroupID)
+        }).ToList();
+
+        return new EmailSubscriptionsViewModel { Items = items };
     }
 
     private async Task<QAndANotificationsFormViewModel> GetNotificationsFormViewModel(CommunityMember member)

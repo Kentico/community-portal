@@ -13,6 +13,8 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>First Name</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
+          <includeintranslation>False</includeintranslation>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
@@ -23,6 +25,8 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Surname</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
+          <includeintranslation>False</includeintranslation>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
@@ -33,6 +37,8 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Photo</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
+          <includeintranslation>False</includeintranslation>
         </properties>
         <settings>
           <AllowedContentItemTypeIdentifiers>
@@ -46,7 +52,9 @@
         <validationrulesdata>
           <ValidationRuleConfiguration>
             <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
-            <RuleValues />
+            <RuleValues>
+              <ErrorMessage />
+            </RuleValues>
           </ValidationRuleConfiguration>
         </validationrulesdata>
       </field>
@@ -58,6 +66,8 @@
             <![CDATA[Used to refer to the author within the application code]]>
           </fielddescription>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
+          <includeintranslation>False</includeintranslation>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
@@ -72,6 +82,8 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Member</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
+          <includeintranslation>False</includeintranslation>
         </properties>
         <settings>
           <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
@@ -83,6 +95,7 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Biography</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
           <includeintranslation>True</includeintranslation>
         </properties>
         <settings>
@@ -93,6 +106,12 @@
           <AdditionalActionConfiguration>
             <AdditionalActionIdentifier>Kentico.Administration.AiraTextRefinement</AdditionalActionIdentifier>
             <AdditionalActionValues />
+          </AdditionalActionConfiguration>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextGeneration</AdditionalActionIdentifier>
+            <AdditionalActionValues>
+              <FieldDescription />
+            </AdditionalActionValues>
           </AdditionalActionConfiguration>
         </additionalactionsdata>
       </field>

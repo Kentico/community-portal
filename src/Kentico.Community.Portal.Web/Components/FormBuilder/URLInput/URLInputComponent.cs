@@ -1,7 +1,7 @@
 using Kentico.Community.Portal.Web.Components.FormBuilder;
 using Kentico.Forms.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
-using XperienceCommunity.KenticoComponentIcons;
+using Kentico.Xperience.ComponentIcons;
 
 [assembly: RegisterFormComponent(
     URLInputComponent.IDENTIFIER,

@@ -5,8 +5,8 @@
 
 ## Description
 
-Xperience by Kentico
-[v31.2.2](https://docs.kentico.com/documentation/changelog#hotfix-march-5-2026).
+This project is using Xperience by Kentico v31.3.2 (changelog:
+https://docs.kentico.com/documentation/changelog#hotfix-march-30-2026).
 
 Xperience by Kentico solution for the Kentico managed SaaS hosted Kentico
 Community website.
@@ -37,6 +37,11 @@ Community website.
   <a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-reporting-dashboard.jpg">
     <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-reporting-dashboard.jpg"
     width="400" alt="Portal Admin reporting dashboard">
+  </a>
+
+  <a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-contact-data-reporting.jpg">
+    <img src="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-contact-data-reporting.jpg"
+    width="400" alt="Portal Admin contact data reporting">
   </a>
 
   <a href="https://raw.githubusercontent.com/Kentico/community-portal/main/images/portal-admin-badge-assignment-management.jpg">

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contenttype>
+  <ClassContentTypeType>Headless</ClassContentTypeType>
+  <ClassDisplayName>Product News Feed Headless Item</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemDataID" columntype="integer" enabled="true" guid="f08eb3cd-6162-47f4-9a71-d584bb2cf2ff" isPK="true" />
+      <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="43ebd726-2163-46e8-90b5-fe9e293e4b4a" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
+      <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="dc87bc9e-c10d-4e7e-9bc8-3291e7e0d04e" isunique="true" system="true" />
+      <schema guid="668b6777-06f6-47eb-a04a-956ac74c7c52" name="668b6777-06f6-47eb-a04a-956ac74c7c52">
+        <properties />
+      </schema>
+      <schema guid="bdc7088f-b01e-4186-a83c-703214805501" name="bdc7088f-b01e-4186-a83c-703214805501">
+        <properties />
+      </schema>
+      <field allowempty="true" column="ProductNewsFeedHeadlessItemLinksFeedLinkContents" columnprecision="0" columntype="contentitemreference" enabled="true" guid="0c588b14-7a07-45b6-9033-082bee71766d" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>News items</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["5ccbb481-1c26-49bd-950d-32ba806a69d4"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>8b4e829f-3e2e-4605-9e8d-e11af8867bde</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassIconClass>xp-kentico</ClassIconClass>
+  <ClassName>KenticoCommunity.ProductNewsFeedHeadlessItem</ClassName>
+  <ClassShortName>KenticoCommunityProductNewsFeedHeadlessItem</ClassShortName>
+  <ClassTableName>KenticoCommunity_ProductNewsFeedHeadlessItem</ClassTableName>
+  <ClassType>Content</ClassType>
+  <ClassWebPageHasUrl>False</ClassWebPageHasUrl>
+</cms.contenttype>

@@ -1,0 +1,147 @@
+.membership-stats-dashboard {
+  --membership-surface: var(--color-paper-background);
+  --membership-border: var(--color-border-low-emphasis);
+  --membership-text: var(--color-text-default-on-light);
+  color: var(--membership-text);
+  font-family: var(--font-family-default);
+  background: var(--color-background-default);
+}
+
+.membership-stats-dashboard * {
+  box-sizing: border-box;
+}
+
+.membership-stats-dashboard .membership-stats-surface {
+  background: var(--membership-surface);
+  border-color: var(--membership-border);
+}
+
+.membership-stats-dashboard .membership-stats-chart {
+  width: 100%;
+}
+
+.membership-stats-dashboard .membership-stats-chart-md {
+  min-height: 320px;
+}
+
+.membership-stats-dashboard .membership-stats-scroll {
+  max-height: 420px;
+  overflow: auto;
+  padding-right: 0.25rem;
+}
+
+.membership-stats-dashboard .membership-stats-table-scroll {
+  padding-right: 0;
+}
+
+.membership-stats-dashboard .membership-stats-toolbar {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.membership-stats-dashboard .membership-stats-search {
+  max-width: 22rem;
+}
+
+.membership-stats-dashboard .membership-stats-results {
+  flex-shrink: 0;
+}
+
+.membership-stats-dashboard .membership-stats-table th,
+.membership-stats-dashboard .membership-stats-table td {
+  padding: 0.6rem 0.85rem;
+  vertical-align: top;
+}
+
+.membership-stats-dashboard .membership-stats-table thead th {
+  border-bottom: 1px solid var(--color-border-low-emphasis);
+  color: var(--color-text-hint);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.membership-stats-dashboard .membership-stats-table tbody tr {
+  border-bottom: 1px solid var(--color-border-low-emphasis);
+}
+
+.membership-stats-dashboard .membership-stats-table tbody tr:last-child {
+  border-bottom: 0;
+}
+
+.membership-stats-dashboard .membership-stats-table tbody tr:hover {
+  background: var(--color-background-highlighted);
+}
+
+.membership-stats-dashboard .membership-stats-member-link {
+  color: var(--color-text-default-on-light);
+  font-weight: 600;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.membership-stats-dashboard .membership-stats-member-link:hover {
+  color: var(--color-product);
+  text-decoration: underline;
+}
+
+.membership-stats-dashboard .membership-stats-rank {
+  color: var(--color-text-hint);
+}
+
+.membership-stats-dashboard .membership-stats-icon-link {
+  align-items: center;
+  border: 1px solid var(--color-border-low-emphasis);
+  border-radius: var(--radius-s);
+  color: var(--color-text-low-emphasis);
+  display: inline-flex;
+  height: 1.75rem;
+  justify-content: center;
+  text-decoration: none;
+  transition:
+    color var(--transition-duration-default),
+    border-color var(--transition-duration-default),
+    background-color var(--transition-duration-default);
+  width: 1.75rem;
+}
+
+.membership-stats-dashboard .membership-stats-icon-link:hover {
+  background: var(--color-background-highlighted);
+  border-color: var(--color-product);
+  color: var(--color-product);
+}
+
+.membership-stats-dashboard .membership-stats-icon-link svg {
+  height: 0.9rem;
+  width: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .membership-stats-dashboard .membership-stats-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .membership-stats-dashboard .membership-stats-search {
+    max-width: none;
+  }
+
+  .membership-stats-dashboard .membership-stats-chart-md {
+    min-height: 260px;
+  }
+
+  .membership-stats-dashboard .membership-stats-scroll {
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .membership-stats-dashboard .membership-stats-table th,
+  .membership-stats-dashboard .membership-stats-table td {
+    padding: 0.55rem 0.65rem;
+  }
+}

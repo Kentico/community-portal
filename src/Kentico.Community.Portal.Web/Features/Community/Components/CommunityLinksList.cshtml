@@ -54,6 +54,16 @@
                         </div>
 
                         <p class="mt-2 flex-grow-1">@item.ShortDescription</p>
+
+                        <div class="mt-3">
+                            <a href="@item.URL" class="btn btn-outline-primary btn-sm"
+                                aria-label="View @item.Title" rel="noopener noreferrer" target="_blank">
+                                View
+                                <svg class="ms-1" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
+                                    <use xlink:href="/img/icons.svg#external-link" asp-append-version />
+                                </svg>
+                            </a>
+                        </div>
                     </article>
                 </div>
             }

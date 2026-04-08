@@ -7,19 +7,18 @@ applyTo: "**/*.cs"
 ## Model Conventions
 
 1. View Models should:
-   - Use nullable property initializers
    - Default collections to empty arrays using collection expressions
    - Use record types for DTOs
-   - Use init-only properties where appropriate
+   - Use constructor parameters or init-only properties where appropriate
    - Include XML documentation for complex models
-   - Follow consistent naming (ViewModel suffix for view models)
+   - Follow consistent naming (e.g. ViewModel suffix for view models)
 
 Example:
 
 ```csharp
 public class ExampleViewModel
 {
-    public string Title { get; set; } = "";
+    public string Title { get; } = "";
     public IReadOnlyList<string> Items { get; } = [];
 }
 
@@ -31,7 +30,6 @@ public record ExampleRequest(string Name, int Value);
 1. Services should:
    - Use constructor-based dependency injection with primary constructor syntax
    - Be registered with appropriate lifetimes
-   - Have clear interface definitions
    - Follow single responsibility principle
    - Use async/await for asynchronous operations
    - Include XML documentation for public APIs
@@ -61,9 +59,8 @@ public class ExampleService(
 
 1. Files should be organized:
    - By feature area in Features folder
-   - Components in Components folder
+   - Reusable or global components in Components folder
    - Common infrastructure in Infrastructure folder
-   - Feature-specific models with their features
    - One primary class per file
    - Use nested namespaces matching folder structure
 
@@ -80,10 +77,8 @@ public class ExampleService(
 
 1. General:
    - Use C# latest features (e.g., primary constructors, collection expressions)
-   - Prefer async/await over Task continuations
    - Use expression-bodied members where appropriate
    - Validate parameters early
-   - Use nullable reference types
    - Use constants for magic strings/numbers
    - Initialize properties with default values
    - Prioritize using `Result<T>` monad from CSharpFunctionalExtensions library
@@ -98,7 +93,6 @@ public class ExampleService(
    - Validate user permissions explicitly
    - Use proper authorization attributes
    - Sanitize user input
-   - Use HTTPS
    - Follow OWASP security guidelines
 
 ## Testing

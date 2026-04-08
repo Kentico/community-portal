@@ -6,7 +6,7 @@ using Kentico.PageBuilder.Web.Mvc;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using XperienceCommunity.KenticoComponentIcons;
+using Kentico.Xperience.ComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: TargetsReportWidget.IDENTIFIER,

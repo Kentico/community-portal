@@ -8,6 +8,13 @@ using Lucene.Net.Util;
 
 namespace Kentico.Community.Portal.Web.Features.Blog.Search;
 
+public enum SearchResultStates
+{
+    HasResults,
+    NoResults,
+    IndexUnavailable
+}
+
 public class BlogSearchRequest
 {
     public const int PAGE_SIZE = 10;
@@ -65,6 +72,7 @@ public class BlogSearchResults
     public LabelAndValue[] BlogTypes { get; } = [];
     public LabelAndValue[] DXTopics { get; } = [];
     public string SortBy { get; init; } = "";
+    public SearchResultStates State { get; set; }
 
     public static BlogSearchResults Empty(BlogSearchRequest request) => new()
     {
@@ -72,6 +80,16 @@ public class BlogSearchResults
         PageSize = request.PageSize,
         Query = request.SearchText,
         SortBy = request.SortBy,
+        State = SearchResultStates.NoResults,
+    };
+
+    public static BlogSearchResults IndexUnavailable(BlogSearchRequest request) => new()
+    {
+        Page = request.PageNumber,
+        PageSize = request.PageSize,
+        Query = request.SearchText,
+        SortBy = request.SortBy,
+        State = SearchResultStates.IndexUnavailable,
     };
 
     public BlogSearchResults(TopDocs topDocs, MultiFacets facets, BlogSearchRequest request, Func<ScoreDoc, Document> retrieveDoc)
@@ -101,6 +119,7 @@ public class BlogSearchResults
         BlogTypes = facets.GetTopChildren(100, nameof(BlogSearchIndexModel.BlogTypeFacet))?.LabelValues.ToArray() ?? [];
         DXTopics = facets.GetTopChildren(100, nameof(BlogSearchIndexModel.DXTopicsFacets))?.LabelValues.ToArray() ?? [];
         SortBy = request.SortBy;
+        State = topDocs.TotalHits > 0 ? SearchResultStates.HasResults : SearchResultStates.NoResults;
     }
 
     private BlogSearchResults() { }
@@ -149,6 +168,11 @@ public class BlogSearchService(
                     return new BlogSearchResults(topDocs, facets, request, d => searcher.Doc(d.Doc));
                 }
             );
+        }
+        catch (Lucene.Net.Index.IndexNotFoundException ex)
+        {
+            logger.LogWarning(new EventId(0, "BLOG_SEARCH_INDEX_UNAVAILABLE"), ex, "Blog search index is unavailable for query '{Query}'", request.SearchText);
+            return BlogSearchResults.IndexUnavailable(request);
         }
         catch (Exception ex)
         {

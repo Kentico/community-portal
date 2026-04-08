@@ -1,4 +1,3 @@
-@using EnumsNET
 @using Kentico.Community.Portal.Web.Features.QAndA.Search
 
 @model QAndASearchViewModel
@@ -66,35 +65,99 @@
                 }
             </div>
         </div>
-        <footer style="grid-area: card-footer;" class="d-flex justify-content-between align-items-start">
-            <div>
+        <footer style="grid-area: card-footer;"
+            class="d-flex flex-row justify-content-between align-items-end gap-2">
+            <div class="flex-grow-1 w-100">
                 <div class="d-md-none">
                     <vc:author author="discussion.Author" />
                     Discussion created<br>
                     <time xpc-datetime="discussion.DateCreated" class="text-muted small">
                     </time>
                 </div>
-                @if (discussion.Tags.Count > 0)
+                @if (discussion.Tags.Count > 0 || discussion.HasAnyUpvotes)
                 {
-                    <div class="d-flex align-items-end mt-2">
-                        <vc:tag-list tags="discussion.Tags" variant="Secondary" aria-label="Discussion topics" />
+                    <div class="d-flex flex-wrap align-items-center gap-2 mt-2">
+                        @if (discussion.Tags.Count > 0)
+                        {
+                            <div class="flex-grow-1">
+                                <vc:tag-list tags="discussion.Tags" variant="Secondary" aria-label="Discussion topics" />
+                            </div>
+                        }
+                        @if (discussion.HasAnyUpvotes)
+                        {
+                            <div class="d-none d-md-flex align-items-center justify-content-end ms-auto">
+                                <span class="badge outline rounded-pill d-inline-flex align-items-center justify-content-center gap-1 text-nowrap" theme="secondary" role="img"
+                                      aria-label="@discussion.DiscussionUpvoteSummary" tabindex="0" data-bs-toggle="tooltip"
+                                      data-bs-placement="top" data-bs-title="@discussion.DiscussionUpvoteSummary">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                                        <use xlink:href="/img/icons.svg#thumbs-up" asp-append-version />
+                                    </svg>
+                                    @if (discussion.HasQuestionUpvotes)
+                                    {
+                                        <span class="d-inline-flex align-items-center gap-1" aria-hidden="true">
+                                            <span class="qa-question-card__vote-kpi-count">@discussion.QuestionUpvotes</span>
+                                        </span>
+                                    }
+                                    @if (discussion.HasQuestionUpvotes && discussion.HasAnswerUpvotes)
+                                    {
+                                        <span class="qa-question-card__vote-divider" aria-hidden="true"></span>
+                                    }
+                                    @if (discussion.HasAnswerUpvotes)
+                                    {
+                                        <span class="d-inline-flex align-items-center gap-1" aria-hidden="true">
+                                            <span class="qa-question-card__vote-kpi-count">@discussion.AnswerUpvotes</span>
+                                        </span>
+                                    }
+                                </span>
+                            </div>
+                        }
                     </div>
                 }
             </div>
-            <div id="responses-m-@discussion.ID" class="d-block d-md-none text-end text-md-center ms-auto"
+            <div id="responses-m-@discussion.ID" class="d-flex d-md-none flex-column align-items-end text-end ms-auto flex-shrink-0 h-100 @(discussion.HasAnyUpvotes ? "justify-content-between" : "justify-content-center")"
                  aria-label="@discussion.ResponseCount @responseText">
-                <div class="fs-5 text-nowrap">
-                    <span class="text-secondary fw-bold lh-sm">@discussion.ResponseCount</span>
-                    @responseText
+                <div>
+                    <div class="fs-5 text-nowrap">
+                        <span class="text-secondary fw-bold lh-sm">@discussion.ResponseCount</span>
+                        @responseText
+                    </div>
+
+                    @if (discussion.ResponseCount > 0)
+                    {
+                        <div class="mt-1">
+                            Latest response<br>
+                            <time xpc-datetime="discussion.LatestResponseDate" class="text-muted small">
+                            </time>
+                        </div>
+                    }
                 </div>
 
-
-                @if (discussion.ResponseCount > 0)
+                @if (discussion.HasAnyUpvotes)
                 {
-                    <div class="mt-1">
-                        Latest response<br>
-                        <time xpc-datetime="discussion.LatestResponseDate" class="text-muted small">
-                        </time>
+                    <div class="d-flex align-items-center justify-content-end mt-2">
+                        <span class="badge outline rounded-pill d-inline-flex align-items-center justify-content-center gap-2 px-2 py-1 text-nowrap" theme="secondary" role="img"
+                              aria-label="@discussion.DiscussionUpvoteSummary" tabindex="0" data-bs-toggle="tooltip"
+                              data-bs-placement="top" data-bs-title="@discussion.DiscussionUpvoteSummary">
+                            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                                <use xlink:href="/img/icons.svg#thumbs-up" asp-append-version />
+                            </svg>
+                            @if (discussion.HasQuestionUpvotes)
+                            {
+                                <span class="d-inline-flex align-items-center gap-1" aria-hidden="true">
+                                    <span class="qa-question-card__vote-kpi-count">@discussion.QuestionUpvotes</span>
+                                </span>
+                            }
+                            @if (discussion.HasQuestionUpvotes && discussion.HasAnswerUpvotes)
+                            {
+                                <span class="qa-question-card__vote-divider" aria-hidden="true"></span>
+                            }
+                            @if (discussion.HasAnswerUpvotes)
+                            {
+                                <span class="d-inline-flex align-items-center gap-1" aria-hidden="true">
+                                    <span class="qa-question-card__vote-kpi-count">@discussion.AnswerUpvotes</span>
+                                </span>
+                            }
+                        </span>
                     </div>
                 }
             </div>
@@ -102,7 +165,13 @@
     </article>
 }
 
-@if (Model.Discussions.Count == 0 && Model.TotalPages == 0)
+@if (Model.SearchResultState == SearchResultStates.IndexUnavailable)
+{
+    <div class="d-flex justify-content-center mt-5">
+        <p>The search index is being updated. Please try again in a few minutes.</p>
+    </div>
+}
+else if (Model.SearchResultState == SearchResultStates.NoResults)
 {
     <div class="d-flex justify-content-center mt-5">
         <p>No results could be found.</p>

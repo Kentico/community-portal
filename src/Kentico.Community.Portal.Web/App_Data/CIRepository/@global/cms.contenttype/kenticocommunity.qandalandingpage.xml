@@ -18,9 +18,10 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Markdown Form Help Message</fieldcaption>
           <fielddescription>
-            <![CDATA[A message displayed near the Q&A markdown form to assist members]]>
+            <![CDATA[A message displayed near the Q&amp;A markdown form to assist members]]>
           </fielddescription>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
           <includeintranslation>True</includeintranslation>
         </properties>
         <settings>
@@ -30,6 +31,12 @@
           <AdditionalActionConfiguration>
             <AdditionalActionIdentifier>Kentico.Administration.AiraTextRefinement</AdditionalActionIdentifier>
             <AdditionalActionValues />
+          </AdditionalActionConfiguration>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextGeneration</AdditionalActionIdentifier>
+            <AdditionalActionValues>
+              <FieldDescription />
+            </AdditionalActionValues>
           </AdditionalActionConfiguration>
         </additionalactionsdata>
       </field>

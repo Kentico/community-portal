@@ -36,6 +36,7 @@ public class BlogSearchViewModel : IPagedViewModel
     [HiddenInput]
     public int Page { get; set; } = 0;
     public int TotalPages { get; set; } = 0;
+    public SearchResultStates SearchResultState { get; }
 
     public IEnumerable<KeyValuePair<string, string?>> GetRouteData(int page)
     {
@@ -68,6 +69,7 @@ public class BlogSearchViewModel : IPagedViewModel
         Page = request.PageNumber;
         Query = request.SearchText;
         SortBy = request.SortBy;
+        SearchResultState = result.State;
         BlogTypes = [.. taxonomies.Types
             .Select(x => new FacetOption()
             {

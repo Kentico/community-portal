@@ -31,6 +31,6 @@ public class RecipientListSubscriberListExtender : PageExtender<RecipientListSub
 
         config.ColumnConfigurations
             .TryFirst(c => string.Equals(c.Name, nameof(ContactInfo.ContactLastName), StringComparison.OrdinalIgnoreCase))
-            .Execute(c => c.Sorting = new() { Sortable = c.Sorting.Sortable });
+            .Tap(c => c.Sorting = new() { Sortable = c.Sorting.Sortable });
     }
 }

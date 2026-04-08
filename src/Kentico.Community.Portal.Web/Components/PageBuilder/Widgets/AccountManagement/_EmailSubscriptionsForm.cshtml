@@ -1,0 +1,61 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.AccountManagement
+
+@model EmailSubscriptionsViewModel
+
+<div id="emailSubscriptionsForm">
+    <h4>Email list subscriptions</h4>
+
+    <small class="form-text text-muted d-block py-1">
+        Manage your email subscriptions. Subscribe or unsubscribe from available mailing lists below.
+    </small>
+
+    @if (Model.Items.Count == 0)
+    {
+        <p class="text-muted mt-2">No email subscriptions are available at this time.</p>
+    }
+    else
+    {
+        <ul class="list-group mt-2">
+            @foreach (var item in Model.Items)
+            {
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-start gap-2">
+                        <div class="flex-grow-1">
+                            <strong>@item.DisplayName</strong>
+                            @if (!string.IsNullOrWhiteSpace(item.Description))
+                            {
+                                <div class="text-muted small">@item.Description</div>
+                            }
+                        </div>
+                        @if (item.IsSubscribed)
+                        {
+                            <form method="post" hx-post hx-controller="AccountManagementWidget" hx-action="UnsubscribeRecipientList"
+                                  hx-route-recipientListID="@item.RecipientListID" hx-target="#emailSubscriptionsForm"
+                                  hx-swap="outerHTML">
+                                <fieldset hx-indicator="this" xpc-readonly-disabled>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger flex-shrink-0" xpc-loading-button
+                                            xpc-readonly-disabled title="Unsubscribe">
+                                        Unsubscribe
+                                    </button>
+                                </fieldset>
+                            </form>
+                        }
+                        else
+                        {
+                            <form method="post" hx-post hx-controller="AccountManagementWidget" hx-action="SubscribeRecipientList"
+                                  hx-route-recipientListID="@item.RecipientListID" hx-target="#emailSubscriptionsForm"
+                                  hx-swap="outerHTML">
+                                <fieldset hx-indicator="this" xpc-readonly-disabled>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary flex-shrink-0" xpc-loading-button
+                                            xpc-readonly-disabled title="Subscribe">
+                                        Subscribe
+                                    </button>
+                                </fieldset>
+                            </form>
+                        }
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+</div>

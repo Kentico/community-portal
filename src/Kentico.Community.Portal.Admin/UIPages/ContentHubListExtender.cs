@@ -22,11 +22,11 @@ public class ContentHubListExtender : PageExtender<ContentHubList>
          */
         configs
             .TryFirst(c => string.Equals(c.Name, nameof(ContentItemLanguageMetadataInfo.ContentItemLanguageMetadataCreatedWhen), StringComparison.OrdinalIgnoreCase))
-            .ExecuteNoValue(() =>
+            .TapNoValue(() =>
             {
                 configs
                     .TryFirst(c => string.Equals(c.Name, nameof(ContentItemLanguageMetadataInfo.ContentItemLanguageMetadataModifiedWhen), StringComparison.OrdinalIgnoreCase))
-                    .Execute(c =>
+                    .Tap(c =>
                     {
                         c.Caption = "Modified";
                         c.MinWidth = 15;
@@ -51,7 +51,7 @@ public class ContentHubListExtender : PageExtender<ContentHubList>
 
         configs
             .TryFirst(c => string.Equals(c.Name, nameof(ContentItemLanguageMetadataInfo.ContentItemLanguageMetadataDisplayName), StringComparison.OrdinalIgnoreCase))
-            .Execute(c => c.MinWidth = 40);
+            .Tap(c => c.MinWidth = 40);
     }
 }
 

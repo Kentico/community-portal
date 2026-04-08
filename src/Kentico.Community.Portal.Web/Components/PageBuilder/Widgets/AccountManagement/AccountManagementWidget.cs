@@ -7,7 +7,7 @@ using Kentico.Content.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using XperienceCommunity.KenticoComponentIcons;
+using Kentico.Xperience.ComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: AccountManagementWidget.IDENTIFIER,
@@ -25,6 +25,7 @@ public class AccountManagementWidget(
     MemberBadgeService memberBadgeService,
     LinkGenerator linkGenerator,
     QAndANotificationSettingsManager notificationsManager,
+    RecipientListManager recipientListManager,
     IContentRetriever contentRetriever,
     IWebPageUrlRetriever urlRetriever) : ViewComponent
 {
@@ -60,7 +61,8 @@ public class AccountManagementWidget(
                 MemberID = member.Id
             },
             BadgesForm = new(await memberBadgeService.GetAllBadgesFor(member.Id)),
-            NotificationsForm = await GetNotificationsFormViewModel(member)
+            NotificationsForm = await GetNotificationsFormViewModel(member),
+            EmailSubscriptions = await GetEmailSubscriptionsViewModel(member.Email ?? "")
         };
 
         return View("~/Components/PageBuilder/Widgets/AccountManagement/AccountManagement.cshtml", new AccountManagementWidgetViewModel(accountVM));
@@ -99,6 +101,23 @@ public class AccountManagementWidget(
 
         return new QAndANotificationsFormViewModel(frequency, autoSubscribeEnabled, subscribedDiscussionModels);
     }
+
+    private async Task<EmailSubscriptionsViewModel> GetEmailSubscriptionsViewModel(string memberEmail)
+    {
+        var allLists = await recipientListManager.GetRecipientLists();
+        var subscribedIDs = await recipientListManager.GetSubscribedRecipientListIDs(memberEmail);
+        var subscribedSet = subscribedIDs.ToHashSet();
+
+        var items = allLists.Select(rl => new RecipientListItemViewModel
+        {
+            RecipientListID = rl.ContactGroupID,
+            DisplayName = rl.ContactGroupDisplayName,
+            Description = rl.ContactGroupDescription,
+            IsSubscribed = subscribedSet.Contains(rl.ContactGroupID)
+        }).ToList();
+
+        return new EmailSubscriptionsViewModel { Items = items };
+    }
 }
 
 public class AccountManagementWidgetProperties : BaseWidgetProperties
@@ -125,5 +144,20 @@ public class MyAccountViewModel
     public BadgesFormViewModel BadgesForm { get; set; } = new([]);
     public DateTime DateCreated { get; set; }
     public UpdatePasswordViewModel PasswordInfo { get; set; } = new();
-    public AvatarFormViewModel AvatarForm { get; set; } = new(); public QAndANotificationsFormViewModel NotificationsForm { get; set; } = new();
+    public AvatarFormViewModel AvatarForm { get; set; } = new();
+    public QAndANotificationsFormViewModel NotificationsForm { get; set; } = new();
+    public EmailSubscriptionsViewModel EmailSubscriptions { get; set; } = new();
+}
+
+public class EmailSubscriptionsViewModel
+{
+    public IReadOnlyList<RecipientListItemViewModel> Items { get; set; } = [];
+}
+
+public class RecipientListItemViewModel
+{
+    public int RecipientListID { get; set; }
+    public string DisplayName { get; set; } = "";
+    public string Description { get; set; } = "";
+    public bool IsSubscribed { get; set; }
 }

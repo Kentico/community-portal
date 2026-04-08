@@ -18,10 +18,10 @@ public class ContactListExtender : PageExtender<ContactList>
 
         configs
             .TryFirst(c => string.Equals(c.Name, nameof(ContactInfo.ContactLastName), StringComparison.OrdinalIgnoreCase))
-            .Execute(c => c.Sorting.DefaultDirection = null);
+            .Tap(c => c.Sorting.DefaultDirection = null);
         configs
             .TryFirst(c => string.Equals(c.Name, nameof(ContactInfo.ContactCreated), StringComparison.OrdinalIgnoreCase))
-            .Execute(c => c.Sorting.DefaultDirection = SortTypeEnum.Desc);
+            .Tap(c => c.Sorting.DefaultDirection = SortTypeEnum.Desc);
     }
 }
 

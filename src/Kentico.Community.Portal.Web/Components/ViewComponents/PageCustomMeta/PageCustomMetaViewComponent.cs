@@ -1,4 +1,5 @@
 using Kentico.Community.Portal.Web.Infrastructure;
+using Kentico.Content.Web.Mvc;
 using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +11,12 @@ public class PageCustomMetaViewComponent(
     IMediator mediator,
     WebPageMetaService metaService,
     IHttpContextAccessor contextAccessor,
-    IOptions<ReCaptchaSettings> options) : ViewComponent
+    IOptions<ReCaptchaSettings> recpatchaOptions,
+    IContentRetriever contentRetriever,
+    IWebPageUrlRetriever urlRetriever,
+    IWebPageDataContextRetriever dataContextRetriever
+    ) : ViewComponent
 {
-    private readonly IMediator mediator = mediator;
-    private readonly WebPageMetaService metaService = metaService;
-    private readonly IHttpContextAccessor contextAccessor = contextAccessor;
-    private readonly ReCaptchaSettings reCaptchaSettings = options.Value;
-
     public async Task<IViewComponentResult> InvokeAsync()
     {
         var meta = await metaService.GetMeta();
@@ -29,12 +29,35 @@ public class PageCustomMetaViewComponent(
         {
             SiteName = settings.GlobalContent.WebsiteGlobalContentDisplayName,
             URL = url,
-            CaptchaSiteKey = Maybe.From(reCaptchaSettings.SiteKey).MapNullOrWhiteSpaceAsNone(),
+            CaptchaSiteKey = Maybe.From(recpatchaOptions.Value.SiteKey).MapNullOrWhiteSpaceAsNone(),
             OGImageURL = meta.OGImageURL,
-            MetaRobotsContent = meta.Robots.MapNullOrWhiteSpaceAsNone()
+            MetaRobotsContent = meta.Robots.MapNullOrWhiteSpaceAsNone(),
+            CanonicalURL = await SetCanonicalURL(meta)
         };
 
         return View("~/Components/ViewComponents/PageCustomMeta/PageCustomMeta.cshtml", vm);
+    }
+
+    private async Task<Maybe<string>> SetCanonicalURL(WebPageMeta meta)
+    {
+        if (meta.CanonicalURL.HasValue)
+        {
+            return meta.CanonicalURL;
+        }
+
+        if (!dataContextRetriever.TryRetrieve(out var _))
+        {
+            return Maybe.None;
+        }
+
+        var page = await contentRetriever.RetrieveCurrentPage<IWebPageFieldsSource>();
+        if (page is null)
+        {
+            return Maybe.None;
+        }
+
+        var url = await urlRetriever.Retrieve(page);
+        return url.AbsoluteUrl;
     }
 }
 

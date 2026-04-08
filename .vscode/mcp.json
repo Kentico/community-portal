@@ -11,12 +11,12 @@
     "xperience-management-api": {
       "type": "stdio",
       "command": "npx",
-      "args": ["@kentico/management-api-mcp@31.2.2-preview"],
+      "args": ["@kentico/management-api-mcp@31.3.2-preview"],
       "env": {
         "NODE_OPTIONS": "--use-system-ca",
         "NODE_TLS_REJECT_UNAUTHORIZED": "0",
         "CACHE_OPENAPI": "false",
-        "MANAGEMENT_API_URL": "https://localhost:45039/kentico-api/management",
+        "MANAGEMENT_API_URL": "http://localhost:45041/kentico-api/management",
         "MANAGEMENT_API_SECRET": "rrvpzpu18m5385tfw1h9j5luxton5vyv"
       }
     },
@@ -33,7 +33,11 @@
         "chrome-devtools-mcp@0.17.1",
         "--no-usage-statistics"
       ]
+    },
+    "amcharts5": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@amcharts/amcharts5-mcp"]
     }
-  },
-  "inputs": []
+  }
 }

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Member Role Member</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="MemberRoleMemberID" columntype="integer" enabled="true" guid="8a1fba2d-8a68-4e72-84aa-3fbc47ae1201" isPK="true" system="true" />
+      <field column="MemberRoleMemberMemberID" columnprecision="0" columntype="integer" enabled="true" guid="8ab9b8e1-8011-45f3-bb4b-e5f4e33f9ff3" refobjtype="cms.member" reftype="Binding" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="MemberRoleMemberMemberRoleID" columnprecision="0" columntype="integer" enabled="true" guid="735d212b-dfef-4f38-80cb-aad627d7abf7" refobjtype="cms.memberrole" reftype="Binding" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>8ac332e5-1dea-41e1-b8f0-0171c99706a6</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.MemberRoleMember</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Membership</CodeName>
+    <GUID>d4b7561a-f188-420c-8f68-63b5c573b2bf</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_MemberRoleMember</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

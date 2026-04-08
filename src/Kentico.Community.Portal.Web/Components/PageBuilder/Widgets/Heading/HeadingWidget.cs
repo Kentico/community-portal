@@ -4,7 +4,7 @@ using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Heading;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using XperienceCommunity.KenticoComponentIcons;
+using Kentico.Xperience.ComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: HeadingWidget.IDENTIFIER,

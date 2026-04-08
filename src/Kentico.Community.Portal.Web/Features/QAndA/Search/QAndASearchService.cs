@@ -76,6 +76,13 @@ public enum DiscussionStates
 }
 
 
+public enum SearchResultStates
+{
+    HasResults,
+    NoResults,
+    IndexUnavailable
+}
+
 public class QAndASearchResult
 {
     public string Query { get; set; } = "";
@@ -88,6 +95,7 @@ public class QAndASearchResult
     public LabelAndValue[] DXTopics { get; set; } = [];
     public LabelAndValue[] DiscussionStates { get; set; } = [];
     public string SortBy { get; set; } = "";
+    public SearchResultStates State { get; set; }
 
     public static QAndASearchResult Empty(QAndASearchRequest request) =>
         new()
@@ -96,6 +104,17 @@ public class QAndASearchResult
             PageSize = request.PageSize,
             Query = request.SearchText,
             SortBy = request.SortBy,
+            State = SearchResultStates.NoResults,
+        };
+
+    public static QAndASearchResult IndexUnavailable(QAndASearchRequest request) =>
+        new()
+        {
+            Page = request.PageNumber,
+            PageSize = request.PageSize,
+            Query = request.SearchText,
+            SortBy = request.SortBy,
+            State = SearchResultStates.IndexUnavailable,
         };
 
     public QAndASearchResult(TopDocs topDocs, MultiFacets facets, QAndASearchRequest request, Func<ScoreDoc, Document> retrieveDoc)
@@ -118,6 +137,7 @@ public class QAndASearchResult
         DiscussionStates = GetLabelValues(2, nameof(QAndASearchIndexModel.DiscussionStatesFacet), facets);
         DXTopics = GetLabelValues(100, nameof(QAndASearchIndexModel.DXTopicsFacet), facets);
         SortBy = request.SortBy;
+        State = topDocs.TotalHits > 0 ? SearchResultStates.HasResults : SearchResultStates.NoResults;
     }
 
     private static LabelAndValue[] GetLabelValues(int topN, string fieldName, MultiFacets facets) =>
@@ -167,6 +187,11 @@ public class QAndASearchService(
                     return new QAndASearchResult(topDocs, facets, request, (d) => searcher.Doc(d.Doc));
                 }
             );
+        }
+        catch (Lucene.Net.Index.IndexNotFoundException ex)
+        {
+            logger.LogWarning(new EventId(0, "Q_AND_A_SEARCH_INDEX_UNAVAILABLE"), ex, "Q&A search index unavailable for query '{Query}'", request.SearchText);
+            return QAndASearchResult.IndexUnavailable(request);
         }
         catch (Exception ex)
         {

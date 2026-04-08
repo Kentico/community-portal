@@ -8,6 +8,31 @@
   }
 }
 
+.qa-upvote-btn {
+  cursor: pointer;
+
+  &:hover {
+    --badge-bg: var(--bs-secondary);
+    --bs-badge-color: var(--bs-white);
+  }
+
+  &.selected {
+    --badge-bg: var(--bs-secondary);
+    --bs-badge-color: var(--bs-white);
+
+    &:hover {
+      --badge-bg: var(--bs-white);
+      --badge-border: var(--bs-secondary);
+      --bs-badge-color: var(--bs-secondary);
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+}
+
 .answer-link {
   --link-color: #2b2422;
   visibility: visible;

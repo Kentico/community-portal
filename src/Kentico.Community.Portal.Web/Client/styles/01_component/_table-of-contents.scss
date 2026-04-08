@@ -1,0 +1,141 @@
+// Table of Contents – fixed floating panel for blog posts.
+// Anchored flush to the right viewport edge so it feels like part of the
+// browser chrome rather than a page component.  Right-side corners are flat;
+// only the left side carries the standard border radius.
+
+[x-cloak] {
+  display: none !important;
+}
+
+.blog-toc {
+  position: fixed;
+  bottom: 5.5rem; // above the reCAPTCHA badge (~60px) at bottom-right
+  right: 0; // flush to screen edge
+  z-index: 1040; // above content, below modals
+  max-width: min(280px, 90vw); // 280px fits comfortably without overlapping body text
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+
+  &__panel {
+    background-color: var(--bs-white);
+    border: 1px solid var(--color-gray-200);
+    border-right: none; // flush to screen edge
+    // rounded on the left, flat on the right
+    border-radius: var(--bs-border-radius-lg) 0 0 var(--bs-border-radius-lg);
+    box-shadow: -4px 4px 24px rgba(0, 0, 0, 0.12); // shadow projects left only
+    width: 100%;
+    max-height: min(60vh, 400px); // 60vh keeps it visible in short viewports; 400px hard cap on tall ones
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  &__panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-gray-200);
+    font-weight: 600;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    line-height: 1;
+    color: var(--bs-body-color);
+    border-radius: var(--bs-border-radius-sm);
+
+    &:hover {
+      background-color: var(--color-gray-100);
+    }
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 0;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  &__item {
+    &--h3 {
+      .blog-toc__link {
+        padding-left: 2rem;
+        font-size: 0.8125rem;
+      }
+    }
+  }
+
+  &__link {
+    display: block;
+    padding: 0.35rem 1rem;
+    color: var(--bs-body-color);
+    text-decoration: none;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    border-left: 2px solid transparent;
+    transition:
+      color 0.15s,
+      background-color 0.15s,
+      border-color 0.15s;
+
+    &:hover {
+      color: var(--color-primary);
+      background-color: var(--color-gray-100);
+    }
+
+    &--active {
+      color: var(--color-primary);
+      border-left-color: var(--color-primary);
+      font-weight: 500;
+    }
+  }
+
+  &__toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.875rem;
+    // rounded on the left, flat on the right
+    border-radius: 2rem 0 0 2rem;
+    border: 1px solid var(--color-gray-200);
+    border-right: none; // flush to screen edge
+    background-color: var(--bs-white);
+    box-shadow: -2px 2px 12px rgba(0, 0, 0, 0.1); // shadow projects left only
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--bs-body-color);
+    transition:
+      background-color 0.15s,
+      box-shadow 0.15s;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: var(--color-gray-100);
+      box-shadow: -4px 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+
+    &-label {
+      @include media-breakpoint-down(md) {
+        display: none;
+      }
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    max-width: 300px;
+  }
+}

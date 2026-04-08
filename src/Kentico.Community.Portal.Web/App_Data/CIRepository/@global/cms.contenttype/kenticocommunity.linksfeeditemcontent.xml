@@ -13,6 +13,7 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Heading</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
           <includeintranslation>True</includeintranslation>
         </properties>
         <settings>
@@ -25,6 +26,7 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Description</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
           <includeintranslation>True</includeintranslation>
         </properties>
         <settings>
@@ -36,7 +38,25 @@
             <AdditionalActionIdentifier>Kentico.Administration.AiraTextRefinement</AdditionalActionIdentifier>
             <AdditionalActionValues />
           </AdditionalActionConfiguration>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextGeneration</AdditionalActionIdentifier>
+            <AdditionalActionValues>
+              <FieldDescription />
+            </AdditionalActionValues>
+          </AdditionalActionConfiguration>
         </additionalactionsdata>
+      </field>
+      <field column="LinksFeedItemContentPublishedDate" columnprecision="3" columntype="datetime" enabled="true" guid="39341872-ba07-4fef-a87c-4117a1c39371" visible="true">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Published date</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
+          <includeintranslation>False</includeintranslation>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
       </field>
       <field column="LinksFeedItemContentCTALabel" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="ab2cfe96-15b1-4baa-817a-832cbc507820" visible="true">
         <properties>
@@ -44,6 +64,7 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>CTA label</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
           <includeintranslation>True</includeintranslation>
         </properties>
         <settings>
@@ -53,6 +74,7 @@
           <ValidationRuleConfiguration>
             <ValidationRuleIdentifier>Kentico.Administration.MaximumLength</ValidationRuleIdentifier>
             <RuleValues>
+              <ErrorMessage />
               <MaxLength>50</MaxLength>
             </RuleValues>
           </ValidationRuleConfiguration>
@@ -66,6 +88,7 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>CTA URL</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
           <includeintranslation>True</includeintranslation>
         </properties>
         <settings>

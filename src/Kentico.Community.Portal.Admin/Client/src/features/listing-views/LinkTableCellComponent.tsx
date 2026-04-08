@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, Tooltip } from '@kentico/xperience-admin-components';
 
 interface LinkTableCellComponentProps {
   readonly path: string;
@@ -11,18 +12,16 @@ const LinkTableCellComponent = ({
 }: LinkTableCellComponentProps): React.JSX.Element => {
   const style = { lineHeight: '16px' };
 
-  return path !== undefined ? (
-    <a
-      style={style}
-      href={path}
-      onClick={(e) => {
-        e.stopPropagation();
-      }}
-    >
-      {label}
-    </a>
+  return !!path ? (
+    <Tooltip tooltipText={path}>
+      <div style={style}>
+        <Link href={path} text={label} />
+      </div>
+    </Tooltip>
   ) : (
-    <span style={style}>{label}</span>
+    <Tooltip tooltipText={path}>
+      <span style={style}>{label}</span>
+    </Tooltip>
   );
 };
 

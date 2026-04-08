@@ -23,6 +23,10 @@
 <div class="d-flex align-content-center @containerClasses container-inline-size"
     xpc-preview-outline="@Model.ComponentName">
     <figure class="figure clamp-width" style="@figureStyles">
+        @if (Model.ShowTitle)
+        {
+            <p class="fs-5 fw-semibold mb-1">@Model.Video.BasicItemTitle</p>
+        }
         <video class="w-100" controls>
             <source src="@Model.Video.VideoContentAsset.Url" type="@Model.Video.VideoContentAssetMimeType">
             Your browser does not support the video tag.

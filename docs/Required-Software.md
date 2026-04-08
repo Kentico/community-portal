@@ -14,7 +14,7 @@
 - [NVM for Windows](https://github.com/coreybutler/nvm-windows) to manage
   multiple installed versions of Node.js (recommended)
   - See `engines` in the solution's `package.json` files for specific version
-    requirements
+    requirements (the root `package.json` is the authoritative source)
 
 ## PowerShell
 
@@ -36,7 +36,6 @@
 ## Database
 
 - SQL Server 2022 or newer compatible database
-
   - [SQL Server 2022 on Docker](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-setup?view=sql-server-ver15)
     (cross-platform, preferred)
     - <https://community.kentico.com/blog/developing-with-xperience-by-kentico-on-macos>

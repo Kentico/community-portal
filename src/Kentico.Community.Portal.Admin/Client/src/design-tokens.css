@@ -1,0 +1,1094 @@
+:root {
+  /* ============================================
+   * PRIMITIVE COLORS (Palette)
+   * Source: _palette.scss
+   * ============================================ */
+
+  /* Kentico Orange */
+  --palette-kentico-orange-original: #f05a22;
+  --palette-white: #fff;
+  --palette-xperience-original: #7f09b7;
+
+  /* Grey Scale */
+  --palette-grey-10: #f5f5f5;
+  --palette-grey-20: #dfdfdf;
+  --palette-grey-30: #c6c6c6;
+  --palette-grey-40: #a8a8a8;
+  --palette-grey-50: #8c8c8c;
+  --palette-grey-60: #6f6f6f;
+  --palette-grey-70: #525252;
+  --palette-grey-80: #393939;
+  --palette-grey-90: #262626;
+  --palette-grey-100: #151515;
+
+  /* Warm Grey Scale */
+  --palette-warm-grey-10: #f5f3f2;
+  --palette-warm-grey-20: #e5dedc;
+  --palette-warm-grey-30: #d1c4bf;
+  --palette-warm-grey-40: #b6a59f;
+  --palette-warm-grey-50: #9c887f;
+  --palette-warm-grey-60: #7d6c65;
+  --palette-warm-grey-70: #5d504b;
+  --palette-warm-grey-80: #413733;
+  --palette-warm-grey-90: #2b2422;
+  --palette-warm-grey-100: #191413;
+
+  /* Neon Green */
+  --palette-neon-green-10: #e9f9dc;
+  --palette-neon-green-20: #c8eba8;
+  --palette-neon-green-30: #96da00;
+  --palette-neon-green-40: #7eb900;
+  --palette-neon-green-50: #689a00;
+  --palette-neon-green-60: #537b00;
+  --palette-neon-green-70: #3c5b00;
+  --palette-neon-green-80: #294000;
+  --palette-neon-green-90: #1a2a00;
+  --palette-neon-green-100: #0d1900;
+
+  /* Kontent Turquoise */
+  --palette-kontent-turquoise-10: #e3f8f4;
+  --palette-kontent-turquoise-20: #b4ebe2;
+  --palette-kontent-turquoise-30: #2cd5c4;
+  --palette-kontent-turquoise-40: #00bdac;
+  --palette-kontent-turquoise-50: #009d8e;
+  --palette-kontent-turquoise-60: #007d72;
+  --palette-kontent-turquoise-70: #005d54;
+  --palette-kontent-turquoise-80: #00413a;
+  --palette-kontent-turquoise-90: #002c27;
+  --palette-kontent-turquoise-100: #001916;
+
+  /* Sky Blue */
+  --palette-sky-blue-10: #ebf5ff;
+  --palette-sky-blue-20: #c6e3ff;
+  --palette-sky-blue-30: #8fcdff;
+  --palette-sky-blue-40: #00b3fc;
+  --palette-sky-blue-50: #0094d2;
+  --palette-sky-blue-60: #0677a8;
+  --palette-sky-blue-70: #00587e;
+  --palette-sky-blue-80: #003d5a;
+  --palette-sky-blue-90: #00293e;
+  --palette-sky-blue-100: #001826;
+
+  /* Ultramarine Blue */
+  --palette-ultramarine-blue-10: #f1f3ff;
+  --palette-ultramarine-blue-20: #d7deff;
+  --palette-ultramarine-blue-30: #b5c4ff;
+  --palette-ultramarine-blue-40: #87a5ff;
+  --palette-ultramarine-blue-50: #5984ff;
+  --palette-ultramarine-blue-60: #3d5dff;
+  --palette-ultramarine-blue-70: #003ddc;
+  --palette-ultramarine-blue-80: #00299f;
+  --palette-ultramarine-blue-90: #001a70;
+  --palette-ultramarine-blue-100: #000d48;
+
+  /* Majorelle Blue */
+  --palette-majorelle-blue-10: #f4f2ff;
+  --palette-majorelle-blue-20: #e0dcff;
+  --palette-majorelle-blue-30: #c8bfff;
+  --palette-majorelle-blue-40: #ac9bff;
+  --palette-majorelle-blue-50: #9176ff;
+  --palette-majorelle-blue-60: #774aff;
+  --palette-majorelle-blue-70: #5c00ef;
+  --palette-majorelle-blue-80: #4000ad;
+  --palette-majorelle-blue-90: #2b007a;
+  --palette-majorelle-blue-100: #19004f;
+
+  /* Xperience Violet */
+  --palette-xperience-violet-10: #f7f1ff;
+  --palette-xperience-violet-20: #ebd8ff;
+  --palette-xperience-violet-30: #dbb8ff;
+  --palette-xperience-violet-40: #cb8eff;
+  --palette-xperience-violet-50: #bd5eff;
+  --palette-xperience-violet-60: #af00fa;
+  --palette-xperience-violet-70: #7f09b7;
+  --palette-xperience-violet-80: #5d0088;
+  --palette-xperience-violet-90: #40005f;
+  --palette-xperience-violet-100: #27003d;
+
+  /* Rose */
+  --palette-rose-10: #fff0f4;
+  --palette-rose-20: #ffd5e0;
+  --palette-rose-30: #ffb0c8;
+  --palette-rose-40: #ff7fac;
+  --palette-rose-50: #ff3691;
+  --palette-rose-60: #d90074;
+  --palette-rose-70: #a30056;
+  --palette-rose-80: #75003c;
+  --palette-rose-90: #510028;
+  --palette-rose-100: #330017;
+
+  /* Red */
+  --palette-red-10: #fff0f0;
+  --palette-red-20: #ffd6d6;
+  --palette-red-30: #ffb3b3;
+  --palette-red-40: #ff8484;
+  --palette-red-50: #ff4547;
+  --palette-red-60: #e10007;
+  --palette-red-70: #a90004;
+  --palette-red-80: #790002;
+  --palette-red-90: #540001;
+  --palette-red-100: #360000;
+
+  /* Kentico Orange Scale */
+  --palette-kentico-orange-10: #fff1e9;
+  --palette-kentico-orange-20: #ffd7ca;
+  --palette-kentico-orange-30: #ffb59b;
+  --palette-kentico-orange-40: #ff8852;
+  --palette-kentico-orange-50: #f05a22;
+  --palette-kentico-orange-60: #c64300;
+  --palette-kentico-orange-70: #953000;
+  --palette-kentico-orange-80: #6a2000;
+  --palette-kentico-orange-90: #491300;
+  --palette-kentico-orange-100: #2e0900;
+
+  /* Yellow */
+  --palette-yellow-10: #fff1e4;
+  --palette-yellow-20: #ffd9ae;
+  --palette-yellow-30: #ffba31;
+  --palette-yellow-40: #db9d00;
+  --palette-yellow-50: #b78200;
+  --palette-yellow-60: #9e6200;
+  --palette-yellow-70: #764800;
+  --palette-yellow-80: #543100;
+  --palette-yellow-90: #392000;
+  --palette-yellow-100: #231200;
+
+  /* ============================================
+   * SEMANTIC COLORS (Decisions)
+   * Source: systemTheme.scss
+   * ============================================ */
+
+  /* Alert Colors */
+  --color-alert-active: #a90004;
+  --color-alert-background-high-emphasis: #e10007;
+  --color-alert-background-low-emphasis: linear-gradient(
+    124.56deg,
+    #fff0f0 28.01%,
+    #ffd6d6 202.32%
+  );
+  --color-alert-background-low-emphasis-hover: linear-gradient(
+    124.56deg,
+    #ffd6d6 28.01%,
+    #ffb3b3 202.32%
+  );
+  --color-alert-background-selected: #ffd6d6;
+  --color-alert-background-selected-hover: #ffb3b3;
+  --color-alert-focus: #e10007;
+  --color-alert-hover: #a90004;
+  --color-alert-icon: #e10007;
+  --color-alert-text: #e10007;
+
+  /* Background Colors */
+  --color-background-disabled: #dfdfdf;
+  --color-background-dragged: #dfdfdf;
+  --color-background-highlighted: #f4f2ff;
+  --color-background-selected-hover: #c8bfff;
+  --color-background-selected: #e0dcff;
+  --color-background-side-menu: #f5f3f2;
+  --color-background-button-on-dark-hover: #e5dedc;
+  --color-background-shelf-solid: #d6cac6; /* mix(warm-grey-20, warm-grey-30, 24%) */
+  --color-background-subtle: #f5f5f5; /* grey-10 — light surface offset */
+  --color-background-subtle-hover: #dfdfdf; /* grey-20 — hover on subtle surface */
+
+  /* Tag Background Colors */
+  --color-background-tag-default: #0677a8;
+  --color-background-tag-grey: #6f6f6f;
+  --color-background-tag-kentico-orange: #c64300;
+  --color-background-tag-kontent-turquoise: #007d72;
+  --color-background-tag-majorelle-blue: #774aff;
+  --color-background-tag-neon-green: #537b00;
+  --color-background-tag-rose: #d90074;
+  --color-background-tag-sky-blue: #0677a8;
+  --color-background-tag-ultramarine-blue: #3d5dff;
+  --color-background-tag-warm-grey: #7d6c65;
+  --color-background-tag-xperience-violet: #af00fa;
+  --color-background-tag-yellow: #9e6200;
+
+  /* Baritem Colors */
+  --color-baritem-header-background: #f7f1ff;
+
+  /* Border Colors */
+  --color-border-active: #151515;
+  --color-border-alert: #e10007;
+  --color-border-default: #8c8c8c;
+  --color-border-disabled: #c6c6c6;
+  --color-border-hover: #151515;
+  --color-border-low-emphasis: var(--palette-grey-20);
+  --color-border-warning: #9e6200;
+
+  /* Comment Colors */
+  --color-comment-background-selected: #ffba31;
+
+  /* Divider Colors */
+  --color-divider-default: #dfdfdf;
+
+  /* Focus Colors */
+  --color-focus-light: #fff;
+  --color-focus: #3d5dff;
+
+  /* Hover Colors */
+  --color-hover: rgba(156, 136, 127, 0.3); /* rgba(warm-grey-50, 0.3) */
+
+  /* Icon Colors */
+  --color-icon-default-on-dark: #fff;
+  --color-icon-default: #151515;
+  --color-icon-disabled: #8c8c8c;
+  --color-icon-highlighted: #5d0088;
+  --color-icon-large-default: #393939;
+  --color-icon-low-emphasis: #525252;
+
+  /* Info Colors */
+  --color-info-background-high-emphasis: #3d5dff;
+  --color-info-background-low-emphasis: linear-gradient(
+    124.56deg,
+    #f1f3ff 28.01%,
+    #e0dcff 202.32%
+  );
+  --color-info-icon: #3d5dff;
+  --color-info-text: #3d5dff;
+
+  /* Input Colors */
+  --color-input-background: transparent;
+  --color-input-border: #8c8c8c;
+
+  /* Link Colors */
+  --color-link-hover: #5d0088;
+  --color-link-visited-hover: #40005f;
+  --color-link-visited: #5d0088;
+  --color-link: #7f09b7;
+
+  /* Macro Colors */
+  --color-macro-background-highlighted: #ffd9ae;
+  --color-macro-background-selected: #ffba31;
+
+  /* Overlay Colors */
+  --color-overlay-background: rgba(57, 57, 57, 0.4); /* rgba(grey-80, 0.4) */
+
+  /* Paper Colors */
+  --color-paper-background: #fff;
+  --color-paper-border: #dfdfdf;
+
+  /* Product Colors */
+  --color-product-hover: #5d0088;
+  --color-product-selected-hover: #40005f;
+  --color-product-selected: #5d0088;
+  --color-product: #7f09b7;
+
+  /* Search Colors */
+  --color-search-background-highlighted: #ffd9ae;
+
+  /* Shelf Colors */
+  --color-shelf-background: rgba(
+    209,
+    196,
+    191,
+    0.24
+  ); /* rgba(warm-grey-30, 0.24) */
+
+  /* Skeleton Colors */
+  --color-skeleton-background: #f5f5f5;
+  --color-skeleton-content: linear-gradient(135deg, #c6c6c6, #dfdfdf);
+
+  /* Success Colors */
+  --color-success-background-high-emphasis: #007d72;
+  --color-success-background-low-emphasis: linear-gradient(
+    124.56deg,
+    #e3f8f4 28.01%,
+    #b4ebe2 202.32%
+  );
+  --color-success-icon: #007d72;
+  --color-success-text: #007d72;
+
+  /* Suggestion Colors */
+  --color-suggestion-background-highlighted: #ffd5e0;
+  --color-suggestion-background-selected: #ffb0c8;
+
+  /* Switch Colors */
+  --color-switch-off-background-hovered: #6f6f6f;
+  --color-switch-off-background: #8c8c8c;
+  --color-switch-on-disabled-background: #ebd8ff;
+
+  /* Tab Colors */
+  --color-tab-icon-hover: #262626;
+  --color-tab-icon-selected: #151515;
+  --color-tab-icon: #393939;
+  --color-tab-text-hover: #262626;
+  --color-tab-text-selected: #151515;
+  --color-tab-text: #393939;
+
+  /* Text Colors */
+  --color-text-default-on-dark: #fff;
+  --color-text-default-on-light: #151515;
+  --color-text-disabled: #8c8c8c;
+  --color-text-high-emphasis: #5d0088;
+  --color-text-hint: #6f6f6f;
+  --color-text-low-emphasis: #525252;
+
+  /* Toggle Colors */
+  --color-toggle-icon-hover: #393939;
+  --color-toggle-icon-selected: #fff;
+  --color-toggle-icon: #525252;
+  --color-toggle-text-hover: #393939;
+  --color-toggle-text-selected: #fff;
+  --color-toggle-text: #525252;
+
+  /* Tooltip Colors */
+  --color-tooltip-background: #151515;
+  --color-tooltip-text: #fff;
+  --color-tooltip-icon: #8c8c8c;
+
+  /* Warning Colors */
+  --color-warning-background-high-emphasis: #db9d00;
+  --color-warning-background-low-emphasis: linear-gradient(
+    124.56deg,
+    #fff1e4 28.01%,
+    #ffd6d6 202.32%
+  );
+  --color-warning-icon: #9e6200;
+  --color-warning-text: #9e6200;
+
+  /* ============================================
+   * GRADIENTS
+   * Source: systemTheme.scss, _paletteGradients.scss
+   * ============================================ */
+
+  /* Desktop Background */
+  --gradient-background-desk:
+    linear-gradient(0deg, rgba(198, 67, 0, 0.02), rgba(198, 67, 0, 0.02)),
+    linear-gradient(107.51deg, #fff -22.1%, #f5f3f2 37.88%, #e5dedc 229.14%);
+
+  /* Product Gradients */
+  --gradient-product: linear-gradient(
+    303.62deg,
+    #c64300 -109.97%,
+    #7f09b7 87.4%
+  );
+  --gradient-product-hover: linear-gradient(
+    303.62deg,
+    #953000 -109.97%,
+    #5d0088 87.4%
+  );
+
+  /* Palette Gradients - Very Light */
+  --gradient-very-light-warm-grey: linear-gradient(135deg, #e5dedc, #d1c4bf);
+  --gradient-medium: linear-gradient(135deg, #a8a8a8, #8c8c8c);
+
+  /* Dark Gradients (60 → 70) */
+  --gradient-dark-grey: linear-gradient(135deg, #6f6f6f, #525252);
+  --gradient-dark-warm-grey: linear-gradient(135deg, #7d6c65, #5d504b);
+  --gradient-dark-neon-green: linear-gradient(135deg, #537b00, #3c5b00);
+  --gradient-dark-kontent-turquoise: linear-gradient(135deg, #007d72, #005d54);
+  --gradient-dark-sky-blue: linear-gradient(135deg, #0677a8, #00587e);
+  --gradient-dark-ultramarine-blue: linear-gradient(135deg, #3d5dff, #003ddc);
+  --gradient-dark-majorelle-blue: linear-gradient(135deg, #774aff, #5c00ef);
+  --gradient-dark-xperience-violet: linear-gradient(135deg, #af00fa, #7f09b7);
+  --gradient-dark-rose: linear-gradient(135deg, #d90074, #a30056);
+  --gradient-dark-red: linear-gradient(135deg, #e10007, #a90004);
+  --gradient-dark-kentico-orange: linear-gradient(135deg, #c64300, #953000);
+  --gradient-dark-yellow: linear-gradient(135deg, #9e6200, #764800);
+
+  /* Light Gradients (30 → 40) */
+  --gradient-light-grey: linear-gradient(135deg, #c6c6c6, #a8a8a8);
+  --gradient-light-warm-grey: linear-gradient(135deg, #d1c4bf, #b6a59f);
+  --gradient-light-neon-green: linear-gradient(135deg, #96da00, #7eb900);
+  --gradient-light-kontent-turquoise: linear-gradient(135deg, #2cd5c4, #00bdac);
+  --gradient-light-sky-blue: linear-gradient(135deg, #8fcdff, #00b3fc);
+  --gradient-light-ultramarine-blue: linear-gradient(135deg, #b5c4ff, #87a5ff);
+  --gradient-light-majorelle-blue: linear-gradient(135deg, #c8bfff, #ac9bff);
+  --gradient-light-xperience-violet: linear-gradient(135deg, #dbb8ff, #cb8eff);
+  --gradient-light-rose: linear-gradient(135deg, #ffb0c8, #ff7fac);
+  --gradient-light-red: linear-gradient(135deg, #ffb3b3, #ff8484);
+  --gradient-light-kentico-orange: linear-gradient(135deg, #ffb59b, #ff8852);
+  --gradient-light-yellow: linear-gradient(135deg, #ffba31, #db9d00);
+
+  /* ============================================
+   * DIMENSIONS
+   * Source: dimensions.scss
+   * ============================================ */
+
+  --grid-unit: 8px;
+
+  /* ============================================
+   * SPACING
+   * Source: spacing.scss
+   * Based on: $grid-unit = 8px
+   * ============================================ */
+
+  --spacing-micro: 1px; /* 0.125 * 8 */
+  --spacing-xxs: 2px; /* 0.25 * 8 */
+  --spacing-xs: 4px; /* 0.5 * 8 */
+  --spacing-s: 8px; /* 1 * 8 */
+  --spacing-m: 12px; /* 1.5 * 8 */
+  --spacing-l: 16px; /* 2 * 8 */
+  --spacing-xl: 24px; /* 3 * 8 */
+  --spacing-xxl: 32px; /* 4 * 8 */
+  --spacing-xxxl: 40px; /* 5 * 8 */
+  --spacing-xxxxl: 48px; /* 6 * 8 */
+
+  /* Derived Spacing */
+  --spacing-element-label: 10px; /* 1.25 * 8 */
+  --spacing-element-caption: 8px;
+  --spacing-element-edge-vertical: 24px;
+  --spacing-element-edge-horizontal: 24px;
+  --spacing-popup-distance: 4px;
+  --spacing-popup-large: 32px;
+  --spacing-input-small: 8px;
+  --spacing-input-large: 16px;
+  --spacing-between-rows: 2px;
+  --spacing-between-tags: 4px;
+  --spacing-between-buttons: 12px;
+  --spacing-toggle-vertical: 8px;
+  --spacing-toggle-horizontal: 12px;
+  --spacing-hierarchy-indent: 24px;
+  --spacing-card: 24px;
+
+  /* ============================================
+   * ICON SIZES
+   * Source: size.scss
+   * ============================================ */
+
+  --icon-xxs: 8px; /* 1 * 8 */
+  --icon-xs: 12px; /* 1.5 * 8 */
+  --icon-s: 16px; /* 2 * 8 */
+  --icon-m: 20px; /* 2.5 * 8 */
+  --icon-l: 24px; /* 3 * 8 */
+  --icon-xl: 32px; /* 4 * 8 */
+  --icon-xxl: 40px; /* 5 * 8 */
+
+  /* Component Sizes */
+  --size-xs: 24px; /* $spacing-XL */
+  --size-s: 32px; /* $spacing-XXL */
+  --size-m: 40px; /* $spacing-XXXL */
+  --size-l: 48px; /* $spacing-XXXXL */
+  --size-guard: 96px; /* 12 * 8 */
+
+  /* ============================================
+   * BORDER
+   * Source: border.scss
+   * ============================================ */
+
+  --border-width-default: 1px;
+  --border-width-warning: 2px;
+  --border-width-error: 2px;
+  --border-width-input: 1px;
+  --border-style-default: solid;
+  --width-focus: 2px;
+
+  /* Border Radius */
+  --radius-l: 16px; /* 2 * 8 */
+  --radius-m: 8px; /* 1 * 8 */
+  --radius-s: 4px; /* 0.5 * 8 */
+  --radius-pill: 5000px;
+
+  /* Focus Ring */
+  --focus-ring-width: 3px; /* width-focus + border-width-default */
+
+  /* ============================================
+   * SHADOWS
+   * Source: shadows.scss
+   * Note: grey-90 = #262626 = rgb(38, 38, 38)
+   * ============================================ */
+
+  --shadow-xs: 0 0 8px rgba(38, 38, 38, 0.03);
+  --shadow-s: 0 8px 14px rgba(38, 38, 38, 0.08), 0 0 8px rgba(38, 38, 38, 0.03);
+  --shadow-m: 0 8px 16px rgba(38, 38, 38, 0.16), 0 0 8px rgba(38, 38, 38, 0.03);
+  --shadow-l: 0 8px 32px rgba(38, 38, 38, 0.24), 0 0 8px rgba(38, 38, 38, 0.03);
+  --shadow-sticky-header: 16px 8px 16px -16px #262626;
+
+  /* Glow */
+  --glow-primary:
+    0 1px 8px rgba(203, 142, 255, 0.4), 0 5px 11px rgba(189, 94, 255, 0.1);
+
+  /* Focus Shadows */
+  --focus-ring-inner: 0 0 0 1px #fff;
+  --focus-ring-outer-default: 0 0 0 3px #3d5dff;
+  --focus-ring-outer-alert: 0 0 0 3px #e10007;
+  --focus-default: 0 0 0 1px #fff, 0 0 0 3px #3d5dff;
+  --focus-alert: 0 0 0 1px #fff, 0 0 0 3px #e10007;
+
+  /* ============================================
+   * Z-INDEX
+   * Source: zindex.scss
+   * ============================================ */
+
+  --z-index-hidden: -1;
+  --z-index-visible: 0;
+  --z-index-elevated: 1;
+  --z-index-dnd-overlay: 2;
+  --z-index-rte: 10;
+  --z-index-rte-popup: 20;
+  --z-index-sticky-header: 100;
+  --z-index-drop-down: 200;
+  --z-index-statusbar: 1000;
+  --z-index-dialog: 2000;
+  --z-index-sidepanel: 3000;
+  --z-index-sidepanel-dialog: 3500;
+  --z-index-application-menu: 4000;
+  --z-index-tooltip: 5000;
+  --z-index-snackbar: 6000;
+  --z-index-prompt: 10000;
+
+  /* ============================================
+   * TYPOGRAPHY
+   * Source: typography.scss
+   * ============================================ */
+
+  /* Font Families */
+  --typeface-product-primary: 'GT Walsheim', sans-serif;
+  --typeface-product-secondary: 'Inter', sans-serif;
+
+  /* Font Weights */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Font Sizes */
+  --font-size-xxs: 9px;
+  --font-size-xs: 11px;
+  --font-size-s: 12px;
+  --font-size-m: 14px;
+  --font-size-l: 16px;
+  --font-size-xl: 24px;
+  --font-size-xxxxl: 48px;
+
+  /* Line Heights */
+  --line-xxs: 10px;
+  --line-xs: 12px;
+  --line-s: 14px;
+  --line-m: 16px;
+  --line-l: 20px;
+  --line-xl: 24px;
+  --line-xxl: 32px;
+  --line-xxxxxl: 56px;
+  --line-height-coefficient: 1.1;
+
+  /* Letter Spacing */
+  --letter-spacing-l: 0.1ch;
+  --letter-spacing-m: 0.08ch;
+
+  /* ============================================
+   * MEDIA BREAKPOINTS
+   * Source: mediaBreakpoints.scss
+   * ============================================ */
+
+  --media-sm-max: 1365.98px;
+  --media-md-min: 1366px;
+  --media-md-max: 1919.98px;
+  --media-lg-min: 1920px;
+  --media-desktop-min: 600px;
+  --media-mobile-max: 599.98px;
+
+  /* ============================================
+   * APP TEMPLATE SPECIFIC TOKENS
+   * Source: templates/app/shared.scss
+   * ============================================ */
+
+  --sidebar-width: 96px; /* 12 * 8 */
+  --application-list-width: 400px; /* 50 * 8 */
+  --box-height: 48px; /* 6 * 8 */
+  --sidebar-margin: 32px; /* 4 * 8 */
+  --color-sidepanel-background: var(--color-paper-background);
+
+  /* Screen Breakpoints */
+  --screen-breakpoint-xs: 320px;
+  --screen-breakpoint-m: 768px;
+  --screen-breakpoint-l: 1200px;
+  --screen-breakpoint-xl: 1920px;
+  --screen-breakpoint-desktop: 600px;
+  --screen-breakpoint-mobile: 599.98px;
+
+  /* ============================================
+   * ANIMATIONS
+   * ============================================ */
+
+  --transition-duration-fast: 150ms; /* project-defined, no source equivalent */
+  --transition-duration-default: 250ms;
+  --transition-duration-normal: 200ms; /* project-defined, no source equivalent */
+  --transition-duration-slow: 300ms; /* project-defined, no source equivalent */
+  --transition-duration-expand: 500ms;
+  --transition-timing-default: cubic-bezier(0.23, 1, 0.32, 1);
+  --transition-250: 250ms cubic-bezier(0.23, 1, 0.32, 1); /* shorthand: duration + easing combined */
+
+  /* ============================================
+   * SHORTHAND VARIABLES
+   * Simplified access to common tokens
+   * ============================================ */
+
+  /* Grey Scale Shortcuts */
+  --grey-10: var(--palette-grey-10);
+  --grey-20: var(--palette-grey-20);
+  --grey-30: var(--palette-grey-30);
+  --grey-40: var(--palette-grey-40);
+  --grey-50: var(--palette-grey-50);
+  --grey-60: var(--palette-grey-60);
+  --grey-70: var(--palette-grey-70);
+  --grey-80: var(--palette-grey-80);
+  --grey-90: var(--palette-grey-90);
+  --grey-100: var(--palette-grey-100);
+
+  /* Warm Grey Shortcuts */
+  --warm-grey-10: var(--palette-warm-grey-10);
+  --warm-grey-20: var(--palette-warm-grey-20);
+  --warm-grey-30: var(--palette-warm-grey-30);
+
+  /* Spacing Shortcuts (uppercase) */
+  --spacing-S: var(--spacing-s);
+  --spacing-M: var(--spacing-m);
+  --spacing-L: var(--spacing-l);
+  --spacing-XL: var(--spacing-xl);
+  --spacing-XXL: var(--spacing-xxl);
+
+  /* Line Height Shortcuts */
+  --line-height-M: var(--line-m);
+  --line-height-m: var(--line-m);
+
+  /* Font Family Shortcuts */
+  --font-family-heading: var(--typeface-product-primary);
+  --font-family-inter: var(--typeface-product-secondary);
+  --font-family-default: var(--typeface-product-secondary);
+
+  /* Font Weight Shortcuts */
+  --font-weight-regular: var(--weight-regular);
+  --font-weight-medium: var(--weight-medium);
+  --font-weight-semibold: var(--weight-semibold);
+  --font-weight-bold: var(--weight-bold);
+
+  /* ============================================
+   * TILE COMPONENT TOKENS
+   * Used by ActionTile, BaseTile, OptionTile, UploadTile
+   * ============================================ */
+
+  /* ActionTile Sizes */
+  --tile-action-x-small-height: 44px; /* 5.5 * 8 */
+  --tile-action-x-small-width: 228px; /* 28.5 * 8 */
+  --tile-action-small: 88px; /* 11 * 8 */
+  --tile-action-large: 128px; /* 16 * 8 */
+
+  /* BaseTile Dimensions (selectable variant) */
+  --tile-selectable-min-width: 140px; /* 17.5 * 8 */
+  --tile-selectable-max-width: 218px; /* 27.25 * 8 */
+
+  /* BaseTile Dimensions (preview variant) */
+  --tile-preview-min-width: 210px; /* 26.25 * 8 */
+  --tile-preview-max-width: 323px; /* 40.375 * 8 */
+
+  /* OptionTile */
+  --tile-option-default-width: 160px; /* 20 * 8 */
+
+  /* UploadTile */
+  --tile-upload-compact-min-width: 140px; /* 17.5 * 8 */
+  --tile-upload-compact-max-width: 218px; /* 27.25 * 8 */
+  --tile-upload-full-min-width: 210px; /* 26.25 * 8 */
+  --tile-upload-full-max-width: 323px; /* 40.375 * 8 */
+
+  /* ImagePreview Aspect Ratio */
+  --tile-preview-aspect-ratio: 56.25%; /* 16:9 ratio */
+
+  /* Tile Colors */
+  --tile-toolbar-background: rgb(255 255 255 / 90%);
+  --tile-dragged-opacity: 0.4;
+
+  /* ============================================
+   * MENU COMPONENT TOKENS
+   * Used by HorizontalActionMenu, VerticalMenu, VerticalTab, ActionMenuDivider
+   * ============================================ */
+
+  /* Menu Dropdown Dimensions */
+  --menu-dropdown-min-width: 160px; /* 20 * 8 */
+  --menu-dropdown-max-height: 320px; /* 40 * 8 - scrollable content limit */
+
+  /* Vertical Menu */
+  --menu-vertical-min-width: 200px; /* 25 * 8 - minimum width for vertical menus */
+  --menu-vertical-item-height: 40px; /* 5 * 8 - standard item height */
+
+  /* Horizontal Action Menu */
+  --menu-horizontal-gap: 4px; /* spacing between horizontal menu items */
+  --menu-horizontal-item-min-width: 32px; /* minimum touchable width */
+
+  /* Vertical Tab */
+  --tab-vertical-indicator-width: 3px; /* active state indicator width */
+  --tab-vertical-height: 40px; /* 5 * 8 - standard tab height */
+  --tab-vertical-padding-horizontal: 16px; /* left/right padding */
+  --tab-vertical-padding-vertical: 8px; /* top/bottom padding */
+
+  /* Menu Divider */
+  --menu-divider-margin-vertical: 16px; /* margin above/below divider */
+  --menu-divider-margin-horizontal: 0; /* margin left/right of divider */
+
+  /* Submenu */
+  --submenu-offset: 4px; /* offset from parent menu */
+
+  /* ============================================
+   * TABLE COMPONENT TOKENS
+   * Used by Table, TableRow, TableHeader, SkeletonBody
+   * Source: Table component SCSS files
+   * ============================================ */
+
+  /* Table Row Dimensions */
+  --table-row-height: var(--size-l); /* 48px - standard row height */
+  --table-header-height: var(--size-l); /* 48px - header row height */
+  --table-cell-padding-horizontal: var(
+    --spacing-l
+  ); /* 16px - left/right cell padding */
+  --table-cell-padding-vertical: 0; /* cells use line-height for centering */
+  --table-row-gap: var(--spacing-between-rows); /* 2px - gap between rows */
+
+  /* Table Row Colors */
+  --table-row-background: var(
+    --color-paper-background
+  ); /* white - default row background */
+  --table-row-background-hover: var(
+    --color-hover
+  ); /* warm-grey-50 at 30% - hover state */
+  --table-row-background-selected: var(
+    --color-background-selected
+  ); /* majorelle-blue-20 - selected row */
+  --table-row-background-selected-hover: var(
+    --color-background-selected-hover
+  ); /* majorelle-blue-30 - selected+hover */
+  --table-row-background-disabled: var(
+    --color-background-disabled
+  ); /* grey-20 - disabled rows */
+  --table-row-background-skeleton: var(
+    --color-skeleton-background
+  ); /* grey-10 - skeleton loading */
+  --table-row-background-invalid: var(
+    --color-alert-background-selected
+  ); /* red-20 - validation error */
+  --table-row-background-invalid-hover: var(
+    --color-alert-background-selected-hover
+  ); /* red-30 - invalid+hover */
+
+  /* Table Row Border */
+  --table-row-border-color: var(--color-paper-border); /* grey-20 */
+  --table-row-border-width: var(--border-width-default); /* 1px */
+  --table-row-border-radius: var(--radius-m); /* 8px */
+
+  /* Table Header Colors */
+  --table-header-text-color: var(
+    --color-text-low-emphasis
+  ); /* grey-70 - header text */
+  --table-header-text-color-sorted: var(
+    --color-text-default-on-light
+  ); /* grey-100 - sorted column */
+  --table-header-background-hover: var(
+    --color-hover
+  ); /* warm-grey-50 at 30% - sortable header hover */
+
+  /* Table Cell Typography */
+  --table-cell-line-height: var(
+    --size-l
+  ); /* 48px - matches row height for vertical centering */
+  --table-cell-font-family: var(--typeface-product-primary); /* GT Walsheim */
+  --table-cell-font-size: var(--font-size-m); /* 14px - label-L equivalent */
+  --table-cell-font-weight: var(--weight-regular); /* 400 */
+
+  /* Table Scroll Shadow (for sticky columns) */
+  --table-scroll-shadow-width: 24px; /* width of scroll indicator shadows */
+  --table-scroll-shadow-color: rgba(
+    57,
+    57,
+    57,
+    0.1
+  ); /* grey-80 at 10% opacity */
+  --table-scroll-shadow-transition: opacity 0.3s ease-in-out;
+
+  /* Skeleton Animation */
+  --skeleton-content-background: var(
+    --color-skeleton-content
+  ); /* gradient: grey-30 to grey-20 */
+  --skeleton-animation-duration: 1s; /* pop-in animation duration */
+  --skeleton-animation-delay: 0.55s; /* delay before animation starts */
+  --skeleton-text-height: var(
+    --spacing-m
+  ); /* 12px - skeleton text bar height */
+  --skeleton-circle-size: var(
+    --spacing-xl
+  ); /* 24px - skeleton circle diameter */
+
+  /* ============================================
+   * SHARED COMPONENT TOKENS
+   * Used by components extracted from shared-components
+   * ============================================ */
+
+  /* Dialog Components */
+  --confirmation-dialog-max-width: 600px; /* max-width for ConfirmationDialog */
+
+  /* VirtualGrid Component */
+  --virtual-grid-row-height: 200px; /* default row height for virtualized grid */
+
+  /* ConditionBuilder Component */
+  --condition-builder-component-width: 264px; /* 33 * 8px - width for condition inputs */
+
+  /* ============================================
+   * FORM COMPONENT TOKENS
+   * Used by form-component-border-* mixins
+   * ============================================ */
+
+  /* Form Component Border */
+  --form-component-border-radius: 20px; /* 2.5 * 8 */
+  --form-component-width: 300px; /* 37.5 * 8 */
+
+  /* ============================================
+   * TEMPLATE LAYOUT TOKENS
+   * Used by page templates
+   * ============================================ */
+
+  /* Content Layout */
+  --template-content-max-width: 1200px; /* max width for content area */
+  --template-sidebar-width: 300px; /* default sidebar width */
+  --template-gap-default: var(--spacing-xl); /* default gap between sections */
+
+  /* ============================================
+   * ADDITIONAL TOKENS FOR TEMPLATES
+   * Added during template migration
+   * ============================================ */
+
+  /* Border Radius Aliases */
+  --border-radius-xs: var(--radius-s);
+  --border-radius-s: var(--radius-s);
+  --border-radius-small: var(--radius-s);
+  --border-radius-m: var(--radius-m);
+  --border-radius-medium: var(--radius-m);
+
+  /* Grey Color Aliases */
+  --color-grey-5: #fafafa;
+  --color-grey-10: var(--palette-grey-10);
+  --color-grey-20: var(--palette-grey-20);
+  --color-grey-30: var(--palette-grey-30);
+  --color-grey-40: var(--palette-grey-40);
+  --color-grey-50: var(--palette-grey-50);
+  --color-grey-60: var(--palette-grey-60);
+  --color-grey-70: var(--palette-grey-70);
+  --color-grey-80: var(--palette-grey-80);
+  --color-grey-100: var(--palette-grey-100);
+  --color-grey-120: #0a0a0a;
+  --color-grey-140: #050505;
+
+  /* Blue Color Aliases */
+  --color-blue-10: var(--palette-ultramarine-blue-10);
+  --color-blue-20: var(--palette-ultramarine-blue-20);
+  --color-blue-50: var(--palette-ultramarine-blue-50);
+  --color-blue-100: var(--palette-ultramarine-blue-100);
+  --color-red-70: var(--palette-red-70);
+
+  /* Background Color Aliases */
+  --color-background-primary: var(--color-paper-background);
+  --color-background-primary-default: var(--color-paper-background);
+  --color-background-primary-hover: var(--color-background-subtle-hover);
+  --color-background-secondary: var(--color-background-subtle);
+  --color-background-hover: var(--color-background-subtle-hover);
+  --color-background-alert: var(--color-alert-background-high-emphasis);
+  --color-background-error: var(--palette-red-10);
+  --color-error-background: var(--palette-red-10);
+  --color-info-background: var(--palette-ultramarine-blue-10);
+  --color-success-background: var(--palette-kontent-turquoise-10);
+
+  /* Error and Status Colors */
+  --color-error: var(--palette-red-60);
+  --color-error-light: var(--palette-red-30);
+  --color-success: var(--color-success-text);
+  --color-primary: var(--color-product);
+  --color-primary-light: var(--palette-xperience-violet-30);
+
+  /* Text Color Aliases */
+  --color-text-default: var(--color-text-default-on-light);
+  --color-text-default-secondary: var(--color-text-low-emphasis);
+  --color-text-primary: var(--color-text-high-emphasis);
+  --color-text-secondary: var(--color-text-low-emphasis);
+  --color-text-error: var(--color-alert-text);
+
+  /* Border and Focus Colors */
+  --color-border-focus: var(--color-focus);
+  --color-focus-ring: var(--color-focus);
+
+  /* Font Family Aliases */
+  --font-family: var(--typeface-product-secondary);
+  --font-family-base: var(--typeface-product-secondary);
+
+  /* Font Size Aliases */
+  --font-size-body-m: var(--font-size-m);
+  --font-size-body-s: var(--font-size-s);
+  --font-size-headline-s: var(--font-size-l);
+  --font-size-label-l: var(--font-size-m);
+  --font-size-label-m: var(--font-size-s);
+  --size-font-body-m: var(--font-size-m);
+
+  /* Font Weight Aliases */
+  --font-weight-semi-bold: var(--weight-semibold);
+
+  /* Line Height Aliases */
+  --line-height-xs: var(--line-xs);
+  --line-height-s: var(--line-s);
+  --line-height-l: var(--line-l);
+  --line-height-m: var(--line-m);
+  --line-height-label-s: var(--line-s);
+  --line-height-label-l: var(--line-l);
+
+  /* Letter Spacing Aliases */
+  --letter-spacing-headline: var(--letter-spacing-m);
+
+  /* Icon Size Aliases */
+  --icon-size-s: var(--icon-s);
+
+  /* Shadow Aliases */
+  --shadow-small: var(--shadow-s);
+  --shadow-large: var(--shadow-l);
+
+  /* Z-Index Aliases */
+  --z-index-sticky: var(--z-index-sticky-header);
+  --z-index-modal: var(--z-index-dialog);
+
+  /* Layout Tokens */
+  --application-menu-mobile-height: 56px;
+  --small-status-bar-height: 32px;
+
+  /* ============================================
+   * WEBSITE COMPONENT TOKENS
+   * Used by Section 4.1 Websites components
+   * ============================================ */
+
+  /* Form Component Border (additional from website components) */
+  --form-component-border-style: dashed;
+  --form-component-min-width: 100%;
+
+  /* ContentTree Tokens */
+  --content-tree-indent: var(--spacing-hierarchy-indent);
+  --content-tree-row-height: var(--size-m);
+  --content-tree-icon-size: var(--icon-s);
+
+  /* PermissionMatrix Tokens */
+  --permission-matrix-cell-min-width: 120px;
+  --permission-matrix-header-height: var(--size-s);
+
+  /* WebPagePanel Tokens */
+  --web-page-panel-width: 104px; /* 13 * grid-unit */
+  --web-page-panel-preview-height: 180px;
+
+  /* WebPageList Tokens (from WebPageSelectorFormComponent) */
+  --web-page-list-tag-height: var(--spacing-xxl);
+  --web-page-list-tag-gap: var(--spacing-s);
+  --web-page-list-max-rows: 8;
+
+  /* UrlList Tokens */
+  --url-list-item-padding: var(--spacing-s);
+  --url-list-copy-button-size: var(--size-xs);
+
+  /* ShareablePreview Tokens */
+  --shareable-preview-max-width: 600px;
+  --shareable-preview-qr-size: 200px;
+
+  /* PropertiesPage Tokens */
+  --properties-page-sidebar-width: 320px;
+  --properties-page-content-max-width: 800px;
+
+  /* ============================================
+   * TYPOGRAPHY ALIASES FOR WEBSITE COMPONENTS
+   * Used by UrlList, PropertiesPage
+   * ============================================ */
+
+  /* Typography size aliases */
+  --typography-body-size: var(--font-size-m);
+  --typography-label-size: var(--font-size-s);
+  --typography-caption-size: var(--font-size-xs);
+  --typography-weight-medium: var(--font-weight-medium);
+  --typography-weight-semibold: var(--font-weight-semibold);
+
+  /* Text medium composite */
+  --text-m-font-size: var(--font-size-m);
+  --text-m-font-weight: var(--font-weight-regular);
+
+  /* ============================================
+   * ADDITIONAL ALIASES FOR WEBSITE COMPONENTS
+   * QA Session 3 Fix
+   * ============================================ */
+
+  /* Border Radius Aliases (website overrides) */
+  --border-radius-xs: 2px;
+  --radius-default: var(--radius-m);
+
+  /* Background Color Aliases (website additions) */
+  --color-background-default: var(--color-paper-background);
+  --color-background-error-on-light: rgba(225, 0, 7, 0.08);
+  --color-background-hover: var(--color-hover);
+  --color-background-info-on-light: rgba(0, 179, 252, 0.12);
+  --color-background-interactive-hover-on-light: var(
+    --color-background-subtle-hover
+  );
+  --color-background-primary: var(--color-product);
+  --color-background-primary-on-light: rgba(127, 9, 183, 0.08);
+  --color-background-primary-subtle: var(--color-background-highlighted);
+  --color-background-secondary-on-light: var(--palette-grey-20);
+  --color-background-tag-success: var(--color-success-background-high-emphasis);
+  --color-background-warning: var(--color-warning-background-high-emphasis);
+
+  /* Border Color Aliases */
+  --color-border-default-on-light: var(--color-border-default);
+  --color-border-input-default: var(--color-input-border);
+
+  /* Icon Color Aliases */
+  --color-icon-primary: var(--color-product);
+  --color-icon-warning: var(--color-warning-icon);
+
+  /* Status Color Aliases */
+  --color-status-info: var(--color-info-icon);
+  --color-status-neutral: var(--palette-grey-50);
+  --color-status-success: var(--color-success-icon);
+  --color-status-warning: var(--color-warning-icon);
+
+  /* Text Color Aliases (website additions) */
+  --color-text-alert: var(--color-alert-text);
+  --color-text-error-on-light: var(--color-alert-text);
+  --color-text-info-on-light: #0094d2;
+  --color-text-link-default-on-light: var(--color-link);
+  --color-text-placeholder: var(--color-text-hint);
+  --color-text-secondary-on-light: var(--color-text-low-emphasis);
+
+  /* Typography Aliases (website additions) */
+  --font-family-mono: monospace;
+  --font-family-primary: var(--typeface-product-primary);
+
+  /* Animation Aliases */
+  --duration-fast: var(--transition-duration-fast);
+  --easing-standard: var(--transition-timing-default);
+  --transition-timing-function: var(--transition-timing-default);
+
+  /* Spacing Aliases */
+  --spacing-2xs: var(--spacing-xxs);
+
+  /* Line Height */
+  --text-m-line-height: var(--line-l);
+
+  /* ============================================
+   * DIGITAL MARKETING COMPONENT TOKENS
+   * Used by Section 4.3 Digital Marketing components
+   * Source: kentico-xperience-admin-digital-marketing
+   * ============================================ */
+
+  /* SidePanel Tokens (Digital Marketing) */
+  --dm-sidepanel-default-width: 600px; /* Digital Marketing default side panel width */
+
+  /* AutomationBuilder Tokens */
+  --automation-node-width: 260px; /* Base width for automation nodes */
+  --automation-node-height-default: 62px; /* Node without statistics */
+  --automation-node-height-stats: 77px; /* Node with statistics */
+  --automation-placeholder-height: 46px; /* Placeholder node height */
+  --automation-edge-button-opacity: 0.2; /* Edge button default opacity */
+  --automation-edge-button-hover-opacity: 1; /* Edge button hover opacity */
+
+  /* AutomationBuilder Colors */
+  --automation-node-background: var(--color-paper-background);
+  --automation-node-border: var(--color-paper-border);
+  --automation-node-shadow: var(--shadow-s);
+  --automation-node-selected-background: var(--color-background-selected);
+  --automation-placeholder-border: var(--color-border-default);
+  --automation-placeholder-disabled-border: var(--color-border-disabled);
+  --automation-placeholder-color: var(--color-product);
+  --automation-placeholder-disabled-color: var(--color-text-disabled);
+
+  /* CustomerJourneys Tokens */
+  --customer-journey-stage-gap: var(
+    --spacing-between-rows
+  ); /* Gap between stage rows */
+}

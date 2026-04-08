@@ -1,6 +1,6 @@
 using Kentico.Community.Portal.Web.Components.PageBuilder.Sections.Unstyled;
 using Kentico.PageBuilder.Web.Mvc;
-using XperienceCommunity.KenticoComponentIcons;
+using Kentico.Xperience.ComponentIcons;
 
 [assembly: RegisterSection(
     identifier: UnstyledSection.IDENTIFIER,

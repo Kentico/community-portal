@@ -12,6 +12,8 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Heading</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
+          <includeintranslation>False</includeintranslation>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
@@ -22,6 +24,7 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Message</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
           <includeintranslation>True</includeintranslation>
         </properties>
         <settings>
@@ -30,13 +33,21 @@
         <validationrulesdata>
           <ValidationRuleConfiguration>
             <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
-            <RuleValues />
+            <RuleValues>
+              <ErrorMessage />
+            </RuleValues>
           </ValidationRuleConfiguration>
         </validationrulesdata>
         <additionalactionsdata>
           <AdditionalActionConfiguration>
             <AdditionalActionIdentifier>Kentico.Administration.AiraTextRefinement</AdditionalActionIdentifier>
             <AdditionalActionValues />
+          </AdditionalActionConfiguration>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextGeneration</AdditionalActionIdentifier>
+            <AdditionalActionValues>
+              <FieldDescription />
+            </AdditionalActionValues>
           </AdditionalActionConfiguration>
         </additionalactionsdata>
       </field>

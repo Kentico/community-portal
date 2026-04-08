@@ -4,7 +4,7 @@
     <UserSecretsId>3df470e6-54c4-41d8-b8f0-36955d9433d2</UserSecretsId>
     <!-- This ensures Lucene index file modifications do not cause a hot reload when using dotnet watch -->
     <!-- See https://github.com/dotnet/sdk/issues/44910#issuecomment-3533124997 -->
-    <DefaultItemExcludes>$(DefaultItemExcludes);**/App_Data/**;**/$StorageAssets/**;</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);**/App_Data/**;**/$StorageAssets/**;**/node_modules/**;</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +16,6 @@
     <PackageReference Include="Htmx" />
     <PackageReference Include="Htmx.TagHelpers" />
     <PackageReference Include="Magick.NET-Q8-AnyCPU" />
-    <PackageReference Include="MimeKit" />
     <PackageReference Include="Azure.Storage.Queues" />
     <PackageReference Include="Kentico.Xperience.Admin" />
     <PackageReference Include="Kentico.Xperience.AzureStorage" />
@@ -41,7 +40,7 @@
     <PackageReference Include="Vite.AspNetCore" />
     <PackageReference Include="Kentico.Xperience.ComponentRegistry.Admin" />
     <PackageReference Include="Kentico.Xperience.ComponentRegistry.MCP" />
-    <PackageReference Include="XperienceCommunity.KenticoComponentIcons" />
+    <PackageReference Include="Kentico.Xperience.ComponentIcons" />
     <PackageReference Include="XperienceCommunity.PreviewComponentOutlines" />
     <PackageReference Include="Vogen" />
   </ItemGroup>

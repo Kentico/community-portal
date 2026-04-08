@@ -1,0 +1,47 @@
+.contact-activity-dashboard {
+  --contact-activity-surface: var(--color-paper-background);
+  --contact-activity-border: var(--color-border-low-emphasis);
+  --contact-activity-text: var(--color-text-default-on-light);
+  color: var(--contact-activity-text);
+  font-family: var(--font-family-default);
+  background: var(--color-background-default);
+}
+
+.contact-activity-dashboard * {
+  box-sizing: border-box;
+}
+
+.contact-activity-dashboard .contact-activity-surface {
+  background: var(--contact-activity-surface);
+  border-color: var(--contact-activity-border);
+}
+
+.contact-activity-dashboard .contact-activity-chart {
+  width: 100%;
+}
+
+.contact-activity-dashboard .contact-activity-chart-md {
+  min-height: 320px;
+}
+
+.contact-activity-dashboard .contact-activity-chart-lg {
+  min-height: 360px;
+}
+
+.contact-activity-dashboard .contact-activity-chart-xl {
+  min-height: 440px;
+}
+
+@media (max-width: 768px) {
+  .contact-activity-dashboard .contact-activity-chart-md {
+    min-height: 260px;
+  }
+
+  .contact-activity-dashboard .contact-activity-chart-lg {
+    min-height: 300px;
+  }
+
+  .contact-activity-dashboard .contact-activity-chart-xl {
+    min-height: 360px;
+  }
+}

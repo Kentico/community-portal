@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.alternativeform>
+  <FormClassID>
+    <CodeName>CMS.MemberRole</CodeName>
+    <GUID>91ae40ce-defa-45dc-9f11-cc8c656d3b0f</GUID>
+    <ObjectType>cms.systemtable</ObjectType>
+  </FormClassID>
+  <FormCustomizedColumns />
+  <FormDefinition>
+    <form>
+      <field column="MemberRoleID" guid="3bfd245f-f8cb-442f-9ace-efadcc7780e3" enabled="" />
+      <field column="MemberRoleGUID" guid="c2ddf6b1-4966-4440-af24-0f5d43cfd05a" enabled="" />
+      <field column="MemberRoleDisplayName" enabled="true" guid="be6a0862-7806-4f7e-9367-f897d3c74ef0" visible="true" order="2">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.memberroles.displayName$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberRoleName" enabled="true" guid="beeadb40-f071-47f9-8b00-8f2483b4ff16" visible="true" order="3">
+        <settings>
+          <controlname>Kentico.Administration.CodeName</controlname>
+          <HasAutomaticCodeNameGenerationOption>False</HasAutomaticCodeNameGenerationOption>
+          <IsCollapsed>True</IsCollapsed>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.memberroles.codeName$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberRoleDescription" enabled="true" guid="c5aa085d-b504-4e0f-9177-baa70fd12d62" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextArea</controlname>
+          <CopyButtonVisible>False</CopyButtonVisible>
+          <MaxRowsNumber>5</MaxRowsNumber>
+          <MinRowsNumber>3</MinRowsNumber>
+        </settings>
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>{$base.memberroles.description$}</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </FormDefinition>
+  <FormDisplayName>edit</FormDisplayName>
+  <FormGUID>11ed5b16-594b-41d9-a152-39e751868db5</FormGUID>
+  <FormIsCustom>False</FormIsCustom>
+  <FormName>Edit</FormName>
+</cms.alternativeform>

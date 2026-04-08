@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Content item Member role</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ContentItemMemberRoleID" columntype="integer" enabled="true" guid="09ba9bd6-cc6f-4fec-b706-890b6fa28199" isPK="true" system="true" />
+      <field column="ContentItemMemberRoleGUID" columnprecision="0" columntype="guid" enabled="true" guid="82b4e143-fdb8-4b92-adf2-6e5faf8740a8" system="true" />
+      <field column="ContentItemMemberRoleContentItemID" columnprecision="0" columntype="integer" enabled="true" guid="0095f6e9-6f77-401b-af2f-5b56534adc55" refobjtype="cms.contentitem" reftype="Binding" system="true" />
+      <field column="ContentItemMemberRoleMemberRoleID" columnprecision="0" columntype="integer" enabled="true" guid="cadab690-2d72-4428-a769-454331f8d9ac" refobjtype="cms.memberrole" reftype="Binding" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>c727c4eb-cedc-44f9-a84b-9da24355af64</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>CMS.ContentItemMemberRole</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContentEngine</CodeName>
+    <GUID>eb76ebd1-752f-4969-a5b6-1fb984cae224</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>CMS_ContentItemMemberRole</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

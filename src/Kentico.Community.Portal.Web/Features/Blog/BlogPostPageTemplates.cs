@@ -6,6 +6,7 @@ using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Content.Web.Mvc;
 using Kentico.Content.Web.Mvc.Routing;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
+using Kentico.Xperience.Admin.Base.FormAnnotations;
 using MediatR;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,15 @@ using Icons = Kentico.Xperience.Admin.Base.Icons;
 
 namespace Kentico.Community.Portal.Web.Features.Blog;
 
-public class BlogPostPageTemplateProperties : IPageTemplateProperties { }
+public class BlogPostPageTemplateProperties : IPageTemplateProperties
+{
+    [CheckBoxComponent(
+        Label = "Show table of contents",
+        ExplanationText = "If checked, a floating table of contents panel is displayed for readers to navigate between sections.",
+        Order = 1
+    )]
+    public bool ShowTableOfContents { get; set; } = true;
+}
 
 public class BlogPostPageTemplateController(
     WebPageMetaService metaService,

@@ -6,7 +6,7 @@ using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using XperienceCommunity.KenticoComponentIcons;
+using Kentico.Xperience.ComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: VideoWidget.IDENTIFIER,
@@ -94,6 +94,13 @@ public class VideoWidgetProperties : BaseWidgetProperties
         Order = 6
     )]
     public bool ShowDescriptionAsCaption { get; set; } = false;
+
+    [CheckBoxComponent(
+        Label = "Show title?",
+        ExplanationText = "If true, the video title will appear above the video.",
+        Order = 7
+    )]
+    public bool ShowTitle { get; set; } = false;
 }
 
 public class VideoWidgetViewModel : BaseWidgetViewModel
@@ -104,6 +111,7 @@ public class VideoWidgetViewModel : BaseWidgetViewModel
     public VideoAlignments Alignment { get; }
     public VideoSizes Size { get; }
     public bool ShowDescriptionAsCaption { get; }
+    public bool ShowTitle { get; }
 
     public VideoWidgetViewModel(VideoContent video, VideoWidgetProperties props)
     {
@@ -111,6 +119,7 @@ public class VideoWidgetViewModel : BaseWidgetViewModel
         Alignment = props.VideoAlignmentParsed;
         Size = props.SizeParsed;
         ShowDescriptionAsCaption = props.ShowDescriptionAsCaption;
+        ShowTitle = props.ShowTitle;
     }
 };
 

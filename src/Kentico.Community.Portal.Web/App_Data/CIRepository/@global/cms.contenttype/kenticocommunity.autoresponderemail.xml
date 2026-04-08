@@ -15,6 +15,7 @@
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$digitalmarketing.emails.edit.subject$}</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>True</includeincontentgeneration>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
@@ -27,43 +28,86 @@
         </validationrulesdata>
         <additionalactionsdata>
           <AdditionalActionConfiguration>
-            <AdditionalActionIdentifier>Kentico.Administration.AiraEmailSubjectSuggestion</AdditionalActionIdentifier>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextGeneration</AdditionalActionIdentifier>
             <AdditionalActionValues>
-              <BodyFieldNames>
-                <string>AutoresponderEmailBodyContentHTML</string>
-                <string>AutoresponderEmailTitle</string>
-                <string>EmailPreviewText</string>
-              </BodyFieldNames>
+              <FieldDescription>
+<![CDATA[
+Email subject line.
+
+Length: Mobile shows 33–50 chars, desktop up to 70. Avg is 6 words, but 2–4 word subject lines outperform — shorter = more attention-grabbing.
+Front-load: Put the value/hook first — truncation cuts from the right.
+Complement preview text: Subject = hook/title, preview = extension. Never repeat each other.
+Personalization: First name alone doesn't move the needle much — deeper segmentation + behavioral relevance drives real lift.
+Action-oriented language: Lead with a strong verb. "Start learning Python today" vastly outperforms "Python course information." 
+Urgency/scarcity: Must be authentic and specific — vague "ends soon" doesn't work; concrete deadlines do. False urgency destroys trust.
+Curiosity/questions: Prompts recipients to think and opens with the expectation of an answer — but the email must deliver on the premise or you erode trust.
+Spam triggers to avoid: Multiple exclamation points, excessive emojis, ALL CAPS — max 1 emoji, and it should supplement words, not replace them.
+]]>
+              </FieldDescription>
             </AdditionalActionValues>
           </AdditionalActionConfiguration>
         </additionalactionsdata>
       </field>
-      <field allowempty="true" column="EmailPreviewText" columntype="longtext" enabled="true" guid="459d7891-0cbd-4dab-ac4c-078218c3e8f7" visible="true">
+      <field allowempty="true" column="EmailPreviewText" columnprecision="0" columntype="longtext" enabled="true" guid="459d7891-0cbd-4dab-ac4c-078218c3e8f7" visible="true">
         <properties>
+          <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>{$digitalmarketing.emails.edit.previewtext$}</fieldcaption>
           <fielddescription>
             <![CDATA[{$digitalmarketing.emails.edit.previewtext.tooltip$}]]>
           </fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>True</includeincontentgeneration>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextArea</controlname>
         </settings>
+        <additionalactionsdata>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextGeneration</AdditionalActionIdentifier>
+            <AdditionalActionValues>
+              <FieldDescription>
+<![CDATA[
+Email preview text.
+Length: 40–90 chars — mobile truncates at 30–55, so front-load the key info.
+Complement, don't repeat: Subject line + preview = one-two punch. If subject has the hook, preview adds context or a different angle — never the same message twice.
+Front-load: Get the gist into the first few words in case the client truncates early.
+]]>
+              </FieldDescription>
+            </AdditionalActionValues>
+          </AdditionalActionConfiguration>
+        </additionalactionsdata>
       </field>
       <field column="AutoresponderEmailTitle" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="b4a8b3f2-f506-450b-b11b-4e9e9dcd93b5" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Title</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>True</includeincontentgeneration>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
+        <additionalactionsdata>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextGeneration</AdditionalActionIdentifier>
+            <AdditionalActionValues>
+              <FieldDescription>
+<![CDATA[
+Email title.
+
+Separate from the email subject line, this field is the heading element content at the top of the email.
+]]>
+              </FieldDescription>
+            </AdditionalActionValues>
+          </AdditionalActionConfiguration>
+        </additionalactionsdata>
       </field>
       <field column="AutoresponderEmailBodyContentHTML" columnprecision="0" columntype="richtexthtml" enabled="true" guid="bdb2afe2-b1f2-4b67-a055-9b2c17b7dccb" visible="true">
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Content</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>True</includeincontentgeneration>
         </properties>
         <settings>
           <ConfigurationName>
@@ -75,6 +119,20 @@
           <AdditionalActionConfiguration>
             <AdditionalActionIdentifier>Kentico.Administration.AiraTextRefinement</AdditionalActionIdentifier>
             <AdditionalActionValues />
+          </AdditionalActionConfiguration>
+          <AdditionalActionConfiguration>
+            <AdditionalActionIdentifier>Kentico.Administration.AiraTextGeneration</AdditionalActionIdentifier>
+            <AdditionalActionValues>
+              <FieldDescription>
+<![CDATA[
+Email body content.
+
+One email, one goal. Every automated email should have a single clear purpose tied to the trigger. Don't conflate nurture + upsell + feedback in one message.
+Value first, ask second. Offer something useful — a tip, resource, or insight — before making any ask. Then one clear CTA: click, download, reply.
+Write conversationally, not robotically. Write as if talking to a friend. Automation doesn't mean losing the personal touch — it means enhancing messages based on context.
+]]>
+              </FieldDescription>
+            </AdditionalActionValues>
           </AdditionalActionConfiguration>
         </additionalactionsdata>
       </field>

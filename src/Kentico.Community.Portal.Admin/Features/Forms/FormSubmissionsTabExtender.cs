@@ -31,10 +31,10 @@ public class FormSubmissionsTabExtender(
 
         columnConfigs
             .TryFirst(c => string.Equals(c.Name, "FormInserted", StringComparison.OrdinalIgnoreCase))
-            .Execute(c => c.Sorting.DefaultDirection = SortTypeEnum.Desc);
+            .Tap(c => c.Sorting.DefaultDirection = SortTypeEnum.Desc);
 
         await GetFormDataFromPage()
-            .Execute(async d =>
+            .Tap(async d =>
             {
                 int count = await BizFormItemProvider
                     .GetItems(d.dataClass.ClassName)

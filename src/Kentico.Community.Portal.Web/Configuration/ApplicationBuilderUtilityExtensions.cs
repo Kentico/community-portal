@@ -1,12 +1,13 @@
+using Kentico.Community.Portal.Web.Features.Testing;
 using Kentico.Web.Mvc;
 
 namespace Microsoft.AspNetCore.Builder;
 
 public static class ApplicationBuilderUtilityExtensions
 {
-    public static IApplicationBuilder IfDevelopment(this IApplicationBuilder app, IWebHostEnvironment env, Action<IApplicationBuilder> configure)
+    public static WebApplication IfConfigured(this IApplicationBuilder _, IConfiguration config, string key, WebApplication app, Action<WebApplication> configure)
     {
-        if (env.IsDevelopment())
+        if (config.GetValue<bool>(key))
         {
             configure(app);
         }
@@ -14,7 +15,7 @@ public static class ApplicationBuilderUtilityExtensions
         return app;
     }
 
-    public static WebApplication IfDevelopment(this IApplicationBuilder _, IWebHostEnvironment env, WebApplication app, Action<WebApplication> configure)
+    public static IApplicationBuilder IfDevelopment(this IApplicationBuilder app, IWebHostEnvironment env, Action<IApplicationBuilder> configure)
     {
         if (env.IsDevelopment())
         {
@@ -59,11 +60,23 @@ public static class ApplicationBuilderUtilityExtensions
         return app;
     }
 
-    public static WebApplication UseAppRoutes(this WebApplication app)
+    public static WebApplication UseAppRoutes(this WebApplication app, IConfiguration config)
     {
         _ = app.MapControllers();
 
         _ = app.MapHealthChecks("status");
+
+        if (config.GetValue<bool>("Testing:E2E:Enabled"))
+        {
+            _ = app.MapE2ETestingTools();
+        }
+
+        return app;
+    }
+
+    public static WebApplication UseAppMcp(this IApplicationBuilder _, WebApplication app, IConfiguration config)
+    {
+        _ = app.IfConfigured(config, "Kentico:VirtualInbox:Enabled", app, a => a.MapMcp("/mcp"));
 
         return app;
     }

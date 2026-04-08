@@ -22,7 +22,7 @@ public class SystemOverviewExtender(ApplicationAssemblyInformation assemblyInfor
         Page.PageConfiguration.CardGroups
             .TryFirst()
             .Bind(group => group.Cards.TryFirst())
-            .Execute(c =>
+            .Tap(c =>
             {
                 c.Components.Add(new FormCardComponent
                 {

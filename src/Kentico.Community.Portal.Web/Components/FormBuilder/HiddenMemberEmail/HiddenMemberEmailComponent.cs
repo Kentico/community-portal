@@ -4,7 +4,7 @@ using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Forms.Web.Mvc;
 using Microsoft.AspNetCore.Identity;
-using XperienceCommunity.KenticoComponentIcons;
+using Kentico.Xperience.ComponentIcons;
 
 [assembly: RegisterFormComponent(
     HiddenMemberEmailComponent.IDENTIFIER,

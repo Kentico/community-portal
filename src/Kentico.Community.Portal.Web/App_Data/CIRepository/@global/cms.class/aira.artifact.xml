@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>AIRA Artifact</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="ArtifactID" columntype="integer" enabled="true" guid="42ab9fd4-6a07-4403-ba24-a54498c1dfab" isPK="true" system="true" />
+      <field column="ArtifactName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="142a9f27-9e6a-4396-ba73-1974eb75fb08" system="true" />
+      <field column="ArtifactFileIdentifier" columnprecision="0" columntype="guid" enabled="true" guid="110196a4-e53c-4df9-8146-961dc4bf3c73" system="true" />
+      <field column="ArtifactExtension" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="a54f56ce-818c-4f41-939d-86a2689324be" system="true" />
+      <field column="ArtifactMimeType" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="e9cfe0dd-fd83-49cf-b230-cd3c55665c8a" system="true" />
+      <field column="ArtifactSize" columnprecision="0" columntype="longinteger" enabled="true" guid="20f1b251-f377-48b1-932c-47d027f7bd11" system="true" />
+      <field column="ArtifactCreatedWhen" columnprecision="7" columntype="datetime" enabled="true" guid="75e839fc-5c6c-4054-8292-50ba8e11191d" system="true" />
+      <field allowempty="true" column="ArtifactCreatedByUserID" columnprecision="0" columntype="integer" enabled="true" guid="9d745c17-519b-4996-9b85-bb184a17da55" refobjtype="cms.user" reftype="NotRequired" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+      <field column="ArtifactLastModified" columnprecision="7" columntype="datetime" enabled="true" guid="201359b4-f0de-4575-898b-0463323f25ce" system="true" />
+      <field allowempty="true" column="ArtifactLastModifiedByUserID" columnprecision="0" columntype="integer" enabled="true" guid="ea4086bb-86f6-4ffe-8bdd-58cfb9b854bc" refobjtype="cms.user" reftype="NotRequired" system="true">
+        <properties>
+          <defaultvalue>0</defaultvalue>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>215ef22b-f800-407d-be64-972c371b14ab</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>aira.artifact</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Aira</CodeName>
+    <GUID>4d122518-44fc-4caa-a058-4b59bbc6f1a7</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Aira_Artifact</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

@@ -42,6 +42,8 @@ public class QAndASearchIndexModel
     public string DiscussionStatesFacet { get; set; } = "";
     public string DiscussionState { get; set; } = "";
     public int ResponseCount { get; set; } = 0;
+    public int QuestionUpvoteCount { get; set; } = 0;
+    public int AnswerUpvoteCount { get; set; } = 0;
 
     public Document ToDocument()
     {
@@ -58,6 +60,8 @@ public class QAndASearchIndexModel
             new TextField(nameof(AuthorUsername), AuthorUsername, Field.Store.YES),
             new TextField(nameof(AuthorFullName), AuthorFullName, Field.Store.YES),
             new Int32Field(nameof(ResponseCount), ResponseCount, Field.Store.YES),
+                        new Int32Field(nameof(QuestionUpvoteCount), QuestionUpvoteCount, Field.Store.YES),
+                        new Int32Field(nameof(AnswerUpvoteCount), AnswerUpvoteCount, Field.Store.YES),
             new TextField(nameof(DiscussionType), string.IsNullOrWhiteSpace(DiscussionType) ? "none" : DiscussionType, Field.Store.YES),
             new TextField(nameof(DiscussionState), string.IsNullOrWhiteSpace(DiscussionState) ? "none" : DiscussionState, Field.Store.YES),
             new TextField(nameof(DXTopics), string.Join(';', DXTopics), Field.Store.YES),
@@ -95,6 +99,12 @@ public class QAndASearchIndexModel
             ResponseCount = int.TryParse(doc.Get(nameof(ResponseCount)), out int answerCount)
                 ? answerCount
                 : 0,
+            QuestionUpvoteCount = int.TryParse(doc.Get(nameof(QuestionUpvoteCount)), out int questionUpvotes)
+                ? questionUpvotes
+                : 0,
+            AnswerUpvoteCount = int.TryParse(doc.Get(nameof(AnswerUpvoteCount)), out int answerUpvotes)
+                ? answerUpvotes
+                : 0,
             PublishedDate = new DateTime(
                 DateTools.UnixTimeMillisecondsToTicks(
                     long.TryParse(doc.Get(nameof(PublishedDate)), out long pubVal) ? pubVal : DateTools.TicksToUnixTimeMilliseconds(DefaultTime.Ticks)
@@ -122,17 +132,11 @@ public class QAndASearchIndexingStrategy(
     WebCrawlerService webCrawler,
     IInfoProvider<MemberInfo> memberProvider,
     IInfoProvider<QAndAAnswerDataInfo> answerProvider,
+        IInfoProvider<QAndAQuestionReactionInfo> questionReactionProvider,
+        IInfoProvider<QAndAAnswerReactionInfo> answerReactionProvider,
     IMediator mediator) : DefaultLuceneIndexingStrategy
 {
     public const string IDENTIFIER = "QANDA_SEARCH";
-
-    private readonly IContentQueryExecutor executor = executor;
-    private readonly WebScraperHtmlSanitizer htmlSanitizer = htmlSanitizer;
-    private readonly WebCrawlerService webCrawler = webCrawler;
-    private readonly IInfoProvider<MemberInfo> memberProvider = memberProvider;
-    private readonly IInfoProvider<QAndAAnswerDataInfo> answerProvider = answerProvider;
-    private readonly IMediator mediator = mediator;
-
 
     public override async Task<Document?> MapToLuceneDocumentOrNull(IIndexEventItemModel item)
     {
@@ -214,6 +218,30 @@ public class QAndASearchIndexingStrategy(
         indexModel.ActivityDate = indexModel.LatestResponseDate > indexModel.PublishedDate
             ? indexModel.LatestResponseDate
             : indexModel.PublishedDate;
+        // Count question upvotes
+        var questionReactions = await questionReactionProvider
+            .Get()
+            .WhereEquals(nameof(QAndAQuestionReactionInfo.QAndAQuestionReactionWebPageItemID), page.SystemFields.WebPageItemID)
+            .WhereEquals(nameof(QAndAQuestionReactionInfo.QAndAQuestionReactionType), DiscussionReactionTypes.Upvote.ToString())
+            .GetEnumerableTypedResultAsync();
+
+        indexModel.QuestionUpvoteCount = questionReactions.Count();
+
+        // Count answer upvotes (sum of all upvotes across all answers)
+        int answerUpvoteCount = 0;
+        if (answers.Count > 0)
+        {
+            var answerIds = answers.Select(a => a.QAndAAnswerDataID).ToList();
+            var answerReactions = await answerReactionProvider
+                .Get()
+                .WhereIn(nameof(QAndAAnswerReactionInfo.QAndAAnswerReactionAnswerID), answerIds)
+                .WhereEquals(nameof(QAndAAnswerReactionInfo.QAndAAnswerReactionType), DiscussionReactionTypes.Upvote.ToString())
+                .GetEnumerableTypedResultAsync();
+            answerUpvoteCount = answerReactions.Count();
+        }
+
+        indexModel.AnswerUpvoteCount = answerUpvoteCount;
+
 
         return indexModel.ToDocument();
     }

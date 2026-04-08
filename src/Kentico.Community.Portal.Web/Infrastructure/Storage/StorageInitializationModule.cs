@@ -26,15 +26,20 @@ public class StorageInitializationModule : Module
         string memberPrefix = storagePathService.GetStoragePathPrefix(StorageAssetType.Member);
         string memberContainer = storagePathService.GetContainerPath(StorageAssetType.Member);
 
+        string lucenePrefix = storagePathService.GetStoragePathPrefix(StorageAssetType.Lucene);
+        string luceneContainer = storagePathService.GetContainerPath(StorageAssetType.Lucene);
+
         if (storagePathService.ShouldMapAzureStorage)
         {
             MapAzureStoragePath(xperiencePrefix, xperienceContainer);
             MapAzureStoragePath(memberPrefix, memberContainer);
+            MapLocalStoragePath(lucenePrefix, luceneContainer);
         }
         else
         {
             MapLocalStoragePath(xperiencePrefix, xperienceContainer);
             MapLocalStoragePath(memberPrefix, memberContainer);
+            MapLocalStoragePath(lucenePrefix, luceneContainer);
         }
     }
 
@@ -52,7 +57,10 @@ public class StorageInitializationModule : Module
     {
         var provider = StorageProvider.CreateFileSystemStorageProvider();
 
-        provider.CustomRootPath = rootPath;
+        if (!string.IsNullOrWhiteSpace(rootPath))
+        {
+            provider.CustomRootPath = rootPath;
+        }
 
         StorageHelper.MapStoragePath(path, provider);
     }
@@ -67,6 +75,7 @@ public class StoragePathService(IWebHostEnvironment environment) : IStoragePathS
 
     private const string LocalStorageXperienceAssetsDirectoryName = "$StorageAssets";
     private const string LocalStorageMemberAssetsDirectoryName = "$StorageMemberAssets";
+    private static readonly string localStorageLuceneDirectoryName = Path.Combine("App_Data", "LuceneSearch");
 
     private readonly IWebHostEnvironment environment = environment;
 
@@ -81,6 +90,7 @@ public class StoragePathService(IWebHostEnvironment environment) : IStoragePathS
         {
             StorageAssetType.Xperience => AzureStorageXperienceAssetsPathPrefix,
             StorageAssetType.Member => AzureStorageMemberAssetsPathPrefix,
+            StorageAssetType.Lucene => localStorageLuceneDirectoryName,
             _ => throw new ArgumentOutOfRangeException(nameof(assetType))
         };
 
@@ -92,7 +102,7 @@ public class StoragePathService(IWebHostEnvironment environment) : IStoragePathS
         string rootPath = assetType switch
         {
             StorageAssetType.Member => AzureStorageMemberAssetsPathPrefix,
-            StorageAssetType.Xperience or _ => throw new ArgumentOutOfRangeException(nameof(assetType))
+            StorageAssetType.Xperience or StorageAssetType.Lucene or _ => throw new ArgumentOutOfRangeException(nameof(assetType)),
         };
 
         return Path.Combine(rootPath, filePath);
@@ -108,6 +118,7 @@ public class StoragePathService(IWebHostEnvironment environment) : IStoragePathS
             StorageAssetType.Member => ShouldMapAzureStorage
                 ? ContainerNameDefault
                 : Path.Combine(LocalStorageMemberAssetsDirectoryName, ContainerNameDefault),
+            StorageAssetType.Lucene => string.Empty,
             _ => throw new ArgumentOutOfRangeException(nameof(assetType))
         };
 

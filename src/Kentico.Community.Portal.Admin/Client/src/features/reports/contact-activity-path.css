@@ -1,0 +1,79 @@
+.contact-activity-path-dashboard {
+  --contact-activity-path-surface: var(--color-paper-background);
+  --contact-activity-path-border: var(--color-border-low-emphasis);
+  --contact-activity-path-text: var(--color-text-default-on-light);
+  color: var(--contact-activity-path-text);
+  font-family: var(--font-family-default);
+  background: var(--color-background-default);
+}
+
+.contact-activity-path-dashboard * {
+  box-sizing: border-box;
+}
+
+.contact-activity-path-dashboard .contact-activity-path-surface {
+  background: var(--contact-activity-path-surface);
+  border-color: var(--contact-activity-path-border);
+}
+
+.contact-activity-path-dashboard .contact-activity-path-chart {
+  width: 100%;
+}
+
+.contact-activity-path-dashboard .contact-activity-path-chart-lg {
+  min-height: 760px;
+}
+
+.contact-activity-path-dashboard .contact-activity-path-scroll {
+  max-height: 520px;
+  overflow: auto;
+  padding-right: 0.25rem;
+}
+
+.contact-activity-path-dashboard .contact-activity-path-table th,
+.contact-activity-path-dashboard .contact-activity-path-table td {
+  padding: 0.7rem 0.85rem;
+  vertical-align: top;
+}
+
+.contact-activity-path-dashboard .contact-activity-path-table thead th {
+  border-bottom: 1px solid var(--color-border-low-emphasis);
+  color: var(--color-text-hint);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.contact-activity-path-dashboard .contact-activity-path-table tbody tr {
+  border-bottom: 1px solid var(--color-border-low-emphasis);
+}
+
+.contact-activity-path-dashboard
+  .contact-activity-path-table
+  tbody
+  tr:last-child {
+  border-bottom: 0;
+}
+
+.contact-activity-path-dashboard .contact-activity-path-table tbody tr:hover {
+  background: var(--color-background-highlighted);
+}
+
+@media (max-width: 768px) {
+  .contact-activity-path-dashboard .contact-activity-path-chart-lg {
+    min-height: 560px;
+  }
+
+  .contact-activity-path-dashboard .contact-activity-path-scroll {
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .contact-activity-path-dashboard .contact-activity-path-table th,
+  .contact-activity-path-dashboard .contact-activity-path-table td {
+    padding: 0.55rem 0.65rem;
+  }
+}

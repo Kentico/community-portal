@@ -56,9 +56,12 @@ jobs:
       - name: Setup Node.js (from package.json)
         uses: actions/setup-node@v6
         with:
-          node-version-file: "src/Kentico.Community.Portal.Web/package.json"
+          node-version-file: "package.json"
           cache: "npm"
-          cache-dependency-path: "src/Kentico.Community.Portal.Web/package-lock.json"
+          cache-dependency-path: |
+            src/Kentico.Community.Portal.Web/package-lock.json
+            src/Kentico.Community.Portal.Admin/Client/package-lock.json
+            test/kentico-community-portal-web-e2e-tests/package-lock.json
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
@@ -180,17 +183,22 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key:
-            ${{ runner.os }}-playwright-${{ hashFiles('**/packages.lock.json')
+            ${{ runner.os }}-playwright-${{
+            hashFiles('test/kentico-community-portal-web-e2e-tests/package-lock.json')
             }}
           restore-keys: |
             ${{ runner.os }}-playwright-
 
-      - name: Install Playwright Dependencies
+      - name: Install Playwright E2E dependencies
+        working-directory: ./test/kentico-community-portal-web-e2e-tests
+        run: npm ci
+
+      - name: Install Playwright browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
+        working-directory: ./test/kentico-community-portal-web-e2e-tests
         run: |
           Write-Output "Installing Playwright browsers..."
-          # Must be path to the RELEASE build
-          ./test/Kentico.Community.Portal.Web.E2E.Tests/bin/Release/net10.0/playwright.ps1 install
+          npx playwright install chromium
           Write-Output "✓ Playwright browsers installed"
 
       - name: Cache Azurite
@@ -209,19 +217,17 @@ jobs:
           azurite -s -l ./.azurite &
           Write-Output "✓ Azurite storage emulator started"
 
-      - name: Run E2E Tests (with App)
-        working-directory: "./scripts"
+      - name: Run Playwright E2E Tests
+        working-directory: ./test/kentico-community-portal-web-e2e-tests
+        env:
+          PORTAL_BASE_URL: https://localhost:45039
+          PORTAL_MCP_URL: https://localhost:45039/mcp
+          PLAYWRIGHT_WEB_SERVER_TIMEOUT_MS: 30000
+          NODE_OPTIONS: --no-warnings
         run: |
           Write-Output "## 🎭 E2E Tests" >> $env:GITHUB_STEP_SUMMARY
-
-          $summary = ./Run-E2E-Tests.ps1 `
-            -PublishPath "../publish" `
-            -AppDllName "${{ env.PROJECT_NAME }}.dll" `
-            -StatusCheckUrl "${{ env.STATUS_CHECK_URL }}" `
-            -TestProjectPath "../test/Kentico.Community.Portal.Web.E2E.Tests/Kentico.Community.Portal.Web.E2E.Tests.csproj" `
-            -TestSettings "../test/e2e.runsettings" `
-            -MaxWaitSeconds 30
-          $summary >> $env:GITHUB_STEP_SUMMARY
+          npm test
+          "Playwright TypeScript E2E suite passed." >> $env:GITHUB_STEP_SUMMARY
 
       # === Artifacts (on failure) ===
       - name: Upload Application Logs (on failure)
@@ -232,4 +238,15 @@ jobs:
           path: |
             publish/app-*.log
           retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Upload Playwright Artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts-${{ github.run_number }}
+          path: |
+            test/kentico-community-portal-web-e2e-tests/playwright-report
+            test/kentico-community-portal-web-e2e-tests/test-results
+          retention-days: 1
           if-no-files-found: ignore

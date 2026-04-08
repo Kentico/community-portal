@@ -2,7 +2,7 @@ using System.Web;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Login;
 using Kentico.PageBuilder.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
-using XperienceCommunity.KenticoComponentIcons;
+using Kentico.Xperience.ComponentIcons;
 
 [assembly: RegisterWidget(
     identifier: LoginWidget.IDENTIFIER,

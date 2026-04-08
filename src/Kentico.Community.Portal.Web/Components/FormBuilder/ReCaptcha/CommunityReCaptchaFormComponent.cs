@@ -8,7 +8,7 @@ using Kentico.Community.Portal.Web.Components.FormBuilder.ReCaptcha;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Forms.Web.Mvc;
 using Microsoft.Extensions.Options;
-using XperienceCommunity.KenticoComponentIcons;
+using Kentico.Xperience.ComponentIcons;
 
 [assembly: RegisterFormComponent(
     identifier: CommunityReCaptchaFormComponent.IDENTIFIER,

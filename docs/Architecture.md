@@ -2,14 +2,14 @@
 
 ## Projects
 
-| Name                                   | Purpose                                                                                                     |
-| -------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Kentico.Community.Portal.Core          | Xperience by Kentico generated content/data types and types shared across live site and administration      |
-| Kentico.Community.Portal.Admin         | Admin-only customizations to the Xperience by Kentico app                                                   |
-| Kentico.Community.Portal.Web           | Xperience by Kentico Community Portal ASP.NET Core app                                                      |
-| Kentico.Community.Portal.Web.Tests     | Unit and integration tests for Kentico.Community.Portal.Web                                                 |
-| Kentico.Community.Portal.Web.E2E.Tests | End-to-end tests in Playwright.NET for Kentico.Community.Portal.Web                                         |
-| Kentico.Community.DataCleaner.App      | Console app that processes CI files to clear or replace invalid data imported from a production environment |
+| Name                                        | Purpose                                                                                                     |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Kentico.Community.Portal.Core               | Xperience by Kentico generated content/data types and types shared across live site and administration      |
+| Kentico.Community.Portal.Admin              | Admin-only customizations to the Xperience by Kentico app                                                   |
+| Kentico.Community.Portal.Web                | Xperience by Kentico Community Portal ASP.NET Core app                                                      |
+| Kentico.Community.Portal.Web.Tests          | Unit and integration tests for Kentico.Community.Portal.Web                                                 |
+| test/kentico-community-portal-web-e2e-tests | End-to-end tests in Playwright Test with TypeScript for Kentico.Community.Portal.Web                        |
+| Kentico.Community.DataCleaner.App           | Console app that processes CI files to clear or replace invalid data imported from a production environment |
 
 ## Technologies and Frameworks
 
@@ -52,3 +52,10 @@ to provide a web based search experience for blogs and Q&A discussions.
 The solution uses
 [Kentico.Xperience.TagManager](https://github.com/Kentico/xperience-by-kentico-tag-manager)
 to manage and load each environment's Google Tag Manager tag.
+
+## Testing Notes
+
+The Playwright TypeScript E2E lane uses the application's Virtual Inbox MCP
+tools for email-dependent flows and a development/CI-only `/testing/e2e` API
+surface for deterministic state setup that cannot be reached through the browser
+alone.

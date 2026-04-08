@@ -131,30 +131,32 @@ function bindFAQWidgets() {
 }
 
 function bindHTMXTooltipReinitialization() {
-  // Hide tooltips before HTMX swap to prevent orphaned tooltip elements
+  // Dispose tooltips on elements about to be swapped out to prevent orphaned tooltip popups
   document.body.addEventListener("htmx:beforeSwap", function (event) {
-    [...document.querySelectorAll('[data-bs-toggle="tooltip"]')]
-      .filter((el) => !!el.getAttribute("title"))
-      .forEach((tooltip) => {
-        const instance = Tooltip.getInstance(tooltip);
-        if (instance) {
-          instance.hide();
-        }
-      });
+    const target = event.detail.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    const elements = [
+      ...(target.matches('[data-bs-toggle="tooltip"]') ? [target] : []),
+      ...target.querySelectorAll('[data-bs-toggle="tooltip"]'),
+    ];
+    elements.forEach((el) => {
+      Tooltip.getInstance(el)?.dispose();
+    });
   });
 
-  // Reinitialize tooltips after HTMX swap
-  document.body.addEventListener("htmx:afterSwap", function (event) {
-    if (event.detail.xhr.status < 400) {
-      [...document.querySelectorAll('[data-bs-toggle="tooltip"]')]
-        .filter((el) => !!el.getAttribute("title"))
-        .forEach((tooltip) => {
-          const instance = Tooltip.getInstance(tooltip);
-          if (instance) {
-            instance.dispose();
-          }
-          new Tooltip(tooltip);
-        });
-    }
+  // Reinitialize any tooltip elements that were added by the swap and have no instance yet
+  document.body.addEventListener("htmx:afterSettle", function () {
+    [...document.querySelectorAll('[data-bs-toggle="tooltip"]')]
+      .filter(
+        (el) =>
+          !!el.getAttribute("title") || !!el.getAttribute("data-bs-title"),
+      )
+      .forEach((el) => {
+        if (!Tooltip.getInstance(el)) {
+          new Tooltip(el);
+        }
+      });
   });
 }

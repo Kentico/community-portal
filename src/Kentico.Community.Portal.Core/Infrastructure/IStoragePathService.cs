@@ -5,7 +5,8 @@ public interface IStoragePathService
     public enum StorageAssetType
     {
         Xperience,
-        Member
+        Member,
+        Lucene
     }
 
     public bool ShouldMapAzureStorage { get; }
