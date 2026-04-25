@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Contact management - Identity Resolution</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="IdentityResolutionID" columntype="integer" enabled="true" guid="2659e09a-d4c3-4445-84f1-d91f58ba752c" isPK="true" system="true" />
+      <field column="IdentityResolutionName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="ff4f0a3e-3240-452f-9588-9c9f0e57e0ed" system="true" />
+      <field column="IdentityResolutionDisplayName" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="1b8aa3f2-1c2e-4b6d-97d8-63f9a503bac5" system="true" />
+      <field column="IdentityResolutionGuid" columnprecision="0" columntype="guid" enabled="true" guid="2abd04ac-df0b-47d4-ae33-dd1c765f2ec5" system="true" />
+      <field column="IdentityResolutionClassID" columnprecision="0" columntype="integer" enabled="true" guid="7a2faf3c-7586-4c2d-8cb7-cece25b468c6" refobjtype="cms.class" reftype="Required" system="true" />
+      <field column="IdentityResolutionClassFieldGuid" columnprecision="0" columntype="guid" enabled="true" guid="480679e8-5971-4ad8-b863-468d05da4542" system="true" />
+      <field column="IdentityResolutionOrder" columnprecision="0" columntype="integer" enabled="true" guid="436feabe-1caa-4db6-a301-b0e46720f059" system="true" />
+      <field column="IdentityResolutionIsImmutable" columnprecision="0" columntype="boolean" enabled="true" guid="ea308061-f3ca-4e20-9bd6-48118070db48" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>b36ab5c3-122a-4f75-bf00-5e8d1d82710c</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>OM.IdentityResolution</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.ContactManagement</CodeName>
+    <GUID>0e4beef1-989c-4687-80ca-ae21fec09734</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>OM_IdentityResolution</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

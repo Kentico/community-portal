@@ -45,6 +45,25 @@ export function registerTableOfContentsComponent(Alpine) {
     },
 
     /**
+     * Scrolls to a heading and updates URL hash without relying on Alpine href expressions.
+     * @param {string} id
+     */
+    navigateTo(id) {
+      const target = document.getElementById(id);
+      if (!target) {
+        return;
+      }
+
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      this.activeId = id;
+      this.close();
+
+      if (history?.replaceState) {
+        history.replaceState(null, "", `#${encodeURIComponent(id)}`);
+      }
+    },
+
+    /**
      * Highlights the TOC entry whose section is currently in view.
      * @param {NodeList} headingEls
      */

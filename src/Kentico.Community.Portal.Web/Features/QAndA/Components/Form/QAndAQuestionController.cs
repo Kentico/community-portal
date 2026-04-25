@@ -2,6 +2,7 @@
 using Htmx;
 using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
+using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.QAndA.Search;
 using Kentico.Community.Portal.Web.Features.QAndA.Notifications;
 using Kentico.Community.Portal.Web.Infrastructure;
@@ -312,6 +313,57 @@ public class QAndAQuestionController(
         var viewModel = new QAndAQuestionReactionViewModel(parentQuestionPage.SystemFields.WebPageItemGUID, updatedReactionData, permissions);
 
         return PartialView("~/Features/QAndA/_QAndAQuestionReaction.cshtml", viewModel);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [EnableRateLimiting(QAndARateLimitingConstants.UpdateQuestionReaction)]
+    public async Task<IActionResult> UpdateBlogPostReaction(Guid questionID)
+    {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
+        var member = await userManager.CurrentUser(HttpContext);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        var questionPages = await contentRetriever.RetrievePagesByGuids<QAndAQuestionPage>([questionID], new RetrievePagesParameters { LinkedItemsMaxLevel = 1 });
+        if (questionPages.FirstOrDefault() is not QAndAQuestionPage parentQuestionPage)
+        {
+            return NotFound();
+        }
+
+        int webPageItemId = parentQuestionPage.SystemFields.WebPageItemID;
+        var currentReactionData = await mediator.Send(new QAndAQuestionReactionsQuery(webPageItemId, member.Id));
+
+        if (currentReactionData.CurrentMemberHasReacted)
+        {
+            var deleteResult = await mediator.Send(new QAndAQuestionReactionDeleteCommand(member.Id, webPageItemId, DiscussionReactionTypes.Upvote));
+            if (deleteResult.IsFailure)
+            {
+                return LogAndReturnError("BLOG_REACTION_UPDATE")(deleteResult.Error);
+            }
+        }
+        else
+        {
+            var createResult = await mediator.Send(new QAndAQuestionReactionCreateCommand(member.Id, webPageItemId, DiscussionReactionTypes.Upvote));
+            if (createResult.IsFailure)
+            {
+                return LogAndReturnError("BLOG_REACTION_UPDATE")(createResult.Error);
+            }
+        }
+
+        await QueueQuestionSearchIndexUpdate(parentQuestionPage);
+
+        var updatedReactionData = await mediator.Send(new QAndAQuestionReactionsQuery(webPageItemId, member.Id));
+        bool canReact = parentQuestionPage.QAndAQuestionPageAuthorMemberID != member.Id;
+        var viewModel = new BlogPostUpvoteViewModel(parentQuestionPage.SystemFields.WebPageItemGUID, updatedReactionData, canReact);
+
+        return PartialView("~/Features/Blog/_BlogPostUpvoteOob.cshtml", viewModel);
     }
 
     private async Task QueueQuestionSearchIndexUpdate(QAndAQuestionPage questionPage)

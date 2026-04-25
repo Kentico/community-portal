@@ -93,9 +93,6 @@
         // https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-nunit-runner-intro
         "--settings",
         "./test/basic.runsettings",
-        // Ensures MTP does not report error for skipping E2E tests
-        // https://learn.microsoft.com/en-us/dotnet/core/testing/microsoft-testing-platform-exit-codes
-        "-p:TestingPlatformCommandLineArguments=\"--ignore-exit-code 8\"",
         "--no-build"
       ],
       "problemMatcher": "$msCompile",

@@ -1,0 +1,10 @@
+@using Kentico.Community.Portal.Web.Features.Blog
+
+@model BlogPostUpvoteViewModel
+
+<div id="blog-upvote-top" hx-swap-oob="innerHTML">
+    <partial name="~/Features/Blog/_BlogPostUpvote.cshtml" model="Model" />
+</div>
+<div id="blog-upvote-bottom" hx-swap-oob="innerHTML">
+    <partial name="~/Features/Blog/_BlogPostUpvote.cshtml" model="Model" />
+</div>

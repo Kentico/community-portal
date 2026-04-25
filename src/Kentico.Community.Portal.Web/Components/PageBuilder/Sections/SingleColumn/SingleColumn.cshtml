@@ -52,11 +52,44 @@
         Layouts.FullWidth_EdgeToEdge => "col-lg-12",
         Layouts.FullWidth_ContentContained or Layouts.Standard or Layouts.FullWidth_ContentStandard or _ => "col-md-10 col-lg-9 col-xl-8"
     };
+
+    bool showCarouselEditMode = Model.DisplayAsCarousel && Model.IsEditMode;
+    bool showCarouselPreviewMode = Model.DisplayAsCarousel && !Model.IsEditMode;
+    string carouselContainerClasses = Model.Layout == Layouts.FullWidth_ContentStandard ? "container" : string.Empty;
 }
 
 <div class="@containerClasses @paddingTopClasses @paddingBottomClasses @backgroundColorClases @alignmentClasses"
      xpc-preview-outline="Single Column Section">
-    @if (Model.Layout == Layouts.FullWidth_ContentStandard)
+    @if (showCarouselEditMode)
+    {
+        <div class="@rowClasses">
+            <div class="@colClasses">
+                <div class="carousel-widget-edit-stack d-flex flex-column gap-3">
+                    @for (int i = 0; i < Model.NumberOfSlides; i++)
+                    {
+                        <div class="carousel-widget-edit-stack__slide p-3">
+                            <div class="carousel-widget-edit-stack__label fw-semibold text-uppercase mb-3">
+                                Slide @(i + 1) of @Model.NumberOfSlides
+                            </div>
+                            <widget-zone zone-name="@($"slide-{i + 1}")" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    else if (showCarouselPreviewMode)
+    {
+        <div class="@carouselContainerClasses">
+            <div class="@rowClasses">
+                <div class="@colClasses">
+                    <partial name="~/Components/PageBuilder/Sections/SingleColumn/_SingleColumnCarousel.cshtml"
+                             model="Model" />
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.Layout == Layouts.FullWidth_ContentStandard)
     {
         <div class="container">
             <div class="@rowClasses">

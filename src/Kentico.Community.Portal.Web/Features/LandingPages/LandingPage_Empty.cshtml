@@ -1,8 +1,18 @@
 @using Kentico.Community.Portal.Web.Features.LandingPages
+@using Kentico.PageBuilder.Web.Mvc
 
 @model TemplateViewModel<LandingPageEmptyTemplateProperties>
 
+@{
+    var allowedWidgets = Model.Properties.WidgetSelectionParsed switch
+    {
+        LandingPageWidgetSelections.Full => AllowedComponents.ALL,
+        _ => LandingPageTemplateProperties.StandardWidgets
+    };
+}
+
 <main>
-    <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"
+    <editable-area area-identifier="top" area-options-allowed-widgets="allowedWidgets"
+        allow-widget-output-cache="View.CacheEnabled"
         widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
 </main>

@@ -2,6 +2,7 @@ using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.AccountManagem
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Features.QAndA.Notifications;
+using Kentico.Community.Portal.Core.Membership;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Content.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;

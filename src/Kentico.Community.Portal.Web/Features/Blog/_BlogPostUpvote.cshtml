@@ -1,0 +1,86 @@
+@using Kentico.Community.Portal.Web.Features.Blog
+
+@model BlogPostUpvoteViewModel
+
+@{
+    var toolTipAttrs = Html.Raw(BuildTooltipAttrs());
+    string likeLabel = Model.CurrentMemberHasReacted ? "Liked" : "Like this post";
+    bool isAuthenticated = User.Identity?.IsAuthenticated ?? false;
+}
+
+@if (Model.CanReact)
+{
+    <form method="post" hx-post hx-controller="QAndAQuestion" hx-action="UpdateBlogPostReaction"
+        hx-route-questionID="@Model.QuestionID" hx-swap="none">
+        <fieldset xpc-readonly-disabled>
+            <button type="submit"
+                class="btn @(Model.CurrentMemberHasReacted ? "btn-secondary" : "btn-outline-secondary") d-inline-flex align-items-center gap-2"
+                aria-label="@likeLabel@(Model.ReactionCount > 0 ? $", {Model.ReactionCount} like{(Model.ReactionCount == 1 ? "" : "s")}" : "")"
+                @(toolTipAttrs)>
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                    <use xlink:href="/img/icons.svg#thumbs-up" asp-append-version />
+                </svg>
+                <span>@likeLabel</span>
+                @if (Model.ReactionCount > 0)
+                {
+                    <span class="badge rounded-pill bg-white text-secondary" aria-hidden="true">@Model.ReactionCount</span>
+                }
+            </button>
+        </fieldset>
+    </form>
+}
+else if (!isAuthenticated)
+{
+    <a href="/login?returnURL=@Context.Request.Path"
+        class="btn btn-outline-secondary d-inline-flex align-items-center gap-2"
+        aria-label="Sign in to like this post@(Model.ReactionCount > 0 ? $", {Model.ReactionCount} like{(Model.ReactionCount == 1 ? "" : "s")}" : "")">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <use xlink:href="/img/icons.svg#thumbs-up" asp-append-version />
+        </svg>
+        <span>Sign in to like this post</span>
+        @if (Model.ReactionCount > 0)
+        {
+            <span class="badge rounded-pill bg-secondary text-white" aria-hidden="true">@Model.ReactionCount</span>
+        }
+    </a>
+}
+else
+{
+    <button type="button" disabled
+        class="btn btn-outline-secondary d-inline-flex align-items-center gap-2"
+        aria-label="@likeLabel@(Model.ReactionCount > 0 ? $", {Model.ReactionCount} like{(Model.ReactionCount == 1 ? "" : "s")}" : "")"
+        @(toolTipAttrs)>
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <use xlink:href="/img/icons.svg#thumbs-up" asp-append-version />
+        </svg>
+        <span>Like this post</span>
+        @if (Model.ReactionCount > 0)
+        {
+            <span class="badge rounded-pill bg-secondary text-white" aria-hidden="true">@Model.ReactionCount</span>
+        }
+    </button>
+}
+
+@{
+    string BuildTooltipAttrs()
+    {
+        var memberList = Model.ReactionCount > 0
+            ? $"Liked by: {Html.Encode(string.Join(", ", Model.MembersWhoReacted))}"
+            : "";
+
+        if (Model.CanReact)
+        {
+            var title = string.IsNullOrEmpty(memberList)
+                ? "Be the first to like this post"
+                : memberList;
+            return $"data-bs-toggle='tooltip' data-bs-html='true' data-bs-delay='1000' data-bs-placement='top' data-bs-title='{title}'";
+        }
+
+        // Authenticated author - tooltip explains why they can't react
+        var message = !string.IsNullOrEmpty(memberList)
+            ? $"You cannot like your own post<br>{memberList}"
+            : "You cannot like your own post";
+
+        return $"data-bs-toggle='tooltip' data-bs-html='true' data-bs-delay='1000' data-bs-placement='top' data-bs-title='{message}'";
+    }
+}

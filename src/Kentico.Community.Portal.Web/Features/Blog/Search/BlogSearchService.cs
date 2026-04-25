@@ -3,6 +3,7 @@ using Kentico.Xperience.Lucene.Core.Search;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Facet;
+using Lucene.Net.Index;
 using Lucene.Net.Search;
 using Lucene.Net.Util;
 
@@ -169,7 +170,7 @@ public class BlogSearchService(
                 }
             );
         }
-        catch (Lucene.Net.Index.IndexNotFoundException ex)
+        catch (Exception ex) when (ex is IndexNotFoundException or FileNotFoundException)
         {
             logger.LogWarning(new EventId(0, "BLOG_SEARCH_INDEX_UNAVAILABLE"), ex, "Blog search index is unavailable for query '{Query}'", request.SearchText);
             return BlogSearchResults.IndexUnavailable(request);

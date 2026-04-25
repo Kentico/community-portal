@@ -5,6 +5,7 @@ using EnumsNET;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Features.QAndA.Notifications;
+using Kentico.Community.Portal.Core.Membership;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Content.Web.Mvc;

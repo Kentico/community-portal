@@ -4,7 +4,11 @@
   <ClassFormDefinition>
     <form>
       <field column="MemberID" columntype="integer" enabled="true" guid="97a619c1-37d6-4490-8dee-6ac70551d421" isPK="true" system="true" />
-      <field allowempty="true" column="MemberEmail" columnprecision="0" columnsize="254" columntype="text" enabled="true" guid="3e50549b-a12d-4c19-8df7-380efa3a8d40" system="true" />
+      <field allowempty="true" column="MemberEmail" columnprecision="0" columnsize="254" columntype="text" enabled="true" guid="3e50549b-a12d-4c19-8df7-380efa3a8d40" system="true">
+        <properties>
+          <identityresolution>True</identityresolution>
+        </properties>
+      </field>
       <field column="MemberEnabled" columnprecision="0" columntype="boolean" enabled="true" guid="1454d95c-81bb-4956-bda2-75edda984071" system="true">
         <properties>
           <defaultvalue>False</defaultvalue>

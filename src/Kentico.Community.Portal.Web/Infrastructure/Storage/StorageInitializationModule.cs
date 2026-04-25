@@ -33,7 +33,7 @@ public class StorageInitializationModule : Module
         {
             MapAzureStoragePath(xperiencePrefix, xperienceContainer);
             MapAzureStoragePath(memberPrefix, memberContainer);
-            MapLocalStoragePath(lucenePrefix, luceneContainer);
+            MapAzureStoragePath(lucenePrefix, luceneContainer);
         }
         else
         {
@@ -69,6 +69,7 @@ public class StorageInitializationModule : Module
 public class StoragePathService(IWebHostEnvironment environment) : IStoragePathService
 {
     private const string ContainerNameDefault = "default";
+    private const string ContainerNameLucene = "lucene";
 
     private const string AzureStorageXperienceAssetsPathPrefix = "assets";
     private const string AzureStorageMemberAssetsPathPrefix = "member-assets";
@@ -118,7 +119,9 @@ public class StoragePathService(IWebHostEnvironment environment) : IStoragePathS
             StorageAssetType.Member => ShouldMapAzureStorage
                 ? ContainerNameDefault
                 : Path.Combine(LocalStorageMemberAssetsDirectoryName, ContainerNameDefault),
-            StorageAssetType.Lucene => string.Empty,
+            StorageAssetType.Lucene => ShouldMapAzureStorage
+                ? ContainerNameLucene
+                : string.Empty,
             _ => throw new ArgumentOutOfRangeException(nameof(assetType))
         };
 

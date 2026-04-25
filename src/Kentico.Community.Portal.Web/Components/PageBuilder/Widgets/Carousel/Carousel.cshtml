@@ -1,0 +1,53 @@
+@addTagHelper Kentico.Content.Web.Mvc.StandaloneWidgetTagHelper, Kentico.Content.Web.Mvc
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Carousel
+@using Kentico.PageBuilder.Web.Mvc
+@model CarouselWidgetViewModel
+
+@{
+    string carouselId = $"carousel-{Guid.NewGuid():N}";
+}
+
+<section class="carousel-widget d-flex flex-column p-3 position-relative" xpc-preview-outline="@Model.ComponentName" role="region"
+         aria-roledescription="carousel" aria-label="@Model.AriaLabel" id="@carouselId" x-data="carouselScrollComponent()">
+
+    @if (Model.Slides.Count > 1)
+    {
+        <button type="button" class="carousel-widget__button carousel-widget__button--prev border-0 d-flex align-items-center justify-content-center position-absolute top-50 translate-middle-y" aria-controls="@carouselId"
+                aria-label="Previous slide" @@click="scrollPrev()">
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+            </svg>
+        </button>
+
+        <button type="button" class="carousel-widget__button carousel-widget__button--next border-0 d-flex align-items-center justify-content-center position-absolute top-50 translate-middle-y" aria-controls="@carouselId"
+                aria-label="Next slide" @@click="scrollNext()">
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+            </svg>
+        </button>
+    }
+
+    <div class="carousel-widget__viewport d-flex gap-3 pb-3" aria-live="polite" @@scroll="updateActiveSlide()" x-ref="viewport">
+        @for (int i = 0; i < Model.Slides.Count; i++)
+        {
+            var slide = Model.Slides[i];
+            <div class="carousel-widget__slide" data-label="Slide @(i + 1)" role="group" aria-roledescription="slide"
+                 aria-label="Slide @(i + 1) of @Model.Slides.Count">
+                <standalone-widget widget-type-identifier="@slide.WidgetIdentifier" widget-properties="slide.WidgetProperties" />
+            </div>
+        }
+    </div>
+
+    @if (Model.Slides.Count > 1)
+    {
+        <div class="carousel-widget__dots d-flex position-absolute start-50 translate-middle-x" role="tablist" aria-label="Slide navigation">
+            @for (int i = 0; i < Model.Slides.Count; i++)
+            {
+                <button type="button" class="carousel-widget__dot border-0 rounded-circle p-0" :class="activeSlide === @i ? 'is-active' : ''" role="tab"
+                        :aria-selected="(activeSlide === @i).toString()" aria-controls="@carouselId"
+                        aria-label="Go to slide @(i + 1)" @@click="scrollToSlide(@i)" :title="'Go to slide ' + (@i + 1)">
+                </button>
+            }
+        </div>
+    }
+</section>

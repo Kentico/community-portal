@@ -72,6 +72,9 @@ export async function initQAndA({ editorElemID, formType = "" }) {
     crepeEditor = new Crepe({
       root: editorEl,
       defaultValue: getInitialMarkdown(textareaEl.value),
+      features: {
+        [Crepe.Feature.ImageBlock]: false,
+      },
       featureConfigs: {
         "code-mirror": {
           languages: getCodeMirrorLanguages(),

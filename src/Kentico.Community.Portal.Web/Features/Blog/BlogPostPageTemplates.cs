@@ -2,6 +2,7 @@ using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Infrastructure;
+using Kentico.Community.Portal.Web.Membership;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Content.Web.Mvc;
 using Kentico.Content.Web.Mvc.Routing;
@@ -9,6 +10,7 @@ using Kentico.PageBuilder.Web.Mvc.PageTemplates;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using MediatR;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 using Icons = Kentico.Xperience.Admin.Base.Icons;
@@ -44,12 +46,14 @@ public class BlogPostPageTemplateController(
     WebPageMetaService metaService,
     IMediator mediator,
     IContentRetriever contentRetriever,
-    IWebPageUrlRetriever urlRetriever) : Controller
+    IWebPageUrlRetriever urlRetriever,
+    UserManager<CommunityMember> userManager) : Controller
 {
     private readonly WebPageMetaService metaService = metaService;
     private readonly IMediator mediator = mediator;
     private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
+    private readonly UserManager<CommunityMember> userManager = userManager;
 
     public async Task<ActionResult> Index()
     {
@@ -66,7 +70,8 @@ public class BlogPostPageTemplateController(
             .Map(p => urlRetriever.Retrieve(p))
             .Map(u => u.RelativePath);
         int commentCount = await GetDiscussionCommentCount(blogPage);
-        var vm = new BlogPostPageViewModel(blogPage, author, discussionURL, absoluteURL, commentCount);
+        var upvote = await GetBlogPostUpvote(blogPage);
+        var vm = new BlogPostPageViewModel(blogPage, author, discussionURL, absoluteURL, commentCount, upvote);
 
         metaService.SetMeta(blogPage);
 
@@ -102,6 +107,20 @@ public class BlogPostPageTemplateController(
 
         return await mediator.Send(new QAndAAnswerCountQuery(question.SystemFields.WebPageItemGUID));
     }
+
+    private async Task<Maybe<BlogPostUpvoteViewModel>> GetBlogPostUpvote(BlogPostPage blogPostPage)
+    {
+        if (blogPostPage.BlogPostPageQAndAQuestionPages.FirstOrDefault() is not QAndAQuestionPage question)
+        {
+            return Maybe<BlogPostUpvoteViewModel>.None;
+        }
+
+        var currentMember = await userManager.CurrentUser(HttpContext);
+        var reactionData = await mediator.Send(new QAndAQuestionReactionsQuery(question.SystemFields.WebPageItemID, currentMember?.Id));
+        bool canReact = currentMember is not null && question.QAndAQuestionPageAuthorMemberID != currentMember.Id;
+
+        return new BlogPostUpvoteViewModel(question.SystemFields.WebPageItemGUID, reactionData, canReact);
+    }
 }
 
 public class BlogPostPageViewModel
@@ -112,8 +131,9 @@ public class BlogPostPageViewModel
     public string AbsoluteURL { get; } = "";
     public Maybe<string> DiscussionLinkPath { get; }
     public int DiscussionCommentsCount { get; }
+    public Maybe<BlogPostUpvoteViewModel> Upvote { get; }
 
-    public BlogPostPageViewModel(BlogPostPage page, AuthorViewModel author, Maybe<string> discussionURL, string absoluteURL, int commentCount)
+    public BlogPostPageViewModel(BlogPostPage page, AuthorViewModel author, Maybe<string> discussionURL, string absoluteURL, int commentCount, Maybe<BlogPostUpvoteViewModel> upvote)
     {
         Title = page.BasicItemTitle;
         PublishedDate = page.BlogPostPagePublishedDate;
@@ -121,6 +141,7 @@ public class BlogPostPageViewModel
         DiscussionLinkPath = discussionURL;
         AbsoluteURL = absoluteURL;
         DiscussionCommentsCount = commentCount;
+        Upvote = upvote;
     }
 }
 
@@ -142,5 +163,23 @@ public class AuthorViewModel
             ? Maybe<string>.None
             : urlHelper.Action(nameof(MemberController.MemberDetail), "Member", new { memberID = author.AuthorContentMemberID });
         BiographyHTML = new(author.AuthorContentBiographyHTML);
+    }
+}
+
+public class BlogPostUpvoteViewModel
+{
+    public Guid QuestionID { get; }
+    public bool CurrentMemberHasReacted { get; }
+    public int ReactionCount { get; }
+    public IReadOnlyList<string> MembersWhoReacted { get; } = [];
+    public bool CanReact { get; }
+
+    public BlogPostUpvoteViewModel(Guid questionID, QuestionReactionsData data, bool canReact)
+    {
+        QuestionID = questionID;
+        CurrentMemberHasReacted = data.CurrentMemberHasReacted;
+        ReactionCount = data.TotalCount;
+        MembersWhoReacted = data.MembersWhoReacted;
+        CanReact = canReact;
     }
 }

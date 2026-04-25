@@ -44,6 +44,14 @@
                                             }
                                         </div>
                                     </div>
+                                    <div class="mt-4">
+                                        @if (post.Upvote.TryGetValue(out var upvoteTop))
+                                        {
+                                            <div id="blog-upvote-top">
+                                                <partial name="~/Features/Blog/_BlogPostUpvote.cshtml" model="upvoteTop" />
+                                            </div>
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -62,6 +70,7 @@
                         [
                             WI.BlogPostList,
                             WI.CTAButton,
+                            WI.Carousel,
                             WI.File,
                             WI.Heading,
                             WI.Image,
@@ -92,10 +101,24 @@
                                         _ => $"Join the conversation ({post.DiscussionCommentsCount} comments)"
                                     };
 
-                                    <div class="d-flex align-items-center justify-content-center">
+                                    <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+                                        @if (post.Upvote.TryGetValue(out var upvoteBottom))
+                                        {
+                                            <div id="blog-upvote-bottom">
+                                                <partial name="~/Features/Blog/_BlogPostUpvote.cshtml" model="upvoteBottom" />
+                                            </div>
+                                        }
                                         <a class="btn btn-secondary" href="@discussionPath">
                                             @message
                                         </a>
+                                    </div>
+                                }
+                                else if (post.Upvote.TryGetValue(out var upvoteOnly))
+                                {
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <div id="blog-upvote-bottom">
+                                            <partial name="~/Features/Blog/_BlogPostUpvote.cshtml" model="upvoteOnly" />
+                                        </div>
                                     </div>
                                 }
                                 <div class="mt-4 text-center">
@@ -178,7 +201,7 @@
             <ol class="blog-toc__list">
                 <template x-for="item in headings" :key="item.id">
                     <li class="blog-toc__item" :class="`blog-toc__item--${item.level}`">
-                        <a :href="`#${item.id}`" class="blog-toc__link" :class="{ 'blog-toc__link--active': activeId === item.id }" @@click="close()" x-text="item.text"></a>
+                        <a href="#" class="blog-toc__link" :class="{ 'blog-toc__link--active': activeId === item.id }" @@click.prevent="navigateTo(item.id)" x-text="item.text"></a>
                     </li>
                 </template>
             </ol>

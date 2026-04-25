@@ -1,0 +1,110 @@
+.content-calendar {
+  position: relative;
+  padding: var(--spacing-xl);
+
+  /* Map FullCalendar CSS variables to Xperience design tokens */
+  --fc-border-color: var(--color-border-low-emphasis);
+  --fc-page-bg-color: var(--color-paper-background);
+  --fc-neutral-bg-color: var(--color-background-subtle);
+  --fc-neutral-text-color: var(--color-text-low-emphasis);
+  --fc-today-bg-color: var(--color-background-highlighted);
+  --fc-button-bg-color: var(--color-product);
+  --fc-button-border-color: var(--color-product);
+  --fc-button-hover-bg-color: var(--color-product-hover);
+  --fc-button-hover-border-color: var(--color-product-hover);
+  --fc-button-active-bg-color: var(--color-product-selected);
+  --fc-button-active-border-color: var(--color-product-selected);
+  --fc-button-text-color: var(--color-text-default-on-dark);
+  --fc-event-bg-color: var(--color-paper-background);
+  --fc-event-border-color: var(--color-border-low-emphasis);
+  --fc-event-text-color: var(--color-text-default-on-light);
+  --fc-more-link-bg-color: transparent;
+  --fc-more-link-text-color: var(--color-link);
+  --fc-small-font-size: var(--font-size-xs);
+
+  font-family: var(--font-family-default);
+  font-size: var(--font-size-m);
+  color: var(--color-text-default-on-light);
+}
+
+.content-calendar__event {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-s);
+  overflow: hidden;
+  cursor: pointer;
+  padding: var(--spacing-xxs) var(--spacing-xs);
+}
+
+.content-calendar__event-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.content-calendar__tooltip-wrapper {
+  position: fixed;
+  z-index: 9999;
+  transform: translate(8px, -50%);
+}
+
+.content-calendar__tooltip {
+  background: var(--color-paper-background);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-m);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  padding: var(--spacing-m) var(--spacing-l);
+  min-width: 220px;
+  max-width: 320px;
+  position: relative;
+}
+
+.content-calendar__tooltip-close {
+  position: absolute;
+  top: var(--spacing-xs);
+  right: var(--spacing-s);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-m);
+  color: var(--color-text-low-emphasis);
+  line-height: 1;
+  padding: 0 var(--spacing-xxs);
+}
+
+.content-calendar__tooltip-close:hover {
+  color: var(--color-text-default-on-light);
+}
+
+.content-calendar__tooltip-title {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-m);
+  margin-bottom: var(--spacing-s);
+  padding-right: var(--spacing-l);
+  word-break: break-word;
+}
+
+.content-calendar__tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-s);
+  margin-top: var(--spacing-xxs);
+}
+
+.content-calendar__tooltip-label {
+  color: var(--color-text-low-emphasis);
+  flex-shrink: 0;
+}
+
+.content-calendar__tooltip-edit-link {
+  color: var(--color-link);
+  text-decoration: none;
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-semibold);
+}
+
+.content-calendar__tooltip-edit-link:hover {
+  text-decoration: underline;
+}

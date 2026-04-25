@@ -2,7 +2,7 @@
 
 $scriptConfig = @{}
 $scriptConfig.WorkspaceFolder = ".."
-$scriptConfig.SolutionFileName = "Kentico.Community.Portal.sln"
+$scriptConfig.SolutionFileName = "Kentico.Community.Portal.slnx"
 $scriptConfig.WebProjectAssemblyName = "Kentico.Community.Portal.Web"
 $scriptConfig.BackupSourceFolderPath = "/var/backups"
 $scriptConfig.BackupSourcePathSeparator = "/"

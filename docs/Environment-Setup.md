@@ -9,7 +9,6 @@ logs) is included in the `.\database` folder as a `.zip`.
 
   For details on using Docker for Xperience by Kentico's SQL Server database see
   [Environment-Setup.md](/docs/Environment-Setup.md).
-
   1. Extract the `.bak` from the `.zip`
   1. Copy the `.bak` into the Docker container file system (see
      `.github\workflows\ci.yml` for an example) at
@@ -23,11 +22,9 @@ logs) is included in the `.\database` folder as a `.zip`.
   See
   [Quickstart: Backup and restore a SQL Server database with SSMS](https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/quickstart-backup-restore-database?view=sql-server-ver16&tabs=ssms)
   for details on using SSMS to restore a database `.bak`.
-
   1. Launch SSMS
   1. Extract `.bak` file from `.zip` in `.\database\`
   1. Restore database
-
      - Right click on 'Databases'
      - 'Restore Database'
      - Select source 'Device' -> ...-> 'Add'
@@ -35,7 +32,7 @@ logs) is included in the `.\database` folder as a `.zip`.
 
 ## Configure the application
 
-1. Open `.\Kentico.Community.Portal.sln` OR open the repository's root folder
+1. Open `.\Kentico.Community.Portal.slnx` OR open the repository's root folder
    directly from VS Code.
 
    If using VS Code, install all recommended extensions
@@ -49,7 +46,6 @@ logs) is included in the `.\database` folder as a `.zip`.
    to make secrets management easier.
 
 1. Build the application
-
    - Use the included
      [VS Code task](https://code.visualstudio.com/docs/debugtest/tasks)
      `.NET: build (Solution)`
@@ -78,7 +74,6 @@ the CI Repository
 
 - Use the VS Code task `Xperience: CI Restore`
 - (**alternative**) Use the script directly
-
   1. `cd scripts`
   1. `.\Restore-CI.ps1`
 

@@ -1,5 +1,7 @@
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.AccountManagement;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList;
+using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Carousel;
+using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CommunityGroupCard;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CommunityProgramTargetsReport;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CookiePreferences;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CTAButton;
@@ -27,6 +29,8 @@ public static class WidgetIdentifiers
 {
     public const string AccountManagement = AccountManagementWidget.IDENTIFIER;
     public const string BlogPostList = BlogPostListWidget.IDENTIFIER;
+    public const string Carousel = CarouselWidget.IDENTIFIER;
+    public const string CommunityGroupCard = CommunityGroupCardWidget.IDENTIFIER;
     public const string TargetsReport = TargetsReportWidget.IDENTIFIER;
     public const string CookiePreferences = CookiePreferencesWidget.IDENTIFIER;
     public const string CTAButton = CTAButtonWidget.IDENTIFIER;
@@ -34,6 +38,7 @@ public static class WidgetIdentifiers
     public const string FAQ = FAQWidget.IDENTIFIER;
     public const string FallbackForm = FallbackFormWidget.IDENTIFIER;
     public const string File = FileWidget.IDENTIFIER;
+    public const string Form = "Kentico.FormWidget";
     public const string Heading = HeadingWidget.IDENTIFIER;
     public const string Image = ImageWidget.IDENTIFIER;
     public const string Integration = IntegrationCardWidget.IDENTIFIER;

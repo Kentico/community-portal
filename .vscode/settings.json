@@ -6,6 +6,7 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
+    "**/*.lscache": true,
     "**/node_modules": true,
     "**/obj": true,
     "**/bin": true,
@@ -69,9 +70,9 @@
     "editor.acceptSuggestionOnCommitCharacter": false
   },
 
-  "dotnet.defaultSolution": "Kentico.Community.Portal.sln",
+  "dotnet.defaultSolution": "Kentico.Community.Portal.slnx",
 
-  "typescript.validate.enable": false,
+  "js/ts.validate.enabled": false,
   "eslint.workingDirectories": ["./src/Kentico.Community.Portal.Admin/Client"],
 
   "files.associations": {
@@ -182,10 +183,10 @@
     "eval": false,
     "Invoke-Expression": false,
     "iex": false,
-    "dotnet tool": true
+    "dotnet tool": true,
+    "dotnet list": true
   },
   "chat.agent.maxRequests": 50,
-  "chat.customAgentInSubagent.enabled": true,
   "chat.useAgentSkills": true,
   "chat.tools.edits.autoApprove": {
     "**/*.github/**": false,

@@ -13,3 +13,4 @@ export * from './features/members';
 export * from './features/data-migrations';
 export * from './features/community-tools';
 export * from './features/web-page-rocket-surgery';
+export * from './features/content-calendar';

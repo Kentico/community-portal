@@ -1,3 +1,4 @@
+using Kentico.Community.Portal.Core.Membership;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Testing;
 using Kentico.Community.Portal.Web.Membership;

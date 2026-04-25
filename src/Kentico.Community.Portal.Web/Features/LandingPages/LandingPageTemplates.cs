@@ -1,8 +1,11 @@
+using Kentico.Community.Portal.Core.Components;
+using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets;
 using Kentico.Community.Portal.Web.Features.LandingPages;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Content.Web.Mvc;
 using Kentico.Content.Web.Mvc.Routing;
 using Kentico.PageBuilder.Web.Mvc.PageTemplates;
+using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
 using Icons = Kentico.Xperience.Admin.Base.Icons;
@@ -34,7 +37,49 @@ using Icons = Kentico.Xperience.Admin.Base.Icons;
 
 namespace Kentico.Community.Portal.Web.Features.LandingPages;
 
-public class LandingPageTemplateProperties : IPageTemplateProperties { }
+public class LandingPageTemplateProperties : IPageTemplateProperties
+{
+    [RadioGroupComponent(
+        Label = "Widget selection",
+        ExplanationText = "Controls which widgets are available in the editable area",
+        Options = "Standard;Standard\nFull;Full",
+        Order = 1
+    )]
+    public string WidgetSelection { get; set; } = nameof(LandingPageWidgetSelections.Standard);
+
+    /// <summary>
+    /// Parsed version of <see cref="WidgetSelection" /> as a <see cref="LandingPageWidgetSelections" /> enum value.
+    /// Defaults to <see cref="LandingPageWidgetSelections.Standard" /> when parsing fails.
+    /// </summary>
+    public LandingPageWidgetSelections WidgetSelectionParsed =>
+        EnumDropDownOptionsProvider<LandingPageWidgetSelections>.Parse(WidgetSelection, LandingPageWidgetSelections.Standard);
+
+    public static readonly string[] StandardWidgets =
+    [
+        WidgetIdentifiers.BlogPostList,
+        WidgetIdentifiers.Carousel,
+        WidgetIdentifiers.CommunityGroupCard,
+        WidgetIdentifiers.CTAButton,
+        WidgetIdentifiers.Embed,
+        WidgetIdentifiers.FallbackForm,
+        WidgetIdentifiers.FAQ,
+        WidgetIdentifiers.File,
+        WidgetIdentifiers.Form,
+        WidgetIdentifiers.Heading,
+        WidgetIdentifiers.Image,
+        WidgetIdentifiers.Integration,
+        WidgetIdentifiers.LinkList,
+        WidgetIdentifiers.Markdown,
+        WidgetIdentifiers.PageHeading,
+        WidgetIdentifiers.Poll,
+        WidgetIdentifiers.ProfileCard,
+        WidgetIdentifiers.Testimonial,
+        WidgetIdentifiers.Video
+    ];
+}
+
+public enum LandingPageWidgetSelections { Standard, Full }
+
 public class LandingPageDefaultTemplateProperties : LandingPageTemplateProperties { }
 public class LandingPageEmptyTemplateProperties : LandingPageTemplateProperties { }
 

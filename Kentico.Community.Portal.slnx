@@ -1,0 +1,29 @@
+<Solution>
+  <Folder Name="/actions/">
+    <File Path=".github/workflows/ci.yml" />
+  </Folder>
+  <Folder Name="/build/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+  </Folder>
+  <Folder Name="/config/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+  </Folder>
+  <Folder Name="/data/">
+    <Project Path="data/Kentico.Community.DataCleaner.App/Kentico.Community.DataCleaner.App.csproj" />
+  </Folder>
+  <Folder Name="/docs/">
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Kentico.Community.Portal.Admin/Kentico.Community.Portal.Admin.csproj" />
+    <Project Path="src/Kentico.Community.Portal.Core/Kentico.Community.Portal.Core.csproj" />
+    <Project Path="src/Kentico.Community.Portal.Web/Kentico.Community.Portal.Web.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/Kentico.Community.Portal.Web.Integration.Tests/Kentico.Community.Portal.Web.Integration.Tests.csproj" />
+    <Project Path="test/Kentico.Community.Portal.Web.Tests/Kentico.Community.Portal.Web.Tests.csproj" />
+  </Folder>
+</Solution>

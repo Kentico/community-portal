@@ -42,7 +42,7 @@ public class StoragePathServiceTests
 
     [TestCase(StorageAssetType.Xperience, "~/assets/")]
     [TestCase(StorageAssetType.Member, "~/member-assets/")]
-    //[TestCase(StorageAssetType.Lucene, "~/App_Data/LuceneSearch/")]
+    [TestCase(StorageAssetType.Lucene, $"~/App_Data/LuceneSearch/")]
     public void GetStoragePathPrefix_Will_Return_A_Custom_Prefix_For_Each_AssetType(StorageAssetType assetType, string expectedResult)
     {
         var env = Substitute.For<IWebHostEnvironment>();
@@ -101,7 +101,7 @@ public class StoragePathServiceTests
 
     [TestCase(StorageAssetType.Xperience, "default")]
     [TestCase(StorageAssetType.Member, "default")]
-    //[TestCase(StorageAssetType.Lucene, "lucene")]
+    [TestCase(StorageAssetType.Lucene, "lucene")]
     public void GetContainerPath_Will_Return_The_Same_Path_For_Each_AssetType_For_SaaS_Deployments(StorageAssetType assetType, string expectedResult)
     {
         var env = Substitute.For<IWebHostEnvironment>();

@@ -1,8 +1,11 @@
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Sections.SingleColumn;
+using Kentico.Community.Portal.Web.Rendering;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
+using Kentico.Xperience.Admin.Base.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Kentico.Xperience.ComponentIcons;
 
@@ -16,13 +19,16 @@ using Kentico.Xperience.ComponentIcons;
 
 namespace Kentico.Community.Portal.Web.Components.PageBuilder.Sections.SingleColumn;
 
-public class SingleColumnSection : ViewComponent
+public class SingleColumnSection(IPageBuilderContext pageBuilderContext) : ViewComponent
 {
     public const string IDENTIFIER = "CommunityPortal.SingleColumnSection";
 
+    private readonly IPageBuilderContext pageBuilderContext = pageBuilderContext;
+
     public IViewComponentResult Invoke(ComponentViewModel<SingleColumnSectionProperties> vm)
     {
-        var model = new SingleColumnSectionViewModel(vm.Properties);
+        bool isEditMode = pageBuilderContext.Mode == ApplicationPageBuilderMode.Edit;
+        var model = new SingleColumnSectionViewModel(vm.Properties, isEditMode);
 
         return View("~/Components/PageBuilder/Sections/SingleColumn/SingleColumn.cshtml", model);
     }
@@ -79,6 +85,34 @@ public class SingleColumnSectionProperties : ISectionProperties
     )]
     public string BackgroundColor { get; set; } = nameof(BackgroundColors.White);
     public BackgroundColors BackgroundColorParsed => EnumDropDownOptionsProvider<BackgroundColors>.Parse(BackgroundColor, BackgroundColors.White);
+
+    [CheckBoxComponent(
+        Label = "Display as carousel",
+        ExplanationText = """
+            Wraps each widget zone in a carousel slide.<br>
+            Slides will render vertically in Page Builder Edit mode for content editing, but display as a horizontal carousel in Preview and Live modes.
+        """,
+        ExplanationTextAsHtml = true,
+        Order = 10
+    )]
+    public bool DisplayAsCarousel { get; set; }
+
+    [VisibleIfEqualTo(nameof(DisplayAsCarousel), true)]
+    [NumberInputComponent(
+        Label = "Number of slides",
+        ExplanationText = "Each slide contains one widget zone (1–8).",
+        Order = 11
+    )]
+    [Range(1, 8)]
+    public int NumberOfSlides { get; set; } = 3;
+
+    [VisibleIfEqualTo(nameof(DisplayAsCarousel), true)]
+    [TextInputComponent(
+        Label = "Accessible label",
+        ExplanationText = "Screen reader label for this carousel region.",
+        Order = 12
+    )]
+    public string CarouselAriaLabel { get; set; } = "Featured content carousel";
 }
 
 public enum Layouts
@@ -130,13 +164,19 @@ public enum BackgroundColors
 
 public class SingleColumnSectionViewModel
 {
-    public SingleColumnSectionViewModel(SingleColumnSectionProperties props)
+    public SingleColumnSectionViewModel(SingleColumnSectionProperties props, bool isEditMode = false)
     {
         Layout = props.LayoutParsed;
         Alignment = props.AlignmentParsed;
         PaddingTop = props.PaddingTopParsed;
         PaddingBottom = props.PaddingBottomParsed;
         BackgroundColor = props.BackgroundColorParsed;
+        DisplayAsCarousel = props.DisplayAsCarousel;
+        IsEditMode = isEditMode;
+        NumberOfSlides = Math.Clamp(props.NumberOfSlides, 1, 8);
+        CarouselAriaLabel = string.IsNullOrWhiteSpace(props.CarouselAriaLabel)
+            ? "Featured content carousel"
+            : props.CarouselAriaLabel;
     }
 
     public Layouts Layout { get; set; }
@@ -144,4 +184,8 @@ public class SingleColumnSectionViewModel
     public VerticalPaddings PaddingTop { get; set; }
     public VerticalPaddings PaddingBottom { get; set; }
     public BackgroundColors BackgroundColor { get; set; }
+    public bool DisplayAsCarousel { get; set; }
+    public bool IsEditMode { get; set; }
+    public int NumberOfSlides { get; set; }
+    public string CarouselAriaLabel { get; set; }
 }
