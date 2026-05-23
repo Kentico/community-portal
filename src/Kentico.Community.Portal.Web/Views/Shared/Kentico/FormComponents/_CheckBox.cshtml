@@ -1,0 +1,29 @@
+@using Kentico.Forms.Web.Mvc
+
+@model CheckBoxComponent
+
+@{
+    var inputHtmlAttributes = ViewData.Kentico().GetEditorHtmlAttributes();
+    var spanTitle = inputHtmlAttributes.TryGetValue("title", out object? title) ? title : string.Empty;
+
+    if (inputHtmlAttributes.TryGetValue("class", out object? classesStr))
+    {
+        inputHtmlAttributes["class"] = $"{classesStr} form-check-input";
+    }
+    else
+    {
+        inputHtmlAttributes["class"] = $"form-check-input";
+    }
+
+    var labelHtmlAttributes = new Dictionary<string, object>
+    {
+        { "class", "form-check-label" }
+    };
+}
+
+<span class="form-check" title="@spanTitle">
+    @Html.CheckBoxFor(m => m.Value, inputHtmlAttributes)
+    @Html.LabelFor(m => m.Value, string.IsNullOrWhiteSpace(Model.Properties.Text) ? "\u00A0" :
+    ResHelper.LocalizeString(Model.Properties.Text), labelHtmlAttributes)
+</span>
+ 

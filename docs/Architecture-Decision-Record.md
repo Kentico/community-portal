@@ -1,5 +1,26 @@
 # Architecture Decision Record
 
+## 2026-05-19 - Switch Node package manager from npm to pnpm
+
+The repository had three Node.js projects using npm and `package-lock.json` in
+parallel with .NET build/test workflows.
+
+To improve supply-chain security and install performance, we standardized on
+pnpm across local development scripts, VS Code tasks, and GitHub workflows.
+
+### Selected solution
+
+- Use pnpm (pinned via `packageManager`) for all Node.js projects.
+- Use a single workspace lockfile (`pnpm-lock.yaml`) at repository root.
+- Configure pnpm supply-chain safeguards in `pnpm-workspace.yaml`:
+  - `minimumReleaseAge: 1440`
+  - `blockExoticSubdeps: true`
+  - `trustPolicy: no-downgrade`
+- Use `pnpm/action-setup@v6` in GitHub workflows (reads version from
+  `packageManager`; handles its own store caching).
+- Use plain `pnpm ...` commands everywhere; `corepack` prefix is redundant once
+  pnpm is on PATH.
+
 ## 2026-01-13 - Q&A discussion notifications & subscriptions
 
 A feature of Kentico's previous membership portal (DevNet) was notification

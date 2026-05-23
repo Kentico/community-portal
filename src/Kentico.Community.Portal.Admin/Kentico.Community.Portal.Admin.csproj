@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Kentico.Xperience.Admin" />
-    <PackageReference Include="MailKit" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" />
     <PackageReference Include="CsvHelper" />
   </ItemGroup>
 
@@ -27,11 +27,11 @@
     <ProjectReference Include="..\Kentico.Community.Portal.Core\Kentico.Community.Portal.Core.csproj" />
   </ItemGroup>
 
-  <Target Name="NpmInstall" BeforeTargets="NpmBuildClient" Condition=" '$(Configuration)|$(Platform)' != 'Debug|AnyCPU' ">
-    <Exec Command="npm ci --no-audit --no-fund" WorkingDirectory="$(MSBuildProjectDirectory)\Client" />
+  <Target Name="PnpmInstall" BeforeTargets="PnpmBuildClient" Condition=" '$(Configuration)|$(Platform)' != 'Debug|AnyCPU' ">
+    <Exec Command="pnpm install --frozen-lockfile" WorkingDirectory="$(MSBuildProjectDirectory)\Client" />
   </Target>
-  <Target Name="NpmBuildClient" BeforeTargets="BeforeBuild" Condition=" '$(Configuration)|$(Platform)' != 'Debug|AnyCPU' ">
-    <Exec Command="npm run build" WorkingDirectory="$(MSBuildProjectDirectory)\Client" />
+  <Target Name="PnpmBuildClient" BeforeTargets="BeforeBuild" Condition=" '$(Configuration)|$(Platform)' != 'Debug|AnyCPU' ">
+    <Exec Command="pnpm run build" WorkingDirectory="$(MSBuildProjectDirectory)\Client" />
 
     <ItemGroup>
       <AdminClientPath Include="Client\dist\**">

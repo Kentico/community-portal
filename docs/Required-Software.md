@@ -11,6 +11,8 @@
 ## Node.js Runtime
 
 - [Node.js](https://nodejs.org/en/download/package-manager) 24.11.1 or newer
+- [Corepack](https://nodejs.org/api/corepack.html) enabled (`corepack enable`)
+- [pnpm](https://pnpm.io/) via Corepack (version is pinned in `packageManager`)
 - [NVM for Windows](https://github.com/coreybutler/nvm-windows) to manage
   multiple installed versions of Node.js (recommended)
   - See `engines` in the solution's `package.json` files for specific version

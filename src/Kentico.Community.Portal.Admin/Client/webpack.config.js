@@ -54,6 +54,11 @@ module.exports = (opts, argv) => {
 };
 
 function buildConfig(baseConfig, opts, argv) {
+  const milkdownCssPathPattern = new RegExp(
+    // Match both classic node_modules and pnpm's nested .pnpm/.../node_modules layout.
+    `[\\\\/]node_modules[\\\\/](?:\\\\.pnpm[\\\\/].+[\\\\/]node_modules[\\\\/])?@milkdown[\\\\/]`,
+  );
+
   const projectConfig = {
     devtool: 'inline-source-map',
     module: {
@@ -67,13 +72,20 @@ function buildConfig(baseConfig, opts, argv) {
         // by postcss or tailwind
         {
           test: /\.css$/i,
-          include: path.resolve(__dirname, 'node_modules/@milkdown'),
-          use: ['css-loader'],
+          include: milkdownCssPathPattern,
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                exportType: 'string',
+              },
+            },
+          ],
         },
         // All other admin custom CSS will be tailwind based using globals.css
         {
           test: /\.css$/i,
-          exclude: path.resolve(__dirname, 'node_modules/@milkdown'),
+          exclude: milkdownCssPathPattern,
           use: ['style-loader', 'css-loader', 'postcss-loader'],
         },
       ],

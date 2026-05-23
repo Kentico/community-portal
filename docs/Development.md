@@ -12,13 +12,13 @@ and separately.
 
 Details on how to start these 3 servers can be found below.
 
-## Start npm dev servers
+## Start pnpm dev servers
 
 1. Install and build the client dependencies for the website channel experience
 
    This uses Vite as a dev server.
-   - Use the VS Code task `npm: watch (Web)`
-   - (**alternative**) Run `npm install` and then `npm run dev` at the command
+   - Use the VS Code task `pnpm: watch (Web)`
+   - (**alternative**) Run `pnpm install` and then `pnpm run dev` at the command
      line in the `.\src\Kentico.Community.Portal.Web` directory
    - (**alternative**) Run `Run-Web-Client.ps1` from the command line in the
      `.\scripts` directory
@@ -27,8 +27,8 @@ Details on how to start these 3 servers can be found below.
    administration React components
 
    This uses webpack as a dev server.
-   - Use the VS Code task `npm: watch (Admin)`
-   - (**alternative**) Run `npm install` and then `npm run dev` at the command
+   - Use the VS Code task `pnpm: watch (Admin)`
+   - (**alternative**) Run `pnpm install` and then `pnpm start` at the command
      line in the `.\src\Kentico.Community.Portal.Admin\Client` directory
    - (**alternative**) Run `Run-Admin-Client.ps1` from the command line in the
      `.\scripts` directory

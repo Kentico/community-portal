@@ -48,11 +48,7 @@ export const MarkdownFormComponent = (props: FormComponentProps) => {
   return (
     <div className={'markdown-editor-container'} onClick={blockEvents}>
       <EditorStyles
-        styles={[
-          (CrepeStyles as string[]).toString(),
-          (FrameStyles as string[]).toString(),
-          customStyles,
-        ]}
+        styles={[CrepeStyles as string, FrameStyles as string, customStyles]}
       />
 
       <FormItemWrapper

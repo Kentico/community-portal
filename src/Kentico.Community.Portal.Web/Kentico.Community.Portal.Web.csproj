@@ -29,7 +29,7 @@
     <PackageReference Include="Kentico.Xperience.VirtualInbox.MCP" />
     <PackageReference Include="Kentico.Xperience.WebApp" />
     <PackageReference Include="Kentico.Xperience.TagManager" />
-    <PackageReference Include="MailKit" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" />
     <PackageReference Include="Markdig" />
     <PackageReference Include="Microsoft.Identity.Web" />
     <PackageReference Include="Scrutor" />
@@ -66,11 +66,11 @@
     <NoWarn>$(NoWarn);ASP0001</NoWarn>
   </PropertyGroup>
 
-  <Target Name="NpmInstall" BeforeTargets="NpmBuildClient" Condition=" '$(Configuration)|$(Platform)' != 'Debug|AnyCPU' ">
-    <Exec Command="npm ci --no-audit --no-fund" WorkingDirectory="$(MSBuildProjectDirectory)" />
+  <Target Name="PnpmInstall" BeforeTargets="PnpmBuildClient" Condition=" '$(Configuration)|$(Platform)' != 'Debug|AnyCPU' ">
+    <Exec Command="pnpm install --frozen-lockfile" WorkingDirectory="$(MSBuildProjectDirectory)" />
   </Target>
-  <Target Name="NpmBuildClient" BeforeTargets="BeforeBuild" Condition=" '$(Configuration)|$(Platform)' != 'Debug|AnyCPU' ">
-    <Exec Command="npm run build" WorkingDirectory="$(MSBuildProjectDirectory)" />
+  <Target Name="PnpmBuildClient" BeforeTargets="BeforeBuild" Condition=" '$(Configuration)|$(Platform)' != 'Debug|AnyCPU' ">
+    <Exec Command="pnpm run build" WorkingDirectory="$(MSBuildProjectDirectory)" />
   </Target>
 
 </Project>

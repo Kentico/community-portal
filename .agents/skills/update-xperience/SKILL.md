@@ -1,12 +1,12 @@
 ---
 name: update-xperience
-description: Update Kentico Xperience NuGet and npm packages to latest non-breaking version and commit changes.
+description: Update Kentico Xperience NuGet and pnpm packages to latest non-breaking version and commit changes.
 ---
 
 ## Purpose
 
 Automate updating all Kentico Xperience dependencies (`Kentico.Xperience.*`
-NuGet + `@kentico/*` npm) when a newer version than the one declared in
+NuGet + `@kentico/*` pnpm) when a newer version than the one declared in
 `README.md` is available, run required update tasks, and produce a proper
 commit. Abort early if no newer version or if breaking changes are detected.
 
@@ -45,21 +45,20 @@ If any precondition fails: output a clear message and stop.
    dotnet restore
    ```
 
-## Update npm Packages (@kentico/\*)
+## Update pnpm Packages (@kentico/\*)
 
 1. Locate `package.json` files under `src/` containing dependencies or
    devDependencies starting with `@kentico/`.
 2. For each found package run:
    ```pwsh
-   npm install <package>@latest --save
+   corepack pnpm add <package>@latest --save-exact
    ```
-   or if dev dependency: `--save-dev`.
-3. Always use `--save-exact` for all packages.
-4. After updates, execute VS Code task: `npm: install (Admin)` (ensures lockfile
-   consistency for Admin client).
-5. After installation, run `npm: audit fix (Admin)` (attempts to resolve package
-   vulnerabilities) and do not block workflow unless critical
-6. Also look for related Xperience packages in the `mcp.json` file and ensure
+   or if dev dependency: `--save-dev --save-exact`.
+3. After updates, execute VS Code task: `pnpm: install (Admin)` (ensures
+   lockfile consistency for Admin client).
+4. After installation, run `pnpm: audit fix (Admin)` (attempts to resolve
+   package vulnerabilities) and do not block workflow unless critical
+5. Also look for related Xperience packages in the `.mcp.json` file and ensure
    their version is updated to match
 
 ## Build & Breaking Change Detection
@@ -107,7 +106,7 @@ If any precondition fails: output a clear message and stop.
 
 1. Stage changes:
    ```pwsh
-   git add Directory.Packages.props README.md **/package.json **/package-lock.json
+   git add Directory.Packages.props README.md **/package.json **/pnpm-lock.yaml
    ```
    Add any generated files updated by the application update (e.g., under
    `src/**` if present).
@@ -124,7 +123,7 @@ Provide a concise summary including:
 
 1. Previous vs new version.
 2. Count of NuGet packages updated.
-3. List of @kentico npm packages updated.
+3. List of @kentico pnpm packages updated.
 4. Confirmation of application update success.
 5. Commit hash.
 
@@ -149,7 +148,7 @@ currentVersion = ExtractVersionFromReadme()
 latestVersion = QueryLatestNuGet()
 if latestVersion <= currentVersion: Stop("No new version")
 UpdateCentralPackageVersions(latestVersion)
-UpdateKenticoNpmPackages()
+UpdateKenticoPnpmPackages()
 RunTask(".NET: build (Solution)")
 if BuildFailed(): Stop("Breaking changes detected")
 RunTask("Xperience: Application Update")
@@ -172,10 +171,10 @@ update Xperience by Kentico packages in the repository. tasks:
   Kentico is available than the one in use.
 - update_nuget_packages: description: Update all Xperience by Kentico NuGet
   packages to the latest version.
-- update_npm_packages: description: Update all Xperience by Kentico npm packages
-  to the latest version.
-- install_admin_npm: description: Use VS Code tasks to install the Admin project
-  npm packages.
+- update_pnpm_packages: description: Update all Xperience by Kentico pnpm
+  packages to the latest version.
+- install_admin_pnpm: description: Use VS Code tasks to install the Admin
+  project pnpm packages.
 - build_solution: description: Use VS Code tasks to perform a solution build.
 - check_breaking_changes: description: Check for breaking changes after the
   updates.

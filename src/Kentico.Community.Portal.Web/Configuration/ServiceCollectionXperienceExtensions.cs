@@ -5,6 +5,7 @@ using CMS.ContentEngine;
 using CMS.ContentSynchronization;
 using CMS.Core;
 using CMS.EmailEngine;
+using CMS.OnlineForms;
 using Kentico.Activities.Web.Mvc;
 using Kentico.Community.Portal.Core.Emails;
 using Kentico.Community.Portal.Web.Components.EmailBuilder.Sections.SingleColumn;
@@ -113,6 +114,7 @@ public static class ServiceCollectionXperienceExtensions
                 options.DefaultCacheExpiration = TimeSpan.FromMinutes(10);
             })
             .Configure<ReadOnlyModeOptions>(config.GetSection("ReadOnlyModeOptions"))
+            .AddSingleton<FormFieldTextValueExtractorBase<DateTime>, DateTimeFormFieldTextValueExtractor>()
             .AddSingleton<IFormFieldContentItemReferenceExtractor, MarkdownContentItemReferenceExtractor>()
             .AddSingleton<IEmailActivityTrackingEvaluator, ConsentEmailActivityTrackingEvaluator>()
             .Decorate<ILocalizationService, ApplicationLocalizationService>();

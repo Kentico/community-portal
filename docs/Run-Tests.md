@@ -32,15 +32,15 @@ Install the E2E dependencies and Playwright browser from
 
 ```powershell
 cd .\test\kentico-community-portal-web-e2e-tests
-npm ci
-npx playwright install chromium
+pnpm install
+pnpm exec playwright install chromium
 ```
 
 Run the suite with:
 
 ```powershell
 cd .\test\kentico-community-portal-web-e2e-tests
-npm test
+pnpm test
 ```
 
 Local execution supports both of these modes:

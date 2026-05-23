@@ -27,6 +27,8 @@ const config = ({ env }) => ({
             // bootstrap form validation
             "is-valid",
             "is-invalid",
+            // form builder
+            "explanation-text",
             // bootstrap tooltip
             "tooltip",
             "tooltip-inner",

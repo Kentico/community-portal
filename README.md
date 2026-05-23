@@ -5,8 +5,8 @@
 
 ## Description
 
-This project is using Xperience by Kentico v31.4.2 (changelog:
-<https://docs.kentico.com/documentation/changelog#hotfix-april-23-2026>).
+This project is using Xperience by Kentico v31.5.1 (changelog:
+<https://docs.kentico.com/changelog#hotfix-may-21-2026>).
 
 Xperience by Kentico solution for the Kentico managed SaaS hosted Kentico
 Community website.

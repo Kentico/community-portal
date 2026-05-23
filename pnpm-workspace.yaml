@@ -1,0 +1,26 @@
+packages:
+  - "src/Kentico.Community.Portal.Web"
+  - "src/Kentico.Community.Portal.Admin/Client"
+  - "test/kentico-community-portal-web-e2e-tests"
+
+minimumReleaseAge: 1440
+blockExoticSubdeps: true
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  - semver@6.3.1
+  - chokidar@4.0.3
+allowBuilds:
+  "@parcel/watcher": true
+
+# These transitive deps are deprecated but cannot be updated directly.
+# jpeg-exif + whatwg-encoding come from @amcharts/amcharts5 via pdfmake.
+# uuid@8 comes from webpack-dev-server via sockjs.
+# Remove entries when upstream packages no longer pull them in.
+allowedDeprecatedVersions:
+  jpeg-exif: "*"
+  uuid: "8"
+  whatwg-encoding: "*"
+
+minimumReleaseAgeExclude:
+  - serialize-javascript@7.0.3
+  - serialize-javascript@7.0.5

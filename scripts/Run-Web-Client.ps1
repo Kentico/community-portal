@@ -13,8 +13,8 @@ Write-Host "`n"
 
 Set-Location (Get-WebProjectPath)
 
-$command = "npm i"
+$command = "pnpm install"
 Invoke-ExpressionWithException $command
 
-$command = "npm start"
+$command = "pnpm start"
 Invoke-ExpressionWithException $command

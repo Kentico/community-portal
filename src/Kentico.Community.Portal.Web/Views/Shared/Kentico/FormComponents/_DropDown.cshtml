@@ -1,0 +1,19 @@
+@using Kentico.Forms.Web.Mvc
+
+@model DropDownComponent
+
+@{
+    var htmlAttributes = ViewData.Kentico().GetEditorHtmlAttributes();
+
+    if (htmlAttributes.TryGetValue("class", out object? classesStr))
+    {
+        htmlAttributes["class"] = $"{classesStr} form-select";
+    }
+    else
+    {
+        htmlAttributes["class"] = $"form-select";
+    }
+}
+
+@Html.DropDownListFor(x => x.SelectedValue, Model.HtmlOptions.ToSelectListItems(),
+ResHelper.LocalizeString(Model.Properties.OptionLabel), htmlAttributes) 

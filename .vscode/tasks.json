@@ -109,160 +109,176 @@
       }
     },
     {
-      "label": "npm: install (Web)",
-      "type": "npm",
-      "script": "install",
+      "label": "pnpm: install (Web)",
+      "type": "shell",
       "group": "none",
+      "options": {
+        "cwd": "src/Kentico.Community.Portal.Web"
+      },
+      "command": "pnpm install",
       "problemMatcher": [],
-      "path": "src/Kentico.Community.Portal.Web",
-      "detail": "Install Web npm dependencies"
+      "detail": "Install Web pnpm dependencies"
     },
     {
-      "label": "npm: audit fix (Web)",
+      "label": "pnpm: audit fix (Web)",
       "type": "shell",
       "options": {
         "cwd": "src/Kentico.Community.Portal.Web"
       },
-      "command": "npm audit fix",
+      "command": "pnpm audit --fix=update",
       "problemMatcher": []
     },
     {
-      "label": "npm: install (Admin)",
-      "type": "npm",
-      "script": "install",
-      "path": "src/Kentico.Community.Portal.Admin/Client",
+      "label": "pnpm: install (Admin)",
+      "type": "shell",
       "group": "none",
+      "options": {
+        "cwd": "src/Kentico.Community.Portal.Admin/Client"
+      },
+      "command": "pnpm install",
       "problemMatcher": [],
-      "detail": "Install Admin npm dependencies"
+      "detail": "Install Admin pnpm dependencies"
     },
     {
-      "label": "npm: audit fix (Admin)",
+      "label": "pnpm: audit fix (Admin)",
       "type": "shell",
       "options": {
         "cwd": "src/Kentico.Community.Portal.Admin/Client"
       },
-      "command": "npm audit fix",
+      "command": "pnpm audit --fix=update",
       "problemMatcher": []
     },
     {
-      "label": "npm: watch (Web)",
-      "type": "npm",
-      "script": "start",
+      "label": "pnpm: watch (Web)",
+      "type": "shell",
+      "command": "pnpm start",
       "problemMatcher": [],
-      "path": "src/Kentico.Community.Portal.Web",
-      "dependsOn": ["npm: install (Web)"],
+      "options": {
+        "cwd": "src/Kentico.Community.Portal.Web"
+      },
+      "dependsOn": ["pnpm: install (Web)"],
       "detail": "Vite development server"
     },
     {
-      "label": "npm: watch (Admin)",
-      "type": "npm",
-      "script": "start",
+      "label": "pnpm: watch (Admin)",
+      "type": "shell",
+      "command": "pnpm start",
       "group": "build",
       "problemMatcher": [],
-      "path": "src/Kentico.Community.Portal.Admin/Client",
-      "dependsOn": ["npm: install (Admin)"],
+      "options": {
+        "cwd": "src/Kentico.Community.Portal.Admin/Client"
+      },
+      "dependsOn": ["pnpm: install (Admin)"],
       "detail": "Webpack development server"
     },
     {
-      "label": "npm: build (Web)",
-      "type": "npm",
-      "script": "build",
+      "label": "pnpm: build (Web)",
+      "type": "shell",
+      "command": "pnpm build",
       "group": "build",
       "problemMatcher": [],
-      "path": "src/Kentico.Community.Portal.Web",
-      "dependsOn": ["npm: install (Web)"],
+      "options": {
+        "cwd": "src/Kentico.Community.Portal.Web"
+      },
+      "dependsOn": ["pnpm: install (Web)"],
       "detail": "Build Web client assets (CSS, JS) with Vite"
     },
     {
-      "label": "npm: install (Playwright E2E)",
-      "type": "npm",
-      "script": "install",
+      "label": "pnpm: install (Playwright E2E)",
+      "type": "shell",
       "group": "none",
+      "options": {
+        "cwd": "test/kentico-community-portal-web-e2e-tests"
+      },
+      "command": "pnpm install",
       "problemMatcher": [],
-      "path": "test/kentico-community-portal-web-e2e-tests",
-      "detail": "Install Playwright E2E npm dependencies"
+      "detail": "Install Playwright E2E pnpm dependencies"
     },
     {
-      "label": "npm: install browsers (Playwright E2E)",
-      "type": "npm",
-      "script": "install:browsers",
+      "label": "pnpm: install browsers (Playwright E2E)",
+      "type": "shell",
+      "command": "pnpm install:browsers",
       "group": "none",
       "problemMatcher": [],
-      "path": "test/kentico-community-portal-web-e2e-tests",
-      "dependsOn": ["npm: install (Playwright E2E)"],
+      "options": {
+        "cwd": "test/kentico-community-portal-web-e2e-tests"
+      },
+      "dependsOn": ["pnpm: install (Playwright E2E)"],
       "detail": "Install Chromium for Playwright E2E"
     },
     {
-      "label": "npm: audit fix (Playwright E2E)",
+      "label": "pnpm: audit fix (Playwright E2E)",
       "type": "shell",
       "options": {
         "cwd": "test/kentico-community-portal-web-e2e-tests"
       },
-      "command": "npm audit fix",
+      "command": "pnpm audit --fix=update",
       "problemMatcher": []
     },
     {
-      "label": "npm: test (Playwright E2E)",
-      "type": "npm",
-      "script": "test",
+      "label": "pnpm: test (Playwright E2E)",
+      "type": "shell",
+      "command": "pnpm test",
       "problemMatcher": [],
       "options": {
+        "cwd": "test/kentico-community-portal-web-e2e-tests",
         "env": {
           "NODE_OPTIONS": "--no-warnings"
         }
       },
-      "path": "test/kentico-community-portal-web-e2e-tests",
-      "dependsOn": ["npm: install browsers (Playwright E2E)"],
+      "dependsOn": ["pnpm: install browsers (Playwright E2E)"],
       "detail": "Run Playwright E2E tests"
     },
     {
-      "label": "npm: test headed (Playwright E2E)",
-      "type": "npm",
-      "script": "test:headed",
+      "label": "pnpm: test headed (Playwright E2E)",
+      "type": "shell",
+      "command": "pnpm test:headed",
       "problemMatcher": [],
       "options": {
+        "cwd": "test/kentico-community-portal-web-e2e-tests",
         "env": {
           "NODE_OPTIONS": "--no-warnings"
         }
       },
-      "path": "test/kentico-community-portal-web-e2e-tests",
-      "dependsOn": ["npm: install browsers (Playwright E2E)"],
+      "dependsOn": ["pnpm: install browsers (Playwright E2E)"],
       "detail": "Run Playwright E2E tests in headed mode"
     },
     {
-      "label": "npm: test UI (Playwright E2E)",
-      "type": "npm",
-      "script": "test:ui",
+      "label": "pnpm: test UI (Playwright E2E)",
+      "type": "shell",
+      "command": "pnpm test:ui",
       "problemMatcher": [],
       "options": {
+        "cwd": "test/kentico-community-portal-web-e2e-tests",
         "env": {
           "NODE_OPTIONS": "--no-warnings"
         }
       },
-      "path": "test/kentico-community-portal-web-e2e-tests",
-      "dependsOn": ["npm: install browsers (Playwright E2E)"],
+      "dependsOn": ["pnpm: install browsers (Playwright E2E)"],
       "detail": "Run Playwright E2E tests in UI mode"
     },
     {
-      "label": "npm: test smoke (Playwright E2E)",
-      "type": "npm",
-      "script": "test:smoke",
+      "label": "pnpm: test smoke (Playwright E2E)",
+      "type": "shell",
+      "command": "pnpm test:smoke",
       "problemMatcher": [],
       "options": {
+        "cwd": "test/kentico-community-portal-web-e2e-tests",
         "env": {
           "NODE_OPTIONS": "--no-warnings"
         }
       },
-      "path": "test/kentico-community-portal-web-e2e-tests",
-      "dependsOn": ["npm: install browsers (Playwright E2E)"],
+      "dependsOn": ["pnpm: install browsers (Playwright E2E)"],
       "detail": "Run Playwright E2E smoke tests"
     },
     {
-      "label": "npm: report (Playwright E2E)",
-      "type": "npm",
-      "script": "report",
+      "label": "pnpm: report (Playwright E2E)",
+      "type": "shell",
+      "command": "pnpm report",
       "problemMatcher": [],
-      "path": "test/kentico-community-portal-web-e2e-tests",
+      "options": {
+        "cwd": "test/kentico-community-portal-web-e2e-tests"
+      },
       "detail": "Open Playwright HTML report"
     },
     {

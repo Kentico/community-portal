@@ -17,9 +17,10 @@ Import-Module (Resolve-Path Utilities) `
 $scriptConfig = Get-ScriptConfig
 
 $licenseQuery = "SELECT KeyValue FROM CMS_SettingsKey WHERE KeyName = 'CMSLicenseKey'"
-$licenseKeyValue = Invoke-SQLQuery -query $licenseQuery
+$licenseKeyValueRaw = Invoke-SQLQuery -query $licenseQuery
+$licenseKeyValue = if ($licenseKeyValueRaw -is [System.DBNull]) { $null } else { [string]$licenseKeyValueRaw }
 
-if (-not $licenseKeyValue) {
+if ([string]::IsNullOrWhiteSpace($licenseKeyValue)) {
     Write-Warning "No license key found in the database"
 }
 else {
@@ -71,7 +72,13 @@ while (!(Test-Path $backupHostSourceFilePath)) {
 }
 Write-Notification "Database backup file created: $backupHostSourceFilePath"
 
-$restoreKeyQuery = "UPDATE CMS_SettingsKey SET KeyValue = '$licenseKeyValue' WHERE KeyName = 'CMSLicenseKey'"
+$restoreKeyQuery = if ([string]::IsNullOrWhiteSpace($licenseKeyValue)) {
+    "UPDATE CMS_SettingsKey SET KeyValue = NULL WHERE KeyName = 'CMSLicenseKey'"
+}
+else {
+    $escapedLicenseKeyValue = $licenseKeyValue.Replace("'", "''")
+    "UPDATE CMS_SettingsKey SET KeyValue = '$escapedLicenseKeyValue' WHERE KeyName = 'CMSLicenseKey'"
+}
 Invoke-SQLQuery -query $restoreKeyQuery
 Write-Notification "License key restored."
 

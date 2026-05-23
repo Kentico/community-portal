@@ -53,15 +53,14 @@ jobs:
       # === Environment Setup ===
       - uses: actions/checkout@v6
 
+      - uses: pnpm/action-setup@v6
+        with:
+          cache: true
+
       - name: Setup Node.js (from package.json)
         uses: actions/setup-node@v6
         with:
           node-version-file: "package.json"
-          cache: "npm"
-          cache-dependency-path: |
-            src/Kentico.Community.Portal.Web/package-lock.json
-            src/Kentico.Community.Portal.Admin/Client/package-lock.json
-            test/kentico-community-portal-web-e2e-tests/package-lock.json
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
@@ -191,21 +190,18 @@ jobs:
 
       - name: Install Playwright E2E dependencies
         working-directory: ./test/kentico-community-portal-web-e2e-tests
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Install Playwright browsers
         working-directory: ./test/kentico-community-portal-web-e2e-tests
         run: |
           Write-Output "Installing Playwright browsers..."
-          npx playwright install chromium
+          pnpm exec playwright install chromium
           Write-Output "✓ Playwright browsers installed"
-
-      - name: Install Azurite
-        run: npm install -g azurite@3.35.0
 
       - name: Start Azurite (Background)
         run: |
-          azurite -s -l ./.azurite &
+          pnpm dlx azurite@3.35.0 -s -l ./.azurite &
           Write-Output "✓ Azurite storage emulator started"
 
       - name: Run Playwright E2E Tests
@@ -217,7 +213,7 @@ jobs:
           NODE_OPTIONS: --no-warnings
         run: |
           Write-Output "## 🎭 E2E Tests" >> $env:GITHUB_STEP_SUMMARY
-          npm test
+          pnpm test
           "Playwright TypeScript E2E suite passed." >> $env:GITHUB_STEP_SUMMARY
 
       # === Artifacts (on failure) ===

@@ -49,12 +49,14 @@ jobs:
       # === Environment Setup ===
       - uses: actions/checkout@v6
 
+      - uses: pnpm/action-setup@v6
+        with:
+          cache: true
+
       - name: Setup Node.js (from package.json)
         uses: actions/setup-node@v6
         with:
-          node-version-file: "src/Kentico.Community.Portal.Web/package.json"
-          cache: "npm"
-          cache-dependency-path: "src/Kentico.Community.Portal.Web/package-lock.json"
+          node-version-file: "package.json"
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
