@@ -28,6 +28,17 @@
     PowerShell. This project requires the modern, cross-platform version of
     PowerShell which is v7.0+.
 
+## .NET Aspire (optional)
+
+[.NET Aspire](https://aspire.dev) can orchestrate the full local development
+stack (database, Azure Storage emulator, client dev servers, and the web app)
+with a single `aspire run` command. See
+[Local Development with .NET Aspire](./Aspire.md).
+
+- [Aspire CLI](https://aspire.dev) — `dotnet tool install -g Aspire.Cli`
+  - Requires [Docker](https://www.docker.com/) running for the SQL Server and
+    Azurite containers
+
 ## C# Editor
 
 - [VS Code](https://code.visualstudio.com) (cross-platform, preferred)

@@ -7,6 +7,19 @@
       <field column="ContentItemDataID" columntype="integer" enabled="true" guid="83d25703-16a8-4db9-9b38-ad71541a0cb0" isPK="true" />
       <field column="ContentItemDataCommonDataID" columntype="integer" enabled="true" guid="77bfa43d-b3fe-4c20-b91c-c76e1fe3d45f" refobjtype="cms.contentitemcommondata" reftype="Required" system="true" />
       <field column="ContentItemDataGUID" columntype="guid" enabled="true" guid="9800efef-b37e-4aca-81b9-69a96fd3fea2" isunique="true" system="true" />
+      <field allowempty="true" column="TestimonialContentTitle" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="979290ab-a859-4e71-a445-82d23963dc10" visible="true">
+        <properties>
+          <explanationtext>Title representing the subject of the testimonial</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Title (optional)</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
+          <includeintranslation>True</includeintranslation>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
       <field column="TestimonialContentMessage" columnprecision="0" columntype="longtext" enabled="true" guid="49aaacca-44b3-412c-9c4b-9aa49bf3d06e" visible="true">
         <properties>
           <explanationtext>The testimonial content.</explanationtext>
@@ -59,6 +72,66 @@ Custom;Custom
           <Placeholder>(select)</Placeholder>
         </settings>
       </field>
+      <field allowempty="true" column="TestimonialContentMemberID" columnprecision="0" columntype="integer" enabled="true" guid="cb7af9cc-ce1c-43cb-9b08-78770006ef35" visible="true">
+        <properties>
+          <explanationtext>Community Portal member endorser.</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Endorser</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
+          <includeintranslation>False</includeintranslation>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.SingleObjectIdSelector</controlname>
+          <ObjectType>cms.member</ObjectType>
+        </settings>
+        <visibilityconditiondata>
+          <VisibilityConditionConfiguration>
+            <Identifier>Kentico.Administration.IsEqualToString</Identifier>
+            <Properties>
+              <PropertyName>TestimonialContentDataSource</PropertyName>
+              <Value>Member</Value>
+              <CaseSensitive>true</CaseSensitive>
+            </Properties>
+          </VisibilityConditionConfiguration>
+        </visibilityconditiondata>
+      </field>
+      <field allowempty="true" column="TestimonialContentPhoto" columnprecision="0" columntype="contentitemreference" enabled="true" guid="e699c45d-06b7-4ab5-9f4b-48d6a84bea05" visible="true">
+        <properties>
+          <explanationtext>Photo of endorser.</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Photo</fieldcaption>
+          <fielddescription>Photo of endorser.</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
+          <includeintranslation>False</includeintranslation>
+        </properties>
+        <settings>
+          <AllowedContentItemTypeIdentifiers>
+            <![CDATA[["40334c2a-0969-4e68-96eb-e0fb8d89b37e"]]]>
+          </AllowedContentItemTypeIdentifiers>
+          <controlname>Kentico.Administration.ContentItemSelector</controlname>
+          <MaximumItems>1</MaximumItems>
+          <MinimumItems>1</MinimumItems>
+          <SelectionType>contentTypes</SelectionType>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+        <visibilityconditiondata>
+          <VisibilityConditionConfiguration>
+            <Identifier>Kentico.Administration.IsEqualToString</Identifier>
+            <Properties>
+              <PropertyName>TestimonialContentDataSource</PropertyName>
+              <Value>Custom</Value>
+              <CaseSensitive>true</CaseSensitive>
+            </Properties>
+          </VisibilityConditionConfiguration>
+        </visibilityconditiondata>
+      </field>
       <field allowempty="true" column="TestimonialContentName" columnprecision="0" columnsize="200" columntype="text" enabled="true" guid="18fc1f63-1b0a-4e2d-bb10-c4ca91757828" visible="true">
         <properties>
           <explanationtext>Visible only when Data Source equals Custom.</explanationtext>
@@ -89,6 +162,29 @@ Custom;Custom
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Job Title</fieldcaption>
           <fielddescription>Job title of person giving testimonial.</fielddescription>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>False</includeincontentgeneration>
+          <includeintranslation>False</includeintranslation>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <visibilityconditiondata>
+          <VisibilityConditionConfiguration>
+            <Identifier>Kentico.Administration.IsEqualToString</Identifier>
+            <Properties>
+              <PropertyName>TestimonialContentDataSource</PropertyName>
+              <Value>Custom</Value>
+              <CaseSensitive>true</CaseSensitive>
+            </Properties>
+          </VisibilityConditionConfiguration>
+        </visibilityconditiondata>
+      </field>
+      <field allowempty="true" column="TestimonialContentEmployer" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="5060450d-d514-46f1-8910-45636e1dd33c" visible="true">
+        <properties>
+          <explanationtext>Employer of endorser</explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Employer</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
           <includeincontentgeneration>False</includeincontentgeneration>
           <includeintranslation>False</includeintranslation>

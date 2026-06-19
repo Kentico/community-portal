@@ -1,0 +1,33 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.4.5">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>152020ca-0302-4356-9dd9-95adfd6b0ba8</UserSecretsId>
+    <!--
+      The Aspire AppHost SDK pulls in host-RID-specific tooling packages
+      (Aspire.Dashboard.Sdk.*, Aspire.Hosting.Orchestration.*) selected by the
+      machine running restore. A single committed packages.lock.json can only
+      capture one platform's variant, so locked-mode restore fails on the
+      others (win-x64 dev, osx-arm64 dev, linux-x64 CI). Opt this dev-only
+      orchestration project out of lock files; package versions stay pinned via
+      Central Package Management (Directory.Packages.props).
+    -->
+    <RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.SqlServer" />
+    <PackageReference Include="Aspire.Hosting.Azure.Storage" />
+    <PackageReference Include="Aspire.Hosting.JavaScript" />
+    <PackageReference Include="Microsoft.Data.SqlClient" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Kentico.Community.Portal.Web\Kentico.Community.Portal.Web.csproj" />
+    <ProjectReference Include="..\..\data\Kentico.Community.DataCleaner.App\Kentico.Community.DataCleaner.App.csproj" />
+  </ItemGroup>
+
+</Project>

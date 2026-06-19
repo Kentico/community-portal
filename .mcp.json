@@ -11,7 +11,9 @@
     "xperience-management-api": {
       "type": "stdio",
       "command": "npx",
-      "args": ["@kentico/management-api-mcp@31.5.1-preview"],
+      "args": [
+        "@kentico/management-api-mcp@31.5.4-preview"
+      ],
       "env": {
         "NODE_OPTIONS": "--use-system-ca",
         "NODE_TLS_REJECT_UNAUTHORIZED": "0",
@@ -37,7 +39,17 @@
     "amcharts5": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@amcharts/amcharts5-mcp"]
+      "args": [
+        "-y",
+        "@amcharts/amcharts5-mcp"
+      ]
+    },
+    "aspire": {
+      "command": "aspire",
+      "args": [
+        "agent",
+        "mcp"
+      ]
     }
   }
 }

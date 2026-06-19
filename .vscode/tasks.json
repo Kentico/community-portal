@@ -2,6 +2,25 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "Aspire: Run",
+      "detail": "Orchestrate the full local dev stack (SQL Server, Azurite, client dev servers, web app) with the Aspire dashboard",
+      "type": "shell",
+      "command": "aspire run",
+      "isBackground": true,
+      "problemMatcher": [],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
       "label": ".NET: build (Solution)",
       "type": "shell",
       "command": "./Build-Solution.ps1",
@@ -109,15 +128,15 @@
       }
     },
     {
-      "label": "pnpm: install (Web)",
+      "label": "pnpm: install (workspace)",
       "type": "shell",
       "group": "none",
       "options": {
-        "cwd": "src/Kentico.Community.Portal.Web"
+        "cwd": "${workspaceFolder}"
       },
       "command": "pnpm install",
       "problemMatcher": [],
-      "detail": "Install Web pnpm dependencies"
+      "detail": "Install all pnpm workspace dependencies (Web + Admin clients) from the repo root"
     },
     {
       "label": "pnpm: audit fix (Web)",
@@ -127,17 +146,6 @@
       },
       "command": "pnpm audit --fix=update",
       "problemMatcher": []
-    },
-    {
-      "label": "pnpm: install (Admin)",
-      "type": "shell",
-      "group": "none",
-      "options": {
-        "cwd": "src/Kentico.Community.Portal.Admin/Client"
-      },
-      "command": "pnpm install",
-      "problemMatcher": [],
-      "detail": "Install Admin pnpm dependencies"
     },
     {
       "label": "pnpm: audit fix (Admin)",
@@ -156,7 +164,7 @@
       "options": {
         "cwd": "src/Kentico.Community.Portal.Web"
       },
-      "dependsOn": ["pnpm: install (Web)"],
+      "dependsOn": ["pnpm: install (workspace)"],
       "detail": "Vite development server"
     },
     {
@@ -168,7 +176,7 @@
       "options": {
         "cwd": "src/Kentico.Community.Portal.Admin/Client"
       },
-      "dependsOn": ["pnpm: install (Admin)"],
+      "dependsOn": ["pnpm: install (workspace)"],
       "detail": "Webpack development server"
     },
     {
@@ -180,7 +188,7 @@
       "options": {
         "cwd": "src/Kentico.Community.Portal.Web"
       },
-      "dependsOn": ["pnpm: install (Web)"],
+      "dependsOn": ["pnpm: install (workspace)"],
       "detail": "Build Web client assets (CSS, JS) with Vite"
     },
     {

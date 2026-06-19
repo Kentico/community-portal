@@ -96,6 +96,12 @@ function Get-CoreProjectPath {
         Gets the database connection string from the user secrets or appsettings.json file
 #>
 function Get-ConnectionString {
+    # Prefer a connection string injected by Aspire (populated when a script runs as a resource in the
+    # Aspire dashboard via WithReference). Falls back to user secrets / appsettings for standalone runs.
+    if (-not [string]::IsNullOrWhiteSpace($Env:ConnectionStrings__CMSConnectionString)) {
+        return $Env:ConnectionStrings__CMSConnectionString
+    }
+
     $projectPath = Get-WebProjectPath
 
     $connectionString = dotnet user-secrets list --project $projectPath `

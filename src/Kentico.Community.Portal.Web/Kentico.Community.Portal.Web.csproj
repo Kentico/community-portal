@@ -4,7 +4,7 @@
     <UserSecretsId>3df470e6-54c4-41d8-b8f0-36955d9433d2</UserSecretsId>
     <!-- This ensures Lucene index file modifications do not cause a hot reload when using dotnet watch -->
     <!-- See https://github.com/dotnet/sdk/issues/44910#issuecomment-3533124997 -->
-    <DefaultItemExcludes>$(DefaultItemExcludes);**/App_Data/**;**/$StorageAssets/**;**/node_modules/**;</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);**/App_Data/**/*;**/$Storage*/**/*;**/node_modules/**/*;package-lock.json;**/*.lscache*</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -40,6 +40,7 @@
     <PackageReference Include="Kentico.Xperience.ComponentRegistry.Admin" />
     <PackageReference Include="Kentico.Xperience.ComponentRegistry.MCP" />
     <PackageReference Include="Kentico.Xperience.ComponentIcons" />
+    <PackageReference Include="XperienceCommunity.FormClone" />
     <PackageReference Include="XperienceCommunity.PreviewComponentOutlines" />
     <PackageReference Include="Vogen" />
   </ItemGroup>
@@ -59,6 +60,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Kentico.Community.Portal.Core\Kentico.Community.Portal.Core.csproj" />
     <ProjectReference Include="..\Kentico.Community.Portal.Admin\Kentico.Community.Portal.Admin.csproj" />
+    <ProjectReference Include="..\Kentico.Community.Portal.ServiceDefaults\Kentico.Community.Portal.ServiceDefaults.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -12,6 +12,53 @@ and separately.
 
 Details on how to start these 3 servers can be found below.
 
+## Start everything with .NET Aspire (optional)
+
+Instead of starting each server separately, you can run the
+[Aspire AppHost](./Aspire.md) to orchestrate the database, Azure Storage
+emulator, both client dev servers, and the web application together, with a
+dashboard for logs, traces, and metrics:
+
+```powershell
+aspire run
+```
+
+See [Local Development with .NET Aspire](./Aspire.md) for prerequisites and the
+one-time database restore. The manual workflow below remains fully supported.
+
+### Outer loop vs. inner loop
+
+Aspire is **additive**, not a replacement for the per-server tasks below. Think
+of it as two complementary loops:
+
+- **Outer loop** — `aspire run` brings up the _whole system_ (SQL, Azurite, both
+  client dev servers, and the web app) with one command and a telemetry
+  dashboard. Best for onboarding, running the full stack, end-to-end checks, and
+  giving agents a one-command environment.
+- **Inner loop** — the individual VS Code tasks (`.NET: watch (Web)`,
+  `pnpm: watch (Web)`, `pnpm: watch (Admin)`) iterate on _one piece_ fast,
+  without spinning up everything. Best when you are focused on a single project.
+
+By default `aspire run` runs the web app without file watching; rebuild it from
+the dashboard's **Rebuild** command, or enable
+[watch mode](./Aspire.md#hot-reload-watch-mode) for automatic rebuilds. Building,
+formatting, testing, CI Store/Restore, database backups, and deployment packaging
+stay outside Aspire — they remain plain VS Code tasks / scripts.
+
+### Which task when
+
+| I want to…                                       | Use                                                          |
+| ------------------------------------------------ | ----------------------------------------------------------- |
+| Run the full stack with one command + dashboard  | `aspire run` (or the `Aspire: Run` task)                    |
+| Iterate quickly on the web app only              | `.NET: watch (Web)`                                         |
+| Iterate on website channel client assets only    | `pnpm: watch (Web)` (Vite)                                  |
+| Iterate on admin React customizations only       | `pnpm: watch (Admin)` (webpack)                             |
+| Install all client dependencies                  | `pnpm: install (workspace)`                                 |
+| Build / rebuild the solution                     | `.NET: build (Solution)` / `.NET: rebuild (Solution)`       |
+| Run unit / E2E tests                             | `.NET: test (Solution)` / `pnpm: test (Playwright E2E)`     |
+| Sync the database to/from the CI repository      | `Xperience: CI Store` / `Xperience: CI Restore`             |
+| Back up the database to a `.bak`                 | `Xperience: Database Backup`                                |
+
 ## Start pnpm dev servers
 
 1. Install and build the client dependencies for the website channel experience

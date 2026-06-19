@@ -1,9 +1,17 @@
 # Environment Setup
 
+> **Using .NET Aspire?** The [Aspire AppHost](./Aspire.md) automates the database
+> restore (via a dashboard **Restore database** command) and starts every dev
+> server for you. The manual steps below remain the supported fallback.
+
 ## Restore the database backup
 
 The latest local development database backup `.bak` (data + full transaction
 logs) is included in the `.\database` folder as a `.zip`.
+
+- (**recommended for Aspire users**) Run `aspire run`, then use the **Restore
+  database** command on the `sql` resource in the dashboard. See
+  [Local Development with .NET Aspire](./Aspire.md#first-run-restore-the-database).
 
 - SQL Server with Docker
 

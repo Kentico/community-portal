@@ -19,6 +19,15 @@ commit. Abort early if no newer version or if breaking changes are detected.
 
 If any precondition fails: output a clear message and stop.
 
+## Run CI Restore
+
+This update process includes a CI Store run after the database is updated. To
+prevent the loss of updated CI state, a CI Restore should always be run _before_
+this process begins.
+
+A restore can be run with the `./scripts/Restore-CI.ps1` script, run from the
+`scripts` directory.
+
 ## Determine Current and Latest Xperience Version
 
 1. Run `dotnet tool restore` at the repository root
@@ -71,8 +80,7 @@ If any precondition fails: output a clear message and stop.
 
 ## Run Xperience Application Update
 
-1. Execute VS Code task: `Xperience: Application Update` (must invoke
-   `Update-Xperience.ps1 -AgentMode`) to update database schema/data to new
+1. Execute `Update-Xperience.ps1 -AgentMode` to update database schema/data to new
    package version without interactive confirmation prompts. The `-AgentMode`
    switch ensures `--skip-confirmation` is passed for non-interactive
    automation.

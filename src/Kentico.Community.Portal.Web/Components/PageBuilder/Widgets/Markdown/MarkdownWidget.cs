@@ -38,6 +38,15 @@ public class MarkdownWidget(MarkdownRenderer markdownRenderer) : ViewComponent
                 {props.Markdown}
                 ```
                 """,
+            MarkdownStyles.ResponsiveTable => $$"""
+                <div class="table-responsive">
+
+                {.table .table-striped .table-hover}
+                
+                {{props.Markdown}}
+
+                </div>
+                """,
             MarkdownStyles.Note => props.Markdown,
             MarkdownStyles.Standard or _ => props.Markdown,
         };
@@ -84,6 +93,7 @@ public class MarkdownWidgetProperties : BaseWidgetProperties
         <ul>
             <li>Standard - normal markdown (default)</li>
             <li>Note - wraps content in a styled alert box for emphasis</li>
+            <li>Responsive Table - wraps table markdown with responsive/table class helpers</li>
             <li>Code - content is wrapped in a code block (deprecated - use /code tool in editor)</li>
         </ul>
         """,
@@ -133,6 +143,8 @@ public enum MarkdownStyles
     Standard,
     [Description("Note")]
     Note,
+    [Description("Responsive Table")]
+    ResponsiveTable,
     [Description("Code (deprecated)")]
     Code
 }

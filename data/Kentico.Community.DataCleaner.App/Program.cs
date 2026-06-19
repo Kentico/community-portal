@@ -1,12 +1,16 @@
-﻿/**
+/**
  * This application is used to clean and fix data from a PROD environment that is being restored locally before running CI Restore.
- * Processing this data is required because the CI process does not track Member data, but other objects it tracks are dependent on it
+ * Processing this data is required because the CI process does not track Member data, but other objects it tracks are dependent on it.
  */
 
 using System.Text.Json;
 using System.Xml;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+
+// `--skip-confirmation` (or `--yes`/`-y`) runs the destructive member cleanup without prompting. This is
+// required when the tool is launched from the Aspire dashboard, which has no interactive console.
+bool skipConfirmation = args.Any(a => a is "--skip-confirmation" or "--yes" or "-y");
 
 // Load member data from JSON file
 string jsonFilePath = Path.Join(AppDomain.CurrentDomain.BaseDirectory, "default-members.json");
@@ -15,29 +19,67 @@ var members = JsonSerializer.Deserialize<Member[]>(jsonContent)
     ?? throw new Exception("Failed to deserialize default-members.json");
 
 string solutionDirectory = FindSolutionFileDirectory(AppDomain.CurrentDomain.BaseDirectory)
-    ?? throw new Exception("This application requires a parent .sln file");
+    ?? throw new Exception("This application requires a parent .slnx or .sln file");
 
 // Clean up the database first
-await CleanupMemberTable(members);
+await CleanupMemberTable(members, skipConfirmation);
 
-MigrateQuestions(solutionDirectory, members);
-MigrateAnswers(solutionDirectory, members);
-MigrateLinkContent(solutionDirectory, members);
-MigrateIntegrationContent(solutionDirectory, members);
-MigrateMemberProfileContent(solutionDirectory, members);
-MigrateAuthorContent(solutionDirectory, members);
-
-void MigrateQuestions(string rootPath, Member[] members)
+// Rewrite member references in the CI repository content so they point at the seeded test members.
+var targets = new MemberReferenceTarget[]
 {
-    string directoryPath = Path.Join(rootPath, @"src\Kentico.Community.Portal.Web\App_Data\CIRepository\devnet\contentitemdata.kenticocommunity.qandaquestionpage");
+    new(
+        "Questions",
+        ["src", "Kentico.Community.Portal.Web", "App_Data", "CIRepository", "devnet", "contentitemdata.kenticocommunity.qandaquestionpage"],
+        "//QAndAQuestionPageAuthorMemberID",
+        UseGuid: false, SkipWhenZero: true, Recurse: true),
+    new(
+        "Answers",
+        ["src", "Kentico.Community.Portal.Web", "App_Data", "CIRepository", "@global", "kenticocommunity.qandaanswerdata"],
+        "//QAndAAnswerDataAuthorMemberID/GUID",
+        UseGuid: true, SkipWhenZero: false, Recurse: false),
+    new(
+        "LinkContent",
+        ["src", "Kentico.Community.Portal.Web", "App_Data", "CIRepository", "@global", "contentitemdata.kenticocommunity.linkcontent"],
+        "//LinkContentMemberID",
+        UseGuid: false, SkipWhenZero: true, Recurse: true),
+    new(
+        "IntegrationContent",
+        ["src", "Kentico.Community.Portal.Web", "App_Data", "CIRepository", "@global", "contentitemdata.ke..integrationcontent@1dabf6434c"],
+        "//IntegrationContentAuthorMemberID",
+        UseGuid: false, SkipWhenZero: true, Recurse: true),
+    new(
+        "MemberProfileContent",
+        ["src", "Kentico.Community.Portal.Web", "App_Data", "CIRepository", "@global", "contentitemdata.ke..mberprofilecontent@8653edbc10"],
+        "//MemberProfileContentMemberID",
+        UseGuid: false, SkipWhenZero: true, Recurse: true),
+    new(
+        "AuthorContent",
+        ["src", "Kentico.Community.Portal.Web", "App_Data", "CIRepository", "@global", "contentitemdata.kenticocommunity.authorcontent"],
+        "//AuthorContentMemberID",
+        UseGuid: false, SkipWhenZero: true, Recurse: true),
+};
+
+foreach (var target in targets)
+{
+    ReplaceMemberReferences(target, solutionDirectory, members);
+}
+
+Console.WriteLine("All processing completed.");
+
+// Replaces member-reference values in CI repository XML content with a randomly selected seeded member.
+void ReplaceMemberReferences(MemberReferenceTarget target, string rootPath, Member[] availableMembers)
+{
+    string[] pathSegments = [rootPath, .. target.RelativeDirSegments];
+    string directoryPath = Path.Combine(pathSegments);
 
     if (!Directory.Exists(directoryPath))
     {
-        Console.WriteLine($"Directory not found: {directoryPath}. Skipping Questions migration.");
+        Console.WriteLine($"Directory not found: {directoryPath}. Skipping {target.Name} migration.");
         return;
     }
 
-    string[] xmlFiles = Directory.GetFiles(directoryPath, "*.xml", SearchOption.AllDirectories);
+    var searchOption = target.Recurse ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+    string[] xmlFiles = Directory.GetFiles(directoryPath, "*.xml", searchOption);
 
     foreach (string file in xmlFiles)
     {
@@ -46,22 +88,27 @@ void MigrateQuestions(string rootPath, Member[] members)
             var xmlDoc = new XmlDocument();
             xmlDoc.Load(file);
 
-            // Find the <QAndAQuestionPageAuthorMemberID> element
-            var authorMemberIdNode = xmlDoc.SelectSingleNode("//QAndAQuestionPageAuthorMemberID")!;
-
-            // Don't replace the member for questions authored by the system
-            if (authorMemberIdNode != null && int.Parse(authorMemberIdNode.InnerText) != 0)
+            var memberNode = xmlDoc.SelectSingleNode(target.Xpath);
+            if (memberNode is null)
             {
-                var randomMember = members[new Random().Next(members.Length)];
-                authorMemberIdNode.InnerText = randomMember.MemberID.ToString();
-                xmlDoc.Save(file);
+                Console.WriteLine($"No node matching '{target.Xpath}' found in file: {file}");
+                continue;
+            }
 
-                Console.WriteLine($"Updated QAndAQuestionPageAuthorMemberID to {randomMember.MemberID} in file: {file}");
-            }
-            else
+            // System-authored content uses member ID 0 and must be preserved.
+            if (target.SkipWhenZero && int.TryParse(memberNode.InnerText, out int currentId) && currentId == 0)
             {
-                Console.WriteLine($"No <QAndAQuestionPageAuthorMemberID> node found in file: {file}");
+                Console.WriteLine($"Skipping system-authored content (value 0) in file: {file}");
+                continue;
             }
+
+            var randomMember = availableMembers[Random.Shared.Next(availableMembers.Length)];
+            memberNode.InnerText = target.UseGuid
+                ? randomMember.MemberGuid.ToString()
+                : randomMember.MemberID.ToString();
+            xmlDoc.Save(file);
+
+            Console.WriteLine($"Updated {target.Name} reference to member {randomMember.MemberID} in file: {file}");
         }
         catch (Exception ex)
         {
@@ -69,250 +116,34 @@ void MigrateQuestions(string rootPath, Member[] members)
         }
     }
 
-    Console.WriteLine("Processing completed.");
+    Console.WriteLine($"{target.Name} processing completed.");
 }
 
-void MigrateAnswers(string rootPath, Member[] members)
-{
-    string directoryPath = Path.Join(rootPath, @"src\Kentico.Community.Portal.Web\App_Data\CIRepository\@global\kenticocommunity.qandaanswerdata");
-
-    if (!Directory.Exists(directoryPath))
-    {
-        Console.WriteLine($"Directory not found: {directoryPath}. Skipping Answers migration.");
-        return;
-    }
-
-    string[] xmlFiles = Directory.GetFiles(directoryPath, "*.xml");
-
-    foreach (string file in xmlFiles)
-    {
-        try
-        {
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(file);
-
-            // Find the <GUID> element under <QAndAAnswerDataAuthorMemberID>
-            var authorMemberIdNode = xmlDoc.SelectSingleNode("//QAndAAnswerDataAuthorMemberID/GUID")!;
-
-            if (authorMemberIdNode != null)
-            {
-                var randomMember = members[new Random().Next(members.Length)];
-                authorMemberIdNode.InnerText = randomMember.MemberGuid.ToString();
-                xmlDoc.Save(file);
-
-                Console.WriteLine($"Updated GUID to {randomMember.MemberGuid} (MemberID {randomMember.MemberID}) in file: {file}");
-            }
-            else
-            {
-                Console.WriteLine($"No <GUID> node found in file: {file}");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error processing file {file}: {ex.Message}");
-        }
-    }
-
-    Console.WriteLine("Processing completed.");
-}
-
-void MigrateLinkContent(string rootPath, Member[] members)
-{
-    string directoryPath = Path.Join(rootPath, @"src\Kentico.Community.Portal.Web\App_Data\CIRepository\@global\contentitemdata.kenticocommunity.linkcontent");
-
-    if (!Directory.Exists(directoryPath))
-    {
-        Console.WriteLine($"Directory not found: {directoryPath}. Skipping LinkContent migration.");
-        return;
-    }
-
-    string[] xmlFiles = Directory.GetFiles(directoryPath, "*.xml", SearchOption.AllDirectories);
-
-    foreach (string file in xmlFiles)
-    {
-        try
-        {
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(file);
-
-            // Find the <LinkContentMemberID> element
-            var memberIdNode = xmlDoc.SelectSingleNode("//LinkContentMemberID")!;
-
-            // Don't replace the member for content authored by the system
-            if (memberIdNode != null && int.Parse(memberIdNode.InnerText) != 0)
-            {
-                var randomMember = members[new Random().Next(members.Length)];
-                memberIdNode.InnerText = randomMember.MemberID.ToString();
-                xmlDoc.Save(file);
-
-                Console.WriteLine($"Updated LinkContentMemberID to {randomMember.MemberID} in file: {file}");
-            }
-            else
-            {
-                Console.WriteLine($"No <LinkContentMemberID> node found or value is 0 in file: {file}");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error processing file {file}: {ex.Message}");
-        }
-    }
-
-    Console.WriteLine("LinkContent processing completed.");
-}
-
-void MigrateIntegrationContent(string rootPath, Member[] members)
-{
-    string directoryPath = Path.Join(rootPath, @"src\Kentico.Community.Portal.Web\App_Data\CIRepository\@global\contentitemdata.ke..integrationcontent@1dabf6434c");
-
-    if (!Directory.Exists(directoryPath))
-    {
-        Console.WriteLine($"Directory not found: {directoryPath}. Skipping IntegrationContent migration.");
-        return;
-    }
-
-    string[] xmlFiles = Directory.GetFiles(directoryPath, "*.xml", SearchOption.AllDirectories);
-
-    foreach (string file in xmlFiles)
-    {
-        try
-        {
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(file);
-
-            // Find the <IntegrationContentAuthorMemberID> element
-            var memberIdNode = xmlDoc.SelectSingleNode("//IntegrationContentAuthorMemberID")!;
-
-            // Don't replace the member for content authored by the system
-            if (memberIdNode != null && int.Parse(memberIdNode.InnerText) != 0)
-            {
-                var randomMember = members[new Random().Next(members.Length)];
-                memberIdNode.InnerText = randomMember.MemberID.ToString();
-                xmlDoc.Save(file);
-
-                Console.WriteLine($"Updated IntegrationContentAuthorMemberID to {randomMember.MemberID} in file: {file}");
-            }
-            else
-            {
-                Console.WriteLine($"No <IntegrationContentAuthorMemberID> node found or value is 0 in file: {file}");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error processing file {file}: {ex.Message}");
-        }
-    }
-
-    Console.WriteLine("IntegrationContent processing completed.");
-}
-
-void MigrateMemberProfileContent(string rootPath, Member[] members)
-{
-    string directoryPath = Path.Join(rootPath, @"src\Kentico.Community.Portal.Web\App_Data\CIRepository\@global\contentitemdata.ke..mberprofilecontent@8653edbc10");
-
-    if (!Directory.Exists(directoryPath))
-    {
-        Console.WriteLine($"Directory not found: {directoryPath}. Skipping MemberProfileContent migration.");
-        return;
-    }
-
-    string[] xmlFiles = Directory.GetFiles(directoryPath, "*.xml", SearchOption.AllDirectories);
-
-    foreach (string file in xmlFiles)
-    {
-        try
-        {
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(file);
-
-            // Find the <MemberProfileContentMemberID> element
-            var memberIdNode = xmlDoc.SelectSingleNode("//MemberProfileContentMemberID")!;
-
-            // Don't replace the member for content authored by the system
-            if (memberIdNode != null && int.Parse(memberIdNode.InnerText) != 0)
-            {
-                var randomMember = members[new Random().Next(members.Length)];
-                memberIdNode.InnerText = randomMember.MemberID.ToString();
-                xmlDoc.Save(file);
-
-                Console.WriteLine($"Updated MemberProfileContentMemberID to {randomMember.MemberID} in file: {file}");
-            }
-            else
-            {
-                Console.WriteLine($"No <MemberProfileContentMemberID> node found or value is 0 in file: {file}");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error processing file {file}: {ex.Message}");
-        }
-    }
-
-    Console.WriteLine("MemberProfileContent processing completed.");
-}
-
-void MigrateAuthorContent(string rootPath, Member[] members)
-{
-    string directoryPath = Path.Join(rootPath, @"src\Kentico.Community.Portal.Web\App_Data\CIRepository\@global\contentitemdata.kenticocommunity.authorcontent");
-
-    if (!Directory.Exists(directoryPath))
-    {
-        Console.WriteLine($"Directory not found: {directoryPath}. Skipping AuthorContent migration.");
-        return;
-    }
-
-    string[] xmlFiles = Directory.GetFiles(directoryPath, "*.xml", SearchOption.AllDirectories);
-
-    foreach (string file in xmlFiles)
-    {
-        try
-        {
-            var xmlDoc = new XmlDocument();
-            xmlDoc.Load(file);
-
-            // Find the <AuthorContentMemberID> element
-            var memberIdNode = xmlDoc.SelectSingleNode("//AuthorContentMemberID")!;
-
-            // Don't replace the member for content authored by the system (only update if field exists and is not 0)
-            if (memberIdNode != null && int.Parse(memberIdNode.InnerText) != 0)
-            {
-                var randomMember = members[new Random().Next(members.Length)];
-                memberIdNode.InnerText = randomMember.MemberID.ToString();
-                xmlDoc.Save(file);
-
-                Console.WriteLine($"Updated AuthorContentMemberID to {randomMember.MemberID} in file: {file}");
-            }
-            else
-            {
-                Console.WriteLine($"No <AuthorContentMemberID> node found or value is 0 in file: {file}");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error processing file {file}: {ex.Message}");
-        }
-    }
-
-    Console.WriteLine("AuthorContent processing completed.");
-}
-
-async Task CleanupMemberTable(Member[] members)
+async Task CleanupMemberTable(Member[] seedMembers, bool skipConfirmationPrompt)
 {
     Console.WriteLine("Starting database cleanup...");
 
     string connectionString = GetConnectionString();
 
-    // Safety confirmation
-    Console.WriteLine("WARNING: This will delete all records from the CMS_Member table and replace them with test data.");
-    Console.WriteLine("Press 'y' to continue or any other key to skip database cleanup:");
-
-    var key = Console.ReadKey();
-    Console.WriteLine(); // New line after key press
-
-    if (key.KeyChar is not 'y' and not 'Y')
+    if (!skipConfirmationPrompt)
     {
-        Console.WriteLine("Database cleanup skipped.");
-        return;
+        if (Console.IsInputRedirected)
+        {
+            Console.WriteLine("Non-interactive session detected and --skip-confirmation was not provided. Skipping database cleanup.");
+            return;
+        }
+
+        Console.WriteLine("WARNING: This will delete all records from the CMS_Member table and replace them with test data.");
+        Console.WriteLine("Press 'y' to continue or any other key to skip database cleanup:");
+
+        var key = Console.ReadKey();
+        Console.WriteLine(); // New line after key press
+
+        if (key.KeyChar is not 'y' and not 'Y')
+        {
+            Console.WriteLine("Database cleanup skipped.");
+            return;
+        }
     }
 
     try
@@ -331,7 +162,7 @@ async Task CleanupMemberTable(Member[] members)
         await ExecuteNonQueryAsync(connection, "SET IDENTITY_INSERT CMS_Member ON");
 
         // Insert new members
-        foreach (var member in members)
+        foreach (var member in seedMembers)
         {
             string insertSql = """
                 INSERT INTO CMS_Member (
@@ -379,7 +210,7 @@ async Task CleanupMemberTable(Member[] members)
         // Disable IDENTITY_INSERT after all insertions are complete
         await ExecuteNonQueryAsync(connection, "SET IDENTITY_INSERT CMS_Member OFF");
 
-        Console.WriteLine($"Successfully inserted {members.Length} members into the database.");
+        Console.WriteLine($"Successfully inserted {seedMembers.Length} members into the database.");
     }
     catch (Exception ex)
     {
@@ -390,15 +221,22 @@ async Task CleanupMemberTable(Member[] members)
 
 string GetConnectionString()
 {
+    // Prefer the Aspire-injected connection string (ConnectionStrings__CMSConnectionString), provided
+    // automatically when this tool runs as a resource in the Aspire dashboard. Falls back to this
+    // project's user secrets for the standalone `dotnet run` workflow.
     var configuration = new ConfigurationBuilder()
-        .AddUserSecrets<Program>()
+        .AddUserSecrets<Program>(optional: true)
+        .AddEnvironmentVariables()
         .Build();
 
-    string? connectionString = configuration["ConnectionStrings:CMSConnectionString"];
+    string? connectionString = configuration.GetConnectionString("CMSConnectionString");
 
     if (string.IsNullOrEmpty(connectionString))
     {
-        throw new Exception("Connection string 'CMSConnectionString' not found in user secrets. Please ensure you have configured the user secrets for this project.");
+        throw new Exception(
+            "Connection string 'CMSConnectionString' not found. Provide it via the " +
+            "ConnectionStrings__CMSConnectionString environment variable (injected automatically when run " +
+            "from the Aspire dashboard) or this project's user secrets.");
     }
 
     return connectionString;
@@ -412,20 +250,33 @@ async Task ExecuteNonQueryAsync(SqlConnection connection, string sql)
 
 static string? FindSolutionFileDirectory(string startPath)
 {
-    string currentDir = startPath;
+    string? currentDir = startPath;
 
     while (!string.IsNullOrEmpty(currentDir))
     {
-        string[] solutionFiles = Directory.GetFiles(currentDir, "*.sln");
-        if (solutionFiles.Length > 0)
+        bool hasSolutionFile =
+            Directory.EnumerateFiles(currentDir, "*.slnx").Any() ||
+            Directory.EnumerateFiles(currentDir, "*.sln").Any();
+
+        if (hasSolutionFile)
         {
             return currentDir;
         }
-        currentDir = Directory.GetParent(currentDir)?.FullName ?? "";
+
+        currentDir = Directory.GetParent(currentDir)?.FullName;
     }
 
     return null;
 }
+
+// Describes a CI repository content location and the member-reference node to rewrite within it.
+internal sealed record MemberReferenceTarget(
+    string Name,
+    string[] RelativeDirSegments,
+    string Xpath,
+    bool UseGuid,
+    bool SkipWhenZero,
+    bool Recurse);
 
 public class Member
 {

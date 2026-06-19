@@ -148,7 +148,9 @@ public class MemberEmailService(
             .GetContentItemData(contentItem, contentLanguage.ContentLanguageID, false);
         var emailFieldValues = new EmailContentTypeSpecificFieldValues(data);
 
-        /* Use the custom content filter directly instead of the IEmailContentResolver because the resolver adds built-in filters only meant for the email body (e.g. tracking links/pixels) */
+        /* Use the custom content filter directly instead of the IEmailContentResolver because the resolver adds built-in filters only meant for the email body (e.g. tracking links/pixels) 
+            This manual use of the filter lets us replace tokens in content outside of the HTML body.
+        */
         var tokenFilter = new CustomTokenValueEmailContentFilter();
         string subject = await tokenFilter.Apply(emailFieldValues.EmailSubject, emailConfig, dataContext);
         string plainTextBody = await tokenFilter.Apply(emailFieldValues.EmailPlainText, emailConfig, dataContext);
@@ -158,7 +160,8 @@ public class MemberEmailService(
                 nameof(EmailChannelInfo.EmailChannelID),
                 emailConfig.EmailConfigurationEmailChannelID)
             .GetEnumerableTypedResultAsync())
-            .FirstOrDefault() ?? throw new Exception($"There is not email channel for the email configuration [{emailConfig.EmailConfigurationID}]");
+            .FirstOrDefault()
+            ?? throw new Exception($"There is not email channel for the email configuration [{emailConfig.EmailConfigurationID}]");
 
         var sender = await emailChannelSenders
             .GetAsync(emailFieldValues.EmailSenderID);
@@ -167,7 +170,7 @@ public class MemberEmailService(
 
         var emailMessage = new EmailMessage
         {
-            From = $"\"{sender.EmailChannelSenderDisplayName}\" <{senderEmail}>",
+            From = $"""{sender.EmailChannelSenderDisplayName}" <{senderEmail}>""",
             Recipients = recipient.Email,
             Subject = subject,
             Body = emailBody,

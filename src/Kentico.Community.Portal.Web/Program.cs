@@ -6,6 +6,8 @@ using Vite.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 var env = builder.Environment;
 var config = builder.Configuration;
 
@@ -50,5 +52,7 @@ app
     .UseAppRoutes(config)
     .UseAppMcp(app, config)
     .IfDevelopment(env, b => b.UseViteDevelopmentServer(true));
+
+app.MapDefaultEndpoints();
 
 app.Run();

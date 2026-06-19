@@ -5,8 +5,8 @@
 
 ## Description
 
-This project is using Xperience by Kentico v31.5.1 (changelog:
-<https://docs.kentico.com/changelog#hotfix-may-21-2026>).
+This project is using Xperience by Kentico v31.5.4 (changelog:
+<https://docs.kentico.com/changelog#hotfix-june-11-2026>).
 
 Xperience by Kentico solution for the Kentico managed SaaS hosted Kentico
 Community website.
@@ -91,6 +91,7 @@ the current required tools and infrastructure.
 1. [Required Software](./docs/Required-Software.md)
 1. [Environment Setup](./docs/Environment-Setup.md)
 1. [Development](./docs/Development.md)
+1. [Local Development with .NET Aspire](./docs/Aspire.md)
 1. [Contributing](./docs/Contributing.md)
 1. [Run Tests](./docs//Run-Tests.md)
 1. [Architecture](./docs/Architecture.md)

@@ -25,6 +25,7 @@ using Kentico.Xperience.ComponentRegistry;
 using Kentico.Xperience.ManagementApi;
 using Kentico.Xperience.Mjml;
 using Microsoft.AspNetCore.Localization.Routing;
+using XperienceCommunity.FormClone;
 
 [assembly: RegisterModule(typeof(StorageInitializationModule))]
 
@@ -84,6 +85,7 @@ public static class ServiceCollectionXperienceExtensions
             .AddKenticoTagManager(config)
             .AddPreviewComponentOutlines()
             .AddComponentRegistry()
+            .AddXperienceCommunityFormClone()
             .AddVirtualInboxServices(config)
             .AddMiniProfiler(config)
             .Configure<EmailQueueOptions>(config.GetSection("EmailQueueOptions"))
