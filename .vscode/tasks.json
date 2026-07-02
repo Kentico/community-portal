@@ -326,6 +326,60 @@
       }
     },
     {
+      "label": "Xperience: CI Enable",
+      "detail": "Enables Continuous Integration using the Xperience CLI command",
+      "type": "shell",
+      "command": "./Enable-CI.ps1",
+      "options": {
+        "cwd": "${workspaceFolder}/scripts"
+      },
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "Xperience: CI Disable",
+      "detail": "Disables Continuous Integration using the Xperience CLI command",
+      "type": "shell",
+      "command": "./Disable-CI.ps1",
+      "options": {
+        "cwd": "${workspaceFolder}/scripts"
+      },
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "Xperience: CI Status",
+      "detail": "Displays Continuous Integration state using the Xperience CLI command",
+      "type": "shell",
+      "command": "./Get-CI-Status.ps1",
+      "options": {
+        "cwd": "${workspaceFolder}/scripts"
+      },
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
       "label": "Xperience: Application Update",
       "detail": "Updates local database data and schema to the version of the project's referenced Xperience NuGet package",
       "type": "shell",

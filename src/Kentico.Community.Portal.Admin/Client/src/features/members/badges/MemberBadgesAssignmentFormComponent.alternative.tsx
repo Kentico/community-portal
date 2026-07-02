@@ -11,9 +11,8 @@ import { Badge } from '../../../components/ui/badge';
 import { Checkbox } from '../../../components/ui/checkbox';
 import { MemberBadgeAssigmentModel } from './MemberBadgeAssignmentModel';
 
-export interface MemberBadgesAssignmentComponentClientProperties extends FormComponentProps {
-  value: MemberBadgeAssigmentModel[];
-}
+export type MemberBadgesAssignmentComponentClientProperties =
+  FormComponentProps<MemberBadgeAssigmentModel[]>;
 
 /**
  * Alternative implementation using shadcn/ui components

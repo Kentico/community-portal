@@ -28,6 +28,19 @@ this process begins.
 A restore can be run with the `./scripts/Restore-CI.ps1` script, run from the
 `scripts` directory.
 
+## Disable CI Before Version Bump (MUST)
+
+Disable CI before updating NuGet package versions to avoid app/database version
+mismatch failures when CI commands run after package updates.
+
+Run from the `scripts` directory:
+
+```pwsh
+./Disable-CI.ps1
+```
+
+If this step fails, stop and resolve before proceeding.
+
 ## Determine Current and Latest Xperience Version
 
 1. Run `dotnet tool restore` at the repository root
@@ -43,16 +56,33 @@ A restore can be run with the `./scripts/Restore-CI.ps1` script, run from the
    entries where `Version` equals the current version.
 3. Replace their `Version` with the latest version reported by
    `dotnet-outdated`.
-4. If a referenced package is a `-preview` or `-prerelease` version and the
-   version number matches the other `Kentico.Xperience.*` packages, try to
-   update it to a new `-preview` or `-prerelease` version as well.
+4. If a referenced package is a `-preview` or `-prerelease` version and it is
+   part of the product update train, update it to the corresponding newer
+   `-preview` or `-prerelease` version. Do not silently skip this step.
 5. Do NOT change packages whose versions are intentionally different (examples
    today: `Kentico.Xperience.Lucene`, `Kentico.Xperience.MiniProfiler`,
    `Kentico.Xperience.TagManager`). These are outside the scope of this task.
+   Additional `Kentico.Xperience.*` integration packages may also version on an
+   independent cadence; do not force them to match the product version unless
+   explicitly listed as part of the current update target.
 6. Run restore:
    ```pwsh
    dotnet restore
    ```
+
+### Guardrail: Prerelease Resolution Is Mandatory
+
+If a product-train prerelease package (for example Management API) does not show
+a clear latest version in the first outdated query:
+
+1. Re-run the outdated query with prerelease visibility.
+2. Query NuGet package versions directly for that package.
+3. Apply one of the following outcomes explicitly:
+   - Update to the matching prerelease for the new product train.
+   - Keep pinned only when no matching prerelease exists, and document the
+     reason in the output summary.
+
+Never leave prerelease package decisions implicit.
 
 ## Update pnpm Packages (@kentico/\*)
 
@@ -65,9 +95,7 @@ A restore can be run with the `./scripts/Restore-CI.ps1` script, run from the
    or if dev dependency: `--save-dev --save-exact`.
 3. After updates, execute VS Code task: `pnpm: install (Admin)` (ensures
    lockfile consistency for Admin client).
-4. After installation, run `pnpm: audit fix (Admin)` (attempts to resolve
-   package vulnerabilities) and do not block workflow unless critical
-5. Also look for related Xperience packages in the `.mcp.json` file and ensure
+4. Also look for related Xperience packages in the `.mcp.json` file and ensure
    their version is updated to match
 
 ## Build & Breaking Change Detection
@@ -80,12 +108,21 @@ A restore can be run with the `./scripts/Restore-CI.ps1` script, run from the
 
 ## Run Xperience Application Update
 
-1. Execute `Update-Xperience.ps1 -AgentMode` to update database schema/data to new
-   package version without interactive confirmation prompts. The `-AgentMode`
-   switch ensures `--skip-confirmation` is passed for non-interactive
-   automation.
+1. Execute `Update-Xperience.ps1 -AgentMode` to update database schema/data to
+   new package version without interactive confirmation prompts. The
+   `-AgentMode` switch ensures `--skip-confirmation` is passed for
+   non-interactive automation.
 2. If script fails: report failure, revert changes if feasible (manual revert
    recommended), STOP.
+
+## Re-enable CI And Store (MUST)
+
+After a successful application update:
+
+1. Run `./Enable-CI.ps1`.
+2. Run `./Store-CI.ps1`.
+
+If either step fails, stop and report failure (do not commit).
 
 ## Update README
 
@@ -109,6 +146,13 @@ A restore can be run with the `./scripts/Restore-CI.ps1` script, run from the
    README, package.json / lock files, potentially generated code, database
    scripts ignored if unchanged).
 2. Optionally re-run `.NET: build (Solution)` to ensure no transient issues.
+3. Run a residue check for old target versions in key files and fail if found:
+   - `Directory.Packages.props`
+   - `README.md`
+   - root `package.json`
+   - `.mcp.json`
+   - updated `src/**/package.json`
+4. If old target-version strings remain, stop and fix them before commit.
 
 ## Commit Changes
 
@@ -155,11 +199,14 @@ ValidateRepoState()
 currentVersion = ExtractVersionFromReadme()
 latestVersion = QueryLatestNuGet()
 if latestVersion <= currentVersion: Stop("No new version")
+RunScript("./scripts/Disable-CI.ps1")
 UpdateCentralPackageVersions(latestVersion)
 UpdateKenticoPnpmPackages()
 RunTask(".NET: build (Solution)")
 if BuildFailed(): Stop("Breaking changes detected")
-RunTask("Xperience: Application Update")
+RunScript("./scripts/Update-Xperience.ps1 -AgentMode")
+RunScript("./scripts/Enable-CI.ps1")
+RunScript("./scripts/Store-CI.ps1")
 UpdateReadmeVersion(latestVersion)
 BackupDatabase()
 StageAndCommit(latestVersion)

@@ -2,7 +2,6 @@ using System.Reflection;
 using CMS.DataEngine;
 using Kentico.Community.Portal.Admin.Infrastructure;
 using Kentico.Community.Portal.Core;
-using Kentico.Community.Portal.Core.Infrastructure;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components;
@@ -44,7 +43,6 @@ public static class ServiceCollectionAppExtensions
             .AddBlogs()
             .AddMemberBadges()
             .AddQAndADiscussionNotifications()
-            .AddMigrations()
             .AddMcp(config);
 
     private static IServiceCollection AddOperations(this IServiceCollection services, IConfiguration config) =>
@@ -81,6 +79,7 @@ public static class ServiceCollectionAppExtensions
             .AddScoped<IHeadingContext, HeadingContext>()
             .AddScoped<ViewService>()
             .AddScoped<DateTimeDisplayService>()
+            .AddScoped<MemberAssetContentService>()
             .AddScoped<AvatarImageService>()
             .AddScoped<ClientAssets>()
             .AddScoped<IJSEncoder, JSEncoder>()
@@ -104,7 +103,6 @@ public static class ServiceCollectionAppExtensions
             .AddSingleton(s => new ApplicationAssemblyInformation())
             .AddSingleton<AzureStorageClientFactory>()
             .AddSingleton(TimeProvider.System)
-            .AddSingleton<IStoragePathService, StoragePathService>()
             .AddScoped<CaptchaValidator>()
             .Configure<ReCaptchaSettings>(config.GetSection("ReCaptcha"))
             .AddSingleton<IObjectDisplayOptionsProvider, DefaultObjectDisplayOptionsProvider>()
@@ -152,9 +150,6 @@ public static class ServiceCollectionAppExtensions
             .AddTransient<QAndANotificationsProcessor>()
             .AddTransient<QAndANotificationLogger>()
             .AddTransient<QAndANotificationSettingsManager>();
-
-    private static IServiceCollection AddMigrations(this IServiceCollection services) =>
-        services;
 
     private static IServiceCollection AddMcp(this IServiceCollection services, IConfiguration config)
     {

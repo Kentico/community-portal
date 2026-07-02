@@ -1,10 +1,7 @@
-using CMS.IO;
 using CMS.Membership;
+using Kentico.Community.Portal.Admin.Features.Migrations;
 using Kentico.Community.Portal.Admin.Features.Members;
-using Kentico.Community.Portal.Core.Infrastructure;
 using Kentico.Xperience.Admin.Base;
-using static Kentico.Community.Portal.Core.Infrastructure.IStoragePathService;
-using Path = CMS.IO.Path;
 
 [assembly: UIPage(
     uiPageType: typeof(MemberManagementPage),
@@ -17,63 +14,101 @@ using Path = CMS.IO.Path;
 
 namespace Kentico.Community.Portal.Admin.Features.Members;
 
-public class MemberManagementPage(IStoragePathService storagePathService) : Page<MemberManagementPageClientProperties>
+public class MemberManagementPage(
+    ) : Page<MemberManagementPageClientProperties>
 {
-    private readonly IStoragePathService storagePathService = storagePathService;
+    private const string AvatarMigrationRetiredMessage = "Avatar migration and legacy filesystem inventory are retired because avatars are now fully served from Content Hub assets.";
 
-    public override async Task<MemberManagementPageClientProperties> ConfigureTemplateProperties(MemberManagementPageClientProperties properties)
+    public override Task<MemberManagementPageClientProperties> ConfigureTemplateProperties(MemberManagementPageClientProperties properties)
     {
-        var unmigratedDirectory = StorageHelper.GetDirectoryInfo(Path.Combine("default", "avatars"));
-        var unmigratedFiles = unmigratedDirectory.Exists
-            ? unmigratedDirectory.GetFiles()
-            : [];
+        properties.AvatarMigrationAnalysis = BuildAvatarMigrationAnalysis();
+        properties.DefaultBatchSize = 10;
 
-        string fullDirectoryPath = storagePathService.GetStorageFilePath("avatars", StorageAssetType.Member);
-        var correctDirectory = StorageHelper.GetDirectoryInfo(fullDirectoryPath);
-        var correctFiles = correctDirectory.Exists
-            ? correctDirectory.GetFiles()
-            : [];
-
-        properties.IncorrectAvatarFiles = unmigratedFiles.Select(f => f.FullName).ToArray();
-        properties.CorrectAvatarFiles = correctFiles.Select(f => f.FullName).ToArray();
-
-        await Task.CompletedTask;
-
-        return properties;
+        return Task.FromResult(properties);
     }
 
     [PageCommand(Permission = SystemPermissions.UPDATE)]
-    public async Task<ICommandResponse> MigrateOldAvatarPaths()
+    public Task<ICommandResponse> AnalyzeMemberAvatarsForContentHubMigration()
     {
-        var result = new AvatarPathMigrationResult([]);
-        var directory = StorageHelper.GetDirectoryInfo(Path.Combine("default", "avatars"));
-        var files = directory.GetFiles();
-
-        foreach (var file in files)
-        {
-            using var stream = file.OpenRead();
-
-            string avatarRelativePath = Path.Combine("avatars", file.Name);
-            string fullFilePath = storagePathService.GetStorageFilePath(avatarRelativePath, StorageAssetType.Member);
-
-            DirectoryHelper.EnsureDiskPath(fullFilePath, "");
-            StorageHelper.SaveFileToDisk(fullFilePath, stream, false);
-
-            var migratedFile = StorageHelper.GetFileInfo(fullFilePath);
-            result.MigratedPaths.Add(migratedFile.FullName);
-        }
-
-        await Task.CompletedTask;
-
-        return ResponseFrom(result).AddSuccessMessage("All files migrated");
+        var analysis = BuildAvatarMigrationAnalysis();
+        return Task.FromResult<ICommandResponse>(
+            ResponseFrom(analysis)
+                .AddErrorMessage(AvatarMigrationRetiredMessage));
     }
+
+    [PageCommand(Permission = SystemPermissions.UPDATE)]
+    public Task<ICommandResponse> MigrateAvatarsToContentHub(MigrateMemberAvatarsToContentHubCommandParams _)
+    {
+        var migrationResult = new MigrationResult(
+            "member-avatar-content-hub-retired",
+            "Member Avatar Content Hub Migration (Retired)",
+            [],
+            [AvatarMigrationRetiredMessage],
+            0);
+
+        return Task.FromResult<ICommandResponse>(
+            ResponseFrom(migrationResult)
+                .AddErrorMessage(AvatarMigrationRetiredMessage));
+    }
+
+    [PageCommand(Permission = SystemPermissions.UPDATE)]
+    public Task<ICommandResponse> MigrateSingleAvatarToContentHub(MigrateSingleMemberAvatarToContentHubCommandParams _)
+    {
+        var migrationResult = new MigrationResult(
+            "member-avatar-content-hub-retired",
+            "Member Avatar Content Hub Migration (Retired)",
+            [],
+            [AvatarMigrationRetiredMessage],
+            0);
+
+        return Task.FromResult<ICommandResponse>(
+            ResponseFrom(migrationResult)
+                .AddErrorMessage(AvatarMigrationRetiredMessage));
+    }
+
+    private static MemberAvatarMigrationAnalysisResult BuildAvatarMigrationAnalysis() => new(0, 0, 0, 0, 0, [], []);
 }
 
 public class MemberManagementPageClientProperties : TemplateClientProperties
 {
-    public IEnumerable<string> IncorrectAvatarFiles { get; set; } = [];
-    public IEnumerable<string> CorrectAvatarFiles { get; set; } = [];
+    public MemberAvatarMigrationAnalysisResult AvatarMigrationAnalysis { get; set; } = new(0, 0, 0, 0, 0, [], []);
+    public int DefaultBatchSize { get; set; } = 10;
 }
 
-public record AvatarPathMigrationResult(List<string> MigratedPaths);
+public record MigrateMemberAvatarsToContentHubCommandParams(int BatchSize = 10);
+
+public record MigrateSingleMemberAvatarToContentHubCommandParams(int MemberID);
+
+public record MemberAvatarMigrationAnalysisResult(
+    int MembersWithAvatarFiles,
+    int MembersMissingAvatarFiles,
+    int MembersAlreadyInContentHub,
+    int MembersPendingMigration,
+    long TotalAvatarBytes,
+    IEnumerable<MemberAvatarMigrationCandidate> Candidates,
+    IEnumerable<ManagedAvatarFileInventoryItem> ManagedAvatarFiles);
+
+public record MemberAvatarMigrationCandidate(
+    int MemberID,
+    string AvatarFileExtension,
+    string AvatarPath,
+    long AvatarSizeBytes,
+    bool ExistsInContentHub,
+    string AvatarUrl);
+
+public record ManagedAvatarFileInventoryItem(
+    string FileName,
+    string AvatarPath,
+    string AvatarExtension,
+    long AvatarSizeBytes,
+    DateTime LastModifiedUtc,
+    DateTime CreatedUtc,
+    bool IsReadOnly,
+    int? MemberID,
+    bool MemberExists,
+    string MemberUserName,
+    string MemberFullName,
+    string MemberEmail,
+    string MemberAvatarFileExtension,
+    bool ExistsInContentHub);
 

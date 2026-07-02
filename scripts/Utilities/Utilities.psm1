@@ -152,21 +152,38 @@ function Invoke-ExpressionWithException {
 
 function Invoke-SQLQuery {
     param (
-        [string]$query
+        [string]$query,
+        [int]$maxRetries = 5,
+        [int]$retryDelaySeconds = 1
     )
 
     $connectionString = Get-ConnectionString
-        
-    $sqlCommand = New-Object System.Data.SqlClient.SqlCommand
-    $sqlConnection = New-Object System.Data.SqlClient.SqlConnection($connectionString)
-    $sqlConnection.Open()
-        
-    $sqlCommand.Connection = $sqlConnection
-    $sqlCommand.CommandText = $query
-    $result = $sqlCommand.ExecuteScalar()
-        
-    $sqlConnection.Close()
-    return $result
+    $attempt = 0
+    
+    while ($attempt -lt $maxRetries) {
+        try {
+            $sqlCommand = New-Object System.Data.SqlClient.SqlCommand
+            $sqlConnection = New-Object System.Data.SqlClient.SqlConnection($connectionString)
+            $sqlConnection.Open()
+            
+            $sqlCommand.Connection = $sqlConnection
+            $sqlCommand.CommandText = $query
+            $result = $sqlCommand.ExecuteScalar()
+            
+            $sqlConnection.Close()
+            return $result
+        }
+        catch {
+            $attempt++
+            if ($attempt -lt $maxRetries) {
+                Write-Host "Database connection failed (attempt $attempt/$maxRetries), retrying in ${retryDelaySeconds}s: $_"
+                Start-Sleep -Seconds $retryDelaySeconds
+            }
+            else {
+                throw "Failed to execute SQL query after $maxRetries attempts: $_"
+            }
+        }
+    }
 }
 
 function Write-Status {

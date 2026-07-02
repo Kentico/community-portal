@@ -58,6 +58,9 @@ jobs:
         with:
           node-version-file: "package.json"
 
+      - name: Install pnpm dependencies
+        run: pnpm install
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
@@ -73,7 +76,10 @@ jobs:
 
       # === Build ===
       - name: Install dependencies
-        run: dotnet restore --locked-mode
+        # TODO: Re-add --locked-mode after Xperience 31.6.2
+        # Currently removed because --locked-mode is incompatible with Configuration-based PackageReference conditions
+        # (ManagementApi package has Condition="'$(Configuration)' == 'Debug'")
+        run: dotnet restore
 
       - name: Build Solution
         run: |
@@ -102,10 +108,13 @@ jobs:
 
       - name: Restore Database from Backup
         run: |
+          Write-Output "Creating backup directory in SQL container..."
+          docker exec -u root sql bash -c "mkdir -p /var/opt/mssql/backups"
+
           Write-Output "Copying database backup to SQL container..."
-          docker cp "./database/${{ env.DATABASE_BACKUP_FILENAME }}" sql:/var/backups/Kentico.Community.bak
-          docker exec -u root sql bash -c "chown mssql:mssql /var/backups/Kentico.Community.bak"
-          docker exec -u root sql bash -c "chmod 644 /var/backups/Kentico.Community.bak"
+          docker cp "./database/${{ env.DATABASE_BACKUP_FILENAME }}" sql:/var/opt/mssql/backups/Kentico.Community.bak
+          docker exec -u root sql bash -c "chown mssql:mssql /var/opt/mssql/backups/Kentico.Community.bak"
+          docker exec -u root sql bash -c "chmod 644 /var/opt/mssql/backups/Kentico.Community.bak"
 
           Write-Output "Restoring database..."
           sqlcmd `
@@ -116,6 +125,11 @@ jobs:
             -N o `
             -C `
             -i ./database/backup-restore.sql
+
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "Failed to restore database"
+            exit 1
+          }
 
           Write-Output "✓ Database restored successfully"
           "## ✓ Database Restored" >> $env:GITHUB_STEP_SUMMARY

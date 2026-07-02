@@ -88,52 +88,27 @@ public class MemberController(
     public async Task<ActionResult> GetAvatarImage(int memberID)
     {
         var memberRecord = await mediator.Send(new MemberByIDQuery(memberID));
-        var profileFile = await ResolveAvatarFile(memberRecord);
-
-        long ticksModified = profileFile.LastWriteTime.Ticks;
-        long fileLength = profileFile.Length;
-        string eTagValue = $"\"{ticksModified}-{fileLength}\"";
-
-        Response.Headers.CacheControl = "public";
-
-        /*
-         * There's an issue where Xperience middleware clears the cache control header
-         * sent from this response, preventing the etag/last modified from being used
-         */
-        if (Request.Headers.TryGetValue("If-None-Match", out var value))
+        if (memberRecord is null)
         {
-            string? existingETag = value.First();
-            if (string.Equals(existingETag, eTagValue))
-            {
-                return new StatusCodeResult(304);
-            }
+            return GetDefaultAvatarResult();
         }
 
-        return File(
-            profileFile.OpenRead(),
-            MimeTypeHelper.GetMimetype(profileFile.Extension),
-            profileFile.LastWriteTime,
-            entityTag: new EntityTagHeaderValue(eTagValue));
-    }
-
-    private async Task<CMS.IO.FileInfo> ResolveAvatarFile(CMS.Membership.MemberInfo? memberRecord)
-    {
-        if (memberRecord is not null)
+        var communityProfile = memberRecord.AsCommunityMember();
+        bool requiresDefaultAvatar =
+            communityProfile.ModerationStatus is ModerationStatuses.Spam
+            or ModerationStatuses.Flagged;
+        if (requiresDefaultAvatar)
         {
-            var communityProfile = memberRecord.AsCommunityMember();
-            bool requiresDefaultAvatar =
-                communityProfile.ModerationStatus is ModerationStatuses.Spam
-                or ModerationStatuses.Flagged;
-
-            if (requiresDefaultAvatar)
-            {
-                return GetDefaultAvatarFile();
-            }
-
-            return await avatarImageService.GetAvatarImage(memberRecord.MemberID);
+            return GetDefaultAvatarResult();
         }
 
-        return GetDefaultAvatarFile();
+        var avatar = await avatarImageService.GetAvatarImage(memberRecord.MemberID);
+        if (!string.IsNullOrWhiteSpace(avatar.ContentHubAvatarUrl))
+        {
+            return Redirect(avatar.ContentHubAvatarUrl);
+        }
+
+        return GetDefaultAvatarResult();
     }
 
     private CMS.IO.FileInfo GetDefaultAvatarFile()
@@ -147,6 +122,20 @@ public class MemberController(
         }
 
         return fileInfo;
+    }
+
+    private ActionResult GetDefaultAvatarResult()
+    {
+        var profileFile = GetDefaultAvatarFile();
+        var stream = System.IO.File.OpenRead(profileFile.FullName);
+        string eTagValue = $"\"{profileFile.LastWriteTime.Ticks}-{profileFile.Length}\"";
+        var entityTag = new EntityTagHeaderValue(eTagValue);
+
+        return File(
+            stream,
+            MimeTypeHelper.GetMimetype(profileFile.Extension),
+            lastModified: new DateTimeOffset(profileFile.LastWriteTime),
+            entityTag: entityTag);
     }
 }
 

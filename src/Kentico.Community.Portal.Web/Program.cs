@@ -1,7 +1,6 @@
 using Kentico.Community.Portal.Web.Middleware;
 using Kentico.Web.Mvc;
 using Kentico.Xperience.Cloud;
-using Kentico.Xperience.ManagementApi;
 using Vite.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,7 +32,6 @@ app
     .UseCors()
     .UseCookiePolicy()
     .UseAuthentication()
-    .IfDevelopment(env, b => b.UseKenticoManagementApi())
     .UseKenticoCloud()
     .UseKentico()
     .UseAppMiniProfiler(app, config, env)

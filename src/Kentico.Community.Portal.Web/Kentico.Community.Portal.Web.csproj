@@ -20,7 +20,6 @@
     <PackageReference Include="Kentico.Xperience.AzureStorage" />
     <PackageReference Include="Kentico.Xperience.Cloud" />
     <PackageReference Include="Kentico.Xperience.ImageProcessing" />
-    <PackageReference Include="Kentico.Xperience.ManagementApi" />
     <PackageReference Include="Kentico.Xperience.Mjml" />
     <PackageReference Include="Kentico.Xperience.Lucene" />
     <PackageReference Include="Kentico.Xperience.MiniProfiler" />
@@ -29,7 +28,6 @@
     <PackageReference Include="Kentico.Xperience.VirtualInbox.MCP" />
     <PackageReference Include="Kentico.Xperience.WebApp" />
     <PackageReference Include="Kentico.Xperience.TagManager" />
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" />
     <PackageReference Include="Markdig" />
     <PackageReference Include="Microsoft.Identity.Web" />
     <PackageReference Include="Scrutor" />
@@ -69,7 +67,7 @@
   </PropertyGroup>
 
   <Target Name="PnpmInstall" BeforeTargets="PnpmBuildClient" Condition=" '$(Configuration)|$(Platform)' != 'Debug|AnyCPU' ">
-    <Exec Command="pnpm install --frozen-lockfile" WorkingDirectory="$(MSBuildProjectDirectory)" />
+    <Message Text="Note: pnpm install should be run separately (e.g., in CI or locally before build)" Importance="high" />
   </Target>
   <Target Name="PnpmBuildClient" BeforeTargets="BeforeBuild" Condition=" '$(Configuration)|$(Platform)' != 'Debug|AnyCPU' ">
     <Exec Command="pnpm run build" WorkingDirectory="$(MSBuildProjectDirectory)" />

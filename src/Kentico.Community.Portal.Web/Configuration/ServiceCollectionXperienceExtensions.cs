@@ -1,4 +1,3 @@
-using CMS;
 using CMS.Base;
 using CMS.Base.Configuration;
 using CMS.ContentEngine;
@@ -12,7 +11,6 @@ using Kentico.Community.Portal.Web.Components.EmailBuilder.Sections.SingleColumn
 using Kentico.Community.Portal.Web.Components.PageBuilder.Sections.Grid;
 using Kentico.Community.Portal.Web.Features.DataCollection;
 using Kentico.Community.Portal.Web.Infrastructure;
-using Kentico.Community.Portal.Web.Infrastructure.Storage;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Content.Web.Mvc;
 using Kentico.Content.Web.Mvc.Routing;
@@ -22,12 +20,9 @@ using Kentico.OnlineMarketing.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Web.Mvc;
 using Kentico.Xperience.ComponentRegistry;
-using Kentico.Xperience.ManagementApi;
 using Kentico.Xperience.Mjml;
 using Microsoft.AspNetCore.Localization.Routing;
 using XperienceCommunity.FormClone;
-
-[assembly: RegisterModule(typeof(StorageInitializationModule))]
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -90,7 +85,6 @@ public static class ServiceCollectionXperienceExtensions
             .AddMiniProfiler(config)
             .Configure<EmailQueueOptions>(config.GetSection("EmailQueueOptions"))
             .AddContentSynchronization(config)
-            .AddManagementApi(config)
             .Configure<CookieLevelOptions>(options =>
             {
                 options.CookieConfigurations.Add(CookieNames.COOKIE_CONSENT_LEVEL, CookieLevel.System);
@@ -135,17 +129,4 @@ public static class ServiceCollectionXperienceExtensions
 
     private static IServiceCollection AddContentSynchronization(this IServiceCollection services, IConfiguration config) =>
         services.Configure<ContentSynchronizationOptions>(config.GetSection("ContentSynchronizationOptions"));
-
-    private static IServiceCollection AddManagementApi(this IServiceCollection services, IConfiguration config)
-    {
-        string? secret = config.GetSection("Kentico.Xperience.ManagementApi").GetValue<string>("Secret");
-
-        if (string.IsNullOrWhiteSpace(secret))
-        {
-            return services;
-        }
-
-        _ = services.AddKenticoManagementApi(options => options.Secret = secret);
-        return services;
-    }
 }

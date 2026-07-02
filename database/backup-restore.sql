@@ -12,5 +12,5 @@ END
 
 -- Restore the database - let SQL Server determine file paths automatically
 RESTORE DATABASE [Kentico.Community]
-FROM DISK = '/var/backups/Kentico.Community.bak'
+FROM DISK = '/var/opt/mssql/backups/Kentico.Community.bak'
 WITH REPLACE;

@@ -21,7 +21,7 @@ type EditorMode = 'edit' | 'readonly';
 type EditorType = 'markdown' | 'editor';
 type ComponentState = { type: EditorType };
 
-export const MarkdownFormComponent = (props: FormComponentProps) => {
+export const MarkdownFormComponent = (props: FormComponentProps<string>) => {
   const defaultValue =
     typeof props.value === 'string' && !!props.value ? props.value : '';
 

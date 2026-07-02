@@ -32,16 +32,16 @@ public partial class MemberBadgeAssignmentScheduledTask(
     private readonly TimeProvider clock = clock;
 
 
-    [LoggerMessage(EventId = 0, Level = LogLevel.Information, Message = "Member Badge Assignment: No configuration found.")]
+    [LoggerMessage(EventId = 1001, Level = LogLevel.Information, Message = "Member Badge Assignment: No configuration found.")]
     partial void LogNoConfiguration();
 
-    [LoggerMessage(EventId = 0, Level = LogLevel.Information, Message = "Member Badge Assignment: Running badge assignment for {Count} rules")]
+    [LoggerMessage(EventId = 1002, Level = LogLevel.Information, Message = "Member Badge Assignment: Running badge assignment for {Count} rules")]
     partial void LogBadgeAssignmentStart(int count);
 
-    [LoggerMessage(EventId = 0, Level = LogLevel.Information, Message = "Member Badge Assignment: {Assignments}")]
+    [LoggerMessage(EventId = 1003, Level = LogLevel.Information, Message = "Member Badge Assignment: {Assignments}")]
     partial void LogBadgeAssignmentsEnd(string assignments);
 
-    [LoggerMessage(EventId = 0, Level = LogLevel.Error, Message = "Member Badge Assignment")]
+    [LoggerMessage(EventId = 1004, Level = LogLevel.Error, Message = "Member Badge Assignment")]
     partial void LogBadgeAssignmentFailure(Exception ex);
 
     public async Task<ScheduledTaskExecutionResult> Execute(ScheduledTaskConfigurationInfo task, CancellationToken cancellationToken)

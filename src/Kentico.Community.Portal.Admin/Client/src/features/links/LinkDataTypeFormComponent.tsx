@@ -3,9 +3,8 @@ import { Input } from '@kentico/xperience-admin-components';
 import React, { ChangeEvent, useState } from 'react';
 import { LinkDataType } from './LinkDataType';
 
-interface LinkDataTypeFormComponentProps extends FormComponentProps {
+interface LinkDataTypeFormComponentProps extends FormComponentProps<LinkDataType> {
   newLink: LinkDataType;
-  value: LinkDataType;
 }
 
 export const LinkDataTypeFormComponent = (

@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <PackageReference Include="Kentico.Xperience.Admin" />
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" />
     <PackageReference Include="CsvHelper" />
   </ItemGroup>
 
@@ -28,7 +27,7 @@
   </ItemGroup>
 
   <Target Name="PnpmInstall" BeforeTargets="PnpmBuildClient" Condition=" '$(Configuration)|$(Platform)' != 'Debug|AnyCPU' ">
-    <Exec Command="pnpm install --frozen-lockfile" WorkingDirectory="$(MSBuildProjectDirectory)\Client" />
+    <Message Text="Note: pnpm install should be run separately (e.g., in CI or locally before build)" Importance="high" />
   </Target>
   <Target Name="PnpmBuildClient" BeforeTargets="BeforeBuild" Condition=" '$(Configuration)|$(Platform)' != 'Debug|AnyCPU' ">
     <Exec Command="pnpm run build" WorkingDirectory="$(MSBuildProjectDirectory)\Client" />

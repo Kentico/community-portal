@@ -7,9 +7,10 @@ import {
 import React, { ChangeEvent, useState } from 'react';
 import { LinkDataType, newLink } from './LinkDataType';
 
-interface LinkListDataTypeFormComponentProps extends FormComponentProps {
+interface LinkListDataTypeFormComponentProps extends FormComponentProps<
+  LinkDataType[]
+> {
   newLink: LinkDataType;
-  value: LinkDataType[];
 }
 
 export const LinkListDataTypeFormComponent = (

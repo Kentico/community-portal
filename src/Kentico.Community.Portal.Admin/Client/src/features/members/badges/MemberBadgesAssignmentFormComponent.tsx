@@ -10,9 +10,8 @@ import {
 import { Badge } from '../../../components/ui/badge';
 import { MemberBadgeAssigmentModel } from './MemberBadgeAssignmentModel';
 
-export interface MemberBadgesAssignmentComponentClientProperties extends FormComponentProps {
-  value: MemberBadgeAssigmentModel[];
-}
+export type MemberBadgesAssignmentComponentClientProperties =
+  FormComponentProps<MemberBadgeAssigmentModel[]>;
 
 export const MemberBadgesAssignmentFormComponent = (
   props: MemberBadgesAssignmentComponentClientProperties,

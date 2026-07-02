@@ -1,8 +1,9 @@
 # Environment Setup
 
-> **Using .NET Aspire?** The [Aspire AppHost](./Aspire.md) automates the database
-> restore (via a dashboard **Restore database** command) and starts every dev
-> server for you. The manual steps below remain the supported fallback.
+> **Using .NET Aspire?** The [Aspire AppHost](./Aspire.md) automates the
+> database restore (via a dashboard **Restore database** command) and starts
+> every dev server for you. The manual steps below remain the supported
+> fallback.
 
 ## Restore the database backup
 
@@ -20,7 +21,7 @@ logs) is included in the `.\database` folder as a `.zip`.
   1. Extract the `.bak` from the `.zip`
   1. Copy the `.bak` into the Docker container file system (see
      `.github\workflows\ci.yml` for an example) at
-     `/var/backups/Kentico.Community.bak`
+     `/var/opt/mssql/backups/Kentico.Community.bak`
   1. Run `.\database\backup-restore.sql` in VS Code to restore the database to
      the Docker container as a new database named `Kentico.Community`
 

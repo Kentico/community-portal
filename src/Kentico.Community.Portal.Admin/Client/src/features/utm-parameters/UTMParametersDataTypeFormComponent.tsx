@@ -6,9 +6,8 @@ import {
   UTMParametersDataType,
 } from './UTMParametersDataType';
 
-interface UTMParametersDataTypeFormComponentProps extends FormComponentProps {
+interface UTMParametersDataTypeFormComponentProps extends FormComponentProps<UTMParametersDataType> {
   newUTMParameters: UTMParametersDataType;
-  value: UTMParametersDataType;
   visibleFields: { text: string; value: UTMParameterDataTypeField }[];
 }
 
