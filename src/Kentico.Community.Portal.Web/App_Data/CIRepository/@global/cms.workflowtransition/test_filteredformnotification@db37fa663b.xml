@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.workflowtransition>
+  <Parent>
+    <CodeName>FilteredFormNotification</CodeName>
+    <GUID>6ceb7805-a193-47f0-a506-db41e2517f7a</GUID>
+    <ObjectType>ma.automationstep</ObjectType>
+    <Parent>
+      <CodeName>Test</CodeName>
+      <GUID>867db769-a901-4be4-bb96-abe28d944cf6</GUID>
+      <ObjectType>ma.automationprocess</ObjectType>
+    </Parent>
+  </Parent>
+  <Bindings>
+    <Binding id="ma.automationstep_Finish_NotificationProcessed_ma.automationprocess_Test-ma.automationstep_Finish_NotificationProcessed_ma.automationprocess_Test">
+      <TransitionEndStepID>
+        <CodeName>Finish_NotificationProcessed</CodeName>
+        <GUID>ad1b596a-99c8-4f42-859a-e48f094fee86</GUID>
+        <ObjectType>ma.automationstep</ObjectType>
+        <Parent>
+          <CodeName>Test</CodeName>
+          <GUID>867db769-a901-4be4-bb96-abe28d944cf6</GUID>
+          <ObjectType>ma.automationprocess</ObjectType>
+        </Parent>
+      </TransitionEndStepID>
+      <TransitionSourcePointGUID>0ba11c35-ab2a-4ca0-bcc5-5cb0d0dd5b3d</TransitionSourcePointGUID>
+      <TransitionType>1</TransitionType>
+      <TransitionWorkflowID>
+        <CodeName>Test</CodeName>
+        <GUID>867db769-a901-4be4-bb96-abe28d944cf6</GUID>
+        <ObjectType>ma.automationprocess</ObjectType>
+      </TransitionWorkflowID>
+    </Binding>
+  </Bindings>
+</cms.workflowtransition>

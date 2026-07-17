@@ -192,6 +192,18 @@
       "detail": "Build Web client assets (CSS, JS) with Vite"
     },
     {
+      "label": "pnpm: build (Admin)",
+      "type": "shell",
+      "command": "pnpm build",
+      "group": "build",
+      "problemMatcher": [],
+      "options": {
+        "cwd": "src/Kentico.Community.Portal.Admin/Client"
+      },
+      "dependsOn": ["pnpm: install (workspace)"],
+      "detail": "Build Admin client assets (CSS, JS) with Webpack"
+    },
+    {
       "label": "pnpm: install (Playwright E2E)",
       "type": "shell",
       "group": "none",

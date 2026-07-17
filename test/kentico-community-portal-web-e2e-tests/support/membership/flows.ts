@@ -8,7 +8,10 @@ import { waitForEmail } from "../email/waitForEmail.js";
 import type { RegistrationIdentity } from "../data/testIdentity.js";
 import type { Client } from "@modelcontextprotocol/sdk/client/index.js";
 
-const confirmationSubject = "Confirm your email";
+const confirmationSubject =
+  "Confirm your email for your new Kentico Community Portal account";
+const confirmationSender =
+  '"Kentico Community" <no-reply@community.kentico.com>';
 const recoverySubject = "Reset Password Confirmation";
 
 export async function registerMember(
@@ -62,12 +65,14 @@ export async function confirmEmail(
   page: Page,
   emailClient: Client,
   identity: RegistrationIdentity,
-): Promise<number | undefined> {
+): Promise<number> {
   const email = await waitForEmail(emailClient, {
     inbox: identity.email,
     subjectContains: confirmationSubject,
     timeoutMs: 30_000,
   });
+
+  expect(email.virtualEmailSender).toBe(confirmationSender);
 
   await page.goto(extractConfirmationUrl(email));
   await expect(page.locator("[test-id=confirmationMessage]")).toBeVisible();

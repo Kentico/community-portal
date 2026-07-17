@@ -1,4 +1,5 @@
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import type { VirtualEmail } from "./virtualEmail.js";
 
 type ToolTextContent = {
   type?: string;
@@ -21,7 +22,7 @@ export type WaitForEmailOptions = {
 export async function waitForEmail(
   client: Client,
   options: WaitForEmailOptions,
-): Promise<unknown> {
+): Promise<VirtualEmail> {
   const response = (await client.callTool({
     name: "wait_for_email",
     arguments: {
@@ -44,7 +45,7 @@ export async function waitForEmail(
   }
 
   if (response.structuredContent) {
-    return response.structuredContent;
+    return response.structuredContent as VirtualEmail;
   }
 
   const textPayload = response.content
@@ -59,8 +60,10 @@ export async function waitForEmail(
   }
 
   try {
-    return JSON.parse(textPayload) as unknown;
+    return JSON.parse(textPayload) as VirtualEmail;
   } catch {
-    return textPayload;
+    throw new Error(
+      "wait_for_email returned text content that could not be parsed as JSON.",
+    );
   }
 }

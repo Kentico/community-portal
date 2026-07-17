@@ -15,6 +15,13 @@ const publishedDllPath = path.resolve(
   repoRoot,
   "publish/Kentico.Community.Portal.Web.dll",
 );
+// Storage state written by the `admin-setup` project's auth.setup.ts and
+// reused by `admin-tests` below, so authenticated admin tests can start
+// signed in instead of each performing its own sign-in.
+const adminStorageStatePath = path.resolve(
+  __dirname,
+  "playwright/.auth/admin.json",
+);
 const webServerCommand = isCi
   ? `dotnet ${publishedDllPath}`
   : `dotnet run --project ${webProjectPath}`;
@@ -27,7 +34,7 @@ const webServerEnv = {
   DOTNET_ENVIRONMENT: process.env.DOTNET_ENVIRONMENT ?? appEnvironment,
 };
 
-const webServers: TestConfigWebServer | TestConfigWebServer[] | undefined = [
+const webServers = [
   {
     command: webServerCommand,
     cwd: webServerCwd,
@@ -43,6 +50,24 @@ const webServers: TestConfigWebServer | TestConfigWebServer[] | undefined = [
 
 export default defineConfig({
   testDir: "./tests",
+  projects: [
+    {
+      name: "portal-tests",
+      testIgnore: [/tests\/admin\//],
+    },
+    {
+      name: "admin-setup",
+      testMatch: /tests\/admin\/auth\.setup\.ts/,
+    },
+    {
+      name: "admin-tests",
+      testMatch: /tests\/admin\/.*\.spec\.ts/,
+      dependencies: ["admin-setup"],
+      use: {
+        storageState: adminStorageStatePath,
+      },
+    },
+  ],
   fullyParallel: true,
   forbidOnly: isCi,
   retries: isCi ? 2 : 0,

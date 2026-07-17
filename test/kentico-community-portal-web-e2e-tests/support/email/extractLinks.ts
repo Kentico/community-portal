@@ -1,4 +1,5 @@
 import * as cheerio from "cheerio";
+import type { VirtualEmail } from "./virtualEmail.js";
 
 const confirmationSelectors = [
   "a[data-confirmation-url]",
@@ -13,8 +14,8 @@ const recoverySelectors = [
   'a[href*="account-recovery"]',
 ];
 
-export function extractConfirmationUrl(email: unknown): string {
-  const html = extractEmailHtml(email);
+export function extractConfirmationUrl(email: VirtualEmail): string {
+  const html = email.virtualEmailBodyHTML;
 
   if (html) {
     const $ = cheerio.load(html);
@@ -28,7 +29,7 @@ export function extractConfirmationUrl(email: unknown): string {
     }
   }
 
-  const fallbackHref = findUrlInStrings(email, ["confirm-email", "confirm"]);
+  const fallbackHref = findUrlInText(html, ["confirm-email", "confirm"]);
 
   if (fallbackHref) {
     return fallbackHref;
@@ -39,8 +40,8 @@ export function extractConfirmationUrl(email: unknown): string {
   );
 }
 
-export function extractRecoveryUrl(email: unknown): string {
-  const html = extractEmailHtml(email);
+export function extractRecoveryUrl(email: VirtualEmail): string {
+  const html = email.virtualEmailBodyHTML;
 
   if (html) {
     const $ = cheerio.load(html);
@@ -54,7 +55,7 @@ export function extractRecoveryUrl(email: unknown): string {
     }
   }
 
-  const fallbackHref = findUrlInStrings(email, [
+  const fallbackHref = findUrlInText(html, [
     "reset-password",
     "resetpassword",
     "account-recovery",
@@ -69,60 +70,14 @@ export function extractRecoveryUrl(email: unknown): string {
   );
 }
 
-function extractEmailHtml(value: unknown): string {
-  const stringValues = collectStringValues(value);
-  const htmlCandidate = stringValues.find((candidate) =>
-    /<a\b|<html\b|<body\b/i.test(candidate),
-  );
+function findUrlInText(text: string, fragments: string[]): string {
+  const normalizedText = text.toLowerCase();
 
-  return htmlCandidate ?? "";
-}
-
-function findUrlInStrings(value: unknown, fragments: string[]): string {
-  const stringValues = collectStringValues(value);
-
-  for (const candidate of stringValues) {
-    const normalizedCandidate = candidate.toLowerCase();
-
-    if (!fragments.some((fragment) => normalizedCandidate.includes(fragment))) {
-      continue;
-    }
-
-    const match = candidate.match(/https?:\/\/[^\s"'<>]+/i);
-
-    if (match) {
-      return match[0];
-    }
+  if (!fragments.some((fragment) => normalizedText.includes(fragment))) {
+    return "";
   }
 
-  return "";
-}
+  const match = text.match(/https?:\/\/[^\s"'<>]+/i);
 
-function collectStringValues(value: unknown): string[] {
-  const strings: string[] = [];
-
-  visit(value, strings);
-
-  return strings;
-}
-
-function visit(value: unknown, strings: string[]): void {
-  if (typeof value === "string") {
-    strings.push(value);
-    return;
-  }
-
-  if (Array.isArray(value)) {
-    for (const entry of value) {
-      visit(entry, strings);
-    }
-
-    return;
-  }
-
-  if (value && typeof value === "object") {
-    for (const entry of Object.values(value as Record<string, unknown>)) {
-      visit(entry, strings);
-    }
-  }
+  return match ? match[0] : "";
 }

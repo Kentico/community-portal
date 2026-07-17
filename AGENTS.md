@@ -10,3 +10,6 @@ to.
 When committing changes, follow
 [Git commit conventions](.agent-resources/instructions/Git.instructions.md) for
 type, scope, and message format.
+
+When creating agent generated research or plan documents, always store them in
+the `.agent-resources/plans` folder.

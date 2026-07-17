@@ -1,21 +1,20 @@
 export type VirtualEmail = {
-  id?: number;
-  subject?: string;
-  htmlBody?: string;
-  bodyHtml?: string;
-  body?: string;
-  textBody?: string;
-  recipients?: string;
-  recipient?: string;
+  virtualEmailID: number;
+  virtualEmailGUID: string;
+  virtualEmailSender: string;
+  virtualEmailRecipientsTo: string;
+  virtualEmailRecipientsCc: string;
+  virtualEmailRecipientsBcc: string;
+  virtualEmailSubject: string;
+  virtualEmailBodyHTML: string;
+  virtualEmailBodyPlainText: string;
+  virtualEmailSentUTCDate: string;
+  virtualEmailStatus: string;
+  virtualEmailErrorMessage: string;
+  virtualEmailChannelName: string;
+  virtualEmailEmailConfigurationID: number;
 };
 
-export function getVirtualEmailId(email: unknown): number | undefined {
-  if (!email || typeof email !== "object") {
-    return undefined;
-  }
-
-  const value = email as Record<string, unknown>;
-  const idCandidate = value.id ?? value.ID ?? value.emailId ?? value.EmailID;
-
-  return typeof idCandidate === "number" ? idCandidate : undefined;
+export function getVirtualEmailId(email: VirtualEmail): number {
+  return email.virtualEmailID;
 }

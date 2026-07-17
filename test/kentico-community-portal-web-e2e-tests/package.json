@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "playwright test",
+    "test:portal": "playwright test --project=portal-tests",
+    "test:admin": "playwright test --project=admin-tests",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
     "test:smoke": "playwright test tests/smoke",
@@ -16,8 +18,8 @@
     "cheerio": "1.2.0"
   },
   "devDependencies": {
-    "@playwright/test": "1.60.0",
-    "@types/node": "25.9.0",
-    "typescript": "6.0.3"
+    "@playwright/test": "1.61.1",
+    "@types/node": "26.1.1",
+    "typescript": "7.0.2"
   }
 }

@@ -36,7 +36,7 @@ public class CustomObjectsRetriever(IObjectDisplayOptionsProvider displayOptions
         {
             displayOptions.ApplySearchFilter(query, retrievalParams.SearchTerm);
 
-            string searchPriorityOrderBy = string.Format(ORDERING_COLUMN_VALUE_TEMPLATE, displayOptions.OrderByExpression, SqlHelper.EscapeLikeText(SqlHelper.EscapeQuotes(retrievalParams.SearchTerm)));
+            string searchPriorityOrderBy = string.Format(ORDERING_COLUMN_VALUE_TEMPLATE, displayOptions.OrderByExpression, SqlHelper.EscapeLikeQueryPatterns(SqlHelper.EscapeQuotes(retrievalParams.SearchTerm)));
             var orderByColumns = new List<string> { searchPriorityOrderBy };
             orderByColumns.AddRange(GetOrderByColumns(retrievalParams.OrderBy, displayOptions.OrderByExpression));
             query.OrderByColumns = string.Join(",", orderByColumns);

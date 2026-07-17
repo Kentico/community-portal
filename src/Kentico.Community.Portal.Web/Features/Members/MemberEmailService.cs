@@ -170,7 +170,7 @@ public class MemberEmailService(
 
         var emailMessage = new EmailMessage
         {
-            From = $"""{sender.EmailChannelSenderDisplayName}" <{senderEmail}>""",
+            From = $"\"{sender.EmailChannelSenderDisplayName}\" <{senderEmail}>",
             Recipients = recipient.Email,
             Subject = subject,
             Body = emailBody,

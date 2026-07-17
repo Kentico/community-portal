@@ -27,11 +27,13 @@ public class RecipientListListExtender : PageExtender<RecipientListList>
                     // We have to specify an explicit column list because .AddColumn() won't expand the aggregate into a subquery
                     new QueryColumn(nameof(ContactGroupInfo.ContactGroupID)),
                     new QueryColumn(nameof(ContactGroupInfo.ContactGroupDisplayName)),
+                    new QueryColumn(nameof(ContactGroupInfo.ContactGroupDescription)),
                     aggregate.AsColumn("ContactsCount"));
         }));
 
         var configs = Page.PageConfiguration.ColumnConfigurations
-            .AddColumn("ContactsCount", caption: "Count");
+            .AddColumn("ContactsCount", caption: "Count")
+            .AddColumn(nameof(ContactGroupInfo.ContactGroupDescription), caption: "Description", minWidth: 30);
     }
 }
 

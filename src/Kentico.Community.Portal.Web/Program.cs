@@ -1,6 +1,7 @@
 using Kentico.Community.Portal.Web.Middleware;
 using Kentico.Web.Mvc;
 using Kentico.Xperience.Cloud;
+using Kentico.Xperience.ManagementApi;
 using Vite.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +15,7 @@ builder.Services
     // Customizes options configured via SaaS, so register this first
     .AddAppAdminAuthentication(config)
     .AddAppXperienceSaaS(config, env)
-    .AddAppXperience(config)
+    .AddAppXperience(config, env)
     .AddAppXperienceMembership()
     .AddAppLuceneSearch(config)
     .AddAppMvc(env)
@@ -28,6 +29,7 @@ app
     .IfDevelopment(env, b => b.UseDeveloperExceptionPage())
     .IfNotDevelopment(env, b => b.UseExceptionHandler("/error/500"))
     .UseStaticFiles()
+    .IfDevelopment(env, b => b.UseKenticoManagementApi())
     .IfDevelopment(env, b => b.UseMiddleware<RemoveXFrameOptionsMiddleware>())
     .UseCors()
     .UseCookiePolicy()

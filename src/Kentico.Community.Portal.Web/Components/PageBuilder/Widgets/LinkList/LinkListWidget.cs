@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using CMS.ContentEngine;
 using CMS.DataEngine;
 using Kentico.Community.Portal.Core.Components;
@@ -72,10 +73,17 @@ public class LinkListWidget(IMediator mediator, IContentRetriever contentRetriev
 
         var result = await contentRetriever.RetrieveContent<LinkContent>(
             RetrieveContentParameters.Default,
-            q => q
-                .InSmartFolder(props.FolderReference.Identifier)
-                .OrderBy([new OrderByColumn(nameof(LinkContent.LinkContentPublishedDate), OrderDirection.Descending)]),
-            new RetrievalCacheSettings($"SmartFolder|{props.FolderReference.Identifier}"));
+            q =>
+            {
+                q.InSmartFolder(props.FolderReference.Identifier)
+                    .OrderBy([new OrderByColumn(nameof(LinkContent.LinkContentPublishedDate), OrderDirection.Descending)]);
+
+                if (props.Count > 0)
+                {
+                    q.TopN(props.Count);
+                }
+            },
+            new RetrievalCacheSettings($"SmartFolder|{props.FolderReference.Identifier}|{props.Count}"));
 
         return [.. result];
     }
@@ -162,11 +170,13 @@ public class LinkListWidget(IMediator mediator, IContentRetriever contentRetriev
     }
 }
 
+[FormCategory(Label = "Content", Order = 1)]
+[FormCategory(Label = "Display", Order = 8)]
 public class LinkListWidgetProperties : BaseWidgetProperties
 {
     [TextInputComponent(
         Label = "Label",
-        Order = 1
+        Order = 2
     )]
     public string Label { get; set; } = "";
 
@@ -174,14 +184,14 @@ public class LinkListWidgetProperties : BaseWidgetProperties
         Label = "Data Source",
         ExplanationText = "The way that Links are selected",
         DataProviderType = typeof(EnumDropDownOptionsProvider<LinkListDataSource>),
-        Order = 2
+        Order = 3
     )]
     public string DataSource { get; set; } = nameof(LinkListDataSource.Individual_Selection);
     public LinkListDataSource DataSourceParsed => EnumDropDownOptionsProvider<LinkListDataSource>.Parse(DataSource, LinkListDataSource.Individual_Selection);
 
     [SmartFolderSelectorComponent(
         Label = "Smart folder",
-        Order = 3,
+        Order = 4,
         ExplanationText = "Select a smart folder containing Link Content items",
         AllowedContentTypeIdentifiersFilter = typeof(LinkContentFilter))]
     [VisibleIfEqualTo(
@@ -191,13 +201,26 @@ public class LinkListWidgetProperties : BaseWidgetProperties
     )]
     public SmartFolderReference FolderReference { get; set; } = null!;
 
+    [NumberInputComponent(
+        Label = "Count",
+        ExplanationText = "The maximum number of links to display. Use 0 to display all items.",
+        Order = 5
+    )]
+    [VisibleIfEqualTo(
+        nameof(DataSource),
+        nameof(LinkListDataSource.Smart_Folder),
+        StringComparison.OrdinalIgnoreCase
+    )]
+    [Range(0, 25)]
+    public int Count { get; set; } = 0;
+
     [ContentItemSelectorComponent(
         contentTypeName: LinkContent.CONTENT_TYPE_NAME,
         Label = "Links",
         ExplanationText = "Link Content items to display in a list",
         AllowContentItemCreation = true,
         DefaultViewMode = ContentItemSelectorViewMode.List,
-        Order = 3
+        Order = 4
     )]
     [VisibleIfEqualTo(
         nameof(DataSource),
@@ -210,7 +233,7 @@ public class LinkListWidgetProperties : BaseWidgetProperties
         Label = "Design",
         ExplanationText = "Component layout and design",
         DataProviderType = typeof(EnumDropDownOptionsProvider<LinkListDesign>),
-        Order = 4
+        Order = 9
     )]
     public string DesignSource { get; set; } = nameof(LinkListDesign.Link_List);
     public LinkListDesign DesignParsed => EnumDropDownOptionsProvider<LinkListDesign>.Parse(DesignSource, LinkListDesign.Link_List);
@@ -218,21 +241,21 @@ public class LinkListWidgetProperties : BaseWidgetProperties
     [CheckBoxComponent(
         Label = "Show Published Date",
         ExplanationText = "Display the link's published date.",
-        Order = 5
+        Order = 10
     )]
     public bool ShowPublishedDate { get; set; } = false;
 
     [CheckBoxComponent(
         Label = "Show Author",
         ExplanationText = "Display the link author's full name.",
-        Order = 6
+        Order = 11
     )]
     public bool ShowAuthor { get; set; } = false;
 
     [CheckBoxComponent(
         Label = "Show DX Topics",
         ExplanationText = "Display the link's DX Topics taxonomy tags.",
-        Order = 7
+        Order = 12
     )]
     public bool ShowDXTopics { get; set; } = false;
 }

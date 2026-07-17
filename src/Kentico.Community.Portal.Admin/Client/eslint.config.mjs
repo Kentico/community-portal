@@ -1,9 +1,9 @@
-import react from 'eslint-plugin-react';
 import globals from 'globals';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
+import tsParser from '@typescript-eslint/parser';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,32 +17,19 @@ export default [
   {
     ignores: ['**/webpack.config.js'],
   },
-  ...compat.extends(
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended-type-checked',
-    'prettier',
-  ),
+  ...compat.extends('plugin:@typescript-eslint/recommended', 'prettier'),
   {
-    plugins: {
-      react,
-    },
-
     languageOptions: {
       globals: {
         ...globals.browser,
       },
 
+      parser: tsParser,
       ecmaVersion: 'latest',
       sourceType: 'module',
 
       parserOptions: {
         project: './tsconfig.json',
-      },
-    },
-
-    settings: {
-      react: {
-        version: '18.2.0',
       },
     },
 
@@ -88,10 +75,6 @@ export default [
         },
       ],
 
-      'react/prefer-es6-class': ['error', 'always'],
-      'react/jsx-uses-react': 'off',
-      'react/react-in-jsx-scope': 'off',
-      'react/prop-types': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-require-imports': 'error',
 

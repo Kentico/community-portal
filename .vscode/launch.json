@@ -2,6 +2,12 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "aspire",
+      "request": "launch",
+      "name": "Aspire: Launch",
+      "program": "${workspaceFolder}/src/Kentico.Community.Portal.AppHost"
+    },
+    {
       "name": ".NET Debug and Hot Reload",
       "type": "coreclr",
       "request": "launch",

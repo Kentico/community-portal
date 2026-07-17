@@ -140,3 +140,6 @@ DeploymentPackage.zip
 
 # Configuration
 /scripts/Utilities/settings.local.json
+
+# Aspire AppHost lock files are incompatible across OS environments and must not be committed
+/src/Kentico.Community.Portal.AppHost/packages.lock.json

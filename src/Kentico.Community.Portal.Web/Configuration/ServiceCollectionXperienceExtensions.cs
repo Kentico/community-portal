@@ -20,6 +20,7 @@ using Kentico.OnlineMarketing.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Web.Mvc;
 using Kentico.Xperience.ComponentRegistry;
+using Kentico.Xperience.ManagementApi;
 using Kentico.Xperience.Mjml;
 using Microsoft.AspNetCore.Localization.Routing;
 using XperienceCommunity.FormClone;
@@ -28,7 +29,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionXperienceExtensions
 {
-    public static IServiceCollection AddAppXperience(this IServiceCollection services, IConfiguration config) =>
+    public static IServiceCollection AddAppXperience(this IServiceCollection services, IConfiguration config, IWebHostEnvironment env) =>
         services
             .AddKentico(features =>
             {
@@ -77,6 +78,7 @@ public static class ServiceCollectionXperienceExtensions
                 options.DefaultSectionIdentifier = SingleColumnSection.IDENTIFIER;
             })
             .AddMjmlForEmails()
+            .AddKenticoManagementApiIfDevelopment(config, env)
             .AddKenticoTagManager(config)
             .AddPreviewComponentOutlines()
             .AddComponentRegistry()
@@ -114,6 +116,18 @@ public static class ServiceCollectionXperienceExtensions
             .AddSingleton<IFormFieldContentItemReferenceExtractor, MarkdownContentItemReferenceExtractor>()
             .AddSingleton<IEmailActivityTrackingEvaluator, ConsentEmailActivityTrackingEvaluator>()
             .Decorate<ILocalizationService, ApplicationLocalizationService>();
+
+    private static IServiceCollection AddKenticoManagementApiIfDevelopment(this IServiceCollection services, IConfiguration config, IWebHostEnvironment env)
+    {
+        if (!env.IsDevelopment())
+        {
+            return services;
+        }
+
+        string secret = config["Kentico.Xperience.ManagementApi:Secret"] ?? string.Empty;
+
+        return services.AddKenticoManagementApi(options => options.Secret = secret);
+    }
 
     private static IServiceCollection AddVirtualInboxServices(this IServiceCollection services, IConfiguration config) =>
         services

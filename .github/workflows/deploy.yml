@@ -47,18 +47,20 @@ jobs:
 
     steps:
       # === Environment Setup ===
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v6
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
         with:
           cache: true
 
-      - name: Setup Node.js (from package.json)
+      - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version-file: "package.json"
 
-      - name: Install pnpm dependencies
+      - name: Install npm dependencies
         run: pnpm install
 
       - name: Setup .NET
@@ -75,13 +77,10 @@ jobs:
             ${{ runner.os }}-nuget-
 
       # === Build ===
-      - name: Install dependencies
-        # TODO: Re-add --locked-mode after Xperience 31.6.2
-        # Currently removed because --locked-mode is incompatible with Configuration-based PackageReference conditions
-        # (ManagementApi package has Condition="'$(Configuration)' == 'Debug'")
-        run: dotnet restore
+      - name: Restore NuGet packages
+        run: dotnet restore --locked-mode
 
-      - name: Build Solution
+      - name: Build web project
         run: |
           dotnet build ./src/${{ env.PROJECT_NAME }}/ `
             -c Release `
@@ -146,7 +145,7 @@ jobs:
           "## ✓ CI Repository Restored" >> $env:GITHUB_STEP_SUMMARY
 
       # === Package Generation ===
-      - name: Generate Deployment Package
+      - name: Generate deployment package
         working-directory: "./scripts"
         run: |
           Write-Output "Generating deployment package with zero-downtime support..."
@@ -155,7 +154,7 @@ jobs:
           "## 📦 Deployment Package Created" >> $env:GITHUB_STEP_SUMMARY
 
       # === Deployment ===
-      - name: Upload Deployment Package to ${{ inputs.environment }}
+      - name: Upload deployment package to ${{ inputs.environment }}
         run: |
           Write-Output "Uploading deployment package to ${{ inputs.environment }}..."
           Write-Output "Reason: ${{ inputs.reason }}"
@@ -172,7 +171,7 @@ jobs:
           "## ✅ Deployed to ${{ inputs.environment }}" >> $env:GITHUB_STEP_SUMMARY
           "**Reason:** ${{ inputs.reason }}" >> $env:GITHUB_STEP_SUMMARY
 
-      - name: Archive Deployment Package
+      - name: Archive deployment package
         if: ${{ inputs.archive_package }}
         uses: actions/upload-artifact@v4
         with:
