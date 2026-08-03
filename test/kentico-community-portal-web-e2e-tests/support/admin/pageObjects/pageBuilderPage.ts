@@ -22,10 +22,12 @@ export class PageBuilderPage {
     await expect(this.page).toHaveURL(/page-builder/i);
   }
 
-  // Leftover drafts from earlier runs hide the "Edit page" button, so revert
-  // to the published version before editing to keep this flow repeatable.
+  // Leftover drafts from earlier runs hide the "Create new version" button, so
+  // revert to the published version before editing to keep this flow repeatable.
   async ensurePublished(): Promise<void> {
-    const editButton = this.page.getByRole("button", { name: "Edit page" });
+    const editButton = this.page.getByRole("button", {
+      name: "Create new version",
+    });
 
     try {
       await expect(editButton).toBeVisible({ timeout: 5_000 });
@@ -35,7 +37,9 @@ export class PageBuilderPage {
   }
 
   async startEditing(): Promise<void> {
-    await this.page.getByRole("button", { name: "Edit page" }).click();
+    await this.page
+      .getByRole("button", { name: "Create new version" })
+      .click();
 
     await expect(this.page.getByText("Draft (New version)")).toBeVisible({
       timeout: 20_000,
@@ -69,7 +73,7 @@ export class PageBuilderPage {
 
   async revertToPublished(): Promise<void> {
     // The unlabeled overflow menu button is the last button in the top action
-    // bar, after "Edit page" or "Save"/"Publish".
+    // bar, after "Create new version" or "Save"/"Publish".
     await this.page.getByRole("banner").getByRole("button").last().click();
     await this.page
       .getByRole("button", { name: "Revert to published" })
@@ -80,7 +84,7 @@ export class PageBuilderPage {
       .click();
 
     await expect(
-      this.page.getByRole("button", { name: "Edit page" }),
+      this.page.getByRole("button", { name: "Create new version" }),
     ).toBeVisible({ timeout: 20_000 });
   }
 }

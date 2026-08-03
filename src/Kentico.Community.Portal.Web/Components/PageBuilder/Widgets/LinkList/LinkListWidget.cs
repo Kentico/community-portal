@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using CMS.ContentEngine;
 using CMS.DataEngine;
+using Kentico.Community.Portal.Admin;
 using Kentico.Community.Portal.Core.Components;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.LinkList;
@@ -9,11 +10,13 @@ using Kentico.Community.Portal.Web.Features.Community;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
+using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Content.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Kentico.Xperience.Admin.Base.Forms;
 using MediatR;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Kentico.Xperience.ComponentIcons;
 
@@ -27,13 +30,14 @@ using Kentico.Xperience.ComponentIcons;
 
 namespace Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.LinkList;
 
-public class LinkListWidget(IMediator mediator, IContentRetriever contentRetriever) : ViewComponent
+public class LinkListWidget(IMediator mediator, IContentRetriever contentRetriever, MarkdownRenderer markdownRenderer) : ViewComponent
 {
     public const string IDENTIFIER = "CommunityPortal.Components.Widgets.LinkList";
     public const string NAME = "Link List";
 
     private readonly IMediator mediator = mediator;
     private readonly IContentRetriever contentRetriever = contentRetriever;
+    private readonly MarkdownRenderer markdownRenderer = markdownRenderer;
 
     public async Task<IViewComponentResult> InvokeAsync(ComponentViewModel<LinkListWidgetProperties> cvm)
     {
@@ -51,6 +55,8 @@ public class LinkListWidget(IMediator mediator, IContentRetriever contentRetriev
                 vm => props.DesignParsed switch
                 {
                     LinkListDesign.List_In_Card => View("~/Components/PageBuilder/Widgets/LinkList/ListInCard.cshtml", vm),
+                    LinkListDesign.Feature_Panel => View("~/Components/PageBuilder/Widgets/LinkList/FeaturePanel.cshtml", vm),
+                    LinkListDesign.Cards => View("~/Components/PageBuilder/Widgets/LinkList/Cards.cshtml", vm),
                     LinkListDesign.Link_List or _ => View("~/Components/PageBuilder/Widgets/LinkList/LinkList.cshtml", vm)
                 },
                 vm => View("~/Components/ComponentError.cshtml", vm)
@@ -159,13 +165,20 @@ public class LinkListWidget(IMediator mediator, IContentRetriever contentRetriev
             return Result.Failure<LinkListWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, error));
         }
 
+        var introHTML = string.IsNullOrWhiteSpace(props.IntroContent)
+            ? null
+            : markdownRenderer.RenderUnsafe(props.IntroContent);
+
         return new LinkListWidgetViewModel
         {
             Label = props.Label,
+            IntroHTML = introHTML,
             Links = links,
             ShowPublishedDate = props.ShowPublishedDate,
             ShowAuthor = props.ShowAuthor,
-            ShowDXTopics = props.ShowDXTopics
+            ShowDXTopics = props.ShowDXTopics,
+            ShowDescriptions = props.ShowDescriptions,
+            DescriptionMaxLines = props.DescriptionMaxLines
         };
     }
 }
@@ -179,6 +192,13 @@ public class LinkListWidgetProperties : BaseWidgetProperties
         Order = 2
     )]
     public string Label { get; set; } = "";
+
+    [MarkdownComponent(
+        Label = "Intro content",
+        ExplanationText = "Optional Markdown that introduces the list's purpose or context. Rendered above the links.",
+        Order = 6
+    )]
+    public string IntroContent { get; set; } = "";
 
     [DropDownComponent(
         Label = "Data Source",
@@ -258,6 +278,22 @@ public class LinkListWidgetProperties : BaseWidgetProperties
         Order = 12
     )]
     public bool ShowDXTopics { get; set; } = false;
+
+    [CheckBoxComponent(
+        Label = "Show Descriptions",
+        ExplanationText = "Display each link's short description.",
+        Order = 13
+    )]
+    public bool ShowDescriptions { get; set; } = true;
+
+    [NumberInputComponent(
+        Label = "Description Line Limit",
+        ExplanationText = "Truncate each description to this many lines with an ellipsis. Use 0 to show the full description.",
+        Order = 14
+    )]
+    [VisibleIfEqualTo(nameof(ShowDescriptions), true)]
+    [Range(0, 10)]
+    public int DescriptionMaxLines { get; set; } = 0;
 }
 
 public enum LinkListDataSource
@@ -274,15 +310,23 @@ public enum LinkListDesign
     Link_List,
     [Description("List in Card")]
     List_In_Card,
+    [Description("Feature Panel")]
+    Feature_Panel,
+    [Description("Cards")]
+    Cards,
 }
 
 public class LinkListWidgetViewModel
 {
     public string Label { get; set; } = "";
+    public HtmlString? IntroHTML { get; set; }
+    public bool HasIntro => IntroHTML is not null && !string.IsNullOrWhiteSpace(IntroHTML.Value);
     public IReadOnlyList<LinkViewModel> Links { get; set; } = [];
     public bool ShowPublishedDate { get; set; }
     public bool ShowAuthor { get; set; }
     public bool ShowDXTopics { get; set; }
+    public bool ShowDescriptions { get; set; } = true;
+    public int DescriptionMaxLines { get; set; }
 }
 
 public class LinkViewModel

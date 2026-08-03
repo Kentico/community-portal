@@ -64,7 +64,7 @@ test.describe("page builder markdown widget", () => {
       });
     } finally {
       // Discard the draft so the page returns to its published state and
-      // repeated runs always start from the "Edit page" button.
+      // repeated runs always start from the "Create new version" button.
       await pageBuilder.revertToPublished();
     }
   });

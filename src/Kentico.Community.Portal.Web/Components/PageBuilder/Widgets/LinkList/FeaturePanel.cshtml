@@ -1,0 +1,75 @@
+@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.LinkList.LinkListWidgetViewModel
+
+<section class="link-list link-list--panel bg-white" xpc-preview-outline="Link List Widget"
+    aria-label="@(!string.IsNullOrWhiteSpace(Model.Label) ? Model.Label : "Link list")">
+
+  <partial name="~/Components/PageBuilder/Widgets/LinkList/_Header.cshtml" model="Model" />
+
+  <div class="link-list__items">
+    @foreach (var link in Model.Links)
+    {
+      string descID = $"desc-{link.ContentItemGUID:N}";
+      bool hasDesc = Model.ShowDescriptions && !string.IsNullOrWhiteSpace(link.ShortDescription);
+
+      <article class="link-list__item">
+        <h3 class="link-list__title fs-4 fw-bold m-0">
+          <a href="@link.PathOrURL"
+            class="link-list__title-link link-list__title--arrow stretched-link text-dark text-decoration-none d-inline-flex align-items-baseline"
+            @(hasDesc ? $"aria-describedby={descID}" : null)>
+            <span>@link.Title</span>
+            <svg class="link-list__arrow text-primary" width="15" height="15" viewBox="0 0 16 16" fill="none"
+              aria-hidden="true">
+              <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </a>
+        </h3>
+
+        @if (Model.ShowPublishedDate || (Model.ShowAuthor && link.MemberID > 0))
+        {
+          <div class="link-list__meta d-flex flex-wrap align-items-center fs-6 text-muted">
+            @if (Model.ShowPublishedDate)
+            {
+              <time datetime="@link.PublishedDate.ToString("yyyy-MM-dd")">
+                @link.PublishedDate.ToString("d", View.Culture)
+              </time>
+            }
+            @if (Model.ShowAuthor && link.MemberID > 0)
+            {
+              @if (Model.ShowPublishedDate)
+              {
+                <span class="link-list__meta-dot" aria-hidden="true">•</span>
+              }
+              @if (!string.IsNullOrWhiteSpace(link.AuthorFullName))
+              {
+                <a class="link-list__meta-link position-relative z-2 text-muted text-decoration-none fw-medium"
+                  asp-controller="Member" asp-action="MemberDetail"
+                  asp-route-memberID="@link.MemberID">@link.AuthorFullName</a>
+              }
+              else
+              {
+                <span>Member ID: @link.MemberID</span>
+              }
+            }
+          </div>
+        }
+
+        @if (hasDesc)
+        {
+          <p id="@descID"
+            class="small text-muted mt-1 @(Model.DescriptionMaxLines > 0 ? "link-list__desc--clamp" : null)"
+            style="@(Model.DescriptionMaxLines > 0 ? $"--ll-clamp:{Model.DescriptionMaxLines}" : null)">
+            @link.ShortDescription
+          </p>
+        }
+
+        @if (Model.ShowDXTopics && link.DXTopics.Any())
+        {
+          <div class="mt-2">
+            <vc:tag-list tags="link.DXTopics" />
+          </div>
+        }
+      </article>
+    }
+  </div>
+</section>

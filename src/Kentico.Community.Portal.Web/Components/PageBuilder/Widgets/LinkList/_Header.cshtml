@@ -1,0 +1,28 @@
+@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.LinkList.LinkListWidgetViewModel
+
+@if (!string.IsNullOrWhiteSpace(Model.Label) || Model.HasIntro)
+{
+  <header class="link-list__header">
+    <span class="link-list__accent-bar d-block" aria-hidden="true"></span>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Label))
+    {
+      string slug = View.SlugHelper.GenerateSlug($"linkList-{Model.Label}");
+
+      @* mt-0 neutralises the .t-article_body h2 top margin (2rem) so the eyebrow
+         sits tight above the heading as a kicker instead of floating below it. *@
+      <h2 id="@slug" class="heading fs-2 fw-bold mt-0 mb-0">
+        @Model.Label
+        <a title="Navigate to this heading" aria-label="Navigate to this heading" class="heading-link"
+          href="#@(slug)"></a>
+      </h2>
+    }
+
+    @if (Model.HasIntro)
+    {
+      <div class="link-list__intro">
+        @Model.IntroHTML
+      </div>
+    }
+  </header>
+}

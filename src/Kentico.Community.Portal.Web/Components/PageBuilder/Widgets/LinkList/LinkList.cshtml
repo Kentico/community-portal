@@ -1,22 +1,20 @@
 @model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.LinkList.LinkListWidgetViewModel
 
-<div xpc-preview-outline="Link List Widget" xpc-preview-outline-remove-element="true">
-  @if (!string.IsNullOrWhiteSpace(Model.Label))
-  {
-    string slug = View.SlugHelper.GenerateSlug($"linkList-{Model.Label}");
-
-    <h3 id="@slug" class="heading">
-      @Model.Label <a title="Navigate to this heading" aria-label="Navigate to this heading" class="heading-link"
-        href="#@(slug)"></a>
-    </h3>
-  }
+<div class="link-list" xpc-preview-outline="Link List Widget" xpc-preview-outline-remove-element="true">
+  <partial name="~/Components/PageBuilder/Widgets/LinkList/_Header.cshtml" model="Model" />
 
   <ul>
     @foreach (var link in Model.Links)
     {
       <li>
         <a href="@link.PathOrURL"> @link.Title </a>
-        <p><small>@link.ShortDescription</small></p>
+        @if (Model.ShowDescriptions && !string.IsNullOrWhiteSpace(link.ShortDescription))
+        {
+          <p class="@(Model.DescriptionMaxLines > 0 ? "link-list__desc--clamp" : null)"
+            style="@(Model.DescriptionMaxLines > 0 ? $"--ll-clamp:{Model.DescriptionMaxLines}" : null)">
+            <small>@link.ShortDescription</small>
+          </p>
+        }
         @if (Model.ShowPublishedDate || Model.ShowAuthor)
         {
           <p>

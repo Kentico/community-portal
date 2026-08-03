@@ -55,6 +55,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      # The SQL container + DB restore + Release build + publish leave the runner
+      # with < 2 GB free by the E2E stage, causing ENOSPC on the Playwright browser
+      # download. Reclaim ~7 GB up front by removing two large, quick-to-delete
+      # preinstalled toolchains this build never uses. CodeQL and Swift are chosen
+      # over Android/GHC because they hold far fewer files and so delete in seconds.
+      - name: Free up runner disk space
+        shell: bash
+        run: |
+          echo "Disk before cleanup:"; df -h /
+          sudo rm -rf /opt/hostedtoolcache/CodeQL /usr/share/swift
+          echo "Disk after cleanup:"; df -h /
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
         with:
@@ -212,9 +224,13 @@ jobs:
       - name: Install Playwright browsers
         working-directory: ./test/kentico-community-portal-web-e2e-tests
         run: |
-          Write-Output "Installing Playwright browsers..."
-          pnpm exec playwright install chromium
-          Write-Output "✓ Playwright browsers installed"
+          # Headless CI: install only the smaller chromium-headless-shell.
+          # --with-deps is intentionally omitted — the required system libraries
+          # are already present on GitHub's ubuntu-latest runners, and the apt
+          # step it runs adds ~45s. https://playwright.dev/docs/browsers
+          Write-Output "Installing Playwright headless shell..."
+          pnpm exec playwright install --only-shell
+          Write-Output "✓ Playwright headless shell installed"
 
       - name: Start Azurite storage emulator (background)
         run: |

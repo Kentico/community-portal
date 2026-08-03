@@ -1,0 +1,178 @@
+/*
+ * Link List widget — Feature Panel and Cards designs.
+ *
+ * Only styling that Bootstrap utilities can't express lives here: design-variant
+ * layout, hover/focus states, the chevron, line-clamp truncation, and the surface
+ * tokens. Everything with a direct utility equivalent — display/flex, spacing on
+ * the token scale, font sizes (.fs-*), weights (.fw-*), text colours, position —
+ * is applied as a utility class in the Razor markup so it reuses the shared
+ * Bootstrap utilities already in the bundle instead of duplicating them here.
+ */
+
+.link-list {
+  --ll-border: var(--color-gray-200);
+  --ll-accent: var(--color-primary);
+  --ll-shadow: 0 1px 2px rgba(35, 31, 32, 0.04), 0 8px 24px rgba(35, 31, 32, 0.06);
+  --ll-shadow-hover: 0 4px 8px rgba(35, 31, 32, 0.06), 0 16px 32px rgba(240, 90, 34, 0.12);
+}
+
+/* ---- Shared header ---------------------------------------------------- */
+
+.link-list__header {
+  margin-bottom: var(--space-3);
+}
+
+/* Small decorative accent above the label — fades from the accent colour on the
+   left to transparent on the right. The fallback keeps it visible in the "Link
+   list" design, whose outline wrapper — and its .link-list token scope — is
+   stripped from the live markup. */
+.link-list__accent-bar {
+  width: 2.5rem;
+  height: 3px;
+  margin-bottom: 0.55rem;
+  border-radius: 3px;
+  background: linear-gradient(
+    to right,
+    var(--ll-accent, var(--color-primary)),
+    transparent
+  );
+}
+
+.link-list__intro {
+  max-width: 62ch;
+  margin-top: 0.4rem;
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* ---- Shared item internals ------------------------------------------- */
+
+.link-list__title {
+  line-height: 1.35;
+}
+
+/* Dark title that shifts to the accent colour on hover/focus. */
+.link-list__title-link {
+  transition: color 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--ll-accent);
+  }
+}
+
+/* Gap between the title text and its trailing chevron. */
+.link-list__title--arrow {
+  gap: 0.4rem;
+}
+
+.link-list__arrow {
+  flex: none;
+  transition: transform 0.18s ease;
+}
+
+.link-list__meta {
+  gap: 0.2rem 0.5rem;
+  margin-top: 0.2rem;
+}
+
+.link-list__meta-link {
+  &:hover,
+  &:focus-visible {
+    color: var(--ll-accent);
+    text-decoration: underline;
+  }
+}
+
+.link-list__meta-dot {
+  color: var(--color-gray-300);
+}
+
+/* Multi-line truncation, driven by the widget's "Description Line Limit". */
+.link-list__desc--clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--ll-clamp, 2);
+  line-clamp: var(--ll-clamp, 2);
+  overflow: hidden;
+}
+
+/* =====================================================================
+   Design: Feature Panel
+   A single elevated card. Strong header, then divided, hover-highlighted
+   rows with a chevron affordance.
+   ===================================================================== */
+
+.link-list--panel {
+  padding: clamp(1rem, 1.5vw, 1.5rem);
+  border: 1px solid var(--ll-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--ll-shadow);
+}
+
+.link-list--panel .link-list__header {
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-1);
+  border-bottom: 1px solid var(--ll-border);
+}
+
+.link-list--panel .link-list__item {
+  position: relative;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--radius-md);
+  transition: background-color 0.15s ease;
+
+  + .link-list__item {
+    border-top: 1px solid var(--ll-border);
+  }
+}
+
+.link-list--panel .link-list__item:hover,
+.link-list--panel .link-list__item:focus-within {
+  background: var(--color-gray-100);
+  border-top-color: transparent;
+}
+
+.link-list--panel .link-list__item:hover + .link-list__item,
+.link-list--panel .link-list__item:focus-within + .link-list__item {
+  border-top-color: transparent;
+}
+
+.link-list--panel .link-list__item:hover .link-list__arrow,
+.link-list--panel .link-list__item:focus-within .link-list__arrow {
+  transform: translateX(0.25rem);
+}
+
+/* =====================================================================
+   Design: Cards
+   Responsive grid of self-contained, fully clickable cards.
+   ===================================================================== */
+
+.link-list__grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+}
+
+.link-list--cards .link-list__card {
+  padding: 1.1rem 1.15rem;
+  border: 1px solid var(--ll-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--ll-shadow);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.link-list--cards .link-list__card:hover,
+.link-list--cards .link-list__card:focus-within {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--ll-accent) 40%, var(--ll-border));
+  box-shadow: var(--ll-shadow-hover);
+}
+
+.link-list--cards .link-list__card:hover .link-list__arrow,
+.link-list--cards .link-list__card:focus-within .link-list__arrow {
+  transform: translateX(0.25rem);
+}

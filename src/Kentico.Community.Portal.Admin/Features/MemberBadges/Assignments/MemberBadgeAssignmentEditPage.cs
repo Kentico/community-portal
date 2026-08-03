@@ -81,6 +81,24 @@ internal class MemberBadgeAssignmentEditPage(IFormItemCollectionProvider formIte
             }
         }
 
+        foreach (var badge in model.RuleAssignedBadges)
+        {
+            if (!badge.IsAssigned && memberBadgeRelationships.HasEntry(MemberID, badge.MemberBadgeID))
+            {
+                deletedBadgeIds.Add(badge.MemberBadgeID);
+            }
+            else if (badge.IsAssigned && !memberBadgeRelationships.HasEntry(MemberID, badge.MemberBadgeID))
+            {
+                assignedBadges.Add(new MemberBadgeMemberInfo
+                {
+                    MemberBadgeMemberMemberBadgeId = badge.MemberBadgeID,
+                    MemberBadgeMemberMemberId = MemberID,
+                    MemberBadgeMemberIsSelected = false,
+                    MemberBadgeMemberCreatedDate = clock.GetUtcNow().DateTime
+                });
+            }
+        }
+
         var removeUnassignedBadgesQuery = memberBadgeMemberInfoProvider
             .Get()
             .WhereIn(nameof(MemberBadgeMemberInfo.MemberBadgeMemberMemberBadgeId), deletedBadgeIds)

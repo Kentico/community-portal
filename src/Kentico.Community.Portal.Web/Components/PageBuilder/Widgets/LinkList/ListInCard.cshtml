@@ -1,15 +1,8 @@
 @model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.LinkList.LinkListWidgetViewModel
 
-<aside class="border rounded-3 p-4 mb-5" xpc-preview-outline="Link List Widget"
+<aside class="link-list border rounded-3 p-4 mb-5" xpc-preview-outline="Link List Widget"
     aria-label="@(!string.IsNullOrWhiteSpace(Model.Label) ? Model.Label : "Link list")">
-    @if (!string.IsNullOrWhiteSpace(Model.Label))
-    {
-        <header class="mb-4">
-            <h4 class="mb-0">
-                @Model.Label
-            </h4>
-        </header>
-    }
+    <partial name="~/Components/PageBuilder/Widgets/LinkList/_Header.cshtml" model="Model" />
 
     @for (int i = 0; i < Model.Links.Count; i++)
     {
@@ -21,7 +14,7 @@
         <div class="@itemClass">
             <h4 class="h4 mb-2 text-primary">
                 <a href="@link.PathOrURL" id="link-@link.ContentItemGUID.ToString("N")" class="text-decoration-none"
-                    aria-describedby="desc-@link.ContentItemGUID.ToString("N")">
+                    @(Model.ShowDescriptions && !string.IsNullOrWhiteSpace(link.ShortDescription) ? $"aria-describedby=desc-{link.ContentItemGUID.ToString("N")}" : null)>
                     @link.Title
                 </a>
             </h4>
@@ -54,9 +47,14 @@
                 </div>
             }
 
-            <p class="mb-0 small text-muted" id="desc-@link.ContentItemGUID.ToString("N")">
-                @link.ShortDescription
-            </p>
+            @if (Model.ShowDescriptions && !string.IsNullOrWhiteSpace(link.ShortDescription))
+            {
+                <p class="mb-0 small text-muted @(Model.DescriptionMaxLines > 0 ? "link-list__desc--clamp" : null)"
+                    style="@(Model.DescriptionMaxLines > 0 ? $"--ll-clamp:{Model.DescriptionMaxLines}" : null)"
+                    id="desc-@link.ContentItemGUID.ToString("N")">
+                    @link.ShortDescription
+                </p>
+            }
 
             @if (Model.ShowDXTopics && link.DXTopics.Any())
             {
