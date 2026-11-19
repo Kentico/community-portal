@@ -1,7 +1,7 @@
 import { FormComponentProps } from '@kentico/xperience-admin-base';
 import { Input } from '@kentico/xperience-admin-components';
 import React, { ChangeEvent, useState } from 'react';
-import {
+import type {
   UTMParameterDataTypeField,
   UTMParametersDataType,
 } from './UTMParametersDataType';

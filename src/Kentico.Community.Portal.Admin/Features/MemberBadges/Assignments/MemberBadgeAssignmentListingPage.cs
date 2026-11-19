@@ -32,6 +32,7 @@ internal class MemberBadgeAssignmentListingPage : ListingPage
             .AddModifier((q, settings) =>
             {
                 MemberListFilter.ModifyQueryForBadgeFilter(q);
+                MemberListFilter.ModifyQueryForMemberRoleFilter(q);
 
                 var ruleAssigned =
                     new ObjectQuery(MemberBadgeMemberInfo.OBJECT_TYPE)

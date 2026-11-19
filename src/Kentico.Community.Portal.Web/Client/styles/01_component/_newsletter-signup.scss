@@ -1,0 +1,371 @@
+.newsletter-signup {
+  // Help text and tracking note are Markdown, so each renders as paragraphs
+  &__note p {
+    margin: 0;
+  }
+}
+
+/*
+ * Banner design (NewsletterSignupBanner.cshtml, "CTA / Unified").
+ * The form, consent text and thank-you message are rendered by shared views,
+ * so their markup is styled from here, scoped under the banner class.
+ */
+:where(.newsletter-signup--banner) {
+  --newsletter-banner-bg: var(--color-purple);
+  --newsletter-banner-color: var(--color-white);
+  --newsletter-banner-radius: var(--radius-lg);
+  // Small screens: the bottom padding leaves a strip for the disc, clear of the text
+  --newsletter-banner-padding: 2rem 1.5rem 5.5rem;
+  --newsletter-banner-gap: 1.5rem;
+  --newsletter-banner-form-max-width: 34rem;
+  --newsletter-banner-heading-size: 1.75rem;
+  --newsletter-banner-lead-size: 1.125rem;
+  --newsletter-banner-small-size: 0.875rem;
+  --newsletter-banner-control-gap: 0.875rem;
+
+  --newsletter-banner-input-bg: var(--color-white);
+  --newsletter-banner-input-color: var(--color-gray-900);
+  --newsletter-banner-input-border: var(--color-gray-200);
+  --newsletter-banner-input-placeholder: #bca39a;
+  --newsletter-banner-input-height: 2.5rem;
+
+  --newsletter-banner-button-bg: var(--color-primary);
+  --newsletter-banner-button-bg-hover: var(--color-primary-dark);
+  --newsletter-banner-button-color: var(--color-white);
+  --newsletter-banner-button-height: 2.625rem;
+
+  --newsletter-banner-checkbox-size: 1.5rem;
+  --newsletter-banner-checkbox-radius: 0.5rem;
+
+  --newsletter-banner-error-color: #ffd9d6;
+  --newsletter-banner-focus-ring: 0 0 0 0.2rem rgba(255, 255, 255, 0.55);
+
+  --newsletter-banner-disc-color: var(--color-purple-bright);
+  --newsletter-banner-ring-color: var(--color-gray-900);
+  --newsletter-banner-dot-color: var(--color-blue);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--newsletter-banner-gap);
+  padding: var(--newsletter-banner-padding);
+  border-radius: var(--newsletter-banner-radius);
+  background: var(--newsletter-banner-bg);
+  color: var(--newsletter-banner-color);
+
+  @include media-breakpoint-up(md) {
+    --newsletter-banner-padding: 2.25rem 2.5rem 5.5rem;
+    --newsletter-banner-heading-size: 2rem;
+  }
+
+  // Two columns, both vertically centred
+  @include media-breakpoint-up(lg) {
+    --newsletter-banner-radius: var(--radius-2xl);
+    --newsletter-banner-padding: 2.25rem 3rem;
+    --newsletter-banner-gap: 2.5rem;
+    --newsletter-banner-heading-size: 2.25rem;
+    --newsletter-banner-form-max-width: none;
+
+    flex-direction: row;
+    align-items: center;
+  }
+
+  @include media-breakpoint-up(xl) {
+    --newsletter-banner-padding: 2.25rem 4.5rem;
+    --newsletter-banner-gap: 3rem;
+  }
+}
+
+/* Columns: above the decorations */
+:where(.newsletter-signup--banner) :where(.newsletter-signup__copy, .newsletter-signup__body) {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+
+  @include media-breakpoint-up(lg) {
+    flex: 1 1 0;
+  }
+}
+
+:where(.newsletter-signup--banner) :where(.newsletter-signup__copy) {
+  gap: 1rem;
+}
+
+:where(.newsletter-signup--banner) :where(.newsletter-signup__body) {
+  gap: var(--newsletter-banner-control-gap);
+}
+
+:where(.newsletter-signup--banner) :where(.newsletter-signup__form) {
+  max-width: var(--newsletter-banner-form-max-width);
+}
+
+// Real specificity: has to beat the global h2 element styles
+.newsletter-signup--banner .newsletter-signup__heading {
+  margin: 0;
+  color: inherit;
+  font-size: var(--newsletter-banner-heading-size);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+:where(.newsletter-signup--banner) :where(.newsletter-signup__lead) {
+  font-size: var(--newsletter-banner-lead-size);
+  line-height: 1.4;
+}
+
+:where(.newsletter-signup--banner)
+  :where(
+    .newsletter-signup__help,
+    .newsletter-signup__consent,
+    .newsletter-signup__tracking
+  ) {
+  font-size: var(--newsletter-banner-small-size);
+  line-height: 1.4;
+}
+
+.newsletter-signup--banner .newsletter-signup__consent p {
+  margin: 0;
+}
+
+// Links in consent / Markdown text: keep them readable on purple
+.newsletter-signup--banner
+  :is(
+    .newsletter-signup__lead,
+    .newsletter-signup__help,
+    .newsletter-signup__consent,
+    .newsletter-signup__tracking
+  )
+  a {
+  color: inherit;
+  text-decoration: underline;
+
+  &:is(:hover, :focus-visible) {
+    color: inherit;
+    text-decoration-thickness: 2px;
+  }
+}
+
+/* Decorative circles */
+:where(.newsletter-signup--banner) :where(.newsletter-signup__decoration) {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+:where(.newsletter-signup--banner) :where(.newsletter-signup__decoration--disc) {
+  // Small screens: a smaller disc in the bottom corner, inside the banner's bottom padding
+  right: -4rem;
+  bottom: -11rem;
+  width: 15.5rem;
+  height: 15.5rem;
+  background: var(--newsletter-banner-disc-color);
+
+  // Narrow two-column banner: a smaller disc, so less of the form text sits on it
+  @include media-breakpoint-up(lg) {
+    top: 40px;
+    right: -150px;
+    bottom: auto;
+    width: 380px;
+    height: 380px;
+  }
+
+  @include media-breakpoint-up(xl) {
+    top: 12px;
+    right: -143px;
+    width: 498px;
+    height: 498px;
+  }
+}
+
+:where(.newsletter-signup--banner) :where(.newsletter-signup__decoration--ring) {
+  display: none;
+  top: -209px;
+  right: 335px;
+  width: 262px;
+  height: 262px;
+  border: 1.5px solid var(--newsletter-banner-ring-color);
+
+  @include media-breakpoint-up(lg) {
+    display: block;
+  }
+}
+
+:where(.newsletter-signup--banner) :where(.newsletter-signup__decoration--dot) {
+  display: none;
+  top: -42px;
+  right: 340px;
+  width: 56px;
+  height: 56px;
+  background: var(--newsletter-banner-dot-color);
+
+  @include media-breakpoint-up(lg) {
+    display: block;
+  }
+}
+
+/*
+ * Kentico form markup (Form widget + form components).
+ * Selectors carry real specificity here: they have to beat `form .form-field ...`
+ * and `form input[type="submit"]` in _formCustomization.scss.
+ * Purge-ignored like that file: these classes come from Kentico's rendering, not our .cshtml.
+ */
+/*! purgecss start ignore */
+.newsletter-signup--banner .newsletter-signup__form {
+  // Email input and submit button share a row; other fields (reCAPTCHA) go below
+  form,
+  .fallback-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--newsletter-banner-control-gap);
+  }
+
+  // Kentico wraps the fields in a section element; flatten it so the fields
+  // and the submit button are items of the same flex row
+  .ktc-default-section {
+    display: contents;
+  }
+
+  .form-field {
+    order: 3;
+    flex: 1 1 100%;
+    min-width: 0;
+    margin-top: 0;
+  }
+
+  .form-field:has(input[type="email"]) {
+    order: 1;
+    flex: 1 1 12rem;
+  }
+
+  .form-field input[type="email"] {
+    width: 100%;
+    max-width: none;
+  }
+
+  // Empty in the live site: the reCAPTCHA field only holds hidden inputs
+  .form-field:not(:has(input:not([type="hidden"]), select, textarea, p, .field-validation-error)) {
+    display: none;
+  }
+
+  // The design has no visible label; keep it for assistive tech
+  .control-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .form-control:not([type="checkbox"]) {
+    height: var(--newsletter-banner-input-height);
+    padding: 0 1rem;
+    border: 1px solid var(--newsletter-banner-input-border);
+    border-radius: var(--radius-pill);
+    background-color: var(--newsletter-banner-input-bg);
+    color: var(--newsletter-banner-input-color);
+    font-size: 1rem;
+
+    &::placeholder {
+      color: var(--newsletter-banner-input-placeholder);
+      opacity: 1;
+    }
+
+    &:focus {
+      border-color: var(--newsletter-banner-input-border);
+      box-shadow: var(--newsletter-banner-focus-ring);
+    }
+  }
+
+  .form-field input[type="checkbox"] {
+    width: var(--newsletter-banner-checkbox-size);
+    height: var(--newsletter-banner-checkbox-size);
+    margin-top: 0;
+    border: 1px solid var(--newsletter-banner-input-border);
+    border-radius: var(--newsletter-banner-checkbox-radius);
+  }
+
+  .ktc-checkbox label {
+    color: inherit;
+    font-size: var(--newsletter-banner-small-size);
+  }
+
+  input[type="submit"],
+  button[type="submit"] {
+    order: 2;
+    flex: 0 0 auto;
+    height: var(--newsletter-banner-button-height);
+    margin-top: 0;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--newsletter-banner-button-bg);
+    border-radius: var(--radius-pill);
+    background-color: var(--newsletter-banner-button-bg);
+    color: var(--newsletter-banner-button-color);
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+
+    &:is(:hover, :focus-visible):not(:disabled) {
+      border-color: var(--newsletter-banner-button-bg-hover);
+      background-color: var(--newsletter-banner-button-bg-hover);
+    }
+
+    &:focus-visible {
+      outline: 0;
+      box-shadow: var(--newsletter-banner-focus-ring);
+    }
+  }
+
+  // Validation errors: the default danger red is unreadable on purple
+  .field-validation-error,
+  .form-validation,
+  .validation-summary,
+  .formwidget-error {
+    display: block;
+    margin-top: 0.375rem;
+    padding-inline: 1rem;
+    color: var(--newsletter-banner-error-color);
+    font-size: var(--newsletter-banner-small-size);
+    font-weight: 500;
+  }
+
+  .field-validation-valid {
+    display: none;
+  }
+
+  .input-validation-error {
+    border-color: var(--newsletter-banner-error-color);
+    box-shadow: 0 0 0 2px var(--newsletter-banner-error-color);
+  }
+
+  // Explanation / Page Builder notes rendered with Bootstrap's muted color
+  .form-text,
+  .text-muted,
+  .explanation-text {
+    color: inherit !important; // .text-muted is an !important utility
+  }
+
+  // Thank-you message (_FormWidgetTextConfirmation.cshtml): light panel, dark text
+  .alert {
+    margin: 0;
+    padding: 0.75rem 1.25rem;
+    border: 0;
+    border-radius: var(--radius-md);
+    background-color: var(--color-white);
+    color: var(--color-gray-900);
+    font-weight: 500;
+  }
+}
+/*! purgecss stop ignore */

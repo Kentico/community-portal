@@ -1,5 +1,8 @@
+using Kentico.Community.Portal.Admin.Features.Members;
 using Kentico.Community.Portal.Core.Membership;
+using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Registration;
 using Kentico.Community.Portal.Web.Features.Members;
+using Kentico.Community.Portal.Web.Features.Members.EmailVerification;
 using Kentico.Community.Portal.Web.Features.Testing;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Membership;
@@ -36,18 +39,32 @@ public static class ServiceCollectionMembershipExtensions
             .AddSignInManager<SignInManager<CommunityMember>>()
             .Services
             .AddScoped<MemberContactManager>()
+            .AddScoped<MemberEmailVerificationService>()
+            .AddScoped<IMemberEmailInUseChecker>(s => s.GetRequiredService<MemberEmailVerificationService>())
+            .AddScoped<MemberEmailIntegrityHandler>()
+            .AddScoped<RegistrationEmailConfirmationService>()
             .AddScoped<RecipientListManager>()
+            .AddOptions<TermsOptions>()
+            .BindConfiguration(TermsOptions.SECTION)
+            .ValidateDataAnnotations()
+            .ValidateOnStart()
+            .Services
             .Decorate<IMemberToContactMapper, CommunityMemberToContactMapper>()
             .ConfigureApplicationCookie(options =>
             {
                 options.ExpireTimeSpan = TimeSpan.FromDays(14);
                 options.SlidingExpiration = true;
                 options.LoginPath = new PathString("/login");
-                options.AccessDeniedPath = new PathString("/login");
+                options.Events.OnRedirectToAccessDenied = context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                    return Task.CompletedTask;
+                };
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.Lax;
             })
             .AddAuthorization()
             .AddSingleton<IMemberEmailService, MemberEmailService>()
-            .AddScoped<E2EMemberModerationService>();
+            .AddScoped<E2EMemberModerationService>()
+            .AddScoped<E2EMemberRoleService>();
 }

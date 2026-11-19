@@ -16,6 +16,7 @@ using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Licenses;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.LinkList;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Login;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Markdown;
+using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.NewsletterSignup;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.PageHeading;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.PollForm;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.ProfileCard;
@@ -52,4 +53,5 @@ public static class WidgetIdentifiers
     public const string Testimonial = TestimonialWidget.IDENTIFIER;
     public const string Video = VideoWidget.IDENTIFIER;
     public const string Poll = PollWidget.IDENTIFIER;
+    public const string NewsletterSignup = NewsletterSignupWidget.IDENTIFIER;
 }

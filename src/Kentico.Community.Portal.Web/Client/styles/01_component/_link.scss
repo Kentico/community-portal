@@ -1,3 +1,21 @@
 a.btn:hover {
   text-decoration: none;
 }
+
+/*
+ * Trailing chevron without per-link SVG markup (same glyph as icons.svg#chevron-right).
+ * For link-dense lists, where an inline <svg><use> per link adds DOM nodes and bytes.
+ */
+.link-chevron::after {
+  --chevron-size: 16px;
+
+  content: "";
+  display: inline-block;
+  width: var(--chevron-size);
+  height: var(--chevron-size);
+  // word space + .ms-1, matching the inline SVG it replaces
+  margin-left: calc(0.25em + 0.25rem);
+  background-color: currentColor;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 13'%3E%3Cpath d='M1.5 11.69 6.5 6.69 1.5 1.69' stroke='%23000' fill='none' stroke-width='2'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}

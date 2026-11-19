@@ -1,0 +1,32 @@
+@using Kentico.Community.Portal.Core.DataProtection
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.NewsletterSignup
+
+@model NewsletterSignupWidgetViewModel
+
+<div class="newsletter-signup text-start" xpc-preview-outline="@Model.ComponentName" test-id="newsletterSignup">
+    @if (!string.IsNullOrWhiteSpace(Model.Heading))
+    {
+        <h3 class="h4" test-id="newsletterSignupHeading">@Model.Heading</h3>
+    }
+
+    <div class="mb-3" test-id="newsletterSignupConsentText">
+        <vc:consent consent-name="@ConsentCodeNames.EMAIL_MARKETING" />
+    </div>
+
+    <div test-id="newsletterSignupForm">
+        @await Html.Kentico().RenderNestedWidgetAsync(
+            SystemComponentIdentifiers.FORM_WIDGET_IDENTIFIER,
+            Model.FormWidgetProperties)
+    </div>
+
+    <div class="form-text text-muted mt-2 newsletter-signup__note" test-id="newsletterSignupHelpText">
+        @Model.HelpText
+    </div>
+
+    @if (Model.TrackingNote.TryGetValue(out var trackingNote))
+    {
+        <div class="form-text text-muted mt-1 newsletter-signup__note" test-id="newsletterSignupTrackingNote">
+            @trackingNote
+        </div>
+    }
+</div>

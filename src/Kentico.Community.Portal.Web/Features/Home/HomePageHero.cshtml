@@ -1,0 +1,22 @@
+@using Kentico.Community.Portal.Web.Features.Home
+
+@model HomePageHeroViewModel
+
+<header test-id="homeHero" class="home-hero @(Model.Image.HasValue ? "home-hero--with-image" : "")">
+    <div class="home-hero__content">
+        <h1 class="home-hero__title k-dot">@Model.Title</h1>
+
+        @if (Model.Description.TryGetValue(out string? description))
+        {
+            <p class="home-hero__description">@description</p>
+        }
+    </div>
+
+    @if (Model.Image.HasValue)
+    {
+        <div class="home-hero__media">
+            <img xpc-image="Model.Image" xpc-image-lazy="false" class="home-hero__image"
+                sizes="(min-width: 768px) 45vw, 100vw" fetchpriority="high" />
+        </div>
+    }
+</header>

@@ -57,6 +57,7 @@ public class LinkListWidget(IMediator mediator, IContentRetriever contentRetriev
                     LinkListDesign.List_In_Card => View("~/Components/PageBuilder/Widgets/LinkList/ListInCard.cshtml", vm),
                     LinkListDesign.Feature_Panel => View("~/Components/PageBuilder/Widgets/LinkList/FeaturePanel.cshtml", vm),
                     LinkListDesign.Cards => View("~/Components/PageBuilder/Widgets/LinkList/Cards.cshtml", vm),
+                    LinkListDesign.Icon_Cards => View("~/Components/PageBuilder/Widgets/LinkList/IconCards.cshtml", vm),
                     LinkListDesign.Link_List or _ => View("~/Components/PageBuilder/Widgets/LinkList/LinkList.cshtml", vm)
                 },
                 vm => View("~/Components/ComponentError.cshtml", vm)
@@ -178,7 +179,8 @@ public class LinkListWidget(IMediator mediator, IContentRetriever contentRetriev
             ShowAuthor = props.ShowAuthor,
             ShowDXTopics = props.ShowDXTopics,
             ShowDescriptions = props.ShowDescriptions,
-            DescriptionMaxLines = props.DescriptionMaxLines
+            DescriptionMaxLines = props.DescriptionMaxLines,
+            IconCardsColumns = props.IconCardsColumnsParsed
         };
     }
 }
@@ -258,6 +260,20 @@ public class LinkListWidgetProperties : BaseWidgetProperties
     public string DesignSource { get; set; } = nameof(LinkListDesign.Link_List);
     public LinkListDesign DesignParsed => EnumDropDownOptionsProvider<LinkListDesign>.Parse(DesignSource, LinkListDesign.Link_List);
 
+    [DropDownComponent(
+        Label = "Cards per row",
+        ExplanationText = "Maximum number of cards in a row on large screens. Auto fits all cards into one row when there is room.",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<LinkListIconCardsColumns>),
+        Order = 15
+    )]
+    [VisibleIfEqualTo(
+        nameof(DesignSource),
+        nameof(LinkListDesign.Icon_Cards),
+        StringComparison.OrdinalIgnoreCase
+    )]
+    public string IconCardsColumns { get; set; } = nameof(LinkListIconCardsColumns.Auto);
+    public LinkListIconCardsColumns IconCardsColumnsParsed => EnumDropDownOptionsProvider<LinkListIconCardsColumns>.Parse(IconCardsColumns, LinkListIconCardsColumns.Auto);
+
     [CheckBoxComponent(
         Label = "Show Published Date",
         ExplanationText = "Display the link's published date.",
@@ -314,6 +330,18 @@ public enum LinkListDesign
     Feature_Panel,
     [Description("Cards")]
     Cards,
+    [Description("Icon Cards")]
+    Icon_Cards,
+}
+
+public enum LinkListIconCardsColumns
+{
+    [Description("Auto (single row)")]
+    Auto,
+    [Description("3")]
+    Three,
+    [Description("4")]
+    Four,
 }
 
 public class LinkListWidgetViewModel
@@ -327,6 +355,7 @@ public class LinkListWidgetViewModel
     public bool ShowDXTopics { get; set; }
     public bool ShowDescriptions { get; set; } = true;
     public int DescriptionMaxLines { get; set; }
+    public LinkListIconCardsColumns IconCardsColumns { get; set; } = LinkListIconCardsColumns.Auto;
 }
 
 public class LinkViewModel
@@ -340,6 +369,34 @@ public class LinkViewModel
     public IEnumerable<string> DXTopics { get; }
     public Guid ContentItemGUID { get; }
 
+    /// <summary>
+    /// Known icon name (see <see cref="KnownIcons"/>), or None when the link has no valid icon.
+    /// </summary>
+    public Maybe<string> Icon { get; }
+
+    /// <summary>
+    /// Site-relative path of the icon image, using <see cref="DEFAULT_ICON"/> when no icon is set.
+    /// </summary>
+    public string IconPath => $"/img/icons/links/{Icon.GetValueOrDefault(DEFAULT_ICON)}.svg";
+
+    public const string DEFAULT_ICON = "document";
+
+    /// <summary>
+    /// Matches the files in wwwroot/img/icons/links/{name}.svg
+    /// </summary>
+    public static readonly string[] KnownIcons =
+    [
+        "chat", "document", "ai", "puzzle", "community", "article", "trophy",
+        "code", "package", "rss", "education", "support", "shield", "roadmap", "calendar", "video"
+    ];
+
+    private static Maybe<string> ParseIcon(string? value)
+    {
+        string? match = KnownIcons.FirstOrDefault(i => string.Equals(i, value?.Trim(), StringComparison.OrdinalIgnoreCase));
+
+        return match is null ? Maybe<string>.None : Maybe<string>.From(match);
+    }
+
     public LinkViewModel(LinkContent link, IEnumerable<string> dxTopics, string authorFullName)
     {
         Title = link.BasicItemTitle;
@@ -350,6 +407,7 @@ public class LinkViewModel
         AuthorFullName = authorFullName;
         DXTopics = dxTopics;
         ContentItemGUID = link.SystemFields.ContentItemGUID;
+        Icon = ParseIcon(link.LinkContentIcon);
     }
 }
 

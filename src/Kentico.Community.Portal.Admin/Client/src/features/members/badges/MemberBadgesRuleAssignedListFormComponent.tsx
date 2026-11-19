@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '../../../components/ui/card';
 import { Badge } from '../../../components/ui/badge';
-import { MemberBadgeAssigmentModel } from './MemberBadgeAssignmentModel';
+import type { MemberBadgeAssigmentModel } from './MemberBadgeAssignmentModel';
 
 export type MemberBadgesRuleAssignedListComponentClientProperties =
   FormComponentProps<MemberBadgeAssigmentModel[]>;

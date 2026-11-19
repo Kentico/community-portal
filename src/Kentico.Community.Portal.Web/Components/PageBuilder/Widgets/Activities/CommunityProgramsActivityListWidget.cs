@@ -3,7 +3,7 @@ using CMS.DataEngine;
 using CMS.Membership;
 using CMS.OnlineForms;
 using Kentico.Community.Portal.Core.Forms;
-using Kentico.Community.Portal.Core.Modules.Membership;
+using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CommunityProgramsActivityList;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Forms;
@@ -110,7 +110,7 @@ public class CommunityProgramsActivityListWidgetViewModel : BaseWidgetViewModel
     public required IReadOnlyDictionary<string, string> EfforMap { get; init; }
     public required IReadOnlyDictionary<string, string> SatisfactionMap { get; init; }
 
-    public IReadOnlyList<ProgramStatuses> ProgramStatusOptions { get; } = [ProgramStatuses.MVP, ProgramStatuses.CommunityLeader];
+    public IReadOnlyList<CommunityProgramMembership> ProgramMembershipOptions { get; } = [CommunityProgramMembership.MVP, CommunityProgramMembership.CommunityLeader];
 
     public string ActivityType(CommunityProgramsActivityListItem item) =>
         ActivitTypesMap.TryGetValue(item.ActivityType, out string? typeVal)
@@ -132,23 +132,23 @@ public class CommunityProgramsActivityListWidgetViewModel : BaseWidgetViewModel
         MemberNames.TryGetValue(item.MemberID, out var member) ? member.Name : "";
 
     public string MemberLabel(CommunityProgramsMemberName member) =>
-        member.ProgramStatus is ProgramStatuses.None
+        member.Membership is CommunityProgramMembership.None
             ? member.Name
-            : $"{member.Name} ({ProgramStatusLabel(member.ProgramStatus)})";
+            : $"{member.Name} ({MembershipLabel(member.Membership)})";
 
-    public string ProgramStatusLabel(ProgramStatuses status) =>
-        status switch
+    public string MembershipLabel(CommunityProgramMembership membership) =>
+        membership switch
         {
-            ProgramStatuses.CommunityLeader => "Community Leader",
-            ProgramStatuses.None => "None",
-            ProgramStatuses.MVP => "MVP",
-            _ => status.ToString()
+            CommunityProgramMembership.CommunityLeader => "Community Leader",
+            CommunityProgramMembership.None => "None",
+            CommunityProgramMembership.MVP => "MVP",
+            _ => membership.ToString()
         };
 }
 
 public record CommunityProgramsActivityListItem(
     int MemberID,
-    ProgramStatuses ProgramStatus,
+    CommunityProgramMembership Membership,
     DateTime ActivityDate,
     string ActivityType,
     string URL,
@@ -158,7 +158,7 @@ public record CommunityProgramsActivityListItem(
     string Effort,
     string Satisfaction);
 
-public record CommunityProgramsMemberName(string Name, ProgramStatuses ProgramStatus);
+public record CommunityProgramsMemberName(string Name, CommunityProgramMembership Membership);
 
 public record CommunityProgramsActivitiesQuery : IQuery<CommunityProgramsActivitiesQueryResponse>;
 
@@ -170,10 +170,14 @@ public record CommunityProgramsActivitiesQueryResponse(
 public class CommunityProgramsActivitiesQueryHandler(
     DataItemQueryTools tools,
     TimeProvider time,
-    IInfoProvider<MemberInfo> memberProvider) : DataItemQueryHandler<CommunityProgramsActivitiesQuery, CommunityProgramsActivitiesQueryResponse>(tools)
+    IInfoProvider<MemberInfo> memberProvider,
+    IInfoProvider<MemberRoleInfo> memberRoleProvider,
+    IInfoProvider<MemberRoleMemberInfo> memberRoleMemberProvider) : DataItemQueryHandler<CommunityProgramsActivitiesQuery, CommunityProgramsActivitiesQueryResponse>(tools)
 {
     private readonly TimeProvider time = time;
     private readonly IInfoProvider<MemberInfo> memberProvider = memberProvider;
+    private readonly IInfoProvider<MemberRoleInfo> memberRoleProvider = memberRoleProvider;
+    private readonly IInfoProvider<MemberRoleMemberInfo> memberRoleMemberProvider = memberRoleMemberProvider;
 
     public override async Task<CommunityProgramsActivitiesQueryResponse> Handle(CommunityProgramsActivitiesQuery request, CancellationToken cancellationToken = default)
     {
@@ -192,19 +196,22 @@ public class CommunityProgramsActivitiesQueryHandler(
             .WhereIn(nameof(MemberInfo.MemberID), memberIds)
             .GetEnumerableTypedResultAsync();
 
+        var membershipByMemberId = await CommunityProgramMembershipResolver.GetMembershipByMemberId(
+            memberRoleProvider, memberRoleMemberProvider, memberIds, cancellationToken);
+
         var memberNames = members
             .Select(m => m.AsCommunityMember())
-            .ToDictionary(m => m.Id, m => new CommunityProgramsMemberName(m.DisplayName, m.ProgramStatus));
+            .ToDictionary(m => m.Id, m => new CommunityProgramsMemberName(m.DisplayName, membershipByMemberId.GetValueOrDefault(m.Id)));
 
-        ProgramStatuses GetProgramStatus(int memberId) =>
+        CommunityProgramMembership GetMembership(int memberId) =>
             memberNames.TryGetValue(memberId, out var member)
-                ? member.ProgramStatus
-                : ProgramStatuses.None;
+                ? member.Membership
+                : CommunityProgramMembership.None;
 
         var ordered = items
             .Select(item => new CommunityProgramsActivityListItem(
                 MemberID: item.MemberID,
-                ProgramStatus: GetProgramStatus(item.MemberID),
+                Membership: GetMembership(item.MemberID),
                 ActivityDate: item.ActivityDate,
                 ActivityType: item.ActivityType,
                 URL: item.URLInput,
@@ -224,5 +231,6 @@ public class CommunityProgramsActivitiesQueryHandler(
     protected override ICacheDependencyKeysBuilder AddDependencyKeys(CommunityProgramsActivitiesQuery query, CommunityProgramsActivitiesQueryResponse result, ICacheDependencyKeysBuilder builder) =>
         builder
             .AllObjects(CommunityProgramActivity_2026Item.CLASS_NAME)
-            .AllObjects(MemberInfo.OBJECT_TYPE);
+            .AllObjects(MemberInfo.OBJECT_TYPE)
+            .AllObjects(MemberRoleMemberInfo.OBJECT_TYPE);
 }

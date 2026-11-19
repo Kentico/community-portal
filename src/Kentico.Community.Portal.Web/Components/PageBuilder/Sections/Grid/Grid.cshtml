@@ -1,20 +1,24 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Sections
 @using Kentico.Community.Portal.Web.Components.PageBuilder.Sections.Grid
 
 @model GridSectionViewModel
 
 @{
-  string containerClass = Model.Layout switch
+  string containerClass = (Model.Layout, Model.ContentWidth) switch
   {
-    Layouts._1_Column_Full_Width => "",
+    (Layouts._1_Column_Full_Width, _) => "",
+    (_, ContentWidths.Narrow) => "container section-container-narrow",
     _ => "container"
   };
 
-  string columnsClass = Model.Layout switch
+  string columnsClass = (Model.Layout, Model.ColumnBreakpoint) switch
   {
-    Layouts._3_Columns_33_33_33 => "row-cols-1 row-cols-lg-3",
-    Layouts._2_Columns_50_50 => "row-cols-1 row-cols-md-2",
-    Layouts._1_Column_Full_Width => "row-cols-1",
-    Layouts._1_Column or Layouts._1_Column_Max_Width_Limited or _ => "row-cols-1",
+    (Layouts._3_Columns_33_33_33, ColumnBreakpoints.Extra_Large) => "row-cols-1 row-cols-xl-3",
+    (Layouts._3_Columns_33_33_33, _) => "row-cols-1 row-cols-lg-3",
+    (Layouts._2_Columns_50_50, ColumnBreakpoints.Extra_Large) => "row-cols-1 row-cols-xl-2",
+    (Layouts._2_Columns_50_50, ColumnBreakpoints.Large) => "row-cols-1 row-cols-lg-2",
+    (Layouts._2_Columns_50_50, _) => "row-cols-1 row-cols-md-2",
+    _ => "row-cols-1",
   };
 
   string bodyAlignmentClass = Model.BodyAlignment switch
@@ -25,15 +29,16 @@
 
   var (backgroundColorClass, backgroundColorProperty) = Model.BackgroundColor switch
   {
-    BackgroundColors.Dark => ("bg-light-subtle", "--bs-light-bg-subtle"),
-    BackgroundColors.Secondary_Light => ("bg-purple-100", "--bs-purple-100-rgb"),
-    BackgroundColors.Light => ("bg-light", "--bs-light-rgb"),
-    BackgroundColors.White or _ => ("", ""),
+    SectionBackgroundColors.Primary_Light => ("bg-orange-100", "--bs-orange-100-rgb"),
+    SectionBackgroundColors.Secondary_Light => ("bg-purple-100", "--bs-purple-100-rgb"),
+    SectionBackgroundColors.Light => ("bg-light", "--bs-light-rgb"),
+    SectionBackgroundColors.White or _ => ("", ""),
   };
 
   string paddingTopClass = Model.PaddingTop switch
   {
     VerticalPaddings.Large => "pt-7",
+    VerticalPaddings.Medium_Large => "pt-6",
     VerticalPaddings.Medium => "pt-5",
     VerticalPaddings.Small => "pt-3",
     VerticalPaddings.None => "pt-0",
@@ -43,14 +48,21 @@
   string paddingBottomClass = Model.PaddingBottom switch
   {
     VerticalPaddings.Large => "pb-7",
+    VerticalPaddings.Medium_Large => "pb-6",
     VerticalPaddings.Medium => "pb-5",
     VerticalPaddings.Small => "pb-3",
     VerticalPaddings.None => "pb-0",
     _ => "pb-0"
   };
+
+  string pageBuilderClass = View.PageBuilderMode switch
+  {
+    ApplicationPageBuilderMode.Edit => "page-builder-edit",
+    _ => ""
+  };
 }
 
-<div class="section @paddingTopClass @paddingBottomClass @backgroundColorClass"
+<div test-id="gridSection" class="section @paddingTopClass @paddingBottomClass @backgroundColorClass @pageBuilderClass"
      style="--section-bg-color: rgb(var(@backgroundColorProperty))" xpc-preview-outline="Grid Section">
   <div class="@containerClass">
     @if (!string.IsNullOrWhiteSpace(Model.Heading))
@@ -63,7 +75,14 @@
         Alignments.Left or _ => "text-left"
       };
 
-      <h2 id="@slug" class="heading @alignmentClass">@Model.Heading
+      string spacingClass = Model.HeadingSpacing switch
+      {
+        HeadingSpacings.Large => "section-heading-gap-lg",
+        HeadingSpacings.Medium => "section-heading-gap-md",
+        HeadingSpacings.Default or _ => ""
+      };
+
+      <h2 id="@slug" class="heading @alignmentClass @spacingClass">@Model.Heading
         @if (Model.IsHeadingAnchorLinkVisible)
         {
           <a title="Navigate to this heading" aria-label="Navigate to this heading" class="heading-link"

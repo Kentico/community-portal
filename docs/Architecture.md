@@ -27,19 +27,13 @@
 
 ## Integrations
 
-### Azure Storage
-
-The solution uses
-[Azure Queue Storage](https://learn.microsoft.com/en-us/azure/storage/queues/storage-queues-introduction)
-and
-[Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview)
-to process support requests in an ASP.NET Core background service.
-
 ### ReCaptcha
 
 The solution uses
 [Google ReCaptcha v3](https://developers.google.com/recaptcha/docs/v3) to
-prevent spam through website forms that do not require authentication.
+prevent spam through website forms that do not require authentication. The
+threshold key is `ReCaptcha:ScoreThreshold`; each verification's score is
+logged (event 1001).
 
 ### Lucene Search
 

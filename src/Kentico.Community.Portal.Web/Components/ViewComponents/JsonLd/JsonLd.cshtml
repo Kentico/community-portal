@@ -1,0 +1,7 @@
+@model IReadOnlyList<string>
+
+@* Raw is safe: JsonLdSerializer escapes <, > and & so the JSON cannot close the script element *@
+@foreach (string json in Model)
+{
+    <script type="application/ld+json">@Html.Raw(json)</script>
+}

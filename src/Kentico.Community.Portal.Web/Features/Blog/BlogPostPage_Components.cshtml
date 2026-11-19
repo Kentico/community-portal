@@ -32,11 +32,11 @@
                                         <div>
                                             @if (post.Author.LinkProfilePath.TryGetValue(out string? p1))
                                             {
-                                                <a href="@p1" class="text-decoration-none">@post.Author.Name</a>
+                                                <a href="@p1" class="text-decoration-none" test-id="blogPostAuthorName">@post.Author.Name</a>
                                             }
                                             else
                                             {
-                                                @post.Author.Name
+                                                <span test-id="blogPostAuthorName">@post.Author.Name</span>
                                             }
                                             @if (post.Author.Title.TryGetValue(out string? title))
                                             {
@@ -108,7 +108,7 @@
                                                 <partial name="~/Features/Blog/_BlogPostUpvote.cshtml" model="upvoteBottom" />
                                             </div>
                                         }
-                                        <a class="btn btn-secondary" href="@discussionPath">
+                                        <a class="btn btn-secondary" href="@discussionPath" test-id="blogDiscussionLink">
                                             @message
                                         </a>
                                     </div>
@@ -159,7 +159,7 @@
                                         }
                                         else
                                         {
-                                            <img src="/img/profile-photo-default.png" alt="@post.Author.Name"
+                                            <img src="/img/profile-photo-default.webp" alt="@post.Author.Name"
                                                  class="rounded-circle" style="width: 50px; height: 50px;" />
                                         }
                                     </div>

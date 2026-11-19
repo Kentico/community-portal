@@ -1,4 +1,16 @@
+@using Kentico.Community.Portal.Core.DataProtection
 @model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Registration.RegisterViewModel
+@using Kentico.Community.Portal.Web.Infrastructure
+@using Kentico.Community.Portal.Web.Rendering
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Registration
+@inject MarkdownRenderer MarkdownRenderer
+
+@{
+    // The form executes reCAPTCHA on submit
+    Context.RequireRecaptchaScript();
+
+    var content = Model.Content ?? new RegisterFormContent(new RegisterWidgetProperties(), MarkdownRenderer);
+}
 
 @if (Context.Request.IsHtmx() && ViewContext.ModelState.IsValid)
 {
@@ -35,20 +47,38 @@
             <span asp-validation-for="PasswordConfirmation" class="invalid-feedback"></span>
         </div>
 
+        <div class="mb-3">
+            <div class="form-check">
+                <input class="form-check-input" asp-for="AcceptTerms" required test-id="acceptTerms" />
+                <label class="form-check-label" asp-for="AcceptTerms">@content.TermsLabel</label>
+                <span asp-validation-for="AcceptTerms" class="invalid-feedback" test-id="acceptTermsError"></span>
+            </div>
+        </div>
+
         <div class="mb-4">
             <div class="form-check">
-                <input class="form-check-input" asp-for="ConsentAgreement" test-id="consentAgreement" />
-                <label class="form-check-label" asp-for="ConsentAgreement">
-                    <vc:consent consent-name="KenticoCommunityPortalTracking" />
+                <input class="form-check-input" asp-for="SubscribeToNewsletter" aria-describedby="newsletterHelpText"
+                       test-id="subscribeToNewsletter" />
+                <label class="form-check-label" asp-for="SubscribeToNewsletter">
+                    <span class="d-block" test-id="newsletterConsentText">
+                        <vc:consent consent-name="@ConsentCodeNames.EMAIL_MARKETING" />
+                    </span>
                 </label>
-                <span asp-validation-for="ConsentAgreement" class="invalid-feedback"></span>
+                <div id="newsletterHelpText" class="form-text text-muted register-form__note" test-id="newsletterHelpText">
+                    @content.NewsletterHelpText
+                </div>
             </div>
         </div>
 
         <input asp-for="CaptchaToken" />
+        <xpc-widget-properties properties="content.Properties" />
         <button id="register" type="submit" class="btn btn-primary w-100" xpc-loading-button>
             Register
         </button>
+
+        <div class="form-text text-muted mt-2 register-form__note" test-id="registerCookieNote">
+            @content.CookieNote
+        </div>
 
         <vc:read-only-mode-notification />
     </fieldset>

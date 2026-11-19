@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassDisplayName>Order promotion trigger item</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="OrderPromotionTriggerItemID" columntype="integer" enabled="true" guid="08060356-1e76-4c07-8d6d-8ea28b169a6c" isPK="true" system="true" />
+      <field column="OrderPromotionTriggerItemOrderPromotionID" columnprecision="0" columntype="integer" enabled="true" guid="4d8be0d8-32c3-4ad2-af98-3601dd580bae" refobjtype="commerce.orderpromotion" reftype="Binding" system="true" />
+      <field column="OrderPromotionTriggerItemOrderItemID" columnprecision="0" columntype="integer" enabled="true" guid="23416171-4539-4527-966a-07209f528017" refobjtype="commerce.orderitem" reftype="Binding" system="true" />
+      <field column="OrderPromotionTriggerItemTriggeringQuantity" columnprecision="4" columnsize="19" columntype="decimal" enabled="true" guid="aafd2eba-fccb-482d-a609-6753aec3f332" system="true" />
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>a30bff93-7dce-400a-8644-801c8b03bd0c</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>Commerce.OrderPromotionTriggerItem</ClassName>
+  <ClassResourceID>
+    <CodeName>CMS.Commerce</CodeName>
+    <GUID>4975d347-eb67-4a9c-a5d6-76997340b8ac</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>Commerce_OrderPromotionTriggerItem</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

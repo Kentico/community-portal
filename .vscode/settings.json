@@ -19,7 +19,7 @@
 
   "search.exclude": {
     "**/*.code-search": true,
-    "**/CIRepository/**": true,
+    "**/CIRepository/**": false,
     "**/dist/**": true,
     "**/vendor/**": true
   },
@@ -73,7 +73,6 @@
   "dotnet.defaultSolution": "Kentico.Community.Portal.slnx",
 
   "js/ts.validate.enabled": false,
-  "eslint.workingDirectories": ["./src/Kentico.Community.Portal.Admin/Client"],
 
   "files.associations": {
     "*.runsettings": "xml"
@@ -90,7 +89,6 @@
     "DISABLE_OH_MY_POSH": "1"
   },
 
-  "azurite.location": "azurite_storage",
   "[sql]": {
     "editor.defaultFormatter": "ms-mssql.mssql"
   },
@@ -188,10 +186,6 @@
   },
   "chat.agent.maxRequests": 50,
   "chat.useAgentSkills": true,
-  "chat.tools.edits.autoApprove": {
-    "**/*.github/**": false,
-    "**/appsettings*.json": false
-  },
   "chat.mcp.serverSampling": {
     "community-portal-internal/.vscode/mcp.json: xperience-management-api": {
       "allowedModels": [
@@ -243,7 +237,6 @@
         "copilot/gpt-5.1-codex",
         "copilot/gpt-5.2"
       ]
-    },
-    "chat.plugins.marketplaces": ["Kentico/xperience-by-kentico-kenticopilot"]
+    }
   }
 }

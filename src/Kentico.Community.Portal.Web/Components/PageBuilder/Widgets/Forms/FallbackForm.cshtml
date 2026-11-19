@@ -25,36 +25,55 @@
     string overlayAttr = Model.IsHidden ? "overlay" : "";
     var showDisabled = JSEncoder.EncodeToJson(Model.IsHidden && hasFallbackContent);
 
+    bool isFeatureCard = Model.Design == FallbackFormDesigns.Feature_Card;
+    string? designClass = isFeatureCard ? "fallback-form--feature-card" : null;
+    string cardClass = isFeatureCard ? "fallback-form__card" : $"{backgroundColorClass} p-4 rounded";
+    // Feature Card sets --fallback-form-bg-color in CSS
+    string? cardStyle = isFeatureCard ? null : $"--fallback-form-bg-color: {backgroundColorProperty}";
+
     FormState.SetIsFormHidden(ViewData, Model);
 }
 
 <div xpc-preview-outline="@FallbackFormWidget.NAME Widget" x-data="{ showDisabled: @showDisabled }">
-    <div class="hideable-form @backgroundColorClass p-4 rounded"
-        style="--fallback-form-bg-color: @backgroundColorProperty" @overlayAttr :overlay="showDisabled">
-
-        @await Html.Kentico().RenderNestedWidgetAsync(
-        SystemComponentIdentifiers.FORM_WIDGET_IDENTIFIER,
-                Model.FormWidgetProperties)
-
-        @if (Model.IsHidden || isPreview)
+    <div class="@designClass">
+        @if (isFeatureCard)
         {
-            <div class="fallback-content justify-content-center align-items-center flex-column position-absolute w-100 h-100"
-                x-cloak :class="{ 'd-flex': showDisabled, 'd-none': !showDisabled }">
-                <div class="p-3 bg-white rounded text-center border border-2"
-                    style="background-color: var(--section-bg-color, --bs-light-rgb); border-color: var(--color-gray-100);">
-                    @if (Model.FallbackContent.TryGetValue(out var content))
-                    {
-                        @content
-                    }
-                    @if (Model.CTA.TryGetValue(out var cta))
-                    {
-                        <a href="@cta.URL" class="btn btn-primary btn-sm">
-                            @cta.Label
-                        </a>
-                    }
-                </div>
-            </div>
+            <span class="fallback-form__decor fallback-form__decor--purple" aria-hidden="true"></span>
+            <span class="fallback-form__decor fallback-form__decor--lavender" aria-hidden="true"></span>
+            <span class="fallback-form__decor fallback-form__decor--outline" aria-hidden="true"></span>
+            <span class="fallback-form__decor fallback-form__decor--blue" aria-hidden="true"></span>
         }
+        <div class="hideable-form @cardClass" style="@cardStyle" @overlayAttr :overlay="showDisabled">
+
+            @if (Model.Heading.TryGetValue(out string? heading))
+            {
+                <h3 class="fallback-form__heading">@heading</h3>
+            }
+
+            @await Html.Kentico().RenderNestedWidgetAsync(
+            SystemComponentIdentifiers.FORM_WIDGET_IDENTIFIER,
+                    Model.FormWidgetProperties)
+
+            @if (Model.IsHidden || isPreview)
+            {
+                <div class="fallback-content justify-content-center align-items-center flex-column position-absolute w-100 h-100"
+                    x-cloak :class="{ 'd-flex': showDisabled, 'd-none': !showDisabled }">
+                    <div class="fallback-form__message p-3 bg-white rounded text-center border border-2"
+                        style="background-color: var(--section-bg-color, --bs-light-rgb); border-color: var(--color-gray-100);">
+                        @if (Model.FallbackContent.TryGetValue(out var content))
+                        {
+                            @content
+                        }
+                        @if (Model.CTA.TryGetValue(out var cta))
+                        {
+                            <a href="@cta.URL" class="btn btn-primary btn-sm">
+                                @cta.Label
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
     </div>
     @if (Model.IsHidden && isPreview)
     {

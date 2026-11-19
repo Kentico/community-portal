@@ -1,4 +1,12 @@
-<section class="section" xpc-preview-outline="Heading Section">
+@{
+  string pageBuilderClass = View.PageBuilderMode switch
+  {
+    ApplicationPageBuilderMode.Edit => "page-builder-edit",
+    _ => ""
+  };
+}
+
+<section class="section @pageBuilderClass" xpc-preview-outline="Heading Section">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-xl-10 col-xxl-9">

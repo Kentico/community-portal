@@ -5,7 +5,7 @@ import {
   Input,
 } from '@kentico/xperience-admin-components';
 import React, { ChangeEvent, useState } from 'react';
-import { LinkDataType, newLink } from './LinkDataType';
+import { type LinkDataType, newLink } from './LinkDataType';
 
 interface LinkListDataTypeFormComponentProps extends FormComponentProps<
   LinkDataType[]

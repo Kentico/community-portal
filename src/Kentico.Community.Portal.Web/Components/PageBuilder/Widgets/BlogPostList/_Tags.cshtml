@@ -1,0 +1,12 @@
+@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList.BlogPostListItemViewModel
+
+@if (Model.Tags.Count == 0)
+{
+  return;
+}
+
+@* Top spacing lives in the stylesheet, not an mt-* utility: Bootstrap utilities are
+   !important, which would beat the Cards design's margin-top:auto bottom alignment. *@
+<div class="blog-post-list__tags position-relative z-2">
+  <vc:tag-list tags="Model.Tags" />
+</div>

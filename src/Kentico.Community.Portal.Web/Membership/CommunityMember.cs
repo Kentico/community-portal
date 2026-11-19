@@ -34,8 +34,47 @@ public class CommunityMember : ApplicationUser
     public string Country { get; set; } = "";
     public string Bio { get; set; } = "";
     public string TimeZone { get; set; } = "";
+    /// <summary>The <see cref="TermsOptions.CurrentVersion" /> the member accepted. Empty for members who registered before Terms acceptance.</summary>
+    public string TermsAcceptedVersion { get; set; } = "";
+    public DateTime? TermsAcceptedDate { get; set; }
+    /// <summary>Set when the member asks for the newsletter at registration. Cleared once subscribed, on email confirmation.</summary>
+    public DateTime? NewsletterOptInRequestedDate { get; set; }
+    /// <summary>A second email (e.g. business or agency) set by the member. Not trusted until <see cref="AlternateEmailVerifiedDate"/> is set.</summary>
+    public string AlternateEmail { get; set; } = "";
+    /// <summary>When the member proved they own <see cref="AlternateEmail"/>. Null = unverified.</summary>
+    public DateTime? AlternateEmailVerifiedDate { get; set; }
 
-    public ProgramStatuses ProgramStatus { get; set; } = ProgramStatuses.None;
+    /// <summary>
+    /// When the member proved they own their account <see cref="Kentico.Membership.ApplicationUser.Email"/> (registration
+    /// confirmation or a confirmed email change), or an administrator enabled them. Null = never confirmed.
+    /// Unlike <see cref="Kentico.Membership.ApplicationUser.Enabled"/> (Xperience's EmailConfirmed), disabling the member doesn't clear it.
+    /// </summary>
+    public DateTime? EmailConfirmedDate { get; set; }
+
+    /// <summary>
+    /// Why the member can or can't sign in. See docs/adr/0005-separate-email-confirmation-from-enabled.md.
+    /// </summary>
+    public MemberSignInState SignInState =>
+        (IsUnderModeration, Enabled, EmailConfirmedDate) switch
+        {
+            (true, _, _) => MemberSignInState.UnderModeration,
+            (false, true, _) => MemberSignInState.Active,
+            (false, false, null) => MemberSignInState.EmailNotConfirmed,
+            (false, false, not null) => MemberSignInState.Disabled,
+        };
+
+    /// <summary>
+    /// Only a member who never confirmed their email can request a registration confirmation email or confirm it.
+    /// A disabled member (confirmed before) can't re-enable themselves this way.
+    /// </summary>
+    public bool CanConfirmEmail => SignInState == MemberSignInState.EmailNotConfirmed;
+
+    public bool IsAlternateEmailVerified =>
+        !string.IsNullOrWhiteSpace(AlternateEmail) && AlternateEmailVerifiedDate is not null;
+
+    /// <summary>The <see cref="AlternateEmail"/> only when verified, otherwise null. Use this, never <see cref="AlternateEmail"/>, to match a member.</summary>
+    public string? VerifiedAlternateEmail =>
+        IsAlternateEmailVerified ? AlternateEmail : null;
 
     public bool IsUnderModeration =>
         ModerationStatus != ModerationStatuses.None;
@@ -44,18 +83,14 @@ public class CommunityMember : ApplicationUser
      * Note that EmailConfirmed and Enabled are the same value/state with Xperience's membership
      * https://docs.kentico.com/documentation/developers-and-admins/development/registration-and-authentication#applicationuser.enabled
      *
-     * Once confirmed / enabled, members cannot change their email address themselves.
-     * If this functionality is added in the future, 
-     * WE MUST CHANGE THIS CHECK OR ENABLE TRUE EMAIL CONFIRMATION by resetting the security stamp after an email change
-     * or having a unique state in the database for unconfirmed email addresses.
+     * Members can change their email (MemberEmailVerificationService), but the Email only changes
+     * after the new address is verified (UserManager.ChangeEmailAsync, which also rotates the security stamp),
+     * so a confirmed member's Email is always an address they proved they own.
      */
     public bool IsInternalEmployee =>
         Email is not null &&
         EmailConfirmed &&
         Email.EndsWith("@kentico.com", StringComparison.OrdinalIgnoreCase);
-
-    public bool IsCommunityProgramMember =>
-        ProgramStatus != ProgramStatuses.None;
 
     public override void MapToMemberInfo(MemberInfo target)
     {
@@ -85,7 +120,12 @@ public class CommunityMember : ApplicationUser
         target.MemberCountry = Country;
         target.MemberBio = Bio;
         target.MemberTimeZone = TimeZone;
-        target.MemberProgramStatus = ProgramStatus.ToString();
+        target.MemberTermsAcceptedVersion = TermsAcceptedVersion;
+        target.MemberTermsAcceptedDate = TermsAcceptedDate;
+        target.MemberNewsletterOptInRequestedDate = NewsletterOptInRequestedDate;
+        target.MemberAlternateEmail = AlternateEmail;
+        target.MemberAlternateEmailVerifiedDate = AlternateEmailVerifiedDate;
+        target.MemberEmailConfirmedDate = EmailConfirmedDate;
     }
 
     public override void MapFromMemberInfo(MemberInfo source)
@@ -105,11 +145,13 @@ public class CommunityMember : ApplicationUser
         Country = source.MemberCountry;
         Bio = source.MemberBio;
         TimeZone = source.MemberTimeZone;
+        TermsAcceptedVersion = source.MemberTermsAcceptedVersion;
+        TermsAcceptedDate = source.MemberTermsAcceptedDate;
+        NewsletterOptInRequestedDate = source.MemberNewsletterOptInRequestedDate;
+        AlternateEmail = source.MemberAlternateEmail;
+        AlternateEmailVerifiedDate = source.MemberAlternateEmailVerifiedDate;
+        EmailConfirmedDate = source.MemberEmailConfirmedDate;
         EmailConfirmed = source.MemberEnabled;
-
-        ProgramStatus = Enum.TryParse<ProgramStatuses>(source.MemberProgramStatus, out var programStatus)
-            ? programStatus
-            : ProgramStatuses.None;
     }
 
     public static CommunityMember FromMemberInfo(MemberInfo memberInfo)
@@ -136,13 +178,27 @@ public class CommunityMember : ApplicationUser
     }
 }
 
+public enum MemberSignInState
+{
+    /// <summary>Enabled and not moderated.</summary>
+    Active,
+    /// <summary>Moderation status other than None. Wins over every other state.</summary>
+    UnderModeration,
+    /// <summary>Not enabled, <see cref="CommunityMember.EmailConfirmedDate"/> null: registered, email not confirmed yet.</summary>
+    EmailNotConfirmed,
+    /// <summary>Not enabled, but the email was confirmed before: an administrator disabled the member.</summary>
+    Disabled,
+}
+
 [ValueObject<int>]
 [Instance("Anonymous", 0)]
 public readonly partial struct CommunityMemberID;
 
 public static class MemberInfoExtensions
 {
-    public const string FIELD_PROGRAM_STATUS = "MemberProgramStatus";
+    public const string FIELD_ALTERNATE_EMAIL = "MemberAlternateEmail";
+    public const string FIELD_ALTERNATE_EMAIL_VERIFIED_DATE = "MemberAlternateEmailVerifiedDate";
+    public const string FIELD_EMAIL_CONFIRMED_DATE = "MemberEmailConfirmedDate";
 
     public static CommunityMember AsCommunityMember(this MemberInfo member) =>
         CommunityMember.FromMemberInfo(member);
@@ -207,6 +263,42 @@ public static class MemberInfoExtensions
         {
             get => member.GetValue("MemberTimeZone", "") ?? "";
             set => member.SetValue("MemberTimeZone", value);
+        }
+
+        public string MemberTermsAcceptedVersion
+        {
+            get => member.GetValue("MemberTermsAcceptedVersion", "") ?? "";
+            set => member.SetValue("MemberTermsAcceptedVersion", value);
+        }
+
+        public DateTime? MemberTermsAcceptedDate
+        {
+            get => member.GetValue("MemberTermsAcceptedDate") as DateTime?;
+            set => member.SetValue("MemberTermsAcceptedDate", value);
+        }
+
+        public DateTime? MemberNewsletterOptInRequestedDate
+        {
+            get => member.GetValue("MemberNewsletterOptInRequestedDate") as DateTime?;
+            set => member.SetValue("MemberNewsletterOptInRequestedDate", value);
+        }
+
+        public string MemberAlternateEmail
+        {
+            get => member.GetValue(FIELD_ALTERNATE_EMAIL, "") ?? "";
+            set => member.SetValue(FIELD_ALTERNATE_EMAIL, value);
+        }
+
+        public DateTime? MemberAlternateEmailVerifiedDate
+        {
+            get => member.GetValue(FIELD_ALTERNATE_EMAIL_VERIFIED_DATE) as DateTime?;
+            set => member.SetValue(FIELD_ALTERNATE_EMAIL_VERIFIED_DATE, value);
+        }
+
+        public DateTime? MemberEmailConfirmedDate
+        {
+            get => member.GetValue(FIELD_EMAIL_CONFIRMED_DATE) as DateTime?;
+            set => member.SetValue(FIELD_EMAIL_CONFIRMED_DATE, value);
         }
     }
 }

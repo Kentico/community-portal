@@ -1,4 +1,12 @@
-<div class="section section--default" xpc-preview-outline="Two Column Section">
+@{
+    string pageBuilderClass = View.PageBuilderMode switch
+    {
+        ApplicationPageBuilderMode.Edit => "page-builder-edit",
+        _ => ""
+    };
+}
+
+<div class="section section--default @pageBuilderClass" xpc-preview-outline="Two Column Section">
     <div class="container">
         <div class="layout">
             <aside class="layout__sidebar">

@@ -30,6 +30,10 @@ public class DateTimeTagHelper(
 {
     public const string ATTRIBUTE_NAME = "xpc-datetime";
     private const string FORMAT_ATTRIBUTE_NAME = "xpc-datetime-format";
+    /// <summary>
+    /// Format of the machine-readable <c>datetime</c> attribute (UTC)
+    /// </summary>
+    public const string MACHINE_FORMAT = "yyyy-MM-ddTHH:mm:ssZ";
 
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly DateTimeDisplayService dateTimeDisplayService = dateTimeDisplayService;
@@ -64,7 +68,7 @@ public class DateTimeTagHelper(
         output.Attributes.RemoveAll(FORMAT_ATTRIBUTE_NAME);
 
         // datetime attribute: UTC time (machine-readable)
-        output.Attributes.SetAttribute("datetime", DisplayDateTime.Value.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+        output.Attributes.SetAttribute("datetime", DisplayDateTime.Value.ToString(MACHINE_FORMAT));
 
         // Merge classes instead of replacing
         string existingClass = output.Attributes.FirstOrDefault(a => a.Name == "class")?.Value.ToString() ?? "";

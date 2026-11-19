@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using CMS.Base;
 using Htmx;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Registration;
+using Kentico.Community.Portal.Web.Features.DataCollection;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Community.Portal.Web.Resources;
@@ -21,7 +22,7 @@ public class LoginWidgetController(
     UserManager<CommunityMember> userManager,
     IStringLocalizer<SharedResources> localizer,
     ILogger<LoginWidgetController> logger,
-    MemberContactManager contactManager,
+    CookieConsentManager cookieConsentManager,
     IReadOnlyModeProvider readOnlyProvider) : Controller
 {
     [HttpPost]
@@ -49,21 +50,32 @@ public class LoginWidgetController(
             {
                 signInResult = SignInResult.Failed;
             }
-            else if (member.IsUnderModeration)
+            else if (member.SignInState != MemberSignInState.Active)
             {
-                return PartialView("~/Components/PageBuilder/Widgets/Registration/_ModerationStatus.cshtml");
-            }
-            else if (!member.Enabled)
-            {
-                var emailConfirmationModel = new EmailConfirmationViewModel()
+                /*
+                 * Password first: only the right password learns why the account can't sign in.
+                 * A wrong one gets the same response as an unknown account.
+                 */
+                if (!await userManager.CheckPasswordAsync(member, model.Password))
                 {
-                    State = EmailConfirmationState.Failure_NotYetConfirmed,
-                    Message = localizer["Your email has not been verified"],
-                    SendButtonText = localizer["Send verification email"],
-                    Username = member.UserName!
-                };
-
-                return PartialView("~/Components/PageBuilder/Widgets/Registration/EmailConfirmation.cshtml", emailConfirmationModel);
+                    signInResult = SignInResult.Failed;
+                }
+                else
+                {
+                    return member.SignInState switch
+                    {
+                        MemberSignInState.UnderModeration => PartialView("~/Components/PageBuilder/Widgets/Registration/_ModerationStatus.cshtml"),
+                        MemberSignInState.EmailNotConfirmed => PartialView("~/Components/PageBuilder/Widgets/Registration/EmailConfirmation.cshtml", new EmailConfirmationViewModel()
+                        {
+                            State = EmailConfirmationState.Failure_NotYetConfirmed,
+                            Message = localizer["Your email has not been verified"],
+                            SendButtonText = localizer["Send verification email"],
+                            Username = member.UserName!
+                        }),
+                        // Disabled by an administrator. Confirming the email again won't help, so no verify prompt.
+                        _ => PartialView("~/Components/PageBuilder/Widgets/Login/_AccountDisabled.cshtml"),
+                    };
+                }
             }
             else
             {
@@ -72,7 +84,7 @@ public class LoginWidgetController(
 
             if (signInResult.Succeeded && member is not null)
             {
-                _ = await contactManager.SetMemberAsCurrentContact(member);
+                await cookieConsentManager.OnMemberSignedIn(member);
             }
         }
         catch (Exception ex)
@@ -88,7 +100,10 @@ public class LoginWidgetController(
             return PartialView("~/Components/PageBuilder/Widgets/Login/_LoginForm.cshtml", model);
         }
 
-        Response.Htmx(h => h.Redirect(model.ReturnURL));
+        // The hidden field is posted by the client: re-check it, never redirect off-site
+        string returnURL = Url.IsLocalUrl(model.ReturnURL) ? model.ReturnURL : "/";
+
+        Response.Htmx(h => h.Redirect(returnURL));
         return Ok();
 
         async Task<CommunityMember?> GetMember()
@@ -126,7 +141,7 @@ public class LoginViewModel
 [Route("[controller]/[action]")]
 public class LogoutController(
     SignInManager<CommunityMember> signInManager,
-    MemberContactManager contactManager,
+    CookieConsentManager cookieConsentManager,
     IReadOnlyModeProvider readOnlyProvider) : Controller
 {
     [Authorize]
@@ -141,7 +156,7 @@ public class LogoutController(
 
         await signInManager.SignOutAsync();
 
-        _ = contactManager.ResetCurrentContact();
+        cookieConsentManager.ForgetVisitor();
 
         return Redirect("/");
     }

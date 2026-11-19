@@ -1,0 +1,26 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Sections.Unstyled
+@using Kentico.Community.Portal.Web.Features.Home
+
+@model TemplateViewModel<HomePageHeroTemplateProperties>
+
+@{
+    var templateModel = Model.GetTemplateModel<HomePage>();
+}
+
+<div class="home-page">
+    <vc:home-page-hero page="templateModel" properties="Model.Properties" />
+
+    <div class="home-hero-links">
+        <editable-area area-identifier="hero-links"
+            area-options-allowed-widgets="HomePageHeroTemplateProperties.HeroLinksWidgets"
+            area-options-allowed-sections="HomePageHeroTemplateProperties.HeroLinksSections"
+            area-options-default-section-identifier="@UnstyledSection.IDENTIFIER"
+            allow-widget-output-cache="View.CacheEnabled"
+            widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
+    </div>
+
+    <main>
+        <editable-area area-identifier="top" allow-widget-output-cache="View.CacheEnabled"
+            widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
+    </main>
+</div>

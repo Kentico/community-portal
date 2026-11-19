@@ -2,9 +2,12 @@ using System.Collections.Immutable;
 using System.Data;
 using CMS.DataEngine;
 using CMS.Websites.Internal;
+using Kentico.Community.Portal.Admin.Infrastructure;
 using Kentico.Community.Portal.Core;
+using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Modules.Membership;
 using Kentico.Xperience.Admin.Base;
+using Kentico.Xperience.Admin.Base.UIPages;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 
@@ -19,11 +22,15 @@ using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Kentico.Community.Portal.Admin.Features.Reporting;
 
-public class MembershipStatsPage(IWebsiteChannelDomainProvider domainProvider, IHttpContextAccessor contextAccessor) : Page<MembershipStatsLayoutClientProperties>
+public class MembershipStatsPage(
+    IWebsiteChannelDomainProvider domainProvider,
+    IHttpContextAccessor contextAccessor,
+    AdminLinkBuilder adminLinkBuilder) : Page<MembershipStatsLayoutClientProperties>
 {
     private const string MemberDisplayNameExpression = "COALESCE(NULLIF(LTRIM(RTRIM(COALESCE(M.[MemberFirstName], '') + ' ' + COALESCE(M.[MemberLastName], ''))), ''), M.[MemberName])";
     private readonly IWebsiteChannelDomainProvider domainProvider = domainProvider;
     private readonly IHttpContextAccessor contextAccessor = contextAccessor;
+    private readonly AdminLinkBuilder adminLinkBuilder = adminLinkBuilder;
 
     private static readonly ImmutableArray<LeaderboardDefinition> leaderboardDefinitions =
     [
@@ -44,12 +51,15 @@ public class MembershipStatsPage(IWebsiteChannelDomainProvider domainProvider, I
         var moderationStatuses = await GetModerationStatuses(cancellationToken);
         var domainCounts = await GetEmailDomainCounts(cancellationToken);
         var leaderboards = await GetContributionLeaderboards(cancellationToken);
+        var programRoleCounts = await GetProgramRoleCounts(cancellationToken);
 
         var overview = new MembershipStatsOverview(
             domainCounts.EnabledEmailDomains.Sum(item => item.Count),
             moderationStatuses.Sum(item => item.Value),
             domainCounts.EnabledEmailDomains.Count,
-            domainCounts.ModeratedEmailDomains.Count);
+            domainCounts.ModeratedEmailDomains.Count,
+            programRoleCounts.MvpCount,
+            programRoleCounts.CommunityLeaderCount);
 
         return new(
             overview,
@@ -93,6 +103,48 @@ public class MembershipStatsPage(IWebsiteChannelDomainProvider domainProvider, I
                     GetModerationLabel(status),
                     countsByStatus.GetValueOrDefault(status.ToString())))
         ];
+    }
+
+    private static async Task<ProgramRoleCountResult> GetProgramRoleCounts(CancellationToken cancellationToken)
+    {
+        const string query = """
+        SELECT
+            R.[MemberRoleGUID] AS [RoleGUID],
+            COUNT(DISTINCT RM.[MemberRoleMemberMemberID]) AS [Count]
+        FROM [CMS_MemberRoleMember] RM
+        INNER JOIN [CMS_MemberRole] R
+            ON RM.[MemberRoleMemberMemberRoleID] = R.[MemberRoleID]
+        WHERE R.[MemberRoleGUID] IN (@MvpRoleGUID, @CommunityLeaderRoleGUID)
+        GROUP BY R.[MemberRoleGUID]
+        """;
+
+        var parameters = new QueryDataParameters
+        {
+            new DataParameter("@MvpRoleGUID", SystemMemberRoles.KenticoMVP.MemberRoleGUID),
+            new DataParameter("@CommunityLeaderRoleGUID", SystemMemberRoles.KenticoCommunityLeader.MemberRoleGUID),
+        };
+
+        await using var reader = await ConnectionHelper.ExecuteReaderAsync(query, parameters, QueryTypeEnum.SQLQuery, CommandBehavior.Default, cancellationToken);
+
+        int mvpCount = 0;
+        int communityLeaderCount = 0;
+
+        while (reader.Read())
+        {
+            var roleGuid = reader.GetGuid("RoleGUID");
+            int count = reader.GetInt32("Count");
+
+            if (roleGuid == SystemMemberRoles.KenticoMVP.MemberRoleGUID)
+            {
+                mvpCount = count;
+            }
+            else if (roleGuid == SystemMemberRoles.KenticoCommunityLeader.MemberRoleGUID)
+            {
+                communityLeaderCount = count;
+            }
+        }
+
+        return new(mvpCount, communityLeaderCount);
     }
 
     private static async Task<DomainCountResult> GetEmailDomainCounts(CancellationToken cancellationToken)
@@ -253,7 +305,10 @@ public class MembershipStatsPage(IWebsiteChannelDomainProvider domainProvider, I
                 reader.GetString("DisplayName"),
                 reader.GetString("MemberEmail"),
                 reader.GetInt32("ItemCount"),
-                $"/admin/members/list/{reader.GetInt32("MemberID")}/edit",
+                adminLinkBuilder.GetPath<MemberEdit>(new()
+                {
+                    { typeof(MemberEditSection), reader.GetInt32("MemberID").ToString() },
+                }),
                 BuildMemberViewUrl(reader.GetInt32("MemberID"), memberDomain, requestScheme)));
         }
 
@@ -320,6 +375,8 @@ public class MembershipStatsPage(IWebsiteChannelDomainProvider domainProvider, I
     private sealed record DomainCountResult(
         ImmutableList<MemberEmailDomainCount> EnabledEmailDomains,
         ImmutableList<MemberEmailDomainCount> ModeratedEmailDomains);
+
+    private sealed record ProgramRoleCountResult(int MvpCount, int CommunityLeaderCount);
 
     private sealed record LeaderboardDefinition(string Key, string Label);
 }

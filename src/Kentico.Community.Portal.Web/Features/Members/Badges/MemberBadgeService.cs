@@ -47,7 +47,7 @@ public class MemberBadgeService(
         return models;
     }
 
-    public async Task UpdateSelectedBadgesFor(List<SelectedBadgeViewModel> badges, int memberId)
+    public async Task UpdateSelectedBadgesFor(IReadOnlyList<SelectedBadgeViewModel> badges, int memberId)
     {
         if (readOnlyProvider.IsReadOnly)
         {

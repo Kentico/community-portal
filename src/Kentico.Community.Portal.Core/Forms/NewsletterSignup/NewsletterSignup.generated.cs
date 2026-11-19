@@ -57,17 +57,6 @@ namespace Kentico.Community.Portal.Core.Forms
 
 
 		/// <summary>
-		/// ConsentAgreement.
-		/// </summary>
-		[DatabaseField]
-		public Guid ConsentAgreement
-		{
-			get => ValidationHelper.GetGuid(GetValue(nameof(ConsentAgreement)), Guid.Empty);
-			set => SetValue(nameof(ConsentAgreement), value);
-		}
-
-
-		/// <summary>
 		/// Recaptcha_FormComponent.
 		/// </summary>
 		[DatabaseField]
@@ -117,16 +106,6 @@ namespace Kentico.Community.Portal.Core.Forms
 			{
 				get => mInstance.Email;
 				set => mInstance.Email = value;
-			}
-
-
-			/// <summary>
-			/// ConsentAgreement.
-			/// </summary>
-			public Guid ConsentAgreement
-			{
-				get => mInstance.ConsentAgreement;
-				set => mInstance.ConsentAgreement = value;
 			}
 
 

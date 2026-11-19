@@ -73,6 +73,39 @@ IndustryResource;Industry resource
           </VisibilityConditionConfiguration>
         </visibilityconditiondata>
       </field>
+      <field allowempty="true" column="LinkContentIcon" columnsize="50" columntype="text" enabled="true" guid="b6f60757-f3c7-46a6-83ad-2228306c1de3" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[(optional) Icon displayed with the link in card designs.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Icon</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.DropDownSelector</controlname>
+          <Options>
+<![CDATA[
+chat;Chat
+document;Document
+ai;AI
+puzzle;Puzzle (integration)
+community;Community (group)
+article;Article
+trophy;Trophy
+code;Code (source, GitHub)
+package;Package (npm, NuGet)
+rss;RSS feed
+education;Education (training, tutorials)
+support;Support
+shield;Shield (security, trust)
+roadmap;Roadmap
+calendar;Calendar (events)
+video;Video
+]]>
+          </Options>
+        </settings>
+      </field>
     </form>
   </ClassFormDefinition>
   <ClassGUID>05bcb412-2000-455b-95fd-74dad14fbdae</ClassGUID>

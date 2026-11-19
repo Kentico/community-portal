@@ -1,3 +1,4 @@
+using Kentico.Community.Portal.Web.Features.DataCollection;
 using Kentico.Community.Portal.Web.Middleware;
 using Kentico.Web.Mvc;
 using Kentico.Xperience.Cloud;
@@ -18,8 +19,8 @@ builder.Services
     .AddAppXperience(config, env)
     .AddAppXperienceMembership()
     .AddAppLuceneSearch(config)
-    .AddAppMvc(env)
-    .AddApp(config);
+    .AddAppMvc(env, config)
+    .AddApp(config, env);
 
 var app = builder.Build();
 
@@ -36,6 +37,7 @@ app
     .UseAuthentication()
     .UseKenticoCloud()
     .UseKentico()
+    .UseMiddleware<CookieConsentMiddleware>()
     .UseAppMiniProfiler(app, config, env)
     .UseRateLimiter()
     /**

@@ -11,6 +11,7 @@ public static partial class SystemTaxonomies
     public static ContentAuthorizationTaxonomy ContentAuthorization { get; } = new();
     public static EmbedTypeTaxonomy EmbedType { get; } = new();
     public static DXTopicTaxonomy DXTopic { get; } = new();
+    public static MemberAssetTypeTaxonomy MemberAssetType { get; } = new();
 
     public static readonly IReadOnlyList<ISystemTaxonomy> ProtectedTaxonomies =
     [
@@ -19,7 +20,8 @@ public static partial class SystemTaxonomies
         IntegrationType,
         ContentAuthorization,
         EmbedType,
-        DXTopic
+        DXTopic,
+        MemberAssetType
     ];
 
     public static bool Includes(TaxonomyInfo taxonomy) =>

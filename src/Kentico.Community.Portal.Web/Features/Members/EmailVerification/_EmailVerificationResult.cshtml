@@ -1,0 +1,37 @@
+@using Kentico.Community.Portal.Web.Features.Members.EmailVerification
+
+@model EmailVerificationResultViewModel
+
+<div class="main text-center" test-id="emailVerificationResult"
+     data-outcome="@Model.Outcome.ToString().ToLowerInvariant()">
+    <h4 class="mb-4" test-id="emailVerificationMessage">@Model.Message</h4>
+
+    @if (Model.Outcome == EmailVerificationOutcome.Pending && Model.Confirm is not null)
+    {
+        @*
+            Opening the link changes nothing (email scanners pre-open links). The member confirms with this button.
+            method="post": the form tag helper renders the antiforgery token the endpoint validates.
+            Without JavaScript the form posts to this page's URL, which the same POST action handles.
+        *@
+        <form method="post" hx-post hx-controller="MemberEmail" hx-action="@Model.ConfirmAction"
+              hx-target="closest [test-id=emailVerificationResult]" hx-swap="outerHTML"
+              hx-disabled-elt="find fieldset" test-id="emailVerificationConfirmForm">
+            <input type="hidden" name="memberID" value="@Model.Confirm.MemberID" />
+            <input type="hidden" name="email" value="@Model.Confirm.Email" />
+            <input type="hidden" name="token" value="@Model.Confirm.Token" />
+            <fieldset hx-indicator="this">
+                <button type="submit" class="btn btn-primary" xpc-loading-button test-id="emailVerificationConfirm">
+                    @Model.ConfirmButtonText
+                </button>
+            </fieldset>
+        </form>
+    }
+    else if (Model.IsSignedInMember)
+    {
+        <a href="/my-account" class="btn btn-outline-secondary" test-id="emailVerificationAccountLink">My account</a>
+    }
+    else
+    {
+        <a href="/login" class="btn btn-outline-secondary" test-id="emailVerificationSignInLink">Sign in</a>
+    }
+</div>

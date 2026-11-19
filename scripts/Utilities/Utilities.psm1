@@ -18,20 +18,34 @@ $scriptConfig.CodeGenerationTypes = @{
 }
 $scriptConfig.CompressDeploymentPackage = $True
 
-# Local settings can be defined by copying settings.template.json to settings.local.json
-$settingsLocalFilePath = Join-Path $scriptConfig.WorkspaceFolder "scripts" "Utilities" "settings.local.json"
+# Local settings can be defined by copying settings.template.json to settings.local.json.
+# Resolved from the module's own location rather than $scriptConfig.WorkspaceFolder, so the
+# file is found regardless of which directory the calling script was invoked from.
+$settingsFileName = "settings.local.json"
+$settingsFilePath = Join-Path $PSScriptRoot $settingsFileName
 
-if (Test-Path $settingsLocalFilePath) {
-    $localConfig = Get-Content -Path $settingsLocalFilePath -Raw | ConvertFrom-Json
+if (Test-Path $settingsFilePath) {
+    Write-Information "Using settings from $settingsFileName"
 
-    $scriptConfig.BackupSourceFolderPath = $localConfig.BackupSourceFolderPath 
-    $scriptConfig.BackupSourcePathSeparator = $localConfig.BackupSourcePathSeparator 
-    $scriptConfig.BackupHostSourceFolderPath = $localConfig.BackupHostSourceFolderPath 
-    $scriptConfig.CodeGenerationTypes = $localConfig.CodeGenerationTypes 
-    $scriptConfig.CompressDeploymentPackage = $localConfig.CompressDeploymentPackage 
+    $settings = Get-Content -Path $settingsFilePath -Raw | ConvertFrom-Json
+
+    # Only keys actually present in the file override the defaults above. Assigning
+    # unconditionally set any absent key to $null, so a settings file that omitted one
+    # silently discarded its default instead of falling back to it.
+    foreach ($key in @(
+            "BackupSourceFolderPath",
+            "BackupSourcePathSeparator",
+            "BackupHostSourceFolderPath",
+            "CodeGenerationTypes",
+            "CompressDeploymentPackage")) {
+
+        if ($null -ne $settings.$key) {
+            $scriptConfig.$key = $settings.$key
+        }
+    }
 }
 else {
-    Write-Information "Local settings file not found. Using default settings."
+    Write-Information "Settings file '$settingsFileName' not found. Using default settings."
 }
 
 <#

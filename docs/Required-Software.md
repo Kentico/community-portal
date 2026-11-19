@@ -2,21 +2,21 @@
 
 ## .NET Runtime
 
-.NET 10.0 SDK (version `10.0.100`) required; projects target .NET 9.0
+.NET 10 SDK required; projects target .NET 10
 
 - <https://dotnet.microsoft.com/en-us/download/dotnet/10.0>
-  - Target framework: .NET 9.0 (`net9.0`)
+  - Target framework: .NET 10 (`net10.0`)
   - See `global.json` for the exact SDK version requirement
 
 ## Node.js Runtime
 
-- [Node.js](https://nodejs.org/en/download/package-manager) 24.11.1 or newer
-- [Corepack](https://nodejs.org/api/corepack.html) enabled (`corepack enable`)
-- [pnpm](https://pnpm.io/) via Corepack (version is pinned in `packageManager`)
+- [Node.js](https://nodejs.org/en/download/package-manager) 24.x (24.22.1+; LTS, security fixes)
+- [pnpm](https://pnpm.io/installation), standalone install (not Corepack). Any
+  recent version works: pnpm switches to the version pinned in `packageManager`
+  automatically.
 - [NVM for Windows](https://github.com/coreybutler/nvm-windows) to manage
   multiple installed versions of Node.js (recommended)
-  - See `engines` in the solution's `package.json` files for specific version
-    requirements (the root `package.json` is the authoritative source)
+  - See `engines` in the root `package.json` for the exact version range
 
 ## PowerShell
 
@@ -31,13 +31,13 @@
 ## .NET Aspire (optional)
 
 [.NET Aspire](https://aspire.dev) can orchestrate the full local development
-stack (database, Azure Storage emulator, client dev servers, and the web app)
-with a single `aspire run` command. See
+stack (database, client dev servers, and the web app) with a single
+`aspire run` command. See
 [Local Development with .NET Aspire](./Aspire.md).
 
-- [Aspire CLI](https://aspire.dev) — `dotnet tool install -g Aspire.Cli`
-  - Requires [Docker](https://www.docker.com/) running for the SQL Server and
-    Azurite containers
+- [Aspire CLI](https://aspire.dev/get-started/install-cli/) 17
+  - Requires [Docker](https://www.docker.com/) running for the SQL Server
+    container
 
 ## C# Editor
 
@@ -65,16 +65,6 @@ with a single `aspire run` command. See
 - (**alternative**)
   [SQL Server Management Studio](https://learn.microsoft.com/en-us/ssms/download-sql-server-management-studio-ssms)
   (Windows only)
-
-## Azure Storage
-
-Azure storage is used locally for data storage and background job processing.
-
-- [Azurite](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio%2Cblob-storage)
-  local install
-- (**alternative**)
-  [Azurite on Docker](https://github.com/Azure/Azurite?tab=readme-ov-file#dockerhub)
-- [Azure Storage Explorer](https://azure.microsoft.com/en-us/products/storage/storage-explorer/)
 
 ## Email SMTP Server
 

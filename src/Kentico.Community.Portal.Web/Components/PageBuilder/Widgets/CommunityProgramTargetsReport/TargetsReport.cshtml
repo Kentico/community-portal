@@ -20,7 +20,7 @@
                         @foreach (var member in Model.AvailableMembers)
                         {
                             <option value="@member.MemberId">
-                                @member.DisplayName (@member.ProgramStatus)
+                                @member.DisplayName (@member.Membership)
                             </option>
                         }
                     </select>
@@ -51,7 +51,7 @@
             else
             {
                 <p class="card-text">
-                    <text><strong>Program:</strong> @Model.ProgramStatusDisplay</text>
+                    <text><strong>Program:</strong> @Model.MembershipDisplay</text>
                 </p>
 
                 var annualGoals = Model.Goals.Where(g => !Model.IsQuarterly(g.Label)).ToList();

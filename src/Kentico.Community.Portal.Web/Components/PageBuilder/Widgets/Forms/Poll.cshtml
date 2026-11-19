@@ -12,40 +12,47 @@
     var showDisabled = JSEncoder.EncodeToJson(Model.IsHidden && showPoll);
     string overlayAttr = Model.IsHidden && showPoll ? "overlay" : "";
 
-    var (backgroundColorClass, backgroundColorProperty) = Model.BackgroundColor switch
+    // Theme (background, text and chart colors) is defined in _poll.scss
+    string themeClass = Model.BackgroundColor switch
     {
-        BackgroundColors.Dark => ("bg-light-subtle", "rgb(var(--bs-light-bg-subtle))"),
-        BackgroundColors.Secondary_Light => ("bg-purple-100", "rgb(var(--bs-purple-100-rgb))"),
-        BackgroundColors.Light => ("bg-light", "rgb(var(--bs-light-rgb))"),
-        BackgroundColors.White or _ => ("bg-white", "var(--bs-white)"),
+        BackgroundColors.Dark => "poll-widget--dark",
+        BackgroundColors.Secondary_Light => "poll-widget--secondary-light",
+        BackgroundColors.Light => "poll-widget--light",
+        BackgroundColors.White or _ => "poll-widget--white",
     };
+    // The question is rendered as the title, so the form's own label is visually hidden
+    string titledClass = showPoll && Model.Title.HasValue ? "poll-widget--titled" : "";
 
     FormState.SetIsFormHidden(ViewData, Model);
 }
 
 <div xpc-preview-outline="@PollWidget.NAME Widget" x-data="{ showDisabled: @showDisabled }">
-    <div class="hideable-form poll-widget p-4 @backgroundColorClass rounded"
-         style="--fallback-form-bg-color: @backgroundColorProperty" @overlayAttr :overlay="showDisabled">
+    <div class="hideable-form poll-widget @themeClass @titledClass" @overlayAttr :overlay="showDisabled">
         @if (showPoll)
         {
+            @if (Model.Title.TryGetValue(out string? title))
+            {
+                <h4 class="poll-widget__title" aria-hidden="true">@title</h4>
+            }
+
             @if (Model.Description.TryGetValue(out var description))
             {
-                <div class="mb-3">@description</div>
+                <div class="poll-widget__description">@description</div>
             }
 
             var form = await Html.Kentico().RenderNestedWidgetAsync(SystemComponentIdentifiers.FORM_WIDGET_IDENTIFIER,
             Model.ToFormWidgetProperties());
             @form
 
-            <p class="mb-0 mt-3">
-                <small>Open until: @Model.OpenUntilDate.ToString("d", View.Culture)</small>
+            <p class="poll-widget__footer poll-widget__footer--form">
+                <span>Open until: @Model.OpenUntilDate.ToString("d", View.Culture)</span>
             </p>
 
             @if (Model.IsHidden || isPreview)
             {
                 <div class="fallback-content justify-content-center align-items-center flex-column position-absolute w-100 h-100"
                      x-cloak :class="{ 'd-flex': showDisabled, 'd-none': !showDisabled }">
-                    <div class="p-3 bg-white rounded text-center border border-2"
+                    <div class="p-3 bg-white text-body rounded text-center border border-2"
                          style="background-color: var(--section-bg-color, --bs-light-rgb); border-color: var(--color-gray-100);">
                         <p>Please login to answer this poll.</p>
                         <a class="btn btn-primary btn-sm" href="/login?returnURL=@Context.Request.Path">

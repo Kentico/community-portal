@@ -54,22 +54,21 @@ public static class FormParser
         }
 
         var lookup = new Dictionary<string, string>();
-        string[] lines = srcString.Split(['\n'], StringSplitOptions.RemoveEmptyEntries);
+        // Lines are "value;text" or just "text" (value == text).
+        // Trimming also removes the '\r' of CRLF line endings, which would otherwise
+        // become part of the key and never match the submitted (trimmed) values.
+        string[] lines = srcString.Split(['\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
         foreach (string line in lines)
         {
-            string[] parts = line.Split(';');
-            if (parts.Length == 2)
+            string[] parts = line.Split(';', 2, StringSplitOptions.TrimEntries);
+            string key = parts[0];
+            if (key.Length == 0)
             {
-                string key = parts[0].Trim();
-                string value = parts[1].Trim();
-                lookup[key] = value;
+                continue;
             }
-            else if (parts.Length == 1)
-            {
-                string key = parts[0];
-                lookup[key] = key;
-            }
+
+            lookup[key] = parts.Length == 2 && parts[1].Length > 0 ? parts[1] : key;
         }
 
         return lookup;

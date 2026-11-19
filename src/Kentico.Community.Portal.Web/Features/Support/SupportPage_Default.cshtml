@@ -9,19 +9,8 @@
 <vc:page-heading page="new(templateModel)" />
 
 <main>
-    <div class="section section--default">
-        <div class="container">
-            <div class="row g-3 g-lg-4 g-xl-6">
-                <aside class="col-12 col-lg-auto support-sidebar">
-                    <editable-area area-identifier="side-panel" allow-widget-output-cache="View.CacheEnabled"
-                        widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
-                </aside>
-                <div role="main" class="col">
-                    <vc:support-form />
-                </div>
-            </div>
-        </div>
-    </div>
+    <editable-area area-identifier="side-panel" allow-widget-output-cache="View.CacheEnabled"
+        widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />
 
     <editable-area area-identifier="bottom" allow-widget-output-cache="View.CacheEnabled"
         widget-output-cache-expires-after="TimeSpan.FromMinutes(5)" />

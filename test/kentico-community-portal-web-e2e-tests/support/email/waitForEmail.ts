@@ -23,17 +23,23 @@ export async function waitForEmail(
   client: Client,
   options: WaitForEmailOptions,
 ): Promise<VirtualEmail> {
-  const response = (await client.callTool({
-    name: "wait_for_email",
-    arguments: {
-      inbox: options.inbox,
-      subjectContains: options.subjectContains,
-      timeoutMs: options.timeoutMs ?? 30_000,
-      ...(typeof options.sinceId === "number"
-        ? { sinceId: options.sinceId }
-        : {}),
+  const timeoutMs = options.timeoutMs ?? 30_000;
+  const response = (await client.callTool(
+    {
+      name: "wait_for_email",
+      arguments: {
+        inbox: options.inbox,
+        subjectContains: options.subjectContains,
+        timeoutMs,
+        ...(typeof options.sinceId === "number"
+          ? { sinceId: options.sinceId }
+          : {}),
+      },
     },
-  })) as ToolResponse;
+    undefined,
+    // The SDK's default request timeout (60s) would end longer waits first
+    { timeout: timeoutMs + 10_000 },
+  )) as ToolResponse;
 
   if (response.isError) {
     throw new Error(

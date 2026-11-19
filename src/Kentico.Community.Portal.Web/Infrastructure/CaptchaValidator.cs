@@ -3,12 +3,18 @@ using Newtonsoft.Json;
 
 namespace Kentico.Community.Portal.Web.Infrastructure;
 
-public class CaptchaValidator(IOptions<ReCaptchaSettings> options, IHttpClientFactory httpClientFactory)
+public class CaptchaValidator(
+    IOptions<ReCaptchaSettings> options,
+    IHttpClientFactory httpClientFactory,
+    ILogger<CaptchaValidator> logger)
 {
     private readonly ReCaptchaSettings settings = options.Value;
     private readonly IHttpClientFactory httpClientFactory = httpClientFactory;
+    private readonly ILogger<CaptchaValidator> logger = logger;
 
-    public async Task<CaptchaValidationResult> ValidateCaptcha(ICaptchaClientResponse clientResponse)
+    /// <param name="clientResponse">The submitted form</param>
+    /// <param name="source">The form, for the verification log (e.g. "Registration")</param>
+    public async Task<CaptchaValidationResult> ValidateCaptcha(ICaptchaClientResponse clientResponse, string source)
     {
         if (settings.IsValidationDisabled)
         {
@@ -35,17 +41,19 @@ public class CaptchaValidator(IOptions<ReCaptchaSettings> options, IHttpClientFa
             return new() { IsSuccess = false, ErrorMessage = "Could not validate captcha" };
         }
 
-        if (response.Score < settings.ScoreThredhold)
+        var result = new CaptchaValidationResult { IsSuccess = true };
+        if (response.Score < settings.ScoreThreshold)
         {
-            return new() { IsSuccess = false, ErrorMessage = "Invalid captcha score" };
+            result = new() { IsSuccess = false, ErrorMessage = "Invalid captcha score" };
+        }
+        else if (!response.IsSuccess)
+        {
+            result = new() { IsSuccess = false, ErrorMessage = response.ErrorMessages.FirstOrDefault() ?? "Captcha failed" };
         }
 
-        if (!response.IsSuccess)
-        {
-            return new() { IsSuccess = false, ErrorMessage = response.ErrorMessages.FirstOrDefault() ?? "Captcha failed" };
-        }
+        logger.LogCaptchaVerification(source, response.Score, response.Action, response.IsSuccess, settings.ScoreThreshold, result.IsSuccess);
 
-        return new() { IsSuccess = true };
+        return result;
     }
 
     public class CaptchaResponse
@@ -57,7 +65,33 @@ public class CaptchaValidator(IOptions<ReCaptchaSettings> options, IHttpClientFa
 
         [JsonProperty("score")]
         public double Score { get; set; }
+
+        [JsonProperty("action")]
+        public string? Action { get; set; }
     }
+}
+
+public static partial class CaptchaLogging
+{
+    /// <summary>
+    /// One reCAPTCHA verification, for tuning the score threshold. No token, IP or form data.
+    /// </summary>
+    /// <param name="source">The form or component that verified the token</param>
+    /// <param name="success">Google's <c>success</c></param>
+    /// <param name="passed">The portal accepted the submission (score and success)</param>
+    [LoggerMessage(
+        EventId = 1001,
+        EventName = "RECAPTCHA_VERIFICATION",
+        Level = LogLevel.Information,
+        Message = "reCAPTCHA verification: {Source} score {Score} action {Action} success {Success} threshold {Threshold} passed {Passed}")]
+    public static partial void LogCaptchaVerification(
+        this ILogger logger,
+        string source,
+        double score,
+        string? action,
+        bool success,
+        double threshold,
+        bool passed);
 }
 
 public interface ICaptchaClientResponse
@@ -82,5 +116,5 @@ public class ReCaptchaSettings
     public bool IsValidationDisabled { get; set; }
     public string SiteKey { get; set; } = "";
     public string SecretKey { get; set; } = "";
-    public double ScoreThredhold { get; set; }
+    public double ScoreThreshold { get; set; }
 }

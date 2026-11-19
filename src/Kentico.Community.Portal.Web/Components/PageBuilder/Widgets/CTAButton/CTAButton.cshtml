@@ -24,10 +24,17 @@
         MarginSizes.Large => "pb-5",
         MarginSizes.None or _ => "pb-1"
     };
+
+    // Outline sizes itself (_cta-button.scss); Filled keeps the classes it has always had.
+    string styleClass = Model.Style switch
+    {
+        CTAButtonStyles.Outline => "btn-outline-primary cta-button--outline",
+        CTAButtonStyles.Filled or _ => "btn-primary btn-lg px-4 d-inline"
+    };
 }
 
 <div class="@horizontalAlignmentClass @topMarginClass @bottomMarginClass" xpc-preview-outline="CTA Widget">
-    <a href="@(Model.LinkURL ?? "#")" class="btn btn-primary btn-lg px-4 d-inline ">
+    <a href="@(Model.LinkURL ?? "#")" class="btn @styleClass">
         @Model.Text
     </a>
 </div>

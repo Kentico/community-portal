@@ -15,7 +15,7 @@ public class MemberListExtender : PageExtender<MemberList>
         await base.ConfigurePage();
 
         Page.PageConfiguration.QueryModifiers.AddModifier((q, settings) =>
-            MemberListFilter.ModifyQueryForBadgeFilter(q));
+            MemberListFilter.ModifyQueryForMemberRoleFilter(MemberListFilter.ModifyQueryForBadgeFilter(q)));
 
         var configs = Page.PageConfiguration.ColumnConfigurations
                 .AddColumn("MemberFirstName", caption: "First name")

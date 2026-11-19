@@ -1,5 +1,5 @@
 using System.Collections.Immutable;
-using Kentico.Community.Portal.Core.Modules.Membership;
+using Kentico.Community.Portal.Core.Modules;
 
 namespace Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CommunityProgramsActivityList;
 
@@ -20,11 +20,11 @@ internal static class CommunityProgramsActivityListFakeData
         var memberNames = Enumerable.Range(1, 25)
             .Select(i =>
             {
-                var status = i % 2 == 0
-                    ? ProgramStatuses.MVP
-                    : ProgramStatuses.CommunityLeader;
+                var membership = i % 2 == 0
+                    ? CommunityProgramMembership.MVP
+                    : CommunityProgramMembership.CommunityLeader;
 
-                return new KeyValuePair<int, CommunityProgramsMemberName>(1000 + i, new CommunityProgramsMemberName($"Fake Member {i}", status));
+                return new KeyValuePair<int, CommunityProgramsMemberName>(1000 + i, new CommunityProgramsMemberName($"Fake Member {i}", membership));
             })
             .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
@@ -50,7 +50,7 @@ internal static class CommunityProgramsActivityListFakeData
 
             items.Add(new(
                 MemberID: memberId,
-                ProgramStatus: memberNames[memberId].ProgramStatus,
+                Membership: memberNames[memberId].Membership,
                 ActivityDate: RandomDateInYear(rng, year),
                 ActivityType: activityTypeKeys[rng.Next(activityTypeKeys.Length)],
                 URL: $"https://example.com/community-programs/activity/{i}",

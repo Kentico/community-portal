@@ -5,6 +5,7 @@ import setupNavigation from "./navigation";
 import { registerAnswerListComponent } from "../../Features/QAndA/answerListComponent";
 import { registerTableOfContentsComponent } from "../../Features/Blog/tableOfContentsComponent";
 import { registerCarouselScrollComponent } from "../../Features/Carousel/carouselScrollComponent";
+import { registerIntegrationsHubComponent } from "../../Features/Integrations/integrationsHubComponent";
 
 window.asyncReady(() => {
   setupBootstrap();
@@ -12,6 +13,7 @@ window.asyncReady(() => {
   registerAnswerListComponent(Alpine);
   registerTableOfContentsComponent(Alpine);
   registerCarouselScrollComponent(Alpine);
+  registerIntegrationsHubComponent(Alpine);
 
   window.Alpine = Alpine;
   Alpine.start();

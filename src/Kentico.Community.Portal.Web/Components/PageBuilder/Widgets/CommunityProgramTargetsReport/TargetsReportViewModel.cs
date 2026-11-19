@@ -1,7 +1,7 @@
 
 using System.ComponentModel;
 using EnumsNET;
-using Kentico.Community.Portal.Core.Modules.Membership;
+using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CommunityProgramTargetsReport.Operations;
 
 namespace Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CommunityProgramTargetsReport;
@@ -11,7 +11,7 @@ public class TargetReportsViewModel : BaseWidgetViewModel
     private TargetReportsViewModel(
         bool isAuthenticated,
         int year,
-        ProgramStatuses programStatus,
+        CommunityProgramMembership membership,
         string heading,
         IReadOnlyList<CommunityProgramTargetsReportProgress> goals,
         IReadOnlyList<CommunityProgramTargetsReportBadgeRequirement> badgeRequirements,
@@ -24,7 +24,7 @@ public class TargetReportsViewModel : BaseWidgetViewModel
     {
         IsAuthenticated = isAuthenticated;
         Year = year;
-        ProgramStatus = programStatus;
+        Membership = membership;
         Heading = heading;
         Goals = goals;
         BadgeRequirements = badgeRequirements;
@@ -40,8 +40,8 @@ public class TargetReportsViewModel : BaseWidgetViewModel
 
     public bool IsAuthenticated { get; }
     public int Year { get; }
-    public ProgramStatuses ProgramStatus { get; }
-    public string ProgramStatusDisplay => GetEnumDescription(ProgramStatus);
+    public CommunityProgramMembership Membership { get; }
+    public string MembershipDisplay => GetEnumDescription(Membership);
 
     public string? ErrorMessage { get; }
 
@@ -61,7 +61,7 @@ public class TargetReportsViewModel : BaseWidgetViewModel
         new(
             isAuthenticated: false,
             year: year,
-            programStatus: ProgramStatuses.None,
+            membership: CommunityProgramMembership.None,
             heading: props.Heading,
             goals: [],
             badgeRequirements: [],
@@ -83,7 +83,7 @@ public class TargetReportsViewModel : BaseWidgetViewModel
         return new(
             isAuthenticated: true,
             year: resp.Year,
-            programStatus: resp.ProgramStatus,
+            membership: resp.Membership,
             heading: props.Heading,
             goals: goals,
             badgeRequirements: badges,
@@ -99,7 +99,7 @@ public class TargetReportsViewModel : BaseWidgetViewModel
         TargetsReportWidgetProperties props,
         TargetsReportQueryResponse resp)
     {
-        if (resp.ProgramStatus == ProgramStatuses.MVP)
+        if (resp.Membership == CommunityProgramMembership.MVP)
         {
             var goals = new List<CommunityProgramTargetsReportProgress>
             {
@@ -120,7 +120,7 @@ public class TargetReportsViewModel : BaseWidgetViewModel
             return (goals, badges);
         }
 
-        if (resp.ProgramStatus == ProgramStatuses.CommunityLeader)
+        if (resp.Membership == CommunityProgramMembership.CommunityLeader)
         {
             var goals = new List<CommunityProgramTargetsReportProgress>
             {

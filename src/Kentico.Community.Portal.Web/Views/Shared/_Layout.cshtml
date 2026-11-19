@@ -1,4 +1,6 @@
 ﻿@using Kentico.Activities.Web.Mvc
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Markdown
+@inject CMS.Helpers.ICurrentCookieLevelProvider CookieLevelProvider
 
 <!DOCTYPE html>
 
@@ -21,11 +23,13 @@
         <link rel="stylesheet" href="/vendor/css/prism.min.css" asp-append-version="true">
     }
 
-    @Html.Kentico().ActivityLoggingScriptV2()
+    @* Activity logging only for visitors who allowed Website tracking *@
+    @if (CookieLevelProvider.GetCurrentCookieLevel() >= Kentico.Web.Mvc.CookieLevel.All.Level)
+    {
+        @Html.Kentico().ActivityLoggingScriptV2()
+    }
 
     <page-builder-styles />
-
-    <vc:cookies-init />
 
     <script>
         window.asyncReady = function (callback) {
@@ -60,6 +64,30 @@
     }
 
     <page-builder-scripts />
+
+    @if (View.PageBuilderMode == ApplicationPageBuilderMode.Edit)
+    {
+        @* Markdown widget inline editor - Milkdown is only downloaded in Page Builder edit mode *@
+        <script>
+            (function () {
+                let editorModule;
+                const run = (fn) => (options) => {
+                    editorModule ??= import('@ClientAssets.ViteAssetPath("js/page-builder-markdown-editor.js")');
+                    editorModule.then((m) => m[fn](options));
+                };
+
+                window.kentico.pageBuilder.registerInlineEditor("@MarkdownWidget.INLINE_EDITOR_IDENTIFIER", {
+                    init: run("init"),
+                    destroy: run("destroy"),
+                    dragStart: run("dragStart"),
+                    drop: run("drop"),
+                });
+            })();
+        </script>
+    }
+
+    @* After the page body, which sets the flag (RecaptchaScript) *@
+    <vc:recaptcha-script />
 </body>
 
 </html>

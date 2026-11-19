@@ -46,8 +46,8 @@ jobs:
       NO_COLOR: 1
       DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION: false
       PROJECT_NAME: Kentico.Community.Portal.Web
-      ASPNETCORE_URLS: https://localhost:45039;https://localhost:45040
-      STATUS_CHECK_URL: https://localhost:45039/status
+      # 45041 (plain HTTP) matches the launch profile.
+      ASPNETCORE_URLS: https://localhost:45039;https://localhost:45040;http://localhost:45041
       SQL_SA_PASSWORD: Pass@12345
 
     steps:
@@ -67,26 +67,36 @@ jobs:
           sudo rm -rf /opt/hostedtoolcache/CodeQL /usr/share/swift
           echo "Disk after cleanup:"; df -h /
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v6
-        with:
-          cache: true
-
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version-file: "package.json"
 
-      - name: Install npm dependencies
-        run: pnpm install
+      - name: Setup pnpm and install packages
+        uses: pnpm/setup@v3
+        with:
+          cache: true
+
+      - name: Install Playwright browsers
+        working-directory: ./test/kentico-community-portal-web-e2e-tests
+        run: |
+          # Headless CI: install only the smaller chromium-headless-shell. Every project uses
+          # Chromium; without the browser name Playwright also downloads Firefox and WebKit
+          # (~8s). FFmpeg (video on failure) comes with chromium.
+          # --with-deps is intentionally omitted — the required system libraries
+          # are already present on GitHub's ubuntu-latest runners, and the apt
+          # step it runs adds ~45s. https://playwright.dev/docs/browsers
+          Write-Output "Installing Playwright headless shell..."
+          pnpm exec playwright install --only-shell chromium
+          Write-Output "✓ Playwright headless shell installed"
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v6
         with:
           global-json-file: global.json
 
       - name: Cache NuGet packages
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
@@ -116,53 +126,22 @@ jobs:
             -DestinationPath "./database"
 
       - name: Install SQL Server (2022)
-        uses: potatoqualitee/mssqlsuite@v1.12
+        uses: potatoqualitee/mssqlsuite@bc850f242e5fe551e36cea6fa4bed608c58fa489 # v2
         with:
-          install: sqlpackage, sqlengine, sqlclient
+          # sqlpackage is intentionally absent: nothing in this workflow uses it. Its only
+          # consumer is scripts/Restore-SaaS-Backup.ps1, a local developer script that
+          # installs its own copy via `dotnet tool install -g microsoft.sqlpackage`.
+          install: sqlengine, sqlclient
           sa-password: ${{ env.SQL_SA_PASSWORD }}
           version: 2022
 
       - name: Restore Database from Backup
+        working-directory: "./scripts"
         run: |
-          Write-Output "Creating backup directory in SQL container..."
-          docker exec -u root sql bash -c "mkdir -p /var/opt/mssql/backups"
+          ./Restore-Database-Backup.ps1 `
+            -BackupFileName "${{ env.DATABASE_BACKUP_FILENAME }}" `
+            -SaPassword "${{ env.SQL_SA_PASSWORD }}"
 
-          Write-Output "Copying database backup to SQL container..."
-          docker cp "./database/${{ env.DATABASE_BACKUP_FILENAME }}" sql:/var/opt/mssql/backups/Kentico.Community.bak
-          docker exec -u root sql bash -c "chown mssql:mssql /var/opt/mssql/backups/Kentico.Community.bak"
-          docker exec -u root sql bash -c "chmod 644 /var/opt/mssql/backups/Kentico.Community.bak"
-
-          Write-Output "Verifying backup file contents..."
-          sqlcmd `
-            -S localhost `
-            -d master `
-            -U "sa" `
-            -P "${{ env.SQL_SA_PASSWORD }}" `
-            -N o `
-            -C `
-            -Q "RESTORE FILELISTONLY FROM DISK = '/var/opt/mssql/backups/Kentico.Community.bak'"
-
-          if ($LASTEXITCODE -ne 0) {
-            Write-Error "Failed to verify backup file"
-            exit 1
-          }
-
-          Write-Output "Restoring database..."
-          sqlcmd `
-            -S localhost `
-            -d master `
-            -U "sa" `
-            -P "${{ env.SQL_SA_PASSWORD }}" `
-            -N o `
-            -C `
-            -i ./database/backup-restore.sql
-
-          if ($LASTEXITCODE -ne 0) {
-            Write-Error "Failed to restore database"
-            exit 1
-          }
-
-          Write-Output "✓ Database restored successfully"
           "## ✓ Database Restored" >> $env:GITHUB_STEP_SUMMARY
 
       - name: Restore License Key
@@ -175,6 +154,17 @@ jobs:
         run: |
           ./Restore-CI.ps1
           "## ✓ CI Repository Restored" >> $env:GITHUB_STEP_SUMMARY
+
+      # Macros in the CI repository are signed with the Production salt (developers use it locally),
+      # but CI runs with its own CMSHashStringSalt. Without re-signing, signed macros (email
+      # templates, contact group rules) fail their security check and render empty.
+      # --sign-all is safe here: the database only exists for this run.
+      - name: Re-sign macros for the CI hash salt
+        working-directory: "./src/Kentico.Community.Portal.Web"
+        run: |
+          dotnet run --launch-profile Portal.WebCI -c Release --no-build --no-restore -- --kxp-resign-macros --sign-all --username administrator
+          if ($LASTEXITCODE -ne 0) { throw "Macro re-signing failed" }
+          "## ✓ Macros re-signed" >> $env:GITHUB_STEP_SUMMARY
 
       # === Testing ===
       - name: Run Unit Tests
@@ -196,14 +186,16 @@ jobs:
       - name: Free disk space
         run: |
           Write-Output "Reclaiming disk space before E2E tests..."
+          Write-Output "Disk before cleanup:"
+          df -h /
 
           Remove-Item -Path "./database/${{ env.DATABASE_BACKUP_FILENAME }}.zip" -Force -ErrorAction SilentlyContinue
           Remove-Item -Path "./database/${{ env.DATABASE_BACKUP_FILENAME }}" -Force -ErrorAction SilentlyContinue
           Remove-Item -Path "./src/Kentico.Community.Portal.Web/node_modules" -Recurse -Force -ErrorAction SilentlyContinue
           Remove-Item -Path "./src/Kentico.Community.Portal.Admin/Client/node_modules" -Recurse -Force -ErrorAction SilentlyContinue
 
-          Get-PSDrive -PSProvider FileSystem | Format-Table -AutoSize | Out-String | Write-Output
-          Write-Output "✓ Disk space reclaimed"
+          Write-Output "Disk after cleanup:"
+          df -h /
 
       # === E2E Testing ===
       - name: Publish web application
@@ -215,27 +207,17 @@ jobs:
             -o ./publish `
             --no-build `
             --no-restore
+          # Content item asset files live in the project's assets/ folder (git), which publish
+          # doesn't fully include. The E2E app runs from ./publish, so without them every image
+          # request fails ("Could not find the asset file"). CI only: the deployment package
+          # handles assets.
+          # Publish already creates ./publish/assets (the default **/*.json content glob picks up
+          # JSON asset files), so copy the folder's contents: copying the folder itself into an
+          # existing destination nests it as ./publish/assets/assets.
+          $sourceAssets = "./src/${{ env.PROJECT_NAME }}/assets"
+          New-Item -ItemType Directory -Path ./publish/assets -Force | Out-Null
+          Copy-Item -Path "$sourceAssets/*" -Destination ./publish/assets -Recurse -Force
           Write-Output "✓ Application published to ./publish"
-
-      - name: Install Playwright dependencies
-        working-directory: ./test/kentico-community-portal-web-e2e-tests
-        run: pnpm install
-
-      - name: Install Playwright browsers
-        working-directory: ./test/kentico-community-portal-web-e2e-tests
-        run: |
-          # Headless CI: install only the smaller chromium-headless-shell.
-          # --with-deps is intentionally omitted — the required system libraries
-          # are already present on GitHub's ubuntu-latest runners, and the apt
-          # step it runs adds ~45s. https://playwright.dev/docs/browsers
-          Write-Output "Installing Playwright headless shell..."
-          pnpm exec playwright install --only-shell
-          Write-Output "✓ Playwright headless shell installed"
-
-      - name: Start Azurite storage emulator (background)
-        run: |
-          pnpm dlx azurite@3.35.0 -s -l ./.azurite &
-          Write-Output "✓ Azurite storage emulator started"
 
       - name: Run E2E tests (portal)
         working-directory: ./test/kentico-community-portal-web-e2e-tests
@@ -264,24 +246,30 @@ jobs:
           pnpm test --project=admin-tests
           "Playwright TypeScript admin E2E suite passed." >> $env:GITHUB_STEP_SUMMARY
 
-      # === Artifacts (on failure) ===
-      - name: Upload application logs
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: application-logs-${{ github.run_number }}
-          path: |
-            publish/app-*.log
-          retention-days: 7
-          if-no-files-found: ignore
+      # Specs that change process-wide state (read-only mode, Tag Manager stub, retention tasks).
+      # Serial, after the other suites; --no-deps because those already ran above.
+      - name: Run E2E tests (isolated)
+        working-directory: ./test/kentico-community-portal-web-e2e-tests
+        env:
+          PORTAL_BASE_URL: https://localhost:45039
+          PORTAL_MCP_URL: https://localhost:45039/mcp
+          PLAYWRIGHT_WEB_SERVER_TIMEOUT_MS: 30000
+          NODE_OPTIONS: --no-warnings
+        run: |
+          Write-Output "## 🎭 Isolated E2E Tests" >> $env:GITHUB_STEP_SUMMARY
+          pnpm test --project=isolated-tests --no-deps
+          "Playwright TypeScript isolated E2E suite passed." >> $env:GITHUB_STEP_SUMMARY
 
+      # === Artifacts (on failure) ===
       - name: Upload Playwright report
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-artifacts-${{ github.run_number }}
           path: |
             test/kentico-community-portal-web-e2e-tests/playwright-report
             test/kentico-community-portal-web-e2e-tests/test-results
+          # Traces are consumed within minutes of a red run, while the PR is still being worked
+          # on - see the diagnose-ci-failure skill. Nothing reads them days later.
           retention-days: 1
           if-no-files-found: ignore

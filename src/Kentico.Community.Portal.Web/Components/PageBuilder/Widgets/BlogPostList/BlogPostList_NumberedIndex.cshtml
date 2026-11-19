@@ -1,0 +1,42 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList
+@model BlogPostListWidgetViewModel
+
+@* Numbered Index — an ordered list with large brand numerals. Built for a series
+   read in order, or a ranked/curated set where position carries meaning. *@
+
+<section class="blog-post-list blog-post-list--index" xpc-preview-outline="@Model.ComponentName"
+  aria-label="@(Model.Heading.GetValueOrDefault("Blog posts"))">
+
+  <partial name="~/Components/PageBuilder/Widgets/BlogPostList/_Header.cshtml" model="Model" />
+
+  <ol class="blog-post-list__rows list-unstyled m-0">
+    @foreach (var post in Model.BlogPosts)
+    {
+      <li class="blog-post-list__row position-relative d-flex gap-3">
+        @* The numeral is decorative: the <ol> already conveys order to assistive tech. *@
+        <span class="blog-post-list__numeral text-primary fw-bold flex-shrink-0" aria-hidden="true"></span>
+
+        <div class="blog-post-list__row-body flex-grow-1">
+          <h3 class="blog-post-list__title fs-4 fw-bold m-0">
+            <a href="@post.LinkPath"
+              class="blog-post-list__title-link stretched-link text-decoration-none"
+              @(post.Description.HasValue ? $"aria-describedby={post.DescriptionID}" : null)>
+              <span>@post.Title</span>
+              <svg class="blog-post-list__arrow text-primary" width="15" height="15" viewBox="0 0 16 16" fill="none"
+                aria-hidden="true">
+                <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </a>
+          </h3>
+
+          <partial name="~/Components/PageBuilder/Widgets/BlogPostList/_Meta.cshtml" model="post" />
+
+        <partial name="~/Components/PageBuilder/Widgets/BlogPostList/_Description.cshtml" model="post" />
+
+        <partial name="~/Components/PageBuilder/Widgets/BlogPostList/_Tags.cshtml" model="post" />
+        </div>
+      </li>
+    }
+  </ol>
+</section>

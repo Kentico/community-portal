@@ -1,0 +1,815 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.contentitemcommondata>
+  <BasicItemShortDescription />
+  <BasicItemTitle>Test</BasicItemTitle>
+  <ContentItemCommonDataContentItemID>
+    <CodeName>Test-s6h7hlny-localtest</CodeName>
+    <GUID>5a64a446-31a2-4381-8d3b-3cf3aab3e056</GUID>
+    <ObjectType>cms.contentitem</ObjectType>
+  </ContentItemCommonDataContentItemID>
+  <ContentItemCommonDataContentLanguageID>
+    <CodeName>en-US</CodeName>
+    <GUID>6c743a9e-8a63-425b-bef6-756c12c1bbf5</GUID>
+    <ObjectType>cms.contentlanguage</ObjectType>
+  </ContentItemCommonDataContentLanguageID>
+  <ContentItemCommonDataFirstPublishedWhen>2026-08-10 13:32:02Z</ContentItemCommonDataFirstPublishedWhen>
+  <ContentItemCommonDataGUID>2b1ebced-4b7d-490b-8158-64604c3d23c0</ContentItemCommonDataGUID>
+  <ContentItemCommonDataIsLatest>True</ContentItemCommonDataIsLatest>
+  <ContentItemCommonDataLastPublishedWhen>2026-08-10 22:54:01Z</ContentItemCommonDataLastPublishedWhen>
+  <ContentItemCommonDataVersionStatus>2</ContentItemCommonDataVersionStatus>
+  <ContentItemCommonDataVisualBuilderTemplateConfiguration>
+<![CDATA[
+{
+  "identifier": "KenticoCommunity.BlogPostPage_Components",
+  "properties": {
+    "showTableOfContents": true
+  },
+  "fieldIdentifiers": {
+    "showTableOfContents": "c2816d6f-1fc4-4331-a289-8cb10b5be472"
+  }
+}
+]]>
+  </ContentItemCommonDataVisualBuilderTemplateConfiguration>
+  <ContentItemCommonDataVisualBuilderWidgets>
+<![CDATA[
+{
+  "editableAreas": [
+    {
+      "identifier": "main",
+      "sections": [
+        {
+          "identifier": "68c9b2e5-908a-40cd-9344-6f98cc08da2f",
+          "type": "CommunityPortal.SingleColumnSection",
+          "properties": {
+            "layout": "Standard",
+            "layoutParsed": 0,
+            "alignment": "Left",
+            "alignmentParsed": 0,
+            "paddingTop": "Large",
+            "paddingTopParsed": 0,
+            "paddingBottom": "Large",
+            "paddingBottomParsed": 0,
+            "backgroundColor": "White",
+            "backgroundColorParsed": 1,
+            "displayAsCarousel": false,
+            "numberOfSlides": 3,
+            "carouselAriaLabel": "Featured content carousel"
+          },
+          "zones": [
+            {
+              "identifier": "90f82ee3-aaed-4d8b-8a03-4475f850a2b6",
+              "widgets": [
+                {
+                  "identifier": "61b86491-f2bb-4a00-98ff-5599bbf502d8",
+                  "type": "CommunityPortal.MarkdownWidget",
+                  "variants": [
+                    {
+                      "identifier": "58036b35-6588-4c35-bdf7-d8fe02b4adcc",
+                      "properties": {
+                        "markdown": "**[Automations](https://docs.kentico.com/x/automation_xp)** help marketers scale their ability to consistently react to customer engagement, guide customers through their journey, and integrate customer data into larger organization workflows.\n\nWhile not new, automations remain powerful for driving digital experiences.\n\nWe've been talking a lot **[about marketing automations recently](https://community.kentico.com/blog/designing-marketing-automation-around-the-customer-journey)**, as have experts in our community:\n\n* **[Marketing automation in 2026: what it is, what it isn't, and why the boring parts still win](https://www.linkedin.com/posts/dmitry-bastron_ive-spent-years-building-marketing-automations-ugcPost-7487421944372461568-FXeJ/)**\n* **[Most marketing automation licenses never got past the welcome email](https://www.linkedin.com/posts/andy-thompson_ive-been-building-marketing-automations-ugcPost-7487297969742901248-zVk6/)**\n\nThis interest stems from new extension points for automations in Xperience by Kentico:\n\n* Actions\n* Conditions\n* Triggers\n\nCustom actions were released in **[the June 2026 Refresh](https://community.kentico.com/blog/xperience-by-kentico-refresh-june-29-2026#massively-more-powerful-marketing-automations-with-custom-actions)**, and with the July Refresh the full suite is now available.\n",
+                        "markdownStyle": "Standard",
+                        "markdownStyleParsed": 0,
+                        "markdownCodeLanguage": "",
+                        "noteStyle": "Info",
+                        "noteStyleParsed": 0,
+                        "useDefaultNoteTitle": false,
+                        "noteTitle": "",
+                        "id": "8ef81d22-bf87-4bd0-9f99-dc3657fe0a4f"
+                      },
+                      "fieldIdentifiers": {
+                        "markdown": "536a7c22-c23f-46b7-a25e-da710457b274",
+                        "markdownStyle": "de203a57-bbb7-4eff-ae57-89adfc31a2df",
+                        "markdownStyleParsed": "43840290-5985-4ad4-bdeb-1e2c10387688",
+                        "markdownCodeLanguage": "48bad734-2c25-41d8-a5ec-6be2ca00f618",
+                        "noteStyle": "b115f6b9-b1f8-4029-b26b-b4f3933bf4e8",
+                        "noteStyleParsed": "65f9457c-631a-4936-974e-0f73cdcb2f75",
+                        "useDefaultNoteTitle": "1858520f-1227-4505-aea7-6fab6f20d393",
+                        "noteTitle": "ca2c5676-ee4b-4f0d-a010-94191a87e5cb",
+                        "id": "1ca60a27-4695-48e1-ad21-04f74f957efb"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "identifier": "2b81548b-07c9-4f7b-8394-7d44826ecad8",
+                  "type": "CommunityPortal.Components.Widgets.LinkList",
+                  "variants": [
+                    {
+                      "identifier": "4c275501-fa61-4ffd-923e-5fef7d458cf6",
+                      "properties": {
+                        "label": "AI links",
+                        "introContent": "Tips for AI software development\n",
+                        "dataSource": "Smart_Folder",
+                        "dataSourceParsed": 1,
+                        "folderReference": {
+                          "identifier": "6a2fdab3-15f0-4e9e-b5e3-89e63403a0bf"
+                        },
+                        "count": 3,
+                        "links": [],
+                        "designSource": "Cards",
+                        "designParsed": 3,
+                        "showPublishedDate": false,
+                        "showAuthor": false,
+                        "showDXTopics": false,
+                        "showDescriptions": true,
+                        "descriptionMaxLines": 0,
+                        "id": "b37df3fa-814c-4903-b321-b0541699510f"
+                      },
+                      "fieldIdentifiers": {
+                        "label": "15992ba9-9643-4284-949c-6c16e5731b04",
+                        "introContent": "70ab0ab2-21b2-4824-97dc-1daf351061e3",
+                        "dataSource": "74c6f639-940e-47e6-bb5b-dd776e0af616",
+                        "dataSourceParsed": "b660eb02-e243-438e-aa2d-ef9b42a3a769",
+                        "folderReference": "45e0e06a-480b-4d91-8725-9b73464532bc",
+                        "count": "d0965263-6139-4414-adb9-a7436f4db006",
+                        "links": "cb1f04c3-a386-456b-a2bf-8a78b2a91db5",
+                        "designSource": "1ba0f7de-90a0-4111-8355-d7c55c064fab",
+                        "designParsed": "0c18e106-49e3-48ed-ba15-67e740461833",
+                        "showPublishedDate": "0ddaea8e-a890-4db4-b22c-9ea0fc469378",
+                        "showAuthor": "a3c329e8-98d3-45a0-85a8-12e2a8601fce",
+                        "showDXTopics": "409b30cb-e18d-419b-8c93-2ab0fc82a12e",
+                        "showDescriptions": "6e175975-e189-4f31-8786-ae50a2e18be3",
+                        "descriptionMaxLines": "ea9f441b-5e49-4365-9b7a-a7cba1ff43cf",
+                        "id": "5b23ac48-3fd7-45d0-b471-6ae557371460"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "identifier": "b4ae1445-5604-4e73-b4db-2f1ea7e83461",
+                  "type": "CommunityPortal.Components.BlogPost-List-Widget",
+                  "variants": [
+                    {
+                      "identifier": "fed875d2-c86e-4c10-8c45-f1103d307be5",
+                      "properties": {
+                        "heading": "AI software development",
+                        "introContent": "As an example, the video above shows how to add the plugin marketplace to Claude Code and then use the **`/agentify`** skill to prep an Xperience project for agentic development according to our best practices. This skill is a perfect starting point for teams interested in bringing existing Xperience projects into agentic development.\n",
+                        "blogPostSource": "Individual_Selection",
+                        "blogPostSourceParsed": 1,
+                        "folderReference": null,
+                        "tagReferences": [],
+                        "blogPosts": [
+                          {
+                            "webPageGuid": "db1367b2-3ff8-4924-a47d-b0c4e1ae274e"
+                          }
+                        ],
+                        "postLimit": 1,
+                        "itemLayoutSource": "Minimal",
+                        "itemLayoutSourceParsed": 7,
+                        "showDXTopics": false,
+                        "showDescription": true,
+                        "descriptionMaxLines": 0,
+                        "showAuthor": true,
+                        "showPublishedDate": true,
+                        "showBlogType": true,
+                        "showHero": true
+                      },
+                      "fieldIdentifiers": {
+                        "heading": "10e602b7-bd74-4b55-aaba-c9ed156981c6",
+                        "introContent": "3e2fceef-0686-42a8-86fd-6a3c0d858559",
+                        "blogPostSource": "1f89e4ad-7376-4897-8320-99d9faa7326c",
+                        "blogPostSourceParsed": "64119e05-6f20-40c4-84f5-926d43057b13",
+                        "folderReference": "ccf38179-d469-4484-92a3-c7090e3cbec1",
+                        "tagReferences": "168522d3-b2c8-4b9c-ba00-18a56b866743",
+                        "blogPosts": "69bad9d5-adb8-4695-b0b9-d8e90486c0d4",
+                        "postLimit": "2ffe8f01-8b28-4540-9172-c932057be0d5",
+                        "itemLayoutSource": "410903f1-55a2-47ac-bbd4-175772f786f5",
+                        "itemLayoutSourceParsed": "6a72376d-0fed-4e4a-b8c2-f5488cc0d2ba",
+                        "showDXTopics": "5e365c1b-9964-48d8-b7f5-8b741ecdede6",
+                        "showDescription": "ecbb9021-ad61-4535-b19e-e622513701af",
+                        "showAuthor": "7ff596bd-17c4-451a-85cb-9090811cdefa",
+                        "showBlogType": "52dfef0f-f514-45ae-b209-00f3fa3d21bf",
+                        "showHero": "8bf6d6d1-be50-4cfd-b8b4-b02e21970540",
+                        "descriptionMaxLines": "ebc8b0c2-8718-4148-8d3a-4bc30262d8a8",
+                        "showPublishedDate": "85e372eb-03e9-4ed0-ad6a-132731014d2e"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "fieldIdentifiers": {
+            "layout": "1bd53761-d4ef-4f56-bb2c-1e7444a54ad3",
+            "layoutParsed": "909e8137-ccdb-4edb-a058-6b009301054c",
+            "alignment": "7418475c-fc06-49b1-bfd3-22e7e891bad3",
+            "alignmentParsed": "f9f3ada6-b78f-420c-b715-7575be0f7df8",
+            "paddingTop": "6bb5ee13-8402-475e-aef9-305ce5320e1f",
+            "paddingTopParsed": "c6bfbe21-dc36-47cd-ac40-1efe5cdec84b",
+            "paddingBottom": "d3789460-3b50-406c-acbc-87cc2b1d50f8",
+            "paddingBottomParsed": "86972337-c326-4612-a61b-979fdb299b62",
+            "backgroundColor": "ee4d413a-b851-485a-ab59-6d50d2c6a0ee",
+            "backgroundColorParsed": "4bfa2bdb-1dea-4f6c-8187-418c6f1bf1ef",
+            "displayAsCarousel": "ef0ef9ec-c0cf-46b1-a63e-b2953d970ad0",
+            "numberOfSlides": "4d928d7c-c5ae-4967-9d6b-cbb4f5b4b2d4",
+            "carouselAriaLabel": "263a4f57-4506-49f6-90fd-c21b6f4a66b1"
+          }
+        },
+        {
+          "identifier": "c277482c-1c73-4f3c-afe7-f7f636d123be",
+          "type": "CommunityPortal.SingleColumnSection",
+          "properties": {
+            "layout": "FullWidth_ContentStandard",
+            "layoutParsed": 1,
+            "alignment": "Left",
+            "alignmentParsed": 0,
+            "paddingTop": "Large",
+            "paddingTopParsed": 0,
+            "paddingBottom": "Large",
+            "paddingBottomParsed": 0,
+            "backgroundColor": "Secondary_Light",
+            "backgroundColorParsed": 3,
+            "displayAsCarousel": false,
+            "numberOfSlides": 3,
+            "carouselAriaLabel": "Featured content carousel"
+          },
+          "zones": [
+            {
+              "identifier": "1b3b46ff-3585-4102-b895-783012bd550e",
+              "widgets": [
+                {
+                  "identifier": "4beda532-1cf6-4669-adfd-0a6aa6f3399e",
+                  "type": "CommunityPortal.Components.BlogPost-List-Widget",
+                  "variants": [
+                    {
+                      "identifier": "32650bd2-0033-4541-8734-d96149d31dd5",
+                      "properties": {
+                        "heading": "Related reading",
+                        "introContent": "Goal was redesigning the Blog Post List widget; six new layouts are built, verified in Page Builder, and passing build and tests. Next: tear the preview sections off /blog/test, or leave them if you want to review first.\n",
+                        "blogPostSource": "Smart_Folder",
+                        "blogPostSourceParsed": 0,
+                        "folderReference": {
+                          "identifier": "5da663cc-12c6-4e9b-b4d4-c6865cd5d61d"
+                        },
+                        "tagReferences": [],
+                        "blogPosts": [],
+                        "postLimit": 2,
+                        "itemLayoutSource": "Related_Callout",
+                        "itemLayoutSourceParsed": 2,
+                        "showDXTopics": true,
+                        "showDescription": true,
+                        "descriptionMaxLines": 0,
+                        "showAuthor": true,
+                        "showPublishedDate": true,
+                        "showBlogType": true,
+                        "showHero": true
+                      },
+                      "fieldIdentifiers": {
+                        "heading": "37f5c43e-3617-4bb7-9196-2b35b6227a78",
+                        "introContent": "8cb99bf6-6dc4-48b5-8c03-821b93d22223",
+                        "blogPostSource": "512de0ff-2f59-4bd4-a344-71d27f772793",
+                        "blogPostSourceParsed": "17be485a-4b53-456b-ac87-a9353f7898cb",
+                        "folderReference": "f3521971-1c70-430b-975d-c6529def38d3",
+                        "tagReferences": "a165a819-a33f-422e-8fd3-54f61f5ffc08",
+                        "blogPosts": "2eb44e74-e9f7-4016-8805-642894a3926c",
+                        "postLimit": "a0ba21c9-6ccb-4439-9d95-7ec38144127f",
+                        "itemLayoutSource": "ed1799cd-ad15-47a5-b4b3-119e3cedc889",
+                        "itemLayoutSourceParsed": "cbab3098-bf69-4f42-bae1-16a9874afbab",
+                        "showDXTopics": "00025705-c3d3-4d1c-8ec2-45e6f0bc19cc",
+                        "showDescription": "43518409-4c91-4544-94fe-17b566fb88ec",
+                        "descriptionMaxLines": "25870f9e-68ba-41d3-bca2-4f0d76d15819",
+                        "showAuthor": "e60ff694-57b6-43f0-8a6a-b28d9a123d78",
+                        "showPublishedDate": "c1aae9d5-af50-4e5b-a1a7-5e68f25328db",
+                        "showBlogType": "22503fb2-93b9-4e49-8929-876e6f8a511f",
+                        "showHero": "d18d30ae-ba8b-4ded-9c93-5dd450198704"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "fieldIdentifiers": {
+            "layout": "108b0c89-fd3f-4641-8041-8765deb4a322",
+            "layoutParsed": "433f550d-2289-490b-a660-eb1a99dd2f88",
+            "alignment": "a1590412-d6a8-4829-92a8-2123bab530ae",
+            "alignmentParsed": "dadcf1c5-6725-4fd4-bff6-a4c0aa8efcf1",
+            "paddingTop": "026be4dd-d956-4d00-b2c5-dcdb4210c7e9",
+            "paddingTopParsed": "d76f53fa-db2f-4a75-baef-58d451f007e1",
+            "paddingBottom": "108ab1c6-b039-4d58-b1f9-d3ce57e11269",
+            "paddingBottomParsed": "10f67b8c-fa29-4587-bd2e-c6a0c7b95bf0",
+            "backgroundColor": "c4fedd87-233d-48bb-8585-d483361070a7",
+            "backgroundColorParsed": "5c5a211e-fbde-4c51-87f3-84dbf76acf81",
+            "displayAsCarousel": "5944774a-088b-4602-b994-bf59d0c80fa1",
+            "numberOfSlides": "028cb33a-8e8f-40b6-b001-dd5d37ee4025",
+            "carouselAriaLabel": "f9d27a55-beed-48a8-bce8-8e77fc6fc442"
+          }
+        },
+        {
+          "identifier": "f88e4b59-32b3-422c-acb3-4e0551d526e0",
+          "type": "CommunityPortal.SingleColumnSection",
+          "properties": {
+            "layout": "Standard",
+            "layoutParsed": 0,
+            "alignment": "Left",
+            "alignmentParsed": 0,
+            "paddingTop": "Large",
+            "paddingTopParsed": 0,
+            "paddingBottom": "Large",
+            "paddingBottomParsed": 0,
+            "backgroundColor": "Secondary_Light",
+            "backgroundColorParsed": 3,
+            "displayAsCarousel": false,
+            "numberOfSlides": 3,
+            "carouselAriaLabel": "Featured content carousel"
+          },
+          "zones": [
+            {
+              "identifier": "3e068088-01dd-4eba-868d-a3b067d4b770",
+              "widgets": [
+                {
+                  "identifier": "33b85a56-39f3-4c8b-b07d-3ad53264cbc8",
+                  "type": "CommunityPortal.Components.BlogPost-List-Widget",
+                  "variants": [
+                    {
+                      "identifier": "a0d7be4b-9551-4737-9190-20b7132d391e",
+                      "properties": {
+                        "heading": "Read this next",
+                        "introContent": "One post we think is worth your time right now.",
+                        "blogPostSource": "Smart_Folder",
+                        "blogPostSourceParsed": 0,
+                        "folderReference": {
+                          "identifier": "5da663cc-12c6-4e9b-b4d4-c6865cd5d61d"
+                        },
+                        "tagReferences": [],
+                        "blogPosts": [],
+                        "postLimit": 3,
+                        "itemLayoutSource": "Spotlight",
+                        "itemLayoutSourceParsed": 4,
+                        "showDXTopics": true,
+                        "showDescription": true,
+                        "descriptionMaxLines": 0,
+                        "showAuthor": true,
+                        "showPublishedDate": true,
+                        "showBlogType": true,
+                        "showHero": true
+                      },
+                      "fieldIdentifiers": {
+                        "heading": "79254c63-b6e9-44d5-9d5b-61403c66e79c",
+                        "introContent": "2dd3406d-4e78-49a0-910a-636ce0b1f504",
+                        "blogPostSource": "3fbdc084-5cfd-4a2c-9ad0-0918e933e9a6",
+                        "blogPostSourceParsed": "ae0ef09a-bf7d-40e0-89f7-9e95353eb97b",
+                        "folderReference": "364a98d7-1632-4118-bb70-4d6200a40335",
+                        "tagReferences": "afd69fa5-17ad-4ec7-8f8a-8d1d9037e17f",
+                        "blogPosts": "9c2dcb36-1037-4d2d-8a33-98db030a2ff6",
+                        "postLimit": "9eff81e7-dd72-4323-87ed-f9ed605ea89b",
+                        "itemLayoutSource": "13920024-4faf-4423-8e42-d33e03a51881",
+                        "itemLayoutSourceParsed": "5c58df8c-7cd2-4048-88b2-7ea371e6bef2",
+                        "showDXTopics": "2f539d60-c7dc-4357-aeba-0b83420a9305",
+                        "showDescription": "a076c914-680d-4330-b4db-02ed8aa579a7",
+                        "descriptionMaxLines": "a343e932-a397-4f35-998a-c3d6bb3aa90e",
+                        "showAuthor": "e8371cde-de1d-4d7a-99be-2eb7e9895f0f",
+                        "showPublishedDate": "6e63195d-ee75-49a4-be49-bfd390ad7d9a",
+                        "showBlogType": "08063b28-ba4c-47ec-9719-4959b3ad1c01",
+                        "showHero": "9e2b8875-00b9-47c1-84ab-912527aeb38e"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "fieldIdentifiers": {
+            "layout": "c478e08d-39f9-4243-906b-ddc10375f37c",
+            "layoutParsed": "b84ebe05-333b-4830-9919-ad20e5f652ef",
+            "alignment": "58461cbf-f22b-4431-8cd7-3e9231848abc",
+            "alignmentParsed": "45bbe0d5-e39b-4c31-a62d-76658cc4dd5b",
+            "paddingTop": "1b420a19-97b7-45e9-a222-fdfd34f02f11",
+            "paddingTopParsed": "3eb27df6-9634-4898-87ea-dc06e8caa27c",
+            "paddingBottom": "9903c219-b29a-4be8-9bf9-0421f30560c1",
+            "paddingBottomParsed": "8f8c733d-2beb-4559-8876-67022a2876fb",
+            "backgroundColor": "d8dcc870-0f02-43f4-b81f-d42d4268894c",
+            "backgroundColorParsed": "10c2289b-1927-40e4-b044-d21b9b304fb0",
+            "displayAsCarousel": "1e365e80-f193-48c8-885d-66b2ecafa630",
+            "numberOfSlides": "09b741e1-7f43-4fa6-a7ec-54b90222ad35",
+            "carouselAriaLabel": "58a27767-583b-412b-b40b-452396916064"
+          }
+        },
+        {
+          "identifier": "b77b688e-057b-4bb6-81e5-5024cb90cae1",
+          "type": "CommunityPortal.SingleColumnSection",
+          "properties": {
+            "layout": "Standard",
+            "layoutParsed": 0,
+            "alignment": "Left",
+            "alignmentParsed": 0,
+            "paddingTop": "Large",
+            "paddingTopParsed": 0,
+            "paddingBottom": "Large",
+            "paddingBottomParsed": 0,
+            "backgroundColor": "Primary_Light",
+            "backgroundColorParsed": 2,
+            "displayAsCarousel": false,
+            "numberOfSlides": 3,
+            "carouselAriaLabel": "Featured content carousel"
+          },
+          "zones": [
+            {
+              "identifier": "dd04f105-38a2-4617-ac0d-067d3f248c6a",
+              "widgets": [
+                {
+                  "identifier": "a3310fb4-b1bd-4762-9daf-28544af025a5",
+                  "type": "CommunityPortal.Components.BlogPost-List-Widget",
+                  "variants": [
+                    {
+                      "identifier": "5da41793-977d-4db5-a298-08122396d780",
+                      "properties": {
+                        "heading": "Latest from the community",
+                        "introContent": "Recent posts on marketing automation and AI-assisted development.",
+                        "blogPostSource": "Post_Taxonomy",
+                        "blogPostSourceParsed": 2,
+                        "folderReference": null,
+                        "tagReferences": [
+                          {
+                            "identifier": "0865e8f6-2568-425e-94d8-2bf53adcdd57"
+                          }
+                        ],
+                        "blogPosts": [],
+                        "postLimit": 3,
+                        "itemLayoutSource": "Cards",
+                        "itemLayoutSourceParsed": 0,
+                        "showDXTopics": false,
+                        "showDescription": true,
+                        "descriptionMaxLines": 3,
+                        "showAuthor": true,
+                        "showPublishedDate": true,
+                        "showBlogType": true,
+                        "showHero": true
+                      },
+                      "fieldIdentifiers": {
+                        "heading": "b68b7c09-d355-46db-8bc9-949e41f0d954",
+                        "introContent": "e84f288a-5289-4b21-97b8-5866b5cf78b5",
+                        "blogPostSource": "0a720184-df64-45a4-adc3-aaa6cb69e078",
+                        "blogPostSourceParsed": "dad8d970-0941-4419-86ea-b5859cc2c416",
+                        "folderReference": "32a82e32-abe0-4bc6-a91e-c5efc39a88a5",
+                        "tagReferences": "078c12cb-6f10-4c95-ace4-0aadd285be3f",
+                        "blogPosts": "dafe2559-174f-4cd6-bc93-ce2d851928a0",
+                        "postLimit": "9005b679-c657-462f-9c24-0a674b34c6a6",
+                        "itemLayoutSource": "8ce51f72-3b84-4a60-9e69-e51da2ee02b2",
+                        "itemLayoutSourceParsed": "1c875a99-cfcb-447f-a330-b3f20ba59afb",
+                        "showDXTopics": "500ac2e0-763f-4fe2-862b-0b531d26dbc4",
+                        "showDescription": "727491bc-b01b-4813-a727-4571de26588d",
+                        "descriptionMaxLines": "5ca07feb-501b-404c-8e91-bbdd397e2b68",
+                        "showAuthor": "32ef761e-3cf0-4a04-a63a-67809a131556",
+                        "showPublishedDate": "76a7effe-94b9-4714-bbee-f1525dc2c3a8",
+                        "showBlogType": "c0e90d00-3c4d-4d19-96de-803f069630ad",
+                        "showHero": "f27057ff-978b-47de-874a-af077d384f1a"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "fieldIdentifiers": {
+            "layout": "7a5e0986-7d64-4531-bfbe-45388b1e9342",
+            "layoutParsed": "a17e657a-a4bc-4843-94b0-e4d325f15d98",
+            "alignment": "52fbdc3a-d3a7-44fe-96a5-2fb91cf2ada3",
+            "alignmentParsed": "82533857-053b-4edd-a0da-fd3686d45fc2",
+            "paddingTop": "3c032519-ee2a-490f-be83-39b66a73839e",
+            "paddingTopParsed": "46922d23-2b9e-4997-be24-34f0bf3070db",
+            "paddingBottom": "5479d69a-be8a-40e6-8d4b-b2bf5fd87eee",
+            "paddingBottomParsed": "a16e8f5b-a550-40b2-b8e5-c0e25fe436c0",
+            "backgroundColor": "d41520f9-04af-41f2-a19b-747458bb3bce",
+            "backgroundColorParsed": "bbc8b11b-6798-4b8f-b0c7-52b4c72a260b",
+            "displayAsCarousel": "0653d240-4e5e-4567-b206-1440ae522dbd",
+            "numberOfSlides": "59dd1b20-3264-4d99-96ce-addac5cf1ae6",
+            "carouselAriaLabel": "5d06d7a6-4fcd-4eaa-a686-a162455cb906"
+          }
+        },
+        {
+          "identifier": "e77a782f-c1fe-4d31-a474-05d55394a644",
+          "type": "CommunityPortal.SingleColumnSection",
+          "properties": {
+            "layout": "Standard",
+            "layoutParsed": 0,
+            "alignment": "Left",
+            "alignmentParsed": 0,
+            "paddingTop": "Large",
+            "paddingTopParsed": 0,
+            "paddingBottom": "Large",
+            "paddingBottomParsed": 0,
+            "backgroundColor": "Light",
+            "backgroundColorParsed": 0,
+            "displayAsCarousel": false,
+            "numberOfSlides": 3,
+            "carouselAriaLabel": "Featured content carousel"
+          },
+          "zones": [
+            {
+              "identifier": "f09700b0-0c10-406d-ac35-a93c700fb2cc",
+              "widgets": [
+                {
+                  "identifier": "451b21e8-8b03-45bc-b509-09443848a932",
+                  "type": "CommunityPortal.Components.BlogPost-List-Widget",
+                  "variants": [
+                    {
+                      "identifier": "51fe93cf-fa00-4b13-9ddf-39eb63547b62",
+                      "properties": {
+                        "heading": "More on automations",
+                        "introContent": "Goal was redesigning the Blog Post List widget; six new layouts are built, verified in Page Builder, and passing build and tests.\n",
+                        "blogPostSource": "Smart_Folder",
+                        "blogPostSourceParsed": 0,
+                        "folderReference": {
+                          "identifier": "5da663cc-12c6-4e9b-b4d4-c6865cd5d61d"
+                        },
+                        "tagReferences": [],
+                        "blogPosts": [],
+                        "postLimit": 4,
+                        "itemLayoutSource": "Compact_List",
+                        "itemLayoutSourceParsed": 1,
+                        "showDXTopics": false,
+                        "showDescription": false,
+                        "descriptionMaxLines": 0,
+                        "showAuthor": true,
+                        "showPublishedDate": true,
+                        "showBlogType": false,
+                        "showHero": true
+                      },
+                      "fieldIdentifiers": {
+                        "heading": "613b747d-2910-4c1e-a8ff-2bb4e33ebc25",
+                        "introContent": "215b3517-0043-4deb-819b-4f2b2d0b05b3",
+                        "blogPostSource": "c85d1ec5-8dfb-46e6-ba6c-25f9bf919d96",
+                        "blogPostSourceParsed": "5ae08118-8f45-40c9-9179-3280e52451c2",
+                        "folderReference": "0412825d-6400-42f9-83d8-1fa20c963791",
+                        "tagReferences": "fc8b5d77-76a6-4d42-a945-47ce0d214a5b",
+                        "blogPosts": "020c915d-f60c-4aff-85fd-7db96702ec85",
+                        "postLimit": "f287a3e6-8b82-4e4e-8278-ad221a6713a5",
+                        "itemLayoutSource": "13cdb521-5431-4627-99d2-01219fb404f1",
+                        "itemLayoutSourceParsed": "c7731151-3e90-4cd3-9b3c-93a7f3b08422",
+                        "showDXTopics": "024b4509-0ad9-41f7-8a64-7f3e31ae9cff",
+                        "showDescription": "6cb1e8e1-cc0f-4471-9e66-529fe6856b6f",
+                        "descriptionMaxLines": "b7b06da0-c960-4b29-9a71-1787181c4ced",
+                        "showAuthor": "f6fe36cd-25e4-49f5-85b9-d3a3815c653f",
+                        "showPublishedDate": "9ad77c84-39fa-4e3e-9f79-99ede220dfed",
+                        "showBlogType": "023b4fa2-7c63-4785-afab-dfcb743f29c0",
+                        "showHero": "ef06ba30-61ed-4898-afe0-cfd4f36c15f3"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "fieldIdentifiers": {
+            "layout": "275ce398-8bb0-4e96-92b2-04acb2c5853e",
+            "layoutParsed": "1bf978c6-c7fa-43d7-80d2-d0cd3c4c20a8",
+            "alignment": "1ee6e9c1-f7f8-40fc-8d05-6083f979e69e",
+            "alignmentParsed": "8c07100f-057a-4bca-8947-7aa908846b72",
+            "paddingTop": "13b3b946-ddc2-4194-b011-d33f53e6e6b0",
+            "paddingTopParsed": "4cd961a1-8c4a-4939-a6c2-b7aadd3a55ed",
+            "paddingBottom": "8cbb8575-39a7-439f-8f43-5b2da612778e",
+            "paddingBottomParsed": "cc86c285-7410-40a1-aa33-5108f29b26e2",
+            "backgroundColor": "b6d88b6e-2988-4600-a84a-71a4aa2e2d60",
+            "backgroundColorParsed": "264fd0f0-c6eb-4785-af7f-7750a58d1059",
+            "displayAsCarousel": "309d7ffb-248a-41d9-9c6a-4e3d41c413c7",
+            "numberOfSlides": "fb91f247-7a6a-4343-9fe4-519ec6ae7627",
+            "carouselAriaLabel": "6dcd3a19-b221-4178-b3ec-a080421a9159"
+          }
+        },
+        {
+          "identifier": "651909d0-da80-46f5-aea2-05b169c7b05c",
+          "type": "CommunityPortal.SingleColumnSection",
+          "properties": {
+            "layout": "Standard",
+            "layoutParsed": 0,
+            "alignment": "Left",
+            "alignmentParsed": 0,
+            "paddingTop": "Large",
+            "paddingTopParsed": 0,
+            "paddingBottom": "Large",
+            "paddingBottomParsed": 0,
+            "backgroundColor": "White",
+            "backgroundColorParsed": 1,
+            "displayAsCarousel": false,
+            "numberOfSlides": 3,
+            "carouselAriaLabel": "Featured content carousel"
+          },
+          "zones": [
+            {
+              "identifier": "3b9af8e6-8d55-4eb3-be3a-163504b01aae",
+              "widgets": [
+                {
+                  "identifier": "3c49094d-3640-4ae0-91b7-899cb7db90e3",
+                  "type": "CommunityPortal.Components.BlogPost-List-Widget",
+                  "variants": [
+                    {
+                      "identifier": "8bfeb8df-b5e2-4370-a4c6-8865c7c89c62",
+                      "properties": {
+                        "heading": "Keep learning",
+                        "introContent": "Posts our community wrote about this topic.",
+                        "blogPostSource": "Smart_Folder",
+                        "blogPostSourceParsed": 0,
+                        "folderReference": {
+                          "identifier": "5da663cc-12c6-4e9b-b4d4-c6865cd5d61d"
+                        },
+                        "tagReferences": [],
+                        "blogPosts": [],
+                        "postLimit": 3,
+                        "itemLayoutSource": "Feature_Panel",
+                        "itemLayoutSourceParsed": 3,
+                        "showDXTopics": false,
+                        "showDescription": true,
+                        "descriptionMaxLines": 2,
+                        "showAuthor": true,
+                        "showPublishedDate": true,
+                        "showBlogType": true,
+                        "showHero": true
+                      },
+                      "fieldIdentifiers": {
+                        "heading": "4d582d34-98ad-46e2-89c1-1ecf15c1a23b",
+                        "introContent": "5abed845-031d-4e68-88b4-cb7d54759534",
+                        "blogPostSource": "c8f1c2b3-4c6f-4829-adb2-d8661227dfa2",
+                        "blogPostSourceParsed": "9d31c5fb-93b2-4af5-b259-feb1a0601027",
+                        "folderReference": "2dd4cf49-1d6b-4f51-9833-6d846218446a",
+                        "tagReferences": "d9e8e547-d6c3-45dc-a28d-5b999a898f57",
+                        "blogPosts": "6d73876c-a9c6-45da-a12e-0883b2f4b711",
+                        "postLimit": "7b8f640c-e70f-4d77-ad79-f132309433ce",
+                        "itemLayoutSource": "bc732632-ee51-4d11-b7b5-6158b5b5dfc8",
+                        "itemLayoutSourceParsed": "34f57b90-a41b-4589-acc1-519c08f8caf1",
+                        "showDXTopics": "d93b3582-3897-49d5-80dd-82c4da825343",
+                        "showDescription": "7c77c245-2ad2-42c1-b094-b3d896b6fe39",
+                        "descriptionMaxLines": "7871869f-ef4f-48fd-9f59-a82716ed4ced",
+                        "showAuthor": "47df73c3-3dce-45d7-b557-85ac888f8cbc",
+                        "showPublishedDate": "b4019d8c-b6f7-4b17-b222-ec42557b565f",
+                        "showBlogType": "25ecb53d-8d88-4983-9b92-4f898732f1c2",
+                        "showHero": "48aaa196-3907-4f63-9ec4-bdc7a010edb3"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "fieldIdentifiers": {
+            "layout": "41d482f3-54ef-4c23-92aa-fd0be628df4a",
+            "layoutParsed": "29a20fd7-8459-4ffd-b044-cf11b19bf090",
+            "alignment": "4a90af4a-e578-44ca-93ff-ab2c44639a49",
+            "alignmentParsed": "38f97b37-f08f-45e6-8781-3027d90c569f",
+            "paddingTop": "cca4406e-a081-4b73-affa-975df81002c8",
+            "paddingTopParsed": "da38c85f-08f6-4e97-bbe7-a7cefcc4f447",
+            "paddingBottom": "1e53b3e1-0716-498b-bc8d-b9e17be9d647",
+            "paddingBottomParsed": "12d70b29-5b2d-45a3-863c-95776af53021",
+            "backgroundColor": "762f5048-cc64-424b-bb0c-9dba8acf3f34",
+            "backgroundColorParsed": "e851b812-96bf-4b6c-abf8-014878fabc7a",
+            "displayAsCarousel": "5f8a1440-83e9-46d1-affa-fbafdf3d6404",
+            "numberOfSlides": "fd9f085a-29a4-462f-95f1-6eb8e25c4871",
+            "carouselAriaLabel": "38f39542-6fc6-4e71-bc91-e60ff1aedc68"
+          }
+        },
+        {
+          "identifier": "47ccfae1-49c1-4923-a3f6-968ac49fbe24",
+          "type": "CommunityPortal.SingleColumnSection",
+          "properties": {
+            "layout": "FullWidth_ContentStandard",
+            "layoutParsed": 1,
+            "alignment": "Left",
+            "alignmentParsed": 0,
+            "paddingTop": "Large",
+            "paddingTopParsed": 0,
+            "paddingBottom": "Large",
+            "paddingBottomParsed": 0,
+            "backgroundColor": "Secondary_Light",
+            "backgroundColorParsed": 3,
+            "displayAsCarousel": false,
+            "numberOfSlides": 3,
+            "carouselAriaLabel": "Featured content carousel"
+          },
+          "zones": [
+            {
+              "identifier": "577168fb-0a9e-496b-a7ca-6d0eb2beceec",
+              "widgets": [
+                {
+                  "identifier": "f7becb0e-16f1-4fd1-a8f1-f33d5c4d6a35",
+                  "type": "CommunityPortal.Components.BlogPost-List-Widget",
+                  "variants": [
+                    {
+                      "identifier": "ca576b1e-8bd3-47f3-b457-c2f8de52441e",
+                      "properties": {
+                        "heading": "Start here: the automations series",
+                        "introContent": "Read these in order to get the full picture.",
+                        "blogPostSource": "Smart_Folder",
+                        "blogPostSourceParsed": 0,
+                        "folderReference": {
+                          "identifier": "5da663cc-12c6-4e9b-b4d4-c6865cd5d61d"
+                        },
+                        "tagReferences": [],
+                        "blogPosts": [],
+                        "postLimit": 4,
+                        "itemLayoutSource": "Numbered_Index",
+                        "itemLayoutSourceParsed": 5,
+                        "showDXTopics": false,
+                        "showDescription": true,
+                        "descriptionMaxLines": 2,
+                        "showAuthor": false,
+                        "showPublishedDate": true,
+                        "showBlogType": false,
+                        "showHero": true
+                      },
+                      "fieldIdentifiers": {
+                        "heading": "22f9c6bb-db14-4882-a75e-8c90485bdd53",
+                        "introContent": "e9d840b0-dd9c-4cd1-a7fb-7e032827a1dd",
+                        "blogPostSource": "d6fa357c-c61f-450a-ad02-8946eed666d0",
+                        "blogPostSourceParsed": "70b2b977-ea66-4696-aa11-df100d4fef7b",
+                        "folderReference": "58816c4d-a999-4d50-b603-25c9f680d5be",
+                        "tagReferences": "ba9c36fc-5ca6-4444-b5b7-1978bd8ef6fa",
+                        "blogPosts": "2a78d9d3-ce73-4a63-821a-8965dd7dea54",
+                        "postLimit": "7cbbfd72-8ca1-45df-af2c-6792fac59c03",
+                        "itemLayoutSource": "9d3f76b8-1220-4de0-8ee7-0f512cd599ba",
+                        "itemLayoutSourceParsed": "7e311f72-7f14-4a7d-a3cb-05f4417c2696",
+                        "showDXTopics": "00c359c6-373f-4cb4-a5d6-ed0bc9923a4a",
+                        "showDescription": "d3bcd87d-333d-46b5-9516-36d85b006636",
+                        "descriptionMaxLines": "088db6ec-ee48-41ec-9fe2-8a6ba047a4fc",
+                        "showAuthor": "c4253928-3d35-4a68-8109-3d0c6c667fc2",
+                        "showPublishedDate": "4882a0b7-3506-4281-9365-fa737e282f1f",
+                        "showBlogType": "2c7f008d-a020-48e6-8f4c-7034192752b2",
+                        "showHero": "c9392881-b27d-48fe-88d5-c61ae2dc0953"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "fieldIdentifiers": {
+            "layout": "d0f02c86-eb3e-4f1b-899f-8d829fc38d6d",
+            "layoutParsed": "45d44284-bca2-496e-9cea-6fb81451ccfb",
+            "alignment": "a968bbe2-c071-4797-be3d-227da291321a",
+            "alignmentParsed": "535957f0-6de7-4c2b-94dd-2a3361067a81",
+            "paddingTop": "762ff1e8-9db7-4a4c-9da2-578715478bf3",
+            "paddingTopParsed": "7a5069ff-9873-450f-a2fb-d39c2bc3cd75",
+            "paddingBottom": "cf671c86-5236-4fd7-b6b0-f214e90614d1",
+            "paddingBottomParsed": "f9d211d8-c452-40d3-94e8-b6e45d6c50ee",
+            "backgroundColor": "6014fd18-929b-411e-bb2f-e5d6cca68516",
+            "backgroundColorParsed": "e0f5cfcd-9130-481e-a736-150cb779d870",
+            "displayAsCarousel": "ed9ede92-1d77-43d7-8000-136e1a59c2a7",
+            "numberOfSlides": "7693d857-ee37-4057-8392-8062bb75a24b",
+            "carouselAriaLabel": "eb7b1d8a-3b15-4930-9594-f7b182842270"
+          }
+        }
+      ]
+    }
+  ]
+}
+]]>
+  </ContentItemCommonDataVisualBuilderWidgets>
+  <WebPageCanonicalURL />
+  <WebPageMetaExcludeFromSitemap>False</WebPageMetaExcludeFromSitemap>
+  <WebPageMetaRobots />
+  <WebPageMetaShortDescription />
+  <WebPageMetaTitle />
+  <ContentItemReferences>
+    <cms.contentitemreference>
+      <ContentItemReferenceGroupGUID>baef8e96-a792-478c-a9dc-1929378ccbac</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>409ebb10-c6cf-4cbb-9460-90902cfd53f3</ContentItemReferenceGUID>
+      <ContentItemReferenceSourceCommonDataID>
+        <GUID>2b1ebced-4b7d-490b-8158-64604c3d23c0</GUID>
+        <ObjectType>cms.contentitemcommondata</ObjectType>
+      </ContentItemReferenceSourceCommonDataID>
+      <ContentItemReferenceTargetItemID>
+        <CodeName>SeanG.Wright-age8tkbp</CodeName>
+        <GUID>f9ac36a5-e1a6-4d21-9cb7-beb385d0fea0</GUID>
+        <ObjectType>cms.contentitem</ObjectType>
+      </ContentItemReferenceTargetItemID>
+    </cms.contentitemreference>
+    <cms.contentitemreference>
+      <ContentItemReferenceGroupGUID>69bad9d5-adb8-4695-b0b9-d8e90486c0d4</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>66c6029a-dcee-494a-8b44-ec9677fe0b2a</ContentItemReferenceGUID>
+      <ContentItemReferenceSourceCommonDataID>
+        <GUID>2b1ebced-4b7d-490b-8158-64604c3d23c0</GUID>
+        <ObjectType>cms.contentitemcommondata</ObjectType>
+      </ContentItemReferenceSourceCommonDataID>
+      <ContentItemReferenceTargetItemID>
+        <CodeName>ThreeConversationsOnAIAndCoding_WhatTheyMeanForKenticoDevelopers-twjq5dcr</CodeName>
+        <GUID>9890a0e0-6efd-4b71-863d-ba3dea568606</GUID>
+        <ObjectType>cms.contentitem</ObjectType>
+      </ContentItemReferenceTargetItemID>
+    </cms.contentitemreference>
+    <cms.contentitemreference>
+      <ContentItemReferenceGroupGUID>e09047d5-2c58-403e-be9b-ed772ca76a2d</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>7673393c-6d67-4001-b038-e78bf20b9070</ContentItemReferenceGUID>
+      <ContentItemReferenceSourceCommonDataID>
+        <GUID>2b1ebced-4b7d-490b-8158-64604c3d23c0</GUID>
+        <ObjectType>cms.contentitemcommondata</ObjectType>
+      </ContentItemReferenceSourceCommonDataID>
+      <ContentItemReferenceTargetItemID>
+        <CodeName>Blog-Discussion-Test-5f14855d-yoeyiqi3-localtest</CodeName>
+        <GUID>bf99ad26-802e-498f-a454-343a1e0fb5d0</GUID>
+        <ObjectType>cms.contentitem</ObjectType>
+      </ContentItemReferenceTargetItemID>
+    </cms.contentitemreference>
+    <cms.contentitemreference>
+      <ContentItemReferenceGroupGUID>9a93d64c-5cc7-47f0-94e8-f7b3cc48946e</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>26f94db9-f443-44ae-8c48-e693aa11e9f1</ContentItemReferenceGUID>
+      <ContentItemReferenceSourceCommonDataID>
+        <GUID>2b1ebced-4b7d-490b-8158-64604c3d23c0</GUID>
+        <ObjectType>cms.contentitemcommondata</ObjectType>
+      </ContentItemReferenceSourceCommonDataID>
+      <ContentItemReferenceTargetItemID>
+        <CodeName>Test-236fj6et-localtest</CodeName>
+        <GUID>0a0d432b-63a2-4952-8f81-922820b04d84</GUID>
+        <ObjectType>cms.contentitem</ObjectType>
+      </ContentItemReferenceTargetItemID>
+    </cms.contentitemreference>
+  </ContentItemReferences>
+</cms.contentitemcommondata>

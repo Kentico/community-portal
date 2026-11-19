@@ -21,7 +21,21 @@ $coreProjectPath = Get-CoreProjectPath
 
 $scriptConfig = Get-ScriptConfig
 
-$Types = if ($null -eq $Types) { $scriptConfig.CodeGenerationTypes.PSObject.Properties.Name } else { $Types }
+# CodeGenerationTypes is a Hashtable when it comes from the module's defaults and a
+# PSCustomObject when it was loaded from settings.local.json. Only the latter exposes its keys
+# through PSObject.Properties - against the defaults that returned Count, Keys, Values and the
+# like, so no name matched the checks below and the script generated nothing while reporting
+# success. Read the keys in the way each type supports.
+$codeGenerationTypes = $scriptConfig.CodeGenerationTypes
+
+$allTypeNames = if ($codeGenerationTypes -is [System.Collections.IDictionary]) {
+    $codeGenerationTypes.Keys
+}
+else {
+    $codeGenerationTypes.PSObject.Properties.Name
+}
+
+$Types = if ($null -eq $Types) { $allTypeNames } else { $Types }
 
 function Get-AppendedCorePath {
     param(

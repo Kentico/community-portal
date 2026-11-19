@@ -52,7 +52,7 @@ internal static class SqlServerResourceBuilderExtensions
         string backupContainerFolder,
         string databaseName)
     {
-        var loggerService = context.ServiceProvider.GetRequiredService<ResourceLoggerService>();
+        var loggerService = context.Services.GetRequiredService<ResourceLoggerService>();
         var logger = loggerService.GetLogger(context.ResourceName);
 
         try

@@ -11,7 +11,7 @@ using Kentico.Xperience.Admin.Base;
     uiPageType: typeof(DiscussionEventsListingPage),
     name: "Discussion events",
     templateName: TemplateNames.LISTING,
-    order: 1)]
+    order: 0)]
 
 namespace Kentico.Community.Portal.Admin.Features.QAndA.DiscussionEvents;
 
@@ -62,6 +62,7 @@ public class DiscussionEventsListingPage : ListingPage
                 "Date",
                 searchable: false,
                 sortable: true,
+                defaultSortDirection: SortTypeEnum.Desc,
                 minWidth: 4)
             .AddColumn(
                 nameof(DiscussionEventInfo.DiscussionEventType),

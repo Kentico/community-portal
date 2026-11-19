@@ -1,6 +1,8 @@
 using CMS.ContactManagement;
 using CMS.DataEngine;
+using CMS.EmailMarketing;
 using Kentico.Community.Portal.Admin.Features.RecipientLists;
+using Kentico.Community.Portal.Core.Membership;
 using Kentico.Xperience.Admin.Base;
 using Kentico.Xperience.Admin.DigitalMarketing.UIPages;
 
@@ -18,9 +20,12 @@ public class RecipientListListExtender : PageExtender<RecipientListList>
         {
             var aggregate =
                 new ObjectQuery(ContactGroupMemberInfo.OBJECT_TYPE_CONTACT)
+                    .Source(s => s.InnerJoin<EmailSubscriptionConfirmationInfo>(
+                        $"{ActiveSubscriptionSql.MEMBER_TABLE}.{nameof(ContactGroupMemberInfo.ContactGroupMemberRelatedID)}",
+                        nameof(EmailSubscriptionConfirmationInfo.EmailSubscriptionConfirmationContactID)))
                     .Column(new AggregatedColumn(AggregationType.Count, nameof(ContactGroupMemberInfo.ContactGroupMemberContactGroupID)))
                     .Where($"{nameof(ContactGroupMemberInfo.ContactGroupMemberContactGroupID)} = {nameof(ContactGroupInfo.ContactGroupID)}")
-                    .WhereEquals(nameof(ContactGroupMemberInfo.ContactGroupMemberType), 0);
+                    .Where(new WhereCondition(ActiveSubscriptionSql.Predicate()));
 
             return q
                 .Columns(
@@ -32,7 +37,7 @@ public class RecipientListListExtender : PageExtender<RecipientListList>
         }));
 
         var configs = Page.PageConfiguration.ColumnConfigurations
-            .AddColumn("ContactsCount", caption: "Count")
+            .AddColumn("ContactsCount", caption: "Subscribers")
             .AddColumn(nameof(ContactGroupInfo.ContactGroupDescription), caption: "Description", minWidth: 30);
     }
 }

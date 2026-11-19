@@ -48,6 +48,8 @@ type MembershipStatsOverview = {
   moderatedMembers: number;
   uniqueEnabledEmailDomains: number;
   uniqueModeratedEmailDomains: number;
+  mvpMembers: number;
+  communityLeaderMembers: number;
 };
 
 type MembershipStatsDashboard = {
@@ -108,6 +110,16 @@ export const MembershipStatsLayoutTemplate = (
                 label="Moderated email domains"
                 value={stats.overview.uniqueModeratedEmailDomains}
                 caption="Distinct domains represented among moderated disabled members."
+              />
+              <OverviewStatCard
+                label="MVP members"
+                value={stats.overview.mvpMembers}
+                caption="Members currently holding the Kentico MVP Member Role."
+              />
+              <OverviewStatCard
+                label="Community Leader members"
+                value={stats.overview.communityLeaderMembers}
+                caption="Members currently holding the Kentico Community Leader Member Role."
               />
             </div>
           </CardHeader>

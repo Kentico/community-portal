@@ -39,6 +39,38 @@ logs) is included in the `.\database` folder as a `.zip`.
      - Select source 'Device' -> ...-> 'Add'
      - Select `.bak` from `.\database\<database-backup.bak>` -> OKF
 
+## Set up pnpm
+
+Install pnpm standalone, outside Node.js, so it survives Node version switches:
+
+```powershell
+winget install pnpm.pnpm
+# or: Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression
+```
+
+Open a new shell, then run from the repository root:
+
+```powershell
+(Get-Command pnpm).Source   # should be under $env:PNPM_HOME, not the Node.js folder
+pnpm --version              # prints the version pinned in package.json
+pnpm install
+```
+
+pnpm reads the `packageManager` pin in the root `package.json` and runs that
+version (`pnpm-lock.yaml` records its integrity hashes). CI does the
+same (`pnpm/setup`). Install dependencies once at the repository root for the
+whole pnpm workspace.
+
+Don't use Corepack (`corepack enable`). It's being removed from Node.js, and its
+shims live in the Node.js install folder. If `pnpm` resolves there, run
+`corepack disable pnpm` and put the pnpm home folder (`$env:PNPM_HOME`) first on your user PATH.
+
+### Updating pnpm
+
+We stay on the latest pnpm. Running `pnpm self-update` inside the repo updates
+the `packageManager` pin and `pnpm-lock.yaml`. Commit both as their own change
+(e.g. `build: bump pnpm to <version>`) so CI and everyone else use it too.
+
 ## Configure the application
 
 1. Open `.\Kentico.Community.Portal.slnx` OR open the repository's root folder

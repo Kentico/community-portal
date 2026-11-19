@@ -6,7 +6,7 @@
     string id = $"{(Model.EditedObjectID ?? Guid.NewGuid()):N}";
     string rootElId = $"questionFormRoot_{id}";
     string rootElIdSelector = $"#{rootElId}";
-    string editorID = $"editormd_{id}";
+    string editorID = $"milkdown_{id}";
     string editorFieldID = $"{editorID}_field";
 
     var selected = Model.TagGroups

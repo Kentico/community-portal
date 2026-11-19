@@ -17,7 +17,7 @@ using Kentico.Xperience.Admin.Websites.UIPages;
     uiPageType: typeof(AnswerDataListingPage),
     name: "Answers",
     templateName: TemplateNames.LISTING,
-    order: 0)]
+    order: 4)]
 
 namespace Kentico.Community.Portal.Admin.Features.QAndA.Answers;
 

@@ -20,7 +20,7 @@ namespace Kentico.Community.Portal.Core.Content
 	/// Represents a page of type <see cref="BlogPostPage"/>.
 	/// </summary>
 	[RegisterContentTypeMapping(CONTENT_TYPE_NAME)]
-	public partial class BlogPostPage : IWebPageFieldsSource, IWebPageMetaFields, IBasicItemFields, ICoreTaxonomyFields
+	public partial class BlogPostPage : IWebPageFieldsSource, IWebPageMetaFields, IFeaturedImageFields, IBasicItemFields, ICoreTaxonomyFields
 	{
 		/// <summary>
 		/// Code name of the content type.
@@ -93,6 +93,12 @@ namespace Kentico.Community.Portal.Core.Content
 		/// WebPageCanonicalURL.
 		/// </summary>
 		public string WebPageCanonicalURL { get; set; }
+
+
+		/// <summary>
+		/// FeaturedImageImageContent.
+		/// </summary>
+		public IEnumerable<ImageContent> FeaturedImageImageContent { get; set; }
 
 
 		/// <summary>

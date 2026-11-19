@@ -66,7 +66,7 @@ public static class ApplicationBuilderUtilityExtensions
 
         _ = app.MapHealthChecks("status");
 
-        if (config.GetValue<bool>("Testing:E2E:Enabled"))
+        if (E2ETestingGate.IsEnabled(config, app.Environment))
         {
             _ = app.MapE2ETestingTools();
         }

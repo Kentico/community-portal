@@ -5,6 +5,10 @@
  * be replaced with static Bootstrap utilities
  */
 
+.section.page-builder-edit {
+  overflow: visible;
+}
+
 :where(.section) {
   /* Modern unified section component with CSS custom properties */
   position: relative;
@@ -32,6 +36,45 @@
     --section-padding-block: 3rem;
   }
 }
+/*
+ * The Standard single-column layout paints its background on a max-width
+ * `.container`, so a solid color ends in a hard vertical seam against the white
+ * page. Overlay a horizontal white-to-transparent gradient so the color melts
+ * into the page on both sides instead of stopping at an edge.
+ */
+.section-bg-bleed {
+  /* Below `sm` the container spans the viewport, so there is no white beside it
+     to fade into. Above it, the fade stops just short of the content column's
+     inset at each breakpoint so the content always sits on the solid color.
+     At `sm` the column is still full width (`col-md-10` is the first inset), so
+     the fade is held to the column's own gutter padding. */
+  --section-bg-bleed-fade: 0%;
+
+  background-image: linear-gradient(
+    to right,
+    var(--color-white) 0%,
+    rgba(255, 255, 255, 0) var(--section-bg-bleed-fade),
+    rgba(255, 255, 255, 0) calc(100% - var(--section-bg-bleed-fade)),
+    var(--color-white) 100%
+  );
+
+  @include media-breakpoint-up(sm) {
+    --section-bg-bleed-fade: 2%;
+  }
+
+  @include media-breakpoint-up(md) {
+    --section-bg-bleed-fade: 8%;
+  }
+
+  @include media-breakpoint-up(lg) {
+    --section-bg-bleed-fade: 12%;
+  }
+
+  @include media-breakpoint-up(xl) {
+    --section-bg-bleed-fade: 15%;
+  }
+}
+
 .section--error-hero {
   --section-padding-block: 20vw;
   --section-margin-top: 1rem;
@@ -70,4 +113,23 @@
   @include media-breakpoint-up(xxl) {
     --section-bg-size: 60% auto;
   }
+}
+
+/*
+ * Grid Section presentation options (see Grid.cshtml)
+ */
+
+/* "Content Width: Narrow" - the gutter is added back so the content itself,
+   not the padded container, lands on the token width. */
+.container.section-container-narrow {
+  max-width: calc(var(--size-content-narrow) + var(--bs-gutter-x));
+}
+
+/* "Heading Spacing" - space between the section heading and its content */
+.section-heading-gap-md {
+  margin-bottom: var(--space-5);
+}
+
+.section-heading-gap-lg {
+  margin-bottom: clamp(var(--space-5), 1rem + 3vw, 3.5rem);
 }

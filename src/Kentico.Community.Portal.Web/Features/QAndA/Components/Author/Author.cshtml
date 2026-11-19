@@ -18,7 +18,7 @@
 
 <div>
     <div class="d-flex justify-content-start align-items-start mb-1">
-        <a class="d-flex align-items-center" asp-controller="Member" asp-action="MemberDetail"
+        <a class="d-flex align-items-center" test-id="memberProfileLink" asp-controller="Member" asp-action="MemberDetail"
             asp-route-memberID="@Model.ID">
             <vc:avatar member-id="Model.ID" size="Small" />
             <span class="ms-1">

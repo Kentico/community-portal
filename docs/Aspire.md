@@ -1,8 +1,8 @@
 # Local Development with .NET Aspire
 
 [.NET Aspire](https://aspire.dev) can orchestrate the entire local development
-stack with a single command. Instead of starting the database, Azure Storage
-emulator, client dev servers, and the ASP.NET Core application separately (see
+stack with a single command. Instead of starting the database, client dev
+servers, and the ASP.NET Core application separately (see
 [Development](./Development.md)), the Aspire AppHost starts and supervises all of
 them together and provides a dashboard with logs, traces, and metrics.
 
@@ -18,7 +18,6 @@ resources:
 | --------------- | ---------------------------- | -------------------------------------------------------------------------------------- |
 | `sql`           | SQL Server 2022 container    | Persistent container + `kentico-community-sql-data` volume. Host port is Aspire-managed |
 | `kentico-community` | Database                 | The `Kentico.Community` database on `sql`                                               |
-| `storage`       | Azurite container            | Blob/queue/table on the standard ports `10000`/`10001`/`10002`                          |
 | `web-client`    | Vite dev server (pnpm)       | Website channel client assets, HTTPS `5174`                                             |
 | `admin-client`  | Webpack dev server (pnpm)    | Admin React customizations, HTTPS `3099`                                                |
 | `web`           | ASP.NET Core project         | The Xperience app on `45039` (site), `45040` (admin), `45041` (http)                    |
@@ -40,8 +39,9 @@ telemetry appears in the dashboard.
 
 In addition to the [Required Software](./Required-Software.md):
 
-- **Aspire CLI** — `dotnet tool install -g Aspire.Cli` (or see
-  <https://aspire.dev>). Confirm with `aspire --version`.
+- **Aspire CLI 17** — see <https://aspire.dev/get-started/install-cli/>.
+  Confirm with `aspire --version`. The AppHost uses the CLI bundle, so the
+  installed CLI supplies the dashboard and orchestrator (DCP).
 - **Docker** running (for the `sql` and `storage` containers).
 - **Trusted .NET dev certificate** — `dotnet dev-certs https --trust`.
 - **pnpm workspace installed once** — run `pnpm install` at the repository root.
@@ -160,8 +160,6 @@ Notes:
   through that same connection string instead.
 - Your User Secrets are **not** modified. Non-Aspire scripts (for example
   `scripts/Restore-CI.ps1`) and the manual workflow continue to use them.
-- Azurite runs on the standard emulator ports, so the existing `CMSAzure*`
-  development settings keep working unchanged.
 
 ## Use your own SQL Server instead of the managed container
 
@@ -217,7 +215,7 @@ use Aspire, and there is no plan to change that. The reasoning:
   Kubernetes and has no concept of the Xperience SaaS package API, so it cannot
   replace any step.
 - **`ci.yml` is a fixed-topology, headless batch job.** Its SQL Server (the
-  `mssqlsuite` action), Azurite, and app startup look superficially like what the
+  `mssqlsuite` action) and app startup look superficially like what the
   AppHost does locally, but swapping in Aspire would be a **lateral move that adds
   complexity, not a simplification**:
   - The Xperience-specific database bootstrap — restore the committed `.bak`,
@@ -239,6 +237,14 @@ steps.
 > whole system through the AppHost, `Aspire.Hosting.Testing` becomes attractive —
 > but that is a test-architecture decision, not a CI simplification, and it does
 > not change the TypeScript Playwright suite described above.
+
+## Updating Aspire
+
+1. `aspire update --self` — updates the CLI.
+2. `aspire update` — updates the AppHost packages.
+
+Keep every `Aspire.Hosting.*` version in `Directory.Packages.props` and
+`sdk.version` in `aspire.config.json` on the same version as the CLI.
 
 ## Troubleshooting
 

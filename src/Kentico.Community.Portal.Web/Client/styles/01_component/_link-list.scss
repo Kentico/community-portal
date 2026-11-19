@@ -7,13 +7,35 @@
  * the token scale, font sizes (.fs-*), weights (.fw-*), text colours, position —
  * is applied as a utility class in the Razor markup so it reuses the shared
  * Bootstrap utilities already in the bundle instead of duplicating them here.
+ *
+ * Selector conventions:
+ *   - Shared element rules are plain single-class selectors at (0,1,0). The
+ *     per-design rules below are descendant selectors at (0,2,0), so they win on
+ *     their own; Bootstrap's utilities are !important in this build and win
+ *     regardless of specificity. Neither needs the base flattened with :where().
+ *   - :where() is used only where it buys something: on the compound shared
+ *     interaction rules, which would otherwise reach (0,4,0) and force anything
+ *     overriding them to out-specify four classes.
+ *   - :is() collapses the hover/focus pairs and the designs that share a behaviour.
+ *
+ * Kept in step with the Blog Post List widget (see _blog-post-list.scss) so the two
+ * widgets read as one system when used on the same page.
  */
+
+/* ---- Tokens ----------------------------------------------------------- */
 
 .link-list {
   --ll-border: var(--color-gray-200);
   --ll-accent: var(--color-primary);
-  --ll-shadow: 0 1px 2px rgba(35, 31, 32, 0.04), 0 8px 24px rgba(35, 31, 32, 0.06);
-  --ll-shadow-hover: 0 4px 8px rgba(35, 31, 32, 0.06), 0 16px 32px rgba(240, 90, 34, 0.12);
+
+  /* Elevation is the neutral text colour at low alpha; the hover glow picks up the
+     variant's own accent, so re-theming --ll-accent re-tints the shadow with it. */
+  --ll-shadow:
+    0 1px 2px color-mix(in srgb, var(--color-gray-900) 4%, transparent),
+    0 8px 24px color-mix(in srgb, var(--color-gray-900) 6%, transparent);
+  --ll-shadow-hover:
+    0 4px 8px color-mix(in srgb, var(--color-gray-900) 6%, transparent),
+    0 16px 32px color-mix(in srgb, var(--ll-accent) 12%, transparent);
 }
 
 /* ---- Shared header ---------------------------------------------------- */
@@ -38,7 +60,10 @@
   );
 }
 
-.link-list__intro {
+/* The intro renders editor markdown, so its children carry no classes and can only
+   be overridden structurally. :where() keeps this low enough for another structural
+   selector to win without escalating. */
+:where(.link-list__intro) {
   max-width: 62ch;
   margin-top: 0.4rem;
 
@@ -53,12 +78,14 @@
   line-height: 1.35;
 }
 
-/* Dark title that shifts to the accent colour on hover/focus. */
+/* Dark title that shifts to the accent colour on hover/focus. The resting colour is
+   set here rather than with a .text-dark utility in the markup: that utility is
+   !important, so it silently beat the hover state below. */
 .link-list__title-link {
-  transition: color 0.15s ease;
+  color: var(--color-gray-900);
+  transition: color var(--duration-fast) ease;
 
-  &:hover,
-  &:focus-visible {
+  &:is(:hover, :focus-visible) {
     color: var(--ll-accent);
   }
 }
@@ -70,7 +97,7 @@
 
 .link-list__arrow {
   flex: none;
-  transition: transform 0.18s ease;
+  transition: transform var(--duration-base) ease;
 }
 
 .link-list__meta {
@@ -79,8 +106,7 @@
 }
 
 .link-list__meta-link {
-  &:hover,
-  &:focus-visible {
+  &:is(:hover, :focus-visible) {
     color: var(--ll-accent);
     text-decoration: underline;
   }
@@ -99,6 +125,16 @@
   overflow: hidden;
 }
 
+/* ---- Shared interactions --------------------------------------------- */
+
+/* One rule for both designs' chevron nudge. The container list is :where() so this
+   stays at (0,2,0) and the reduced-motion mirror below can match it exactly. */
+:where(.link-list)
+  :where(.link-list__item, .link-list__card):is(:hover, :focus-within)
+  .link-list__arrow {
+  transform: translateX(0.25rem);
+}
+
 /* =====================================================================
    Design: Feature Panel
    A single elevated card. Strong header, then divided, hover-highlighted
@@ -110,39 +146,34 @@
   border: 1px solid var(--ll-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--ll-shadow);
-}
 
-.link-list--panel .link-list__header {
-  padding-bottom: var(--space-3);
-  margin-bottom: var(--space-1);
-  border-bottom: 1px solid var(--ll-border);
-}
-
-.link-list--panel .link-list__item {
-  position: relative;
-  padding: 0.7rem 0.85rem;
-  border-radius: var(--radius-md);
-  transition: background-color 0.15s ease;
-
-  + .link-list__item {
-    border-top: 1px solid var(--ll-border);
+  .link-list__header {
+    padding-bottom: var(--space-3);
+    margin-bottom: var(--space-1);
+    border-bottom: 1px solid var(--ll-border);
   }
-}
 
-.link-list--panel .link-list__item:hover,
-.link-list--panel .link-list__item:focus-within {
-  background: var(--color-gray-100);
-  border-top-color: transparent;
-}
+  .link-list__item {
+    position: relative;
+    padding: 0.7rem 0.85rem;
+    border-radius: var(--radius-md);
+    transition: background-color var(--duration-fast) ease;
 
-.link-list--panel .link-list__item:hover + .link-list__item,
-.link-list--panel .link-list__item:focus-within + .link-list__item {
-  border-top-color: transparent;
-}
+    + .link-list__item {
+      border-top: 1px solid var(--ll-border);
+    }
 
-.link-list--panel .link-list__item:hover .link-list__arrow,
-.link-list--panel .link-list__item:focus-within .link-list__arrow {
-  transform: translateX(0.25rem);
+    &:is(:hover, :focus-within) {
+      background: var(--color-gray-100);
+    }
+  }
+
+  // The fill reads as one block, so the hovered row drops its own top rule and the
+  // next row's as well.
+  .link-list__item:is(:hover, :focus-within),
+  .link-list__item:is(:hover, :focus-within) + .link-list__item {
+    border-top-color: transparent;
+  }
 }
 
 /* =====================================================================
@@ -160,19 +191,288 @@
   border-radius: var(--radius-md);
   box-shadow: var(--ll-shadow);
   transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    border-color 0.18s ease;
+    transform var(--duration-base) ease,
+    box-shadow var(--duration-base) ease,
+    border-color var(--duration-base) ease;
+
+  &:is(:hover, :focus-within) {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--ll-accent) 40%, var(--ll-border));
+    box-shadow: var(--ll-shadow-hover);
+  }
 }
 
-.link-list--cards .link-list__card:hover,
-.link-list--cards .link-list__card:focus-within {
-  transform: translateY(-3px);
-  border-color: color-mix(in srgb, var(--ll-accent) 40%, var(--ll-border));
-  box-shadow: var(--ll-shadow-hover);
+/* =====================================================================
+   Design: Icon Cards
+   Equal-width, fully clickable cards (the card is the <a>), each led by
+   an icon tile. No container — the hosting section owns the horizontal
+   padding.
+
+   Columns:  < md  2      md–xl  4      xl+  one row (wraps past ~7 cards)
+   A short last row is stretched to the full width instead of leaving
+   orphans, so 7 cards read as 2+2+2+1 wide, then 4+3, then 7.
+   The widget's "Cards per row" (--cols-3 / --cols-4) caps the count from
+   md up instead of switching to the single row.
+   ===================================================================== */
+
+:where(.link-list-icon-cards) {
+  --lic-gap: var(--space-2);
+  --lic-col-min: 9rem;
+  --lic-card-bg: var(--color-white);
+  --lic-card-bg-hover: var(--color-purple-100);
+  --lic-card-border: var(--color-gray-300);
+  --lic-card-border-hover: var(--color-purple);
+  --lic-card-radius: var(--radius-lg);
+  --lic-card-padding: var(--space-3);
+  --lic-card-gap: 0.75rem;
+  --lic-card-min-height: 0rem;
+  --lic-text-gap: var(--space-2);
+  --lic-icon-size: 3rem;
+  --lic-icon-radius: 0.75rem;
+  --lic-icon-bg: var(--color-purple-100);
+  --lic-icon-bg-hover: var(--color-white);
+  /* Shrinks on the narrowest phones so long words still fit a half-width card */
+  --lic-title-size: clamp(0.9375rem, 4.6vw, var(--font-size-4));
+  --lic-title-color: var(--color-gray-900);
+  --lic-desc-size: var(--font-size-6);
+  --lic-desc-line-height: 1.25rem;
+  --lic-desc-lines: 3;
+  --lic-desc-color: color-mix(in srgb, var(--color-gray-900) 75%, transparent);
+
+  @include media-breakpoint-up(sm) {
+    --lic-title-size: var(--font-size-3);
+    --lic-desc-size: var(--font-size-5);
+    --lic-desc-line-height: 1.3125rem;
+  }
+
+  /* 4 narrow cards per row: one step down keeps titles to two lines */
+  @include media-breakpoint-up(md) {
+    --lic-title-size: var(--font-size-4);
+  }
+
+  @include media-breakpoint-up(lg) {
+    --lic-title-size: var(--font-size-3);
+  }
+
+  @include media-breakpoint-up(xl) {
+    --lic-card-min-height: 13.75rem;
+    --lic-card-padding: 0.75rem;
+    --lic-title-size: var(--font-size-4);
+  }
+
+  @include media-breakpoint-up(xxl) {
+    --lic-card-padding: var(--space-3);
+    --lic-title-size: var(--font-size-3);
+  }
 }
 
-.link-list--cards .link-list__card:hover .link-list__arrow,
-.link-list--cards .link-list__card:focus-within .link-list__arrow {
-  transform: translateX(0.25rem);
+.link-list-icon-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--lic-gap);
+
+  @include media-breakpoint-up(md) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  @include media-breakpoint-up(xl) {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(100%, var(--lic-col-min)), 1fr)
+    );
+  }
+}
+
+.link-list-icon-cards__item {
+  display: flex;
+  min-width: 0;
+}
+
+@include media-breakpoint-down(md) {
+  .link-list-icon-cards__item:nth-child(odd):last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Fixed column counts sit on the 12-track grid. A short last row shares the
+   full width: its first item is matched by position ($columns n + 1) and by how
+   many items are left; it and its following siblings take a wider span. */
+@mixin lic-last-row($columns, $remaining, $span) {
+  .link-list-icon-cards__item:nth-child(#{$columns}n + 1):nth-last-child(#{$remaining}),
+  .link-list-icon-cards__item:nth-child(#{$columns}n + 1):nth-last-child(#{$remaining})
+    ~ .link-list-icon-cards__item {
+    grid-column: span $span;
+  }
+}
+
+@mixin lic-columns-4 {
+  .link-list-icon-cards__item {
+    grid-column: span 3;
+  }
+
+  @include lic-last-row(4, 3, 4);
+  @include lic-last-row(4, 2, 6);
+  @include lic-last-row(4, 1, 12);
+}
+
+@mixin lic-columns-3 {
+  .link-list-icon-cards__item {
+    grid-column: span 4;
+  }
+
+  @include lic-last-row(3, 2, 6);
+  @include lic-last-row(3, 1, 12);
+}
+
+/* Cards per row: Auto — 4 across between md and xl, then the single auto-fit row. */
+@include media-breakpoint-between(md, xl) {
+  .link-list-icon-cards--cols-auto {
+    @include lic-columns-4;
+  }
+}
+
+/* Cards per row: 3 or 4 — capped from md up, for lists with more cards than fit
+   one comfortable row. The cards stay wide, so the xl+ tightening the single row
+   needs (smaller title, less padding, fixed min-height) is undone. */
+/* These lists carry long single words ("Documentation") that the default phone
+   title size breaks mid-word in a half-width card. */
+@include media-breakpoint-down(sm) {
+  :is(.link-list-icon-cards--cols-3, .link-list-icon-cards--cols-4) {
+    --lic-card-padding: 0.75rem;
+    --lic-title-size: clamp(0.8125rem, 4.1vw, 1rem);
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .link-list-icon-cards--cols-3 {
+    --lic-title-size: var(--font-size-3);
+
+    @include lic-columns-3;
+  }
+
+  .link-list-icon-cards--cols-4 {
+    @include lic-columns-4;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  :is(.link-list-icon-cards--cols-3, .link-list-icon-cards--cols-4) {
+    --lic-card-min-height: 0rem;
+    --lic-card-padding: var(--space-3);
+    --lic-title-size: var(--font-size-3);
+
+    .link-list-icon-cards__grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+  }
+}
+
+.link-list-icon-cards__card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--lic-card-gap);
+  min-width: 0;
+  min-height: var(--lic-card-min-height);
+  padding: var(--lic-card-padding);
+  border: 1px solid var(--lic-card-border);
+  border-radius: var(--lic-card-radius);
+  background: var(--lic-card-bg);
+  transition:
+    background-color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease;
+
+  &:is(:hover, :focus-visible) {
+    border-color: var(--lic-card-border-hover);
+    background: var(--lic-card-bg-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--lic-card-border-hover);
+    outline-offset: 2px;
+  }
+}
+
+.link-list-icon-cards__icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--lic-icon-size);
+  height: var(--lic-icon-size);
+  border-radius: var(--lic-icon-radius);
+  background: var(--lic-icon-bg);
+  transition: background-color var(--duration-fast) ease;
+}
+
+.link-list-icon-cards__icon img {
+  width: var(--lic-icon-glyph-size, 1.5rem);
+  height: var(--lic-icon-glyph-size, 1.5rem);
+  object-fit: contain;
+}
+
+/* The tile would vanish into the hovered card's fill, so it flips to the card's
+   resting surface. */
+.link-list-icon-cards__card:is(:hover, :focus-visible)
+  .link-list-icon-cards__icon {
+  background: var(--lic-icon-bg-hover);
+}
+
+.link-list-icon-cards__title {
+  color: var(--lic-title-color);
+  font-size: var(--lic-title-size);
+  font-weight: 700;
+  line-height: normal;
+  /* Words wrap whole; a break inside a word is the last resort on tiny phones */
+  overflow-wrap: break-word;
+  hyphens: manual;
+}
+
+/* Always clamped so one long description cannot stretch the whole row; the
+   widget's "Description Line Limit" (--ll-clamp) overrides the default. The
+   negative margin tightens the card gap to the title/description gap. */
+.link-list-icon-cards__desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--ll-clamp, var(--lic-desc-lines));
+  line-clamp: var(--ll-clamp, var(--lic-desc-lines));
+  overflow: hidden;
+  margin-top: calc(var(--lic-text-gap) - var(--lic-card-gap));
+  color: var(--lic-desc-color);
+  font-size: var(--lic-desc-size);
+  line-height: var(--lic-desc-line-height);
+}
+/* =====================================================================
+   Reduced motion
+   Hover/focus affordances stay — only the movement is dropped, so the
+   colour and shadow feedback still reads.
+   ===================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .link-list-icon-cards__card,
+  .link-list-icon-cards__icon {
+    transition: none;
+  }
+
+  /* A media query adds no specificity, so each rule below mirrors the shape of the
+     rule it disables. */
+  .link-list
+    :is(
+      .link-list__title-link,
+      .link-list__arrow,
+      .link-list__item,
+      .link-list__card
+    ) {
+    transition: none;
+  }
+
+  .link-list--cards .link-list__card:is(:hover, :focus-within) {
+    transform: none;
+  }
+
+  :where(.link-list)
+    :where(.link-list__item, .link-list__card):is(:hover, :focus-within)
+    .link-list__arrow {
+    transform: none;
+  }
 }

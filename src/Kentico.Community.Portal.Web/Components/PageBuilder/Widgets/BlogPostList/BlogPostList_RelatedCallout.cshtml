@@ -1,0 +1,63 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList
+@model BlogPostListWidgetViewModel
+
+@* Related Callout — a tinted aside for related reading inside a blog post body.
+   The widget Heading is rendered as an eyebrow label rather than a document
+   heading, so the post title stays the callout's only competing headline. *@
+
+@{
+  string eyebrow = Model.Heading.GetValueOrDefault("Related reading");
+}
+
+<aside class="blog-post-list blog-post-list--callout" xpc-preview-outline="@Model.ComponentName"
+  aria-label="@eyebrow">
+
+  @* Shares .blog-post-list__header with the other designs so the eyebrow and intro
+     keep the same separation from the first post. *@
+  <header class="blog-post-list__header">
+    <p class="blog-post-list__eyebrow text-secondary fw-bold text-uppercase m-0">
+      <svg class="blog-post-list__eyebrow-icon" width="14" height="14" viewBox="0 0 16 16" fill="none"
+        aria-hidden="true">
+        <path d="M6.5 9.5l3-3M6 4.5H4.5a3.5 3.5 0 000 7H6M10 4.5h1.5a3.5 3.5 0 010 7H10" stroke="currentColor"
+          stroke-width="1.6" stroke-linecap="round" />
+      </svg>
+      @eyebrow
+    </p>
+
+    @if (Model.Intro.TryGetValue(out HtmlString? introHtml))
+    {
+      <div class="blog-post-list__intro">
+        @introHtml
+      </div>
+    }
+  </header>
+
+  <div class="blog-post-list__rows">
+    @foreach (var post in Model.BlogPosts)
+    {
+      <article class="blog-post-list__row position-relative">
+        @* A real heading element, matching the other designs' fs-4 titles: the site
+           styles h1-h6 with text-wrap:balance, which a <p> would not pick up. *@
+        <h3 class="blog-post-list__title fs-4 fw-bold m-0">
+          <a href="@post.LinkPath"
+            class="blog-post-list__title-link stretched-link text-decoration-none"
+            @(post.Description.HasValue ? $"aria-describedby={post.DescriptionID}" : null)>
+            <span>@post.Title</span>
+            <svg class="blog-post-list__arrow text-secondary" width="15" height="15" viewBox="0 0 16 16" fill="none"
+              aria-hidden="true">
+              <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </a>
+        </h3>
+
+        <partial name="~/Components/PageBuilder/Widgets/BlogPostList/_Description.cshtml" model="post" />
+
+        <div class="blog-post-list__row-footer d-flex flex-wrap align-items-center gap-2 mt-2">
+          <partial name="~/Components/PageBuilder/Widgets/BlogPostList/_Meta.cshtml" model="post" />
+          <partial name="~/Components/PageBuilder/Widgets/BlogPostList/_Tags.cshtml" model="post" />
+        </div>
+      </article>
+    }
+  </div>
+</aside>

@@ -22,14 +22,21 @@ public class WebPageMetaService(
 
         meta = meta with { Title = fullTitle };
 
-        if (meta.OGImageURL.HasNoValue)
+        if (meta.OGImageURL.TryGetValue(out string? imageURL))
+        {
+            if (!Uri.IsWellFormedUriString(imageURL, UriKind.Absolute) && contextAccessor.HttpContext is HttpContext context)
+            {
+                meta = meta with { OGImageURL = imageURL.RelativePathToAbsoluteURL(context.Request) };
+            }
+        }
+        else
         {
             var imageContent = settings.GlobalContent.WebsiteGlobalContentLogoImageContent.FirstOrDefault();
 
             if (imageContent is not null && contextAccessor.HttpContext is HttpContext context)
             {
                 string absoluteAssetURL = imageContent.ImageContentAsset.AssetAbsoluteURL(context.Request);
-                meta = meta with { OGImageURL = absoluteAssetURL };
+                meta = meta with { OGImageURL = absoluteAssetURL, OGImageIsFallback = true };
             }
         }
 

@@ -1,3 +1,4 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Sections
 @using Kentico.Community.Portal.Web.Components.PageBuilder.Sections.SingleColumn
 
 @model SingleColumnSectionViewModel
@@ -35,11 +36,19 @@
 
     string backgroundColorClases = Model.BackgroundColor switch
     {
-        BackgroundColors.Dark => "bg-dark",
-        BackgroundColors.Secondary_Light => "bg-purple-100",
-        BackgroundColors.Light => "bg-light",
-        BackgroundColors.White or _ => "",
+        SectionBackgroundColors.Primary_Light => "bg-orange-100",
+        SectionBackgroundColors.Secondary_Light => "bg-purple-100",
+        SectionBackgroundColors.Light => "bg-light",
+        SectionBackgroundColors.White or _ => "",
     };
+
+    // The Standard layout's background is clipped to the container width, which would
+    // otherwise end in a hard edge against the white page. Fade the tint out horizontally
+    // instead so it melts into the page.
+    if (Model.Layout == Layouts.Standard && Model.BackgroundColor != SectionBackgroundColors.White)
+    {
+        backgroundColorClases += " section-bg-bleed";
+    }
 
     string rowClasses = Model.Layout switch
     {

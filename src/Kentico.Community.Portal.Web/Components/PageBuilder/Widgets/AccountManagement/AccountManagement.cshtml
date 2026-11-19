@@ -35,6 +35,16 @@
             </div>
 
             <div class="g-col-12 g-col-lg-6">
+                <partial name="~/Components/PageBuilder/Widgets/AccountManagement/_EmailForm.cshtml"
+                         model="account.EmailChange" />
+            </div>
+
+            <div class="g-col-12 g-col-lg-6">
+                <partial name="~/Components/PageBuilder/Widgets/AccountManagement/_AlternateEmailForm.cshtml"
+                         model="account.AlternateEmailForm" />
+            </div>
+
+            <div class="g-col-12 g-col-lg-6">
                 <partial name="~/Components/PageBuilder/Widgets/AccountManagement/_DiscussionSubscriptions.cshtml"
                          model="account.NotificationsForm.SubscribedDiscussions" />
             </div>
@@ -46,6 +56,10 @@
             <div class="g-col-12 g-col-lg-6">
                 <partial name="~/Components/PageBuilder/Widgets/AccountManagement/_EmailSubscriptionsForm.cshtml"
                          model="account.EmailSubscriptions" />
+            </div>
+
+            <div class="g-col-12 g-col-lg-6">
+                <partial name="~/Components/PageBuilder/Widgets/AccountManagement/_PrivacySettings.cshtml" />
             </div>
         </div>
     </div>

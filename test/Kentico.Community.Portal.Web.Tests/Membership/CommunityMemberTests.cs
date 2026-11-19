@@ -48,3 +48,76 @@ public class CommunityMemberTests
         Assert.That(displayName, Is.EqualTo(""));
     }
 }
+
+public class CommunityMemberIsInternalEmployeeTests
+{
+    [Test]
+    public void IsInternalEmployee_Is_True_For_Confirmed_KenticoComEmail()
+    {
+        var sut = new CommunityMember { Email = "person@kentico.com", EmailConfirmed = true };
+
+        Assert.That(sut.IsInternalEmployee, Is.True);
+    }
+
+    [TestCase("Person@Kentico.com", TestName = "IsInternalEmployee_Is_True_Regardless_Of_Email_Casing")]
+    [TestCase("person@KENTICO.COM", TestName = "IsInternalEmployee_Is_True_Regardless_Of_Domain_Casing")]
+    public void IsInternalEmployee_Ignores_Case(string email)
+    {
+        var sut = new CommunityMember { Email = email, EmailConfirmed = true };
+
+        Assert.That(sut.IsInternalEmployee, Is.True);
+    }
+
+    [Test]
+    public void IsInternalEmployee_Is_False_When_Email_Not_Confirmed()
+    {
+        var sut = new CommunityMember { Email = "person@kentico.com", EmailConfirmed = false };
+
+        Assert.That(sut.IsInternalEmployee, Is.False);
+    }
+
+    [Test]
+    public void IsInternalEmployee_Is_False_For_NonKenticoComEmail()
+    {
+        var sut = new CommunityMember { Email = "person@example.com", EmailConfirmed = true };
+
+        Assert.That(sut.IsInternalEmployee, Is.False);
+    }
+
+    [Test]
+    public void IsInternalEmployee_Is_False_When_Email_Is_Null()
+    {
+        var sut = new CommunityMember { Email = null, EmailConfirmed = true };
+
+        Assert.That(sut.IsInternalEmployee, Is.False);
+    }
+}
+
+public class CommunityMemberAlternateEmailTests
+{
+    [Test]
+    public void VerifiedAlternateEmail_Is_Null_When_Not_Verified()
+    {
+        var sut = new CommunityMember { AlternateEmail = "jane@agency.com", AlternateEmailVerifiedDate = null };
+
+        Assert.That(sut.IsAlternateEmailVerified, Is.False);
+        Assert.That(sut.VerifiedAlternateEmail, Is.Null);
+    }
+
+    [Test]
+    public void VerifiedAlternateEmail_Is_Email_When_Verified()
+    {
+        var sut = new CommunityMember { AlternateEmail = "jane@agency.com", AlternateEmailVerifiedDate = DateTime.Now };
+
+        Assert.That(sut.IsAlternateEmailVerified, Is.True);
+        Assert.That(sut.VerifiedAlternateEmail, Is.EqualTo("jane@agency.com"));
+    }
+
+    [Test]
+    public void VerifiedAlternateEmail_Is_Null_When_Email_Empty_Even_With_Date()
+    {
+        var sut = new CommunityMember { AlternateEmail = "", AlternateEmailVerifiedDate = DateTime.Now };
+
+        Assert.That(sut.VerifiedAlternateEmail, Is.Null);
+    }
+}

@@ -1,5 +1,102 @@
 # Architecture Decision Record
 
+## 2026-11-10 - Support request feature removed
+
+The support form was taken off `/support` in the consent release. The rest of the
+feature (blob + queue processing, external endpoint delivery, admin Support
+Requests app, failure notification, E2E stub) kept personal data that neither
+retention nor data protection erasure covered.
+
+### Selected solution
+
+- Remove all support request code, config, CI repository objects
+  (`KenticoCommunity.SupportRequestProcessingEvent`,
+  `KenticoCommunity.SupportRequestConfiguration`, `SupportMessageFailureNotification`)
+  and Azurite from local dev, Aspire and CI. Supersedes
+  [2024-02-19 - Support Requests Processing](#2024-02-19---support-requests-processing)
+  and [2024-04-04 - Support request processing settings](#2024-04-04---support-request-processing-settings).
+- `/support` stays a content page (`SupportPage`). Its content already sends
+  visitors to Kentico's support center, and `/support/feedback` is its child.
+- CD never deletes, so prod classes, rows and blob containers are deleted by hand
+  (#368).
+
+## 2026-11-10 - Consent-based tracking, data protection and retention
+
+Xperience can track visitors as contacts, log their activities and load analytics
+through Tag Manager. We want each of these to run only after the visitor chooses
+it, to answer personal data requests from the Xperience Data protection app, and
+to delete data the portal no longer needs on a schedule. Operating details are in
+[Privacy-And-Retention.md](./Privacy-And-Retention.md).
+
+### Selected solution
+
+- The website channel's default cookie level is Essential: no contact, no
+  activities. The banner and cookie settings offer Analytics and Website tracking
+  as separate choices; Necessary is always on.
+- The choice is one versioned, HTTP-only cookie (`kcp.cookieconsent`).
+  `CookieConsentMiddleware` applies it to the cookie level before each page
+  renders. No valid choice (missing or an older format) = Essential + banner.
+- Website tracking sets cookie level All and records a
+  `KenticoCommunityWebsiteTracking` agreement on the contact (a member's own
+  contact, so it follows them to other browsers). Withdrawing revokes it and
+  drops to Essential. If the agreement is revoked elsewhere, the browser is reset
+  and asked again. Sign-out resets the browser to Essential and forgets the choice.
+- Analytics is a cookie-only choice. Recording it as an agreement would need a
+  contact, which is the tracking the visitor may have refused.
+  - No Tag Manager snippet, GTM included, renders until Analytics is allowed
+    (`ConsentGatedCodeSnippetsService`). The library's own gate checks a contact
+    agreement, which doesn't fit. Snippets load right after the choice, no reload.
+  - Google Consent Mode starts all denied before any snippet and follows the
+    choice. `ad_storage`, `ad_user_data` and `ad_personalization` are always
+    denied.
+  - reCAPTCHA loads only on pages that use it.
+- Email marketing: one recipient list and one `EmailMarketing` consent. Its short
+  text is the sign-up wording everywhere, so Xperience's consent archive keeps the
+  text each person agreed to.
+  - Agreements are recorded when a subscription is confirmed (double opt-in link,
+    or email confirmation for the registration opt-in) and revoked on
+    unsubscribe. Xperience has no double opt-in event, so an object event handler
+    and a reconciliation task keep agreements in line with subscriptions.
+  - Only confirmations after `EmailMarketingOptions:AgreementCutoffDate` get an
+    agreement, so one is never recorded against text the person didn't see.
+- Terms acceptance is required at registration and stored on the member (version
+  and date), not as a consent agreement, because registration requires it.
+- Data protection: a custom identity collector, data collector and eraser. Forms
+  are searched by field shape (member ID, email fields), not by name, so forms
+  added later in an environment are covered.
+- Erasure disables, archives and anonymizes the member ("Former member") instead of
+  deleting it. Q&A, badges and other contributions reference members and stay
+  attributed. Other options delete contacts, short-lived form rows and
+  subscriptions, and replace the email in kept form rows.
+- Retention uses custom scheduled tasks (contacts, activities, form data), not
+  Xperience's built-in "Delete inactive contacts". In 31.9.1 that task can't
+  exclude members' and subscribers' contacts (its selection hooks are internal),
+  and deleting them would drop their subscriptions and agreements.
+- Retention periods are configuration (`RetentionOptions`), not code.
+- Each form has a retention policy (History or Short-lived) stored as data and
+  set in the Forms app. Forms differ per environment, so a code list can't cover
+  them, and a CD-deployed setting would be reset on every deploy. Forms without a
+  policy are kept and logged.
+- Read-only mode: the cookie choice is saved, but agreements can't be written. A
+  new Website tracking choice stays at Essential and is asked again after
+  read-only mode ends; a withdrawal's revoke is completed then. Retention tasks
+  do nothing.
+
+## 2026-10-21 - Install pnpm standalone, not via Corepack
+
+Corepack shims live in the Node.js install folder (swapped by NVM on each Node
+switch). One broke locally (`Error: CommandNotFound`), and Corepack is being
+removed from Node.js. pnpm itself (9.7+) switches to the version pinned in
+`packageManager`, so Corepack adds nothing.
+
+### Selected solution
+
+- Install pnpm standalone (`winget install pnpm.pnpm` or the pnpm install script).
+- Keep the `packageManager` pin. pnpm records its own integrity hashes in
+  `pnpm-lock.yaml`.
+- Stay on the latest pnpm: `pnpm self-update` in the repo, then commit
+  `package.json` + `pnpm-lock.yaml`.
+
 ## 2026-05-19 - Switch Node package manager from npm to pnpm
 
 The repository had three Node.js projects using npm and `package-lock.json` in

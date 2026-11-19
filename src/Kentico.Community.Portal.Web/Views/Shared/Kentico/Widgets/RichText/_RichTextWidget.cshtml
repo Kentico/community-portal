@@ -1,5 +1,8 @@
 @using Kentico.PageBuilder.Web.Mvc
 @using Kentico.Components.Web.Mvc.Widgets.Internal
+@using Kentico.Community.Portal.Web.Membership
+@using Microsoft.Extensions.Options
+@inject IOptions<TermsOptions> TermsOptions
 
 @model ComponentViewModel<RichTextWidgetProperties>
 
@@ -9,6 +12,7 @@ we can override it.
 This is a copy of the Rich Text Widget view included in Xperience, customized
 with the "xpc-preview-outline" tag helper to have the Rich Text Widget show up
 in Page Builder Preview with a component outline.
+Live rendering also replaces {{TermsVersion}} with TermsOptions:CurrentVersion (TermsVersionPlaceholder).
 *@
 
 
@@ -19,6 +23,6 @@ in Page Builder Preview with a component outline.
 else
 {
     <div class="fr-view" xpc-preview-outline="Rich Text Widget">
-        @Html.Raw(Html.Kentico().ResolveRichText(Model.Properties.Content))
+        @Html.Raw(TermsVersionPlaceholder.Apply(Html.Kentico().ResolveRichText(Model.Properties.Content), TermsOptions.Value.CurrentVersion))
     </div>
 }

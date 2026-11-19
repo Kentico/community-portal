@@ -1,13 +1,10 @@
+@using Kentico.Community.Portal.Core.DataProtection
 @using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.AccountManagement
 
 @model EmailSubscriptionsViewModel
 
-<div id="emailSubscriptionsForm">
-    <h4>Email list subscriptions</h4>
-
-    <small class="form-text text-muted d-block py-1">
-        Manage your email subscriptions. Subscribe or unsubscribe from available mailing lists below.
-    </small>
+<div id="emailSubscriptionsForm" test-id="emailSubscriptions">
+    <h4>Email subscriptions</h4>
 
     @if (Model.Items.Count == 0)
     {
@@ -18,13 +15,33 @@
         <ul class="list-group mt-2">
             @foreach (var item in Model.Items)
             {
-                <li class="list-group-item">
+                <li class="list-group-item" test-id="recipientList" data-recipient-list-id="@item.RecipientListID"
+                    data-newsletter="@(item.IsNewsletter ? "true" : "false")">
                     <div class="d-flex justify-content-between align-items-start gap-2">
                         <div class="flex-grow-1">
                             <strong>@item.DisplayName</strong>
-                            @if (!string.IsNullOrWhiteSpace(item.Description))
+                            @if (item.IsNewsletter)
+                            {
+                                <div class="text-muted small" test-id="recipientListConsentText">
+                                    <vc:consent consent-name="@ConsentCodeNames.EMAIL_MARKETING" />
+                                </div>
+                            }
+                            else if (!string.IsNullOrWhiteSpace(item.Description))
                             {
                                 <div class="text-muted small">@item.Description</div>
+                            }
+
+                            @if (item.SubscribedSince is DateTime subscribedSince)
+                            {
+                                <div class="small mt-1" test-id="recipientListSubscribedSince">
+                                    Subscribed since <time datetime="@subscribedSince.ToString("yyyy-MM-dd")">@subscribedSince.ToString("yyyy-MM-dd")</time>.
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-muted small mt-1" test-id="recipientListSubscribeHelp">
+                                    No confirmation email needed. Your address is already verified.
+                                </div>
                             }
                         </div>
                         @if (item.IsSubscribed)
@@ -34,7 +51,7 @@
                                   hx-swap="outerHTML">
                                 <fieldset hx-indicator="this" xpc-readonly-disabled>
                                     <button type="submit" class="btn btn-sm btn-outline-danger flex-shrink-0" xpc-loading-button
-                                            xpc-readonly-disabled title="Unsubscribe">
+                                            xpc-readonly-disabled title="Unsubscribe" test-id="recipientListUnsubscribe">
                                         Unsubscribe
                                     </button>
                                 </fieldset>
@@ -47,7 +64,7 @@
                                   hx-swap="outerHTML">
                                 <fieldset hx-indicator="this" xpc-readonly-disabled>
                                     <button type="submit" class="btn btn-sm btn-outline-primary flex-shrink-0" xpc-loading-button
-                                            xpc-readonly-disabled title="Subscribe">
+                                            xpc-readonly-disabled title="Subscribe" test-id="recipientListSubscribe">
                                         Subscribe
                                     </button>
                                 </fieldset>

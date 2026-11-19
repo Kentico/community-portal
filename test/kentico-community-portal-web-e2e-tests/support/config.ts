@@ -11,3 +11,14 @@ export const webServerTimeoutMs = Number.parseInt(
   process.env.PLAYWRIGHT_WEB_SERVER_TIMEOUT_MS ?? "30000",
   10,
 );
+
+const loopbackHostnames = new Set(["localhost", "127.0.0.1", "[::1]", "::1"]);
+
+/** Whether a URL points at this machine, and so is served by the untrusted development certificate. */
+export function isLoopbackUrl(url: string): boolean {
+  try {
+    return loopbackHostnames.has(new URL(url).hostname);
+  } catch {
+    return false;
+  }
+}

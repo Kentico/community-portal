@@ -99,7 +99,7 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="integrations-tab" data-bs-toggle="tab"
                                         data-bs-target="#integrations" type="button" role="tab" aria-controls="integrations"
-                                        aria-selected="false">Integrations</button>
+                                        aria-selected="false">Extensions</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="blogposts-tab" data-bs-toggle="tab"
@@ -166,13 +166,13 @@
                                                     @if (Model.Integrations.Count > 0)
                                                     {
                                                         <div class="mb-3">
-                                                            <input type="text" class="form-control" placeholder="Search integrations..."
+                                                            <input type="text" class="form-control" placeholder="Search extensions..."
                                                                    x-model.debounce.200ms="searchTerm">
                                                         </div>
                                                     }
                                                     @if (Model.Integrations.Count == 0)
                                                     {
-                                                        <p>This member has not authored any <a href="/resource-hub/integrations">integrations</a>.
+                                                        <p>This member has not authored any <a href="/resource-hub/extensions">extensions</a>.
                                                         </p>
                                                     }
                                                     @foreach (var link in Model.Integrations)

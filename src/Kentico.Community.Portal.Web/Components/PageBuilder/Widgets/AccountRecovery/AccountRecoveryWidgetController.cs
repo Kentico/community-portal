@@ -41,7 +41,8 @@ public class AccountRecoveryWidgetController(
         }
 
         var member = await userManager.FindByEmailAsync(model.Email.Trim());
-        if (member is null)
+        // A disabled member gets the unknown email response: no reset link, and no verify prompt that can't help
+        if (member is null || member.SignInState == MemberSignInState.Disabled)
         {
             await Task.Delay(Random.Shared.Next(2000, 7000));
             return PartialView("~/Components/PageBuilder/Widgets/AccountRecovery/_AccountRecoveryForm.cshtml", new AccountRecoveryFormViewModel());

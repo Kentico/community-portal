@@ -4,35 +4,40 @@
     string ID = Guid.NewGuid().ToString("N");
     string chartID = $"poll{ID}";
     string pollsAssetPath = ClientAssets.ViteAssetPath("js/polls.js");
+    int totalVotes = Model.Results.Select(r => r.Value).Sum();
+    // One chart row per option; the chart height is derived from it in _poll.scss
+    int rowCount = Math.Max(1, Model.FormData.Options.Keys.Union(Model.Results.Keys).Count());
+    string chartSummary = string.Join(", ", Model.FormData.Options
+        .Select(o => $"{o.Value}: {(Model.Results.TryGetValue(o.Key, out int count) ? count : 0)}"));
+    // Option keys in the form's order, so the chart can keep it for options with equal votes
+    var optionOrder = Model.FormData.Options.Keys.ToArray();
 }
 
-<div class="text-center">
-    <h4>@Model.FormData.Label</h4>
-</div>
+<h4 class="poll-widget__title">@Model.FormData.Label</h4>
 
 @if (Model.Description.TryGetValue(out var description))
 {
-    <div class="mt-3">@description</div>
+    <div class="poll-widget__description">@description</div>
 }
 @if (Model.CurrentMembersAnswer.TryGetValue(out var answer))
 {
-    <small>You answered: <strong>@answer</strong></small>
+    <p class="poll-widget__answer">You answered: <strong>@answer</strong></p>
 }
 
-<div style="min-height: 350px;">
-    <canvas id="@chartID"></canvas>
+<div class="poll-widget__chart" style="--poll-chart-rows: @rowCount">
+    <canvas id="@chartID" role="img" aria-label="Poll results (votes). @chartSummary"></canvas>
 </div>
 
-<div class="d-flex justify-content-between">
+<div class="poll-widget__footer">
     @if (!Model.IsPollActive)
     {
-        <small>This poll is closed</small>
+        <span>This poll is closed</span>
     }
     else
     {
-        <small>Open until: @Model.OpenUntilDate.ToString("d", View.Culture)</small>
+        <span>Open until: @Model.OpenUntilDate.ToString("d", View.Culture)</span>
     }
-    <small>Total votes: @Model.Results.Select(r => r.Value).Sum()</small>
+    <span class="poll-widget__total">Total votes: @totalVotes</span>
 </div>
 
 <script type="module">
@@ -43,6 +48,7 @@
         polls.createBarChart({
             chartElemID: '@chartID',
             options: @JSEncoder.EncodeToJson(Model.FormData.Options),
+            optionOrder: @JSEncoder.EncodeToJson(optionOrder),
             results: @JSEncoder.EncodeToJson(Model.Results)
         });
     });

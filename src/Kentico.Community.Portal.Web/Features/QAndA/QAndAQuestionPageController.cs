@@ -5,6 +5,7 @@ using Kentico.Community.Portal.Web.Features.Members.Badges;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Features.QAndA.Notifications;
 using Kentico.Community.Portal.Web.Features.QAndA.Search;
+using Kentico.Community.Portal.Web.Features.SEO.StructuredData;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Community.Portal.Web.Rendering;
@@ -31,7 +32,8 @@ public class QAndAQuestionPageController(
     MemberBadgeService memberBadgeService,
     IContentRetriever contentRetriever,
     MarkdownRenderer markdownRenderer,
-    QAndANotificationSettingsManager notificationSettingsManager) : Controller
+    QAndANotificationSettingsManager notificationSettingsManager,
+    JsonLdCollector jsonLd) : Controller
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly IQAndAPermissionService permissionService = permissionService;
@@ -41,6 +43,7 @@ public class QAndAQuestionPageController(
     private readonly MemberBadgeService memberBadgeService = memberBadgeService;
     private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly QAndANotificationSettingsManager notificationSettingsManager = notificationSettingsManager;
+    private readonly JsonLdCollector jsonLd = jsonLd;
 
     [HttpGet]
     public async Task<ActionResult> Index()
@@ -48,15 +51,30 @@ public class QAndAQuestionPageController(
         var currentMember = await userManager.CurrentUser(HttpContext);
 
         var question = await contentRetriever.RetrieveCurrentPage<QAndAQuestionPage>(new RetrieveCurrentPageParameters { LinkedItemsMaxLevel = 1 });
-        metaService.SetMeta(new WebPageMeta(
-            question.BasicItemTitle,
-            $"View the discussion about {question.BasicItemTitle} in the Kentico Community Portal Q&A."));
+        string questionExcerpt = markdownRenderer.ToPlainTextExcerpt(question.QAndAQuestionPageContent);
+        var meta = new WebPageMeta(question).WithDescriptionFallback(
+            string.IsNullOrWhiteSpace(questionExcerpt)
+                ? $"View the discussion about {question.BasicItemTitle} in the Kentico Community Portal Q&A."
+                : questionExcerpt);
+        // Auto-created blog discussions hold no answer; an editor-set robots value still wins
+        metaService.SetMeta(question.IsBlogDiscussion()
+            ? meta.WithRobotsFallback(WebPageMeta.ROBOTS_NOINDEX)
+            : meta);
 
         var answers = await GetAnswers(question, currentMember);
         var taxonomyResp = await mediator.Send(new QAndATaxonomiesQuery());
         var questionVM = await MapQuestion(question, currentMember, taxonomyResp);
 
         var vm = new QAndAQuestionPageViewModel(questionVM, answers);
+
+        // Blog discussions are comments on a post, not questions (and are noindexed)
+        if (!question.IsBlogDiscussion())
+        {
+            jsonLd.Add(QAndAQuestionPageJsonLd.Map(
+                vm,
+                Request.CanonicalURL(),
+                memberID => (Url.Action(nameof(MemberController.MemberDetail), "Member", new { memberID }) ?? "").RelativePathToAbsoluteURL(Request)));
+        }
 
         return View("~/Features/QAndA/QAndAQuestionPage.cshtml", vm);
     }
@@ -165,6 +183,7 @@ public class QAndAQuestionPageController(
             GUID = answer.QAndAAnswerDataGUID,
             ParentQuestionID = question.SystemFields.WebPageItemGUID,
             HTMLSanitizedContentHTML = markdownRenderer.Render(answer.QAndAAnswerDataContent),
+            ContentPlainText = markdownRenderer.ToPlainText(answer.QAndAAnswerDataContent),
             Author = author,
             DateCreated = answer.QAndAAnswerDataDateCreated,
             DateModified = answer.QAndAAnswerDataDateModified,
@@ -227,6 +246,10 @@ public class QAndAPostQuestionViewModel
     public DateTime DateModified { get; set; }
     public QAndAAuthorViewModel Author { get; set; } = new();
     public HtmlSanitizedHtmlString HTMLSanitizedContentHTML { get; set; } = HtmlSanitizedHtmlString.Empty;
+    /// <summary>
+    /// Plain text of the rendered content, for structured data
+    /// </summary>
+    public string ContentPlainText { get; set; } = "";
     public QAndAQuestionPermissions Permissions { get; set; } = QAndAQuestionPermissions.NoPermissions;
     public IReadOnlyList<string> DXTopics { get; } = [];
     public bool IsSubscribed { get; set; }
@@ -247,6 +270,7 @@ public class QAndAPostQuestionViewModel
         ID = question.SystemFields.WebPageItemGUID;
         Title = question.BasicItemTitle;
         HTMLSanitizedContentHTML = markdownRenderer.Render(question.QAndAQuestionPageContent);
+        ContentPlainText = markdownRenderer.ToPlainText(question.QAndAQuestionPageContent);
         DateCreated = question.QAndAQuestionPageDateCreated;
         DateModified = question.QAndAQuestionPageDateModified;
         Author = author;
@@ -267,8 +291,16 @@ public class QAndAPostAnswerViewModel
     public Guid ParentQuestionID { get; set; }
     public QAndAAuthorViewModel Author { get; set; } = new();
     public HtmlSanitizedHtmlString HTMLSanitizedContentHTML { get; set; } = HtmlSanitizedHtmlString.Empty;
+    /// <summary>
+    /// Plain text of the rendered content, for structured data
+    /// </summary>
+    public string ContentPlainText { get; set; } = "";
     public DateTime DateCreated { get; set; }
     public DateTime DateModified { get; set; }
+    /// <summary>
+    /// Element id of the rendered answer - its share link and structured data URL fragment
+    /// </summary>
+    public string ElementID => $"answer_{GUID:N}";
     public bool IsAcceptedAnswer { get; set; }
     public QAndAAnswerPermissions Permissions { get; set; } = QAndAAnswerPermissions.NoPermissions;
     public QAndADiscussionReactionViewModel Reactions { get; set; } = QAndADiscussionReactionViewModel.Empty;

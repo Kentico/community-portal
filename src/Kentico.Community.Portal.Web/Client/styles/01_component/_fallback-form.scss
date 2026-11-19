@@ -14,3 +14,460 @@
     pointer-events: auto;
   }
 }
+
+/*
+ * Feature Card design (FallbackFormDesigns.Feature_Card)
+ *
+ * <div class="fallback-form--feature-card">
+ *   <span class="fallback-form__decor fallback-form__decor--purple"></span> ...
+ *   <div class="hideable-form fallback-form__card">
+ *     <h3 class="fallback-form__heading"></h3>
+ *     ...Kentico Form widget markup...
+ *   </div>
+ * </div>
+ *
+ * Nested Kentico form markup is styled here (scoped to the modifier) because
+ * the shared form views/styles are used by every other form on the site.
+ * Selector weights match the rules in _formCustomization.scss, which is
+ * imported earlier.
+ */
+:where(.fallback-form--feature-card) {
+  --fallback-form-card-max-width: 543px;
+  --fallback-form-card-bg: var(--color-purple);
+  --fallback-form-card-color: var(--color-white);
+  --fallback-form-card-radius: var(--radius-2xl);
+  --fallback-form-card-padding: var(--space-5);
+  --fallback-form-card-padding-bottom: var(--space-4);
+  --fallback-form-card-gap: var(--space-4);
+  /* room for the decorations above/below the card (hidden below md) */
+  --fallback-form-stage-padding: 5.0625rem;
+  /* how far the lavender circle extends below the card */
+  --fallback-form-decor-overhang: 75px;
+
+  --fallback-form-heading-size: var(--font-size-2);
+
+  --fallback-form-field-gap: var(--space-3);
+  --fallback-form-row-gap: var(--space-3);
+  --fallback-form-label-max-width: 150px;
+  --fallback-form-label-size: var(--font-size-5);
+  --fallback-form-help-size: var(--font-size-7);
+
+  --fallback-form-input-bg: var(--color-white);
+  --fallback-form-input-color: var(--color-gray-900);
+  --fallback-form-input-border-color: var(--color-gray-200);
+  --fallback-form-input-placeholder: #bca39a;
+  --fallback-form-input-radius: 0.5rem;
+  --fallback-form-input-height: 2.5rem;
+  --fallback-form-input-padding-inline: var(--space-4);
+  --fallback-form-textarea-min-height: 9.125rem;
+  --fallback-form-help-gap: var(--space-2);
+  --fallback-form-focus-ring: 0 0 0 0.2rem
+    color-mix(in srgb, var(--color-white) 55%, transparent);
+
+  --fallback-form-check-size: 1.5rem;
+
+  --fallback-form-error-bg: color-mix(
+    in srgb,
+    var(--color-yellow) 22%,
+    var(--color-white)
+  );
+  --fallback-form-error-color: var(--color-gray-900);
+  --fallback-form-error-border-color: var(--color-yellow);
+
+  --fallback-form-submit-bg: var(--color-primary);
+  --fallback-form-submit-bg-hover: var(--color-primary-dark);
+  --fallback-form-submit-color: var(--color-white);
+  --fallback-form-submit-height: 3rem;
+
+  --fallback-form-decor-purple: var(--color-purple-bright);
+  --fallback-form-decor-lavender: var(--color-purple-300);
+  --fallback-form-decor-blue: var(--color-blue);
+  --fallback-form-decor-stroke: var(--color-gray-900);
+
+  /* x of the card's left edge, decorations are offset from it */
+  --fallback-form-card-left: calc(
+    50% - var(--fallback-form-card-max-width) / 2
+  );
+
+  position: relative;
+  isolation: isolate;
+  padding-block: var(--fallback-form-stage-padding);
+  /* decorations extend past the card, never cause horizontal scrolling */
+  overflow-x: clip;
+  /* decorations adapt to the width of the stage (the widget's column) */
+  container: fallback-form-stage / inline-size;
+
+  /* no decorations: the card fills the column */
+  @include media-breakpoint-down(lg) {
+    --fallback-form-stage-padding: 0rem;
+  }
+}
+
+/* Decorative circles */
+:where(.fallback-form--feature-card .fallback-form__decor) {
+  position: absolute;
+  z-index: 0;
+  width: var(--fallback-form-decor-size);
+  height: var(--fallback-form-decor-size);
+  left: calc(var(--fallback-form-card-left) + var(--fallback-form-decor-x));
+  top: calc(var(--fallback-form-stage-padding) + var(--fallback-form-decor-y));
+  border-radius: 50%;
+  pointer-events: none;
+
+  @include media-breakpoint-down(lg) {
+    display: none;
+  }
+
+  /* not enough room beside the card (card 543px + 150px each side) */
+  @container fallback-form-stage (max-width: 842px) {
+    display: none;
+  }
+}
+
+:where(.fallback-form--feature-card .fallback-form__decor--purple) {
+  --fallback-form-decor-size: 234px;
+  --fallback-form-decor-x: 395px;
+  --fallback-form-decor-y: -85px;
+
+  background: var(--fallback-form-decor-purple);
+}
+
+/* Anchored to the card's bottom edge, so it stays inside the stage whatever
+   the height of the form */
+:where(.fallback-form--feature-card .fallback-form__decor--lavender) {
+  --fallback-form-decor-size: 340px;
+  --fallback-form-decor-x: 432px;
+
+  top: auto;
+  bottom: calc(
+    var(--fallback-form-stage-padding) - var(--fallback-form-decor-overhang)
+  );
+  background: var(--fallback-form-decor-lavender);
+
+  /* smaller, so it is not cut off at the edge of the stage */
+  @container fallback-form-stage (max-width: 1000px) {
+    --fallback-form-decor-size: 270px;
+  }
+}
+
+:where(.fallback-form--feature-card .fallback-form__decor--outline) {
+  --fallback-form-decor-size: 265px;
+  --fallback-form-decor-x: -120px;
+  --fallback-form-decor-y: 118px;
+
+  /* the outline crosses the blue circle */
+  z-index: 1;
+  border: 2px solid var(--fallback-form-decor-stroke);
+}
+
+:where(.fallback-form--feature-card .fallback-form__decor--blue) {
+  --fallback-form-decor-size: 106px;
+  --fallback-form-decor-x: -147px;
+  --fallback-form-decor-y: 95px;
+
+  background: var(--fallback-form-decor-blue);
+}
+
+/* Card */
+:where(.fallback-form--feature-card .fallback-form__card) {
+  /* used by the .hideable-form[overlay] gradient */
+  --fallback-form-bg-color: var(--fallback-form-card-bg);
+  /* .form-text / .text-muted inside the card */
+  --bs-secondary-color: var(--fallback-form-card-color);
+
+  position: relative;
+  z-index: 1;
+  max-width: var(--fallback-form-card-max-width);
+  margin-inline: auto;
+  padding: var(--fallback-form-card-padding);
+  padding-bottom: var(--fallback-form-card-padding-bottom);
+  border-radius: var(--fallback-form-card-radius);
+  background: var(--fallback-form-card-bg);
+  color: var(--fallback-form-card-color);
+
+  @include media-breakpoint-down(sm) {
+    --fallback-form-card-radius: var(--radius-lg);
+    --fallback-form-card-padding: var(--space-4);
+    --fallback-form-input-padding-inline: var(--space-3);
+  }
+}
+
+/* Real specificity: global heading rules (size, line height, margin) lose */
+.fallback-form--feature-card .fallback-form__heading {
+  margin: 0 0 var(--fallback-form-card-gap);
+  color: inherit;
+  font-size: var(--fallback-form-heading-size);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.fallback-form--feature-card {
+  /* Links on purple (consent text, confirmation text) */
+  .fallback-form__card a:not(.btn, .fallback-form__message a) {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  /* Disabled-state message box keeps its white background */
+  .fallback-form__message {
+    color: var(--bs-body-color);
+  }
+
+  /* Field row: label left, control right */
+  .form-field {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--fallback-form-field-gap);
+
+    &:not(:first-child) {
+      margin-top: var(--fallback-form-row-gap);
+    }
+
+    /* fields without a visible control (reCAPTCHA) take no space */
+    &:not(
+        :has(
+            label,
+            input:not([type="hidden"]),
+            textarea,
+            select,
+            button,
+            iframe,
+            .field-validation-error
+          )
+      ) {
+      margin-top: 0;
+    }
+
+    > :where(div) {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .control-label {
+      flex: 1;
+      max-width: var(--fallback-form-label-max-width);
+      margin-bottom: 0;
+      /* centers the first label line on the control */
+      padding-top: calc((var(--fallback-form-input-height) - 1.5rem) / 2);
+      color: inherit;
+      font-size: var(--fallback-form-label-size);
+      font-weight: 400;
+      line-height: 1.5rem;
+
+      /* components without a label (consent, checkbox, reCAPTCHA) */
+      &:empty {
+        display: none;
+      }
+    }
+
+    @include media-breakpoint-down(sm) {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-1);
+
+      > :where(div) {
+        flex: none;
+      }
+
+      .control-label {
+        flex: none;
+        max-width: none;
+        padding-top: 0;
+      }
+    }
+  }
+
+  /* Controls */
+  .form-control:not(.form-check-input, [type="checkbox"], [type="radio"]),
+  .form-select {
+    height: var(--fallback-form-input-height);
+    padding-block: 0;
+    padding-left: var(--fallback-form-input-padding-inline);
+    border: 1px solid var(--fallback-form-input-border-color);
+    border-radius: var(--fallback-form-input-radius);
+    background-color: var(--fallback-form-input-bg);
+    color: var(--fallback-form-input-color);
+    font-size: var(--font-size-5);
+    line-height: 1.5rem;
+
+    &::placeholder {
+      color: var(--fallback-form-input-placeholder);
+      opacity: 1;
+    }
+
+    &:focus {
+      border-color: var(--fallback-form-input-border-color);
+      box-shadow: var(--fallback-form-focus-ring);
+    }
+
+    &.input-validation-error {
+      border-color: var(--fallback-form-error-border-color);
+    }
+  }
+
+  .form-control:not(.form-check-input, [type="checkbox"], [type="radio"]) {
+    padding-right: var(--fallback-form-input-padding-inline);
+  }
+
+  textarea.form-control:not(
+      .form-check-input,
+      [type="checkbox"],
+      [type="radio"]
+    ) {
+    display: block;
+    height: var(--fallback-form-textarea-min-height);
+    min-height: var(--fallback-form-textarea-min-height);
+    padding-block: 0.6875rem; /* 12px including the border */
+  }
+
+  .form-control[type="file"] {
+    height: auto;
+    padding-block: 0.5rem;
+  }
+
+  /* Help text below the control */
+  .explanation-text,
+  .form-text {
+    margin-top: var(--fallback-form-help-gap);
+    padding: 0;
+    color: inherit;
+    font-size: var(--fallback-form-help-size);
+    line-height: 1rem;
+  }
+
+  /* Help text is a sibling of the control: wrap it onto its own line, aligned
+     under the control column. */
+  .form-field {
+    flex-wrap: wrap;
+  }
+
+  .form-field > .explanation-text {
+    flex: 0 0 100%;
+    margin-top: calc(
+      var(--fallback-form-help-gap) - var(--fallback-form-field-gap)
+    );
+    padding-left: calc(
+      var(--fallback-form-label-max-width) + var(--fallback-form-field-gap)
+    );
+
+    @include media-breakpoint-down(sm) {
+      /* stacked: the row gap above is --space-1 */
+      margin-top: calc(var(--fallback-form-help-gap) - var(--space-1));
+      padding-left: 0;
+    }
+  }
+
+  /* Validation messages */
+  .field-validation-error {
+    display: block;
+    margin-top: var(--space-1);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    background: var(--fallback-form-error-bg);
+    color: var(--fallback-form-error-color);
+    font-size: var(--fallback-form-help-size);
+    line-height: 1rem;
+  }
+
+  /* Checkbox, consent and radio buttons */
+  .form-check,
+  .form-field div:has(> .form-check-input) {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    min-height: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+
+  .form-check + .form-check {
+    margin-top: var(--space-2);
+  }
+
+  .form-field .form-check-input:is([type="checkbox"], [type="radio"]) {
+    flex: none;
+    float: none;
+    width: var(--fallback-form-check-size);
+    height: var(--fallback-form-check-size);
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--fallback-form-input-border-color);
+
+    /* outlined on the card color until checked */
+    &:not(:checked) {
+      background-color: transparent;
+    }
+
+    &:focus {
+      box-shadow: var(--fallback-form-focus-ring);
+    }
+  }
+
+  /* Consent / checkbox rows are set apart from the fields above */
+  .form-field:has(.form-check-input[type="checkbox"]):not(:first-child) {
+    margin-top: var(--fallback-form-card-gap);
+  }
+
+  .form-field .form-check-input[type="checkbox"] {
+    border-radius: var(--fallback-form-input-radius);
+  }
+
+  .form-check-label {
+    /* centers a single line on the box */
+    padding-top: calc((var(--fallback-form-check-size) - 1rem) / 2);
+    color: inherit;
+    font-size: var(--fallback-form-help-size);
+    line-height: 1rem;
+  }
+
+  /* Form sections rendered as Bootstrap cards (Titled group) */
+  .fallback-form__card .card {
+    --bs-card-bg: transparent;
+    --bs-card-border-color: color-mix(
+      in srgb,
+      var(--fallback-form-card-color) 35%,
+      transparent
+    );
+
+    color: inherit;
+  }
+
+  /* After-submit confirmation text */
+  .fallback-form__card .alert {
+    --bs-alert-bg: transparent;
+    --bs-alert-color: var(--fallback-form-card-color);
+    --bs-alert-border-color: color-mix(
+      in srgb,
+      var(--fallback-form-card-color) 35%,
+      transparent
+    );
+
+    margin-bottom: 0;
+  }
+
+  /* Submit */
+  :is(input, button)[type="submit"] {
+    display: block;
+    height: var(--fallback-form-submit-height);
+    margin: var(--fallback-form-card-gap) auto 0;
+    padding: 0 var(--space-4);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background-color: var(--fallback-form-submit-bg);
+    color: var(--fallback-form-submit-color);
+    font-size: var(--font-size-4);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.36px;
+    text-transform: uppercase;
+
+    &:hover:not(:disabled) {
+      background-color: var(--fallback-form-submit-bg-hover);
+    }
+
+    &:focus-visible {
+      outline: 0;
+      box-shadow: var(--fallback-form-focus-ring);
+    }
+  }
+}

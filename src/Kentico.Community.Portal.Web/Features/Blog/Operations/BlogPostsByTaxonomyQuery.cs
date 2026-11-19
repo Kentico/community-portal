@@ -39,6 +39,9 @@ public class BlogPostsByTaxonomyQueryHandler(WebPageQueryTools tools) : WebPageQ
                 (page, builder) => builder
                     // Only depend on pages referencing these posts
                     .WebPage(page.SystemFields.WebPageItemID)
+                    .Collection(
+                        page.FeaturedImageImageContent,
+                        (image, builder) => builder.ContentItem(image))
                     // Add related content dependencies
                     .Collection(
                         page.BlogPostPageAuthorContent,

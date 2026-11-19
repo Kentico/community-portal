@@ -31,14 +31,16 @@ public class DiscussionMemberSubscriptionListingPage : ListingPage
         PageConfiguration.AddEditRowAction<DiscussionMemberSubscriptionEditPage>();
 
         PageConfiguration.QueryModifiers
-            .AddModifier((query, settings) => query.Source(source =>
-                source
-                    .Join<MemberInfo>(
-                        nameof(DiscussionMemberSubscriptionInfo.DiscussionMemberSubscriptionMemberID),
-                        nameof(MemberInfo.MemberID))
-                    .Join<WebPageItemInfo>(
-                        $"KenticoCommunity_DiscussionMemberSubscription.{nameof(DiscussionMemberSubscriptionInfo.DiscussionMemberSubscriptionWebPageItemID)}",
-                        nameof(WebPageItemInfo.WebPageItemID))));
+            .AddModifier((query, settings) => query
+                .Source(source =>
+                    source
+                        .Join<MemberInfo>(
+                            nameof(DiscussionMemberSubscriptionInfo.DiscussionMemberSubscriptionMemberID),
+                            nameof(MemberInfo.MemberID))
+                        .Join<WebPageItemInfo>(
+                            $"KenticoCommunity_DiscussionMemberSubscription.{nameof(DiscussionMemberSubscriptionInfo.DiscussionMemberSubscriptionWebPageItemID)}",
+                            nameof(WebPageItemInfo.WebPageItemID)))
+                .OrderByDescending(nameof(DiscussionMemberSubscriptionInfo.DiscussionMemberSubscriptionDateModified)));
 
         PageConfiguration.ColumnConfigurations
             .AddColumn(nameof(DiscussionMemberSubscriptionInfo.DiscussionMemberSubscriptionID),
@@ -54,7 +56,15 @@ public class DiscussionMemberSubscriptionListingPage : ListingPage
                 nameof(WebPageItemInfo.WebPageItemName),
                 "Question",
                 searchable: true,
-                minWidth: 7);
+                minWidth: 7)
+            // Timestamp column: set on create, but also bumped by an admin edit, so not "Subscribed"
+            .AddColumn(
+                nameof(DiscussionMemberSubscriptionInfo.DiscussionMemberSubscriptionDateModified),
+                "Modified",
+                searchable: false,
+                sortable: true,
+                defaultSortDirection: SortTypeEnum.Desc,
+                minWidth: 4);
 
         _ = PageConfiguration.TableActions.AddDeleteAction(nameof(Delete));
     }

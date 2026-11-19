@@ -39,6 +39,12 @@ textarea.form-control {
   resize: none;
 }
 
+/* Long-answer survey textarea should respect rows and allow manual expansion */
+textarea.form-control[data-long-answer-textarea="true"] {
+  height: auto;
+  resize: vertical;
+}
+
 /* File input styling */
 .form-control[type="file"] {
   color: inherit;

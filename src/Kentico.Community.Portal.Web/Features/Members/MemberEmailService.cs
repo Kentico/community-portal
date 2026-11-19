@@ -21,10 +21,75 @@ public class MemberEmailConfiguration
     public Dictionary<string, string> ContextItems { get; }
     public string EmailConfigurationName { get; }
 
-    public static MemberEmailConfiguration RegistrationConfirmation(string confirmationURL) =>
+    /// <summary>
+    /// <c>TOKEN_NewsletterOptInLine</c> in the registration confirmation email.
+    /// </summary>
+    public const string NEWSLETTER_OPT_IN_LINE =
+        "Confirming your email also subscribes you to Kentico Community news and updates, as you requested. You can unsubscribe at any time.";
+
+    /// <param name="newsletterOptInRequested">The member ticked the newsletter box at registration. Adds <see cref="NEWSLETTER_OPT_IN_LINE"/>; otherwise the token is emptied.</param>
+    public static MemberEmailConfiguration RegistrationConfirmation(string confirmationURL, bool newsletterOptInRequested) =>
         new(
-            new() { { "TOKEN_ConfirmationURL", confirmationURL } },
+            new()
+            {
+                { "TOKEN_ConfirmationURL", confirmationURL },
+                { "TOKEN_NewsletterOptInLine", newsletterOptInRequested ? NEWSLETTER_OPT_IN_LINE : "" },
+            },
             SystemEmails.RegistrationConfirmation.EmailConfigurationName);
+
+    /// <summary>
+    /// <c>TOKEN_VerificationMessage</c> when a member changes their account email.
+    /// </summary>
+    public const string EMAIL_CHANGE_VERIFICATION_MESSAGE =
+        "You asked to change the email address of your Kentico Community Portal account to this address. Your account email changes only after you verify it.";
+
+    /// <summary>
+    /// <c>TOKEN_VerificationMessage</c> when a member adds an alternate email.
+    /// </summary>
+    public const string ALTERNATE_EMAIL_VERIFICATION_MESSAGE =
+        "You asked to add this address as the alternate email of your Kentico Community Portal account.";
+
+    /// <summary>Verification link sent to a member's requested new account email.</summary>
+    public static MemberEmailConfiguration EmailChangeVerification(string verificationURL) =>
+        EmailVerification(verificationURL, EMAIL_CHANGE_VERIFICATION_MESSAGE);
+
+    /// <summary>Verification link sent to a member's alternate email.</summary>
+    public static MemberEmailConfiguration AlternateEmailVerification(string verificationURL) =>
+        EmailVerification(verificationURL, ALTERNATE_EMAIL_VERIFICATION_MESSAGE);
+
+    private static MemberEmailConfiguration EmailVerification(string verificationURL, string message) =>
+        new(
+            new()
+            {
+                { "TOKEN_VerificationURL", verificationURL },
+                { "TOKEN_VerificationMessage", message },
+            },
+            SystemEmails.MemberEmailVerification.EmailConfigurationName);
+
+    /// <summary>
+    /// Sent to the previous email after an email change.
+    /// </summary>
+    /// <param name="maskedNewEmail">The new email, partly hidden (<see cref="MaskEmail"/>): the old address may no longer belong to the member.</param>
+    public static MemberEmailConfiguration EmailChangedNotification(string username, string maskedNewEmail, string supportURL) =>
+        new(
+            new()
+            {
+                { "TOKEN_Username", username },
+                { "TOKEN_NewEmail", maskedNewEmail },
+                { "TOKEN_SupportURL", supportURL },
+            },
+            SystemEmails.MemberEmailChangedNotification.EmailConfigurationName);
+
+    /// <summary>
+    /// Keeps the first character of the local part and the whole domain: <c>jane.doe@example.com</c> → <c>j***@example.com</c>.
+    /// </summary>
+    public static string MaskEmail(string email)
+    {
+        int at = email.IndexOf('@');
+        return at <= 0
+            ? "***"
+            : $"{email[0]}***{email[at..]}";
+    }
 
     public static MemberEmailConfiguration ResetPassword(string resetURL) =>
         new(
@@ -75,7 +140,8 @@ public class MemberEmailConfiguration
 
 public interface IMemberEmailService
 {
-    public Task SendEmail(CommunityMember member, MemberEmailConfiguration configuration);
+    /// <param name="recipientEmail">Sends to this address instead of <see cref="CommunityMember.Email"/>, e.g. an email the member is verifying.</param>
+    public Task SendEmail(CommunityMember member, MemberEmailConfiguration configuration, string? recipientEmail = null);
 }
 
 public class MemberEmailService(
@@ -106,13 +172,13 @@ public class MemberEmailService(
     private readonly IEmailUnsubscriptionUrlGenerator emailUnsubscriptionUrlGenerator = emailUnsubscriptionUrlGenerator;
     private readonly IInfoProvider<ContactInfo> contactProvider = contactProvider;
 
-    public async Task SendEmail(CommunityMember member, MemberEmailConfiguration configuration)
+    public async Task SendEmail(CommunityMember member, MemberEmailConfiguration configuration, string? recipientEmail = null)
     {
         var recipient = new Recipient
         {
             FirstName = member.FirstName,
             LastName = member.LastName,
-            Email = member.Email!
+            Email = string.IsNullOrWhiteSpace(recipientEmail) ? member.Email! : recipientEmail
         };
 
         var dataContext = new CustomTokenValueDataContext

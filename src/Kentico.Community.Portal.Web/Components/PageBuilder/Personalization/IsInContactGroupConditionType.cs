@@ -37,7 +37,7 @@ public class IsInContactGroupConditionType : ConditionType
     /// <returns>Returns <c>true</c> if implemented condition is met.</returns>
     public override bool Evaluate()
     {
-        var contact = ContactManagementContext.GetCurrentContact();
+        var contact = ContactManagementContext.GetCurrentContact(createAnonymous: false);
         if (contact == null)
         {
             return false;

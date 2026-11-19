@@ -1,51 +1,74 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CookiePreferences
 @using Kentico.Community.Portal.Web.Features.DataCollection
+@using Kentico.Community.Portal.Core.DataProtection
+@using Kentico.Community.Portal.Web.Infrastructure
 
-@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CookiePreferences.CookiePreferencesWidgetViewModel
+@model CookiePreferencesWidgetViewModel
 
 @{
-    var messageID = "cookiePreferencesMessage";
+    var copy = Model.Copy;
+    var settings = Model.Settings;
 }
 
-<form method="post" hx-post hx-route="@CookiesController.ROUTE_SET_PREFERENCES" hx-swap="outerHTML"
-    hx-target="#@messageID" xpc-preview-outline="Cookie Preferences Widget">
-    <fieldset xpc-readonly-disabled>
+<div id="cookie-settings" class="container" xpc-preview-outline="Cookie Preferences Widget">
+    @* method="post": the form tag helper renders the antiforgery token the endpoint validates *@
+    <form class="cookie-settings" method="post" hx-post hx-route="@CookiesController.ROUTE_SET_CONSENT"
+        hx-target="#cookieSettingsResult" hx-swap="outerHTML" test-id="cookieSettings">
+        <input type="hidden" name="Source" value="@CookieConsentSource.Settings" />
 
-        <div class="container">
-            <div class="cookie-preferences">
-                <div class="cookie-preferences__levels">
-                    <div class="cookie-preferences__selector">
-                        <div class="cookie-preferences__range-fill" id="range-fill"></div>
-                        <input id="CookieLevelSelected" name="CookieLevelSelected" type="range" min="1" max="4" step="1"
-                            class="cookie-preferences__range-slider" value="@Model.CookieLevelSelected" />
-                        <input type="hidden" name="ShowMessage" value="true">
-                        <input type="hidden" name="MessageID" value="@messageID">
-                    </div>
+        <h2>@copy.Heading</h2>
+        <p>@copy.Intro</p>
 
-                    <ul class="cookie-preferences__options">
-                        <li class="cookie-preferences__option" data-value="1">
-                            <span class="cookie-preferences__option-header">@Model.NecessaryHeader</span>
-                            <span class="cookie-preferences__option-description">@Model.NecessaryDescription</span>
-                        </li>
-                        <li class="cookie-preferences__option" data-value="2">
-                            <span class="cookie-preferences__option-header">@Model.PreferenceHeader</span>
-                            <span class="cookie-preferences__option-description">@Model.PreferenceDescription</span>
-                        </li>
-                        <li class="cookie-preferences__option" data-value="3">
-                            <span class="cookie-preferences__option-header">@Model.AnalyticalHeader</span>
-                            <span class="cookie-preferences__option-description">@Model.AnalyticalDescription</span>
-                        </li>
-                        <li class="cookie-preferences__option" data-value="4">
-                            <span class="cookie-preferences__option-header">@Model.MarketingHeader</span>
-                            <span class="cookie-preferences__option-description">@Model.MarketingDescription</span>
-                        </li>
-                    </ul>
-                </div>
-                <button class="btn btn-primary mt-4 cookie-preferences__button" type="submit" name="button">
-                    @Model.ButtonText
-                </button>
-                <div id="@messageID" class="cookie-preferences__message"></div>
-                <vc:read-only-mode-notification />
+        <div class="cookie-settings__category">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="cookieSettingsNecessary" checked disabled />
+                <label class="form-check-label fw-bold" for="cookieSettingsNecessary">Necessary <span class="badge text-bg-secondary ms-1">Always on</span></label>
             </div>
+            <p>@copy.NecessaryDescription</p>
         </div>
-    </fieldset>
-</form>
+
+        <div class="cookie-settings__category">
+            <div class="form-check form-switch">
+                <partial name="~/Components/PageBuilder/Widgets/CookiePreferences/_CookieSettingsSwitch.cshtml"
+                    model="CookieSettingsSwitches.Analytics(settings)" />
+                <label class="form-check-label fw-bold" for="@CookieSettingsSwitches.ANALYTICS_ID">Analytics</label>
+            </div>
+            <p>@copy.AnalyticsDescription</p>
+        </div>
+
+        <div class="cookie-settings__category">
+            <div class="form-check form-switch">
+                <partial name="~/Components/PageBuilder/Widgets/CookiePreferences/_CookieSettingsSwitch.cshtml"
+                    model="CookieSettingsSwitches.Tracking(settings)" />
+                <label class="form-check-label fw-bold" for="@CookieSettingsSwitches.TRACKING_ID">Website tracking &amp; personalization</label>
+            </div>
+            @if (settings.IsReadOnly)
+            {
+                <p class="text-muted" test-id="cookieSettingsReadOnly">@CookieSettingsViewModel.READ_ONLY_NOTE</p>
+            }
+            <vc:consent consent-name="@ConsentCodeNames.WEBSITE_TRACKING" />
+            <details>
+                <summary>More details</summary>
+                <vc:consent consent-name="@ConsentCodeNames.WEBSITE_TRACKING" full-text="true" />
+            </details>
+        </div>
+
+        <div class="d-flex flex-wrap gap-2 mt-4">
+            <button type="submit" name="Choice" value="@CookieConsentChoice.Save" class="btn btn-primary"
+                test-id="cookieSettingsSave">Save choices</button>
+            <button type="submit" name="Choice" value="@CookieConsentChoice.AcceptAll" class="btn btn-outline-primary"
+                test-id="cookieSettingsAcceptAll">Accept all</button>
+            <button type="submit" name="Choice" value="@CookieConsentChoice.NecessaryOnly" class="btn btn-outline-primary"
+                test-id="cookieSettingsNecessaryOnly">Necessary only</button>
+        </div>
+
+        <partial name="~/Components/PageBuilder/Widgets/CookiePreferences/_CookieSettingsResult.cshtml" model="settings" />
+
+        @if (settings.IsMember)
+        {
+            <p class="text-muted">@copy.MemberNote</p>
+        }
+
+        <p class="text-muted">@copy.SignOutNote</p>
+    </form>
+</div>

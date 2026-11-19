@@ -14,7 +14,8 @@ namespace Kentico.Community.Portal.Admin.Features.Members;
 /// Applies more complex filter conditions to member listing
 /// </summary>
 /// <remarks>
-/// Should be used with <see cref="ModifyQueryForBadgeFilter"/> applied to the listing query
+/// Should be used with <see cref="ModifyQueryForBadgeFilter"/> and
+/// <see cref="ModifyQueryForMemberRoleFilter"/> applied to the listing query
 /// </remarks>
 public class MemberListFilter
 {
@@ -36,14 +37,17 @@ public class MemberListFilter
     )]
     public string ModerationStatus { get; set; } = "";
 
-    [DropDownComponent(
-        Label = "Program status",
-        DataProviderType = typeof(EnumDropDownOptionsProvider<ProgramStatuses>))]
-    [FilterCondition(
-        BuilderType = typeof(MemberInfoWhereConditionBuilder),
-        ColumnName = CommunityMemberInfoExtensions.FIELD_PROGRAM_STATUS
+    [GeneralSelectorComponent(
+        dataProviderType: typeof(MemberRoleDataProvider),
+        Label = "Member Roles",
+        Placeholder = "Any",
+        Order = 1
     )]
-    public string ProgramStatus { get; set; } = "";
+    [FilterCondition(
+        BuilderType = typeof(MemberRoleWhereConditionBuilder),
+        ColumnName = nameof(MemberRoleInfo.MemberRoleName)
+    )]
+    public IEnumerable<string> MemberRoles { get; set; } = [];
 
     [GeneralSelectorComponent(
         dataProviderType: typeof(MemberBadgeGeneralSelectorDataProvider),
@@ -81,6 +85,28 @@ public class MemberListFilter
                     condition: "Badges.Sub_MemberID = CMS_Member.MemberID"))
                 .AddColumn(new QueryColumn("ISNULL(Badges.BadgeList, '')") { ColumnAlias = "BadgeList" });
 
+    public static ObjectQuery ModifyQueryForMemberRoleFilter(ObjectQuery query) =>
+        query.Source(source =>
+            source
+                .LeftJoin(
+                    // Same sub-query + STRING_AGG pattern as ModifyQueryForBadgeFilter,
+                    // against the Member Role tables instead of the badge tables.
+                    sourceExpression: """
+                        (SELECT
+                            M.MemberID as Sub_MemberID,
+                            STRING_AGG(R.MemberRoleName, ',') AS RoleList
+                        FROM
+                            CMS_Member M
+                            LEFT JOIN
+                            CMS_MemberRoleMember MRM ON M.MemberID = MRM.MemberRoleMemberMemberID
+                            LEFT JOIN
+                            CMS_MemberRole R ON MRM.MemberRoleMemberMemberRoleID = R.MemberRoleID
+                        GROUP BY
+                            M.MemberID) AS MemberRolesAgg
+                        """,
+                    condition: "MemberRolesAgg.Sub_MemberID = CMS_Member.MemberID"))
+                .AddColumn(new QueryColumn("ISNULL(MemberRolesAgg.RoleList, '')") { ColumnAlias = "RoleList" });
+
 }
 
 public class MemberInfoWhereConditionBuilder : IWhereConditionBuilder
@@ -106,8 +132,6 @@ public class MemberInfoWhereConditionBuilder : IWhereConditionBuilder
             (nameof(MemberInfo.MemberEnabled), "Enabled") => new WhereCondition().WhereEquals(nameof(MemberInfo.MemberEnabled), 1),
             (CommunityMemberInfoExtensions.FIELD_MODERATION_STATUS, _) =>
                 new WhereCondition().WhereEquals(CommunityMemberInfoExtensions.FIELD_MODERATION_STATUS, strValue),
-            (CommunityMemberInfoExtensions.FIELD_PROGRAM_STATUS, _) =>
-                new WhereCondition().WhereEquals(CommunityMemberInfoExtensions.FIELD_PROGRAM_STATUS, strValue),
             (_, "") or _ => new WhereCondition("1 = 1"),
         };
 
@@ -185,6 +209,56 @@ public class MemberBadgeWhereConditionBuilder : IWhereConditionBuilder
         _ = whereCondition.Where(query, new QueryDataParameters
         {
             { "BadgesToFilter", badgesToFilter }
+        });
+
+        return Task.FromResult<IWhereCondition>(whereCondition);
+    }
+}
+
+/// <summary>
+/// Used with <see cref="MemberListFilter.ModifyQueryForMemberRoleFilter"/> to
+/// filter member results by the Member Roles assigned to members.
+/// Matches members who belong to at least one of the selected roles.
+/// </summary>
+public class MemberRoleWhereConditionBuilder : IWhereConditionBuilder
+{
+    public Task<IWhereCondition> Build(string columnName, object value)
+    {
+        if (string.IsNullOrEmpty(columnName))
+        {
+            throw new ArgumentException(
+                $"{nameof(columnName)} cannot be a null or an empty string.");
+        }
+
+        var whereCondition = new WhereCondition();
+
+        if (value is null || value is not IEnumerable<string> memberRoles)
+        {
+            return Task.FromResult<IWhereCondition>(whereCondition);
+        }
+
+        string rolesToFilter = string.Join(",", memberRoles);
+
+        if (string.IsNullOrEmpty(rolesToFilter))
+        {
+            return Task.FromResult<IWhereCondition>(whereCondition);
+        }
+
+        // Exact per-token match against both sides via STRING_SPLIT, not a substring LIKE,
+        // so a role name that is a substring of another (e.g. "Employee" vs "KenticoEmployee")
+        // can't false-positive match.
+        string query = """
+        EXISTS (
+            SELECT 1
+            FROM STRING_SPLIT(@RolesToFilter, ',') role
+            INNER JOIN STRING_SPLIT(ISNULL(MemberRolesAgg.RoleList, ''), ',') memberRole
+                ON memberRole.value = role.value
+        )
+        """;
+
+        _ = whereCondition.Where(query, new QueryDataParameters
+        {
+            { "RolesToFilter", rolesToFilter }
         });
 
         return Task.FromResult<IWhereCondition>(whereCondition);

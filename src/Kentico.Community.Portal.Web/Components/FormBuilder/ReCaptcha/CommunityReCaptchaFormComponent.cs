@@ -31,7 +31,8 @@ public class CommunityReCaptchaFormComponent(
     IHttpContextAccessor httpContextAccessor,
     ILocalizationService localizationService,
     CaptchaValidator validator,
-    IOptions<ReCaptchaSettings> captchaOptions) : FormComponent<CommunityReCaptchaFormComponentProperties, string>
+    IOptions<ReCaptchaSettings> captchaOptions,
+    ILogger<CommunityReCaptchaFormComponent> logger) : FormComponent<CommunityReCaptchaFormComponentProperties, string>
 {
     /// <summary>
     /// Represents the <see cref="CommunityReCaptchaFormComponent"/> identifier.
@@ -51,6 +52,7 @@ public class CommunityReCaptchaFormComponent(
     private readonly ILocalizationService localizationService = localizationService;
     private readonly CaptchaValidator validator = validator;
     private readonly ReCaptchaSettings captchaOptions = captchaOptions.Value;
+    private readonly ILogger<CommunityReCaptchaFormComponent> logger = logger;
     private bool? mSkipRecaptcha;
 
 
@@ -178,13 +180,15 @@ public class CommunityReCaptchaFormComponent(
         var validationResult = ValidateResponse(httpContext);
         if (validationResult != null)
         {
+            int errorCount = errors.Count;
+
             if (!string.IsNullOrEmpty(validationResult.ErrorMessage))
             {
                 errors.Add(new ValidationResult(localizationService.GetString(validationResult.ErrorMessage)));
             }
             else
             {
-                if (validationResult.Score < captchaOptions.ScoreThredhold)
+                if (validationResult.Score < captchaOptions.ScoreThreshold)
                 {
                     errors.Add(new ValidationResult(localizationService.GetString("recaptcha.error.scorenotmet")));
                 }
@@ -193,6 +197,14 @@ public class CommunityReCaptchaFormComponent(
                     errors.Add(new ValidationResult(localizationService.GetString("recaptcha.error.actionmismatch")));
                 }
             }
+
+            logger.LogCaptchaVerification(
+                $"Form:{this.GetBizFormComponentContext()?.FormInfo?.FormName}",
+                validationResult.Score,
+                validationResult.Action,
+                validationResult.IsValid,
+                captchaOptions.ScoreThreshold,
+                errors.Count == errorCount);
         }
         else
         {

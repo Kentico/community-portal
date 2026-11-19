@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <cms.contentitemcommondata>
   <BasicItemShortDescription>
-    <![CDATA[We want to you know how and why we use your data in the Kentico Community Portal.]]>
+    <![CDATA[We want you to know how and why we use your data on Kentico Community.]]>
   </BasicItemShortDescription>
-  <BasicItemTitle>Privacy Policy</BasicItemTitle>
+  <BasicItemTitle>Privacy at Kentico Community</BasicItemTitle>
   <ContentItemCommonDataContentItemID>
     <CodeName>Privacy-kza2am6y</CodeName>
     <GUID>e67a7c5c-d014-4e91-a9c8-e44d7b5a8d59</GUID>
@@ -16,14 +16,20 @@
   </ContentItemCommonDataContentLanguageID>
   <ContentItemCommonDataGUID>5269d84c-4c0f-49b8-92c5-1e4c05896361</ContentItemCommonDataGUID>
   <ContentItemCommonDataIsLatest>True</ContentItemCommonDataIsLatest>
-  <ContentItemCommonDataLastPublishedWhen>2025-06-12 23:35:56Z</ContentItemCommonDataLastPublishedWhen>
+  <ContentItemCommonDataLastPublishedWhen>2026-11-10 21:59:43Z</ContentItemCommonDataLastPublishedWhen>
   <ContentItemCommonDataVersionStatus>2</ContentItemCommonDataVersionStatus>
   <ContentItemCommonDataVisualBuilderTemplateConfiguration>
 <![CDATA[
 {
   "identifier": "KenticoCommunity.LandingPage_Default",
-  "properties": {},
-  "fieldIdentifiers": {}
+  "properties": {
+    "widgetSelection": "Standard",
+    "widgetSelectionParsed": 0
+  },
+  "fieldIdentifiers": {
+    "widgetSelection": "f2f40cb6-d380-4aac-b789-072786a4a548",
+    "widgetSelectionParsed": "b114c867-222f-446b-9cb7-264018a617e9"
+  }
 }
 ]]>
   </ContentItemCommonDataVisualBuilderTemplateConfiguration>
@@ -36,27 +42,25 @@
       "sections": [
         {
           "identifier": "fc1055ca-efbc-46d0-9088-923b25d5a43f",
-          "type": "CommunityPortal.Components.Sections.Grid.Grid-Section",
+          "type": "CommunityPortal.SingleColumnSection",
           "properties": {
-            "heading": "",
-            "headingAlignment": "Left",
-            "headingAlignmentParsed": 0,
-            "bodyAlignment": "Center",
-            "bodyAlignmentParsed": 1,
-            "isHeadingAnchorLinkVisible": false,
-            "layout": "_1_Column_Narrow",
+            "layout": "Standard",
             "layoutParsed": 0,
+            "alignment": "Left",
+            "alignmentParsed": 0,
             "paddingTop": "Large",
             "paddingTopParsed": 0,
             "paddingBottom": "Large",
             "paddingBottomParsed": 0,
-            "widgetZonesCount": 1,
             "backgroundColor": "White",
-            "backgroundColorParsed": 1
+            "backgroundColorParsed": 1,
+            "displayAsCarousel": false,
+            "numberOfSlides": 3,
+            "carouselAriaLabel": "Featured content carousel"
           },
           "zones": [
             {
-              "identifier": "8a6c246b-486d-483b-b293-a1d081d8176f",
+              "identifier": "a24edb5f-0a72-4c66-84d7-c59b1d090b5a",
               "widgets": [
                 {
                   "identifier": "8a807100-dc1c-46c9-bfa4-418cee38cfb0",
@@ -65,7 +69,7 @@
                     {
                       "identifier": "7c7e11e9-8e39-45d3-9945-5d714b0a1529",
                       "properties": {
-                        "content": "<p>Please view the&nbsp;<a href=\"https://www.kentico.com/privacy-policy\" id=\"isPasted\">Privacy Policy on Kentico.com</a>.</p>"
+                        "content": "<p>This notice explains how Kentico Software s.r.o. (\"Kentico\", \"we\") handles personal data on Kentico Community (community.kentico.com): membership, discussions, the newsletter and other emails, forms, cookies and tracking. Kentico's general <a href=\"https://www.kentico.com/privacy-policy\">Privacy Policy</a> applies to everything not covered here. Last updated: 2026-11-10.</p><h2 class=\"h2 mt-5\" id=\"controller\">Who's responsible</h2><p>Kentico Software s.r.o., Nové sady 996/25, 602 00 Brno, Czech Republic, is the controller. Contact: <a href=\"mailto:privacy@kentico.com\">privacy@kentico.com</a>.</p><h2 class=\"h2 mt-5\" id=\"what-we-collect\">What we collect and why</h2><div class=\"table-responsive\"><table class=\"table table-striped table-bordered\"><thead><tr><th scope=\"col\">What</th><th scope=\"col\">Data</th><th scope=\"col\">Why</th><th scope=\"col\">Legal basis</th></tr></thead><tbody><tr><td>Membership</td><td>Email, username, name, password (hashed), profile details you add, sign-in times</td><td>Provide your account and member features</td><td>Contract</td></tr><tr><td>Your contributions</td><td>Questions, answers, comments, blog posts, reactions, poll votes, community program participation</td><td>Publish and attribute your contributions; run Kentico's Community programs</td><td>Contract</td></tr><tr><td>Member and role-based content</td><td>Your account roles</td><td>Show content meant for your role</td><td>Contract</td></tr><tr><td>Account emails</td><td>Email, name</td><td>Registration confirmation, password reset, welcome email, notifications you turned on</td><td>Contract</td></tr><tr><td>Newsletter (news and updates)</td><td>Email, subscription and confirmation dates, emails sent</td><td>Send what you subscribed to</td><td>Consent</td></tr><tr><td>Email statistics</td><td>Whether and when you opened each email we sent you, and which links you clicked, linked to that email</td><td>Measure and improve our emails</td><td>Legitimate interest</td></tr><tr><td>Forms (contributions, program activities, polls, feedback, surveys)</td><td>What you enter, submission time; for member-only forms, your member ID and email</td><td>Handle your request; troubleshoot form issues</td><td>Contract or legitimate interest</td></tr><tr><td>Security</td><td>IP address, browser data, reCAPTCHA risk score</td><td>Protect against fraud, bots and spam</td><td>Legitimate interest</td></tr><tr><td>Analytics (optional)</td><td>Pages viewed, device and browser, approximate location</td><td>Aggregate usage statistics for Kentico Community and other Kentico websites, including visits across them</td><td>Consent</td></tr><tr><td>Website &amp; email tracking (optional)</td><td>Pages visited, forms submitted, and your email opens and clicks, linked to a visitor record</td><td>Improve and personalize Kentico Community</td><td>Consent</td></tr></tbody></table></div><h2 class=\"h2 mt-5\" id=\"website-tracking\">Website &amp; email tracking</h2><p>Tracking is off until you allow it in the cookie banner or <a href=\"~/cookies-policy#cookie-settings\">Cookie settings</a>. Once allowed, we keep a visitor record (a \"contact\") for this browser, as described in the consent text. Your email opens and clicks are then also linked to that record and recorded as activity. Withdrawing stops tracking from that moment. Signing out resets the browser to necessary cookies only. Activity already recorded is kept until its retention period ends (below). You can ask us to delete it sooner.</p><p>When you register or submit a form, we record that event (and, for forms, what you submitted) even without tracking, because we need it to handle your request.</p><h2 class=\"h2 mt-5\" id=\"email-statistics\">Email statistics</h2><p>Every Kentico Community email includes a small tracking image and links that pass through our site. This applies to all our emails, whether or not you allowed tracking. We record whether and when each email was opened and which links were clicked, linked to the email sent to you, to measure and improve our emails. We keep copies of sent emails, which include your email address, for 14 days.</p><p>The statistics themselves don't include your email address or a contact ID. After the 14 days, they can't be linked to you, and we keep them without attribution. If you ask us to erase your data, we unlink them sooner. If you've allowed website tracking, your opens and clicks are also linked to your visitor record and recorded as activity, which erasure deletes. Email <a href=\"mailto:privacy@kentico.com\">privacy@kentico.com</a>.</p><h2 class=\"h2 mt-5\" id=\"newsletter\">Newsletter</h2><p>We send Kentico Community news and updates only to people who subscribed: through the sign-up form and confirmation link, at registration (when you confirm your email), or from your account page. Unsubscribe with the link in any email or on your account page. Like all our emails, the newsletter includes email statistics (see <a href=\"#email-statistics\">Email statistics</a>).</p><h2 class=\"h2 mt-5\" id=\"membership\">Membership and public content</h2><p>Your username, name, profile and contributions are visible to other visitors. Your contributions (questions, answers, blog posts, integrations, community contributions) and community program history are a lasting part of the community, so we keep them for as long as Kentico Community runs, under the license in the <a href=\"~/terms\">Terms of Use</a>.</p><p><strong>Closing your account.</strong> We archive it. You can no longer sign in, and your public profile is marked as archived. Your contributions stay, credited to you.</p><p><strong>Erasure.</strong> If you ask us to erase your data, we also:</p><ul><li>replace your name with \"Former member\";</li><li>remove your email address from your account and from every form you submitted;</li><li>remove your profile details and avatar;</li><li>delete your visitor records, activity and non-program form entries;</li><li>unlink your email statistics from you, if they can still be linked.</li></ul><p>Your contributions stay, credited to \"Former member\". Tell us if a specific contribution contains personal data you want removed.</p><h2 class=\"h2 mt-5\" id=\"sharing\">Who we share data with</h2><p>We don't sell your personal data or share it with third parties for their own marketing or advertising. Kentico Community doesn't use advertising cookies or remarketing.</p><p>We use these service providers to run the site. They process data on our behalf, under contract:</p><ul><li data-pasted=\"true\">Microsoft Azure (Kentico’s Xperience by Kentico SaaS): hosting and database West Europe region</li><li>SendGrid (Twilio): sending emails (US)</li><li>Cloudflare: security and content delivery</li><li>Google Analytics: usage statistics across Kentico websites, only with your consent</li></ul><p>Details of the providers behind Xperience by Kentico SaaS: <a href=\"https://www.kentico.com/privacy-policy/personal-data-in-xperience-by-kentico-saas\" target=\"_blank\" rel=\"noreferrer\">Personal data in Xperience by Kentico SaaS</a>.</p><p>Google reCAPTCHA runs on registration and forms with spam protection to block spam and abuse. Google processes this data under its own <a href=\"https://policies.google.com/privacy\">Privacy Policy</a> and <a href=\"https://policies.google.com/terms\">Terms</a>.</p><p dir=\"ltr\" data-pasted=\"true\">We share your data only within the Kentico group and with the providers listed above, unless the law requires us to disclose it (for example, to authorities or courts) or we need to protect Kentico’s rights.</p><p dir=\"ltr\">Some providers are based outside the EU, so your data may be transferred there. When it is, we rely on an EU adequacy decision (for the US, the EU–US Data Privacy Framework) or on the EU Standard Contractual Clauses.</p><h2 class=\"h2 mt-5\" id=\"retention\">How long we keep data</h2><div class=\"table-responsive\"><table class=\"table table-striped table-bordered\"><thead><tr><th scope=\"col\">Data</th><th scope=\"col\">Kept</th></tr></thead><tbody><tr><td>Member account</td><td>Until you ask us to close it (archived) or erase it</td></tr><tr><td>Public contributions and program history (badges, program activities)</td><td>While Kentico Community runs; credited to \"Former member\" after erasure</td></tr><tr><td>Newsletter subscription</td><td>Until you unsubscribe. We keep a record of the unsubscribe so we don't email you again, until it's deleted with your visitor record (3 years without activity).</td></tr><tr><td>Sent emails (copies, including your email address)</td><td>14 days</td></tr><tr><td>Email statistics (opens and clicks)</td><td>No fixed period, without attribution: they don't include your email address or a contact ID. They can be linked to you only through the sent email, for 14 days. On an erasure request, we unlink them sooner.</td></tr><tr><td>Website tracking activity</td><td>3 years</td></tr><tr><td>Anonymous visitor records</td><td>Deleted after 12 months without activity</td></tr><tr><td>Visitor records with your email (for example from a form), if you're not a member or newsletter subscriber</td><td>Deleted after 3 years without activity</td></tr><tr><td>Newsletter sign-up form entries</td><td>3 years</td></tr><tr><td>Poll votes</td><td>While Kentico Community runs (poll results, and your own vote shown to you)</td></tr><tr><td>Feedback, survey and other general form entries</td><td>3 years</td></tr><tr><td>Community contribution form entries</td><td>3 years (the published contribution stays)</td></tr><tr><td>Kentico Community Program entries (activities, interest, program event feedback)</td><td>While Kentico Community runs (program history)</td></tr><tr><td>Consent records</td><td>As long as the related visitor record exists</td></tr><tr><td>Google Analytics</td><td>14 months</td></tr></tbody></table></div><h2 class=\"h2 mt-5\" id=\"your-rights\">Your rights</h2><p>You can ask us for a copy of your data, to correct or delete it, to restrict or object to processing, or to receive it in a portable format. Email <a href=\"mailto:privacy@kentico.com\">privacy@kentico.com</a>. You can withdraw consent at any time (<a href=\"~/cookies-policy#cookie-settings\">Cookie settings</a>, the unsubscribe link, or your account page); this doesn't affect processing before you withdrew. You can complain to the Czech Office for Personal Data Protection (ÚOOÚ, <a href=\"https://uoou.gov.cz\">uoou.gov.cz</a>) or your local authority.</p><h2 class=\"h2 mt-5\" id=\"changes\">Changes</h2><p>We'll update this page and its date when things change, and tell members by email about significant changes.</p>"
                       },
                       "fieldIdentifiers": {
                         "content": "f12810cd-e10d-48fc-b051-afd9ce5b9afc"
@@ -77,21 +81,19 @@
             }
           ],
           "fieldIdentifiers": {
-            "heading": "c8d1da2a-0574-4c0b-9940-d70f598aa7b5",
-            "headingAlignment": "02ef1eb4-3ba2-4b92-abbc-c7ce52d6e1aa",
-            "headingAlignmentParsed": "7ec9e66a-c3db-407d-ac74-f8a5ce54f64b",
-            "bodyAlignment": "4a8867e3-e2a0-40de-9e51-ac85fc86a328",
-            "bodyAlignmentParsed": "78804d83-5219-46b3-9697-e252f93151f1",
-            "isHeadingAnchorLinkVisible": "8f17018d-8254-481a-821b-1260c06db667",
-            "layout": "0a14c524-bb83-4dd1-bbc8-0ebb39db600b",
-            "layoutParsed": "20a50fc9-dcc4-4e83-bdf0-68ccc313e9c6",
-            "paddingTop": "1f369ae3-7b16-4d83-836f-a902959bce22",
-            "paddingTopParsed": "d79fdaf7-6f60-413a-88ab-36d9c6270959",
-            "paddingBottom": "13ac9ffd-83c5-4ff6-abb6-10e4991f3a13",
-            "paddingBottomParsed": "8b425625-54ed-4ca0-b46b-6a1c46e2c6d3",
-            "widgetZonesCount": "68c59a7e-1378-43c4-a481-1c18c292e823",
-            "backgroundColor": "8d4d6a4a-d5c4-4612-832a-1b17b69f1227",
-            "backgroundColorParsed": "bfae4ca9-5da6-42a6-935f-24680e2bb4cf"
+            "layout": "628901d0-78d6-4011-9b2b-a8e1a03545e5",
+            "layoutParsed": "bb1c3f35-49bd-4374-a2f4-ca7de12795ad",
+            "alignment": "579001ce-f89d-4cb8-877f-fc777c745a93",
+            "alignmentParsed": "c94cbfb1-ee64-4948-8b24-15cff56c0cd6",
+            "paddingTop": "e5c7ae2c-e72b-41b3-885f-c0b664dc497a",
+            "paddingTopParsed": "f15945a0-e239-47fb-939d-2c1779f41dae",
+            "paddingBottom": "2ee2f726-4055-47a8-9e20-407f7257e96b",
+            "paddingBottomParsed": "63a4ebcb-b2e0-4075-93f2-4787706f391e",
+            "backgroundColor": "0d56c62f-18c9-4f87-93d4-b38a61576cf1",
+            "backgroundColorParsed": "78de88af-eba4-4341-9075-aebb0c1ce7c5",
+            "displayAsCarousel": "e7f00782-0cf6-4a8c-871a-a61039e8c920",
+            "numberOfSlides": "37d8c9d1-888e-4a8a-9a21-b0ba792479f6",
+            "carouselAriaLabel": "a89d737f-a090-4de6-9988-6e3eea3da3ba"
           }
         }
       ]
@@ -104,7 +106,7 @@
   <WebPageMetaExcludeFromSitemap>False</WebPageMetaExcludeFromSitemap>
   <WebPageMetaRobots />
   <WebPageMetaShortDescription>
-    <![CDATA[We want to you know how and why we use your data in the Kentico Community Portal.]]>
+    <![CDATA[We want you to know how and why we use your data on Kentico Community.]]>
   </WebPageMetaShortDescription>
-  <WebPageMetaTitle>Privacy Policy</WebPageMetaTitle>
+  <WebPageMetaTitle>Privacy</WebPageMetaTitle>
 </cms.contentitemcommondata>

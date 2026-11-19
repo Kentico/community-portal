@@ -69,6 +69,8 @@ $img-path: "/img"; // This is the runtime path - see vite.config.js
   --color-purple-100: #f7f1ff;
   --color-purple-300: #ebd8ff;
   --color-purple-900: #283f8a;
+  --color-purple-dark: #380451;
+  --color-purple-bright: #af00fa;
   --color-red: #b72929;
   --color-orange: #f05a22;
   --color-orange-dark: #c64300;
@@ -112,6 +114,12 @@ $img-path: "/img"; // This is the runtime path - see vite.config.js
   --radius-md: 1rem;
   --radius-lg: 1.5rem;
   --radius-xl: 1.75rem;
+  --radius-2xl: 2.5rem;
+  --radius-pill: 999px;
+
+  // Motion — shared state-change timings so components animate in step
+  --duration-fast: 0.15s; // Colour and background changes
+  --duration-base: 0.18s; // Transform and elevation changes
 
   // Component-specific design tokens
   --bg-target: var(--color-purple-100); // Used for target highlighting
@@ -144,6 +152,8 @@ $img-path: "/img"; // This is the runtime path - see vite.config.js
   --size-container-medium: 31.25rem; /* 500px - medium content containers */
   --size-list-max-height: 21.875rem; /* 350px - scrollable list containers */
   --size-list-medium-height: 18.75rem; /* 300px - medium height lists */
+  --size-content-narrow: 78rem; /* 1248px - reading-width content column */
+  --size-content-wide: 85rem; /* 1360px - widest content row (home quick links) */
 
   // Form and Input Sizing
   --size-form-suggestion: 0.75rem; /* 12px - form suggestion border radius */
@@ -238,8 +248,19 @@ $purples: (
   "purple-900": $purple-900,
 ) !default;
 
+/*
+ * Opaque equivalent of `--color-primary-light` (the primary at 14% over white).
+ * The translucent token cannot back a `bg-*` utility: Bootstrap rebuilds those
+ * from an `-rgb` triplet, which drops the alpha and yields solid orange.
+ */
+$orange-100: mix($orange, $white, 14%) !default;
+$oranges: (
+  "orange-100": $orange-100,
+) !default;
+
 /* Adds grays to bs-* theme color classes */
 $theme-colors: map-merge($theme-colors, $purples);
+$theme-colors: map-merge($theme-colors, $oranges);
 $theme-colors: map-merge($theme-colors, $named-grays);
 
 $enable-negative-margins: true !default;

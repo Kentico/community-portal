@@ -71,6 +71,18 @@ export class PageBuilderPage {
     return this.builderFrame.locator(".ktc-widget-body-wrapper").first();
   }
 
+  async publish(): Promise<void> {
+    await this.page
+      .getByRole("button", { name: "Publish", exact: true })
+      .click();
+    // "Publish now" is preselected in the dialog.
+    await this.page.getByRole("button", { name: "Confirm" }).click();
+
+    await expect(
+      this.page.getByRole("button", { name: "Create new version" }),
+    ).toBeVisible({ timeout: 20_000 });
+  }
+
   async revertToPublished(): Promise<void> {
     // The unlabeled overflow menu button is the last button in the top action
     // bar, after "Create new version" or "Save"/"Publish".

@@ -112,9 +112,9 @@
             <label class="form-label mb-0 ms-sm-2" for="cpProgramFilter">Program</label>
             <select class="form-select form-select-sm w-auto" id="cpProgramFilter" x-model="programStatusFilter">
                 <option value="">All</option>
-                @foreach (var status in Model.ProgramStatusOptions)
+                @foreach (var membership in Model.ProgramMembershipOptions)
                 {
-                    <option value="@status">@Model.ProgramStatusLabel(status)</option>
+                    <option value="@membership">@Model.MembershipLabel(membership)</option>
                 }
             </select>
 
@@ -161,7 +161,7 @@
                     @foreach (var item in Model.AllActivities)
                     {
                         var quarter = $"Q{((item.ActivityDate.Month - 1) / 3) + 1}";
-                        <tr data-member-id="@item.MemberID" data-program-status="@item.ProgramStatus" data-activity-type="@item.ActivityType"
+                        <tr data-member-id="@item.MemberID" data-program-status="@item.Membership" data-activity-type="@item.ActivityType"
                             data-quarter="@quarter"
                             x-show="(memberFilter === '' || memberFilter === $el.getAttribute('data-member-id')) && (programStatusFilter === '' || programStatusFilter === $el.getAttribute('data-program-status')) && (activityTypeFilter === '' || activityTypeFilter === $el.getAttribute('data-activity-type')) && (quarterFilter === '' || quarterFilter === $el.getAttribute('data-quarter'))">
                             <td>@item.ActivityDate.ToString("yyyy/MM/dd")</td>

@@ -46,6 +46,12 @@
               <AllowMultipleAddresses>false</AllowMultipleAddresses>
             </RuleValues>
           </ValidationRuleConfiguration>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>
+              <![CDATA[Kentico.Community.Portal.ValidationRule.MemberAccountEmail]]>
+            </ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
         </validationrulesdata>
         <properties>
           <explanationtextashtml>False</explanationtextashtml>
@@ -163,26 +169,7 @@ Archived
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberProgramStatus" enabled="true" guid="ab44a32d-7a34-4c76-966c-26897b7596c4" visible="true" order="18">
-        <settings>
-          <controlname>Kentico.Administration.DropDownSelector</controlname>
-          <Options>
-<![CDATA[
-None
-MVP
-CommunityLeader;Community Leader
-]]>
-          </Options>
-          <OptionsValueSeparator>;</OptionsValueSeparator>
-        </settings>
-        <properties>
-          <explanationtext>Controls access to content and experiences</explanationtext>
-          <explanationtextashtml>False</explanationtextashtml>
-          <fieldcaption>Program status</fieldcaption>
-          <fielddescriptionashtml>False</fielddescriptionashtml>
-        </properties>
-      </field>
-      <field column="MemberEmployerLink" enabled="true" guid="b832e3a2-04c2-40c8-8c29-ed4f5bd736ee" visible="true" order="19">
+      <field column="MemberEmployerLink" enabled="true" guid="b832e3a2-04c2-40c8-8c29-ed4f5bd736ee" visible="true" order="18">
         <settings>
           <controlname>Kentico.Community.Portal.Admin.FormComponent.Link</controlname>
         </settings>
@@ -192,7 +179,7 @@ CommunityLeader;Community Leader
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberJobTitle" enabled="true" guid="55ab4c14-3279-4126-9066-4b8c270176d9" visible="true" order="20">
+      <field column="MemberJobTitle" enabled="true" guid="55ab4c14-3279-4126-9066-4b8c270176d9" visible="true" order="19">
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
@@ -202,7 +189,7 @@ CommunityLeader;Community Leader
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberTimeZone" enabled="true" guid="0bb26afb-8926-485a-8043-804d98220d72" visible="true" order="21">
+      <field column="MemberTimeZone" enabled="true" guid="0bb26afb-8926-485a-8043-804d98220d72" visible="true" order="20">
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
@@ -212,7 +199,7 @@ CommunityLeader;Community Leader
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberCountry" enabled="true" guid="6a6c1d8a-04c9-4827-b1b2-e31e2ba0d24d" visible="true" order="22">
+      <field column="MemberCountry" enabled="true" guid="6a6c1d8a-04c9-4827-b1b2-e31e2ba0d24d" visible="true" order="21">
         <settings>
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
@@ -222,7 +209,7 @@ CommunityLeader;Community Leader
           <fielddescriptionashtml>False</fielddescriptionashtml>
         </properties>
       </field>
-      <field column="MemberBio" enabled="true" guid="0da3128f-f405-4dee-976a-1619ff66e597" visible="true" order="23">
+      <field column="MemberBio" enabled="true" guid="0da3128f-f405-4dee-976a-1619ff66e597" visible="true" order="22">
         <settings>
           <controlname>Kentico.Administration.TextArea</controlname>
           <CopyButtonVisible>False</CopyButtonVisible>
@@ -233,6 +220,82 @@ CommunityLeader;Community Leader
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Bio</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="MemberTermsAcceptedVersion" enabled="true" guid="00bddd38-349f-4ce9-b9a9-10c9d67c05df" visible="true" order="23">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <fieldcaption>Terms of Use accepted (version)</fieldcaption>
+        </properties>
+      </field>
+      <field column="MemberTermsAcceptedDate" guid="c0cbf8a4-3f8f-446e-9377-6fe10d7d6c97" visible="true" enabled="" order="24">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <fieldcaption>Terms of Use accepted (date)</fieldcaption>
+        </properties>
+      </field>
+      <field column="MemberNewsletterOptInRequestedDate" guid="b724f5a3-3f61-4f7e-99fe-1b30c8af093b" visible="true" enabled="" order="25">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <fieldcaption>Newsletter opt-in requested at registration (date)</fieldcaption>
+        </properties>
+      </field>
+      <field column="MemberAlternateEmail" enabled="true" guid="088bb99f-7dbd-46f4-9fb5-57ba2ac79884" visible="true" order="26">
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+        <validationrulesdata>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.MaximumLength</ValidationRuleIdentifier>
+            <RuleValues>
+              <MaxLength>254</MaxLength>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>Kentico.Administration.Email</ValidationRuleIdentifier>
+            <RuleValues>
+              <AllowMultipleAddresses>false</AllowMultipleAddresses>
+            </RuleValues>
+          </ValidationRuleConfiguration>
+          <ValidationRuleConfiguration>
+            <ValidationRuleIdentifier>
+              <![CDATA[Kentico.Community.Portal.ValidationRule.MemberAlternateEmail]]>
+            </ValidationRuleIdentifier>
+            <RuleValues />
+          </ValidationRuleConfiguration>
+        </validationrulesdata>
+        <properties>
+          <fieldcaption>Alternate email</fieldcaption>
+          <fielddescription>
+            <![CDATA[Usually set and verified by the member on their account page. Saving a changed email here marks it verified now (you vouch for it). Clear it to remove it.]]>
+          </fielddescription>
+        </properties>
+      </field>
+      <field column="MemberAlternateEmailVerifiedDate" guid="3af912e6-fb63-4b24-b581-b057034eb91f" visible="true" enabled="" order="27">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <fieldcaption>Alternate email verified (date)</fieldcaption>
+          <fielddescription>Empty means the alternate email is not verified.</fielddescription>
+          <includeincontentgeneration>True</includeincontentgeneration>
+        </properties>
+      </field>
+      <field column="MemberEmailConfirmedDate" guid="6926016a-1a47-4a02-8bb8-83e606c2e623" visible="true" enabled="" order="28">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <fieldcaption>Email confirmed (date)</fieldcaption>
+          <fielddescription>
+            <![CDATA[When the member proved they own their account email, or an administrator enabled them. Empty means never confirmed: the member can request a confirmation email. Disabling the member keeps the date, so they can't re-enable themselves by confirming again.]]>
+          </fielddescription>
         </properties>
       </field>
     </form>

@@ -1,0 +1,16 @@
+@using Kentico.Forms.Web.Mvc
+
+@model FormSectionViewModel<Kentico.Community.Portal.Web.Components.FormBuilder.Sections.TitledGroup.TitledGroupSectionProperties>
+
+<section class="card border-secondary-subtle mb-3">
+    <div class="card-body">
+        @if (!string.IsNullOrWhiteSpace(Model.Properties.Title))
+        {
+            <h3 class="h5 mb-3">@Model.Properties.Title</h3>
+        }
+
+        <div class="vstack gap-3">
+            <form-zone zone-name="main" />
+        </div>
+    </div>
+</section>

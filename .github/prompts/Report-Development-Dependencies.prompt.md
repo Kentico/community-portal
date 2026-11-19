@@ -16,6 +16,8 @@ development of this repository.
 - `README.md` - General setup overview
 - `docs/Required-Software.md` - Comprehensive software requirements
 - `docs/Environment-Setup.md` - Environment configuration details
+- `docs/Aspire.md` and the AppHost project - Aspire CLI and orchestrated
+  resources
 - Xperience by Kentico official documentation system requirements
 
 ## Report Format
@@ -42,8 +44,8 @@ Generate a structured report with these sections:
 
 ### Storage & Services
 
-- Azure Storage/Azurite requirements
-- Email SMTP server (MailHog/Mailpit)
+- Aspire CLI and the resources the AppHost runs
+- Email: Virtual Inbox (development) or a local SMTP server (MailHog/Mailpit)
 
 ### Xperience by Kentico Specifics
 

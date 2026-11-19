@@ -5,24 +5,28 @@ using CMS.ContentSynchronization;
 using CMS.Core;
 using CMS.EmailEngine;
 using CMS.OnlineForms;
+using CMS.Scheduler.Internal;
 using Kentico.Activities.Web.Mvc;
 using Kentico.Community.Portal.Core.Emails;
 using Kentico.Community.Portal.Web.Components.EmailBuilder.Sections.SingleColumn;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Sections.Grid;
+using Kentico.Community.Portal.Web.Components.ViewComponents.Navigation;
 using Kentico.Community.Portal.Web.Features.DataCollection;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Content.Web.Mvc;
 using Kentico.Content.Web.Mvc.Routing;
-using Kentico.CrossSiteTracking.Web.Mvc;
 using Kentico.EmailBuilder.Web.Mvc;
 using Kentico.OnlineMarketing.Web.Mvc;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Web.Mvc;
-using Kentico.Xperience.ComponentRegistry;
+using Kentico.Xperience.Labs.ComponentRegistry;
+using Kentico.Xperience.Labs.ContentModelGraph.Admin;
 using Kentico.Xperience.ManagementApi;
 using Kentico.Xperience.Mjml;
+using Kentico.Xperience.TagManager.Rendering;
 using Microsoft.AspNetCore.Localization.Routing;
+using XperienceCommunity.Compare;
 using XperienceCommunity.FormClone;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -60,11 +64,6 @@ public static class ServiceCollectionXperienceExtensions
 
                 features.UseActivityTracking();
 
-                features.UseCrossSiteTracking(new CrossSiteTrackingOptions
-                {
-                    ConsentSettings = null
-                });
-
                 features.UseWebPageRouting();
             })
             .Configure<EmailBuilderOptions>(options =>
@@ -82,15 +81,20 @@ public static class ServiceCollectionXperienceExtensions
             .AddKenticoTagManager(config)
             .AddPreviewComponentOutlines()
             .AddComponentRegistry()
+            .AddContentModelGraph()
             .AddXperienceCommunityFormClone()
+            .AddXperienceCompare()
             .AddVirtualInboxServices(config)
             .AddMiniProfiler(config)
             .Configure<EmailQueueOptions>(config.GetSection("EmailQueueOptions"))
+            // Only Development/CI set this (default 30s); it delays automation Wait steps
+            .Configure<SchedulerOptions>(config.GetSection("SchedulerOptions"))
             .AddContentSynchronization(config)
             .Configure<CookieLevelOptions>(options =>
             {
-                options.CookieConfigurations.Add(CookieNames.COOKIE_CONSENT_LEVEL, CookieLevel.System);
-                options.CookieConfigurations.Add(CookieNames.COOKIE_ACCEPTANCE, CookieLevel.System);
+                options.CookieConfigurations.Add(CookieNames.CONSENT, CookieLevel.System);
+                // Essential, so alert dismissals are remembered without tracking consent
+                options.CookieConfigurations.Add(AlertMessageCookieManager.COOKIE_NAME_NOTIFICATION_CLEARED, CookieLevel.Essential);
             })
             .Configure<KenticoRequestLocalizationOptions>(options =>
             {
@@ -115,7 +119,10 @@ public static class ServiceCollectionXperienceExtensions
             .AddSingleton<FormFieldTextValueExtractorBase<DateTime>, DateTimeFormFieldTextValueExtractor>()
             .AddSingleton<IFormFieldContentItemReferenceExtractor, MarkdownContentItemReferenceExtractor>()
             .AddSingleton<IEmailActivityTrackingEvaluator, ConsentEmailActivityTrackingEvaluator>()
-            .Decorate<ILocalizationService, ApplicationLocalizationService>();
+            .Decorate<ILocalizationService, ApplicationLocalizationService>()
+            // No Tag Manager snippet renders until the visitor allows Analytics
+            .Configure<TagManagerConsentOptions>(config.GetSection(TagManagerConsentOptions.SECTION))
+            .Decorate<IChannelCodeSnippetsService, ConsentGatedCodeSnippetsService>();
 
     private static IServiceCollection AddKenticoManagementApiIfDevelopment(this IServiceCollection services, IConfiguration config, IWebHostEnvironment env)
     {

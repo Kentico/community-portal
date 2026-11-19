@@ -47,6 +47,12 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
+		/// LinksFeedItemContentPublishedDate.
+		/// </summary>
+		public DateTime LinksFeedItemContentPublishedDate { get; set; }
+
+
+		/// <summary>
 		/// LinksFeedItemContentCTALabel.
 		/// </summary>
 		public string LinksFeedItemContentCTALabel { get; set; }

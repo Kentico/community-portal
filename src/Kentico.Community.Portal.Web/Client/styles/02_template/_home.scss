@@ -1,0 +1,146 @@
+/*
+ * Home Page - Hero template
+ * Hero banner with an overlapping quick links area.
+ *
+ * Layout by breakpoint:
+ *   < md   copy stacked over the image, quick links below on the surface colour
+ *   md+    copy | image side by side
+ *   lg+    quick links pulled up over the bottom of the hero
+ *   wide   quick links capped at --home-content-max and centred; the hero copy
+ *          stays aligned to that column while the background and image bleed
+ *
+ * Element rules are plain single-class selectors so they beat the global
+ * element styles (h1, p); only the token scopes use :where().
+ */
+
+:where(.home-page) {
+  // How far the quick links area is pulled up over the hero
+  --home-hero-overlap: 0rem;
+  --home-hero-surface: var(--color-purple-100);
+  // Widest row on the page (the quick links)
+  --home-content-max: var(--size-content-wide);
+  --home-gutter: var(--space-3);
+  // Inset of the hero copy from the quick links' left edge
+  --home-hero-copy-inset: var(--space-2);
+
+  @include media-breakpoint-up(md) {
+    --home-gutter: var(--space-4);
+  }
+
+  @include media-breakpoint-up(lg) {
+    --home-hero-overlap: 7.6875rem;
+    --home-gutter: 2.5rem;
+    --home-hero-copy-inset: var(--space-5);
+  }
+}
+
+:where(.home-hero) {
+  --home-hero-bg-start: var(--color-purple);
+  --home-hero-bg-end: var(--color-purple-dark);
+  --home-hero-color: var(--color-white);
+  --home-hero-min-height: 0rem;
+  --home-hero-padding-top: var(--space-6);
+  --home-hero-padding-bottom: var(--space-6);
+  --home-hero-title-size: clamp(2.5rem, 1rem + 5.5vw, 5.125rem);
+  --home-hero-image-max-width: 60rem;
+
+  @include media-breakpoint-up(lg) {
+    // Grows a little on wide screens so the image keeps a sane crop
+    --home-hero-min-height: clamp(37.3125rem, 37.5vw, 45rem);
+    --home-hero-padding-top: 6.5rem;
+    --home-hero-padding-bottom: 3.375rem;
+  }
+}
+
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: var(--home-hero-min-height);
+  color: var(--home-hero-color);
+  background-image: linear-gradient(
+    126deg,
+    var(--home-hero-bg-start) 6.8%,
+    var(--home-hero-bg-end) 82.6%
+  );
+}
+
+.home-hero--with-image {
+  @include media-breakpoint-up(md) {
+    grid-template-columns:
+      minmax(0, 1fr)
+      min(45%, var(--home-hero-image-max-width));
+  }
+}
+
+.home-hero__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-4);
+  padding-top: var(--home-hero-padding-top);
+  // Keeps the copy clear of the quick links pulled up over the hero
+  padding-bottom: calc(
+    var(--home-hero-padding-bottom) + var(--home-hero-overlap)
+  );
+  padding-inline-end: var(--home-gutter);
+  // Follows the centred quick links column once the viewport outgrows it
+  padding-inline-start: calc(
+    max(var(--home-gutter), (100vw - var(--home-content-max)) / 2) +
+      var(--home-hero-copy-inset)
+  );
+}
+
+.home-hero__title {
+  margin: 0;
+  max-width: 12ch;
+  font-size: var(--home-hero-title-size);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  color: inherit;
+}
+
+.home-hero__description {
+  margin: 0;
+  max-width: 40.5rem;
+  font-size: var(--font-size-5);
+  line-height: 1.4;
+}
+
+.home-hero__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+
+  @include media-breakpoint-up(md) {
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
+}
+
+.home-hero__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Quick links area: overlaps the bottom of the hero on large screens */
+.home-hero-links {
+  position: relative;
+  z-index: 1;
+  margin-top: calc(var(--home-hero-overlap) * -1);
+  padding-block: var(--space-4) var(--space-5);
+  padding-inline: max(
+    var(--home-gutter),
+    (100% - var(--home-content-max)) / 2
+  );
+  background-image: linear-gradient(
+    to bottom,
+    transparent var(--home-hero-overlap),
+    var(--home-hero-surface) var(--home-hero-overlap)
+  );
+
+  @include media-breakpoint-up(lg) {
+    padding-block: 0 var(--space-6);
+  }
+}

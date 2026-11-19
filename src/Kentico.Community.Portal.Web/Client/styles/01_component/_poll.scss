@@ -1,12 +1,346 @@
+/*
+ * Poll widget (Home Page redesign)
+ *
+ * <div class="hideable-form poll-widget poll-widget--secondary-light">
+ *   <h4 class="poll-widget__title"></h4>
+ *   <div class="poll-widget__description"></div>
+ *   ...Kentico Form widget markup (open) or...
+ *   <div class="poll-widget__chart" style="--poll-chart-rows: 4"><canvas></canvas></div>
+ *   <div class="poll-widget__footer"></div>
+ * </div>
+ *
+ * The `--poll-chart-*` properties are read by Client/js/polls.js
+ * (getComputedStyle), so the chart theme lives here. Unitless values are px.
+ */
+:where(.poll-widget) {
+  --poll-bg: var(--color-white);
+  --poll-color: var(--color-gray-900);
+  --poll-muted-color: var(--color-gray-500);
+  --poll-link-color: var(--color-primary);
+  --poll-accent: var(--color-purple);
+  --poll-padding: var(--space-4);
+  --poll-radius: var(--radius-md);
+  --poll-gap: var(--space-3);
+
+  --poll-title-size: var(--font-size-3);
+  --poll-title-line-height: 0.96;
+  /* narrow title block: questions wrap the same way in side by side polls */
+  --poll-title-max-width: 22em;
+  /* description */
+  --poll-description-size: var(--font-size-5);
+  /* answers, form controls */
+  --poll-text-size: var(--font-size-5);
+  --poll-text-line-height: 1.5rem;
+  /* footer, "You answered" */
+  --poll-meta-size: var(--font-size-5);
+  --poll-meta-line-height: 1.3125rem;
+
+  --poll-control-size: 1.5rem;
+  --poll-control-border-color: var(--color-gray-500);
+  --poll-control-bg: var(--color-white);
+  --poll-focus-ring: 0 0 0 0.2rem
+    color-mix(in srgb, var(--poll-accent) 30%, transparent);
+
+  --poll-submit-bg: var(--color-primary);
+  --poll-submit-bg-hover: var(--color-primary-dark);
+  --poll-submit-color: var(--color-white);
+  --poll-submit-height: 3rem;
+
+  /* Chart layout */
+  --poll-chart-gap: 2.75rem; /* description to first grid line */
+  /*
+   * Row height shrinks with the number of options (--poll-chart-rows, set on
+   * .poll-widget__chart): max up to 4 rows, then -step per row, down to min
+   * (10 rows = 40px)
+   */
+  --poll-chart-row-max: 70px;
+  --poll-chart-row-min: 40px;
+  --poll-chart-row-step: 5px;
+  /* tick padding + tick line height (size * 1.2), rounded up */
+  --poll-chart-axis-height: 28px;
+  --poll-chart-footer-gap: 1.375rem;
+  --poll-chart-bar-ratio: 0.85; /* bar thickness / row height (59.5px) */
+  --poll-chart-bar-radius: 0;
+
+  /* Chart colors: bars cycle through 1-4 */
+  --poll-chart-bar-1: var(--color-purple);
+  --poll-chart-bar-2: var(--color-blue);
+  --poll-chart-bar-3: var(--color-orange);
+  --poll-chart-bar-4: var(--color-yellow);
+  --poll-chart-bar-opacity: 0.5;
+  --poll-chart-bar-hover-opacity: 0.7;
+  --poll-chart-grid-color: #e0e0e0;
+  --poll-chart-tick-color: #666;
+  --poll-chart-tick-size: 12;
+  --poll-chart-tick-padding: 13;
+  --poll-chart-tick-limit: 5; /* max number of x axis ticks */
+  --poll-chart-label-color: #222;
+  --poll-chart-label-size: 18;
+  --poll-chart-label-min-size: 13;
+  --poll-chart-label-inset: 21;
+
+  /* used by the .hideable-form[overlay] gradient */
+  --fallback-form-bg-color: var(--poll-bg);
+  /* .form-text / .text-muted inside the poll */
+  --bs-secondary-color: var(--poll-muted-color);
+
+  padding: var(--poll-padding);
+  border-radius: var(--poll-radius);
+  background: var(--poll-bg);
+  color: var(--poll-color);
+  font-size: var(--poll-text-size);
+  line-height: var(--poll-text-line-height);
+  text-align: left;
+  /* children adapt to the width of the widget (its column), see below */
+  container: poll-widget / inline-size;
+}
+
+/*
+ * Narrow widget (phone, or side by side on a tablet). Set on the children
+ * because a container can't query itself; polls.js reads the chart tokens
+ * from the canvas, which inherits them from .poll-widget__chart.
+ */
+@container poll-widget (max-width: 480px) {
+
+  :where(.poll-widget__chart) {
+    --poll-chart-gap: 2rem;
+    --poll-chart-row-max: 64px;
+    --poll-chart-label-size: 16;
+    --poll-chart-label-inset: 12;
+    --poll-chart-tick-limit: 4;
+  }
+}
+
+/* Themes (BackgroundColors widget property) */
+:where(.poll-widget--white) {
+  --poll-bg: var(--color-white);
+}
+
+:where(.poll-widget--light) {
+  --poll-bg: var(--color-gray-100);
+}
+
+/* Sits directly on a section of the same color: no card */
+:where(.poll-widget--secondary-light) {
+  --poll-bg: var(--color-purple-100);
+  --poll-padding: 0;
+  --poll-radius: 0;
+}
+
+:where(.poll-widget--dark) {
+  --poll-bg: var(--color-gray-900);
+  --poll-color: var(--color-white);
+  --poll-muted-color: var(--color-gray-300);
+  --poll-accent: var(--color-purple-bright);
+  --poll-control-border-color: var(--color-gray-300);
+  --poll-chart-bar-opacity: 0.6;
+  --poll-chart-bar-hover-opacity: 0.8;
+  --poll-chart-grid-color: color-mix(
+    in srgb,
+    var(--color-white) 20%,
+    transparent
+  );
+  --poll-chart-tick-color: var(--poll-muted-color);
+  --poll-chart-label-color: var(--poll-color);
+}
+
+.poll-widget__title {
+  max-width: var(--poll-title-max-width);
+  margin: 0 0 var(--poll-gap);
+  color: inherit;
+  font-size: var(--poll-title-size);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--poll-title-line-height);
+  text-wrap: balance;
+}
+
+:where(.poll-widget__description) {
+  margin-bottom: var(--poll-gap);
+  font-size: var(--poll-description-size);
+  text-wrap: pretty;
+
+  > * {
+    margin-bottom: var(--poll-gap);
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+.poll-widget__description a {
+  color: var(--poll-link-color);
+  font-weight: var(--font-weight-medium);
+  text-decoration: underline;
+}
+
+:where(.poll-widget__answer) {
+  margin: 0 0 var(--poll-gap);
+  color: var(--poll-muted-color);
+  font-size: var(--poll-meta-size);
+  line-height: var(--poll-meta-line-height);
+
+  strong {
+    color: var(--poll-color);
+  }
+}
+
+/* Explicit height: chart.js fills it (maintainAspectRatio: false) */
+:where(.poll-widget__chart) {
+  /* computed here: --poll-chart-rows is set inline on this element */
+  --poll-chart-row-height: clamp(
+    var(--poll-chart-row-min),
+    var(--poll-chart-row-max) -
+      (var(--poll-chart-rows, 4) - 4) * var(--poll-chart-row-step),
+    var(--poll-chart-row-max)
+  );
+
+  position: relative;
+  width: 100%;
+  /* the canvas never widens its column (grid/flex min-content) */
+  min-width: 0;
+  margin-top: var(--poll-chart-gap);
+  height: calc(
+    var(--poll-chart-rows, 4) * var(--poll-chart-row-height) +
+      var(--poll-chart-axis-height)
+  );
+}
+
+:where(.poll-widget__footer) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-3);
+  margin: var(--poll-chart-footer-gap) 0 0;
+  color: var(--poll-muted-color);
+  font-size: var(--poll-meta-size);
+  line-height: var(--poll-meta-line-height);
+}
+
+/* stays on the right edge, also when it is the only item or wraps */
+:where(.poll-widget__total) {
+  margin-left: auto;
+}
+
+/*
+ * Open (voting) state: the footer follows the form, not a chart.
+ * Class specificity (not :where) so Bootstrap's p { margin-top: 0 } doesn't win.
+ */
+.poll-widget__footer--form {
+  margin-top: var(--space-4);
+}
+
+/*
+ * Open (voting) state: nested Kentico form markup is styled here because the
+ * shared form views/styles are used by every other form on the site.
+ * Selector weights match the rules in _formCustomization.scss, which is
+ * imported earlier. Kentico renders these class names, so PurgeCSS can't see
+ * them in the .cshtml files.
+ */
+/*! purgecss start ignore */
 .poll-widget {
   .form-field {
     .control-label {
-      font-size: 1rem;
-      font-weight: 700;
+      margin-bottom: var(--poll-gap);
+      color: inherit;
+      font-size: var(--poll-title-size);
+      font-weight: var(--font-weight-bold);
+      max-width: var(--poll-title-max-width);
+      line-height: var(--poll-title-line-height);
+      text-wrap: balance;
     }
   }
 
   .form-field:not(:first-child) {
     margin-top: 0;
   }
+
+  /* Radio options as rows */
+  .form-check {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    min-height: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+
+  .form-check + .form-check {
+    margin-top: var(--space-2);
+  }
+
+  .form-field .form-check-input[type="radio"] {
+    flex: none;
+    float: none;
+    width: var(--poll-control-size);
+    height: var(--poll-control-size);
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--poll-control-border-color);
+    background-color: var(--poll-control-bg);
+    accent-color: var(--poll-accent);
+    cursor: pointer;
+
+    &:checked {
+      border-color: var(--poll-accent);
+      background-color: var(--poll-accent);
+    }
+
+    &:focus-visible {
+      border-color: var(--poll-accent);
+      box-shadow: var(--poll-focus-ring);
+    }
+  }
+
+  .form-check-label {
+    color: inherit;
+    font-size: var(--poll-text-size);
+    line-height: var(--poll-control-size);
+    cursor: pointer;
+  }
+
+  /* Submit: orange pill */
+  :is(input, button)[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--poll-submit-height);
+    margin-top: var(--space-4);
+    padding: 0 var(--space-4);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background-color: var(--poll-submit-bg);
+    color: var(--poll-submit-color);
+    font-size: var(--font-size-4);
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    letter-spacing: 0.36px;
+    text-transform: uppercase;
+
+    &:hover:not(:disabled) {
+      background-color: var(--poll-submit-bg-hover);
+    }
+
+    &:focus-visible {
+      outline: 0;
+      box-shadow: var(--poll-focus-ring);
+    }
+  }
 }
+
+/*
+ * The question is rendered as .poll-widget__title above the description, so
+ * the form's own label is only kept for assistive technology.
+ */
+.poll-widget--titled .form-field:has(input[type="radio"]) .control-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+/*! purgecss stop ignore */

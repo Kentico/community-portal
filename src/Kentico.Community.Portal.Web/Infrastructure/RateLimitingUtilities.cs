@@ -29,6 +29,15 @@ public static class RateLimitingUtilities
             : Maybe.From(id);
 
     /// <summary>
+    /// Creates a fixed or sliding window partition (per <see cref="RateLimitPolicyOptions.SegmentsPerWindow"/>)
+    /// with the standard per-member/IP partition key.
+    /// </summary>
+    public static RateLimitPartition<string> CreatePartition(HttpContext httpContext, RateLimitPolicyOptions policy) =>
+        policy.SegmentsPerWindow is int segments
+            ? CreateSlidingWindowPartition(httpContext, policy.PermitLimit, segments, policy.Window)
+            : CreateFixedWindowPartition(httpContext, policy.PermitLimit, policy.Window);
+
+    /// <summary>
     /// Creates a fixed window rate limiter partition with standard per-user partition key.
     /// This method provides consistent rate limiting behavior across the application by using
     /// the authenticated user's name as the partition key, falling back to IP address for anonymous users.

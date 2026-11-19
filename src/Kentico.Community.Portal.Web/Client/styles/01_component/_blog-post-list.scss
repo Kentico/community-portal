@@ -1,0 +1,764 @@
+/*
+ * Blog Post List widget — Cards, Compact List, Related Callout, Feature Panel,
+ * Spotlight and Numbered Index designs.
+ *
+ * Only styling that Bootstrap utilities can't express lives here: design-variant
+ * layout, hover/focus states, the chevron, line-clamp truncation, the ordered-list
+ * counter, and the surface tokens. Everything with a direct utility equivalent —
+ * display/flex, spacing on the token scale, font sizes (.fs-*), weights (.fw-*),
+ * text colours, position — is applied as a utility class in the Razor markup so it
+ * reuses the shared Bootstrap utilities already in the bundle.
+ *
+ * Selector conventions:
+ *   - Shared element rules are plain single-class selectors at (0,1,0). The
+ *     per-design rules below are descendant selectors at (0,2,0), so they win on
+ *     their own; Bootstrap's utilities are !important in this build and win
+ *     regardless of specificity. Neither needs the base flattened with :where().
+ *   - :where() is used only where it buys something: on the compound shared
+ *     interaction rules, which would otherwise reach (0,4,0) and force anything
+ *     overriding them to out-specify four classes.
+ *   - :is() collapses the hover/focus pairs and the designs that share a behaviour.
+ *
+ * Mirrors the Link List widget's conventions (see _link-list.scss) so the two
+ * widgets read as one system when used on the same page.
+ */
+
+/* ---- Tokens ----------------------------------------------------------- */
+
+.blog-post-list {
+  --bpl-border: var(--color-gray-200);
+  --bpl-accent: var(--color-primary);
+
+  /* Elevation is the neutral text colour at low alpha; the hover glow picks up the
+     variant's own accent, so re-theming --bpl-accent re-tints the shadow with it. */
+  --bpl-shadow:
+    0 1px 2px color-mix(in srgb, var(--color-gray-900) 4%, transparent),
+    0 8px 24px color-mix(in srgb, var(--color-gray-900) 6%, transparent);
+  --bpl-shadow-hover:
+    0 4px 8px color-mix(in srgb, var(--color-gray-900) 6%, transparent),
+    0 16px 32px color-mix(in srgb, var(--bpl-accent) 12%, transparent);
+
+  /* Row rhythm. Shared by the row's block padding and the hover rule's inset, so
+     the rule always spans exactly the row's text box. Designs override the value
+     rather than restating the geometry. */
+  --bpl-row-padding-block: 0.85rem;
+
+  /* Horizontal offset of the hover accent rule, for the designs that use one. */
+  --bpl-rule-inset: 0;
+}
+
+/* ---- Shared header ---------------------------------------------------- */
+
+.blog-post-list__header {
+  margin-bottom: var(--space-3);
+}
+
+/* Small decorative accent above the heading — fades from the accent colour on the
+   left to transparent on the right. The fallback keeps it visible in designs whose
+   outline wrapper, and its .blog-post-list token scope, is stripped from the live
+   markup. */
+.blog-post-list__accent-bar {
+  width: 2.5rem;
+  height: 3px;
+  margin-bottom: 0.55rem;
+  border-radius: 3px;
+  background: linear-gradient(
+    to right,
+    var(--bpl-accent, var(--color-primary)),
+    transparent
+  );
+}
+
+/* The intro renders editor markdown, so its children carry no classes and can only
+   be overridden structurally. :where() keeps this low enough for another structural
+   selector to win without escalating. */
+:where(.blog-post-list__intro) {
+  max-width: 62ch;
+  margin-top: 0.4rem;
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* ---- Shared item internals ------------------------------------------- */
+
+.blog-post-list__title {
+  line-height: 1.35;
+}
+
+/* Dark title that shifts to the accent colour on hover/focus. The resting colour is
+   set here rather than with a .text-dark utility in the markup: that utility is
+   !important, so it silently beat the hover state below. */
+.blog-post-list__title-link {
+  color: var(--color-gray-900);
+  transition: color var(--duration-fast) ease;
+
+  &:is(:hover, :focus-visible) {
+    color: var(--bpl-accent);
+  }
+}
+
+/* The chevron flows inline after the last word of the title. Titles here routinely
+   wrap to two or three lines, and a flex row would instead park the chevron against
+   the far right edge, reading as an unrelated element. */
+.blog-post-list__arrow {
+  display: inline-block;
+  margin-left: 0.3rem;
+  vertical-align: middle;
+  transition: transform var(--duration-base) ease;
+}
+
+.blog-post-list__tags {
+  /* Not an mt-* utility — Bootstrap utilities are !important and would beat the
+     Cards design's margin-top:auto bottom alignment. */
+  margin-top: var(--space-2);
+}
+
+.blog-post-list__meta {
+  gap: 0.2rem 0.5rem;
+  margin-top: 0.2rem;
+}
+
+.blog-post-list__meta-link {
+  &:is(:hover, :focus-visible) {
+    color: var(--bpl-accent);
+    text-decoration: underline;
+  }
+}
+
+.blog-post-list__meta-dot {
+  color: var(--color-gray-300);
+}
+
+/* The tag helper stamps the asset's intrinsic width/height on the <img>; author
+   CSS beats those presentational hints, so the avatar stays a fixed circle. */
+.blog-post-list__avatar {
+  width: 1.25rem;
+  height: 1.25rem;
+  object-fit: cover;
+}
+
+/* Multi-line truncation, driven by the widget's "Description Line Limit". */
+.blog-post-list__desc--clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--bpl-clamp, 2);
+  line-clamp: var(--bpl-clamp, 2);
+  overflow: hidden;
+}
+
+/* Keeps a flex child from overflowing its row when the title cannot wrap. */
+.blog-post-list__row-body {
+  min-width: 0;
+}
+
+/* Every row-based design shares this rhythm and divider; only the token values and
+   the hover treatment differ. */
+.blog-post-list__row {
+  padding: var(--bpl-row-padding-block) 0;
+
+  + .blog-post-list__row {
+    border-top: 1px solid var(--bpl-border);
+  }
+}
+
+/* ---- Shared interactions --------------------------------------------- */
+
+/* One rule for every design's chevron nudge. The container list is :where() so this
+   stays at (0,2,0) and the reduced-motion mirror below can match it exactly. */
+:where(.blog-post-list)
+  :where(.blog-post-list__card, .blog-post-list__row):is(:hover, :focus-within)
+  .blog-post-list__arrow {
+  transform: translateX(0.25rem);
+}
+
+/* The Compact and Spotlight designs both mark the hovered row with an accent rule
+   rather than a background fill, so long lists stay quiet. The rule sits in the
+   gutter rather than in row padding, so it cannot push text out of alignment with
+   the header above. */
+:is(.blog-post-list--compact, .blog-post-list--spotlight) .blog-post-list__row {
+  &::before {
+    content: "";
+    position: absolute;
+    top: var(--bpl-row-padding-block);
+    bottom: var(--bpl-row-padding-block);
+    left: var(--bpl-rule-inset);
+    width: 2px;
+    border-radius: 2px;
+    background: var(--bpl-accent);
+    opacity: 0;
+    transition: opacity var(--duration-base) ease;
+  }
+
+  &:is(:hover, :focus-within)::before {
+    opacity: 1;
+  }
+}
+
+/* =====================================================================
+   Design: Cards
+   Responsive grid of self-contained, fully clickable cards.
+   ===================================================================== */
+
+.blog-post-list__grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+}
+
+.blog-post-list--cards {
+  .blog-post-list__card {
+    padding: 1.1rem 1.15rem;
+    border: 1px solid var(--bpl-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--bpl-shadow);
+    transition:
+      transform var(--duration-base) ease,
+      box-shadow var(--duration-base) ease,
+      border-color var(--duration-base) ease;
+
+    &:is(:hover, :focus-within) {
+      transform: translateY(-3px);
+      border-color: color-mix(
+        in srgb,
+        var(--bpl-accent) 40%,
+        var(--bpl-border)
+      );
+      box-shadow: var(--bpl-shadow-hover);
+    }
+  }
+
+  // Tags anchor to the card's bottom edge so cards of differing title/description
+  // length still line their badge rows up across the grid.
+  .blog-post-list__tags {
+    margin-top: auto;
+    padding-top: 0.75rem;
+  }
+}
+
+/* =====================================================================
+   Design: Compact List
+   Dense divided rows with no card chrome.
+   ===================================================================== */
+
+.blog-post-list--compact {
+  /* No inline row padding: row text stays flush with the heading and intro above
+     it, so the accent rule hangs in the gutter instead. */
+  --bpl-rule-inset: -0.75rem;
+}
+
+/* =====================================================================
+   Design: Related Callout
+   Tinted aside for related reading inside a post body. Purple keeps it
+   legible as an aside rather than reading as another orange call to action.
+   ===================================================================== */
+
+.blog-post-list--callout {
+  --bpl-accent: var(--color-secondary);
+  --bpl-border: color-mix(in srgb, var(--color-secondary) 18%, transparent);
+
+  /* Rows in an aside are separated by their divider spacing below, not by padding. */
+  --bpl-row-padding-block: 0;
+
+  padding: clamp(1rem, 1.5vw, 1.5rem);
+  padding-left: clamp(1.25rem, 2vw, 1.75rem);
+  border-left: 4px solid var(--color-secondary);
+  border-radius: var(--radius-md);
+  background: var(--color-purple-100);
+
+  .blog-post-list__row + .blog-post-list__row {
+    padding-top: var(--space-3);
+    margin-top: var(--space-3);
+  }
+
+  // The row footer packs meta and tags onto one line, so their own top margins
+  // would misalign them against each other.
+  .blog-post-list__row-footer
+    :is(.blog-post-list__meta, .blog-post-list__tags) {
+    margin-top: 0;
+  }
+}
+
+.blog-post-list__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: var(--font-size-7);
+  letter-spacing: 0.08em;
+}
+
+.blog-post-list__eyebrow-icon {
+  flex: none;
+}
+
+/* =====================================================================
+   Design: Feature Panel
+   One elevated card. Header, then divided, hover-highlighted rows.
+   ===================================================================== */
+
+.blog-post-list--panel {
+  --bpl-row-padding-block: 0.7rem;
+
+  padding: clamp(1rem, 1.5vw, 1.5rem);
+  border: 1px solid var(--bpl-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--bpl-shadow);
+
+  .blog-post-list__header {
+    padding-bottom: var(--space-3);
+    margin-bottom: var(--space-1);
+    border-bottom: 1px solid var(--bpl-border);
+  }
+
+  .blog-post-list__row {
+    transition: background-color var(--duration-fast) ease;
+
+    &:is(:hover, :focus-within) {
+      background: var(--color-gray-100);
+    }
+  }
+
+  // The fill reads as one block, so the hovered row drops its own top rule and the
+  // next row's as well.
+  .blog-post-list__row:is(:hover, :focus-within),
+  .blog-post-list__row:is(:hover, :focus-within) + .blog-post-list__row {
+    border-top-color: transparent;
+  }
+}
+
+/* =====================================================================
+   Design: Spotlight
+   Promotes the first post with a large title and an explicit CTA. Any
+   remaining posts follow as quiet compact rows.
+   ===================================================================== */
+
+.blog-post-list--spotlight {
+  --bpl-row-padding-block: 0.7rem;
+
+  .blog-post-list__lead {
+    overflow: hidden;
+    padding: clamp(1.25rem, 2vw, 2rem);
+    border: 1px solid var(--bpl-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    box-shadow: var(--bpl-shadow);
+
+    /* Brand gradient rule across the top edge, clipped by the card's radius. */
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(
+        to right,
+        var(--color-primary),
+        var(--color-secondary)
+      );
+    }
+  }
+
+  // The accent rule sits inside the row here rather than in a gutter, so the rows
+  // indent to clear it.
+  .blog-post-list__row {
+    padding-left: 0.85rem;
+  }
+}
+
+.blog-post-list__title--lead {
+  line-height: 1.2;
+}
+
+/* =====================================================================
+   Design: Numbered Index
+   Ordered list with large brand numerals for a series or a ranked set.
+   ===================================================================== */
+
+.blog-post-list--index {
+  .blog-post-list__rows {
+    counter-reset: bpl-index;
+  }
+
+  .blog-post-list__row {
+    counter-increment: bpl-index;
+
+    &:is(:hover, :focus-within) .blog-post-list__numeral {
+      color: var(--bpl-accent);
+    }
+  }
+}
+
+.blog-post-list__numeral {
+  min-width: 2.25ch;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+  color: color-mix(in srgb, var(--bpl-accent) 55%, transparent);
+  transition: color var(--duration-base) ease;
+
+  &::before {
+    content: counter(bpl-index, decimal-leading-zero);
+  }
+}
+
+/* =====================================================================
+   Design: Featured Mosaic
+   Image-led cards: a full-width hero, then a tall card beside a stack of
+   up to three rows. Uses its own .blog-post-mosaic block because the
+   cards share nothing with the text-only designs above.
+
+   Breakpoints are container queries against .blog-post-mosaic, so the
+   mosaic collapses by the width it is given, not the viewport's. Type
+   scales with the same container (cqi), which keeps 375px from overflowing
+   without a second set of breakpoints.
+   ===================================================================== */
+
+:where(.blog-post-mosaic) {
+  --bpm-gap: var(--space-4);
+  --bpm-card-bg: var(--color-purple-100);
+  --bpm-card-bg-hover: var(--color-purple-300);
+  --bpm-card-border: var(--color-purple);
+  --bpm-card-radius: var(--radius-lg);
+  --bpm-card-padding: var(--space-2);
+  --bpm-media-radius: var(--radius-md);
+  --bpm-media-ratio: 16 / 9;
+  --bpm-media-bg: linear-gradient(
+    135deg,
+    var(--color-purple-dark),
+    var(--color-purple) 55%,
+    var(--color-purple-bright)
+  );
+  --bpm-title-color: var(--color-black);
+  --bpm-desc-color: var(--color-black);
+  --bpm-body-padding: var(--space-4) var(--space-3) var(--space-3);
+
+  /* Per-variant values; the hero and tall cards share the large type. */
+  --bpm-title-size: clamp(1.5rem, 5cqi, 2.25rem);
+  --bpm-title-tracking: -0.02em;
+  --bpm-title-lines: 4;
+  --bpm-desc-size: clamp(1rem, 3.5cqi, var(--font-size-3));
+  --bpm-desc-lines: 3;
+  --bpm-copy-gap: 0.75rem;
+
+  --bpm-hero-min-height: clamp(20rem, 34.6cqi, 27rem);
+  --bpm-tall-width: clamp(17.5rem, 30cqi, 20rem);
+  --bpm-tall-media-min-height: 12.5rem;
+  --bpm-row-media-width: clamp(6rem, 28cqi, 12.5rem);
+
+  container-type: inline-size;
+}
+
+:where(.blog-post-mosaic__grid) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--bpm-gap);
+}
+
+/* Rows take an equal share of the stack, which stretches to the tall card's height. */
+:where(.blog-post-mosaic__stack) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: 1fr;
+  gap: var(--bpm-gap);
+}
+
+:where(.blog-post-mosaic__card) {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: var(--bpm-card-padding);
+  overflow: hidden;
+  border: 1px solid var(--bpm-card-border);
+  border-radius: var(--bpm-card-radius);
+  background: var(--bpm-card-bg);
+  transition: background-color var(--duration-fast) ease;
+}
+
+:where(.blog-post-mosaic__card:is(:hover, :focus-within)) {
+  background: var(--bpm-card-bg-hover);
+}
+
+/* The stretched link's hit area is a pseudo-element, which draws no focus ring of
+   its own, so the ring goes on the card. */
+:where(.blog-post-mosaic__card:has(.blog-post-mosaic__link:focus-visible)) {
+  outline: 2px solid var(--bpm-card-border);
+  outline-offset: 2px;
+}
+
+/* The gradient shows while the image loads and behind transparent artwork. */
+.blog-post-mosaic__media {
+  position: relative;
+  flex: none;
+  aspect-ratio: var(--bpm-media-ratio);
+  overflow: hidden;
+  border-radius: var(--bpm-media-radius);
+  background: var(--bpm-media-bg);
+}
+
+/* Fallback artwork for posts without a featured image: brand circles over a
+   gradient, varied per post. The circles are sized from the slot's shorter side
+   (closest-side keeps them round and inside the slot's proportions), so the
+   artwork reads the same in a wide hero, a tall card and a small thumbnail. */
+.blog-post-mosaic__media[data-fallback] {
+  --bpm-fallback-a: var(--color-purple-bright);
+  --bpm-fallback-b: var(--color-blue);
+
+  container-type: size;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  /* Large disc, bleeding off the bottom-right corner. */
+  &::before {
+    right: -12cqmin;
+    bottom: -22cqmin;
+    width: 78cqmin;
+    height: 78cqmin;
+    background: var(--bpm-fallback-a);
+  }
+
+  /* Small dot, top-left. */
+  &::after {
+    top: 14cqmin;
+    left: 14cqmin;
+    width: 24cqmin;
+    height: 24cqmin;
+    background: var(--bpm-fallback-b);
+  }
+}
+
+.blog-post-mosaic__media[data-fallback="1"] {
+  --bpm-fallback-a: var(--color-purple-300);
+  --bpm-fallback-b: var(--color-primary);
+}
+
+.blog-post-mosaic__media[data-fallback="2"] {
+  --bpm-fallback-a: var(--color-blue);
+  --bpm-fallback-b: var(--color-purple-300);
+}
+
+.blog-post-mosaic__media[data-fallback="3"] {
+  --bpm-fallback-a: var(--color-primary);
+  --bpm-fallback-b: var(--color-purple-bright);
+}
+
+/* Absolutely positioned so the image fills whatever box the variant gives the media
+   slot, rather than sizing that box from its own intrinsic width/height attributes. */
+.blog-post-mosaic__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+:where(.blog-post-mosaic__body) {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  padding: var(--bpm-body-padding);
+}
+
+.blog-post-mosaic__title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--bpm-title-lines);
+  line-clamp: var(--bpm-title-lines);
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font-size: var(--bpm-title-size);
+  line-height: 1.05;
+  letter-spacing: var(--bpm-title-tracking);
+
+  /* line-height 1.05 clips descenders against overflow:hidden without this. */
+  padding-bottom: 0.08em;
+}
+
+.blog-post-mosaic__link {
+  color: var(--bpm-title-color);
+
+  &:is(:hover, :focus-visible) {
+    color: var(--bpm-title-color);
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+/* Cards here have fixed proportions, so the description always clamps: to the
+   editor's line limit when one is set, otherwise to the variant's own. */
+.blog-post-mosaic__desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--bpl-clamp, var(--bpm-desc-lines));
+  line-clamp: var(--bpl-clamp, var(--bpm-desc-lines));
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  margin: var(--bpm-copy-gap) 0 0;
+  color: var(--bpm-desc-color);
+  font-size: var(--bpm-desc-size);
+  line-height: 1.4;
+}
+
+.blog-post-mosaic__card .blog-post-list__meta {
+  margin-top: var(--space-2);
+}
+
+/* ---- Variants --------------------------------------------------------- */
+
+.blog-post-mosaic__card--tall {
+  --bpm-copy-gap: var(--space-2);
+}
+
+/* Rows keep the image on the left at every width; only its width scales. */
+.blog-post-mosaic__card--row {
+  --bpm-title-size: clamp(1.125rem, 4cqi, var(--font-size-2));
+  --bpm-title-lines: 3;
+  --bpm-desc-lines: 2;
+  --bpm-body-padding: var(--space-3);
+
+  flex-direction: row;
+
+  /* The minimum height is on the card, not the image slot: the slot is a size
+     container for its fallback artwork, and only a stretched height gives that
+     container a block size to measure. */
+  min-height: calc(6rem + 2 * var(--bpm-card-padding));
+
+  .blog-post-mosaic__media {
+    aspect-ratio: auto;
+    width: var(--bpm-row-media-width);
+  }
+}
+
+/* Phone: the row text column is under 200px, so the description gives way to the title. */
+@container (max-width: 479.98px) {
+  .blog-post-mosaic__card--row {
+    --bpm-desc-size: 0.9375rem;
+    --bpm-copy-gap: var(--space-2);
+    --bpm-body-padding: var(--space-2) var(--space-2) var(--space-2)
+      var(--space-3);
+  }
+}
+
+/* Tablet: the hero stays image-on-top (a shallower crop), and the tall card turns
+   into a horizontal card, so the three sizes still read as hero > feature > rows. */
+@container (min-width: 600px) and (max-width: 879.98px) {
+  .blog-post-mosaic__card--hero {
+    --bpm-media-ratio: 2 / 1;
+  }
+
+  .blog-post-mosaic__card--tall {
+    --bpm-title-size: clamp(1.5rem, 4cqi, 2rem);
+
+    flex-direction: row;
+    min-height: calc(15rem + 2 * var(--bpm-card-padding));
+
+    .blog-post-mosaic__media {
+      aspect-ratio: auto;
+      width: 42%;
+    }
+
+    .blog-post-mosaic__body {
+      justify-content: center;
+    }
+  }
+}
+
+/* Desktop: the mockup's mosaic. Hero image beside its copy, then the tall card
+   beside the stack of rows. */
+@container (min-width: 880px) {
+  .blog-post-mosaic__grid {
+    grid-template-columns: var(--bpm-tall-width) minmax(0, 1fr);
+  }
+
+  /* Everything spans the mosaic except the tall card and the stack beside it. */
+  .blog-post-mosaic__card--hero,
+  .blog-post-mosaic__stack--wide {
+    grid-column: 1 / -1;
+  }
+
+  .blog-post-mosaic__card--hero {
+    --bpm-title-size: clamp(1.75rem, 3.2cqi, 2.25rem);
+
+    flex-direction: row;
+    min-height: var(--bpm-hero-min-height);
+
+    .blog-post-mosaic__media {
+      aspect-ratio: auto;
+      width: 50%;
+    }
+
+    .blog-post-mosaic__body {
+      justify-content: center;
+    }
+  }
+
+  /* The tall card is as high as the stack beside it. Its image takes whatever
+     height the copy leaves, so a long title grows into the image before it
+     grows the card. */
+  .blog-post-mosaic__card--tall {
+    /* The column is narrow and real titles run long, so the type is a step below
+       the hero's and clamps: the rows beside it set the card's height, not the title. */
+    --bpm-title-size: clamp(1.5rem, 2.25cqi, 1.75rem);
+    --bpm-title-lines: 4;
+
+    .blog-post-mosaic__media {
+      flex: 1 1 var(--bpm-tall-media-min-height);
+      aspect-ratio: auto;
+      min-height: var(--bpm-tall-media-min-height);
+      border-radius: var(--bpm-media-radius) var(--bpm-media-radius) 0 0;
+    }
+
+    .blog-post-mosaic__body {
+      flex: none;
+    }
+  }
+
+  .blog-post-mosaic__card--row {
+    --bpm-title-lines: 2;
+    --bpm-desc-size: clamp(1.0625rem, 2cqi, var(--font-size-3));
+  }
+}
+
+/* =====================================================================
+   Reduced motion
+   Hover/focus affordances stay — only the movement is dropped, so the
+   colour, shadow and accent-rule feedback still reads.
+   ===================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.blog-post-mosaic__card) {
+    transition: none;
+  }
+
+  /* A media query adds no specificity, so each rule below mirrors the shape of the
+     rule it disables. */
+  .blog-post-list
+    :is(
+      .blog-post-list__title-link,
+      .blog-post-list__arrow,
+      .blog-post-list__numeral,
+      .blog-post-list__card,
+      .blog-post-list__row
+    ),
+  .blog-post-list .blog-post-list__row::before {
+    transition: none;
+  }
+
+  .blog-post-list--cards .blog-post-list__card:is(:hover, :focus-within) {
+    transform: none;
+  }
+
+  :where(.blog-post-list)
+    :where(.blog-post-list__card, .blog-post-list__row):is(
+      :hover,
+      :focus-within
+    )
+    .blog-post-list__arrow {
+    transform: none;
+  }
+}

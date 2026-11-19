@@ -1,0 +1,46 @@
+@using Kentico.Community.Portal.Web.Components.TagHelpers
+@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList.BlogPostListItemViewModel
+
+@{
+  bool hasDate = Model.PublishedDate.HasValue;
+  bool hasAuthor = Model.Author.HasValue;
+}
+
+@if (!hasDate && !hasAuthor)
+{
+  return;
+}
+
+<div class="blog-post-list__meta d-flex flex-wrap align-items-center fs-6 text-muted">
+  @if (Model.PublishedDate.TryGetValue(out DateTime publishedDate))
+  {
+    <time xpc-datetime="publishedDate" xpc-datetime-format="@DateTimeFormat.Date"></time>
+  }
+
+  @if (Model.Author.TryGetValue(out var author))
+  {
+    @if (hasDate)
+    {
+      <span class="blog-post-list__meta-dot" aria-hidden="true">•</span>
+    }
+
+    @* z-2 keeps the author link clickable above a sibling .stretched-link title. *@
+    @if (author.ID > 0)
+    {
+      <a class="blog-post-list__meta-link position-relative z-2 d-inline-flex align-items-center gap-1 text-muted text-decoration-none fw-medium"
+        asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@author.ID">
+        <img xpc-image="author.Photo" xpc-image-responsive="false"
+          class="blog-post-list__avatar rounded-circle d-inline-block m-0" />
+        <span>@author.Name</span>
+      </a>
+    }
+    else
+    {
+      <span class="d-inline-flex align-items-center gap-1 fw-medium">
+        <img xpc-image="author.Photo" xpc-image-responsive="false"
+          class="blog-post-list__avatar rounded-circle d-inline-block m-0" />
+        <span>@author.Name</span>
+      </span>
+    }
+  }
+</div>

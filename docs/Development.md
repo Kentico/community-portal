@@ -15,8 +15,8 @@ Details on how to start these 3 servers can be found below.
 ## Start everything with .NET Aspire (optional)
 
 Instead of starting each server separately, you can run the
-[Aspire AppHost](./Aspire.md) to orchestrate the database, Azure Storage
-emulator, both client dev servers, and the web application together, with a
+[Aspire AppHost](./Aspire.md) to orchestrate the database, both client dev
+servers, and the web application together, with a
 dashboard for logs, traces, and metrics:
 
 ```powershell
@@ -31,8 +31,8 @@ one-time database restore. The manual workflow below remains fully supported.
 Aspire is **additive**, not a replacement for the per-server tasks below. Think
 of it as two complementary loops:
 
-- **Outer loop** — `aspire run` brings up the _whole system_ (SQL, Azurite, both
-  client dev servers, and the web app) with one command and a telemetry
+- **Outer loop** — `aspire run` brings up the _whole system_ (SQL, both client
+  dev servers, and the web app) with one command and a telemetry
   dashboard. Best for onboarding, running the full stack, end-to-end checks, and
   giving agents a one-command environment.
 - **Inner loop** — the individual VS Code tasks (`.NET: watch (Web)`,
@@ -41,23 +41,24 @@ of it as two complementary loops:
 
 By default `aspire run` runs the web app without file watching; rebuild it from
 the dashboard's **Rebuild** command, or enable
-[watch mode](./Aspire.md#hot-reload-watch-mode) for automatic rebuilds. Building,
-formatting, testing, CI Store/Restore, database backups, and deployment packaging
-stay outside Aspire — they remain plain VS Code tasks / scripts.
+[watch mode](./Aspire.md#hot-reload-watch-mode) for automatic rebuilds.
+Building, formatting, testing, CI Store/Restore, database backups, and
+deployment packaging stay outside Aspire — they remain plain VS Code tasks /
+scripts.
 
 ### Which task when
 
-| I want to…                                       | Use                                                          |
-| ------------------------------------------------ | ----------------------------------------------------------- |
-| Run the full stack with one command + dashboard  | `aspire run` (or the `Aspire: Run` task)                    |
-| Iterate quickly on the web app only              | `.NET: watch (Web)`                                         |
-| Iterate on website channel client assets only    | `pnpm: watch (Web)` (Vite)                                  |
-| Iterate on admin React customizations only       | `pnpm: watch (Admin)` (webpack)                             |
-| Install all client dependencies                  | `pnpm: install (workspace)`                                 |
-| Build / rebuild the solution                     | `.NET: build (Solution)` / `.NET: rebuild (Solution)`       |
-| Run unit / E2E tests                             | `.NET: test (Solution)` / `pnpm: test (Playwright E2E)`     |
-| Sync the database to/from the CI repository      | `Xperience: CI Store` / `Xperience: CI Restore`             |
-| Back up the database to a `.bak`                 | `Xperience: Database Backup`                                |
+| I want to…                                      | Use                                                     |
+| ----------------------------------------------- | ------------------------------------------------------- |
+| Run the full stack with one command + dashboard | `aspire run` (or the `Aspire: Run` task)                |
+| Iterate quickly on the web app only             | `.NET: watch (Web)`                                     |
+| Iterate on website channel client assets only   | `pnpm: watch (Web)` (Vite)                              |
+| Iterate on admin React customizations only      | `pnpm: watch (Admin)` (webpack)                         |
+| Install all client dependencies                 | `pnpm: install (workspace)`                             |
+| Build / rebuild the solution                    | `.NET: build (Solution)` / `.NET: rebuild (Solution)`   |
+| Run unit / E2E tests                            | `.NET: test (Solution)` / `pnpm: test (Playwright E2E)` |
+| Sync the database to/from the CI repository     | `Xperience: CI Store` / `Xperience: CI Restore`         |
+| Back up the database to a `.bak`                | `Xperience: Database Backup`                            |
 
 ## Start pnpm dev servers
 
@@ -80,24 +81,6 @@ stay outside Aspire — they remain plain VS Code tasks / scripts.
    - (**alternative**) Run `Run-Admin-Client.ps1` from the command line in the
      `.\scripts` directory
 
-## Start Azurite
-
-Enable Azurite for local Azure Storage access.
-
-- Install the
-  [VS Code extension](https://marketplace.visualstudio.com/items?itemName=Azurite.azurite)
-  (installed with recommended extensions)
-- Run Azurite from the VS Code command palette (`ctrl+shift+p`) with
-  `Azurite: Start`
-- (**alternative**) Use the
-  [Azurite documentation](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio%2Cblob-storage#install-azurite)
-  to install or start it with your IDE of choice
-- (**alternative**) Use
-  [the Azurite Docker image](https://github.com/Azure/Azurite?tab=readme-ov-file#dockerhub)
-- (**alternative**) Disable Support Request Processing via your User Secrets
-  configuration (see `SupportRequestProcessing` in `appsettings.json`). This
-  will disable the code from executing that requires Azurite.
-
 ## Start ASP.NET Core application
 
 Launch the ASP.NET Core application on localhost.
@@ -112,6 +95,15 @@ See: `README.md` or
   [Start without debugging](https://dailydotnettips.com/back-to-basic-difference-between-start-debugging-start-without-debugging-in-visual-studio/)
 - (**alternative**) Navigate to the `Kentico.Community.Portal.Web` directory in
   a terminal and run `dotnet watch`
+
+## Local production testing
+
+To run locally with the CI environment and Release configuration, run this from
+`src/Kentico.Community.Portal.Web`:
+
+```pwsh
+dotnet run --configuration Release --launch-profile Portal.WebCI
+```
 
 ## Client Assets
 
@@ -141,6 +133,12 @@ For production builds, the Vite build process compiles the SCSS and JS in the
 `~/Client` folder into the `~/wwwroot/dist` folder and generated CSS is trimmed
 using PurgeCSS to match what is being used in the `.cshtml` templates.
 
+## Privacy, consent and retention
+
+Consent settings, retention periods (`RetentionOptions`), the retention and cleanup
+scheduled tasks, form retention policies and data protection requests are described in
+[Privacy-And-Retention.md](./Privacy-And-Retention.md).
+
 ## Xperience Upgrades
 
 After
@@ -166,3 +164,31 @@ The local administrator account credentials are:
 - Password: Pass@12345
 
 You can create a local user account once you login as administrator.
+
+## Management API and MCP
+
+The Xperience Management API (`/kentico-api/management`) is only registered in the
+Development environment (`IfDevelopment` in `Program.cs` and
+`ServiceCollectionXperienceExtensions.cs`). It is disabled everywhere else.
+
+Its secret is committed on purpose, in `appsettings.Development.json`
+(`Kentico.Xperience.ManagementApi:Secret`) and `.mcp.json`
+(`MANAGEMENT_API_SECRET`, for the `xperience-management-api` MCP server). It is a
+local-only value, and no deployed environment accepts it.
+
+Changes made through the Management API/MCP are not serialized to CI
+automatically. Run a CI store when you're done.
+
+## Agents and skills
+
+General-purpose skills are not vendored in this project. Install them once per
+machine:
+
+```pwsh
+claude plugin install mattpocock-skills
+```
+
+That supplies `research`, `wayfinder`, `grill-me`,
+`improve-codebase-architecture`, and others. User scope is fine — it is a
+developer prerequisite, not repo config. Do not copy these into
+`.agents/skills/`; vendored forks go stale and shadow the maintained version.

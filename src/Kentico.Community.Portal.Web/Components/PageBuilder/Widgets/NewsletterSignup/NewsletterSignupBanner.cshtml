@@ -1,0 +1,58 @@
+@using Kentico.Community.Portal.Core.DataProtection
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.NewsletterSignup
+
+@model NewsletterSignupWidgetViewModel
+
+@* Banner design ("CTA / Unified"). Same parts and test-ids as NewsletterSignup.cshtml, arranged in two columns. *@
+<div class="newsletter-signup newsletter-signup--banner text-start" xpc-preview-outline="@Model.ComponentName" test-id="newsletterSignup">
+    <span class="newsletter-signup__decoration newsletter-signup__decoration--disc" aria-hidden="true"></span>
+    <span class="newsletter-signup__decoration newsletter-signup__decoration--ring" aria-hidden="true"></span>
+    <span class="newsletter-signup__decoration newsletter-signup__decoration--dot" aria-hidden="true"></span>
+
+    <div class="newsletter-signup__copy">
+        @if (!string.IsNullOrWhiteSpace(Model.Heading))
+        {
+            <h2 class="newsletter-signup__heading" test-id="newsletterSignupHeading">@Model.Heading</h2>
+        }
+
+        @* The lead is the description when there is one; otherwise the help text, which then is not repeated under the form. *@
+        @if (Model.Description.TryGetValue(out var description))
+        {
+            <div class="newsletter-signup__lead newsletter-signup__note" test-id="newsletterSignupDescription">
+                @description
+            </div>
+        }
+        else
+        {
+            <div class="newsletter-signup__lead newsletter-signup__note" test-id="newsletterSignupHelpText">
+                @Model.HelpText
+            </div>
+        }
+    </div>
+
+    <div class="newsletter-signup__body">
+        <div class="newsletter-signup__form" test-id="newsletterSignupForm">
+            @await Html.Kentico().RenderNestedWidgetAsync(
+                SystemComponentIdentifiers.FORM_WIDGET_IDENTIFIER,
+                Model.FormWidgetProperties)
+        </div>
+
+        @if (Model.Description.HasValue)
+        {
+            <div class="newsletter-signup__help newsletter-signup__note" test-id="newsletterSignupHelpText">
+                @Model.HelpText
+            </div>
+        }
+
+        <div class="newsletter-signup__consent" test-id="newsletterSignupConsentText">
+            <vc:consent consent-name="@ConsentCodeNames.EMAIL_MARKETING" />
+        </div>
+
+        @if (Model.TrackingNote.TryGetValue(out var trackingNote))
+        {
+            <div class="newsletter-signup__tracking newsletter-signup__note" test-id="newsletterSignupTrackingNote">
+                @trackingNote
+            </div>
+        }
+    </div>
+</div>

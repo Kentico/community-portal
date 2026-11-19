@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.class>
+  <ClassCodeGenerationSettings>
+    <Data>
+      <GUIDColumn>FormRetentionPolicyGUID</GUIDColumn>
+      <LastModifiedColumn>FormRetentionPolicyDateModified</LastModifiedColumn>
+      <ObjectType>KenticoCommunity.FormRetentionPolicy</ObjectType>
+    </Data>
+  </ClassCodeGenerationSettings>
+  <ClassDisplayName>Form retention policy</ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="FormRetentionPolicyID" columntype="integer" enabled="true" guid="ce3685eb-961a-4105-b08b-f036a84a65bf" isPK="true" />
+      <field column="FormRetentionPolicyGUID" columntype="guid" enabled="true" guid="29d93c7d-9af1-4ccc-981e-3f2680223acd">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="FormRetentionPolicyFormID" columntype="integer" enabled="true" guid="d07ec42a-a6bc-47f6-ab11-c0d0bfc0a6e0" refobjtype="cms.form" reftype="Required">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="FormRetentionPolicyType" columnsize="20" columntype="text" enabled="true" guid="5b6db0e3-7109-49a7-9c77-e0b640b4a470">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field allowempty="true" column="FormRetentionPolicyRetentionDays" columntype="integer" enabled="true" guid="093ede7f-b6d5-43f1-92c6-1120db5477d9">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field column="FormRetentionPolicyDateModified" columnprecision="7" columntype="datetime" enabled="true" guid="284b3933-7717-4c5e-b68f-461b6b59f35f">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>c5ae6197-0020-452b-afc9-ad4bb4742021</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>KenticoCommunity.FormRetentionPolicy</ClassName>
+  <ClassResourceID>
+    <CodeName>KenticoCommunity</CodeName>
+    <GUID>5e10e4ec-a038-4b97-a9f6-c17724896c89</GUID>
+    <ObjectType>cms.resource</ObjectType>
+  </ClassResourceID>
+  <ClassTableName>KenticoCommunity_FormRetentionPolicy</ClassTableName>
+  <ClassType>Other</ClassType>
+</cms.class>

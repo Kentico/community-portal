@@ -1,0 +1,44 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.LinkList
+@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.LinkList.LinkListWidgetViewModel
+
+@{
+  // Literal class names: production PurgeCSS only keeps classes it can find verbatim.
+  string columnsClass = Model.IconCardsColumns switch
+  {
+    LinkListIconCardsColumns.Three => "link-list-icon-cards--cols-3",
+    LinkListIconCardsColumns.Four => "link-list-icon-cards--cols-4",
+    LinkListIconCardsColumns.Auto or _ => "link-list-icon-cards--cols-auto"
+  };
+}
+
+<section class="link-list link-list-icon-cards @columnsClass" xpc-preview-outline="Link List Widget"
+    aria-label="@(!string.IsNullOrWhiteSpace(Model.Label) ? Model.Label : "Link list")">
+
+  <partial name="~/Components/PageBuilder/Widgets/LinkList/_Header.cshtml" model="Model" />
+
+  <ul class="link-list-icon-cards__grid list-unstyled m-0 p-0">
+    @foreach (var link in Model.Links)
+    {
+      bool hasDesc = Model.ShowDescriptions && !string.IsNullOrWhiteSpace(link.ShortDescription);
+
+      <li class="link-list-icon-cards__item">
+        <a href="@link.PathOrURL" class="link-list-icon-cards__card text-decoration-none">
+          <span class="link-list-icon-cards__icon" aria-hidden="true">
+            <img src="@link.IconPath" alt="" width="24" height="24" asp-append-version="true">
+          </span>
+
+          <span class="link-list-icon-cards__title">@link.Title</span>
+
+          @if (hasDesc)
+          {
+            <span
+              class="link-list-icon-cards__desc @(Model.DescriptionMaxLines > 0 ? "link-list__desc--clamp" : null)"
+              style="@(Model.DescriptionMaxLines > 0 ? $"--ll-clamp:{Model.DescriptionMaxLines}" : null)">
+              @link.ShortDescription
+            </span>
+          }
+        </a>
+      </li>
+    }
+  </ul>
+</section>

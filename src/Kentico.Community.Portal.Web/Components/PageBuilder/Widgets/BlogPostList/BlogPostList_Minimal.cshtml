@@ -10,6 +10,13 @@
         <h3>@heading</h3>
     }
 
+    @if (Model.Intro.TryGetValue(out HtmlString? introHtml))
+    {
+        <div class="blog-post-list__intro">
+            @introHtml
+        </div>
+    }
+
     @foreach (var post in Model.BlogPosts)
     {
         <article class="border rounded-3 p-3 mt-3 blog-post-card shadow-sm" aria-label="Blog post: @post.Title">
@@ -18,52 +25,55 @@
                     <h4 class="mb-0 flex-grow-1 me-3">
                         <a class="text-dark text-decoration-none" href="@post.LinkPath">@post.Title</a>
                     </h4>
-                    @if (Model.ShowAuthor)
+                    @if (post.Author.TryGetValue(out var author))
                     {
-                        @if (post.Author.ID > 0)
+                        @if (author.ID > 0)
                         {
-                            <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
+                            <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@author.ID"
                                 class="d-inline-flex align-items-center text-decoration-none border border-secondary text-secondary bg-white rounded-pill px-2 py-1 text-nowrap flex-shrink-0">
-                                <img xpc-image="post.Author.Photo" class="rounded me-1 d-inline-block m-0 icon"
+                                <img xpc-image="author.Photo" class="rounded me-1 d-inline-block m-0 icon"
                                     style="--icon-font-size: 1.2rem" xpc-image-responsive="false" />
-                                <span>@post.Author.Name</span>
+                                <span>@author.Name</span>
                             </a>
                         }
                         else
                         {
                             <div
                                 class="d-inline-flex align-items-center bg-light text-dark rounded-pill px-2 py-1 text-nowrap flex-shrink-0">
-                                <img xpc-image="post.Author.Photo" class="rounded me-1 d-inline-block m-0 icon"
+                                <img xpc-image="author.Photo" class="rounded me-1 d-inline-block m-0 icon"
                                     style="--icon-font-size: 1.2rem" xpc-image-responsive="false" />
-                                <span>@post.Author.Name</span>
+                                <span>@author.Name</span>
                             </div>
                         }
                     }
                 </div>
 
-                <div class="d-flex align-items-center">
-                    <time xpc-datetime="post.PublishedDate" xpc-datetime-format="@DateTimeFormat.Date" class="small"></time>
-                </div>
+                @if (post.PublishedDate.TryGetValue(out DateTime publishedDate))
+                {
+                    <div class="d-flex align-items-center">
+                        <time xpc-datetime="publishedDate" xpc-datetime-format="@DateTimeFormat.Date" class="small"></time>
+                    </div>
+                }
             </header>
 
-            @if (Model.ShowDescription)
+            @if (post.Description.TryGetValue(out string? description))
             {
                 <div class="mb-3">
-                    <p class="mb-0">@post.ShortDescription</p>
+                    <p class="mb-0">@description</p>
                 </div>
             }
 
-            @if (Model.ShowBlogType && post.BlogType.TryGetValue(out string? taxonomy))
+            @if (post.BlogType.TryGetValue(out string? taxonomy))
             {
                 <footer class="mt-auto d-flex flex-column gap-3">
                     <vc:tag-list tags="new[] { taxonomy }" />
-                    @if (Model.ShowDXTopics)
+                    @if (post.DXTopics.Count > 0)
                     {
                         <vc:tag-list tags="post.DXTopics" />
                     }
                 </footer>
             }
-            else if (Model.ShowDXTopics)
+            else if (post.DXTopics.Count > 0)
             {
                 <footer class="mt-auto d-flex flex-column gap-3">
                     <vc:tag-list tags="post.DXTopics" />

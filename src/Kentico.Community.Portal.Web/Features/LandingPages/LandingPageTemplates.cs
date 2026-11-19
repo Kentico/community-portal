@@ -70,6 +70,7 @@ public class LandingPageTemplateProperties : IPageTemplateProperties
         WidgetIdentifiers.Integration,
         WidgetIdentifiers.LinkList,
         WidgetIdentifiers.Markdown,
+        WidgetIdentifiers.NewsletterSignup,
         WidgetIdentifiers.PageHeading,
         WidgetIdentifiers.Poll,
         WidgetIdentifiers.ProfileCard,
@@ -90,18 +91,13 @@ public class LandingPageTemplateController(
     private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly WebPageMetaService metaService = metaService;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    /// <remarks>
-    /// This authorization filter must be applied at the Controller level because it interfers
-    /// with the Page Builder if registered globally
-    /// </remarks>
-    [TypeFilter(typeof(ContentAuthorizationFilter))]
     public async Task<ActionResult> Index()
     {
-        var landingPage = await contentRetriever.RetrieveCurrentPage<LandingPage>();
+        var parameters = new RetrieveCurrentPageParameters
+        {
+            IncludeSecuredItems = User.Identity?.IsAuthenticated ?? false
+        };
+        var landingPage = await contentRetriever.RetrieveCurrentPage<LandingPage>(parameters);
         if (landingPage is null)
         {
             return NotFound();

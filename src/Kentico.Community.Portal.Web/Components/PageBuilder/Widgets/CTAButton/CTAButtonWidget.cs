@@ -70,6 +70,23 @@ public class CTAButtonWidgetProperties : BaseWidgetProperties
     )]
     public string BottomMargin { get; set; } = nameof(MarginSizes.Medium);
     public MarginSizes BottomMarginParsed => EnumDropDownOptionsProvider<MarginSizes>.Parse(BottomMargin, MarginSizes.None);
+
+    [DropDownComponent(
+        Label = "Style",
+        ExplanationText = "The visual style of the CTA",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<CTAButtonStyles>),
+        Order = 6
+    )]
+    public string Style { get; set; } = nameof(CTAButtonStyles.Filled);
+    public CTAButtonStyles StyleParsed => EnumDropDownOptionsProvider<CTAButtonStyles>.Parse(Style, CTAButtonStyles.Filled);
+}
+
+public enum CTAButtonStyles
+{
+    [Description("Filled")]
+    Filled,
+    [Description("Outline")]
+    Outline
 }
 
 public enum HorizontalAlignments
@@ -99,4 +116,5 @@ public class CTAButtonWidgetViewModel(CTAButtonWidgetProperties props)
     public HorizontalAlignments HorizontalAlignment { get; set; } = props.HorizontalAlignmentParsed;
     public MarginSizes TopMargin { get; set; } = props.TopMarginParsed;
     public MarginSizes BottomMargin { get; set; } = props.BottomMarginParsed;
+    public CTAButtonStyles Style { get; set; } = props.StyleParsed;
 }

@@ -59,6 +59,12 @@ namespace Kentico.Community.Portal.Core.Content
 
 
 		/// <summary>
+		/// LinkContentIcon.
+		/// </summary>
+		public string LinkContentIcon { get; set; }
+
+
+		/// <summary>
 		/// BasicItemTitle.
 		/// </summary>
 		public string BasicItemTitle { get; set; }

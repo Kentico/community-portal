@@ -1,0 +1,16 @@
+@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList.BlogPostListItemViewModel
+
+@if (!Model.Description.TryGetValue(out string? description))
+{
+  return;
+}
+
+@{
+  int maxLines = Model.DescriptionMaxLines;
+}
+
+<p id="@Model.DescriptionID"
+  class="blog-post-list__desc text-muted mt-2 mb-0 @(maxLines > 0 ? "blog-post-list__desc--clamp" : null)"
+  style="@(maxLines > 0 ? $"--bpl-clamp:{maxLines}" : null)">
+  @description
+</p>

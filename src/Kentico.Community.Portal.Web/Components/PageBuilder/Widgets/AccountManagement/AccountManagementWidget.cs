@@ -1,3 +1,4 @@
+using CMS.ContactManagement;
 using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.AccountManagement;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
@@ -57,6 +58,15 @@ public class AccountManagementWidget(
                 TimeZone = member.TimeZone,
             },
             DateCreated = member.Created,
+            EmailChange = new()
+            {
+                CurrentEmail = member.Email ?? ""
+            },
+            AlternateEmailForm = new()
+            {
+                CurrentAlternateEmail = member.AlternateEmail,
+                VerifiedDate = member.AlternateEmailVerifiedDate
+            },
             AvatarForm = new()
             {
                 MemberID = member.Id
@@ -103,22 +113,10 @@ public class AccountManagementWidget(
         return new QAndANotificationsFormViewModel(frequency, autoSubscribeEnabled, subscribedDiscussionModels);
     }
 
-    private async Task<EmailSubscriptionsViewModel> GetEmailSubscriptionsViewModel(string memberEmail)
-    {
-        var allLists = await recipientListManager.GetRecipientLists();
-        var subscribedIDs = await recipientListManager.GetSubscribedRecipientListIDs(memberEmail);
-        var subscribedSet = subscribedIDs.ToHashSet();
-
-        var items = allLists.Select(rl => new RecipientListItemViewModel
-        {
-            RecipientListID = rl.ContactGroupID,
-            DisplayName = rl.ContactGroupDisplayName,
-            Description = rl.ContactGroupDescription,
-            IsSubscribed = subscribedSet.Contains(rl.ContactGroupID)
-        }).ToList();
-
-        return new EmailSubscriptionsViewModel { Items = items };
-    }
+    private async Task<EmailSubscriptionsViewModel> GetEmailSubscriptionsViewModel(string memberEmail) =>
+        EmailSubscriptionsViewModel.Create(
+            await recipientListManager.GetRecipientLists(),
+            await recipientListManager.GetSubscriptions(memberEmail));
 }
 
 public class AccountManagementWidgetProperties : BaseWidgetProperties
@@ -145,6 +143,8 @@ public class MyAccountViewModel
     public BadgesFormViewModel BadgesForm { get; set; } = new([]);
     public DateTime DateCreated { get; set; }
     public UpdatePasswordViewModel PasswordInfo { get; set; } = new();
+    public ChangeEmailViewModel EmailChange { get; set; } = new();
+    public AlternateEmailViewModel AlternateEmailForm { get; set; } = new();
     public AvatarFormViewModel AvatarForm { get; set; } = new();
     public QAndANotificationsFormViewModel NotificationsForm { get; set; } = new();
     public EmailSubscriptionsViewModel EmailSubscriptions { get; set; } = new();
@@ -153,6 +153,25 @@ public class MyAccountViewModel
 public class EmailSubscriptionsViewModel
 {
     public IReadOnlyList<RecipientListItemViewModel> Items { get; set; } = [];
+
+    public static EmailSubscriptionsViewModel Create(
+        IReadOnlyList<ContactGroupInfo> recipientLists,
+        IReadOnlyList<RecipientListSubscription> subscriptions)
+    {
+        var confirmedDates = subscriptions.ToDictionary(s => s.RecipientListID, s => s.ConfirmedDate);
+
+        return new()
+        {
+            Items = [.. recipientLists.Select(rl => new RecipientListItemViewModel
+            {
+                RecipientListID = rl.ContactGroupID,
+                DisplayName = rl.ContactGroupDisplayName,
+                Description = rl.ContactGroupDescription,
+                IsNewsletter = string.Equals(rl.ContactGroupName, RecipientListCodeNames.NEWSLETTER, StringComparison.OrdinalIgnoreCase),
+                SubscribedSince = confirmedDates.TryGetValue(rl.ContactGroupID, out var date) ? date : null,
+            })]
+        };
+    }
 }
 
 public class RecipientListItemViewModel
@@ -160,5 +179,10 @@ public class RecipientListItemViewModel
     public int RecipientListID { get; set; }
     public string DisplayName { get; set; } = "";
     public string Description { get; set; } = "";
-    public bool IsSubscribed { get; set; }
+    /// <summary>
+    /// The newsletter list's description is the Email marketing consent text, the text a subscription agrees to.
+    /// </summary>
+    public bool IsNewsletter { get; set; }
+    public DateTime? SubscribedSince { get; set; }
+    public bool IsSubscribed => SubscribedSince is not null;
 }

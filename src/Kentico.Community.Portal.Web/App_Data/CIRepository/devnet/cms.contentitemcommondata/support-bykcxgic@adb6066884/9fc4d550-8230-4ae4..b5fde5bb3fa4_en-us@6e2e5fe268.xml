@@ -16,7 +16,7 @@
   </ContentItemCommonDataContentLanguageID>
   <ContentItemCommonDataGUID>9fc4d550-8230-4ae4-8be4-b5fde5bb3fa4</ContentItemCommonDataGUID>
   <ContentItemCommonDataIsLatest>True</ContentItemCommonDataIsLatest>
-  <ContentItemCommonDataLastPublishedWhen>2025-06-12 23:35:57Z</ContentItemCommonDataLastPublishedWhen>
+  <ContentItemCommonDataLastPublishedWhen>2026-11-10 21:07:57Z</ContentItemCommonDataLastPublishedWhen>
   <ContentItemCommonDataVersionStatus>2</ContentItemCommonDataVersionStatus>
   <ContentItemCommonDataVisualBuilderTemplateConfiguration>
 <![CDATA[
@@ -36,12 +36,25 @@
       "sections": [
         {
           "identifier": "7947a0d4-72c3-4436-9fdc-b83b42db2ba7",
-          "type": "KenticoCommunity.Section.Unstyled",
-          "properties": null,
+          "type": "CommunityPortal.SingleColumnSection",
+          "properties": {
+            "layout": "Standard",
+            "layoutParsed": 0,
+            "alignment": "Left",
+            "alignmentParsed": 0,
+            "paddingTop": "Large",
+            "paddingTopParsed": 0,
+            "paddingBottom": "Large",
+            "paddingBottomParsed": 0,
+            "backgroundColor": "White",
+            "backgroundColorParsed": 1,
+            "displayAsCarousel": false,
+            "numberOfSlides": 3,
+            "carouselAriaLabel": "Featured content carousel"
+          },
           "zones": [
             {
-              "identifier": "4752b905-5541-44eb-bdd2-a4c35e02d73c",
-              "name": "main",
+              "identifier": "fe587f3c-4b59-43b8-a52e-1bbceead025c",
               "widgets": [
                 {
                   "identifier": "8c213299-b543-4aad-b399-1e1ea176e707",
@@ -51,13 +64,23 @@
                       "identifier": "2a91544a-0556-4904-81cf-485ea7419020",
                       "properties": {
                         "label": "",
+                        "introContent": "",
+                        "dataSource": "Individual_Selection",
+                        "dataSourceParsed": 0,
+                        "folderReference": null,
+                        "count": 0,
                         "links": [
                           {
                             "identifier": "4f9117e4-cad2-4849-b986-fef30f842e33"
                           }
                         ],
                         "designSource": "List_In_Card",
-                        "designParsed": 2,
+                        "designParsed": 1,
+                        "showPublishedDate": false,
+                        "showAuthor": false,
+                        "showDXTopics": false,
+                        "showDescriptions": true,
+                        "descriptionMaxLines": 0,
                         "id": "a6cf1713-cbfc-4dec-8b50-9512ed0b5486"
                       },
                       "fieldIdentifiers": {
@@ -65,7 +88,17 @@
                         "links": "c9c85b8f-2a1b-405e-abd0-f486a4d0a845",
                         "designSource": "59115959-f34a-4864-ba5d-50b259e0674f",
                         "designParsed": "206617d6-eecb-4c08-8a19-fb597b36ba7d",
-                        "id": "d5ea6a30-0d09-41e3-8cda-c064a27e2125"
+                        "id": "d5ea6a30-0d09-41e3-8cda-c064a27e2125",
+                        "introContent": "5d2c4d6a-7ced-4dcd-a2f2-2e66662aa8ff",
+                        "dataSource": "fb81559f-40fc-41d4-b3d8-004f28db6e9e",
+                        "dataSourceParsed": "4353ec9c-1b0e-442b-8331-5adfcdc60390",
+                        "folderReference": "b7ddfc9f-2f12-455b-9407-4854694117ea",
+                        "count": "0beefb5a-bbea-4f97-876e-58eec5eb162c",
+                        "showPublishedDate": "55f5f4e6-a4a2-4321-9aa3-c16c3df77d4d",
+                        "showAuthor": "ca6d03fb-e6b8-4de5-8cbd-301af927dfef",
+                        "showDXTopics": "7f09719b-c547-49f7-8ce2-024875c0143f",
+                        "showDescriptions": "f62cd3d1-96f6-4d4b-bdb4-aead6f6575e2",
+                        "descriptionMaxLines": "0c80fc5e-d69d-43c9-9a9f-bc0ad3fe2bc6"
                       }
                     }
                   ]
@@ -78,6 +111,11 @@
                       "identifier": "7e96e4aa-20f8-41bf-8946-bc2b44317b28",
                       "properties": {
                         "label": "Additional Resources",
+                        "introContent": "",
+                        "dataSource": "Individual_Selection",
+                        "dataSourceParsed": 0,
+                        "folderReference": null,
+                        "count": 0,
                         "links": [
                           {
                             "identifier": "f8c994f8-f00e-45ac-9076-89f7bb15c42a"
@@ -99,7 +137,12 @@
                           }
                         ],
                         "designSource": "List_In_Card",
-                        "designParsed": 2,
+                        "designParsed": 1,
+                        "showPublishedDate": false,
+                        "showAuthor": false,
+                        "showDXTopics": false,
+                        "showDescriptions": true,
+                        "descriptionMaxLines": 0,
                         "id": "6c712eb7-8244-451c-a133-ce56f8ac6f8d"
                       },
                       "fieldIdentifiers": {
@@ -107,7 +150,48 @@
                         "links": "b45f383f-3b62-4dd7-8547-12e8c9a82b26",
                         "designSource": "4a089f3e-fba2-4f73-a9e1-fef565961938",
                         "designParsed": "a079ee1b-68d4-48d1-8861-c7307eecee61",
-                        "id": "6daeb663-928a-4b68-87f5-c39a10cbc015"
+                        "id": "6daeb663-928a-4b68-87f5-c39a10cbc015",
+                        "introContent": "5772a607-005b-4cb7-ae45-d1fcf6339ca1",
+                        "dataSource": "af23e2a5-5d57-4bb9-9ddd-460673302d8c",
+                        "dataSourceParsed": "8ba6b6a9-e840-4239-b788-ab248286f19f",
+                        "folderReference": "09c2910f-2cdd-43c5-80a2-0283646fd9e2",
+                        "count": "a7672e4d-e546-46ed-9e6e-4b6d6b3817e7",
+                        "showPublishedDate": "545b42f3-c167-4380-8f4d-8e5c8f756c1d",
+                        "showAuthor": "c8e0d3a0-2ee6-4f6a-ba6c-50bfbc7e9aa7",
+                        "showDXTopics": "80d212be-a1e0-4f8c-b157-ea3ba425058d",
+                        "showDescriptions": "e94c3de8-b5d3-4363-a0c3-aed7e2e66d65",
+                        "descriptionMaxLines": "595124ab-c8d2-4a6a-86df-d2d5daa02af2"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "identifier": "5a8af685-a313-45bf-a044-d2659d03ecef",
+                  "type": "CommunityPortal.CtaButtonWidget",
+                  "variants": [
+                    {
+                      "identifier": "4035109c-72e3-4619-bdb2-b33e65c65f52",
+                      "properties": {
+                        "text": "Submit a support request",
+                        "linkURL": "https://www.kentico.com/customers/supportcenter/submit-a-question-or-bug",
+                        "horizontalAlignment": "Center",
+                        "horizontalAlignmentParsed": 1,
+                        "topMargin": "Medium",
+                        "topMarginParsed": 2,
+                        "bottomMargin": "Medium",
+                        "bottomMarginParsed": 2,
+                        "id": "47715745-10ce-446b-9ca0-c2a35e39d730"
+                      },
+                      "fieldIdentifiers": {
+                        "text": "d7db318d-b6fa-4651-b159-a5bafe7cb55a",
+                        "linkURL": "3e736273-13fe-4e2c-afaa-d959e1c6737b",
+                        "horizontalAlignment": "9846e8d7-911f-432c-aa3a-228253169575",
+                        "horizontalAlignmentParsed": "565411ef-4514-4b93-9101-6eb08e728a00",
+                        "topMargin": "ff22f05c-3f4f-4c05-aab0-435d9240da9b",
+                        "topMarginParsed": "fd6a9dfc-d252-4b2b-b0f6-fa5ac08af181",
+                        "bottomMargin": "e58ce055-36da-4bc4-8893-451e7afeaed0",
+                        "bottomMarginParsed": "2900e601-5b8f-4392-ac49-926a3801d832",
+                        "id": "481f2d01-0e78-4937-9763-4a2aef9208cc"
                       }
                     }
                   ]
@@ -115,7 +199,21 @@
               ]
             }
           ],
-          "fieldIdentifiers": {}
+          "fieldIdentifiers": {
+            "layout": "243fb41b-7640-46f2-b1a0-b4ffdad9ca26",
+            "layoutParsed": "151e8148-d357-4fdb-a7eb-f3f38efdde40",
+            "alignment": "7a68f8cb-2ba2-4326-a62c-583d79370b38",
+            "alignmentParsed": "210f3efb-2b62-442b-ba57-d6c33435ac5e",
+            "paddingTop": "ad9a28ac-8eeb-447f-a4df-6b783ade1660",
+            "paddingTopParsed": "893860d4-1bd9-4370-9c9e-ba5b3649d2db",
+            "paddingBottom": "99342511-994d-42ee-af0a-19613dee0653",
+            "paddingBottomParsed": "d152e589-5e8b-4f3d-ae48-3fc883cb0fa7",
+            "backgroundColor": "99e61dfa-cf48-447e-b0d9-c0710bb5d480",
+            "backgroundColorParsed": "cf595e88-c5f9-4edd-935e-8ce2a75bae5a",
+            "displayAsCarousel": "1697488c-5d5e-4e0f-923d-0134d56a4d90",
+            "numberOfSlides": "ce494e17-9003-4e72-b676-a034685fd91b",
+            "carouselAriaLabel": "0d83ca90-4540-41bf-8a6a-dee692da734d"
+          }
         }
       ]
     },
@@ -182,46 +280,20 @@
   <ContentItemReferences>
     <cms.contentitemreference>
       <ContentItemReferenceGroupGUID>b45f383f-3b62-4dd7-8547-12e8c9a82b26</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>5a9040bc-0b9c-4068-8eea-30dcf97424a5</ContentItemReferenceGUID>
+      <ContentItemReferenceGUID>86fd8afd-1d5b-4cda-8d17-3f10a91a98e6</ContentItemReferenceGUID>
       <ContentItemReferenceSourceCommonDataID>
         <GUID>9fc4d550-8230-4ae4-8be4-b5fde5bb3fa4</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>
       </ContentItemReferenceSourceCommonDataID>
       <ContentItemReferenceTargetItemID>
-        <CodeName>XperienceByKenticoRoadmap-czastewx</CodeName>
-        <GUID>f8c994f8-f00e-45ac-9076-89f7bb15c42a</GUID>
+        <CodeName>XbyKDocumentation-60z2zx7s</CodeName>
+        <GUID>50371520-0cc9-4644-9176-0ba628e4f2ec</GUID>
         <ObjectType>cms.contentitem</ObjectType>
       </ContentItemReferenceTargetItemID>
     </cms.contentitemreference>
     <cms.contentitemreference>
       <ContentItemReferenceGroupGUID>b45f383f-3b62-4dd7-8547-12e8c9a82b26</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>9bb64ba0-7df0-41fd-9e70-3859fc32e305</ContentItemReferenceGUID>
-      <ContentItemReferenceSourceCommonDataID>
-        <GUID>9fc4d550-8230-4ae4-8be4-b5fde5bb3fa4</GUID>
-        <ObjectType>cms.contentitemcommondata</ObjectType>
-      </ContentItemReferenceSourceCommonDataID>
-      <ContentItemReferenceTargetItemID>
-        <CodeName>CommunityNewsletterSignup-hvramz73</CodeName>
-        <GUID>1b5442ca-94b1-4cae-a505-5ca60853587a</GUID>
-        <ObjectType>cms.contentitem</ObjectType>
-      </ContentItemReferenceTargetItemID>
-    </cms.contentitemreference>
-    <cms.contentitemreference>
-      <ContentItemReferenceGroupGUID>b45f383f-3b62-4dd7-8547-12e8c9a82b26</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>7b86f6b7-e8b5-45d8-9d93-6d36846cd478</ContentItemReferenceGUID>
-      <ContentItemReferenceSourceCommonDataID>
-        <GUID>9fc4d550-8230-4ae4-8be4-b5fde5bb3fa4</GUID>
-        <ObjectType>cms.contentitemcommondata</ObjectType>
-      </ContentItemReferenceSourceCommonDataID>
-      <ContentItemReferenceTargetItemID>
-        <CodeName>KenticoCommunitySlack-kvyzh6np</CodeName>
-        <GUID>ea3c2e67-b69a-4eae-bc7b-a3497ef9f1c7</GUID>
-        <ObjectType>cms.contentitem</ObjectType>
-      </ContentItemReferenceTargetItemID>
-    </cms.contentitemreference>
-    <cms.contentitemreference>
-      <ContentItemReferenceGroupGUID>b45f383f-3b62-4dd7-8547-12e8c9a82b26</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>ac8b2fbb-0d62-41b6-8aa8-a68702e6969d</ContentItemReferenceGUID>
+      <ContentItemReferenceGUID>34cef4ab-aed4-452e-beba-756165063f02</ContentItemReferenceGUID>
       <ContentItemReferenceSourceCommonDataID>
         <GUID>9fc4d550-8230-4ae4-8be4-b5fde5bb3fa4</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>
@@ -234,7 +306,33 @@
     </cms.contentitemreference>
     <cms.contentitemreference>
       <ContentItemReferenceGroupGUID>b45f383f-3b62-4dd7-8547-12e8c9a82b26</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>07e498c9-97cc-4cb0-b2fe-ccc59884c2e7</ContentItemReferenceGUID>
+      <ContentItemReferenceGUID>480fa460-ca7a-41ef-8588-9e8b667a6350</ContentItemReferenceGUID>
+      <ContentItemReferenceSourceCommonDataID>
+        <GUID>9fc4d550-8230-4ae4-8be4-b5fde5bb3fa4</GUID>
+        <ObjectType>cms.contentitemcommondata</ObjectType>
+      </ContentItemReferenceSourceCommonDataID>
+      <ContentItemReferenceTargetItemID>
+        <CodeName>XperienceByKenticoRoadmap-czastewx</CodeName>
+        <GUID>f8c994f8-f00e-45ac-9076-89f7bb15c42a</GUID>
+        <ObjectType>cms.contentitem</ObjectType>
+      </ContentItemReferenceTargetItemID>
+    </cms.contentitemreference>
+    <cms.contentitemreference>
+      <ContentItemReferenceGroupGUID>b45f383f-3b62-4dd7-8547-12e8c9a82b26</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>87f7c532-e73e-4368-b451-ac457fd34727</ContentItemReferenceGUID>
+      <ContentItemReferenceSourceCommonDataID>
+        <GUID>9fc4d550-8230-4ae4-8be4-b5fde5bb3fa4</GUID>
+        <ObjectType>cms.contentitemcommondata</ObjectType>
+      </ContentItemReferenceSourceCommonDataID>
+      <ContentItemReferenceTargetItemID>
+        <CodeName>KenticoCommunitySlack-kvyzh6np</CodeName>
+        <GUID>ea3c2e67-b69a-4eae-bc7b-a3497ef9f1c7</GUID>
+        <ObjectType>cms.contentitem</ObjectType>
+      </ContentItemReferenceTargetItemID>
+    </cms.contentitemreference>
+    <cms.contentitemreference>
+      <ContentItemReferenceGroupGUID>b45f383f-3b62-4dd7-8547-12e8c9a82b26</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>60523101-7120-4676-85b8-c411c04c74df</ContentItemReferenceGUID>
       <ContentItemReferenceSourceCommonDataID>
         <GUID>9fc4d550-8230-4ae4-8be4-b5fde5bb3fa4</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>
@@ -247,20 +345,20 @@
     </cms.contentitemreference>
     <cms.contentitemreference>
       <ContentItemReferenceGroupGUID>b45f383f-3b62-4dd7-8547-12e8c9a82b26</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>1f0d9580-13d7-4c5a-954b-d7104a06e962</ContentItemReferenceGUID>
+      <ContentItemReferenceGUID>6d355828-95d5-4e89-a441-d3cc471d7a67</ContentItemReferenceGUID>
       <ContentItemReferenceSourceCommonDataID>
         <GUID>9fc4d550-8230-4ae4-8be4-b5fde5bb3fa4</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>
       </ContentItemReferenceSourceCommonDataID>
       <ContentItemReferenceTargetItemID>
-        <CodeName>XbyKDocumentation-60z2zx7s</CodeName>
-        <GUID>50371520-0cc9-4644-9176-0ba628e4f2ec</GUID>
+        <CodeName>CommunityNewsletterSignup-hvramz73</CodeName>
+        <GUID>1b5442ca-94b1-4cae-a505-5ca60853587a</GUID>
         <ObjectType>cms.contentitem</ObjectType>
       </ContentItemReferenceTargetItemID>
     </cms.contentitemreference>
     <cms.contentitemreference>
       <ContentItemReferenceGroupGUID>c9c85b8f-2a1b-405e-abd0-f486a4d0a845</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>43d0cc12-1d75-48c9-ae10-7ace424d5006</ContentItemReferenceGUID>
+      <ContentItemReferenceGUID>9f447a3c-d2a1-4cbc-8710-d45a75c17aaf</ContentItemReferenceGUID>
       <ContentItemReferenceSourceCommonDataID>
         <GUID>9fc4d550-8230-4ae4-8be4-b5fde5bb3fa4</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>

@@ -1,0 +1,30 @@
+@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList.BlogPostListWidgetViewModel
+
+@if (!Model.HasHeader)
+{
+  return;
+}
+
+<header class="blog-post-list__header">
+  <span class="blog-post-list__accent-bar d-block" aria-hidden="true"></span>
+
+  @if (Model.Heading.TryGetValue(out string? heading))
+  {
+    string slug = View.SlugHelper.GenerateSlug($"blogPostList-{heading}");
+
+    @* mt-0 neutralises the .t-article_body h2 top margin so the accent bar sits
+       tight above the heading as a kicker instead of floating below it. *@
+    <h2 id="@slug" class="heading fs-2 fw-bold mt-0 mb-0">
+      @heading
+      <a title="Navigate to this heading" aria-label="Navigate to this heading" class="heading-link"
+        href="#@(slug)"></a>
+    </h2>
+  }
+
+  @if (Model.Intro.TryGetValue(out HtmlString? introHtml))
+  {
+    <div class="blog-post-list__intro">
+      @introHtml
+    </div>
+  }
+</header>

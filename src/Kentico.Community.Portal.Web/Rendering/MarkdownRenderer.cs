@@ -1,5 +1,6 @@
 using System.Text.Encodings.Web;
 using Markdig;
+using Markdig.Renderers;
 using Markdig.Syntax;
 using Microsoft.AspNetCore.Html;
 
@@ -50,7 +51,57 @@ public class MarkdownRenderer
         return new(contentHTML);
     }
 
+    /// <summary>
+    /// Like <see cref="RenderUnsafe(string)"/>, but paragraphs render without <c>&lt;p&gt;</c> tags,
+    /// so a one-line value can go inside phrasing content (ex: a <c>&lt;label&gt;</c>).
+    /// Same XSS caveat as <see cref="RenderUnsafe(string)"/>.
+    /// </summary>
+    /// <param name="contentWithHTML"></param>
+    /// <returns></returns>
+    public HtmlString RenderInlineUnsafe(string contentWithHTML)
+    {
+        var document = Markdown.Parse(contentWithHTML, unsafePipeline);
+
+        using var writer = new StringWriter();
+        var renderer = new HtmlRenderer(writer) { ImplicitParagraph = true };
+        unsafePipeline.Setup(renderer);
+        renderer.Render(document);
+        writer.Flush();
+
+        return new(writer.ToString().Trim());
+    }
+
     public MarkdownDocument Parse(string contentWithHTML) => Markdown.Parse(contentWithHTML, unsafePipeline);
+
+    /// <summary>
+    /// Full plain text of the markdown, without formatting. Ex: structured data text of rendered content.
+    /// </summary>
+    /// <param name="markdownContent"></param>
+    /// <returns></returns>
+    public string ToPlainText(string markdownContent) =>
+        Markdown.ToPlainText(markdownContent ?? "", defaultPipeline).Trim();
+
+    /// <summary>
+    /// Plain text of the markdown on one line, cut at a word boundary to at most
+    /// <paramref name="maxLength"/> characters (ellipsis included). Ex: a meta description.
+    /// </summary>
+    /// <param name="markdownContent"></param>
+    /// <param name="maxLength"></param>
+    /// <returns></returns>
+    public string ToPlainTextExcerpt(string markdownContent, int maxLength = 160)
+    {
+        string text = string.Join(' ', Markdown.ToPlainText(markdownContent ?? "", defaultPipeline)
+            .Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
+
+        if (text.Length <= maxLength)
+        {
+            return text;
+        }
+
+        int cut = text.LastIndexOf(' ', maxLength - 1);
+
+        return $"{text[..(cut > 0 ? cut : maxLength - 1)].TrimEnd(' ', ',', '.', ';', ':')}…";
+    }
 }
 
 /// <summary>

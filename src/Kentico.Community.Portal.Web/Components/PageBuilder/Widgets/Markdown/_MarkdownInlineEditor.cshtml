@@ -1,0 +1,22 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Markdown
+
+@model MarkdownWidgetViewModel
+
+@*
+    Page Builder edit mode only.
+    Editor script is registered once in _Layout.cshtml, not here (one copy per widget otherwise).
+    Client: Client/js/page-builder-markdown-editor.js
+*@
+
+@using (Html.Kentico().BeginInlineEditor(MarkdownWidget.INLINE_EDITOR_IDENTIFIER, nameof(MarkdownWidgetProperties.Markdown)))
+{
+    <div class="md-inline-editor" data-testid="markdown-inline-editor" data-md-version="@Model.MarkdownVersion">
+        <div class="md-inline-editor__bar">
+            <button type="button" class="md-inline-editor__toggle" data-md-toggle
+                data-testid="markdown-inline-editor-toggle" aria-pressed="false">Raw markdown</button>
+        </div>
+        <div class="md-inline-editor__root" data-md-root data-testid="markdown-inline-editor-root"></div>
+        <textarea class="md-inline-editor__raw" data-md-raw data-testid="markdown-inline-editor-raw"
+            aria-label="Raw markdown" spellcheck="false" hidden></textarea>
+    </div>
+}

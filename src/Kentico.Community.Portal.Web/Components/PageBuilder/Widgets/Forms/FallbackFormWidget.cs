@@ -58,16 +58,34 @@ public class FallbackFormWidget(MarkdownRenderer renderer) : ViewComponent
 }
 
 [FormCategory(Label = "Design", Order = 5)]
-[FormCategory(Label = "Fallback", Order = 7)]
+[FormCategory(Label = "Fallback", Order = 10)]
 public class FallbackFormWidgetProperties : FormWidgetProperties
 {
+    [DropDownComponent(
+        Label = "Design",
+        ExplanationText = "Feature Card displays the form in a purple card with decorative circles.",
+        DataProviderType = typeof(EnumDropDownOptionsProvider<FallbackFormDesigns>),
+        Order = 6
+    )]
+    public string Design { get; set; } = nameof(FallbackFormDesigns.Default);
+    public FallbackFormDesigns DesignParsed => EnumDropDownOptionsProvider<FallbackFormDesigns>.Parse(Design, FallbackFormDesigns.Default);
+
+    [TextInputComponent(
+        Label = "Heading",
+        ExplanationText = "Optional heading displayed inside the card above the form.",
+        Order = 7
+    )]
+    [VisibleIfEqualTo(nameof(Design), nameof(FallbackFormDesigns.Feature_Card))]
+    public string Heading { get; set; } = "";
+
     [DropDownComponent(
         Label = "Background color",
         ExplanationText = "Determines the background color of the entire form",
         Tooltip = "Select a color",
         DataProviderType = typeof(EnumDropDownOptionsProvider<BackgroundColors>),
-        Order = 6
+        Order = 8
     )]
+    [VisibleIfEqualTo(nameof(Design), nameof(FallbackFormDesigns.Default))]
     public string BackgroundColor { get; set; } = nameof(BackgroundColors.White);
     public BackgroundColors BackgroundColorParsed => EnumDropDownOptionsProvider<BackgroundColors>.Parse(BackgroundColor, BackgroundColors.White);
 
@@ -83,14 +101,14 @@ public class FallbackFormWidgetProperties : FormWidgetProperties
             """,
         ExplanationTextAsHtml = true,
         DataProviderType = typeof(EnumDropDownOptionsProvider<ComponentStates>),
-        Order = 6
+        Order = 9
     )]
     public string ComponentState { get; set; } = nameof(ComponentStates.Active);
     public ComponentStates ComponentStateParsed => EnumDropDownOptionsProvider<ComponentStates>.Parse(ComponentState, ComponentStates.Active);
 
     [MarkdownComponent(
         Label = "Fallback content",
-        Order = 8,
+        Order = 11,
         ExplanationText = "If specified, this will be displayed instead of a form. If no value is provided, the form will be completely hidden."
     )]
     [VisibleIfEqualTo(nameof(ComponentState), nameof(ComponentStates.Disabled))]
@@ -98,7 +116,7 @@ public class FallbackFormWidgetProperties : FormWidgetProperties
 
     [UrlSelectorComponent(
         Label = "CTA path or URL",
-        Order = 9,
+        Order = 12,
         ExplanationText = "If specified, a fallback CTA will be displayed linking to this path or URL."
     )]
     [VisibleIfEqualTo(nameof(ComponentState), nameof(ComponentStates.Disabled))]
@@ -106,7 +124,7 @@ public class FallbackFormWidgetProperties : FormWidgetProperties
 
     [TextInputComponent(
         Label = "CTA label",
-        Order = 10,
+        Order = 13,
         ExplanationText = "Required if CTA path or URL is specified"
     )]
     [VisibleIfEqualTo(nameof(ComponentState), nameof(ComponentStates.Disabled))]
@@ -122,6 +140,14 @@ public enum ComponentStates
     Disabled,
     [Description("Hidden")]
     Hidden,
+}
+
+public enum FallbackFormDesigns
+{
+    [Description("Default")]
+    Default,
+    [Description("Feature Card")]
+    Feature_Card
 }
 
 public enum BackgroundColors
@@ -142,6 +168,8 @@ public class FallbackFormWidgetViewModel : IHideableComponent
     public ComponentStates ComponentState { get; }
     public FormWidgetProperties FormWidgetProperties { get; }
     public BackgroundColors BackgroundColor { get; }
+    public FallbackFormDesigns Design { get; }
+    public Maybe<string> Heading { get; }
     public Maybe<HtmlString> FallbackContent { get; }
     public Maybe<LinkDataType> CTA { get; }
 
@@ -157,5 +185,9 @@ public class FallbackFormWidgetViewModel : IHideableComponent
             : new LinkDataType() { Label = props.FallbackCTALabel, URL = props.FallbackCTAPathOrURL };
         FormWidgetProperties = props;
         BackgroundColor = props.BackgroundColorParsed;
+        Design = props.DesignParsed;
+        Heading = props.DesignParsed == FallbackFormDesigns.Feature_Card
+            ? Maybe.From(props.Heading).MapNullOrWhiteSpaceAsNone()
+            : Maybe<string>.None;
     }
 }

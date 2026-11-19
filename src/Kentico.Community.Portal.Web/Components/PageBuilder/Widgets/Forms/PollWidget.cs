@@ -9,6 +9,7 @@ using Kentico.Forms.Web.Mvc.Widgets;
 using Kentico.PageBuilder.Web.Mvc;
 using Kentico.Xperience.Admin.Base.FormAnnotations;
 using Kentico.Xperience.Admin.Base.Forms;
+using Kentico.Xperience.Admin.DigitalMarketing.FormAnnotations;
 using MediatR;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
@@ -61,7 +62,7 @@ public class PollWidget(
             return Result.Failure<PollWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "The selected content item no longer exists."));
         }
 
-        if (!poll.PollContentForm.TryFirst().MapNullOrWhiteSpaceAsNone().TryGetValue(out string? formName))
+        if (!GetFormName(props, poll).TryGetValue(out string? formName))
         {
             return Result.Failure<PollWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "The selected poll has no associated form."));
         }
@@ -69,7 +70,40 @@ public class PollWidget(
         bool isAuthenticated = HttpContext.User.Identity?.IsAuthenticated ?? false;
         bool hasSubmitted = await engagementRetriever.HasCurrentMemberSubmittedForm(formName);
 
-        return new PollWidgetViewModel(poll, formName, hasSubmitted, props, isAuthenticated, renderer, time);
+        var title = await GetPollTitle(formName);
+
+        return new PollWidgetViewModel(poll, formName, title, hasSubmitted, props, isAuthenticated, renderer, time);
+    }
+
+    /// <summary>
+    /// The poll question is the caption of the form's "Question" field
+    /// </summary>
+    private async Task<Maybe<string>> GetPollTitle(string formName)
+    {
+        var formResp = await mediator.Send(new FormByFormNameQuery(formName));
+        if (!formResp.TryGetValue(out var form))
+        {
+            return Maybe<string>.None;
+        }
+
+        string caption = form.Form.Form.GetFormField("Question")?.Caption ?? "";
+
+        return Maybe.From(caption).MapNullOrWhiteSpaceAsNone();
+    }
+
+    /// <summary>
+    /// Prefers the form selected in the widget (tracked for form usage),
+    /// falling back to the poll's form for widgets saved before the widget property existed
+    /// </summary>
+    public static Maybe<string> GetFormName(PollWidgetProperties props, PollContent poll)
+    {
+        var widgetFormName = props.PollForms.TryFirst()
+            .Map(f => f.ObjectCodeName ?? "")
+            .MapNullOrWhiteSpaceAsNone();
+
+        return widgetFormName.HasValue
+            ? widgetFormName
+            : poll.PollContentForm.TryFirst().MapNullOrWhiteSpaceAsNone();
     }
 }
 
@@ -80,6 +114,15 @@ public class PollWidgetProperties : IWidgetProperties
         Order = 1,
         ExplanationText = "The Poll Content and associated form to populate the widget.")]
     public IEnumerable<ContentItemReference> PollContents { get; set; } = [];
+
+    /// <summary>
+    /// Form selector properties are included in form usage tracking automatically
+    /// </summary>
+    [FormSelectorComponent(
+        Label = "Poll form",
+        Order = 2,
+        ExplanationText = "The form used to collect poll answers. Should match the form of the selected Poll Content. If empty, the Poll Content's form is used.")]
+    public IEnumerable<ObjectRelatedItem> PollForms { get; set; } = [];
 
     [DropDownComponent(
         Label = "Background color",
@@ -109,6 +152,7 @@ public class PollWidgetViewModel : IHideableComponent
 
     public bool IsHidden { get; }
     public string FormName { get; }
+    public Maybe<string> Title { get; }
     public Maybe<HtmlString> Description { get; }
     public DateTime PublishedDate { get; }
     public DateTime OpenUntilDate { get; }
@@ -116,7 +160,7 @@ public class PollWidgetViewModel : IHideableComponent
     public bool IsPollActive { get; }
     public BackgroundColors BackgroundColor { get; }
 
-    public PollWidgetViewModel(PollContent poll, string formName, bool hasSubmitted, PollWidgetProperties props, bool isAuthenticated, MarkdownRenderer renderer, TimeProvider time)
+    public PollWidgetViewModel(PollContent poll, string formName, Maybe<string> title, bool hasSubmitted, PollWidgetProperties props, bool isAuthenticated, MarkdownRenderer renderer, TimeProvider time)
     {
         IsHidden = !isAuthenticated;
         PublishedDate = poll.PollContentPublishedDate;
@@ -127,6 +171,7 @@ public class PollWidgetViewModel : IHideableComponent
         HasVisitorAnsweredPoll = hasSubmitted;
         IsPollActive = time.GetLocalNow() <= poll.PollContentOpenUntilDate;
         FormName = formName;
+        Title = title;
         BackgroundColor = props.BackgroundColorParsed;
     }
 

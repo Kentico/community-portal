@@ -1,0 +1,36 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList
+@model BlogPostListWidgetViewModel
+
+@* Cards — responsive grid of self-contained, fully clickable cards. Built for
+   landing pages showing several recent posts from a taxonomy or smart folder. *@
+
+<section class="blog-post-list blog-post-list--cards" xpc-preview-outline="@Model.ComponentName"
+         aria-label="@(Model.Heading.GetValueOrDefault("Blog posts"))">
+
+  <partial name="~/Components/PageBuilder/Widgets/BlogPostList/_Header.cshtml" model="Model" />
+
+  <div class="blog-post-list__grid d-grid gap-3">
+    @foreach (var post in Model.BlogPosts)
+    {
+      <article class="blog-post-list__card position-relative d-flex flex-column h-100 bg-white">
+        <h3 class="blog-post-list__title fs-4 fw-bold m-0">
+          <a href="@post.LinkPath" class="blog-post-list__title-link stretched-link text-decoration-none"
+            @(post.Description.HasValue ? $"aria-describedby={post.DescriptionID}" : null)>
+            <span>@post.Title</span>
+            <svg class="blog-post-list__arrow text-primary" width="15" height="15" viewBox="0 0 16 16" fill="none"
+                 aria-hidden="true">
+              <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+          </a>
+        </h3>
+
+        <partial name="~/Components/PageBuilder/Widgets/BlogPostList/_Meta.cshtml" model="post" />
+
+        <partial name="~/Components/PageBuilder/Widgets/BlogPostList/_Description.cshtml" model="post" />
+
+        <partial name="~/Components/PageBuilder/Widgets/BlogPostList/_Tags.cshtml" model="post" />
+      </article>
+    }
+  </div>
+</section>

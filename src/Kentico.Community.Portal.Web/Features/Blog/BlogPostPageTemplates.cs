@@ -1,6 +1,7 @@
 using Kentico.Community.Portal.Web.Features.Blog;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.QAndA;
+using Kentico.Community.Portal.Web.Features.SEO.StructuredData;
 using Kentico.Community.Portal.Web.Infrastructure;
 using Kentico.Community.Portal.Web.Membership;
 using Kentico.Community.Portal.Web.Rendering;
@@ -47,13 +48,15 @@ public class BlogPostPageTemplateController(
     IMediator mediator,
     IContentRetriever contentRetriever,
     IWebPageUrlRetriever urlRetriever,
-    UserManager<CommunityMember> userManager) : Controller
+    UserManager<CommunityMember> userManager,
+    JsonLdCollector jsonLd) : Controller
 {
     private readonly WebPageMetaService metaService = metaService;
     private readonly IMediator mediator = mediator;
     private readonly IContentRetriever contentRetriever = contentRetriever;
     private readonly IWebPageUrlRetriever urlRetriever = urlRetriever;
     private readonly UserManager<CommunityMember> userManager = userManager;
+    private readonly JsonLdCollector jsonLd = jsonLd;
 
     public async Task<ActionResult> Index()
     {
@@ -73,9 +76,40 @@ public class BlogPostPageTemplateController(
         var upvote = await GetBlogPostUpvote(blogPage);
         var vm = new BlogPostPageViewModel(blogPage, author, discussionURL, absoluteURL, commentCount, upvote);
 
-        metaService.SetMeta(blogPage);
+        metaService.SetMeta(new WebPageMeta(blogPage)
+        {
+            Article = new WebPageArticleMeta(
+                blogPage.BlogPostPagePublishedDate,
+                blogPage.SystemFields.ContentItemCommonDataLastPublishedWhen is DateTime modified ? modified : Maybe<DateTime>.None,
+                author.Name,
+                author.LinkProfilePath.Map(p => p.RelativePathToAbsoluteURL(Request)))
+        });
+
+        // Only values rendered in the post header: h1, <time>, author name/profile link
+        jsonLd.Add(BlogPostingJsonLd.Create(
+            vm.Title,
+            vm.PublishedDate,
+            new PersonJsonLd(author.Name, author.LinkProfilePath.Map(p => p.RelativePathToAbsoluteURL(Request)).GetValueOrDefault()),
+            await GetCanonicalURL(blogPage)));
 
         return new TemplateResult(vm);
+    }
+
+    /// <summary>
+    /// Same URL the page head's canonical link renders
+    /// </summary>
+    private async Task<string> GetCanonicalURL(BlogPostPage post)
+    {
+        if (!string.IsNullOrWhiteSpace(post.WebPageCanonicalURL))
+        {
+            string url = post.WebPageCanonicalURL;
+            bool siteRelative = url.StartsWith("~/", StringComparison.Ordinal)
+                || (url.StartsWith('/') && !url.StartsWith("//", StringComparison.Ordinal));
+            return siteRelative ? url.RelativePathToAbsoluteURL(Request) : url;
+        }
+
+        var pageURL = await urlRetriever.Retrieve(post);
+        return string.IsNullOrWhiteSpace(pageURL.AbsoluteUrl) ? Request.CanonicalURL() : pageURL.AbsoluteUrl;
     }
 
     private async Task<AuthorViewModel> GetAuthor(BlogPostPage post)

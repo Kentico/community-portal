@@ -1,4 +1,4 @@
-﻿@using Kentico.Community.Portal.Web.Features.DataCollection
+@using Kentico.Community.Portal.Web.Features.DataCollection
 
 @model CookieBannerViewModel
 
@@ -7,36 +7,36 @@
     return;
 }
 
-@{
-    string messageId = "cookieBannerMessage";
-}
-
-<form asp-route="@CookiesController.ROUTE_SET_PREFERENCES" hx-post hx-route="@CookiesController.ROUTE_SET_PREFERENCES"
-    hx-swap="outerHTML" hx-target="#@messageId">
-    <fieldset xpc-readonly-disabled>
-        <div class="xpcookiebanner is-active position-relative" xp-cookie-banner>
-            <div class="xpcookiebanner__inner container">
-                <h5 class="xpcookiebanner__header">@Model.CookieBannerHeading</h5>
-                @Model.CookieBannerContentHTML
-                <div class="xpcookiebanner__ctas">
-
-                    <input type="hidden" name="CookieLevelSelected" value="4">
-                    <input type="hidden" name="ShowMessage" value="false">
-
-                    <button type="submit" value="4" name="CookieLevelSelected"
-                        class="btn btn-primary-light xpcookiebanner__cta text-uppercase"
-                        data-tracking-code="CookieBar_Accept" cookie-cta>
-                        Accept All
-                    </button>
-
-                    <a href="@Model.CookiePolicyPagePath" class="xpcookiebanner__cta"
-                        data-tracking-code="CookieBar_More">
-                        Configure
-                    </a>
-
-                </div>
+@*
+    Heading and message: WebsiteCookieBannerSettingsContent (admin). The message embeds the Website
+    tracking consent short text (CookieBannerViewComponent.TRACKING_CONSENT_TOKEN).
+    No close button: the banner stays until a choice is made.
+    method="post": the form tag helper renders the antiforgery token the endpoint validates.
+*@
+<form id="cookieBanner" method="post" hx-post hx-route="@CookiesController.ROUTE_SET_CONSENT" hx-swap="outerHTML"
+    hx-target="#cookieBanner" test-id="cookieBanner">
+    <input type="hidden" name="Source" value="@CookieConsentSource.Banner" />
+    <div class="xpcookiebanner is-active position-relative" role="region" aria-label="Cookie consent">
+        <div class="xpcookiebanner__inner container">
+            <div class="xpcookiebanner__content">
+                @if (!string.IsNullOrWhiteSpace(Model.Heading))
+                {
+                    <h2 class="xpcookiebanner__header h5" test-id="cookieBannerHeading">@Model.Heading</h2>
+                }
+                <div test-id="cookieBannerMessage">@Model.MessageHTML</div>
             </div>
-            <div id="@messageId" class="xpcookiebanner__message"></div>
+            <div class="xpcookiebanner__ctas">
+                <button type="submit" name="Choice" value="@CookieConsentChoice.AcceptAll"
+                    class="btn btn-primary xpcookiebanner__cta" data-tracking-code="CookieBar_Accept"
+                    test-id="cookieBannerAcceptAll">
+                    Accept all
+                </button>
+                <button type="submit" name="Choice" value="@CookieConsentChoice.NecessaryOnly"
+                    class="btn btn-outline-primary xpcookiebanner__cta" data-tracking-code="CookieBar_Necessary"
+                    test-id="cookieBannerNecessaryOnly">
+                    Necessary only
+                </button>
+            </div>
         </div>
-    </fieldset>
+    </div>
 </form>

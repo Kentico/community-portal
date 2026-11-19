@@ -51,7 +51,7 @@ public class ExampleService(
 1. Error handling should:
    - Use ModelState for validation errors
    - Return appropriate HTTP status codes
-   - Log errors using ILogger or IEventLogService
+   - Log errors using ILogger
    - Use custom exceptions for domain-specific errors
    - Include meaningful error messages
 
@@ -67,11 +67,10 @@ public class ExampleService(
 ## Dependency Injection
 
 1. Dependencies should:
-   - Be registered in feature-specific extension methods
+   - Be registered in feature-specific DI configuration extension methods
    - Use constructor injection
    - Follow interface segregation principle
    - Use appropriate service lifetimes
-   - Be mockable for testing
 
 ## Code Style
 
@@ -84,7 +83,7 @@ public class ExampleService(
    - Prioritize using `Result<T>` monad from CSharpFunctionalExtensions library
      over throwing exceptions
    - Prioritize using `Maybe<T>` monad from CSharpFunctionalExtensions library
-     over C# nullable reference types
+     over C# nullable reference types or "Is visible" properties in view models
 
 ## Security
 
@@ -104,3 +103,4 @@ public class ExampleService(
    - Mock external dependencies
    - Test both success and failure paths
    - Use appropriate test categories
+2. Prioritize E2E tests over unit and integration tests

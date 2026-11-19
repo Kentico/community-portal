@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { FormComponentProps } from '@kentico/xperience-admin-base';
 import {
@@ -11,11 +10,7 @@ import { Crepe } from '@milkdown/crepe';
 import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
 import CrepeStyles from '@milkdown/crepe/theme/common/style.css';
 import FrameStyles from '@milkdown/crepe/theme/frame.css';
-import { EditorStatus } from '@milkdown/kit/core';
 import { getCodeMirrorLanguages } from './CodeMirrorConfig';
-
-let crepeEditor: Crepe | undefined = undefined;
-let crepeReadonly: Crepe | undefined = undefined;
 
 type EditorMode = 'edit' | 'readonly';
 type EditorType = 'markdown' | 'editor';
@@ -152,15 +147,16 @@ const RawEditor = ({
   );
 };
 
+// Each instance creates its own Crepe editor. @milkdown/react calls the
+// useEditor factory once per mounted <Milkdown /> and destroys the editor on
+// unmount, so no module-level instance is needed. A shared one made every
+// Markdown field on a form render into, and destroy, the same editor.
 const MilkdownEditor = ({
   defaultValue,
   UpdateContent: updateContent,
 }: EditorProps) => {
   useEditor((root) => {
-    if (crepeEditor) {
-      return crepeEditor;
-    }
-    crepeEditor = new Crepe({
+    const crepe = new Crepe({
       root,
       defaultValue,
       featureConfigs: {
@@ -173,7 +169,7 @@ const MilkdownEditor = ({
       },
     });
 
-    crepeEditor.editor
+    crepe.editor
       .config((ctx) => {
         ctx
           .get(listenerCtx)
@@ -181,15 +177,9 @@ const MilkdownEditor = ({
             updateContent(oldValue, newValue),
           );
       })
-      .use(listener)
-      .onStatusChange((s) => {
-        if (s === EditorStatus.Destroyed) {
-          crepeEditor?.destroy().catch((err) => console.error(err));
-          crepeEditor = undefined;
-        }
-      });
+      .use(listener);
 
-    return crepeEditor;
+    return crepe;
   }, []);
 
   return <Milkdown />;
@@ -197,10 +187,7 @@ const MilkdownEditor = ({
 
 const MilkdownEditorReadOnly = ({ defaultValue }: EditorProps) => {
   useEditor((root) => {
-    if (crepeReadonly) {
-      return crepeReadonly;
-    }
-    crepeReadonly = new Crepe({
+    const crepe = new Crepe({
       root,
       defaultValue,
       featureConfigs: {
@@ -213,16 +200,9 @@ const MilkdownEditorReadOnly = ({ defaultValue }: EditorProps) => {
       },
     });
 
-    crepeReadonly.setReadonly(true);
+    crepe.setReadonly(true);
 
-    crepeReadonly.editor.onStatusChange((s) => {
-      if (s === EditorStatus.Destroyed) {
-        crepeReadonly?.destroy().catch((err) => console.error(err));
-        crepeReadonly = undefined;
-      }
-    });
-
-    return crepeReadonly;
+    return crepe;
   }, []);
 
   return <Milkdown />;

@@ -21,7 +21,9 @@ public record MembershipStatsOverview(
     int EnabledMembers,
     int ModeratedMembers,
     int UniqueEnabledEmailDomains,
-    int UniqueModeratedEmailDomains);
+    int UniqueModeratedEmailDomains,
+    int MvpMembers,
+    int CommunityLeaderMembers);
 
 public record MemberModerationStatusCount(string Key, string Label, int Value);
 

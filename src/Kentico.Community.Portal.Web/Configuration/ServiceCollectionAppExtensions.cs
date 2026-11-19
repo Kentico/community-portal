@@ -1,7 +1,9 @@
 using System.Reflection;
+using CMS.Base;
 using CMS.DataEngine;
 using Kentico.Community.Portal.Admin.Infrastructure;
 using Kentico.Community.Portal.Core;
+using Kentico.Community.Portal.Core.DataProtection;
 using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Components;
@@ -11,16 +13,22 @@ using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Licenses;
 using Kentico.Community.Portal.Web.Components.ViewComponents.Navigation;
 using Kentico.Community.Portal.Web.Features.Blog.Events;
 using Kentico.Community.Portal.Web.Features.DataCollection;
+using Kentico.Community.Portal.Web.Features.DataProtection;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
+using Kentico.Community.Portal.Web.Features.Members.Events;
+using Kentico.Community.Portal.Web.Features.Newsletter;
 using Kentico.Community.Portal.Web.Features.QAndA;
 using Kentico.Community.Portal.Web.Features.QAndA.Events;
 using Kentico.Community.Portal.Web.Features.QAndA.Notifications;
 using Kentico.Community.Portal.Web.Features.SEO;
-using Kentico.Community.Portal.Web.Features.Support;
+using Kentico.Community.Portal.Web.Features.SEO.IndexNow;
+using Kentico.Community.Portal.Web.Features.SEO.SocialImages;
+using Kentico.Community.Portal.Web.Features.SEO.StructuredData;
+using Kentico.Community.Portal.Web.Features.Testing;
 using Kentico.Community.Portal.Web.Infrastructure;
-using Kentico.Community.Portal.Web.Infrastructure.Storage;
 using Kentico.Community.Portal.Web.Rendering;
 using Kentico.Xperience.Admin.Base.Forms;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Sidio.Sitemap.AspNetCore;
 using Sidio.Sitemap.Core.Services;
 using Slugify;
@@ -29,20 +37,28 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionAppExtensions
 {
-    public static IServiceCollection AddApp(this IServiceCollection services, IConfiguration config) =>
+    public static IServiceCollection AddApp(this IServiceCollection services, IConfiguration config, IHostEnvironment env) =>
         services
             .AddScoped<CookieConsentManager>()
-            .AddScoped<ConsentManager>()
+            .AddSingleton<ICurrentContactAccessor, CurrentContactAccessor>()
+            .AddTransient<ITagHelperComponent, ConsentModeTagHelperComponent>()
+            .AddScoped<ConsentRetriever>()
+            .AddPrivacyTesting()
+            .AddE2EContactCorrelation(config, env)
             .AddRendering()
             .AddSEO()
+            .AddIndexNow(config)
             .AddForms()
             .AddOperations(config)
             .AddInfrastructure(config)
-            .AddSupport(config)
+            .AddLicenses()
             .AddQAndA()
             .AddBlogs()
+            .AddMembers()
             .AddMemberBadges()
             .AddQAndADiscussionNotifications()
+            .AddNewsletter(config)
+            .AddDataProtection(config)
             .AddMcp(config);
 
     private static IServiceCollection AddOperations(this IServiceCollection services, IConfiguration config) =>
@@ -91,8 +107,61 @@ public static class ServiceCollectionAppExtensions
     private static IServiceCollection AddSEO(this IServiceCollection services) =>
         services
             .AddScoped<WebPageMetaService>()
+            .AddScoped<JsonLdCollector>()
             .AddTransient<SitemapRetriever>()
+            .AddTransient<LlmsTxtRetriever>()
+            .AddSingleton<ISocialImageGenerator>(s => new MagickSocialImageGenerator(s.GetRequiredService<IWebHostEnvironment>().WebRootFileProvider))
             .AddDefaultSitemapServices<HttpContextBaseUrlProvider>();
+
+    /// <summary>
+    /// Publish events only queue pages; <see cref="IndexNowSubmissionService"/> submits them out of band.
+    /// Disabled until <c>IndexNow:Key</c> is set.
+    /// </summary>
+    private static IServiceCollection AddIndexNow(this IServiceCollection services, IConfiguration config)
+    {
+        _ = services
+            .Configure<IndexNowOptions>(config.GetSection(IndexNowOptions.SECTION))
+            .AddSingleton<IndexNowQueue>()
+            .AddTransient<IndexNowUrlResolver>()
+            .AddEventHandler<AfterPublishWebPageEvent, IndexNowPublishHandler>()
+            .AddHostedService<IndexNowSubmissionService>()
+            .AddHttpClient<IndexNowClient>();
+
+        return services;
+    }
+
+    /// <summary>
+    /// Registered unconditionally, like E2EMemberModerationService - the endpoints that use them are
+    /// only mapped when E2ETestingGate allows (Testing:E2E:Enabled in Development or CI; startup fails elsewhere).
+    /// </summary>
+    private static IServiceCollection AddPrivacyTesting(this IServiceCollection services) =>
+        services
+            .AddScoped<E2EPrivacyTestingService>()
+            .AddScoped<E2EScheduledTaskRunner>()
+            .AddScoped<E2ENewsletterTestingService>()
+            .AddScoped<E2ETagManagerStub>()
+            .AddScoped<E2EReadOnlyModeSwitch>()
+            .AddScoped<E2EDataProtectionTestingService>();
+
+    private static IServiceCollection AddNewsletter(this IServiceCollection services, IConfiguration config) =>
+        services
+            .Configure<EmailMarketingOptions>(config.GetSection(EmailMarketingOptions.SECTION))
+            // Transient: scheduled tasks resolve from the root provider, so scoped services fail there
+            .AddTransient<EmailMarketingConsentManager>()
+            .AddTransient<EmailMarketingAgreementHandler>();
+
+    /// <summary>
+    /// Transient for the same reason as the newsletter services: scheduled tasks resolve from the
+    /// root provider. The Data protection adapters create a scope per call.
+    /// </summary>
+    private static IServiceCollection AddDataProtection(this IServiceCollection services, IConfiguration config) =>
+        services
+            .Configure<RetentionOptions>(config.GetSection(RetentionOptions.SECTION))
+            .AddTransient<CommunityFormDataService>()
+            .AddTransient<MemberContentItemsQuery>()
+            .AddTransient<MemberAnonymizer>()
+            .AddTransient<CommunityPersonalDataCollectorService>()
+            .AddTransient<CommunityPersonalDataEraserService>();
 
     private static IServiceCollection AddForms(this IServiceCollection services) =>
         services
@@ -101,18 +170,16 @@ public static class ServiceCollectionAppExtensions
     private static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config) =>
         services
             .AddSingleton(s => new ApplicationAssemblyInformation())
-            .AddSingleton<AzureStorageClientFactory>()
             .AddSingleton(TimeProvider.System)
             .AddScoped<CaptchaValidator>()
+            .AddTransient<AdminLinkBuilder>()
             .Configure<ReCaptchaSettings>(config.GetSection("ReCaptcha"))
             .AddSingleton<IObjectDisplayOptionsProvider, DefaultObjectDisplayOptionsProvider>()
             .AddSingleton<IObjectsRetriever, CustomObjectsRetriever>();
 
-    private static IServiceCollection AddSupport(this IServiceCollection services, IConfiguration config) =>
+    private static IServiceCollection AddLicenses(this IServiceCollection services) =>
         services
-            .AddTransient<ILicenseFileService, LicenseFileService>()
-            .AddHostedService<SupportRequestProcessorBackgroundService>()
-            .Configure<SupportRequestProcessingSettings>(config.GetSection("SupportRequestProcessing"));
+            .AddTransient<ILicenseFileService, LicenseFileService>();
 
     private static IServiceCollection AddQAndA(this IServiceCollection services) =>
         services
@@ -123,7 +190,13 @@ public static class ServiceCollectionAppExtensions
     private static IServiceCollection AddBlogs(this IServiceCollection services) =>
         services
             .AddTransient<BlogPostPublishCreateQAndAQuestionHandler>()
-            .AddTransient<BlogPostContentAutoPopulateHandler>();
+            .AddTransient<BlogPostContentAutoPopulateHandler>()
+            // Async handler: runs after the publish and never throws (failures are logged)
+            .AddEventHandler<AfterPublishWebPageEvent, BlogPostPublishSocialImageHandler>();
+
+    private static IServiceCollection AddMembers(this IServiceCollection services) =>
+        services
+            .AddTransient<KenticoEmployeeOffboardingHandler>();
 
     private static IServiceCollection AddMemberBadges(this IServiceCollection services) =>
         services
@@ -159,6 +232,7 @@ public static class ServiceCollectionAppExtensions
         }
 
         _ = services
+            .AddComponentRegistryMcpServices()
             .AddMcpServer()
             .WithHttpTransport()
             .WithComponentRegistryTools()

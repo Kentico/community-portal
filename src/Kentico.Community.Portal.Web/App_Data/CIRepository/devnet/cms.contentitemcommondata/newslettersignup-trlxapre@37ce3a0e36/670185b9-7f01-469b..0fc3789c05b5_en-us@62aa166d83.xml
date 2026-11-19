@@ -14,14 +14,20 @@
   </ContentItemCommonDataContentLanguageID>
   <ContentItemCommonDataGUID>670185b9-7f01-469b-b5b1-0fc3789c05b5</ContentItemCommonDataGUID>
   <ContentItemCommonDataIsLatest>True</ContentItemCommonDataIsLatest>
-  <ContentItemCommonDataLastPublishedWhen>2025-06-12 23:35:58Z</ContentItemCommonDataLastPublishedWhen>
+  <ContentItemCommonDataLastPublishedWhen>2026-11-13 18:59:00Z</ContentItemCommonDataLastPublishedWhen>
   <ContentItemCommonDataVersionStatus>2</ContentItemCommonDataVersionStatus>
   <ContentItemCommonDataVisualBuilderTemplateConfiguration>
 <![CDATA[
 {
   "identifier": "KenticoCommunity.LandingPage_Default",
-  "properties": {},
-  "fieldIdentifiers": {}
+  "properties": {
+    "widgetSelection": "Standard",
+    "widgetSelectionParsed": 0
+  },
+  "fieldIdentifiers": {
+    "widgetSelection": "6e85b248-6b91-4967-bb84-f0bb3e9339a9",
+    "widgetSelectionParsed": "984f2c0c-b6b9-468f-8596-6a2d14427318"
+  }
 }
 ]]>
   </ContentItemCommonDataVisualBuilderTemplateConfiguration>
@@ -39,11 +45,17 @@
             "heading": "",
             "headingAlignment": "Left",
             "headingAlignmentParsed": 0,
+            "headingSpacing": "Default",
+            "headingSpacingParsed": 0,
             "bodyAlignment": "Center",
             "bodyAlignmentParsed": 1,
             "isHeadingAnchorLinkVisible": false,
-            "layout": "_1_Column_Narrow",
-            "layoutParsed": 0,
+            "layout": "_1_Column",
+            "layoutParsed": 2,
+            "columnBreakpoint": "Default",
+            "columnBreakpointParsed": 0,
+            "contentWidth": "Default",
+            "contentWidthParsed": 0,
             "paddingTop": "Large",
             "paddingTopParsed": 0,
             "paddingBottom": "Large",
@@ -54,47 +66,35 @@
           },
           "zones": [
             {
-              "identifier": "21f11c0f-deee-49a1-8280-80b937a25f40",
+              "identifier": "65f4542c-d928-4044-832f-7962117ad239",
               "widgets": [
                 {
-                  "identifier": "aac6aecb-c94a-4961-a06f-1eff7b133f32",
-                  "type": "Kentico.Widget.RichText",
+                  "identifier": "7487fdec-fdef-42d3-9683-ea40091181a2",
+                  "type": "CommunityPortal.NewsletterSignupWidget",
                   "variants": [
                     {
-                      "identifier": "a15074ec-5ee3-4952-a4c0-b5891093f3c0",
+                      "identifier": "7fdd6318-7325-4d30-a3ae-62f39d08f701",
                       "properties": {
-                        "content": "<p>Sign up for the Community Newsletter to stay up to date with&nbsp;<a data-channel-guid=\"9ca57e0f-969f-43be-91d3-6c45659316bd\" href=\"~/blog/launching-the-kentico-community-newsletter\" target=\"_blank\" rel=\"noopener noreferrer\" id=\"isPasted\">all the news and knowledge coming from the Kentico Community</a>...</p>"
+                        "design": "Banner",
+                        "designParsed": 1,
+                        "heading": "Kentico Community news and updates",
+                        "description": "",
+                        "thankYouMessage": "Check your inbox for a confirmation link to finish subscribing.",
+                        "helpText": "We'll email you a confirmation link. You're subscribed only after you click it.",
+                        "showTrackingNote": true,
+                        "trackingNote": "We measure opens and clicks of every email we send. If you allow tracking in [Cookie settings](/cookies-policy#cookie-settings), they're also linked to your visitor record. [Details](/privacy#email-statistics)",
+                        "id": "772f4962-2b53-44e8-ad54-63232bfc5c06"
                       },
                       "fieldIdentifiers": {
-                        "content": "3b358fc9-23b4-4709-8357-54b3a8e5bda1"
-                      }
-                    }
-                  ]
-                },
-                {
-                  "identifier": "6ccc2e60-6646-468a-83f3-a701be149c51",
-                  "type": "Kentico.FormWidget",
-                  "variants": [
-                    {
-                      "identifier": "40dc6723-f7ba-4080-b87c-987cb3994586",
-                      "properties": {
-                        "selectedForm": [
-                          {
-                            "objectGuid": null,
-                            "objectCodeName": "NewsletterSignup"
-                          }
-                        ],
-                        "afterSubmitMode": "message",
-                        "afterSubmitDisplayText": "Thanks for signing up! Check your email and confirm your subscription.",
-                        "afterSubmitRedirectToUrl": null,
-                        "afterSubmitRedirectToWebPage": []
-                      },
-                      "fieldIdentifiers": {
-                        "selectedForm": "9044389c-70f2-4914-85bb-47ee58b66a7a",
-                        "afterSubmitMode": "5f2bc10e-85da-4dac-9bbd-529e144c3799",
-                        "afterSubmitDisplayText": "f3a22933-55aa-4bed-8277-5630ef42ddfe",
-                        "afterSubmitRedirectToUrl": "8b76bdf8-5286-41fb-95e8-2bb5999cbdab",
-                        "afterSubmitRedirectToWebPage": "0fc18765-9ec6-4e38-b733-ea59c2158bb4"
+                        "heading": "804192a6-06d5-48dd-b08b-3d7e650a98aa",
+                        "thankYouMessage": "4567a05b-40c5-4a2a-beb3-cf362fa5fa49",
+                        "showTrackingNote": "06911c6b-ec05-4e5c-ba26-a97559a20f68",
+                        "id": "bd57dca2-0e90-4319-b69b-0522ac395b9b",
+                        "design": "f9151c04-651c-4c64-91d8-2aec214614d6",
+                        "designParsed": "ae0750c9-b5a7-4316-8088-3119aab9e010",
+                        "description": "5e3812d0-92ce-406a-a1d8-6c2bd162b005",
+                        "helpText": "97c16fd8-2480-478d-936e-cfad11ced185",
+                        "trackingNote": "193fcbbb-ac2b-4b2c-9d40-f9a299dc4faa"
                       }
                     }
                   ]
@@ -103,21 +103,27 @@
             }
           ],
           "fieldIdentifiers": {
-            "heading": "d530904e-5bcf-47f7-bc29-6fac46cac9cc",
-            "headingAlignment": "996a3094-caf9-47c5-a2a4-dfff36e805f3",
-            "headingAlignmentParsed": "95c829df-a9ac-49e4-946d-077f28c6d8d3",
-            "bodyAlignment": "76edb9ec-5649-496c-a7fd-bf974c8b6045",
-            "bodyAlignmentParsed": "ec8472c7-d7ff-4ec5-96ca-87dfeac161da",
-            "isHeadingAnchorLinkVisible": "2d88a6ac-bb84-434e-9a8d-22781c4d6325",
-            "layout": "565323c1-8614-44bb-9cdf-4e6354335341",
-            "layoutParsed": "c99d4d5a-b8a4-4afa-a497-0097b0c8bb43",
-            "paddingTop": "e184d242-6efc-4a0a-8bb1-dfa5b31151f3",
-            "paddingTopParsed": "0191e998-f89b-4de5-bf11-a2e30c2f3961",
-            "paddingBottom": "9798222e-fa91-4c11-814b-7ed3addc3686",
-            "paddingBottomParsed": "886af973-a890-4627-93c1-7428390ce9d9",
-            "widgetZonesCount": "cc905e1e-1492-4261-9672-bc8ee2f19a64",
-            "backgroundColor": "19d47a08-4471-455c-805a-e2f7604a176a",
-            "backgroundColorParsed": "445b0a02-0448-40e6-9f6b-9fbd4254d381"
+            "heading": "436e2c70-7c51-4a78-bb74-80be0e771791",
+            "headingAlignment": "634b67db-1e0c-4bc4-9c87-760970325311",
+            "headingAlignmentParsed": "1c34a902-2757-45a2-ad75-5170868ce092",
+            "headingSpacing": "a9cf10a3-affa-4ba7-936e-99064a8471f3",
+            "headingSpacingParsed": "673d657d-1329-4878-af91-49d5bb2d22e5",
+            "bodyAlignment": "ab62e456-5e0e-48f9-884c-1d04dd413a96",
+            "bodyAlignmentParsed": "6975c657-40a2-41ed-80d2-d68d64969494",
+            "isHeadingAnchorLinkVisible": "125e71cc-caba-4c59-8ded-4d9a34cb032d",
+            "layout": "2577d62d-de38-4e64-ac24-3cfd5134e786",
+            "layoutParsed": "701d35ad-1328-4a39-934c-be92fb2916c1",
+            "columnBreakpoint": "932ea271-3864-4bc4-a8c4-53fdccf7e06b",
+            "columnBreakpointParsed": "bd649bbe-81f7-4f16-b4c3-088e31b04156",
+            "contentWidth": "b6a1d4b1-4d3a-4e10-9296-c04f018a0674",
+            "contentWidthParsed": "e14d4405-84ab-42b7-b7ab-4c0e4843790e",
+            "paddingTop": "24b24ceb-28cc-41c9-babc-871e15d0a4b8",
+            "paddingTopParsed": "2a225734-1889-44b1-8794-cfbe7ba88db7",
+            "paddingBottom": "88801d2e-3dfb-4d99-8cce-5b92094f1e8b",
+            "paddingBottomParsed": "ba073992-e310-4f16-b780-e9a1110ccd1b",
+            "widgetZonesCount": "d814539a-5c43-4330-9b11-a76fc86176a8",
+            "backgroundColor": "ed1e55fe-2409-4819-b0ad-31fdb6f73c89",
+            "backgroundColorParsed": "1815f3b2-ca45-4eda-9c6c-8048962adc5a"
           }
         }
       ]
@@ -127,37 +133,8 @@
 ]]>
   </ContentItemCommonDataVisualBuilderWidgets>
   <WebPageCanonicalURL />
-  <WebPageMetaExcludeFromSitemap>False</WebPageMetaExcludeFromSitemap>
+  <WebPageMetaExcludeFromSitemap>True</WebPageMetaExcludeFromSitemap>
   <WebPageMetaRobots />
   <WebPageMetaShortDescription>Sign up for the Kentico Community Newsletter!</WebPageMetaShortDescription>
   <WebPageMetaTitle>Newsletter Signup</WebPageMetaTitle>
-  <ContentItemReferences>
-    <cms.contentitemreference>
-      <ContentItemReferenceGroupGUID>3b358fc9-23b4-4709-8357-54b3a8e5bda1</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>22eb765f-97d4-4e4f-a028-9000d3f58b43</ContentItemReferenceGUID>
-      <ContentItemReferenceSourceCommonDataID>
-        <GUID>670185b9-7f01-469b-b5b1-0fc3789c05b5</GUID>
-        <ObjectType>cms.contentitemcommondata</ObjectType>
-      </ContentItemReferenceSourceCommonDataID>
-      <ContentItemReferenceTargetItemID>
-        <CodeName>LaunchingTheKenticoCommunityNewsletter-zt8lgi6b</CodeName>
-        <GUID>29c754ea-b560-4d3e-a15a-9d3c04d59a41</GUID>
-        <ObjectType>cms.contentitem</ObjectType>
-      </ContentItemReferenceTargetItemID>
-    </cms.contentitemreference>
-  </ContentItemReferences>
-  <ContentItemObjectReferences>
-    <cms.contentitemobjectreference>
-      <ContentItemObjectReferenceGUID>4e8de065-01d2-4097-a236-283b29445e57</ContentItemObjectReferenceGUID>
-      <ContentItemObjectReferenceSourceCommonDataID>
-        <GUID>670185b9-7f01-469b-b5b1-0fc3789c05b5</GUID>
-        <ObjectType>cms.contentitemcommondata</ObjectType>
-      </ContentItemObjectReferenceSourceCommonDataID>
-      <ContentItemObjectReferenceTargetFormID>
-        <CodeName>NewsletterSignup</CodeName>
-        <GUID>ac5aca2c-6198-4dbe-a76e-fedb26111626</GUID>
-        <ObjectType>cms.form</ObjectType>
-      </ContentItemObjectReferenceTargetFormID>
-    </cms.contentitemobjectreference>
-  </ContentItemObjectReferences>
 </cms.contentitemcommondata>

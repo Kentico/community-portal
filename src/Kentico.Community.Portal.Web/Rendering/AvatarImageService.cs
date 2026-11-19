@@ -25,7 +25,7 @@ public class AvatarImageService(
 
     public async Task<MemberAvatarImageResult> GetAvatarImage(int memberID)
     {
-        string fallbackPath = Path.Combine(webHostEnvironment.WebRootPath, "img", "profile-photo-default.png");
+        string fallbackPath = Path.Combine(webHostEnvironment.WebRootPath, "img", "profile-photo-default.webp");
         string? contentHubAvatarUrl = await memberAssetContentService.GetContentHubAvatarUrl(memberID);
         if (!string.IsNullOrWhiteSpace(contentHubAvatarUrl))
         {

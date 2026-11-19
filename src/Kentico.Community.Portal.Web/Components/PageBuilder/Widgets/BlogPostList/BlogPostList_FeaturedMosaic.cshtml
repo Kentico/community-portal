@@ -1,0 +1,52 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList
+@model BlogPostListWidgetViewModel
+
+@* Featured Mosaic — image-led layout for a landing page. Post 1 is a full-width hero
+   card; post 2 a tall card beside posts 3-5 stacked as rows. Posts beyond the fifth
+   are ignored. With fewer posts the mosaic shrinks: 1 = hero only, 2 = hero plus one
+   full-width row, 3-4 = tall card plus one or two rows. *@
+
+@{
+  const string cardPartial = "~/Components/PageBuilder/Widgets/BlogPostList/_MosaicCard.cshtml";
+
+  // Image slot widths per variant, so the browser picks a sensible srcset candidate.
+  const string heroSizes = "(min-width: 1000px) 620px, 100vw";
+  const string tallSizes = "(min-width: 1000px) 320px, (min-width: 680px) 45vw, 100vw";
+  const string rowSizes = "200px";
+
+  var posts = Model.BlogPosts.Take(5).ToList();
+  var hero = posts[0];
+  // A lone second post has no stack to sit beside, so it renders as a row instead.
+  var tall = posts.Count > 2 ? posts[1] : null;
+  var rows = posts.Count > 2 ? posts.Skip(2).ToList() : posts.Skip(1).ToList();
+}
+
+<section class="blog-post-list blog-post-list--mosaic" xpc-preview-outline="@Model.ComponentName"
+  aria-label="@(Model.Heading.GetValueOrDefault("Blog posts"))">
+
+  <partial name="~/Components/PageBuilder/Widgets/BlogPostList/_Header.cshtml" model="Model" />
+
+  <div class="blog-post-mosaic">
+    <div class="blog-post-mosaic__grid">
+      <partial name="@cardPartial"
+        model='new BlogPostMosaicCardViewModel(hero, "blog-post-mosaic__card--hero", heroSizes)' />
+
+      @if (tall is not null)
+      {
+        <partial name="@cardPartial"
+          model='new BlogPostMosaicCardViewModel(tall, "blog-post-mosaic__card--tall", tallSizes)' />
+      }
+
+      @if (rows.Count > 0)
+      {
+        <div class="blog-post-mosaic__stack @(tall is null ? "blog-post-mosaic__stack--wide" : null)">
+          @foreach (var post in rows)
+          {
+            <partial name="@cardPartial"
+              model='new BlogPostMosaicCardViewModel(post, "blog-post-mosaic__card--row", rowSizes)' />
+          }
+        </div>
+      }
+    </div>
+  </div>
+</section>

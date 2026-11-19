@@ -18,7 +18,8 @@
         @foreach (var notification in Model.Messages)
         {
             <form hx-post hx-route="@NotificationController.ROUTE_CONFIRM_ALERT" hx-route-messageGUID="@notification.GUID"
-                hx-swap="outerHTML" class="notification-item d-flex gap-2">
+                hx-swap="outerHTML" class="notification-item d-flex gap-2" test-id="notificationItem"
+                data-alert-guid="@notification.GUID">
                 <div>
                     @if (notification.Title.TryGetValue(out string? title))
                     {
@@ -26,7 +27,8 @@
                     }
                     @notification.HTML
                 </div>
-                <button class="btn-close btn-close-dark" type="submit" aria-label="Close tray"></button>
+                <button class="btn-close btn-close-dark" type="submit" aria-label="Dismiss notification"
+                    test-id="notificationDismiss"></button>
             </form>
         }
     </div>

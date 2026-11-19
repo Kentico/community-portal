@@ -10,21 +10,6 @@
   }
 }
 
-/* 
- * Support page sidebar layout
- * Uses Bootstrap grid with fixed sidebar widths
- */
-
-.support-sidebar {
-  @include media-breakpoint-up(lg) {
-    width: 18rem !important;
-  }
-
-  @include media-breakpoint-up(xl) {
-    width: 22rem !important;
-  }
-}
-
 .content-wrapper {
   min-height: calc(100vh - var(--header-height, 12.5rem));
 

@@ -20,12 +20,14 @@ using Kentico.Xperience.ComponentIcons;
 
 namespace Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Markdown;
 
-public class MarkdownWidget(MarkdownRenderer markdownRenderer) : ViewComponent
+public class MarkdownWidget(MarkdownRenderer markdownRenderer, IPageBuilderContext pageBuilderContext) : ViewComponent
 {
     public const string IDENTIFIER = "CommunityPortal.MarkdownWidget";
     public const string NAME = "Markdown";
+    public const string INLINE_EDITOR_IDENTIFIER = "markdown-editor";
 
     private readonly MarkdownRenderer markdownRenderer = markdownRenderer;
+    private readonly IPageBuilderContext pageBuilderContext = pageBuilderContext;
 
     public IViewComponentResult Invoke(ComponentViewModel<MarkdownWidgetProperties> cvm)
     {
@@ -52,15 +54,25 @@ public class MarkdownWidget(MarkdownRenderer markdownRenderer) : ViewComponent
         };
         var html = markdownRenderer.RenderUnsafe(markdown);
 
-        return Validate(props, html)
+        // Code style content is not markdown, so it is only edited in the properties dialog
+        bool useInlineEditor = pageBuilderContext.Mode == ApplicationPageBuilderMode.Edit
+            && props.MarkdownStyleParsed != MarkdownStyles.Code;
+
+        return Validate(props, html, useInlineEditor)
                .Match(
                    vm => View("~/Components/PageBuilder/Widgets/Markdown/Markdown.cshtml", vm),
                    vm => View("~/Components/ComponentError.cshtml", vm)
                );
     }
 
-    private static Result<MarkdownWidgetViewModel, ComponentErrorViewModel> Validate(MarkdownWidgetProperties props, HtmlString html)
+    private static Result<MarkdownWidgetViewModel, ComponentErrorViewModel> Validate(MarkdownWidgetProperties props, HtmlString html, bool useInlineEditor)
     {
+        // The inline editor is how empty widgets get their content
+        if (useInlineEditor)
+        {
+            return new MarkdownWidgetViewModel(html, props, useInlineEditor);
+        }
+
         if (string.IsNullOrWhiteSpace(props.Markdown))
         {
             return Result.Failure<MarkdownWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "No markdown has been authored for this widget."));
@@ -71,7 +83,7 @@ public class MarkdownWidget(MarkdownRenderer markdownRenderer) : ViewComponent
             return Result.Failure<MarkdownWidgetViewModel, ComponentErrorViewModel>(new ComponentErrorViewModel(NAME, ComponentType.Widget, "The given markdown generated no HTML."));
         }
 
-        return new MarkdownWidgetViewModel(html, props);
+        return new MarkdownWidgetViewModel(html, props, useInlineEditor);
     }
 }
 
@@ -167,9 +179,23 @@ public class MarkdownWidgetViewModel : BaseWidgetViewModel
     public string NoteTitle { get; }
     public bool HasNoteTitle { get; }
 
-    public MarkdownWidgetViewModel(HtmlString html, MarkdownWidgetProperties properties)
+    /// <summary>
+    /// True when the content is edited in place in Page Builder edit mode
+    /// </summary>
+    public bool UseInlineEditor { get; }
+    /// <summary>
+    /// Changes whenever the markdown changes. Page Builder only re-initializes an inline editor
+    /// when the widget markup differs, so the editor markup must depend on the value
+    /// (ex: markdown changed in the properties dialog)
+    /// </summary>
+    public string MarkdownVersion { get; }
+
+    public MarkdownWidgetViewModel(HtmlString html, MarkdownWidgetProperties properties, bool useInlineEditor)
     {
         HTML = html;
+        UseInlineEditor = useInlineEditor;
+        MarkdownVersion = Convert.ToHexString(
+            System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(properties.Markdown ?? "")))[..12];
         EnableNote = properties.MarkdownStyleParsed == MarkdownStyles.Note;
         NoteStyle = properties.NoteStyleParsed;
 

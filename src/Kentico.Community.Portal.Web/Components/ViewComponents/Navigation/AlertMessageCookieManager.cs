@@ -1,62 +1,71 @@
 using CMS.ContactManagement;
-using CMS.Core;
 using Kentico.Web.Mvc;
 
 namespace Kentico.Community.Portal.Web.Components.ViewComponents.Navigation;
 
+/// <summary>
+/// Remembers dismissed site alerts in one cookie holding their GUIDs. One cookie, because
+/// <see cref="CookieLevelOptions"/> registers exact names only (no prefixes) and the cookie must be
+/// registered at <see cref="CookieLevel.Essential"/> to work without tracking consent.
+/// </summary>
 public class AlertMessageCookieManager(
-    IConversionService conversionService,
     ICookieAccessor cookies,
-    TimeProvider timeProvider,
-    ICurrentContactProvider contactProvider)
+    TimeProvider timeProvider)
 {
-    public const string COOKIE_NAME_PREFIX_NOTIFICATION_CLEARED = "kcp.notification-cleared.";
+    public const string COOKIE_NAME_NOTIFICATION_CLEARED = "kcp.notification-cleared";
 
-    private readonly IConversionService conversionService = conversionService;
+    /// <summary>
+    /// Keeps the cookie below browser size limits. The oldest dismissals drop off first.
+    /// </summary>
+    private const int MAX_CLEARED_ALERTS = 50;
+
     private readonly ICookieAccessor cookies = cookies;
     private readonly TimeProvider timeProvider = timeProvider;
-    private readonly ICurrentContactProvider contactProvider = contactProvider;
 
     public bool CanDisplay(AlertMessageContent message) =>
-        !conversionService.GetBoolean(cookies.Get(GetCookieName(message)), false);
+        !GetClearedAlerts().Contains(message.SystemFields.ContentItemGUID);
 
     public IEnumerable<AlertMessageContent> GetVisibleAlerts(WebsiteAlertSettingsContent settings)
     {
-        var contact = contactProvider.GetCurrentContact();
+        // Contact group targeting needs a tracked contact. Without one, targeted alerts don't show.
+        var contact = ContactManagementContext.GetCurrentContact(createAnonymous: false);
+        var cleared = GetClearedAlerts();
 
         return settings
             .WebsiteAlertSettingsContentAlertMessageContents
-            .Where(CanDisplay)
+            .Where(m => !cleared.Contains(m.SystemFields.ContentItemGUID))
             .Where(m =>
             {
-                if (m.AlertMessageContentDisplayForContactGroup == default)
+                // No contact group selected (null or empty): shown to everyone
+                if (m.AlertMessageContentDisplayForContactGroup?.FirstOrDefault() is not Guid groupGuid
+                    || groupGuid == Guid.Empty)
                 {
                     return true;
                 }
 
-                var contactGroups = contact?.ContactGroups is null
-                    ? []
-                    : contact.ContactGroups.ToList();
-
-                return contactGroups.Any(c => c.ContactGroupGUID == m.AlertMessageContentDisplayForContactGroup.FirstOrDefault());
+                return contact?.ContactGroups?.Any(c => c.ContactGroupGUID == groupGuid) ?? false;
             });
     }
 
-
     public void SetClearedCookie(Guid messageGUID, WebsiteAlertSettingsContent settings)
     {
-        string cookieName = GetCookieName(messageGUID);
+        var cleared = GetClearedAlerts().Where(g => g != messageGUID).ToList();
+        cleared.Add(messageGUID);
 
-        cookies.Set(cookieName, "true", new()
+        cookies.Set(COOKIE_NAME_NOTIFICATION_CLEARED, string.Join('|', cleared.TakeLast(MAX_CLEARED_ALERTS)), new()
         {
             Expires = timeProvider.GetUtcNow().AddDays(settings.WebsiteAlertSettingsContentCookieExpirationDays),
             HttpOnly = false,
-            Secure = true
+            Secure = true,
+            SameSite = SameSiteMode.Lax,
+            IsEssential = true,
         });
     }
 
-    private static string GetCookieName(AlertMessageContent message) =>
-        $"{COOKIE_NAME_PREFIX_NOTIFICATION_CLEARED}{message.SystemFields.ContentItemGUID}";
-    private static string GetCookieName(Guid guid) =>
-        $"{COOKIE_NAME_PREFIX_NOTIFICATION_CLEARED}{guid}";
+    private List<Guid> GetClearedAlerts() =>
+        (cookies.Get(COOKIE_NAME_NOTIFICATION_CLEARED) ?? "")
+            .Split('|', StringSplitOptions.RemoveEmptyEntries)
+            .Select(s => Guid.TryParse(s, out var guid) ? guid : Guid.Empty)
+            .Where(g => g != Guid.Empty)
+            .ToList();
 }

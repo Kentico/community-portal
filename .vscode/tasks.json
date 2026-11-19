@@ -3,7 +3,7 @@
   "tasks": [
     {
       "label": "Aspire: Run",
-      "detail": "Orchestrate the full local dev stack (SQL Server, Azurite, client dev servers, web app) with the Aspire dashboard",
+      "detail": "Orchestrate the full local dev stack (SQL Server, client dev servers, web app) with the Aspire dashboard",
       "type": "shell",
       "command": "aspire run",
       "isBackground": true,
@@ -109,9 +109,7 @@
       "type": "process",
       "args": [
         "test",
-        // https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-nunit-runner-intro
-        "--settings",
-        "./test/basic.runsettings",
+        // Microsoft.Testing.Platform (global.json): runs unit + integration test projects
         "--no-build"
       ],
       "problemMatcher": "$msCompile",
@@ -276,20 +274,6 @@
       },
       "dependsOn": ["pnpm: install browsers (Playwright E2E)"],
       "detail": "Run Playwright E2E tests in UI mode"
-    },
-    {
-      "label": "pnpm: test smoke (Playwright E2E)",
-      "type": "shell",
-      "command": "pnpm test:smoke",
-      "problemMatcher": [],
-      "options": {
-        "cwd": "test/kentico-community-portal-web-e2e-tests",
-        "env": {
-          "NODE_OPTIONS": "--no-warnings"
-        }
-      },
-      "dependsOn": ["pnpm: install browsers (Playwright E2E)"],
-      "detail": "Run Playwright E2E smoke tests"
     },
     {
       "label": "pnpm: report (Playwright E2E)",

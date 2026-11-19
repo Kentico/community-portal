@@ -6,3 +6,12 @@
     font-style: italic;
   }
 }
+
+// Integrations hub logos - one class instead of an inline style on every entry
+// Not :where() - must beat .img-fluid max-width
+.integration-logo {
+  --logo-size: 60px;
+
+  max-width: var(--logo-size);
+  max-height: var(--logo-size);
+}

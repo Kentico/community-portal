@@ -56,5 +56,17 @@ namespace Kentico.Community.Portal.Core.Content
 		/// WebsiteGlobalContentRobotsTxt.
 		/// </summary>
 		public string WebsiteGlobalContentRobotsTxt { get; set; }
+
+
+		/// <summary>
+		/// WebsiteGlobalContentGoogleSiteVerification.
+		/// </summary>
+		public string WebsiteGlobalContentGoogleSiteVerification { get; set; }
+
+
+		/// <summary>
+		/// WebsiteGlobalContentBingSiteVerification.
+		/// </summary>
+		public string WebsiteGlobalContentBingSiteVerification { get; set; }
 	}
 }

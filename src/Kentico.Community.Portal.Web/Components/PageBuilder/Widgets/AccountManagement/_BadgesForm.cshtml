@@ -6,19 +6,33 @@
 
 @{
     int maxBadges = BadgesFormViewModel.MAX_SELECTED_BADGES;
+    // Members with no badges have nothing to select, so the submit button stays disabled
+    string submitDisabledExpression = Model.HasBadges ? "selectedCount > maxBadges" : "true";
 }
 
-<form id="badgesUpdateForm" method="post" hx-post hx-controller="AccountManagementWidget" hx-action="UpdateSelectedBadges"
+<form id="badgesUpdateForm" test-id="badgesForm" method="post" hx-post hx-controller="AccountManagementWidget" hx-action="UpdateSelectedBadges"
       hx-swap="outerHTML" hx-disabled-elt="find fieldset"
       x-data="{ selectedCount: @Model.InitialSelectedCount, maxBadges: @Model.RemainingSlots }">
 
     <fieldset hx-indicator="this" xpc-readonly-disabled>
         <div class="d-flex justify-content-between align-items-center mb-2">
             <h4 class="mb-0">My badges</h4>
-            <small class="text-muted">
-                <span x-text="@Model.AlwaysSelectedBadges.Count + selectedCount"></span> of @maxBadges selected
-            </small>
+            @if (Model.HasBadges)
+            {
+                <small class="text-muted" test-id="selectedBadgeCount">
+                    <span x-text="@Model.AlwaysSelectedBadges.Count + selectedCount"></span> of @maxBadges selected
+                </small>
+            }
         </div>
+
+        @if (!Model.HasBadges)
+        {
+            <p id="noBadgesMessage" test-id="noBadgesMessage" class="mb-0">
+                You do not have any badges. You can earn badges by completing your profile,
+                <a href="/q-and-a">participating in Q&amp;A discussions</a>, or contributing to
+                <a href="/community/contributions">the Kentico community</a>.
+            </p>
+        }
 
         @if (Model.AlwaysSelectedBadges.Any())
         {
@@ -53,7 +67,7 @@
             </div>
         }
 
-        <div class="form-group overflow-x-auto">
+        <div class="form-group overflow-x-auto @(Model.HasBadges ? "" : "d-none")" test-id="badgeSelection">
             @if (Model.AlwaysSelectedBadges.Any())
             {
                 <p class="mb-1">
@@ -95,14 +109,19 @@
         </div>
 
         <p class="d-flex justify-content-between mt-3 align-items-center gap-3">
-            <button id="updateBadges" type="submit" class="btn btn-primary" :disabled="selectedCount > maxBadges"
+            <button id="updateBadges" test-id="updateBadges" type="submit" class="btn btn-primary"
+                    disabled="@(Model.HasBadges ? null : "disabled")" :disabled="@submitDisabledExpression"
                     xpc-loading-button>
                 Update badges
             </button>
 
             <span>
                 <small>Show off your accomplishments and Kentico Community Portal participation.</small><br>
-                @if (Model.AlwaysSelectedBadges.Any())
+                @if (!Model.HasBadges)
+                {
+                    <small>Up to @maxBadges of the badges you earn will be shown next to your name in the portal.</small>
+                }
+                else if (Model.AlwaysSelectedBadges.Any())
                 {
                     <small>Up to @maxBadges total badges will be shown next to your name in the portal.</small>
                 }

@@ -10,6 +10,13 @@
         <h3>@heading</h3>
     }
 
+    @if (Model.Intro.TryGetValue(out HtmlString? introHtml))
+    {
+        <div class="blog-post-list__intro">
+            @introHtml
+        </div>
+    }
+
     @foreach (var post in Model.BlogPosts)
     {
         <article class="border rounded-3 p-4 mt-3 blog-post-card" aria-label="Blog post: @post.Title">
@@ -22,30 +29,33 @@
 
             <header class="mb-3">
                 <h3 class="h3 mb-2">@post.Title</h3>
-                <div class="small text-muted mb-2">
-                    <time xpc-datetime="post.PublishedDate" xpc-datetime-format="@DateTimeFormat.Date"></time>
-                </div>
-                @if (Model.ShowAuthor)
+                @if (post.PublishedDate.TryGetValue(out DateTime publishedDate))
+                {
+                    <div class="small text-muted mb-2">
+                        <time xpc-datetime="publishedDate" xpc-datetime-format="@DateTimeFormat.Date"></time>
+                    </div>
+                }
+                @if (post.Author.TryGetValue(out var author))
                 {
                     <div class="small text-muted">
                         by
-                        @if (post.Author.ID > 0)
+                        @if (author.ID > 0)
                         {
-                            <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@post.Author.ID"
-                               class="text-decoration-none">@post.Author.Name</a>
+                            <a asp-controller="Member" asp-action="MemberDetail" asp-route-memberID="@author.ID"
+                               class="text-decoration-none">@author.Name</a>
                         }
                         else
                         {
-                            @post.Author.Name
+                            @author.Name
                         }
                     </div>
                 }
             </header>
 
-            @if (Model.ShowDescription)
+            @if (post.Description.TryGetValue(out string? description))
             {
                 <div class="mb-3">
-                    <p class="mb-0">@post.ShortDescription</p>
+                    <p class="mb-0">@description</p>
                 </div>
             }
 

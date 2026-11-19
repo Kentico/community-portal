@@ -1,0 +1,31 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CookiePreferences
+@using Kentico.Community.Portal.Web.Features.DataCollection
+
+@model CookieSettingsViewModel
+
+@*
+    The settings form's swap target. After a save it also updates the toggles out-of-band, since
+    Accept all and Necessary only change them server-side. The copy stays in the widget view.
+*@
+<div id="cookieSettingsResult" class="mt-3">
+    <p role="status" test-id="cookieSettingsStatus">
+        @if (Model.ShowSavedMessage)
+        {
+            <strong>Your choice has been saved.</strong>
+        }
+        @Model.StatusText
+    </p>
+
+    @if (Model.ShowSavedMessage)
+    {
+        @ConsentModeScript.ForChoice(Model.Analytics, Model.Tracking)
+    }
+</div>
+
+@if (Model.ShowSavedMessage)
+{
+    <partial name="~/Components/PageBuilder/Widgets/CookiePreferences/_CookieSettingsSwitch.cshtml"
+        model="CookieSettingsSwitches.Analytics(Model, oob: true)" />
+    <partial name="~/Components/PageBuilder/Widgets/CookiePreferences/_CookieSettingsSwitch.cshtml"
+        model="CookieSettingsSwitches.Tracking(Model, oob: true)" />
+}

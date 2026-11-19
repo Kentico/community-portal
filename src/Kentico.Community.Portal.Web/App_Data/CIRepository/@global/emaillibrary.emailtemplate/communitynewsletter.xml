@@ -3,7 +3,7 @@
   <EmailTemplateCode>
 <![CDATA[
 <!DOCTYPE html>
-{% emailDefaults = EmailDefaults[0].Data; "" |(user)SeanW_kentico.com|(hash)c7971f7c322140293999c6a9fc041f0fd99bc15786afb9d330c04190a4ba69f2%}
+{% emailDefaults = EmailDefaults[0].Data; "" |(user)SeanW@kentico.com|(hash)af7fd582af63b7f7f164ed73f609687efad3f0890fab5aca12dfaa6dded5971d%}
 {% emailTitle = NewsletterEmailTitle + " #" + NewsletterEmailIssueNumber; "" %}
 <html lang="en">
   <head>
@@ -17,7 +17,7 @@
     <meta name="supported-color-schemes" content="light dark" />
     <!-- ios -->
     <style type="text/css">
-      {% emailDefaults.EmailDefaultsContentHTMLStyles |(user)SeanW_kentico.com|(hash)6e02adf858cdd7a58661d874b2f2f2b950e33f6b743960f9aaad23dd23938ae6%}
+      {% emailDefaults.EmailDefaultsContentHTMLStyles |(user)SeanW@kentico.com|(hash)0d35013c14304635cf2904f7367f5a2c89e434fab53fc75751c28c320ac4c923%}
     </style>
   </head>
   <body style="margin: 0; padding: 0; height: 100%; width: 100%">
@@ -92,17 +92,17 @@
                     class="logo"
                   >
                     <a
-                      href="{% emailDefaults.EmailDefaultsContentHeaderLinkURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) |(user)SeanW_kentico.com|(hash)4d850afc9b0cf2209954bda4e8dd59f0ff9f5464fb2a56ed7aa091f568d7004b%}"
+                      href="{% emailDefaults.EmailDefaultsContentHeaderLinkURL |(user)SeanW@kentico.com|(hash)d24146455bce5f95dc45a2465581acac66fb7c8257df6db77fed55733a8c9405%}"
                       style="width: 101px; height: 101px; display: inline-block"
                       target="_blank"
                     >
-                      {% headerLogo = emailDefaults.EmailDefaultsContentHeaderLogoImageContent[0].Data; "" |(user)SeanW_kentico.com|(hash)c0c8fed51ff04fed998048503312947249c4215714f2c63709d79df2d28a3d93%}
+                      {% headerLogo = emailDefaults.EmailDefaultsContentHeaderLogoImageContent[0].Data; "" |(user)SeanW@kentico.com|(hash)4cd7ac5dbd201787e446f7fdfb9fa94b2d0827d34bb396dae54309abfbfab3fc%}
                       <img
                         class="light-img"
-                        src="{% headerLogo.ImageContentAsset.Url |(user)SeanW_kentico.com|(hash)fa99ae94c3d5a24f3d063d1ba82552292ec9dd867f4273978a7d91ccd2a3551d%}"
-                        alt="{% HTMLEncode(headerLogo.MediaItemTitle) |(user)SeanW_kentico.com|(hash)4df8dccf614c88b4ed22609cb5d7f3ff806b40ca3a00eda6c7269424f7b1c872%}"
-                        width="{% headerLogo.MediaItemAssetWidth |(user)SeanW_kentico.com|(hash)ebe13f4468b04cfb5170658f90bb6324bfeaeedb18b612f80ff73b5f51d7a09b%}"
-                        height="{% headerLogo.MediaItemAssetHeight |(user)SeanW_kentico.com|(hash)ea628f669af1a77366f5b9d9efd4d050a79f11f5c7c90be5c41b63984ccb3feb%}"
+                        src="{% headerLogo.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)e4d87320865da5b224b877264039c16bd236caebd3ba0bf5e1f4d34ffc5195d4%}"
+                        alt="{% HTMLEncode(headerLogo.MediaItemTitle) |(user)SeanW@kentico.com|(hash)4851518c1dd0ab034b7f7d8e3773ed3d9e8f77aa81ce003b0c926f85c44a3729%}"
+                        width="{% headerLogo.MediaItemAssetWidth |(user)SeanW@kentico.com|(hash)4b55b66bbbe63dc90b2d1c26d1fee72dc592793cc04ce541bb01a1ef324428db%}"
+                        height="{% headerLogo.MediaItemAssetHeight |(user)SeanW@kentico.com|(hash)dd17f05a1e98ab48108d8f84a106082b7019a2b3ae1db8e1f8f1550baade4d90%}"
                         style="width: 101px;"
                       />
                       <div
@@ -119,10 +119,10 @@
                         "
                       >
                         <img
-                          src="{% headerLogo.ImageContentAsset.Url |(user)SeanW_kentico.com|(hash)fa99ae94c3d5a24f3d063d1ba82552292ec9dd867f4273978a7d91ccd2a3551d%}"
-                          alt="{% HTMLEncode(headerLogo.MediaItemTitle) |(user)SeanW_kentico.com|(hash)4df8dccf614c88b4ed22609cb5d7f3ff806b40ca3a00eda6c7269424f7b1c872%}"
-                          width="{% headerLogo.MediaItemAssetWidth |(user)SeanW_kentico.com|(hash)ebe13f4468b04cfb5170658f90bb6324bfeaeedb18b612f80ff73b5f51d7a09b%}"
-                          height="{% headerLogo.MediaItemAssetHeight |(user)SeanW_kentico.com|(hash)ea628f669af1a77366f5b9d9efd4d050a79f11f5c7c90be5c41b63984ccb3feb%}"
+                          src="{% headerLogo.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)e4d87320865da5b224b877264039c16bd236caebd3ba0bf5e1f4d34ffc5195d4%}"
+                          alt="{% HTMLEncode(headerLogo.MediaItemTitle) |(user)SeanW@kentico.com|(hash)4851518c1dd0ab034b7f7d8e3773ed3d9e8f77aa81ce003b0c926f85c44a3729%}"
+                          width="{% headerLogo.MediaItemAssetWidth |(user)SeanW@kentico.com|(hash)4b55b66bbbe63dc90b2d1c26d1fee72dc592793cc04ce541bb01a1ef324428db%}"
+                          height="{% headerLogo.MediaItemAssetHeight |(user)SeanW@kentico.com|(hash)dd17f05a1e98ab48108d8f84a106082b7019a2b3ae1db8e1f8f1550baade4d90%}"
                           style="width: 101px;"
                         />
                       </div>
@@ -358,7 +358,7 @@
             </td></tr></table>
             <![endif]-->
               </div>
-              {% pageURL = page.Url.ReplaceUtmParameters(NewsletterEmailUTMParameters); "" %}
+              {% pageURL = page.Url; "" %}
               <a
                 class="card__cta brand-link"
                 href="{% pageURL %}"
@@ -397,7 +397,7 @@
     </td></tr></table>
     </td></tr></table>
     <![endif]-->
-          {% } |(user)SeanW_kentico.com|(hash)abd855cbf73bc05f6f514b392731480f57fb2cc1cbc59b272e8e7f248918e698%}
+          {% } |(user)SeanW@kentico.com|(hash)7eddc4b41f34c0f3b2d0179ad9378478852601930a9c068fb2dbdfbf8db9d599%}
           </div>
 
           <div class="links" style="padding-top: 40px">
@@ -435,7 +435,7 @@
                         <![endif]-->
                 <li style="color: #3d5dc0; font-size: 22px; line-height: 22px; margin-bottom: 0.5rem">
                   <a
-                    href='{% emailLink.Data.LinkContentPathOrURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) %}'
+                    href='{% emailLink.Data.LinkContentPathOrURL %}'
                     target="_blank"
                     style="color: #3d5dc0;"
                   >
@@ -454,7 +454,7 @@
                 <!--[if (gte mso 9)|(IE)]>
                         </td></tr><tr><td>
                         <![endif]-->
-                {% } |(user)SeanW_kentico.com|(hash)b2804d222f96c3968ce4297190dcd07e79eb855e0d498d75e4ef13c8ab6247fa%}
+                {% } |(user)SeanW@kentico.com|(hash)1b23fed3fe4c1e2c408ba3d8899a83311af4dc323fb5d2ddbf248723512403c7%}
                 <!-- List item end -->
                 <!--[if (gte mso 9)|(IE)]>
                         </td></tr>
@@ -570,7 +570,7 @@
                     "
                   >
                     <a
-                      href="{% link.Data.SocialLinkContentURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) %}"
+                      href="{% link.Data.SocialLinkContentURL %}"
                       target="_blank"
                       style="
                         display: inline-block;
@@ -617,7 +617,7 @@
                       </div>
                     </a>
                   </td>
-                 {% } |(user)SeanW_kentico.com|(hash)352acd50bd24fa4b57c8025251fd051165b0e15bacff90a48f57e3a1afc01f17%}
+                 {% } |(user)SeanW@kentico.com|(hash)f5370468e9d029a80e3a51d596ef19d0055bb98408ca9330dd71335dcbc05d24%}
                 </tr>
               </tbody>
             </table>
@@ -670,10 +670,10 @@
             Kentico software s.r.o., Nove sady 25, 602 00 Brno, Czech Republic.
             <br />
             <a
-              href="{% emailDefaults.EmailDefaultsContentDefaultURL |(user)SeanW_kentico.com|(hash)90a5a22af6fb4f9a7b6a7c674b3a44ea45feecebdd6d51f90b63338c3a8ebd3b%}"
+              href="{% emailDefaults.EmailDefaultsContentDefaultURL |(user)SeanW@kentico.com|(hash)2a49fb04fd9fccd67f154cde1b0fef721e7e5782a70dcb993c1cbbc5d29d0a0d%}"
               style="color: #4f4c4d; text-decoration: none"
               target="_blank"
-              >{% emailDefaults.EmailDefaultsContentDefaultURL |(user)SeanW_kentico.com|(hash)90a5a22af6fb4f9a7b6a7c674b3a44ea45feecebdd6d51f90b63338c3a8ebd3b%}</a
+              >{% emailDefaults.EmailDefaultsContentDefaultURL |(user)SeanW@kentico.com|(hash)2a49fb04fd9fccd67f154cde1b0fef721e7e5782a70dcb993c1cbbc5d29d0a0d%}</a
             >
           </p>
           <div
@@ -686,17 +686,17 @@
             class="footer__logo"
           >
             <a
-              href="{% emailDefaults.EmailDefaultsContentFooterLinkURL.ReplaceUtmParameters(NewsletterEmailUTMParameters) |(user)SeanW_kentico.com|(hash)2251c2136577adbbf48917f36e5648c6f4bc311dddb27607aa07deb9e0f595d9%}"
+              href="{% emailDefaults.EmailDefaultsContentFooterLinkURL |(user)SeanW@kentico.com|(hash)1ba67de5297b06af3191d32caf31d1d08df1b903a046927cf06f16c15b2f589e%}"
               style="width: 101px; height: 101px; display: inline-block"
               target="_blank"
             >
-              {% footerLogo = emailDefaults.EmailDefaultsContentFooterLogoImageContent[0].Data; "" |(user)SeanW_kentico.com|(hash)47a5c37b4b35fab6616967413b1c5e125a7c6d705aa52be524e0b93f26e487e3%}
+              {% footerLogo = emailDefaults.EmailDefaultsContentFooterLogoImageContent[0].Data; "" |(user)SeanW@kentico.com|(hash)690505af8fcad0cc0401a695c4614ba36f2e171df9aa6a68d73195354af431d6%}
               <img
                 class="light-img"
-                src="{% footerLogo.ImageContentAsset.Url |(user)SeanW_kentico.com|(hash)ae22a167f5b21a1c41c30462fdd24ae4fa9bd9667ba7ec0f97811add2e214b79%}"
-                alt="{% HTMLEncode(footerLogo.MediaItemTitle) |(user)SeanW_kentico.com|(hash)6d70eba614ef7ae7d4c3760073645ede48b04ab64b831f56ecbd37f1822de508%}"
-                width="{% footerLogo.MediaItemAssetWidth |(user)SeanW_kentico.com|(hash)96ff27a0a5161a0884c07d85590c86ca213f74398d4921a60ac82511cea73e62%}"
-                height="{% footerLogo.MediaItemAssetHeight |(user)SeanW_kentico.com|(hash)d933bd79f24e92353b2c6b67de5195b8c5a18fcb76b87c6130fba4981fe69159%}"
+                src="{% footerLogo.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)dd0a3dd40e4600d7c4bf8ff1b57025faec249f23c87dcb8f5e8c2856fb666288%}"
+                alt="{% HTMLEncode(footerLogo.MediaItemTitle) |(user)SeanW@kentico.com|(hash)4ea6a2695648396b1a4e317437cfa13adde985db51a910c54135ca6a5cbcf74d%}"
+                width="{% footerLogo.MediaItemAssetWidth |(user)SeanW@kentico.com|(hash)56644b07d3a71e7187051f34a9221369c7fab1ba6ed133c0e7d86e1506a7bddf%}"
+                height="{% footerLogo.MediaItemAssetHeight |(user)SeanW@kentico.com|(hash)3c2b29f358ae5e40ac2e658215e01950d23dfc853a010fa7958f7e557ca0b875%}"
                 style="width: 101px;"
               />
               <div
@@ -713,10 +713,10 @@
                 "
               >
                 <img
-                  src="{% footerLogo.ImageContentAsset.Url |(user)SeanW_kentico.com|(hash)ae22a167f5b21a1c41c30462fdd24ae4fa9bd9667ba7ec0f97811add2e214b79%}"
-                  alt="{% HTMLEncode(footerLogo.MediaItemTitle) |(user)SeanW_kentico.com|(hash)6d70eba614ef7ae7d4c3760073645ede48b04ab64b831f56ecbd37f1822de508%}"
-                  width="{% footerLogo.MediaItemAssetWidth |(user)SeanW_kentico.com|(hash)96ff27a0a5161a0884c07d85590c86ca213f74398d4921a60ac82511cea73e62%}"
-                  height="{% footerLogo.MediaItemAssetHeight |(user)SeanW_kentico.com|(hash)d933bd79f24e92353b2c6b67de5195b8c5a18fcb76b87c6130fba4981fe69159%}"
+                  src="{% footerLogo.ImageContentAsset.Url |(user)SeanW@kentico.com|(hash)dd0a3dd40e4600d7c4bf8ff1b57025faec249f23c87dcb8f5e8c2856fb666288%}"
+                  alt="{% HTMLEncode(footerLogo.MediaItemTitle) |(user)SeanW@kentico.com|(hash)4ea6a2695648396b1a4e317437cfa13adde985db51a910c54135ca6a5cbcf74d%}"
+                  width="{% footerLogo.MediaItemAssetWidth |(user)SeanW@kentico.com|(hash)56644b07d3a71e7187051f34a9221369c7fab1ba6ed133c0e7d86e1506a7bddf%}"
+                  height="{% footerLogo.MediaItemAssetHeight |(user)SeanW@kentico.com|(hash)3c2b29f358ae5e40ac2e658215e01950d23dfc853a010fa7958f7e557ca0b875%}"
                   style="width: 101px;"
                 />
               </div>

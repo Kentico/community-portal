@@ -4,6 +4,7 @@ using System.Globalization;
 using CMS.DataEngine;
 using Kentico.Community.Portal.Admin.Features.Reporting;
 using Kentico.Community.Portal.Admin.Features.Stats;
+using Kentico.Community.Portal.Core.Membership;
 using Kentico.Xperience.Admin.Base;
 
 [assembly: UIPage(
@@ -32,10 +33,10 @@ public class CommunityStatsPage(TimeProvider clock) : Page<CommunityStatsLayoutC
         new(
             "subscribers",
             "Newsletter subscribers",
-            "Confirmed recipient-list subscriptions added during the selected period.",
+            "Active recipient-list subscribers, by the date they last confirmed.",
             "ESC.[EmailSubscriptionConfirmationDate]",
             "OM_ContactGroupMember CGM\nINNER JOIN EmailLibrary_EmailSubscriptionConfirmation ESC\n    ON CGM.ContactGroupMemberRelatedID = ESC.EmailSubscriptionConfirmationContactID\nINNER JOIN OM_ContactGroup CG\n    ON CGM.ContactGroupMemberContactGroupID = CG.ContactGroupID",
-            "ESC.EmailSubscriptionConfirmationIsApproved = 1 AND CG.ContactGroupIsRecipientList = 1"),
+            $"CG.ContactGroupIsRecipientList = 1 AND {ActiveSubscriptionSql.Predicate("CGM", "ESC")}"),
         new(
             "blog-posts",
             "Blog posts",

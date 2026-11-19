@@ -53,9 +53,7 @@ public class TargetsReportWidget(
             {
                 // Fetch all members in program for dropdown
                 var membersResponse = await mediator.Send(new ProgramMembersAllQuery(), HttpContext.RequestAborted);
-                availableMembers = [.. membersResponse.Members
-                    .Select(m => new MemberSummary(m.Id, m.DisplayName, m.Email ?? "", m.ProgramStatus))
-                    .OrderBy(m => m.DisplayName)];
+                availableMembers = membersResponse.Members;
                 memberID = properties.EmulatedMemberID;
             }
 

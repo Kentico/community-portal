@@ -28,6 +28,35 @@ this process begins.
 A restore can be run with the `./scripts/Restore-CI.ps1` script, run from the
 `scripts` directory.
 
+## Xperience CLI Status Commands
+
+The `scripts/*-CI.ps1` and `Get-DB-Status.ps1` scripts wrap native Xperience CLI
+commands (correct launch profile, configuration, `--no-build`). Prefer the
+scripts; the native equivalents, run from `src/Kentico.Community.Portal.Web`,
+are:
+
+| Script               | Native command                                          |
+| -------------------- | ------------------------------------------------------- |
+| `./Disable-CI.ps1`   | `dotnet run --no-build -- --kxp-ci-disable`             |
+| `./Enable-CI.ps1`    | `dotnet run --no-build -- --kxp-ci-enable`              |
+| `./Get-CI-Status.ps1`| `dotnet run --no-build -- --kxp-ci-status`              |
+| `./Get-DB-Status.ps1`| `dotnet run --no-build -- --kxp-db-status --format json`|
+
+`--kxp-db-status` reports `state`: `Ready`, `MissingConnectionString`,
+`NotAvailable`, or `UpdateRequired` (with `databaseVersion` /
+`applicationVersion`). It exits 0 for every state, so always read `state`. Docs:
+<https://docs.kentico.com/documentation/developers-and-admins/installation/check-the-database-status>
+
+`--no-build` runs the last build output, so the app version reported by these
+commands is whatever was last built — rebuild after a package bump before
+trusting `applicationVersion`.
+
+## Pre-check Database Status (MUST)
+
+Before disabling CI, run `./Get-DB-Status.ps1`. `state` MUST be `Ready`. If it
+is anything else, stop and report — do not start the update on a database that
+is already mismatched or unreachable.
+
 ## Disable CI Before Version Bump (MUST)
 
 Disable CI before updating NuGet package versions to avoid app/database version
@@ -37,9 +66,26 @@ Run from the `scripts` directory:
 
 ```pwsh
 ./Disable-CI.ps1
+./Get-CI-Status.ps1   # confirm CI reports disabled
 ```
 
 If this step fails, stop and resolve before proceeding.
+
+### CI Re-enable Safety Contract (MUST)
+
+From the moment `./Disable-CI.ps1` succeeds, the repository is in a disabled-CI
+state that MUST NOT outlive this workflow. Treat everything between here and the
+"Re-enable CI And Store" step as a guarded window with a mandatory cleanup:
+
+- The window spans the NuGet/pnpm bumps, the solution build, and the
+  `Update-Xperience.ps1` run — up to and including the "Re-enable CI And Store"
+  step. If ANY step in that window fails or you abort for any reason (build
+  failure, breaking changes, `Update-Xperience.ps1` failure, etc.), you MUST run
+  `./Enable-CI.ps1` from the `scripts` directory _before_ stopping, so CI is
+  never left disabled for the next developer.
+- After re-enabling on an abort path, do NOT run `./Store-CI.ps1` (the database
+  was not successfully updated) and do NOT commit. Report that CI was re-enabled
+  and that a CI Store was intentionally skipped.
 
 ## Determine Current and Latest Xperience Version
 
@@ -93,36 +139,54 @@ Never leave prerelease package decisions implicit.
    corepack pnpm add <package>@latest --save-exact
    ```
    or if dev dependency: `--save-dev --save-exact`.
-3. After updates, execute VS Code task: `pnpm: install (Admin)` (ensures
-   lockfile consistency for Admin client).
-4. Also look for related Xperience packages in the `.mcp.json` file and ensure
+   Run each `pnpm add` from the `package.json`'s own directory; the root
+   `package.json` needs `-w`.
+3. `pnpm-workspace.yaml` sets `minimumReleaseAge` (24h). A same-day Xperience
+   release will silently resolve to the old version. Verify the resolved
+   version; if blocked, ask the user before adding exact
+   `@kentico/<pkg>@<version>` entries to `minimumReleaseAgeExclude`.
+4. After updates, execute VS Code task: `pnpm: install (workspace)` (ensures
+   lockfile consistency).
+5. Also look for related Xperience packages in the `.mcp.json` file and ensure
    their version is updated to match
 
 ## Build & Breaking Change Detection
 
 1. Run VS Code task: `.NET: build (Solution)`.
 2. If build fails OR compile errors reference removed/renamed Kentico APIs,
-   treat as breaking changes: output a summary and STOP (do NOT commit).
+   treat as breaking changes: run `./Enable-CI.ps1` to restore CI (per the CI
+   Re-enable Safety Contract), then output a summary and STOP (do NOT commit).
 3. Optional deeper check: run `.NET: test (Solution)`; if widespread failures
-   clearly due to API changes, STOP.
+   clearly due to API changes, run `./Enable-CI.ps1`, then STOP.
 
 ## Run Xperience Application Update
 
-1. Execute `Update-Xperience.ps1 -AgentMode` to update database schema/data to
+1. After the build, run `./Get-DB-Status.ps1`. Expect `UpdateRequired` with
+   `databaseVersion` = old and `applicationVersion` = new. If `applicationVersion`
+   is still the old version, the build did not pick up the bump — fix before
+   continuing. If the database is _higher_ than the app, stop.
+2. Execute `Update-Xperience.ps1 -AgentMode` to update database schema/data to
    new package version without interactive confirmation prompts. The
    `-AgentMode` switch ensures `--skip-confirmation` is passed for
    non-interactive automation.
-2. If script fails: report failure, revert changes if feasible (manual revert
-   recommended), STOP.
+3. Run `./Get-DB-Status.ps1` again; `state` MUST be `Ready`. Otherwise treat
+   as an update failure (next step).
+4. If script fails: run `./Enable-CI.ps1` to restore CI (per the CI Re-enable
+   Safety Contract), report failure, revert changes if feasible (manual revert
+   recommended), STOP. Do NOT run `./Store-CI.ps1` and do NOT commit.
 
 ## Re-enable CI And Store (MUST)
 
-After a successful application update:
+This is the normal (success-path) close of the disabled-CI guarded window. After
+a successful application update:
 
-1. Run `./Enable-CI.ps1`.
-2. Run `./Store-CI.ps1`.
+1. Run `./Enable-CI.ps1` (wraps native `--kxp-ci-enable`).
+2. Run `./Get-CI-Status.ps1` and confirm CI reports enabled.
+3. Run `./Store-CI.ps1`.
 
-If either step fails, stop and report failure (do not commit).
+If `./Enable-CI.ps1` fails, stop and report failure (do not commit) — CI cannot
+be left disabled. If `./Store-CI.ps1` fails, CI is already re-enabled; report
+the failure and stop (do not commit).
 
 ## Update README
 
@@ -184,13 +248,14 @@ manual follow-up steps.
 
 ## Error Handling Guidelines
 
-| Scenario                        | Action                                              |
-| ------------------------------- | --------------------------------------------------- |
-| Dirty working tree              | Abort; ask user to commit/stash changes.            |
-| On `main` branch                | Abort; instruct user to create feature branch.      |
-| NuGet query fails               | Retry with fallback search; if still failing abort. |
-| Build fails post-update         | Report potential breaking changes; abort.           |
-| Application update script fails | Report; abort commit.                               |
+| Scenario                        | Action                                                                   |
+| ------------------------------- | ------------------------------------------------------------------------ |
+| Dirty working tree              | Abort; ask user to commit/stash changes.                                 |
+| On `main` branch                | Abort; instruct user to create feature branch.                           |
+| NuGet query fails               | Retry with fallback search; if still failing abort.                      |
+| Build fails post-update         | Re-enable CI (`./Enable-CI.ps1`); report breaking changes; abort.        |
+| Application update script fails | Re-enable CI (`./Enable-CI.ps1`); report; abort commit.                  |
+| Any abort while CI is disabled  | ALWAYS run `./Enable-CI.ps1` before stopping; skip Store; do not commit. |
 
 ## Pseudocode Flow
 
@@ -199,14 +264,23 @@ ValidateRepoState()
 currentVersion = ExtractVersionFromReadme()
 latestVersion = QueryLatestNuGet()
 if latestVersion <= currentVersion: Stop("No new version")
+RunScript("./scripts/Restore-CI.ps1")
+if DbStatus() != "Ready": Stop("Database not ready")
 RunScript("./scripts/Disable-CI.ps1")
-UpdateCentralPackageVersions(latestVersion)
-UpdateKenticoPnpmPackages()
-RunTask(".NET: build (Solution)")
-if BuildFailed(): Stop("Breaking changes detected")
-RunScript("./scripts/Update-Xperience.ps1 -AgentMode")
-RunScript("./scripts/Enable-CI.ps1")
-RunScript("./scripts/Store-CI.ps1")
+try:
+    UpdateCentralPackageVersions(latestVersion)
+    UpdateKenticoPnpmPackages()
+    RunTask(".NET: build (Solution)")
+    if BuildFailed(): Stop("Breaking changes detected")   # finally re-enables CI
+    if DbStatus() != "UpdateRequired": Stop("Unexpected DB state")
+    RunScript("./scripts/Update-Xperience.ps1 -AgentMode")
+    if DbStatus() != "Ready": Stop("Update did not complete")
+    RunScript("./scripts/Enable-CI.ps1")                   # success-path re-enable
+    ciReenabled = true
+    RunScript("./scripts/Store-CI.ps1")
+finally:
+    # CI Re-enable Safety Contract: never leave CI disabled on an abort path
+    if not ciReenabled: RunScript("./scripts/Enable-CI.ps1")   # skip Store, do not commit
 UpdateReadmeVersion(latestVersion)
 BackupDatabase()
 StageAndCommit(latestVersion)

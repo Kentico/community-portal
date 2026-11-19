@@ -68,12 +68,15 @@
           </ValidationRuleConfiguration>
         </validationrulesdata>
       </field>
-      <field column="WebsiteGlobalContentRobotsTxt" columnprecision="0" columntype="longtext" enabled="true" guid="9701b7ca-c812-4d1e-aa72-67c27aed1db9" visible="true">
+      <field column="WebsiteGlobalContentRobotsTxt" columntype="longtext" enabled="true" guid="9701b7ca-c812-4d1e-aa72-67c27aed1db9" visible="true">
         <properties>
-          <explanationtext>Served from /robots.txt</explanationtext>
+          <explanationtext>
+            <![CDATA[Served as-is from /robots.txt. A Sitemap directive for the current domain is added automatically, so don't add one: a hard-coded URL would be wrong in other environments. Content-Signal declares how AI crawlers may use the content (search, ai-input, ai-train). Disallow stops crawling but doesn't remove a page from search, and a disallowed page's noindex is never seen. To keep a page out of search, use the page's "Robots meta value" and "Sitemap - exclude" fields instead.]]>
+          </explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Robots.txt</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>True</includeincontentgeneration>
         </properties>
         <settings>
           <controlname>Kentico.Administration.TextArea</controlname>
@@ -84,9 +87,39 @@
         <validationrulesdata>
           <ValidationRuleConfiguration>
             <ValidationRuleIdentifier>Kentico.Administration.RequiredValue</ValidationRuleIdentifier>
-            <RuleValues />
+            <RuleValues>
+              <ErrorMessage />
+            </RuleValues>
           </ValidationRuleConfiguration>
         </validationrulesdata>
+      </field>
+      <field allowempty="true" column="WebsiteGlobalContentGoogleSiteVerification" columnsize="200" columntype="text" enabled="true" guid="91214852-dfe3-4ea9-b549-43381ac50102" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[Content value of the google-site-verification meta tag from Google Search Console. Rendered on every page when set.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Google site verification</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>True</includeincontentgeneration>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
+      </field>
+      <field allowempty="true" column="WebsiteGlobalContentBingSiteVerification" columnsize="200" columntype="text" enabled="true" guid="03bac0a9-9446-4bb0-a5aa-8f9fddacd7a7" visible="true">
+        <properties>
+          <explanationtext>
+            <![CDATA[Content value of the msvalidate.01 meta tag from Bing Webmaster Tools. Rendered on every page when set.]]>
+          </explanationtext>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fieldcaption>Bing site verification</fieldcaption>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+          <includeincontentgeneration>True</includeincontentgeneration>
+        </properties>
+        <settings>
+          <controlname>Kentico.Administration.TextInput</controlname>
+        </settings>
       </field>
     </form>
   </ClassFormDefinition>

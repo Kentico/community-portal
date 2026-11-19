@@ -7,7 +7,6 @@ using Kentico.Community.Portal.Core.Modules;
 using Kentico.Community.Portal.Core.Modules.Membership;
 using Kentico.Community.Portal.Core.Operations;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
-using Kentico.Community.Portal.Web.Membership;
 
 namespace Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.CommunityProgramTargetsReport.Operations;
 
@@ -23,7 +22,7 @@ public record TargetsReportQuery(
 public record TargetsReportQueryResponse(
     int MemberId,
     int Year,
-    ProgramStatuses ProgramStatus,
+    CommunityProgramMembership Membership,
     int ActivitiesSubmittedCountYear,
     IReadOnlyList<int> ActivitiesSubmittedCountByQuarter,
     IReadOnlyList<int> SocialPostsCountByQuarter,
@@ -37,13 +36,15 @@ public record TargetsReportQueryResponse(
 
 public class TargetsReportQueryHandler(
     DataItemQueryTools tools,
-    IInfoProvider<MemberInfo> memberProvider,
+    IInfoProvider<MemberRoleInfo> memberRoleProvider,
+    IInfoProvider<MemberRoleMemberInfo> memberRoleMemberProvider,
     MemberBadgeService memberBadgeService,
     IContentQueryExecutor executor) : DataItemQueryHandler<TargetsReportQuery, TargetsReportQueryResponse>(tools)
 {
     private const string SocialPostActivityType = "Social media promotion";
 
-    private readonly IInfoProvider<MemberInfo> memberProvider = memberProvider;
+    private readonly IInfoProvider<MemberRoleInfo> memberRoleProvider = memberRoleProvider;
+    private readonly IInfoProvider<MemberRoleMemberInfo> memberRoleMemberProvider = memberRoleMemberProvider;
     private readonly MemberBadgeService memberBadgeService = memberBadgeService;
     private readonly IContentQueryExecutor executor = executor;
 
@@ -51,12 +52,9 @@ public class TargetsReportQueryHandler(
     {
         var yearStart = new DateTime(request.Year, 1, 1);
 
-        var member = await memberProvider.Get()
-            .WhereEquals(nameof(MemberInfo.MemberID), request.MemberId)
-            .TopN(1)
-            .GetEnumerableTypedResultAsync();
-
-        var programStatus = member.FirstOrDefault()?.AsCommunityMember().ProgramStatus ?? ProgramStatuses.None;
+        var membershipByMemberId = await CommunityProgramMembershipResolver.GetMembershipByMemberId(
+            memberRoleProvider, memberRoleMemberProvider, [request.MemberId], cancellationToken);
+        var membership = membershipByMemberId.GetValueOrDefault(request.MemberId);
 
         var activityItemsYear = await BizFormItemProvider.GetItems<CommunityProgramActivity_2026Item>()
             .WhereEquals(nameof(CommunityProgramActivity_2026Item.MemberID), request.MemberId)
@@ -104,7 +102,7 @@ public class TargetsReportQueryHandler(
         return new(
             MemberId: request.MemberId,
             Year: request.Year,
-            ProgramStatus: programStatus,
+            Membership: membership,
             ActivitiesSubmittedCountYear: activitiesSubmittedCountYear,
             ActivitiesSubmittedCountByQuarter: activitiesSubmittedCountByQuarter,
             SocialPostsCountByQuarter: socialPostsCountByQuarter,
@@ -164,6 +162,7 @@ public class TargetsReportQueryHandler(
         builder
             .AllObjects(CommunityProgramActivity_2026Item.CLASS_NAME)
             .AllObjects(MemberInfo.OBJECT_TYPE)
+            .AllObjects(MemberRoleMemberInfo.OBJECT_TYPE)
             .AllObjects(MemberBadgeMemberInfo.OBJECT_TYPE)
             .AllObjects(MemberBadgeInfo.OBJECT_TYPE)
             .AllContentItems(QAndAQuestionPage.CONTENT_TYPE_NAME);

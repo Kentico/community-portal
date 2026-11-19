@@ -40,12 +40,61 @@
       <field column="MemberAvatarFileExtension" guid="295972d6-2114-46d3-9703-066154c1fb17" enabled="" />
       <field column="MemberAdministratorNotes" guid="652d625f-c20e-46bd-9f8c-838d3dfaf01c" enabled="" />
       <field column="MemberModerationStatus" guid="5fe75ef9-0e15-4d2d-a4ab-1e186d1861c6" enabled="" />
-      <field column="MemberProgramStatus" guid="ab44a32d-7a34-4c76-966c-26897b7596c4" enabled="" />
       <field column="MemberEmployerLink" guid="b832e3a2-04c2-40c8-8c29-ed4f5bd736ee" enabled="" />
       <field column="MemberJobTitle" guid="55ab4c14-3279-4126-9066-4b8c270176d9" enabled="" />
       <field column="MemberTimeZone" guid="0bb26afb-8926-485a-8043-804d98220d72" enabled="" />
       <field column="MemberCountry" guid="6a6c1d8a-04c9-4827-b1b2-e31e2ba0d24d" enabled="" />
       <field column="MemberBio" guid="0da3128f-f405-4dee-976a-1619ff66e597" enabled="" />
+      <field column="MemberTermsAcceptedVersion" enabled="true" guid="00bddd38-349f-4ce9-b9a9-10c9d67c05df" visible="true">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <fieldcaption>Terms of Use accepted (version)</fieldcaption>
+        </properties>
+      </field>
+      <field column="MemberTermsAcceptedDate" guid="c0cbf8a4-3f8f-446e-9377-6fe10d7d6c97" visible="true" enabled="">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <fieldcaption>Terms of Use accepted (date)</fieldcaption>
+        </properties>
+      </field>
+      <field column="MemberNewsletterOptInRequestedDate" guid="b724f5a3-3f61-4f7e-99fe-1b30c8af093b" visible="true" enabled="">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <fieldcaption>Newsletter opt-in requested at registration (date)</fieldcaption>
+        </properties>
+      </field>
+      <field column="MemberAlternateEmail" guid="088bb99f-7dbd-46f4-9fb5-57ba2ac79884" visible="true" enabled="">
+        <settings>
+          <controlname>Kentico.Administration.TextWithLabel</controlname>
+        </settings>
+        <properties>
+          <fieldcaption>Alternate email</fieldcaption>
+        </properties>
+      </field>
+      <field column="MemberAlternateEmailVerifiedDate" guid="3af912e6-fb63-4b24-b581-b057034eb91f" visible="true" enabled="">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <fieldcaption>Alternate email verified (date)</fieldcaption>
+          <includeincontentgeneration>True</includeincontentgeneration>
+        </properties>
+      </field>
+      <field column="MemberEmailConfirmedDate" guid="6926016a-1a47-4a02-8bb8-83e606c2e623" visible="true" enabled="">
+        <settings>
+          <controlname>Kentico.Administration.DateTimeInput</controlname>
+        </settings>
+        <properties>
+          <fieldcaption>Email confirmed (date)</fieldcaption>
+          <includeincontentgeneration>True</includeincontentgeneration>
+        </properties>
+      </field>
     </form>
   </FormDefinition>
   <FormDisplayName>Profile overview - registration information</FormDisplayName>

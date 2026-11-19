@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <cms.contentitemcommondata>
   <BasicItemShortDescription>
-    <![CDATA[Learn about how and why we use cookies on the Kentico Community Portal]]>
+    <![CDATA[Every cookie Kentico Community sets, why, and how to change your choice.]]>
   </BasicItemShortDescription>
-  <BasicItemTitle>Cookies Policy</BasicItemTitle>
+  <BasicItemTitle>Cookies on Kentico Community</BasicItemTitle>
   <ContentItemCommonDataContentItemID>
     <CodeName>CookiesPolicy-9wkc3fl3</CodeName>
     <GUID>58b116ea-b90a-44cb-a5de-3e3449b1127d</GUID>
@@ -16,14 +16,20 @@
   </ContentItemCommonDataContentLanguageID>
   <ContentItemCommonDataGUID>46c346f7-f0c9-4e77-9a4b-9a672f76b571</ContentItemCommonDataGUID>
   <ContentItemCommonDataIsLatest>True</ContentItemCommonDataIsLatest>
-  <ContentItemCommonDataLastPublishedWhen>2025-06-12 23:35:53Z</ContentItemCommonDataLastPublishedWhen>
+  <ContentItemCommonDataLastPublishedWhen>2026-11-10 21:59:15Z</ContentItemCommonDataLastPublishedWhen>
   <ContentItemCommonDataVersionStatus>2</ContentItemCommonDataVersionStatus>
   <ContentItemCommonDataVisualBuilderTemplateConfiguration>
 <![CDATA[
 {
   "identifier": "KenticoCommunity.LandingPage_Default",
-  "properties": {},
-  "fieldIdentifiers": {}
+  "properties": {
+    "widgetSelection": "Standard",
+    "widgetSelectionParsed": 0
+  },
+  "fieldIdentifiers": {
+    "widgetSelection": "ccf52d24-e67a-4711-9bd5-74f6f6f366b2",
+    "widgetSelectionParsed": "884caaea-869e-4d5f-8de8-d908cbb9320d"
+  }
 }
 ]]>
   </ContentItemCommonDataVisualBuilderTemplateConfiguration>
@@ -36,27 +42,25 @@
       "sections": [
         {
           "identifier": "0f6efc70-d3be-473b-9563-68d437edcd51",
-          "type": "CommunityPortal.Components.Sections.Grid.Grid-Section",
+          "type": "CommunityPortal.SingleColumnSection",
           "properties": {
-            "heading": "",
-            "headingAlignment": "Left",
-            "headingAlignmentParsed": 0,
-            "bodyAlignment": "Left",
-            "bodyAlignmentParsed": 0,
-            "isHeadingAnchorLinkVisible": false,
-            "layout": "_1_Column",
-            "layoutParsed": 2,
+            "layout": "Standard",
+            "layoutParsed": 0,
+            "alignment": "Left",
+            "alignmentParsed": 0,
             "paddingTop": "Large",
             "paddingTopParsed": 0,
             "paddingBottom": "Large",
             "paddingBottomParsed": 0,
-            "widgetZonesCount": 1,
             "backgroundColor": "White",
-            "backgroundColorParsed": 1
+            "backgroundColorParsed": 1,
+            "displayAsCarousel": false,
+            "numberOfSlides": 3,
+            "carouselAriaLabel": "Featured content carousel"
           },
           "zones": [
             {
-              "identifier": "8d933bc4-7ef6-4a2d-8568-1f26cc039db4",
+              "identifier": "848282a4-9ae0-4b0b-81f8-f0be65a00912",
               "widgets": [
                 {
                   "identifier": "0d2bb5f1-a9b4-4704-bd0a-e2b63689a03c",
@@ -65,7 +69,7 @@
                     {
                       "identifier": "f8ee1b73-6886-4878-8b77-c204106601c3",
                       "properties": {
-                        "content": "<h2 class=\"h2 mt-5\">What are cookies?</h2><p>To make Kentico.com, and its subdomains work properly, we sometimes place small data files called cookies on your device. Most big websites do this too. A cookie is a small text file that a website saves on your computer or mobile device when you visit the site, respond to surveys, or participate in polls. It enables our website to remember your actions and preferences (such as login, language, font size, and other display preferences) over a period of time, so you don’t have to keep re-entering them whenever you come back to the site or browse from one page to another.</p><p>If you want to know more about cookies, head to <a href=\"http://www.aboutcookies.org/\" target=\"_blank\" title=\"aboutcookies.org\">aboutcookies.org</a> or <a href=\"http://www.allaboutcookies.org/\" target=\"_blank\">allaboutcookies.org</a>.</p><h2 class=\"h2 mt-5\">How we use cookies</h2><p>We can use cookies to identify your computer, and information like this from you and users like you helps us analyze traffic patterns on our site and can help us provide you with a better experience by improving content and making the site easier to use.</p><p>CMSCookieLevel and kenticocommunityportal.cookieconsentlevel store a user's selected cookie level.</p>"
+                        "content": "<p>This page lists every cookie Kentico Community (community.kentico.com) sets, and why. Some analytics cookies are shared with other Kentico websites on kentico.com. Kentico Software s.r.o. is responsible for them. For how we use personal data, see <a href=\"~/privacy\">Privacy</a>. Last updated: 2026-11-10</p>"
                       },
                       "fieldIdentifiers": {
                         "content": "6a5096d6-eefb-4ea1-b57c-23b1b70d5d28"
@@ -80,27 +84,21 @@
                     {
                       "identifier": "d2fb916b-9585-4dcc-8fad-3a0e15cf0954",
                       "properties": {
-                        "necessaryHeader": "Necessary cookies",
+                        "heading": "Cookie settings",
+                        "intro": "Choose which optional cookies and tracking you allow. Necessary cookies are always on because the site can't work without them. Your choice is saved in this browser. If you clear your cookies, sign out, or use another browser or device, we'll ask again.",
                         "necessaryDescription": "These cookies are essential in order to enable you to move around the website and use its features. Without these cookies, some core site functionality will not work properly.",
-                        "preferenceHeader": "Preference cookies",
-                        "preferenceDescription": "Preference cookies make things easier for you by, for example, remembering the language, in which you wish to display the website, etc.",
-                        "analyticalHeader": "Analytical cookies",
-                        "analyticalDescription": "These cookies allow us to perform site usage analytics so we can measure and improve the performance of the site.",
-                        "marketingHeader": "Marketing cookies",
-                        "marketingDescription": "The objective of these cookies is to link our website to third-party social media and advertising networks, such as Facebook or Google Ads. With this connection, we can present relevant ads to you even outside our website.",
-                        "buttonText": "Agree",
+                        "analyticsDescription": "Google Analytics measures how the site is used (pages viewed, time on site, device and browser type, approximate location from your IP address). Kentico uses it in aggregate to improve Kentico Community and its other kentico.com websites, including how visitors move between them. Google processes this data on our behalf.",
+                        "memberNote": "Your choice doesn't affect your account. All member features work with necessary cookies only.",
+                        "signOutNote": "When you sign out, we reset this browser to necessary cookies only and forget your choice, so the next person using this browser starts fresh.",
                         "id": "cffc4fd4-1518-4879-8954-544beecd3504"
                       },
                       "fieldIdentifiers": {
-                        "necessaryHeader": "e85499e4-2af6-4284-ba3f-bdf088f95213",
                         "necessaryDescription": "a2cfdd83-6f20-4168-8425-350ffa549c8d",
-                        "preferenceHeader": "025c2b83-782c-4247-9988-3008dee6053a",
-                        "preferenceDescription": "d98a8bfd-5825-4d37-95e9-bc300465dd0f",
-                        "analyticalHeader": "291a30b2-289a-4c16-906b-d11065deb864",
-                        "analyticalDescription": "95bcad17-a38d-46b0-a271-fcea5e9a2db2",
-                        "marketingHeader": "0dccc436-9b9d-4a0a-b263-ff353b67fc47",
-                        "marketingDescription": "b150702d-b5b1-4601-9d58-0569385626fd",
-                        "buttonText": "53db63e2-27c6-48eb-aed4-c45977858616",
+                        "signOutNote": "b1bd7fc6-d1c8-410b-9621-5fd6e8034446",
+                        "memberNote": "bf37a538-9adc-41e4-9d08-88fc8a2c6153",
+                        "analyticsDescription": "cc949880-61c3-4a3d-9aa3-d3d9b4b65a5f",
+                        "intro": "c080e6f6-8057-4e1f-90ae-4f491f51a272",
+                        "heading": "91ce17f3-c9a5-480e-b2fa-98b16f45f352",
                         "id": "7059b214-2316-4cae-8627-5a25bcff30eb"
                       }
                     }
@@ -113,7 +111,7 @@
                     {
                       "identifier": "cfd348a9-d8bd-4eb0-a791-f5f60d17a5be",
                       "properties": {
-                        "content": "<h3>community.kentico.com cookies</h3><div class=\"table-responsive\"><table class=\"table table-striped table-bordered table-hover\"><thead><tr><th scope=\"col\">Name</th><th scope=\"col\">Expire</th><th scope=\"col\">Category</th><th scope=\"col\">Description</th></tr></thead><tbody><tr><td height=\"19\">__RequestVerificationToken</td><td>Session</td><td>Necessary</td><td>Helps prevent Cross-Site Request Forgery (CSRF) attacks.</td></tr><tr><td height=\"19\">_grecaptcha</td><td>Persistent</td><td>Necessary</td><td>This cookie is used to distinguish between humans and bots. This is beneficial for the website, in order to make valid reports on the use of their website.</td></tr><tr><td height=\"19\">CookieConsent</td><td>1 year</td><td>Necessary</td><td>Stores the user's cookie consent state for the current domain.</td></tr><tr><td>CMSCookieLevel<br></td><td>1 year</td><td>Necessary</td><td>Stores system value based on chosen cookie level.</td></tr><tr><td>kenticocommunityportal.cookielevelselection&nbsp;</td><td>1 year</td><td>Necessary</td><td>Stores a flag whether user has already consent cookies.</td></tr><tr><td>kenticocommunityportal.cookieconsentlevel<br></td><td>1 year</td><td>Necessary</td><td>Stores user's cookie level he or she has selected.<br></td></tr><tr><td height=\"19\">t3D</td><td>Persistent</td><td>Necessary</td><td>This cookie is part of a bundle of cookies which serve the purpose of content delivery and presentation. The cookies keep the correct state of font, blog/picture sliders, color themes and other website settings.</td></tr><tr><td height=\"19\">tADe</td><td>Persistent</td><td>Necessary</td><td>This cookie is part of a bundle of cookies which serve the purpose of content delivery and presentation. The cookies keep the correct state of font, blog/picture sliders, color themes and other website settings.</td></tr><tr><td height=\"19\">tADu</td><td>Persistent</td><td>Necessary</td><td>This cookie is part of a bundle of cookies which serve the purpose of content delivery and presentation. The cookies keep the correct state of font, blog/picture sliders, color themes and other website settings.</td></tr><tr><td height=\"19\">tAE</td><td>Persistent</td><td>Necessary</td><td>This cookie is part of a bundle of cookies which serve the purpose of content delivery and presentation. The cookies keep the correct state of font, blog/picture sliders, color themes and other website settings.</td></tr><tr><td height=\"19\">tC</td><td>Persistent</td><td>Necessary</td><td>This cookie is part of a bundle of cookies which serve the purpose of content delivery and presentation. The cookies keep the correct state of font, blog/picture sliders, color themes and other website settings.</td></tr><tr><td height=\"19\">tMQ</td><td>Persistent</td><td>Necessary</td><td>This cookie is part of a bundle of cookies which serve the purpose of content delivery and presentation. The cookies keep the correct state of font, blog/picture sliders, color themes and other website settings.</td></tr><tr><td height=\"19\">tnsApp</td><td>Persistent</td><td>Necessary</td><td>This cookie is part of a bundle of cookies which serve the purpose of content delivery and presentation. The cookies keep the correct state of font, blog/picture sliders, color themes and other website settings.</td></tr><tr><td height=\"19\">tPL</td><td>Persistent</td><td>Necessary</td><td>This cookie is part of a bundle of cookies which serve the purpose of content delivery and presentation. The cookies keep the correct state of font, blog/picture sliders, color themes and other website settings.</td></tr><tr><td height=\"19\">tTDe</td><td>Persistent</td><td>Necessary</td><td>This cookie is part of a bundle of cookies which serve the purpose of content delivery and presentation. The cookies keep the correct state of font, blog/picture sliders, color themes and other website settings.</td></tr><tr><td height=\"19\">tTDu</td><td>Persistent</td><td>Necessary</td><td>This cookie is part of a bundle of cookies which serve the purpose of content delivery and presentation. The cookies keep the correct state of font, blog/picture sliders, color themes and other website settings.</td></tr><tr><td height=\"19\">tTE</td><td>Persistent</td><td>Necessary</td><td>This cookie is part of a bundle of cookies which serve the purpose of content delivery and presentation. The cookies keep the correct state of font, blog/picture sliders, color themes and other website settings.</td></tr><tr><td height=\"19\">tTf</td><td>Persistent</td><td>Necessary</td><td>This cookie is part of a bundle of cookies which serve the purpose of content delivery and presentation. The cookies keep the correct state of font, blog/picture sliders, color themes and other website settings.</td></tr><tr><td height=\"19\">_clck</td><td>1 year</td><td>Statistics</td><td>Collects data on the user’s navigation and behavior on the website. This is used to compile statistical reports and heatmaps for the website owner.</td></tr><tr><td height=\"19\">_clsk</td><td>1 day</td><td>Statistics</td><td>Registers statistical data on users' behaviour on the website. Used for internal analytics by the website operator.&nbsp;</td></tr><tr><td height=\"19\">_cltk</td><td>Session</td><td>Statistics</td><td>Registers statistical data on users' behaviour on the website. Used for internal analytics by the website operator.&nbsp;</td></tr><tr><td height=\"19\">_ga</td><td>2 years</td><td>Statistics</td><td>Registers a unique ID that is used to generate statistical data on how the visitor uses the website.</td></tr><tr><td height=\"19\">_ga_#</td><td>2 years</td><td>Statistics</td><td>Used by Google Analytics to collect data on the number of times a user has visited the website as well as dates for the first and most recent visit.&nbsp;</td></tr><tr><td height=\"19\">_gat</td><td>1 day</td><td>Statistics</td><td>Used by Google Analytics to throttle request rate</td></tr><tr><td height=\"19\">_gid</td><td>1 day</td><td>Statistics</td><td>Registers a unique ID that is used to generate statistical data on how the visitor uses the website.</td></tr><tr><td height=\"19\">_gtm_click_cc</td><td>Session</td><td>Statistics<br></td><td>Google Tag Manager click event tracking.</td></tr><tr><td height=\"19\">_gtm_click_sc</td><td>Session</td><td>Statistics<br></td><td>Google Tag Manager click event tracking.<br></td></tr><tr><td height=\"19\">_gtm_mh_isnnbc</td><td>Session</td><td>Statistics<br></td><td>Google Tag Manager tracking.<br></td></tr><tr><td height=\"19\">CurrentContact</td><td>50 years</td><td>Statistics</td><td>Sets a unique ID for the session. This allows the website to obtain data on visitor behaviour for statistical purposes.</td></tr><tr><td height=\"19\">__tld__</td><td>Session</td><td>Marketing</td><td>Used to track visitors on multiple websites, in order to present relevant advertisement based on the visitor's preferences.&nbsp;</td></tr><tr><td height=\"19\">_fbp</td><td>3 months</td><td>Marketing</td><td>Used by Facebook to deliver a series of advertisement products such as real time bidding from third party advertisers.</td></tr><tr><td height=\"19\">_gcl_au</td><td>3 months</td><td>Marketing</td><td>Used by Google AdSense for experimenting with advertisement efficiency across websites using their services. &nbsp;</td></tr><tr><td height=\"19\">_lfa</td><td>2 years</td><td>Marketing</td><td>Used in context with Account-Based-Marketing (ABM). The cookie registers data such as IP-addresses, time spent on the website and page requests for the visit. This is used for retargeting of multiple users rooting from the same IP-addresses. ABM usually facilitates B2B marketing purposes.</td></tr><tr><td height=\"19\">_lfa</td><td>Persistent</td><td>Marketing</td><td>Used in context with Account-Based-Marketing (ABM). The cookie registers data such as IP-addresses, time spent on the website and page requests for the visit. This is used for retargeting of multiple users rooting from the same IP-addresses. ABM usually facilitates B2B marketing purposes.</td></tr><tr><td height=\"19\">_lfa_expiry</td><td>Persistent</td><td>Marketing</td><td>Contains the expiry-date for the cookie with corresponding name.&nbsp;</td></tr><tr><td height=\"19\">_lfa_test_cookie_stored</td><td>1 day</td><td>Marketing</td><td>Used in context with Account-Based-Marketing (ABM). The cookie registers data such as IP-addresses, time spent on the website and page requests for the visit. This is used for retargeting of multiple users rooting from the same IP-addresses. ABM usually facilitates B2B marketing purposes.</td></tr><tr><td height=\"19\">_uetsid</td><td>1 day</td><td>Marketing</td><td>Collects data on visitor behaviour from multiple websites, in order to present more relevant advertisement - This also allows the website to limit the number of times that they are shown the same advertisement.&nbsp;</td></tr><tr><td height=\"19\">_uetsid</td><td>Persistent</td><td>Marketing</td><td>Used to track visitors on multiple websites, in order to present relevant advertisement based on the visitor's preferences.&nbsp;</td></tr><tr><td height=\"19\">_uetsid_exp</td><td>Persistent</td><td>Marketing</td><td>Contains the expiry-date for the cookie with corresponding name.&nbsp;</td></tr><tr><td height=\"19\">_uetvid</td><td>Persistent</td><td>Marketing</td><td>Used to track visitors on multiple websites, in order to present relevant advertisement based on the visitor's preferences.&nbsp;</td></tr><tr><td height=\"19\">_uetvid</td><td>1 year</td><td>Marketing</td><td>Used to track visitors on multiple websites, in order to present relevant advertisement based on the visitor's preferences.&nbsp;</td></tr><tr><td height=\"19\">_uetvid_exp</td><td>Persistent</td><td>Marketing</td><td>Contains the expiry-date for the cookie with corresponding name.&nbsp;</td></tr></tbody></table></div><h3>Third-party cookies</h3><p>Third-party cookies originate from a domain that’s different to the website being visited. &nbsp;We don't control how they use their cookies, so we suggest you check their website to see how they're using them and how you can manage them.&nbsp;</p><div class=\"table-responsive\"><table class=\"table table-striped table-bordered table-hover\"><thead><tr><th scope=\"col\">Name</th><th scope=\"col\">Expire</th><th scope=\"col\">Category</th><th scope=\"col\">Description</th></tr></thead><tbody><tr><td height=\"19\">test_cookie</td><td>1 day</td><td>Necessary</td><td>Used to check if the user's browser supports cookies.</td></tr><tr><td height=\"19\">__cf_bm</td><td>1 day</td><td>Necessary</td><td>This cookie is used to distinguish between humans and bots. This is beneficial for the website, in order to make valid reports on the use of their website.</td></tr><tr><td height=\"19\">__cf_bm</td><td>1 day</td><td>Necessary</td><td>This cookie is used to distinguish between humans and bots. This is beneficial for the website, in order to make valid reports on the use of their website.</td></tr><tr><td height=\"19\">_GRECAPTCHA</td><td>179 days</td><td>Necessary</td><td>This cookie is used to distinguish between humans and bots. This is beneficial for the website, in order to make valid reports on the use of their website.</td></tr><tr><td height=\"19\">rc::a</td><td>Persistent</td><td>Necessary</td><td>This cookie is used to distinguish between humans and bots. This is beneficial for the website, in order to make valid reports on the use of their website.</td></tr><tr><td height=\"19\">rc::b</td><td>Session</td><td>Necessary</td><td>This cookie is used to distinguish between humans and bots.&nbsp;</td></tr><tr><td height=\"19\">rc::c</td><td>Session</td><td>Necessary</td><td>This cookie is used to distinguish between humans and bots.&nbsp;</td></tr><tr><td height=\"19\">JSESSIONID</td><td>Session</td><td>Necessary</td><td>Preserves users states across page requests.</td></tr><tr><td height=\"19\">lang</td><td>Session</td><td>Preferences</td><td>Remembers the user's selected language version of a website</td></tr><tr><td height=\"19\">CLID</td><td>1 year</td><td>Statistics</td><td>Collects data on the user’s navigation and behavior on the website. This is used to compile statistical reports and heatmaps for the website owner.</td></tr><tr><td height=\"19\">collect</td><td>Session</td><td>Statistics</td><td>Used to send data to Google Analytics about the visitor's device and behavior. Tracks the visitor across devices and marketing channels.</td></tr><tr><td height=\"19\">AnalyticsSyncHistory</td><td>29 days</td><td>Statistics</td><td>Used in connection with data-synchronization with third-party analysis service.&nbsp;</td></tr><tr><td height=\"19\">personalization_id</td><td>2 years</td><td>Statistics</td><td>This cookie is set by Twitter - The cookie allows the visitor to share content from the website onto their Twitter profile.&nbsp;</td></tr><tr><td height=\"19\">events/1/#</td><td>Session</td><td>Marketing</td><td>Presents the user with relevant content and advertisement. The service is provided by third-party advertisement hubs, which facilitate real-time bidding for advertisers.</td></tr><tr><td height=\"19\">MUID</td><td>1 year</td><td>Marketing</td><td>Used widely by Microsoft as a unique user ID. The cookie enables user tracking by synchronising the ID across many Microsoft domains.</td></tr><tr><td height=\"19\">SRM_B</td><td>1 year</td><td>Marketing</td><td>Tracks the user’s interaction with the website’s search-bar-function. This data can be used to present the user with relevant products or services. &nbsp; &nbsp;&nbsp;</td></tr><tr><td height=\"19\">ANONCHK</td><td>1 day</td><td>Marketing</td><td>Registers data on visitors from multiple visits and on multiple websites. This information is used to measure the efficiency of advertisement on websites. &nbsp;</td></tr><tr><td height=\"19\">SM</td><td>Session</td><td>Marketing</td><td>Registers a unique ID that identifies the user's device during return visits across websites that use the same ad network. The ID is used to allow targeted ads.</td></tr><tr><td height=\"19\">MUID</td><td>1 year</td><td>Marketing</td><td>Used widely by Microsoft as a unique user ID. The cookie enables user tracking by synchronising the ID across many Microsoft domains.</td></tr><tr><td height=\"19\">IDE</td><td>1 year</td><td>Marketing</td><td>Used by Google DoubleClick to register and report the website user's actions after viewing or clicking one of the advertiser's ads with the purpose of measuring the efficacy of an ad and to present targeted ads to the user.</td></tr><tr><td height=\"19\">pagead/landing</td><td>Session</td><td>Marketing</td><td>Collects data on visitor behaviour from multiple websites, in order to present more relevant advertisement - This also allows the website to limit the number of times that they are shown the same advertisement.&nbsp;</td></tr><tr><td height=\"19\">tr</td><td>Session</td><td>Marketing</td><td>Used by Facebook to deliver a series of advertisement products such as real time bidding from third party advertisers.</td></tr><tr><td height=\"19\">ads/ga-audiences</td><td>Session</td><td>Marketing</td><td>Used by Google AdWords to re-engage visitors that are likely to convert to customers based on the visitor's online behaviour across websites.</td></tr><tr><td height=\"19\">pagead/1p-user-list/#</td><td>Session</td><td>Marketing</td><td>Tracks if the user has shown interest in specific products or events across multiple websites and detects how the user navigates between sites. This is used for measurement of advertisement efforts and facilitates payment of referral-fees between websites.</td></tr><tr><td height=\"19\">pagead/landing</td><td>Session</td><td>Marketing</td><td>Collects data on visitor behaviour from multiple websites, in order to present more relevant advertisement - This also allows the website to limit the number of times that they are shown the same advertisement.&nbsp;</td></tr><tr><td height=\"19\">bcookie</td><td>2 years</td><td>Marketing</td><td>Used by the social networking service, LinkedIn, for tracking the use of embedded services.</td></tr><tr><td height=\"19\">bscookie</td><td>2 years</td><td>Marketing</td><td>Used by the social networking service, LinkedIn, for tracking the use of embedded services.</td></tr><tr><td height=\"19\">lang</td><td>Session</td><td>Marketing</td><td>Set by LinkedIn when a web page contains an embedded \"Follow us\" panel.</td></tr><tr><td height=\"19\">lidc</td><td>1 day</td><td>Marketing</td><td>Used by the social networking service, LinkedIn, for tracking the use of embedded services.</td></tr><tr><td height=\"19\">UserMatchHistory</td><td>29 days</td><td>Marketing</td><td>Used to track visitors on multiple websites, in order to present relevant advertisement based on the visitor's preferences. &nbsp;</td></tr><tr><td height=\"19\">_/ad/#/pixel</td><td>Session</td><td>Marketing</td><td>Collects data on user behaviour and interaction in order to optimize the website and make advertisement on the website more relevant.&nbsp;</td></tr><tr><td height=\"19\">https://tr.lfeeder.com/</td><td>Session</td><td>Marketing</td><td>Tracks the individual sessions on the website, allowing the website to compile statistical data from multiple visits. This data can also be used to create leads for marketing purposes.</td></tr><tr><td height=\"19\">_session_id</td><td>13 days</td><td>Marketing</td><td>Stores visitors' navigation by registering landing pages - This allows the website to present relevant products and/or measure their advertisement efficiency on other websites.&nbsp;</td></tr></tbody></table></div>"
+                        "content": "<h2 class=\"h2 mt-5\" id=\"cookies\">Cookies we use</h2><div class=\"table-responsive\"><table class=\"table table-striped table-bordered\"><thead><tr><th scope=\"col\">Cookie</th><th scope=\"col\">Provider</th><th scope=\"col\">Purpose</th><th scope=\"col\">Category</th><th scope=\"col\">Xperience cookie level</th><th scope=\"col\">Expires</th></tr></thead><tbody><tr><td><code>CMSCookieLevel</code></td><td>Kentico Community</td><td>Stores your cookie choice for the site platform</td><td>Necessary</td><td>System</td><td>1 year</td></tr><tr><td><code>kcp.cookieconsent</code></td><td>Kentico Community</td><td>Stores your banner and settings choice (version, analytics, tracking)</td><td>Necessary</td><td>System</td><td>1 year</td></tr><tr><td><code>kcp.notification-cleared</code></td><td>Kentico Community</td><td>Remembers site alerts you dismissed</td><td>Necessary</td><td>Essential</td><td>Days</td></tr><tr><td><code>.AspNetCore.Identity.Application</code></td><td>Kentico Community</td><td>Keeps you signed in</td><td>Necessary</td><td>n/a (framework)</td><td>14 days, renewed while active</td></tr><tr><td><code>.AspNetCore.Antiforgery.*</code></td><td>Kentico Community</td><td>Protects forms from cross-site request forgery</td><td>Necessary</td><td>n/a (framework)</td><td>Session</td></tr><tr><td><code>__cf_bm</code></td><td>Cloudflare (on our domain)</td><td>Bot protection</td><td>Necessary</td><td>n/a</td><td>30 minutes</td></tr><tr><td><code>_GRECAPTCHA</code></td><td>Google (google.com)</td><td>Spam and abuse protection. Only on registration and forms with spam protection.</td><td>Necessary</td><td>n/a</td><td>6 months</td></tr><tr><td><code>_ga</code>, <code>_ga_X720WCX590</code>, <code>_ga_42M5EMV0PB</code>, <code>_ga_BVZVC8F2R5</code></td><td>Google Analytics (.kentico.com, shared with other Kentico websites)</td><td>Distinguish visitors and sessions for usage statistics across Kentico websites</td><td>Analytics (consent)</td><td>n/a (Google consent mode)</td><td>Up to 2 years</td></tr><tr><td><code>CurrentContact</code></td><td>Kentico Community</td><td>Links your visits to your visitor record for website tracking and personalization</td><td>Website tracking (consent)</td><td>Visitor</td><td>Up to 400 days (browser limit)</td></tr><tr><td><code>CMSLandingPageLoaded</code></td><td>Kentico Community</td><td>Records the first page of your visit</td><td>Website tracking (consent)</td><td>Visitor</td><td>20 minutes</td></tr></tbody></table></div><p>Kentico staff who edit the site get additional cookies that are needed to use the administration.</p><h2 class=\"h2 mt-5\" id=\"email-statistics\">Email statistics</h2><p>Kentico Community emails don't set cookies, but every email includes a small tracking image and links that pass through our site. We record whether and when each email was opened and which links were clicked, linked to the email sent to you, to measure and improve our emails. This happens for every email, whatever you choose here. We keep copies of sent emails for 14 days. The statistics themselves don't include your email address or a contact ID, so after those 14 days they can't be linked to you. If you allow website tracking, your opens and clicks are also linked to your visitor record. See <a href=\"~/privacy#email-statistics\">Privacy</a>.</p><h2 class=\"h2 mt-5\" id=\"changing-your-choice\">Changing your choice</h2><p>Use the <a href=\"#cookie-settings\">Cookie settings</a> above at any time. Choosing \"Necessary only\" deletes the analytics and tracking cookies we set in this browser.</p><p>If you turn Analytics off, Kentico Community stops sending analytics data. Analytics cookies shared with other Kentico websites aren't deleted, because those sites use them under their own cookie settings. You can delete them in your browser.</p><p><strong>No advertising.</strong> Kentico Community doesn't use advertising or remarketing cookies.</p>"
                       },
                       "fieldIdentifiers": {
                         "content": "664f74ee-e5e9-4b6d-a98e-ec7ff5b534de"
@@ -125,21 +123,19 @@
             }
           ],
           "fieldIdentifiers": {
-            "heading": "adc648f4-5ee3-46c3-bdda-1e1726b47d5b",
-            "headingAlignment": "d7db38c9-4610-46cb-a071-f10e8e4f2501",
-            "headingAlignmentParsed": "9e8063eb-5464-46f0-9c41-52cd03cf863d",
-            "bodyAlignment": "aad82c8a-f9d9-4d62-a8d1-b7c6fbd0d671",
-            "bodyAlignmentParsed": "d3bfac61-4a57-4cdf-b212-bbbc9f93130f",
-            "isHeadingAnchorLinkVisible": "ff13ac7a-4376-4524-9e7f-6c4be30d4645",
-            "layout": "9620b652-4e0c-43e1-9eea-c96bb3877c6c",
-            "layoutParsed": "339bd51a-3174-4473-85f9-2a6536bcbc7f",
-            "paddingTop": "ca10ef85-db15-446c-a4cf-7238378b6a2f",
-            "paddingTopParsed": "da2988bd-1ba1-4e23-a44d-c08823d18d50",
-            "paddingBottom": "aef5ec7a-8aa5-424a-86f9-1810a27cc222",
-            "paddingBottomParsed": "27ffbac4-497d-479a-8f05-ca927f3de340",
-            "widgetZonesCount": "c6eff8f4-379f-43f8-aeb9-9b94676c8a6b",
-            "backgroundColor": "ccb9f3b9-7258-4b66-b994-eaa0b32b15d6",
-            "backgroundColorParsed": "6f811b91-8a89-4987-9c5b-bebad8d18d2c"
+            "layout": "5c85d16c-b1f2-4f4d-9574-d3d5513e0727",
+            "layoutParsed": "2e9cbd01-1e1d-4e64-a62a-bca132891fe6",
+            "alignment": "cd5a9f2e-22aa-49fe-8639-569e3354e3d7",
+            "alignmentParsed": "c51def9b-2594-4a9a-ad85-beb9ce0050fa",
+            "paddingTop": "0fb61d82-9781-46db-92b1-a31af98fd860",
+            "paddingTopParsed": "28f09f1e-6429-4c3a-b289-b86c22720026",
+            "paddingBottom": "f947e20b-1d75-4da0-b4dd-ab71af9e1d5b",
+            "paddingBottomParsed": "f2d0d23c-171b-4536-95d3-746f36e26b20",
+            "backgroundColor": "1a005dcc-a93a-4d17-9c44-135f299774d7",
+            "backgroundColorParsed": "ec6d3551-aaf3-4f64-99c0-0350c65c861b",
+            "displayAsCarousel": "341bc168-4cab-400b-adb5-e023ec7700bc",
+            "numberOfSlides": "9cbe6e9b-ccca-4705-963c-e9da2b18e95b",
+            "carouselAriaLabel": "4b381430-c167-40ff-b756-0039632e95df"
           }
         }
       ]
@@ -152,7 +148,7 @@
   <WebPageMetaExcludeFromSitemap>False</WebPageMetaExcludeFromSitemap>
   <WebPageMetaRobots />
   <WebPageMetaShortDescription>
-    <![CDATA[Learn about how and why we use cookies on the Kentico Community Portal]]>
+    <![CDATA[Every cookie Kentico Community sets, why, and how to change your choice.]]>
   </WebPageMetaShortDescription>
-  <WebPageMetaTitle>Cookies Policy</WebPageMetaTitle>
+  <WebPageMetaTitle>Cookie Policy</WebPageMetaTitle>
 </cms.contentitemcommondata>

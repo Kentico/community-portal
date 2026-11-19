@@ -1,9 +1,4 @@
-using CMS.DataEngine;
-using CMS.Helpers;
-using CMS.Membership;
-using Kentico.Community.Portal.Core;
 using Kentico.Community.Portal.Core.Modules;
-using Kentico.Community.Portal.Core.Modules.Membership;
 using Kentico.Community.Portal.Web.Membership;
 using Microsoft.AspNetCore.Identity;
 
@@ -65,13 +60,9 @@ public interface IQAndAPermissionService
 /// Implementation of content permission service
 /// </summary>
 public class QAndAPermissionService(
-    UserManager<CommunityMember> userManager,
-    IProgressiveCache cache,
-    IInfoProvider<UserInfo> userInfoProvider) : IQAndAPermissionService
+    UserManager<CommunityMember> userManager) : IQAndAPermissionService
 {
     private readonly UserManager<CommunityMember> userManager = userManager;
-    private readonly IProgressiveCache cache = cache;
-    private readonly IInfoProvider<UserInfo> userInfoProvider = userInfoProvider;
 
     /// <inheritdoc/>
     public async Task<bool> HasPermission(HttpContext httpContext, QAndAQuestionPage question, QAndAQuestionPermissionType permissionType)
@@ -162,45 +153,25 @@ public class QAndAPermissionService(
     }
 
     /// <summary>
-    /// Gets the CMS user corresponding to the community member
-    /// </summary>
-    /// <param name="communityMember">The community member</param>
-    /// <returns>The corresponding CMS user or null if not found</returns>
-    private async Task<Maybe<UserInfo>> GetCmsUser(CommunityMember communityMember)
-    {
-        var users = await cache.LoadAsync(async cs =>
-            await userInfoProvider.Get()
-                .WhereEquals(nameof(UserInfo.Email), communityMember.Email)
-                .GetEnumerableTypedResultAsync(),
-            new CacheSettings(10, nameof(GetCmsUser), communityMember.Email));
-
-        return users.TryFirst();
-    }
-
-    /// <summary>
     /// Checks if the community member has edit permissions
-    /// Edit permissions are granted to users with the Community Manager role only
+    /// Edit permissions are granted to members with the KenticoEmployee Member Role only
     /// </summary>
     /// <param name="communityMember">The community member</param>
     /// <returns>True if the member can edit content</returns>
     private async Task<bool> CanEditGlobally(CommunityMember communityMember) =>
-        await GetCmsUser(communityMember)
-            .Map(user => user.IsInRole(PortalWebSiteChannel.ROLE_COMMUNITY_MANAGER))
-            .GetValueOrDefault(() => false);
+        await userManager.IsInRoleAsync(communityMember, SystemMemberRoles.KenticoEmployee.MemberRoleName);
 
     /// <summary>
     /// Checks if the community member has delete permissions
-    /// Delete permissions are granted to:
-    /// 1. Community Managers (via role)
-    /// 2. MVPs (via badge)
-    /// 3. Community Leaders (via badge)
+    /// Delete permissions are granted to members with the following Member Roles:
+    /// 1. KenticoEmployee
+    /// 2. KenticoMVP
+    /// 3. KenticoCommunityLeader
     /// </summary>
     /// <param name="communityMember">The community member</param>
     /// <returns>True if the member can delete content</returns>
     private async Task<bool> CanDeleteGlobally(CommunityMember communityMember) =>
-        await GetCmsUser(communityMember)
-            .Map(user => user.IsInRole(PortalWebSiteChannel.ROLE_COMMUNITY_MANAGER))
-            .GetValueOrDefault(() => false)
-        || communityMember.ProgramStatus == ProgramStatuses.MVP
-        || communityMember.ProgramStatus == ProgramStatuses.CommunityLeader;
+        await userManager.IsInRoleAsync(communityMember, SystemMemberRoles.KenticoEmployee.MemberRoleName)
+        || await userManager.IsInRoleAsync(communityMember, SystemMemberRoles.KenticoMVP.MemberRoleName)
+        || await userManager.IsInRoleAsync(communityMember, SystemMemberRoles.KenticoCommunityLeader.MemberRoleName);
 }

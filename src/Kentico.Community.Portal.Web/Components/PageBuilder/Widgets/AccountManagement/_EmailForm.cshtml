@@ -1,0 +1,53 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.AccountManagement
+
+@model ChangeEmailViewModel
+
+<form id="emailChangeForm" method="post" hx-post hx-controller="AccountManagementWidget" hx-action="RequestEmailChange"
+      hx-swap="outerHTML" hx-disabled-elt="find fieldset" test-id="emailChangeForm">
+    <fieldset hx-indicator="this" xpc-readonly-disabled>
+        <h4>My email</h4>
+
+        <small class="form-text text-muted d-block py-1">
+            Your account email is <strong test-id="currentEmail">@Model.CurrentEmail</strong>.
+            To change it, enter the new email and your current password. We send a verification link to the new
+            email. Your account email changes only after you click the link. Your username does not change.
+        </small>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
+
+        <div class="form-group">
+            <div class="editing-form-label-cell">
+                <label asp-for="NewEmail" class="control-label form-label mt-3"></label>
+            </div>
+            <div class="editing-form-value-cell">
+                <input asp-for="NewEmail" type="email" autocomplete="email" class="form-control" test-id="newEmail" />
+                <span asp-validation-for="NewEmail" class="text-danger field-validation-error" test-id="newEmailError"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="editing-form-label-cell">
+                <label asp-for="CurrentPassword" class="control-label form-label mt-3"></label>
+            </div>
+            <div class="editing-form-value-cell">
+                <input asp-for="CurrentPassword" autocomplete="current-password" class="form-control" test-id="emailChangeCurrentPassword" />
+                <span asp-validation-for="CurrentPassword" class="text-danger field-validation-error" test-id="emailChangeCurrentPasswordError"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3" xpc-loading-button test-id="requestEmailChange">
+            Send verification link
+        </button>
+
+        <vc:read-only-mode-notification />
+    </fieldset>
+
+    @if (!string.IsNullOrWhiteSpace(Model.RequestedEmail))
+    {
+        <xpc-alert dismissable="true">
+            <span test-id="emailChangeRequested">
+                We sent a verification link to @Model.RequestedEmail. Your account email changes after you click it.
+            </span>
+        </xpc-alert>
+    }
+</form>

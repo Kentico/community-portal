@@ -1,0 +1,27 @@
+@using Kentico.Forms.Web.Mvc
+@using Kentico.Community.Portal.Web.Components.FormBuilder
+
+@model LongAnswerTextAreaComponent
+
+@{
+    var htmlAttributes = ViewData.Kentico().GetEditorHtmlAttributes();
+    htmlAttributes["rows"] = Model.Rows;
+    htmlAttributes["data-long-answer-textarea"] = "true";
+
+    if (Model.MinCharacters is not null)
+    {
+        htmlAttributes["minlength"] = Model.MinCharacters;
+    }
+
+    if (Model.MaxCharacters is not null)
+    {
+        htmlAttributes["maxlength"] = Model.MaxCharacters;
+    }
+}
+
+@Html.TextAreaFor(m => m.Value, htmlAttributes)
+
+@if (!string.IsNullOrWhiteSpace(Model.CharacterHint))
+{
+    <div class="form-text">@Model.CharacterHint</div>
+}

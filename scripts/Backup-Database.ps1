@@ -53,7 +53,7 @@ $backupQuery = @"
 BACKUP DATABASE [Kentico.Community] 
 TO DISK = N'$backupSourceFilePath'
 WITH NOFORMAT, 
-    NOINIT, 
+    INIT,
     NAME = N'Kentico.Community', 
     SKIP, 
     NOREWIND, 

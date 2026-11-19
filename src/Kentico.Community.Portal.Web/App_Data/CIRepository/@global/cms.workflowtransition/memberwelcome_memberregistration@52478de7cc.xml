@@ -2,31 +2,31 @@
 <cms.workflowtransition>
   <Parent>
     <CodeName>MemberRegistration</CodeName>
-    <GUID>8d3572bc-77ca-4fc6-8c09-6f561e2e6d9e</GUID>
+    <GUID>ea8682e7-b455-4fcf-bfd8-363d1c2df6c4</GUID>
     <ObjectType>ma.automationstep</ObjectType>
     <Parent>
       <CodeName>MemberWelcome</CodeName>
-      <GUID>70edf1d2-ccdc-44a3-b67f-570f69ea71b7</GUID>
+      <GUID>fe3083f8-a1cb-474d-b7f8-bc1625beb442</GUID>
       <ObjectType>ma.automationprocess</ObjectType>
     </Parent>
   </Parent>
   <Bindings>
-    <Binding id="ma.automationstep_Wait1Minute_ma.automationprocess_MemberWelcome-ma.automationstep_Wait1Minute_ma.automationprocess_MemberWelcome">
+    <Binding id="ma.automationstep_SendEmail_Welcome_ma.automationprocess_MemberWelcome-ma.automationstep_SendEmail_Welcome_ma.automationprocess_MemberWelcome">
       <TransitionEndStepID>
-        <CodeName>Wait1Minute</CodeName>
-        <GUID>ded4c8ba-2d00-47ad-a131-9aed43733668</GUID>
+        <CodeName>SendEmail_Welcome</CodeName>
+        <GUID>2c512fbd-9d61-46eb-9bf9-77e2751ac896</GUID>
         <ObjectType>ma.automationstep</ObjectType>
         <Parent>
           <CodeName>MemberWelcome</CodeName>
-          <GUID>70edf1d2-ccdc-44a3-b67f-570f69ea71b7</GUID>
+          <GUID>fe3083f8-a1cb-474d-b7f8-bc1625beb442</GUID>
           <ObjectType>ma.automationprocess</ObjectType>
         </Parent>
       </TransitionEndStepID>
-      <TransitionSourcePointGUID>24484f20-8877-4a96-a0d2-e791c1ce0af5</TransitionSourcePointGUID>
+      <TransitionSourcePointGUID>4dfa20c2-a00c-4f38-bf27-9cb3083ad889</TransitionSourcePointGUID>
       <TransitionType>1</TransitionType>
       <TransitionWorkflowID>
         <CodeName>MemberWelcome</CodeName>
-        <GUID>70edf1d2-ccdc-44a3-b67f-570f69ea71b7</GUID>
+        <GUID>fe3083f8-a1cb-474d-b7f8-bc1625beb442</GUID>
         <ObjectType>ma.automationprocess</ObjectType>
       </TransitionWorkflowID>
     </Binding>

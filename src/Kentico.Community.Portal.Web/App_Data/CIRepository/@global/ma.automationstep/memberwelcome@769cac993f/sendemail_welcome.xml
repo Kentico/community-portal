@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ma.automationstep>
+  <StepActionID>
+    <CodeName>Send_e-mail</CodeName>
+    <GUID>a578a254-b251-4f1e-abb7-533e5898f012</GUID>
+    <ObjectType>ma.automationaction</ObjectType>
+  </StepActionID>
+  <StepActionParameters>
+    <Parameters>
+      <BasedOn>3</BasedOn>
+      <EmailGuid>6ea5e4cf-86c5-4e05-924a-3d83b8c21253</EmailGuid>
+    </Parameters>
+  </StepActionParameters>
+  <StepDefinition>
+    <Step xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <TimeoutEnabled>false</TimeoutEnabled>
+      <TimeoutTarget>00000000-0000-0000-0000-000000000000</TimeoutTarget>
+      <SourcePoints>
+        <SourcePoint Guid="8acb16da-cdb3-4adc-935c-db5b65760ade">
+          <Label>workflowsourcepoint.standard</Label>
+          <Type>0</Type>
+          <StepRolesSecurity>0</StepRolesSecurity>
+          <StepUsersSecurity>0</StepUsersSecurity>
+        </SourcePoint>
+      </SourcePoints>
+      <Position>
+        <X>-1</X>
+        <Y>-1</Y>
+      </Position>
+    </Step>
+  </StepDefinition>
+  <StepDisplayName>Send email: Welcome</StepDisplayName>
+  <StepGUID>2c512fbd-9d61-46eb-9bf9-77e2751ac896</StepGUID>
+  <StepName>SendEmail_Welcome</StepName>
+  <StepRolesSecurity>0</StepRolesSecurity>
+  <StepType>11</StepType>
+  <StepUsersSecurity>0</StepUsersSecurity>
+  <StepWorkflowID>
+    <CodeName>MemberWelcome</CodeName>
+    <GUID>fe3083f8-a1cb-474d-b7f8-bc1625beb442</GUID>
+    <ObjectType>ma.automationprocess</ObjectType>
+  </StepWorkflowID>
+  <StepWorkflowType>3</StepWorkflowType>
+</ma.automationstep>

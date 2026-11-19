@@ -1,3 +1,4 @@
+using System.Threading.RateLimiting;
 using Kentico.Community.Portal.Web.Features.Errors;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.QAndA;
@@ -6,13 +7,14 @@ using Kentico.Community.Portal.Web.Resources;
 using Lucene.Net.Util;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Options;
 using Vite.AspNetCore;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionMvcExtensions
 {
-    public static IServiceCollection AddAppMvc(this IServiceCollection services, IWebHostEnvironment env) =>
+    public static IServiceCollection AddAppMvc(this IServiceCollection services, IWebHostEnvironment env, IConfiguration config) =>
         services
             .Configure<RouteOptions>(options =>
             {
@@ -105,98 +107,43 @@ public static class ServiceCollectionMvcExtensions
             .AddViteServices()
             .AddHealthChecks()
             .Services
+            .AddRateLimitingOptions(config)
             .AddRateLimiter(options =>
             {
-                // Q&A Content Creation Policies (Authenticated - softer limits)
+                // Limits come from RateLimitingOptions (appsettings "RateLimiting")
                 _ = options
-                    .AddPolicy(
-                        QAndARateLimitingConstants.CreateQuestion,
-                        httpContext => RateLimitingUtilities.CreateSlidingWindowPartition(
-                            httpContext,
-                            permitLimit: 1,
-                            segmentsPerWindow: 4,
-                            window: TimeSpan.FromMinutes(4)
-                        )
-                    )
-                    .AddPolicy(
-                        QAndARateLimitingConstants.CreateAnswer,
-                        httpContext => RateLimitingUtilities.CreateSlidingWindowPartition(
-                            httpContext,
-                            permitLimit: 2,
-                            segmentsPerWindow: 2,
-                            window: TimeSpan.FromMinutes(1)
-                        )
-                    )
-                    .AddPolicy(
-                        QAndARateLimitingConstants.UpdateQuestion,
-                        httpContext => RateLimitingUtilities.CreateSlidingWindowPartition(
-                            httpContext,
-                            permitLimit: 10,
-                            segmentsPerWindow: 5,
-                            window: TimeSpan.FromMinutes(5)
-                        )
-                    )
-                    .AddPolicy(
-                        QAndARateLimitingConstants.UpdateAnswer,
-                        httpContext => RateLimitingUtilities.CreateSlidingWindowPartition(
-                            httpContext,
-                            permitLimit: 10,
-                            segmentsPerWindow: 5,
-                            window: TimeSpan.FromMinutes(5)
-                        )
-                    )
-                    .AddPolicy(
-                        QAndARateLimitingConstants.UpdateQuestionSubscription,
-                        httpContext => RateLimitingUtilities.CreateSlidingWindowPartition(
-                            httpContext,
-                            permitLimit: 10,
-                            segmentsPerWindow: 5,
-                            window: TimeSpan.FromMinutes(2)
-                        )
-                    )
-                    .AddPolicy(
-                        QAndARateLimitingConstants.UpdateAnswerReaction,
-                        httpContext => RateLimitingUtilities.CreateSlidingWindowPartition(
-                            httpContext,
-                            permitLimit: 10,
-                            segmentsPerWindow: 10,
-                            window: TimeSpan.FromMinutes(1)
-                        )
-                    )
-                    .AddPolicy(
-                        QAndARateLimitingConstants.UpdateQuestionReaction,
-                        httpContext => RateLimitingUtilities.CreateSlidingWindowPartition(
-                            httpContext,
-                            permitLimit: 10,
-                            segmentsPerWindow: 10,
-                            window: TimeSpan.FromMinutes(1)
-                        )
-                    )
-                    // Authentication and Member Management Policies (Public - stronger limits)
-                    .AddPolicy(
-                        MemberRateLimitingConstants.Login,
-                        httpContext => RateLimitingUtilities.CreateFixedWindowPartition(
-                            httpContext,
-                            permitLimit: 50,
-                            window: TimeSpan.FromMinutes(10)
-                        )
-                    )
-                    .AddPolicy(
-                        MemberRateLimitingConstants.Registration,
-                        httpContext => RateLimitingUtilities.CreateFixedWindowPartition(
-                            httpContext,
-                            permitLimit: 10,
-                            window: TimeSpan.FromMinutes(5)
-                        )
-                    )
-                    .AddPolicy(
-                        MemberRateLimitingConstants.ForgotPassword,
-                        httpContext => RateLimitingUtilities.CreateFixedWindowPartition(
-                            httpContext,
-                            permitLimit: 10,
-                            window: TimeSpan.FromMinutes(30)
-                        )
-                    )
+                    // Q&A content creation (authenticated)
+                    .AddPolicy(QAndARateLimitingConstants.CreateQuestion, ctx => Partition(ctx, o => o.CreateQuestion))
+                    .AddPolicy(QAndARateLimitingConstants.CreateAnswer, ctx => Partition(ctx, o => o.CreateAnswer))
+                    .AddPolicy(QAndARateLimitingConstants.UpdateQuestion, ctx => Partition(ctx, o => o.UpdateQuestion))
+                    .AddPolicy(QAndARateLimitingConstants.UpdateAnswer, ctx => Partition(ctx, o => o.UpdateAnswer))
+                    .AddPolicy(QAndARateLimitingConstants.UpdateQuestionSubscription, ctx => Partition(ctx, o => o.UpdateQuestionSubscription))
+                    .AddPolicy(QAndARateLimitingConstants.UpdateAnswerReaction, ctx => Partition(ctx, o => o.UpdateAnswerReaction))
+                    .AddPolicy(QAndARateLimitingConstants.UpdateQuestionReaction, ctx => Partition(ctx, o => o.UpdateQuestionReaction))
+                    // Authentication and member management (public)
+                    .AddPolicy(MemberRateLimitingConstants.Login, ctx => Partition(ctx, o => o.Login))
+                    .AddPolicy(MemberRateLimitingConstants.Registration, ctx => Partition(ctx, o => o.Registration))
+                    .AddPolicy(MemberRateLimitingConstants.ForgotPassword, ctx => Partition(ctx, o => o.ForgotPassword))
+                    .AddPolicy(MemberRateLimitingConstants.UpdateAvatar, ctx => Partition(ctx, o => o.UpdateAvatar))
+                    .AddPolicy(MemberRateLimitingConstants.EmailVerification, ctx => Partition(ctx, o => o.EmailVerification))
                     .OnRejected = RateLimitingUtilities.OnRejectedHandler;
             });
+
+    /// <summary>
+    /// Binds <see cref="RateLimitingOptions" />. Unknown keys and invalid values are logged as errors at
+    /// startup and keep the defaults (<see cref="RateLimitingOptionsSetup" />); the app still starts.
+    /// </summary>
+    public static IServiceCollection AddRateLimitingOptions(this IServiceCollection services, IConfiguration config) =>
+        services
+            .AddOptions()
+            .AddSingleton<IConfigureOptions<RateLimitingOptions>>(sp =>
+                new RateLimitingOptionsSetup(config, sp.GetRequiredService<ILogger<RateLimitingOptionsSetup>>()))
+            .AddHostedService<RateLimitingOptionsStartupCheck>();
+
+    private static RateLimitPartition<string> Partition(
+        HttpContext httpContext,
+        Func<RateLimitingOptions, RateLimitPolicyOptions> policy) =>
+        RateLimitingUtilities.CreatePartition(
+            httpContext,
+            policy(httpContext.RequestServices.GetRequiredService<IOptions<RateLimitingOptions>>().Value));
 }

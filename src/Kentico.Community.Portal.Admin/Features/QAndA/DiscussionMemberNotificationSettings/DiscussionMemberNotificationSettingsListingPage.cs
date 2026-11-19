@@ -51,6 +51,7 @@ public class DiscussionMemberNotificationSettingsListingPage : ListingPage
                 "Modified",
                 searchable: false,
                 sortable: true,
+                defaultSortDirection: SortTypeEnum.Desc,
                 minWidth: 4)
             .AddColumn(
                 nameof(DiscussionMemberNotificationSettingsInfo.DiscussionMemberNotificationSettingsFrequencyType),

@@ -25,7 +25,7 @@ public class MemberController(
     IJSEncoder jsEncoder,
     IWebHostEnvironment webHostEnvironment) : Controller
 {
-    private const string DEFAULT_AVATAR_RELATIVE_PATH = "img/profile-photo-default.png";
+    private const string DEFAULT_AVATAR_RELATIVE_PATH = "img/profile-photo-default.webp";
 
     private readonly IMediator mediator = mediator;
     private readonly AvatarImageService avatarImageService = avatarImageService;
@@ -49,7 +49,14 @@ public class MemberController(
 
         metaService.SetMeta(new WebPageMeta(
             $"Community member profile - {member.DisplayName}",
-            $"Learn about {member.DisplayName} and their contributions to the Kentico Community"));
+            $"Learn about {member.DisplayName} and their contributions to the Kentico Community")
+        {
+            // Member profiles have no content item, so the canonical URL comes from the route
+            CanonicalURL = Maybe.From(Url.ActionLink(nameof(MemberDetail), values: new { memberID })).MapNullOrWhiteSpaceAsNone(),
+            // Profiles hold no answer; author identity is expressed as Person markup in articles and answers
+            Robots = WebPageMeta.ROBOTS_NOINDEX,
+            OGType = WebPageMeta.OG_TYPE_PROFILE
+        });
 
         var blogResult = search.SearchBlog(new BlogSearchRequest("publishdate", 50)
         {

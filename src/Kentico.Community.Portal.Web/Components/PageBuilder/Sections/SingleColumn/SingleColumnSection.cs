@@ -80,11 +80,11 @@ public class SingleColumnSectionProperties : ISectionProperties
         Label = "Background Color",
         ExplanationText = "Determines the background color of the entire section",
         Tooltip = "Select a Background Color",
-        DataProviderType = typeof(EnumDropDownOptionsProvider<BackgroundColors>),
+        DataProviderType = typeof(EnumDropDownOptionsProvider<SectionBackgroundColors>),
         Order = 7
     )]
-    public string BackgroundColor { get; set; } = nameof(BackgroundColors.White);
-    public BackgroundColors BackgroundColorParsed => EnumDropDownOptionsProvider<BackgroundColors>.Parse(BackgroundColor, BackgroundColors.White);
+    public string BackgroundColor { get; set; } = nameof(SectionBackgroundColors.White);
+    public SectionBackgroundColors BackgroundColorParsed => EnumDropDownOptionsProvider<SectionBackgroundColors>.Parse(BackgroundColor, SectionBackgroundColors.White);
 
     [CheckBoxComponent(
         Label = "Display as carousel",
@@ -150,18 +150,6 @@ public enum VerticalPaddings
     None,
 }
 
-public enum BackgroundColors
-{
-    [Description("Light")]
-    Light,
-    [Description("White")]
-    White,
-    [Description("Dark")]
-    Dark,
-    [Description("Secondary Light")]
-    Secondary_Light
-}
-
 public class SingleColumnSectionViewModel
 {
     public SingleColumnSectionViewModel(SingleColumnSectionProperties props, bool isEditMode = false)
@@ -183,7 +171,7 @@ public class SingleColumnSectionViewModel
     public Alignments Alignment { get; set; }
     public VerticalPaddings PaddingTop { get; set; }
     public VerticalPaddings PaddingBottom { get; set; }
-    public BackgroundColors BackgroundColor { get; set; }
+    public SectionBackgroundColors BackgroundColor { get; set; }
     public bool DisplayAsCarousel { get; set; }
     public bool IsEditMode { get; set; }
     public int NumberOfSlides { get; set; }

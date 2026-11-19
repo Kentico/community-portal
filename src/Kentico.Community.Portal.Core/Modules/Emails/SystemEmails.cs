@@ -5,31 +5,23 @@ namespace Kentico.Community.Portal.Core.Modules;
 
 public static class SystemEmails
 {
-    public static SupportRequestConfirmationEmail SupportRequestConfirmation { get; } = new();
     public static PasswordRecoveryConfirmationEmail PasswordRecoveryConfirmation { get; } = new();
     public static RegistrationConfirmationEmail RegistrationConfirmation { get; } = new();
     public static QAndADiscussionNotificationEmail QAndADiscussionNotification { get; } = new();
+    public static MemberEmailVerificationEmail MemberEmailVerification { get; } = new();
+    public static MemberEmailChangedNotificationEmail MemberEmailChangedNotification { get; } = new();
 
     public static readonly ImmutableList<ISystemEmailConfiguration> ProtectedEmails =
     [
-        SupportRequestConfirmation,
         PasswordRecoveryConfirmation,
         RegistrationConfirmation,
-        QAndADiscussionNotification
+        QAndADiscussionNotification,
+        MemberEmailVerification,
+        MemberEmailChangedNotification
     ];
 
     public static bool Includes(EmailConfigurationInfo config) =>
         ProtectedEmails.Select(c => c.EmailConfigurationGUID).Contains(config.EmailConfigurationGUID);
-
-    public record SupportRequestConfirmationEmail : ISystemEmailConfiguration
-    {
-        public static Guid GUID { get; } = new Guid("57d3ca11-3fa9-49ab-b48e-26e7c856b33e");
-        public const string CodeName = "SupportRequestConfirmation-pu4fmsre";
-
-        public Guid EmailConfigurationGUID => GUID;
-
-        public string EmailConfigurationName => CodeName;
-    }
 
     public record PasswordRecoveryConfirmationEmail : ISystemEmailConfiguration
     {
@@ -55,6 +47,32 @@ public static class SystemEmails
     {
         public static Guid GUID { get; } = new Guid("17ac6ad9-d0cb-4e82-a64f-b63589c6e53d");
         public const string CodeName = "QAndADiscussionNotification-x49wqflo";
+
+        public Guid EmailConfigurationGUID => GUID;
+
+        public string EmailConfigurationName => CodeName;
+    }
+
+    /// <summary>
+    /// Verification link for a new (changed) member email or an alternate email. Sent to the address being verified.
+    /// </summary>
+    public record MemberEmailVerificationEmail : ISystemEmailConfiguration
+    {
+        public static Guid GUID { get; } = new Guid("b6f1c2a4-5d3e-4f7a-9c8b-1e2d3f4a5b6c");
+        public const string CodeName = "MemberEmailVerification-k3v9qx2m";
+
+        public Guid EmailConfigurationGUID => GUID;
+
+        public string EmailConfigurationName => CodeName;
+    }
+
+    /// <summary>
+    /// Sent to a member's previous email after their account email changed.
+    /// </summary>
+    public record MemberEmailChangedNotificationEmail : ISystemEmailConfiguration
+    {
+        public static Guid GUID { get; } = new Guid("d2e8a7c1-3b4f-4e6d-8a9c-7f1e2d3c4b5a");
+        public const string CodeName = "MemberEmailChangedNotification-p7w4rz5t";
 
         public Guid EmailConfigurationGUID => GUID;
 

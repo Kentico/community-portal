@@ -4,6 +4,7 @@ using CMS.Base;
 using EnumsNET;
 using Kentico.Community.Portal.Web.Features.Members;
 using Kentico.Community.Portal.Web.Features.Members.Badges;
+using Kentico.Community.Portal.Web.Features.Members.EmailVerification;
 using Kentico.Community.Portal.Web.Features.QAndA.Notifications;
 using Kentico.Community.Portal.Core.Membership;
 using Kentico.Community.Portal.Web.Membership;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.AccountManagement;
 
@@ -30,8 +32,10 @@ public class AccountManagementWidgetController(
     QAndANotificationSettingsManager notificationsManager,
     RecipientListManager recipientListManager,
     IContentRetriever contentRetriever,
-    IWebPageUrlRetriever urlRetriever) : Controller
+    IWebPageUrlRetriever urlRetriever,
+    MemberEmailVerificationService emailVerificationService) : Controller
 {
+    private readonly MemberEmailVerificationService emailVerificationService = emailVerificationService;
     private readonly UserManager<CommunityMember> userManager = userManager;
     private readonly SignInManager<CommunityMember> signInManager = signInManager;
     private readonly MemberContactManager contactManager = contactManager;
@@ -124,6 +128,158 @@ public class AccountManagementWidgetController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [EnableRateLimiting(MemberRateLimitingConstants.EmailVerification)]
+    public async Task<ActionResult> RequestEmailChange(ChangeEmailViewModel model)
+    {
+        const string view = "~/Components/PageBuilder/Widgets/AccountManagement/_EmailForm.cshtml";
+
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
+        var member = await userManager.GetUserAsync(User);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        model.CurrentEmail = member.Email ?? "";
+
+        if (!ModelState.IsValid)
+        {
+            return PartialView(view, model);
+        }
+
+        // Re-authenticate: a hijacked session alone can't move the account to another email
+        if (!await userManager.CheckPasswordAsync(member, model.CurrentPassword))
+        {
+            ModelState.AddModelError(nameof(ChangeEmailViewModel.CurrentPassword), "The current password is incorrect.");
+            return PartialView(view, model);
+        }
+
+        var result = await emailVerificationService.RequestEmailChange(member, model.NewEmail);
+        switch (result)
+        {
+            case EmailVerificationRequestResult.SameAsAccountEmail:
+                ModelState.AddModelError(nameof(ChangeEmailViewModel.NewEmail), "This is already your account email.");
+                return PartialView(view, model);
+            case EmailVerificationRequestResult.InUse:
+                ModelState.AddModelError(nameof(ChangeEmailViewModel.NewEmail), "This email is already used by another account.");
+                return PartialView(view, model);
+            default:
+                break;
+        }
+
+        ModelState.Clear();
+
+        return PartialView(view, new ChangeEmailViewModel
+        {
+            CurrentEmail = member.Email ?? "",
+            RequestedEmail = model.NewEmail.Trim()
+        });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [EnableRateLimiting(MemberRateLimitingConstants.EmailVerification)]
+    public async Task<ActionResult> UpdateAlternateEmail(AlternateEmailViewModel model)
+    {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
+        var member = await userManager.GetUserAsync(User);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return AlternateEmailPartial(member, model);
+        }
+
+        var result = await emailVerificationService.RequestAlternateEmail(member, model.AlternateEmail);
+        switch (result)
+        {
+            case EmailVerificationRequestResult.SameAsAccountEmail:
+                ModelState.AddModelError(nameof(AlternateEmailViewModel.AlternateEmail), "This is your account email. Enter a different email.");
+                return AlternateEmailPartial(member, model);
+            case EmailVerificationRequestResult.InUse:
+                ModelState.AddModelError(nameof(AlternateEmailViewModel.AlternateEmail), "This email is already used by another account.");
+                return AlternateEmailPartial(member, model);
+            case EmailVerificationRequestResult.AlreadyVerified:
+                return AlternateEmailPartial(member, new(), "This alternate email is already verified.");
+            default:
+                return AlternateEmailPartial(member, new(), $"We sent a verification link to {member.AlternateEmail}.");
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [EnableRateLimiting(MemberRateLimitingConstants.EmailVerification)]
+    public async Task<ActionResult> ResendAlternateEmailVerification()
+    {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
+        var member = await userManager.GetUserAsync(User);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        var result = await emailVerificationService.ResendAlternateEmailVerification(member);
+
+        return AlternateEmailPartial(member, new(), result switch
+        {
+            EmailVerificationRequestResult.Sent => $"We sent a new verification link to {member.AlternateEmail}.",
+            EmailVerificationRequestResult.AlreadyVerified => "This alternate email is already verified.",
+            _ => "You have no alternate email to verify."
+        });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult> RemoveAlternateEmail()
+    {
+        if (readOnlyProvider.IsReadOnly)
+        {
+            return StatusCode(503);
+        }
+
+        var member = await userManager.GetUserAsync(User);
+        if (member is null)
+        {
+            return Unauthorized();
+        }
+
+        await emailVerificationService.RemoveAlternateEmail(member);
+
+        return AlternateEmailPartial(member, new(), "Alternate email removed.");
+    }
+
+    private PartialViewResult AlternateEmailPartial(CommunityMember member, AlternateEmailViewModel model, string? statusMessage = null)
+    {
+        model.CurrentAlternateEmail = member.AlternateEmail;
+        model.VerifiedDate = member.AlternateEmailVerifiedDate;
+        model.StatusMessage = statusMessage;
+
+        if (statusMessage is not null)
+        {
+            ModelState.Clear();
+        }
+
+        return PartialView("~/Components/PageBuilder/Widgets/AccountManagement/_AlternateEmailForm.cshtml", model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [EnableRateLimiting(MemberRateLimitingConstants.UpdateAvatar)]
     public async Task<ActionResult> UpdateAvatarImage(AvatarFormViewModel model)
     {
         if (readOnlyProvider.IsReadOnly)
@@ -178,13 +334,15 @@ public class AccountManagementWidgetController(
             return Unauthorized();
         }
 
+        var requestedBadges = request.SelectedBadges;
+
         // Include always-selected badges in the total count limit
-        if (request.Badges.Count(x => x.IsSelected) > BadgesFormViewModel.MAX_SELECTED_BADGES)
+        if (requestedBadges.Count(x => x.IsSelected) > BadgesFormViewModel.MAX_SELECTED_BADGES)
         {
             return ValidationProblem();
         }
 
-        await memberBadgeService.UpdateSelectedBadgesFor(request.Badges, member.Id);
+        await memberBadgeService.UpdateSelectedBadgesFor(requestedBadges, member.Id);
         var badges = await memberBadgeService.GetAllBadgesFor(member.Id);
 
         return PartialView("~/Components/PageBuilder/Widgets/AccountManagement/_BadgesForm.cshtml", new BadgesFormViewModel(badges));
@@ -287,22 +445,10 @@ public class AccountManagementWidgetController(
             await GetEmailSubscriptionsViewModel(member.Email!));
     }
 
-    private async Task<EmailSubscriptionsViewModel> GetEmailSubscriptionsViewModel(string memberEmail)
-    {
-        var allLists = await recipientListManager.GetRecipientLists();
-        var subscribedIDs = await recipientListManager.GetSubscribedRecipientListIDs(memberEmail);
-        var subscribedSet = subscribedIDs.ToHashSet();
-
-        var items = allLists.Select(rl => new RecipientListItemViewModel
-        {
-            RecipientListID = rl.ContactGroupID,
-            DisplayName = rl.ContactGroupDisplayName,
-            Description = rl.ContactGroupDescription,
-            IsSubscribed = subscribedSet.Contains(rl.ContactGroupID)
-        }).ToList();
-
-        return new EmailSubscriptionsViewModel { Items = items };
-    }
+    private async Task<EmailSubscriptionsViewModel> GetEmailSubscriptionsViewModel(string memberEmail) =>
+        EmailSubscriptionsViewModel.Create(
+            await recipientListManager.GetRecipientLists(),
+            await recipientListManager.GetSubscriptions(memberEmail));
 
     private async Task<QAndANotificationsFormViewModel> GetNotificationsFormViewModel(CommunityMember member)
     {
@@ -339,7 +485,14 @@ public class AccountManagementWidgetController(
     }
 }
 
-public record UpdateBadgesRequest(List<SelectedBadgeViewModel> Badges);
+public record UpdateBadgesRequest(List<SelectedBadgeViewModel>? Badges)
+{
+    /// <summary>
+    /// The posted badges, or an empty list. Model binding leaves <see cref="Badges"/> null
+    /// when the form posts no badge fields, which is the case for members with no badges.
+    /// </summary>
+    public IReadOnlyList<SelectedBadgeViewModel> SelectedBadges => Badges ?? [];
+}
 
 public class BadgesFormViewModel
 {
@@ -350,6 +503,12 @@ public class BadgesFormViewModel
     public IReadOnlyList<MemberBadgeViewModel> SelectableBadges { get; }
     public int InitialSelectedCount { get; }
     public int RemainingSlots { get; }
+
+    /// <summary>
+    /// False when the member has no assigned badges, in which case there is nothing to
+    /// select and the form cannot be submitted.
+    /// </summary>
+    public bool HasBadges => Badges.Count > 0;
 
     public BadgesFormViewModel(IReadOnlyList<MemberBadgeViewModel> badges)
     {
@@ -431,6 +590,49 @@ public class UpdatePasswordViewModel
     [MaxLength(100, ErrorMessage = "The password confirmation cannot be longer than 100 characters.")]
     [Compare(nameof(NewPassword), ErrorMessage = "The entered passwords do not match.")]
     public string PasswordConfirmation { get; set; } = "";
+}
+
+public class ChangeEmailViewModel
+{
+    [BindNever]
+    public string CurrentEmail { get; set; } = "";
+
+    [Required(ErrorMessage = "The new email cannot be empty.")]
+    [EmailAddress(ErrorMessage = "Enter a valid email address.")]
+    [DisplayName("New email")]
+    [MaxLength(254, ErrorMessage = "The email cannot be longer than 254 characters.")]
+    public string NewEmail { get; set; } = "";
+
+    [DataType(DataType.Password)]
+    [Required(ErrorMessage = "The current password cannot be empty.")]
+    [DisplayName("Current password")]
+    [MaxLength(100, ErrorMessage = "The password cannot be longer than 100 characters.")]
+    public string CurrentPassword { get; set; } = "";
+
+    /// <summary>Set after a verification link was sent to this email.</summary>
+    [BindNever]
+    public string? RequestedEmail { get; set; }
+}
+
+public class AlternateEmailViewModel
+{
+    [BindNever]
+    public string CurrentAlternateEmail { get; set; } = "";
+
+    [BindNever]
+    public DateTime? VerifiedDate { get; set; }
+
+    [BindNever]
+    public string? StatusMessage { get; set; }
+
+    public bool HasAlternateEmail => !string.IsNullOrWhiteSpace(CurrentAlternateEmail);
+    public bool IsVerified => HasAlternateEmail && VerifiedDate is not null;
+
+    [Required(ErrorMessage = "The alternate email cannot be empty.")]
+    [EmailAddress(ErrorMessage = "Enter a valid email address.")]
+    [DisplayName("Alternate email")]
+    [MaxLength(254, ErrorMessage = "The email cannot be longer than 254 characters.")]
+    public string AlternateEmail { get; set; } = "";
 }
 
 public class AvatarFormViewModel

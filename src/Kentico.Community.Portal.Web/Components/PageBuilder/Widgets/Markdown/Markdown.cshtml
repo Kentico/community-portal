@@ -16,6 +16,8 @@
         NoteStyles.Warning => "var(--bs-primary-light)",
         _ => "var(--bs-purple-100)"
     };
+
+    const string inlineEditorView = "~/Components/PageBuilder/Widgets/Markdown/_MarkdownInlineEditor.cshtml";
 }
 
 <div xpc-preview-outline="@Model.ComponentName" xpc-preview-outline-remove-element="true">
@@ -26,8 +28,19 @@
             {
                 <h4 class="alert-heading">@Model.NoteTitle</h4>
             }
-            @Model.HTML
+            @if (Model.UseInlineEditor)
+            {
+                <partial name="@inlineEditorView" model="Model" />
+            }
+            else
+            {
+                @Model.HTML
+            }
         </div>
+    }
+    else if (Model.UseInlineEditor)
+    {
+        <partial name="@inlineEditorView" model="Model" />
     }
     else
     {

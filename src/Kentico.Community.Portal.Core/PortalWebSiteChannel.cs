@@ -7,4 +7,5 @@ public static class PortalWebSiteChannel
     public const string ROLE_COMMUNITY_MANAGER = "CommunityManager";
     public const string WORKSPACE_DEFAULT = "KenticoDefault";
     public const string WORKSPACE_BLOG = "Blog";
+    public const string WORKSPACE_MEMBER_ASSETS = "MemberAssets";
 }

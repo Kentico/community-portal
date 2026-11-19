@@ -1,7 +1,7 @@
 namespace Kentico.Community.Portal.Web.Features.QAndA;
 
 /// <summary>
-/// Constants for Q&A rate limiting policy names
+/// Constants for Q&A rate limiting policy names. Limits: <see cref="Infrastructure.RateLimitingOptions"/>
 /// </summary>
 public static class QAndARateLimitingConstants
 {

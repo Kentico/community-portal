@@ -31,6 +31,7 @@ public class RecipientListSubscriberListExtender(
                     s.InnerJoin<EmailSubscriptionConfirmationInfo>(
                         $"OM_ContactGroupMember.{nameof(ContactGroupMemberInfo.ContactGroupMemberRelatedID)}",
                         nameof(EmailSubscriptionConfirmationInfo.EmailSubscriptionConfirmationContactID)))
+                .Where(new WhereCondition(ActiveSubscriptionSql.Predicate()))
                 .AddColumn(nameof(EmailSubscriptionConfirmationInfo.EmailSubscriptionConfirmationDate)));
 
         _ = config.ColumnConfigurations.AddColumn(
@@ -42,6 +43,23 @@ public class RecipientListSubscriberListExtender(
             .Tap(c => c.Sorting = new() { Sortable = c.Sorting.Sortable });
 
         _ = config.TableActions.AddDeleteAction(nameof(Delete));
+
+        // Native CSV export; keep any export the page already configures
+        if (config.ExportConfiguration is null)
+        {
+            config.EnableExport(new ListingExportConfiguration
+            {
+                FileName = "recipient-list-subscribers",
+                AdditionalColumns =
+                [
+                    new ColumnConfiguration
+                    {
+                        Name = nameof(ContactGroupMemberInfo.ContactGroupMemberRelatedID),
+                        Caption = "Contact ID"
+                    }
+                ]
+            });
+        }
     }
 
     [PageCommand(Permission = SystemPermissions.DELETE)]

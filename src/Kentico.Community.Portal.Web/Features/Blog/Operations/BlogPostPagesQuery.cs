@@ -31,6 +31,9 @@ public class BlogPostPagesByWebPageGUIDQueryHandler(ContentItemQueryTools tools)
             (page, builder) => builder
                 .WebPage(page)
                 .Collection(
+                    page.FeaturedImageImageContent,
+                    (image, builder) => builder.ContentItem(image))
+                .Collection(
                     page.BlogPostPageAuthorContent,
                     (author, builder) => builder.ContentItem(author)
                         .Collection(

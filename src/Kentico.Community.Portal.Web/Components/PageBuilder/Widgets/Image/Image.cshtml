@@ -47,7 +47,7 @@
         {
             <a href="@Model.Image.Asset.Url">
                 <picture>
-                    <img class="img-fluid @themeClasses" xpc-image-asset="Model.Image" xpc-image-asset-responsive="true"
+                    <img class="img-fluid @themeClasses" xpc-image-asset="Model.Image" xpc-image-asset-responsive="true" test-id="imageWidgetImage"
                         sizes="@sizesAttribute">
                 </picture>
             </a>
@@ -55,7 +55,7 @@
         else
         {
             <picture>
-                <img class="img-fluid @themeClasses" xpc-image-asset="Model.Image" xpc-image-asset-responsive="true"
+                <img class="img-fluid @themeClasses" xpc-image-asset="Model.Image" xpc-image-asset-responsive="true" test-id="imageWidgetImage"
                     sizes="@sizesAttribute">
             </picture>
         }

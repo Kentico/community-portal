@@ -1,0 +1,4 @@
+@model string
+
+@* Same URL js/recaptcha.js loads on demand; it reuses this tag when present *@
+<script src="https://www.google.com/recaptcha/api.js?render=@Model" async defer></script>

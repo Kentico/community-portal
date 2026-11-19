@@ -26,16 +26,47 @@
       <field allowempty="true" column="MemberAvatarFileExtension" columnprecision="0" columnsize="5" columntype="text" enabled="true" guid="295972d6-2114-46d3-9703-066154c1fb17" />
       <field allowempty="true" column="MemberAdministratorNotes" columnprecision="0" columntype="longtext" enabled="true" guid="652d625f-c20e-46bd-9f8c-838d3dfaf01c" />
       <field allowempty="true" column="MemberModerationStatus" columnprecision="0" columnsize="15" columntype="text" enabled="true" guid="5fe75ef9-0e15-4d2d-a4ab-1e186d1861c6" />
-      <field column="MemberProgramStatus" columnprecision="0" columnsize="20" columntype="text" enabled="true" guid="ab44a32d-7a34-4c76-966c-26897b7596c4">
-        <properties>
-          <defaultvalue>None</defaultvalue>
-        </properties>
-      </field>
       <field allowempty="true" column="MemberEmployerLink" columnprecision="0" columntype="link" enabled="true" guid="b832e3a2-04c2-40c8-8c29-ed4f5bd736ee" />
       <field allowempty="true" column="MemberJobTitle" columnprecision="0" columnsize="100" columntype="text" enabled="true" guid="55ab4c14-3279-4126-9066-4b8c270176d9" />
       <field allowempty="true" column="MemberTimeZone" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="0bb26afb-8926-485a-8043-804d98220d72" />
       <field allowempty="true" column="MemberCountry" columnprecision="0" columnsize="50" columntype="text" enabled="true" guid="6a6c1d8a-04c9-4827-b1b2-e31e2ba0d24d" />
       <field allowempty="true" column="MemberBio" columnprecision="0" columntype="longtext" enabled="true" guid="0da3128f-f405-4dee-976a-1619ff66e597" />
+      <field allowempty="true" column="MemberTermsAcceptedVersion" columnsize="50" columntype="text" enabled="true" guid="00bddd38-349f-4ce9-b9a9-10c9d67c05df">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field allowempty="true" column="MemberTermsAcceptedDate" columnprecision="7" columntype="datetime" enabled="true" guid="c0cbf8a4-3f8f-446e-9377-6fe10d7d6c97">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field allowempty="true" column="MemberNewsletterOptInRequestedDate" columnprecision="7" columntype="datetime" enabled="true" guid="b724f5a3-3f61-4f7e-99fe-1b30c8af093b">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field allowempty="true" column="MemberAlternateEmail" columnsize="254" columntype="text" enabled="true" guid="088bb99f-7dbd-46f4-9fb5-57ba2ac79884">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field allowempty="true" column="MemberAlternateEmailVerifiedDate" columnprecision="7" columntype="datetime" enabled="true" guid="3af912e6-fb63-4b24-b581-b057034eb91f">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
+      <field allowempty="true" column="MemberEmailConfirmedDate" columnprecision="7" columntype="datetime" enabled="true" guid="6926016a-1a47-4a02-8bb8-83e606c2e623">
+        <properties>
+          <explanationtextashtml>False</explanationtextashtml>
+          <fielddescriptionashtml>False</fielddescriptionashtml>
+        </properties>
+      </field>
     </form>
   </ClassFormDefinition>
   <ClassGUID>07c5d145-7cbc-4c75-9a96-6d4948bf6c73</ClassGUID>

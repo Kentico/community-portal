@@ -1,0 +1,33 @@
+/*
+ * CTA Button widget, Outline style (CTAButton.cshtml).
+ * The Filled style is plain Bootstrap (.btn-primary .btn-lg) and has no rules here.
+ * Sits on top of .btn .btn-outline-primary, so hover/active/focus colours come from Bootstrap.
+ */
+:where(.cta-button--outline) {
+  --cta-button-height: 3rem;
+  --cta-button-padding-x: var(--space-4);
+  --cta-button-font-size: var(--font-size-4);
+  --cta-button-font-weight: 500;
+  --cta-button-tracking: 0.02em;
+}
+
+// Real specificity: has to beat .btn's own padding / type custom properties
+.btn.cta-button--outline {
+  --bs-btn-padding-x: var(--cta-button-padding-x);
+  --bs-btn-padding-y: 0;
+  --bs-btn-font-size: var(--cta-button-font-size);
+  --bs-btn-font-weight: var(--cta-button-font-weight);
+  --bs-btn-line-height: 1.2;
+  --bs-btn-border-width: 1px;
+  --bs-btn-border-radius: var(--radius-pill);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  min-height: var(--cta-button-height);
+  letter-spacing: var(--cta-button-tracking);
+  // Long labels wrap on a phone instead of overflowing the column
+  white-space: normal;
+  text-transform: uppercase;
+}

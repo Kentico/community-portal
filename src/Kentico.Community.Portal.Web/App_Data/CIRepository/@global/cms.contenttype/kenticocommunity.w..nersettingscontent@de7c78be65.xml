@@ -19,8 +19,11 @@
           <controlname>Kentico.Administration.TextInput</controlname>
         </settings>
       </field>
-      <field column="WebsiteCookieBannerSettingsContentMessageHTML" columnprecision="0" columntype="richtexthtml" enabled="true" guid="052d4ed1-6631-4e02-b903-0a2cadc97135" visible="true">
+      <field column="WebsiteCookieBannerSettingsContentMessageHTML" columntype="richtexthtml" enabled="true" guid="052d4ed1-6631-4e02-b903-0a2cadc97135" visible="true">
         <properties>
+          <explanationtext>
+            <![CDATA[Put {{WebsiteTrackingConsent}} where the Website tracking consent short text should appear (edit that text on the consent). Without it, the consent text is added after the message.]]>
+          </explanationtext>
           <explanationtextashtml>False</explanationtextashtml>
           <fieldcaption>Message</fieldcaption>
           <fielddescriptionashtml>False</fielddescriptionashtml>

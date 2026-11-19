@@ -1,4 +1,4 @@
-﻿@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Registration
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.Registration
 
 @model EmailConfirmationViewModel
 
@@ -13,7 +13,7 @@
         <p>@Model.Message</p>
 
         <fieldset hx-indicator="this" xpc-readonly-disabled>
-            <button type="submit" class="btn btn-primary mt-3" xpc-loading-button>
+            <button type="submit" class="btn btn-primary mt-3" xpc-loading-button test-id="resendConfirmationEmail">
                 @Model.SendButtonText
             </button>
 
@@ -24,23 +24,42 @@
     return;
 }
 
-<section class="section section--default">
+<section class="section section--default" test-id="emailConfirmation" data-state="@Model.State.ToString().ToLowerInvariant()">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-xl-10 col-xxl-9">
                 <div class="main text-center">
                     <h4 class="mb-4" test-id="confirmationMessage">@Model.Message</h4>
 
-                    @if (Model.State == EmailConfirmationState.Success_Confirmed || Model.State == EmailConfirmationState.Success_AlreadyConfirmed)
-                    {   
-                        <a href="/login" test-id="confirmationSignInLink" class="btn btn-outline-secondary" test-id="signIn">Sign in</a>
+                    @if (Model.State == EmailConfirmationState.Pending)
+                    {
+                        @*
+                            Opening the link changes nothing (email scanners pre-open links). The member confirms with
+                            this button. method="post": the form tag helper renders the antiforgery token the endpoint validates.
+                        *@
+                        <form hx-post hx-controller="EmailConfirmationWidget" hx-action="ConfirmEmail" hx-swap="outerHTML"
+                            hx-target="closest section" method="post" hx-disabled-elt="find fieldset" test-id="confirmEmailForm">
+                            <input type="hidden" name="memberEmail" value="@Model.MemberEmail" />
+                            <input type="hidden" name="confirmToken" value="@Model.ConfirmToken" />
+                            <fieldset hx-indicator="this" xpc-readonly-disabled>
+                                <button type="submit" class="btn btn-primary" xpc-loading-button test-id="confirmEmail">
+                                    @Model.SendButtonText
+                                </button>
+
+                                <vc:read-only-mode-notification />
+                            </fieldset>
+                        </form>
                     }
-                    else
+                    else if (Model.State == EmailConfirmationState.Success_Confirmed || Model.State == EmailConfirmationState.Success_AlreadyConfirmed)
+                    {
+                        <a href="/login" test-id="confirmationSignInLink" class="btn btn-outline-secondary">Sign in</a>
+                    }
+                    else if (!string.IsNullOrEmpty(Model.Username))
                     {
                         <form hx-post hx-controller="EmailConfirmationWidget" hx-action="ResendConfirmationEmail" hx-swap="outerHTML" hx-target=""
                             hx-route-username="@Model.Username" method="post" hx-disabled-elt="find fieldset">
                             <fieldset hx-indicator="this">
-                                <button type="submit" class="btn btn-primary mt-3" xpc-loading-button>
+                                <button type="submit" class="btn btn-primary mt-3" xpc-loading-button test-id="resendConfirmationEmail">
                                     @Model.SendButtonText
                                 </button>
                             </fieldset>

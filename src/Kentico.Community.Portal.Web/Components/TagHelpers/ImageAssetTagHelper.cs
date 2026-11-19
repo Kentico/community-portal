@@ -14,19 +14,6 @@ public class ImageAssetTagHelper(IWebsiteChannelContext channelContext) : TagHel
     public const string ATTRIBUTE_LAZY = "xpc-image-asset-lazy";
     public const string ATTRIBUTE_RESPONSIVE = "xpc-image-asset-responsive";
 
-    /// <summary>
-    /// Standard image variant names with their maximum widths as configured in Xperience.
-    /// These should match the variant names and max widths you've set up in your Xperience environment.
-    /// Update these values to match your actual variant configuration.
-    /// </summary>
-    private static readonly Dictionary<string, int> standardVariants = new()
-    {
-        { "Small_Scaled", 400 },    // Mobile 1x displays
-        { "Medium_Scaled", 800 },   // Mobile 2x, tablet 1x displays  
-        { "Large_Scaled", 1200 },   // Mobile 3x, tablet 1.5x, desktop 1x displays
-        { "Large_X2_Scaled", 1600 },      // Tablet 2x, desktop 1.3x displays
-        { "Large_X3_Scaled", 2400 },     // Desktop 2x displays (optional)
-    };
     private readonly IWebsiteChannelContext channelContext = channelContext;
 
     [HtmlAttributeName(ATTRIBUTE_IMAGE)]
@@ -103,8 +90,8 @@ public class ImageAssetTagHelper(IWebsiteChannelContext channelContext) : TagHel
         // Pre-allocate with reasonable capacity (typically 3-5 variants)
         var srcsetParts = new List<string>(6);
 
-        // Process variants in order, building sorted list directly
-        foreach (var (variantName, maxWidth) in standardVariants.OrderBy(kvp => kvp.Value))
+        // Variants are declared in ascending width order
+        foreach (var (variantName, maxWidth) in ImageVariants.All)
         {
             // Skip variants that would be larger than the original image
             if (maxWidth >= originalWidth)

@@ -59,16 +59,6 @@ else
     database = builder.AddConnectionString("CMSConnectionString");
 }
 
-// Azure Storage emulator (Azurite), pinned to the standard emulator ports so the existing
-// CMSAzure* development settings keep working unchanged. Used by Support Request Processing when enabled.
-_ = builder.AddAzureStorage("storage")
-    .RunAsEmulator(emulator => emulator
-        .WithLifetime(ContainerLifetime.Persistent)
-        .WithDataVolume("kentico-community-azurite-data")
-        .WithBlobPort(10000)
-        .WithQueuePort(10001)
-        .WithTablePort(10002));
-
 // Vite dev server for the website channel client assets (proxied by the web app via Vite.AspNetCore).
 // Self-configures HTTPS + port 5174 from appsettings; the endpoint is declared for dashboard visibility only.
 // pnpm packages are installed once at the repo root (shared pnpm workspace), so per-resource install is skipped.
@@ -84,8 +74,39 @@ _ = builder.AddJavaScriptApp("admin-client", "../Kentico.Community.Portal.Admin/
 
 // The Xperience by Kentico web application. Uses the existing launch profile so the fixed
 // Kestrel ports (45039 site, 45040 admin, 45041 http) that Xperience config depends on are preserved.
-var web = builder.AddProject<Projects.Kentico_Community_Portal_Web>("web", launchProfileName: "Portal.Web")
-    .WithReference(database, connectionName: "CMSConnectionString");
+string repositoryRoot = Path.GetFullPath(Path.Combine(builder.AppHostDirectory, "..", ".."));
+
+var web = builder.AddDotnetProject("web",
+        Path.Combine(repositoryRoot, "src", "Kentico.Community.Portal.Web", "Kentico.Community.Portal.Web.csproj"),
+        options => options.LaunchProfileName = "Portal.Web")
+    .WithReference(database, connectionName: "CMSConnectionString")
+    // Label the launch profile URLs in the dashboard and point each at its entry path.
+    .WithUrls(context =>
+    {
+        foreach (var url in context.Urls)
+        {
+            if (!Uri.TryCreate(url.Url, UriKind.Absolute, out var uri))
+            {
+                continue;
+            }
+
+            (string? label, string path) = uri.Port switch
+            {
+                45039 => ("Portal website", "/"),
+                45040 => ("Admin", "/admin"),
+                45041 => ("MCP server", "/mcp"),
+                _ => ((string?)null, "/")
+            };
+
+            if (label is null)
+            {
+                continue;
+            }
+
+            url.DisplayText = label;
+            url.Url = new UriBuilder(uri) { Path = path }.Uri.ToString();
+        }
+    });
 
 // Only gate startup on the database when Aspire owns its lifecycle; an external server is assumed ready.
 if (useManagedSqlServer)
@@ -132,7 +153,8 @@ _ = AsDevTool(builder.AddExecutable("db-backup", "pwsh", scriptsDirectory,
 
 // Scrub member data from a restored production backup before CI restore. Destructive: --skip-confirmation
 // proceeds without the interactive prompt (the dashboard Start action is the confirmation).
-_ = AsDevTool(builder.AddProject<Projects.Kentico_Community_DataCleaner_App>("data-cleaner")
+_ = AsDevTool(builder.AddDotnetProject("data-cleaner",
+        Path.Combine(repositoryRoot, "data", "Kentico.Community.DataCleaner.App", "Kentico.Community.DataCleaner.App.csproj"))
     .WithArgs("--skip-confirmation"));
 
 builder.Build().Run();

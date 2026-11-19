@@ -4,8 +4,8 @@ import fs from "fs";
 import path from "path";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
-import appsettings from "./appsettings.json";
-import appsettingsDev from "./appsettings.Development.json";
+import appsettings from "./appsettings.json" with { type: "json" };
+import appsettingsDev from "./appsettings.Development.json" with { type: "json" };
 
 import * as process from "process";
 
@@ -99,19 +99,20 @@ export default defineConfig(async ({ mode }) => {
       rollupOptions: {
         input: [
           /**
-           * We have explicity entrypoints so we can create small esmodule outputs
+           * We have explicit entrypoints so we can create small esmodule outputs
            * which can be used with dynamic imports
            * Example: const mod = await import('/path/file.js');
            *
            * Having a separate scss entrypoint also prevents a flash of unstyled content
            * (FOUC) on page navigations. See: https://github.com/Eptagone/Vite.AspNetCore/issues/50
            */
-          "Client/js/main.js",
-          "Client/js/polls.js",
-          "Client/js/q-and-a.js",
-          "Client/js/search.js",
-          "Client/js/recaptcha.js",
-          "Client/styles/style.scss",
+          "js/main.js",
+          "js/polls.js",
+          "js/q-and-a.js",
+          "js/page-builder-markdown-editor.js",
+          "js/search.js",
+          "js/recaptcha.js",
+          "styles/style.scss",
         ],
         output: {
           preserveModules: false,

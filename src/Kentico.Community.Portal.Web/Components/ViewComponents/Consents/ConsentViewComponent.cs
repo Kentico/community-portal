@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Kentico.Community.Portal.Web.Components.ViewComponents.Consents;
 
-public class ConsentViewComponent(ConsentManager consentManager) : ViewComponent
+public class ConsentViewComponent(ConsentRetriever consentRetriever) : ViewComponent
 {
-    private readonly ConsentManager consentManager = consentManager;
+    private readonly ConsentRetriever consentRetriever = consentRetriever;
 
-    public async Task<IViewComponentResult> InvokeAsync(string consentName)
+    public async Task<IViewComponentResult> InvokeAsync(string consentName, bool fullText = false)
     {
-        var consent = await consentManager.GetConsent(consentName);
+        var consent = await consentRetriever.GetConsent(consentName);
 
         if (consent is null)
         {
@@ -23,7 +23,7 @@ public class ConsentViewComponent(ConsentManager consentManager) : ViewComponent
 
         return View("~/Components/ViewComponents/Consents/Consent.cshtml", new ConsentViewModel
         {
-            ConsentHTML = new(cultureText.ShortText)
+            ConsentHTML = new(fullText ? cultureText.FullText : cultureText.ShortText)
         });
     }
 }

@@ -16,14 +16,22 @@
   </ContentItemCommonDataContentLanguageID>
   <ContentItemCommonDataGUID>97e02035-3bdd-47c9-86c6-bb7a79454078</ContentItemCommonDataGUID>
   <ContentItemCommonDataIsLatest>True</ContentItemCommonDataIsLatest>
-  <ContentItemCommonDataLastPublishedWhen>2025-08-23 02:50:15Z</ContentItemCommonDataLastPublishedWhen>
+  <ContentItemCommonDataLastPublishedWhen>2026-11-13 15:18:16Z</ContentItemCommonDataLastPublishedWhen>
   <ContentItemCommonDataVersionStatus>2</ContentItemCommonDataVersionStatus>
   <ContentItemCommonDataVisualBuilderTemplateConfiguration>
 <![CDATA[
 {
-  "identifier": "KenticoCommunity.HomePage_Default",
-  "properties": {},
-  "fieldIdentifiers": {}
+  "identifier": "KenticoCommunity.HomePage_Hero",
+  "properties": {
+    "heroImage": [
+      {
+        "identifier": "20ed90f9-72d1-4aa8-9002-99497d264dba"
+      }
+    ]
+  },
+  "fieldIdentifiers": {
+    "heroImage": "6831d4dd-b238-45da-88df-112b7c4b7701"
+  }
 }
 ]]>
   </ContentItemCommonDataVisualBuilderTemplateConfiguration>
@@ -32,58 +40,147 @@
 {
   "editableAreas": [
     {
+      "identifier": "hero-links",
+      "sections": [
+        {
+          "identifier": "abff8257-46c2-4bbc-b827-acb4b1fd1fed",
+          "type": "KenticoCommunity.Section.Unstyled",
+          "properties": null,
+          "zones": [
+            {
+              "identifier": "916111f6-df9b-4a97-acec-94acbe5d5c6c",
+              "name": "main",
+              "widgets": [
+                {
+                  "identifier": "8d84d2f1-c799-4655-a63f-f7053be471dc",
+                  "type": "CommunityPortal.Components.Widgets.LinkList",
+                  "variants": [
+                    {
+                      "identifier": "05b7d3e5-f535-47fd-8c37-6ba6b828d5a2",
+                      "properties": {
+                        "label": "",
+                        "introContent": "",
+                        "dataSource": "Individual_Selection",
+                        "dataSourceParsed": 0,
+                        "folderReference": null,
+                        "count": 0,
+                        "links": [
+                          {
+                            "identifier": "7e91d36d-8966-44b4-ae03-452b49a79324"
+                          },
+                          {
+                            "identifier": "b2f48196-615d-4de9-806b-40b2ec2ba8ec"
+                          },
+                          {
+                            "identifier": "f596c4d9-0701-4f7f-8ad2-9fe30f528227"
+                          },
+                          {
+                            "identifier": "2b7f9d3a-88fe-4521-9ae2-c136da7af559"
+                          },
+                          {
+                            "identifier": "ed18abbe-038b-43df-8fac-7bae3bfe70c9"
+                          },
+                          {
+                            "identifier": "020f0277-376a-41c5-b6e0-d8226ccca30c"
+                          },
+                          {
+                            "identifier": "8d2fb739-b1aa-4459-980a-5d5d40d5b6f8"
+                          }
+                        ],
+                        "designSource": "Icon_Cards",
+                        "designParsed": 4,
+                        "iconCardsColumns": "Auto",
+                        "iconCardsColumnsParsed": 0,
+                        "showPublishedDate": false,
+                        "showAuthor": false,
+                        "showDXTopics": false,
+                        "showDescriptions": true,
+                        "descriptionMaxLines": 3,
+                        "id": "e105aeb2-5edf-47d1-9ff7-b3d879ba657d"
+                      },
+                      "fieldIdentifiers": {
+                        "label": "00e40f31-d6ab-4009-a33d-3526d09b8168",
+                        "introContent": "c1b91ba7-4da8-4378-9b17-00e151305c5c",
+                        "dataSource": "d891e326-217d-4f24-8098-0946da6fdbdc",
+                        "dataSourceParsed": "6a462238-1152-4f6e-b54b-a7b80b7b26d1",
+                        "folderReference": "1847f834-ca3a-4951-9426-5558e2e7756b",
+                        "count": "37cafbad-4aed-4d7e-94fc-984a7a53b20f",
+                        "links": "b34c5ed1-8e36-43bf-8edc-a75e3d1b7a2a",
+                        "designSource": "ff1d7dc7-4b91-4ebc-b953-08748baf7379",
+                        "designParsed": "d26db429-d884-48b0-832e-bc7662f60493",
+                        "showPublishedDate": "67d1f4c9-6a6d-4788-b4b2-c18a2bf2a6b4",
+                        "showAuthor": "6ec822de-e2eb-4176-a116-db57c6a5a382",
+                        "showDXTopics": "c4ac2fa3-a5c2-4805-96b1-d9fcd9745e83",
+                        "showDescriptions": "fa0c91ba-63c4-4da8-b909-c5e23d3a8bb5",
+                        "descriptionMaxLines": "574fa575-cba0-4849-85f6-20fb4562b469",
+                        "id": "4d8f78a7-8767-482c-a3d2-aafa26e5ba82",
+                        "iconCardsColumns": "b95b2be1-831e-47de-9977-f4f3664149d7",
+                        "iconCardsColumnsParsed": "c0673ad9-cc3e-4605-8374-10bead645abb"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "fieldIdentifiers": {}
+        }
+      ]
+    },
+    {
       "identifier": "top",
       "sections": [
         {
-          "identifier": "5da2d6d0-6999-48b3-bb72-0e6e02894713",
+          "identifier": "597c3bb9-1a57-41e4-9a78-4bf50e5fd652",
           "type": "CommunityPortal.Components.Sections.Grid.Grid-Section",
           "properties": {
-            "heading": "Quick Links",
-            "headingAlignment": "Left",
-            "headingAlignmentParsed": 0,
+            "heading": "Community polls",
+            "headingAlignment": "Center",
+            "headingAlignmentParsed": 1,
+            "headingSpacing": "Large",
+            "headingSpacingParsed": 2,
             "bodyAlignment": "Left",
             "bodyAlignmentParsed": 0,
             "isHeadingAnchorLinkVisible": false,
             "layout": "_2_Columns_50_50",
             "layoutParsed": 4,
-            "paddingTop": "None",
-            "paddingTopParsed": 3,
-            "paddingBottom": "Medium",
-            "paddingBottomParsed": 1,
+            "columnBreakpoint": "Large",
+            "columnBreakpointParsed": 1,
+            "contentWidth": "Narrow",
+            "contentWidthParsed": 1,
+            "paddingTop": "Large",
+            "paddingTopParsed": 0,
+            "paddingBottom": "Large",
+            "paddingBottomParsed": 0,
             "widgetZonesCount": 2,
-            "backgroundColor": "White",
-            "backgroundColorParsed": 1
+            "backgroundColor": "Secondary_Light",
+            "backgroundColorParsed": 3
           },
           "zones": [
             {
-              "identifier": "0c43f270-b64f-47f3-abb3-7cd2477f32d9",
+              "identifier": "8a8d97eb-3e68-4c83-81d6-2d5f30869296",
               "widgets": [
                 {
-                  "identifier": "5464cb30-c979-46af-8784-096529d38d5d",
-                  "type": "CommunityPortal.Components.Widgets.LinkList",
+                  "identifier": "518aa093-5cb6-4ca0-a19f-8c4eda76eefc",
+                  "type": "CommunityPortal.PollWidget",
                   "variants": [
                     {
-                      "identifier": "4a2deeed-c01c-4e86-b183-8e3c317a8bc4",
+                      "identifier": "75587583-c9a7-4e84-a68f-92c8e42a3908",
                       "properties": {
-                        "label": "",
-                        "links": [
+                        "pollContents": [
                           {
-                            "identifier": "8d2fb739-b1aa-4459-980a-5d5d40d5b6f8"
-                          },
-                          {
-                            "identifier": "7e91d36d-8966-44b4-ae03-452b49a79324"
+                            "identifier": "a142a16a-960c-4dc5-aa62-b0be40e4f91a"
                           }
                         ],
-                        "designSource": "List_In_Card",
-                        "designParsed": 2,
-                        "id": "69d0b220-3635-4772-9914-a2a3c306382c"
+                        "pollForms": [],
+                        "backgroundColor": "Secondary_Light",
+                        "backgroundColorParsed": 3
                       },
                       "fieldIdentifiers": {
-                        "label": "0d5f2a23-7961-4fb6-ac7e-7b1f7f8580e2",
-                        "links": "af9ca209-6e32-4927-86d8-8f6e18d56564",
-                        "designSource": "b38ac978-f06f-4d46-b862-d59f1c5fa611",
-                        "designParsed": "dd2004fa-0ad7-4a92-bbf0-bdbc9b325656",
-                        "id": "be024556-d819-4e64-ac32-3fe236ecda33"
+                        "pollContents": "5cb85128-9340-4b83-a5ec-1083447fc42b",
+                        "pollForms": "a870c31e-0e79-432e-a833-099a9c73d47b",
+                        "backgroundColor": "ca67a973-b208-4d68-83a2-4730811a6c02",
+                        "backgroundColorParsed": "cffcc6be-13a4-480d-b7d8-2a619b658798"
                       }
                     }
                   ]
@@ -91,34 +188,29 @@
               ]
             },
             {
-              "identifier": "d93e13f2-9db1-4b59-8d0f-b4b3e73e7b39",
+              "identifier": "6307d48d-7bf3-48d2-abf5-04891694d142",
               "widgets": [
                 {
-                  "identifier": "e7c17048-fca1-483f-9965-6180b253899a",
-                  "type": "CommunityPortal.Components.Widgets.LinkList",
+                  "identifier": "9cc93326-83ef-4704-975f-45ee9a9a96a6",
+                  "type": "CommunityPortal.PollWidget",
                   "variants": [
                     {
-                      "identifier": "fb49779a-6704-41ac-be9f-15bc27abea75",
+                      "identifier": "26c3804c-efbe-4ff1-a627-5b539cb76315",
                       "properties": {
-                        "label": "",
-                        "links": [
+                        "pollContents": [
                           {
-                            "identifier": "ed18abbe-038b-43df-8fac-7bae3bfe70c9"
-                          },
-                          {
-                            "identifier": "b2f48196-615d-4de9-806b-40b2ec2ba8ec"
+                            "identifier": "f56256f9-84ef-4af9-9f84-a465c6750710"
                           }
                         ],
-                        "designSource": "List_In_Card",
-                        "designParsed": 2,
-                        "id": "535fb488-a834-4461-8d9e-bdb365ba15e1"
+                        "pollForms": [],
+                        "backgroundColor": "Secondary_Light",
+                        "backgroundColorParsed": 3
                       },
                       "fieldIdentifiers": {
-                        "label": "3f7ff73d-6434-4e93-b43a-5743123049df",
-                        "links": "96af924c-0110-4511-a2bf-ebdb6ca1f6f4",
-                        "designSource": "b1598e4f-752e-4ccb-8cc1-38e8d0d5603f",
-                        "designParsed": "2aaa8c2c-f6c2-4a6c-8709-e091e2ed700b",
-                        "id": "23927b33-ee8c-498e-9138-6cb641537b0d"
+                        "pollContents": "f0cf0362-e4bb-49b0-87c6-ead685ec18f0",
+                        "pollForms": "0bab5ef7-d7a3-4cf3-b9e3-40feee0d310d",
+                        "backgroundColor": "852e3fd3-69b2-473a-b5a4-96c153a7d7e8",
+                        "backgroundColorParsed": "eca2da4f-eb28-41a7-a112-79a27ce92bf4"
                       }
                     }
                   ]
@@ -127,150 +219,68 @@
             }
           ],
           "fieldIdentifiers": {
-            "heading": "455bb5cd-3eaf-4640-bf05-6daf1ce4dc77",
-            "headingAlignment": "d0d5542b-28c0-4fc2-b78b-b4994f0170c8",
-            "headingAlignmentParsed": "7857a516-d76e-459b-b890-ee8e9c604a6f",
-            "bodyAlignment": "f0c7539b-ae45-49e6-8447-048398a92c18",
-            "bodyAlignmentParsed": "8a323c3e-1019-4a52-bfe7-26bd9f38c5e4",
-            "isHeadingAnchorLinkVisible": "a2eaf61a-3864-45f1-8db7-736eab9ef5d3",
-            "layout": "bb29a1f4-95b3-4641-83d2-324f3419769d",
-            "layoutParsed": "21f5f0c2-742e-47d8-999c-d178e9aba7ee",
-            "paddingTop": "6dc96352-9e96-48c9-8a3c-c58a99fbfb5f",
-            "paddingTopParsed": "910a327e-b714-4666-8b5e-f0346e47c47a",
-            "paddingBottom": "b09ca622-90a7-4ec8-a342-d9baf94adbb8",
-            "paddingBottomParsed": "0c9551f0-5bd2-4c17-9589-6cfe0223ee48",
-            "widgetZonesCount": "3220a7a8-df8f-4074-8854-ab84253b6666",
-            "backgroundColor": "3bd72151-3a1f-46db-8fa6-30d085af85f1",
-            "backgroundColorParsed": "18c3ccc0-46e1-4b83-a429-b2d219888be0"
+            "heading": "eeaa54b8-23b3-457c-a731-87aba13a652e",
+            "headingAlignment": "201abd6e-5a90-4a8a-84df-b006743b2f63",
+            "headingAlignmentParsed": "dbc62c22-b83e-4cd8-bb58-d1e308adca3b",
+            "bodyAlignment": "ffc76e03-084c-4bbf-994f-d59b8b92b524",
+            "bodyAlignmentParsed": "cc4e2ccf-1a53-4aff-aa3f-fb6591abd159",
+            "isHeadingAnchorLinkVisible": "146bf727-603b-40a4-b834-cd97a706f146",
+            "layout": "06b0fc94-a0b5-4f96-9c54-a24c39e016ed",
+            "layoutParsed": "8f37f6a3-7edd-4efc-ab15-34974807d651",
+            "paddingTop": "783e3aed-c151-444c-a1f7-0adba749c1ce",
+            "paddingTopParsed": "f9049b67-ebf7-43ef-b519-afd42678d7c1",
+            "paddingBottom": "96e592df-6175-4198-a39c-059bd9fd3847",
+            "paddingBottomParsed": "4b0c174e-6402-4187-a6a4-ef29e5117e90",
+            "widgetZonesCount": "6ad8674b-f1cc-4a39-b703-136046f4c32b",
+            "backgroundColor": "7338a02f-742e-434e-9be1-e72c57a013eb",
+            "backgroundColorParsed": "fed9f70b-ed20-4184-8901-be471fbcbf1a",
+            "headingSpacing": "030c0ad0-8e99-4f95-a389-c38d197ee4ba",
+            "headingSpacingParsed": "331e6c91-473e-4107-99ff-9eb70a8afa52",
+            "columnBreakpoint": "bebf0dc4-a759-4a88-844c-2777f9c77e5b",
+            "columnBreakpointParsed": "988c7d9e-c7b2-4b65-a50d-492f249ad603",
+            "contentWidth": "edefbf99-ef4f-4eb5-97e4-22617011ade5",
+            "contentWidthParsed": "e7da8a34-8ef4-48d4-81de-d31de2ea6fd8"
           }
         },
         {
-          "identifier": "50fa896c-db25-4b13-8e40-d6c315ddbca6",
+          "identifier": "5fcca01f-4523-40c4-81c1-cf5768aeb97e",
           "type": "CommunityPortal.Components.Sections.Grid.Grid-Section",
           "properties": {
             "heading": "",
             "headingAlignment": "Left",
             "headingAlignmentParsed": 0,
-            "bodyAlignment": "Center",
-            "bodyAlignmentParsed": 1,
-            "isHeadingAnchorLinkVisible": false,
-            "layout": "_1_Column_Narrow",
-            "layoutParsed": 0,
-            "paddingTop": "Medium",
-            "paddingTopParsed": 1,
-            "paddingBottom": "Small",
-            "paddingBottomParsed": 2,
-            "widgetZonesCount": 1,
-            "backgroundColor": "Secondary_Light",
-            "backgroundColorParsed": 3
-          },
-          "zones": [
-            {
-              "identifier": "ac7a1910-bb9e-40d7-93b0-bcd4d8276d50",
-              "widgets": [
-                {
-                  "identifier": "dd8308cc-c5e4-4c75-9cf8-71dc21017b0a",
-                  "type": "CommunityPortal.HeadingWidget",
-                  "variants": [
-                    {
-                      "identifier": "9c67f0d2-2cda-409e-8e31-92103ef151aa",
-                      "properties": {
-                        "headingText": "Community poll",
-                        "headingLevel": "H3",
-                        "headingLevelsParsed": 2,
-                        "headingAlignment": "Center",
-                        "headingAlignmentsParsed": 1,
-                        "showHeadingAnchor": true,
-                        "id": "ca8d5025-be17-49ae-a65f-1707f54a026d"
-                      },
-                      "fieldIdentifiers": {
-                        "headingText": "5f14ed64-b07f-4a1f-8b9e-88038be4da91",
-                        "headingLevel": "67d4875b-a19f-402f-a042-cd638799911d",
-                        "headingLevelsParsed": "7ed8cdf0-1694-4207-86ea-37172fb10566",
-                        "headingAlignment": "41d9092c-f607-4294-ad08-47065c149429",
-                        "headingAlignmentsParsed": "bdd92c5f-1c7b-494d-9fa9-22f3ec0f89bb",
-                        "showHeadingAnchor": "ca0bf622-764f-4c98-9b86-e18b75ee3415",
-                        "id": "4670d676-ffcd-4923-8f46-554c95b6ff0f"
-                      }
-                    }
-                  ]
-                },
-                {
-                  "identifier": "1b78eaef-2f09-4fd2-8d19-0e05d181c6f2",
-                  "type": "CommunityPortal.PollWidget",
-                  "variants": [
-                    {
-                      "identifier": "561ff33b-7ad3-4dbb-a8df-fca2b1383e35",
-                      "properties": {
-                        "pollContents": [
-                          {
-                            "identifier": "a409fc0a-72a3-47e0-bd6d-1c685c8f73bf"
-                          }
-                        ],
-                        "backgroundColor": "Secondary_Light",
-                        "backgroundColorParsed": 3
-                      },
-                      "fieldIdentifiers": {
-                        "pollContents": "b736005a-620e-49bd-857d-01dd2175c2a5",
-                        "backgroundColor": "54cc4e8c-5133-46c3-a46e-de0e8d6a4de4",
-                        "backgroundColorParsed": "c801c916-a22b-4656-8304-ecb761477374"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "fieldIdentifiers": {
-            "heading": "b1577e5d-efcc-492d-8fb6-c7123cbddb16",
-            "headingAlignment": "0d7991a1-a80f-409a-9da3-e870a89f7198",
-            "headingAlignmentParsed": "c25b8b7a-86c6-49ce-8552-9e835f322ed9",
-            "bodyAlignment": "731b6043-0d1b-43d0-b3bd-0af8127800c9",
-            "bodyAlignmentParsed": "f8cb6925-af04-4187-b018-77d8f95c969b",
-            "isHeadingAnchorLinkVisible": "1c650e57-b16b-449c-958b-2875d289ebea",
-            "layout": "ff8bf22b-a092-4284-b182-2db3ad61f9cc",
-            "layoutParsed": "5f2265ea-4bfd-4ee2-8eac-02803f47e32f",
-            "paddingTop": "50a8d26e-ca77-4128-876a-0dddbf043363",
-            "paddingTopParsed": "4a7ea1cd-a6c6-47a5-8000-73c1edb03b25",
-            "paddingBottom": "19c05b64-03a6-4672-a275-14bd8c5bdfd0",
-            "paddingBottomParsed": "b8907073-2be4-4ebd-90b3-4c1a378719fe",
-            "widgetZonesCount": "c385a125-e173-43a1-849c-14e642bf5b6c",
-            "backgroundColor": "7ce297ef-1569-4792-9289-f7d22eba3cf2",
-            "backgroundColorParsed": "6a604121-f2c3-4465-a79d-acb8eee916c6"
-          }
-        },
-        {
-          "identifier": "3d50c4fa-d00b-4d3f-93d0-f77e073dd5f4",
-          "type": "CommunityPortal.Components.Sections.Grid.Grid-Section",
-          "properties": {
-            "heading": "Updates",
-            "headingAlignment": "Left",
-            "headingAlignmentParsed": 0,
+            "headingSpacing": "Default",
+            "headingSpacingParsed": 0,
             "bodyAlignment": "Left",
             "bodyAlignmentParsed": 0,
             "isHeadingAnchorLinkVisible": false,
-            "layout": "_2_Columns_50_50",
-            "layoutParsed": 4,
-            "paddingTop": "Medium",
+            "layout": "_1_Column",
+            "layoutParsed": 2,
+            "columnBreakpoint": "Default",
+            "columnBreakpointParsed": 0,
+            "contentWidth": "Narrow",
+            "contentWidthParsed": 1,
+            "paddingTop": "Medium_Large",
             "paddingTopParsed": 1,
-            "paddingBottom": "Large",
-            "paddingBottomParsed": 0,
-            "widgetZonesCount": 2,
+            "paddingBottom": "None",
+            "paddingBottomParsed": 4,
+            "widgetZonesCount": 1,
             "backgroundColor": "White",
             "backgroundColorParsed": 1
           },
           "zones": [
             {
-              "identifier": "dfd3c279-3079-40b8-9bf7-228dcdf36868",
+              "identifier": "b8af5c7e-39cd-474f-ad1d-280d5a7fab59",
               "widgets": [
                 {
-                  "identifier": "2f85d83d-bd6e-470f-90d3-0692c54bd78b",
+                  "identifier": "cc014d1d-69ca-4aa4-89c6-6ce385470ee7",
                   "type": "CommunityPortal.Components.BlogPost-List-Widget",
                   "variants": [
                     {
-                      "identifier": "3102b0aa-c8e0-440b-8125-0decf771de3b",
+                      "identifier": "6e446afd-7f71-4ee6-ae54-2a644afdecd9",
                       "properties": {
-                        "heading": "Announcements from Kentico",
+                        "heading": "",
+                        "introContent": "",
                         "blogPostSource": "Post_Taxonomy",
                         "blogPostSourceParsed": 2,
                         "folderReference": null,
@@ -280,37 +290,228 @@
                           }
                         ],
                         "blogPosts": [],
-                        "postLimit": 3,
-                        "itemLayoutSource": "Minimal",
-                        "itemLayoutSourceParsed": 1
+                        "postLimit": 5,
+                        "itemLayoutSource": "Featured_Mosaic",
+                        "itemLayoutSourceParsed": 6,
+                        "showDXTopics": false,
+                        "showDescription": true,
+                        "descriptionMaxLines": 2,
+                        "showAuthor": true,
+                        "showPublishedDate": true,
+                        "showBlogType": false,
+                        "showHero": true
                       },
                       "fieldIdentifiers": {
-                        "heading": "75cc44b3-15b3-4db4-8b1a-499f9b1539ae",
-                        "blogPostSource": "e49f8e5a-a305-4327-8fd5-9289eaae8a95",
-                        "blogPostSourceParsed": "4801ebe5-8862-401c-ab21-5d1163a33218",
-                        "postLimit": "10def075-6448-45d0-81d0-814253a9d4f5",
-                        "blogPosts": "ac404449-023e-497e-b4a4-91ea13031779",
-                        "itemLayoutSource": "8be7bf0e-c8c1-40fe-bf7d-974b3a9d6752",
-                        "itemLayoutSourceParsed": "2a7ccfc3-828e-4ee4-804d-2ca544de4a85",
-                        "tagReferences": "530f035e-147b-4adf-bb9e-7e05ec07006a",
-                        "folderReference": "edc3b085-1856-4de7-b906-1301030c5184"
+                        "heading": "c2c79992-32fc-439e-974c-d30ceeff2b9e",
+                        "introContent": "32329e09-bdb8-4a68-8a4a-48eadded3f79",
+                        "blogPostSource": "cae82f93-4496-42ef-8bb5-debe32f709ea",
+                        "blogPostSourceParsed": "61a63dfa-e0c4-4916-b2a6-a09fdc7fe65f",
+                        "folderReference": "3ae5b180-a407-4a80-8bc8-4f6dbcb9e37c",
+                        "tagReferences": "cda6d22d-3133-4919-9b52-00dd4a305720",
+                        "blogPosts": "51d94def-5fdb-438b-8a0a-41d80f750dba",
+                        "postLimit": "abf056ac-bd60-4903-bcd9-a89cf57bdcfb",
+                        "itemLayoutSource": "fd9db822-7a0e-4d18-a180-f933a53d65b2",
+                        "itemLayoutSourceParsed": "ba5c46f7-ccf9-470e-8664-d794182e4ea0",
+                        "showDXTopics": "e93e5767-efe5-4178-97c5-df56db4d1f6f",
+                        "showDescription": "c1c7a32c-af30-4c40-94c2-a8c2057da113",
+                        "descriptionMaxLines": "9fa153bc-49f4-4be7-b023-f341585e3d4b",
+                        "showAuthor": "fe952d0c-9fc2-4d11-88df-182f31bed33e",
+                        "showPublishedDate": "9a9635c7-66f8-4fa6-bd57-20c50045d2a7",
+                        "showBlogType": "f63a1db7-0a39-4e76-961f-e97bda387707",
+                        "showHero": "5c8bda99-8d04-48ba-85bc-0bc846842823"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "identifier": "af06cdf3-9e0d-4025-bef5-b247a19b2d12",
+                  "type": "CommunityPortal.CtaButtonWidget",
+                  "variants": [
+                    {
+                      "identifier": "7d4bbd6c-a132-4d27-bb1b-7132cc24aee3",
+                      "properties": {
+                        "text": "More articles",
+                        "linkURL": "~/blog",
+                        "horizontalAlignment": "Center",
+                        "horizontalAlignmentParsed": 1,
+                        "topMargin": "Large",
+                        "topMarginParsed": 3,
+                        "bottomMargin": "Medium",
+                        "bottomMarginParsed": 2,
+                        "style": "Outline",
+                        "styleParsed": 1,
+                        "id": "3ac6451c-3d1a-433b-a5cd-1168bad80c9a"
+                      },
+                      "fieldIdentifiers": {
+                        "text": "abf31e11-3b2c-4a84-bbe8-b6ac8fdd36e2",
+                        "linkURL": "b4617cab-7d87-4736-b29b-b5dd1d1cb163",
+                        "horizontalAlignment": "d5e7ccd9-84bb-4759-bbec-8983b380933d",
+                        "horizontalAlignmentParsed": "c86b5929-c647-4f02-ab5b-eee58545b7d9",
+                        "topMargin": "510f3dd7-8abf-4b75-9a1e-1002c03b1869",
+                        "topMarginParsed": "963f8ed0-9370-46b9-a252-4b20f5196433",
+                        "bottomMargin": "8aeff314-54ab-4a70-a406-4aebe46f1dda",
+                        "bottomMarginParsed": "474256a7-94a1-4d78-bbd9-d9eed57e7f39",
+                        "id": "7e9dfa86-7fd3-41f8-b137-40d79d29f398",
+                        "style": "4b76c7e2-a2b6-49d2-a720-d7aa3427e51d",
+                        "styleParsed": "5b36fc5c-07b4-4993-acf8-0b9e515c93bd"
                       }
                     }
                   ]
                 }
               ]
-            },
+            }
+          ],
+          "fieldIdentifiers": {
+            "heading": "7c6e2a22-faa3-451c-9a28-62c1717ba0fb",
+            "headingAlignment": "2b7f281a-6466-4ce2-81d6-a3354a81d8cb",
+            "headingAlignmentParsed": "89fd73e8-63b2-499a-89c0-b400d351a4f5",
+            "bodyAlignment": "3c5e1db4-79a3-4f5b-bc09-e82eb876b414",
+            "bodyAlignmentParsed": "bbefd167-096e-4830-87a1-c70623ac1fe6",
+            "isHeadingAnchorLinkVisible": "13026adc-22bd-4a63-9aa2-680bad9c1846",
+            "layout": "74b69f23-bca6-485c-836c-7e086fe09615",
+            "layoutParsed": "993b6ce3-aae8-4229-84f4-3d5b8bd68118",
+            "paddingTop": "ebf13e9d-fa47-45ac-88bc-91c024bc531d",
+            "paddingTopParsed": "1eb8d338-1041-4b46-9aee-05f8e0168642",
+            "paddingBottom": "9ce48228-9694-4f87-bf5b-4582f9804df8",
+            "paddingBottomParsed": "f9bc244e-bb28-47f8-8cd0-61d64f4525a9",
+            "widgetZonesCount": "977453d8-964d-48f3-b061-6249bf1c8255",
+            "backgroundColor": "4093f01c-a1af-49af-b3ef-7d728f6e3702",
+            "backgroundColorParsed": "d871187b-fd73-4ff9-a48d-4c9f4812fce2",
+            "headingSpacing": "7d15975c-13c1-4361-9bfb-17bd2be2315f",
+            "headingSpacingParsed": "15779c4e-b639-481d-8ac2-14efa04ef540",
+            "columnBreakpoint": "5ec56b9a-5244-4de5-93af-fc5aaead5de1",
+            "columnBreakpointParsed": "097da52b-7621-4c06-9c24-ebd6e30e0da7",
+            "contentWidth": "5812bcde-ccb4-4876-adfa-4cc9cf8e12af",
+            "contentWidthParsed": "3d778289-3b02-4a18-aa4d-5b00aab3f751"
+          }
+        },
+        {
+          "identifier": "f011c2fb-fa9f-4f36-a755-365122ba2899",
+          "type": "CommunityPortal.Components.Sections.Grid.Grid-Section",
+          "properties": {
+            "heading": "",
+            "headingAlignment": "Left",
+            "headingAlignmentParsed": 0,
+            "headingSpacing": "Default",
+            "headingSpacingParsed": 0,
+            "bodyAlignment": "Left",
+            "bodyAlignmentParsed": 0,
+            "isHeadingAnchorLinkVisible": false,
+            "layout": "_1_Column",
+            "layoutParsed": 2,
+            "columnBreakpoint": "Default",
+            "columnBreakpointParsed": 0,
+            "contentWidth": "Narrow",
+            "contentWidthParsed": 1,
+            "paddingTop": "Medium",
+            "paddingTopParsed": 2,
+            "paddingBottom": "Medium",
+            "paddingBottomParsed": 2,
+            "widgetZonesCount": 1,
+            "backgroundColor": "White",
+            "backgroundColorParsed": 1
+          },
+          "zones": [
             {
-              "identifier": "a982319c-7f0b-4e34-aec5-77c9a04ebcfc",
+              "identifier": "d37bd483-1952-44c9-bb23-7b4886b6fa3a",
               "widgets": [
                 {
-                  "identifier": "4ad292b9-3ff8-4ed8-8909-2bf782b3577c",
+                  "identifier": "8511be98-79b5-4638-84d7-10e61c6b4f15",
+                  "type": "CommunityPortal.NewsletterSignupWidget",
+                  "variants": [
+                    {
+                      "identifier": "898040ca-773d-40e3-a697-fe3595069e9d",
+                      "properties": {
+                        "design": "Banner",
+                        "designParsed": 1,
+                        "heading": "Community Newsletter",
+                        "description": "Sign up for the Community Newsletter to stay up to date with all the news and knowledge coming from the Kentico Community.",
+                        "thankYouMessage": "Check your inbox for a confirmation link to finish subscribing.",
+                        "helpText": "We'll email you a confirmation link. You're subscribed only after you click it.",
+                        "showTrackingNote": true,
+                        "trackingNote": "We measure opens and clicks of every email we send. If you allow tracking in [Cookie settings](/cookies-policy#cookie-settings), they're also linked to your visitor record. [Details](/privacy#email-statistics)",
+                        "id": "1b66848e-b927-4047-8036-5f8012629d20"
+                      },
+                      "fieldIdentifiers": {
+                        "design": "e83f3425-bebd-4146-9738-68d30c9b55b0",
+                        "designParsed": "c3d833f2-9f1d-40f5-a658-bef4c3d1a2c8",
+                        "heading": "b6071ae2-95e8-4eb7-96ae-2d5e021f15e5",
+                        "thankYouMessage": "a0864373-04bb-483d-80f0-946cc1c36630",
+                        "helpText": "9f91594c-656c-491d-8642-8f917e0e5728",
+                        "showTrackingNote": "9efe5d21-d080-4a82-8f79-e385a5d5f480",
+                        "trackingNote": "246293ee-4d13-4446-8c17-22648dad960b",
+                        "id": "3527f9a5-9f8a-4698-ba45-2550fed8dcfe",
+                        "description": "88555df4-a014-4745-aa06-93ea198e3d72"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "fieldIdentifiers": {
+            "heading": "e04ce4ab-71e7-4f3f-b30b-39d810990422",
+            "headingAlignment": "11585b7a-2d1e-4d41-9f30-afe44c4a8322",
+            "headingAlignmentParsed": "9768b482-7474-4e8a-878c-7d319036102d",
+            "bodyAlignment": "41167955-caab-45ea-a00a-c5fe44bdeacb",
+            "bodyAlignmentParsed": "ccc6c555-536e-409d-b11a-9bb4543f538b",
+            "isHeadingAnchorLinkVisible": "0522d9ac-2d80-4cc6-b25b-fd46a2977d7f",
+            "layout": "1e494664-fe03-4882-b50d-d2a886d0e49c",
+            "layoutParsed": "40ecf892-6386-42ca-9a4a-4123e401a369",
+            "paddingTop": "fba4403f-5358-4b08-8a03-5d77afbd70e1",
+            "paddingTopParsed": "09e5217b-b593-464a-921c-f640fa0c8cae",
+            "paddingBottom": "26adfd8c-93cf-4f01-88cf-3e4bbbcc9c6c",
+            "paddingBottomParsed": "56baaae2-83bb-4710-9f21-e25d26edaa43",
+            "widgetZonesCount": "023aff5c-0638-44d0-8135-a5707c9b2006",
+            "backgroundColor": "baf56d07-8efc-4caf-ba80-1c5086360d60",
+            "backgroundColorParsed": "675abe66-0d79-4d88-a4d1-c5ce5d170bb6",
+            "headingSpacing": "a1ba1459-90c7-4013-b42d-e3f4a9ade056",
+            "headingSpacingParsed": "d7e0f134-0a09-4fed-b548-51c61f439790",
+            "columnBreakpoint": "fd9de83d-c436-4b2d-8970-d791a430efd5",
+            "columnBreakpointParsed": "298f2bbb-4984-4a6e-b81a-d46385a1db1e",
+            "contentWidth": "aee3cb8e-64af-47da-bb29-31cadd346631",
+            "contentWidthParsed": "4e004be1-4f78-4cec-af46-eb7522bf7d9a"
+          }
+        },
+        {
+          "identifier": "2ae91a5b-11df-4b3f-9ee1-6ada2bbbd89d",
+          "type": "CommunityPortal.Components.Sections.Grid.Grid-Section",
+          "properties": {
+            "heading": "",
+            "headingAlignment": "Left",
+            "headingAlignmentParsed": 0,
+            "headingSpacing": "Default",
+            "headingSpacingParsed": 0,
+            "bodyAlignment": "Left",
+            "bodyAlignmentParsed": 0,
+            "isHeadingAnchorLinkVisible": false,
+            "layout": "_1_Column",
+            "layoutParsed": 2,
+            "columnBreakpoint": "Default",
+            "columnBreakpointParsed": 0,
+            "contentWidth": "Narrow",
+            "contentWidthParsed": 1,
+            "paddingTop": "Medium",
+            "paddingTopParsed": 2,
+            "paddingBottom": "Medium",
+            "paddingBottomParsed": 2,
+            "widgetZonesCount": 1,
+            "backgroundColor": "White",
+            "backgroundColorParsed": 1
+          },
+          "zones": [
+            {
+              "identifier": "24976901-f9d9-4908-843c-889c4091cbc2",
+              "widgets": [
+                {
+                  "identifier": "b4c7bff3-8a12-445b-8dfa-59196f99c0f7",
                   "type": "CommunityPortal.Components.BlogPost-List-Widget",
                   "variants": [
                     {
-                      "identifier": "0d30f218-ee5f-4aae-a02c-4e32e82e3b48",
+                      "identifier": "07ec76b6-20f3-4e43-b79d-49e1603e02ef",
                       "properties": {
-                        "heading": "Community updates",
+                        "heading": "",
+                        "introContent": "",
                         "blogPostSource": "Post_Taxonomy",
                         "blogPostSourceParsed": 2,
                         "folderReference": null,
@@ -320,108 +521,70 @@
                           }
                         ],
                         "blogPosts": [],
-                        "postLimit": 3,
-                        "itemLayoutSource": "Minimal",
-                        "itemLayoutSourceParsed": 1
+                        "postLimit": 5,
+                        "itemLayoutSource": "Featured_Mosaic",
+                        "itemLayoutSourceParsed": 6,
+                        "showDXTopics": false,
+                        "showDescription": true,
+                        "descriptionMaxLines": 2,
+                        "showAuthor": false,
+                        "showPublishedDate": false,
+                        "showBlogType": false,
+                        "showHero": true
                       },
                       "fieldIdentifiers": {
-                        "heading": "5b24287e-1d53-47e9-898d-862bedd9f8f4",
-                        "blogPostSource": "8a20f3a2-841b-47fb-a1bf-2fadef6a78f6",
-                        "blogPostSourceParsed": "bdf1e6b4-37cd-42f7-b6ec-304ca7b7f0e2",
-                        "postLimit": "0075cadb-d769-44c9-9dff-ed6d65d9588c",
-                        "blogPosts": "8bcf2f61-5cbb-4d84-b1b9-f56ed92b9607",
-                        "itemLayoutSource": "427b188e-2209-4e00-873b-156ab314262b",
-                        "itemLayoutSourceParsed": "40757c6c-bf67-4027-85ad-f4268a703cdf",
-                        "tagReferences": "0e8eeeb0-90a0-45a2-b026-70548f05c2bb",
-                        "folderReference": "f1d4c592-bcd1-42a0-9e8b-3c8d21ec9818"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "fieldIdentifiers": {
-            "heading": "04c538a3-9f8f-4f5b-9a86-ae00dfb74889",
-            "headingAlignment": "95132f2d-e62c-4489-9917-0eb8e04404bd",
-            "headingAlignmentParsed": "8c3b11d1-4760-428a-a6d5-bdb8ced8b1ec",
-            "bodyAlignment": "6ad3b012-c48f-43f4-a751-a9c18f929b54",
-            "bodyAlignmentParsed": "c01cb242-b823-461f-9de5-2fbd3d1117d8",
-            "isHeadingAnchorLinkVisible": "b5218894-bcef-407c-ba5f-84b269884395",
-            "layout": "e0689f07-6f7b-466a-8a23-8d3a1e577129",
-            "layoutParsed": "ca8fc17c-9efd-438f-9a75-f6fb3adec480",
-            "paddingTop": "967e2794-f723-494d-bd8e-aade906fdc61",
-            "paddingTopParsed": "a5939f4f-9ba9-4934-aa8a-32278f04e6a9",
-            "paddingBottom": "bd81b1b4-c945-4ce9-be82-8d8e5c0b916e",
-            "paddingBottomParsed": "e0b2a1a1-9d15-42de-827e-a21480ecdc0d",
-            "widgetZonesCount": "2a41aa2a-06df-4e16-bfbd-3b961bf5401e",
-            "backgroundColor": "15e6da3f-d719-4d60-b598-9801ec4b79a4",
-            "backgroundColorParsed": "93e43399-85ac-4a72-bf69-889fecb554f9"
-          }
-        },
-        {
-          "identifier": "58258730-589f-4712-bda8-fe9d3c94bd41",
-          "type": "CommunityPortal.Components.Sections.Grid.Grid-Section",
-          "properties": {
-            "heading": "Community Newsletter",
-            "headingAlignment": "Center",
-            "headingAlignmentParsed": 1,
-            "bodyAlignment": "Center",
-            "bodyAlignmentParsed": 1,
-            "isHeadingAnchorLinkVisible": true,
-            "layout": "_1_Column_Narrow",
-            "layoutParsed": 0,
-            "paddingTop": "Large",
-            "paddingTopParsed": 0,
-            "paddingBottom": "Large",
-            "paddingBottomParsed": 0,
-            "widgetZonesCount": 1,
-            "backgroundColor": "Secondary_Light",
-            "backgroundColorParsed": 3
-          },
-          "zones": [
-            {
-              "identifier": "e270684e-5858-410a-bb78-5730c56bbc37",
-              "widgets": [
-                {
-                  "identifier": "efc6015e-bdf3-48d6-b927-82c3ea8ddc71",
-                  "type": "Kentico.Widget.RichText",
-                  "variants": [
-                    {
-                      "identifier": "91cef3f6-989e-4a10-9ed5-a35a47c49d69",
-                      "properties": {
-                        "content": "<p>Sign up for the Community Newsletter to stay up to date with <a data-channel-guid=\"9ca57e0f-969f-43be-91d3-6c45659316bd\" href=\"~/blog/launching-the-kentico-community-newsletter\" target=\"_blank\" rel=\"noopener noreferrer\">all the news and knowledge coming from the Kentico Community</a>...</p>"
-                      },
-                      "fieldIdentifiers": {
-                        "content": "e65b2f3b-b2b1-41a8-9d9f-cfcc004799e5"
+                        "heading": "e27c786c-962e-4894-abd0-fa6f0b706f7e",
+                        "introContent": "d5561391-6fcf-42ee-bec7-cf69aa968a9d",
+                        "blogPostSource": "da81a47f-dfa7-4e8d-b0b7-6828b47b4035",
+                        "blogPostSourceParsed": "8428d4c8-e6ad-4023-a6ee-ecd1ef4bee0b",
+                        "folderReference": "d84af2d5-b7e7-4a08-92d2-fc4d12781014",
+                        "tagReferences": "9eeb81de-7433-4338-a1f2-e415f5defb0e",
+                        "blogPosts": "a859b19f-eec3-4309-a1b8-80b6546d8183",
+                        "postLimit": "3b25599e-621d-41c1-b678-303db2104e64",
+                        "itemLayoutSource": "da385cb5-593b-47a3-9def-f6b81009fa29",
+                        "itemLayoutSourceParsed": "e5f030fe-bfe6-4608-9476-00c37c6d4046",
+                        "showDXTopics": "ca55bcaa-c40c-43bf-adf1-e03f876984d3",
+                        "showDescription": "08160f7c-4b5a-4864-9d0e-a0e0d319ebda",
+                        "descriptionMaxLines": "088cc81d-4c32-4b33-b392-e4690a5f75d4",
+                        "showAuthor": "e3af35f6-0292-404c-af27-e9ab3cab76c3",
+                        "showPublishedDate": "55bbe8cc-4bb1-4180-bd0d-25d136ae9e70",
+                        "showBlogType": "3a07de61-098b-4937-95a1-52ebd21eb943",
+                        "showHero": "559500d2-0c0e-4504-a6a0-25d2d32689b1"
                       }
                     }
                   ]
                 },
                 {
-                  "identifier": "cfb14d19-4ee0-44d3-a14f-b8c5162a8db8",
-                  "type": "Kentico.FormWidget",
+                  "identifier": "77968216-e7f3-4e4b-934f-e60c0b27ce33",
+                  "type": "CommunityPortal.CtaButtonWidget",
                   "variants": [
                     {
-                      "identifier": "9eb7cb92-541c-407e-b2c5-dcd480163375",
+                      "identifier": "75cde403-10a3-4ab3-b53b-a2a64ab33b58",
                       "properties": {
-                        "selectedForm": [
-                          {
-                            "objectGuid": null,
-                            "objectCodeName": "NewsletterSignup"
-                          }
-                        ],
-                        "afterSubmitMode": "message",
-                        "afterSubmitDisplayText": "Thanks for signing up! Check your email and confirm your subscription.",
-                        "afterSubmitRedirectToUrl": null,
-                        "afterSubmitRedirectToWebPage": []
+                        "text": "More articles",
+                        "linkURL": "~/blog",
+                        "horizontalAlignment": "Center",
+                        "horizontalAlignmentParsed": 1,
+                        "topMargin": "Large",
+                        "topMarginParsed": 3,
+                        "bottomMargin": "Medium",
+                        "bottomMarginParsed": 2,
+                        "style": "Outline",
+                        "styleParsed": 1,
+                        "id": "ad011527-b7bb-4aa8-bfe6-9e14ffd347aa"
                       },
                       "fieldIdentifiers": {
-                        "selectedForm": "20043f63-6399-44b0-95e9-f13b4061f550",
-                        "afterSubmitMode": "a4462a80-5a07-49dc-bc3d-5ac576409fb2",
-                        "afterSubmitDisplayText": "bf0d3122-e51b-45ff-a2ad-be7b4bbfc2a2",
-                        "afterSubmitRedirectToUrl": "30ee9ad8-3466-4b9a-92be-2eb121079446",
-                        "afterSubmitRedirectToWebPage": "5813eeb6-15d5-4659-814c-5474b0b3fca9"
+                        "text": "abf31e11-3b2c-4a84-bbe8-b6ac8fdd36e2",
+                        "linkURL": "b4617cab-7d87-4736-b29b-b5dd1d1cb163",
+                        "horizontalAlignment": "d5e7ccd9-84bb-4759-bbec-8983b380933d",
+                        "horizontalAlignmentParsed": "c86b5929-c647-4f02-ab5b-eee58545b7d9",
+                        "topMargin": "510f3dd7-8abf-4b75-9a1e-1002c03b1869",
+                        "topMarginParsed": "963f8ed0-9370-46b9-a252-4b20f5196433",
+                        "bottomMargin": "8aeff314-54ab-4a70-a406-4aebe46f1dda",
+                        "bottomMarginParsed": "474256a7-94a1-4d78-bbd9-d9eed57e7f39",
+                        "id": "7e9dfa86-7fd3-41f8-b137-40d79d29f398",
+                        "style": "4b76c7e2-a2b6-49d2-a720-d7aa3427e51d",
+                        "styleParsed": "5b36fc5c-07b4-4993-acf8-0b9e515c93bd"
                       }
                     }
                   ]
@@ -430,174 +593,76 @@
             }
           ],
           "fieldIdentifiers": {
-            "heading": "5c3a96a9-97a4-42ce-89d3-b01ae6da3592",
-            "headingAlignment": "3e0a7b12-916a-47f6-abe8-580257cf09ad",
-            "headingAlignmentParsed": "5aefd98b-b2c0-49bd-b086-0c6ebfce4294",
-            "bodyAlignment": "328029f9-61e6-4468-9d42-0c369f346133",
-            "bodyAlignmentParsed": "353111c2-8fe6-40f1-8a4e-91d5dd262788",
-            "isHeadingAnchorLinkVisible": "85e0a0cf-e1ba-425a-b2cd-73334be8c5a3",
-            "layout": "011c27d2-5f18-430f-ad8b-f0c2e460e94f",
-            "layoutParsed": "26533c24-ec00-4d88-b208-ebbb66a84911",
-            "paddingTop": "010daea2-a3a7-488e-919d-105bc9b3b0f2",
-            "paddingTopParsed": "c15a07d7-49d7-448f-8ee2-f1d163060cd7",
-            "paddingBottom": "b31c576c-a0f2-465e-af85-70756ca416de",
-            "paddingBottomParsed": "d71f89b4-f788-4c28-b176-084f43f36d40",
-            "widgetZonesCount": "9ecd8078-3419-44c4-8486-b0f8d28e9fca",
-            "backgroundColor": "8d47f73c-63e4-4b7b-b8c7-28c4dcd28913",
-            "backgroundColorParsed": "566734f7-39ed-4108-90e1-f91b8a6e9c85"
+            "heading": "dd35fc09-00b1-4663-825e-f22f605658f7",
+            "headingAlignment": "2bbb39f9-6f6d-4754-8999-bb173dcd87c6",
+            "headingAlignmentParsed": "92b5ab4c-a823-42c5-86ce-bcafa88ecddd",
+            "bodyAlignment": "5e35558b-338b-4ab6-9ac4-60d0630d448c",
+            "bodyAlignmentParsed": "3add90e0-4f2b-4a7b-945d-4a649f7e6a6e",
+            "isHeadingAnchorLinkVisible": "9d61f7e0-4a8d-4345-a76d-08c86790d90e",
+            "layout": "d7e75a63-312d-4911-8135-a1b1f3e62112",
+            "layoutParsed": "7a71bbad-3d72-4d02-b001-dfa3d28391bc",
+            "paddingTop": "283e8e37-d6dc-4169-8c81-1520cf9b217c",
+            "paddingTopParsed": "e6a4455f-f1b2-470c-8856-aba63841d034",
+            "paddingBottom": "a1d05270-50bc-45aa-b090-11972ea4ce5f",
+            "paddingBottomParsed": "d95e68c0-218e-4b08-85a2-13bdc8bbbceb",
+            "widgetZonesCount": "4e621751-68b4-455e-9667-762ca6245f98",
+            "backgroundColor": "2c554dde-6430-4f9b-be12-1e0ca795ca8e",
+            "backgroundColorParsed": "347327f9-ecf0-472e-b4e4-3ce48075dc58",
+            "headingSpacing": "15719444-091f-4cfa-80dd-50226929e63f",
+            "headingSpacingParsed": "1b6d7b37-1675-415a-bf70-def69eccd967",
+            "columnBreakpoint": "d203ef52-6575-4046-bee1-edd88964adf0",
+            "columnBreakpointParsed": "67f79a50-034f-4234-be9e-bbe7961e75d6",
+            "contentWidth": "29e63a2b-d6ca-464d-b1be-0a4a29d93707",
+            "contentWidthParsed": "0909e3f9-3f21-4197-b5e3-2ba2d52cfa48"
           }
         },
         {
-          "identifier": "0d7cf30b-6051-438a-bfda-8ff90ccbe3c8",
+          "identifier": "20d4e695-26b9-47f6-977b-6eabbb82cc6c",
           "type": "CommunityPortal.Components.Sections.Grid.Grid-Section",
           "properties": {
             "heading": "",
             "headingAlignment": "Left",
             "headingAlignmentParsed": 0,
-            "bodyAlignment": "Left",
-            "bodyAlignmentParsed": 0,
+            "headingSpacing": "Default",
+            "headingSpacingParsed": 0,
+            "bodyAlignment": "Center",
+            "bodyAlignmentParsed": 1,
             "isHeadingAnchorLinkVisible": false,
-            "layout": "_2_Columns_50_50",
-            "layoutParsed": 4,
-            "paddingTop": "Large",
-            "paddingTopParsed": 0,
-            "paddingBottom": "Large",
-            "paddingBottomParsed": 0,
-            "widgetZonesCount": 2,
+            "layout": "_1_Column",
+            "layoutParsed": 2,
+            "columnBreakpoint": "Default",
+            "columnBreakpointParsed": 0,
+            "contentWidth": "Default",
+            "contentWidthParsed": 0,
+            "paddingTop": "Medium",
+            "paddingTopParsed": 2,
+            "paddingBottom": "Medium",
+            "paddingBottomParsed": 2,
+            "widgetZonesCount": 1,
             "backgroundColor": "White",
             "backgroundColorParsed": 1
           },
           "zones": [
             {
-              "identifier": "a86f2515-28f5-4db6-999b-17b9ad554f4b",
+              "identifier": "4864521b-1775-464a-ac87-3a9dafbf3abf",
               "widgets": [
                 {
-                  "identifier": "105996c6-c66a-4e42-a693-a90fa244008a",
-                  "type": "CommunityPortal.Components.BlogPost-List-Widget",
+                  "identifier": "be247a4c-924f-4086-898e-96ec0bce9222",
+                  "type": "CommunityPortal.FallbackFormWidget",
                   "variants": [
                     {
-                      "identifier": "6a13d969-7880-41c0-89f7-ded87622b2bc",
+                      "identifier": "dcc73b3a-4f69-4dfb-a3bc-0dbed0e66877",
                       "properties": {
-                        "heading": "Videos, Podcasts, and other media",
-                        "blogPostSource": "Post_Taxonomy",
-                        "blogPostSourceParsed": 2,
-                        "folderReference": null,
-                        "tagReferences": [
-                          {
-                            "identifier": "977cab75-2b4e-43b2-b456-ec9d9d504494"
-                          }
-                        ],
-                        "blogPosts": [],
-                        "postLimit": 3,
-                        "itemLayoutSource": "Minimal",
-                        "itemLayoutSourceParsed": 1
-                      },
-                      "fieldIdentifiers": {
-                        "heading": "33f5c8ad-e8ca-4c47-a021-1edb1171281a",
-                        "blogPostSource": "e23bcbb7-6653-4408-a665-0d11710c8b6a",
-                        "blogPostSourceParsed": "54c772b1-6f09-4305-a1ec-0319048437d4",
-                        "postLimit": "c9f68d0c-bf61-44ce-a3f0-2e2fa9ad8844",
-                        "blogPosts": "82d4a722-9c0e-4546-9976-ed5c186048c6",
-                        "itemLayoutSource": "5fb56bf4-17db-4ef9-8180-6585522e203e",
-                        "itemLayoutSourceParsed": "30638898-657e-4ce9-84b9-5d7ace60dd06",
-                        "tagReferences": "9d2484de-c0d9-4681-85b8-ea8a1dafa06e",
-                        "folderReference": "fce1b7f5-cec3-44ff-8bac-fd5855ecb6c0"
-                      }
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "identifier": "b8c91029-d6f6-4cac-aa85-641cb588697f",
-              "widgets": [
-                {
-                  "identifier": "2201375f-bb4f-4902-afe1-cd7f7501b9c6",
-                  "type": "CommunityPortal.Components.BlogPost-List-Widget",
-                  "variants": [
-                    {
-                      "identifier": "3fef82c0-70bf-45a2-b716-45b9d2c18d83",
-                      "properties": {
-                        "heading": "Articles",
-                        "blogPostSource": "Post_Taxonomy",
-                        "blogPostSourceParsed": 2,
-                        "folderReference": null,
-                        "tagReferences": [
-                          {
-                            "identifier": "0cb21dda-384b-4792-8e1b-41034f113d28"
-                          }
-                        ],
-                        "blogPosts": [],
-                        "postLimit": 3,
-                        "itemLayoutSource": "Minimal",
-                        "itemLayoutSourceParsed": 1
-                      },
-                      "fieldIdentifiers": {
-                        "heading": "a72870a4-28b3-4a1e-9ac6-4953b585ec9a",
-                        "blogPostSource": "2153bf87-0097-46bd-ab36-3fa5b5595898",
-                        "blogPostSourceParsed": "5b7a07bc-c70c-4632-ac12-c448786105ba",
-                        "postLimit": "6ee029e4-f684-4919-a29a-43e85bdd058c",
-                        "blogPosts": "eae3cc19-0a4b-4aa2-9c03-4ed05705d618",
-                        "itemLayoutSource": "2969fc68-a0f4-4fb9-b404-bc02b8ef1810",
-                        "itemLayoutSourceParsed": "7432a16d-20e9-411e-886d-a263d06d8447",
-                        "tagReferences": "c2d3c0a5-5415-401f-b6fb-b9a6c2558796",
-                        "folderReference": "663cc365-d985-4011-adc6-c465d8e3f9be"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "fieldIdentifiers": {
-            "heading": "3c9a5f4e-934f-4418-8855-9865c5a62e8e",
-            "headingAlignment": "e477282b-241e-4f97-a543-0010452b6ae3",
-            "headingAlignmentParsed": "6f66f87c-3e31-4676-bd00-0668b6aee7ff",
-            "bodyAlignment": "3d4eb469-be59-4bfc-b282-d1da4434e9a9",
-            "bodyAlignmentParsed": "83110285-40e0-4e4c-9f6f-88a2b844f7e6",
-            "isHeadingAnchorLinkVisible": "3916777d-3537-47b2-b438-113f5222a13a",
-            "layout": "a34b077e-5f44-4452-8c67-c12ab62df51b",
-            "layoutParsed": "7991714a-55aa-4b77-aad8-ca3b612ebab5",
-            "paddingTop": "2f31daac-7e81-4cce-bfca-736e5a4596b3",
-            "paddingTopParsed": "cdcc65f6-1d42-4500-84a4-ee5487a75ff5",
-            "paddingBottom": "88cecdd6-5d80-45a8-ab7e-db666256fbd1",
-            "paddingBottomParsed": "4939b621-7eca-486d-86f4-eb283e836bc6",
-            "widgetZonesCount": "5c72e36c-cd2b-4971-b5d7-98914ff1705b",
-            "backgroundColor": "42e1fa69-dfc6-4b80-b52a-81b614cbfca0",
-            "backgroundColorParsed": "0e2cf592-6d53-4a9a-b3cc-59eaa205409e"
-          }
-        },
-        {
-          "identifier": "8f25ef5b-8b62-449b-a552-cfe3e4581f7e",
-          "type": "CommunityPortal.Components.Sections.Grid.Grid-Section",
-          "properties": {
-            "heading": "Feedback",
-            "headingAlignment": "Center",
-            "headingAlignmentParsed": 1,
-            "bodyAlignment": "Center",
-            "bodyAlignmentParsed": 1,
-            "isHeadingAnchorLinkVisible": true,
-            "layout": "_1_Column_Narrow",
-            "layoutParsed": 0,
-            "paddingTop": "Large",
-            "paddingTopParsed": 0,
-            "paddingBottom": "Large",
-            "paddingBottomParsed": 0,
-            "widgetZonesCount": 1,
-            "backgroundColor": "Secondary_Light",
-            "backgroundColorParsed": 3
-          },
-          "zones": [
-            {
-              "identifier": "b9c56010-81f3-4989-b171-7f7516ba5a91",
-              "widgets": [
-                {
-                  "identifier": "b28fc3b8-5700-4639-b088-f6457c115785",
-                  "type": "Kentico.FormWidget",
-                  "variants": [
-                    {
-                      "identifier": "0bf867b7-90f9-4078-9e3b-529196c3301b",
-                      "properties": {
+                        "design": "Feature_Card",
+                        "designParsed": 1,
+                        "heading": "Feedback Form",
+                        "backgroundColor": "White",
+                        "backgroundColorParsed": 1,
+                        "componentState": "Active",
+                        "componentStateParsed": 0,
+                        "fallbackMarkdown": "",
+                        "fallbackCTAPathOrURL": "",
+                        "fallbackCTALabel": "",
                         "selectedForm": [
                           {
                             "objectGuid": null,
@@ -610,11 +675,21 @@
                         "afterSubmitRedirectToWebPage": []
                       },
                       "fieldIdentifiers": {
-                        "selectedForm": "c4c77e54-d57c-478e-8d0c-f06f7fc8f1d0",
-                        "afterSubmitMode": "cde71b44-2eea-4d11-a608-fe8cc7454022",
-                        "afterSubmitDisplayText": "b7079f6d-e8ce-416e-b19a-809b6d7147f0",
-                        "afterSubmitRedirectToUrl": "4e0c4fba-aa93-4201-af71-0c44b9520bfa",
-                        "afterSubmitRedirectToWebPage": "ab1eb6c2-4e27-4268-95cb-0d9179374141"
+                        "design": "ac7e5b86-7d1a-4930-88f8-53ff8f010ab9",
+                        "designParsed": "9df718f1-ff4d-4f93-87f9-ab955d09caa1",
+                        "heading": "9f4a0de7-b27e-4e69-a2cb-e69f478c9bd3",
+                        "backgroundColor": "eccbe840-712e-4f5f-b313-16b12b686a6d",
+                        "backgroundColorParsed": "93ad2ad9-309c-4f34-b039-c70df7c88c8c",
+                        "componentState": "dffcdb14-53cb-4a34-887c-4865aa95a245",
+                        "componentStateParsed": "a1defdef-d6d4-4c47-bffa-8f07d57f311f",
+                        "fallbackMarkdown": "898e11e8-5bee-46d5-969e-d954a76b7c65",
+                        "fallbackCTAPathOrURL": "636530dc-911d-4804-8a49-5f89421c4979",
+                        "fallbackCTALabel": "faca6ce1-89b5-46e9-94c1-2aee788e9e20",
+                        "selectedForm": "dd5ea6f5-242b-4e57-b882-e1357c166f3e",
+                        "afterSubmitMode": "f6ccbd01-254c-468e-9cb7-b32136169522",
+                        "afterSubmitDisplayText": "bbf70cb8-8f93-47b5-8045-4d0a82be7028",
+                        "afterSubmitRedirectToUrl": "c858eb30-6674-45b0-9fac-26fab78349a3",
+                        "afterSubmitRedirectToWebPage": "87274cb9-b3e9-4532-b4ec-d684032d092a"
                       }
                     }
                   ]
@@ -623,21 +698,27 @@
             }
           ],
           "fieldIdentifiers": {
-            "heading": "f0ea6df8-2f30-4369-9a1d-812e7ee08297",
-            "headingAlignment": "7a8f6577-34e0-429f-a700-97f1e0315000",
-            "headingAlignmentParsed": "e8c3cb10-8c4f-4012-ad1a-5a5c843f1bad",
-            "bodyAlignment": "be09bf53-a7b3-4990-9b8a-db3872c0d8f9",
-            "bodyAlignmentParsed": "94cdf595-5c01-4632-8711-71aa988a9146",
-            "isHeadingAnchorLinkVisible": "8733ddaf-6735-4917-b13e-ed473369d010",
-            "layout": "810dcb73-3a41-4bb3-9d2d-d13ceecae339",
-            "layoutParsed": "ac2165d1-12f2-48b2-9f14-d460dee7cf34",
-            "paddingTop": "880fee3f-29b8-406e-9a24-c01e36e81033",
-            "paddingTopParsed": "da62c8a3-468d-43f0-9910-4d29fc37826d",
-            "paddingBottom": "4b2375c4-4b97-4119-b340-b8e6880f56a4",
-            "paddingBottomParsed": "a433e29b-2967-40b3-bb39-ce091f0c5e7d",
-            "widgetZonesCount": "c2d0c0d9-1d31-4946-b5b9-7776bbb0e725",
-            "backgroundColor": "04419065-9461-4f2e-a5db-7bc79d84ab5a",
-            "backgroundColorParsed": "34a8c613-0400-4a24-b5d8-f9772f07d709"
+            "heading": "f10fe408-629f-4e6e-a20a-4f8ea4394d67",
+            "headingAlignment": "d1a5819b-ef74-4984-9b00-c10283d75f96",
+            "headingAlignmentParsed": "ea7ea6f7-972f-47c4-bad3-35a96d518273",
+            "bodyAlignment": "608efd53-4364-454d-98ae-c672761c926b",
+            "bodyAlignmentParsed": "353032e8-e069-4d07-bc19-861e8cf21385",
+            "isHeadingAnchorLinkVisible": "25c892dc-29ce-4964-9b5c-44c368ad60be",
+            "layout": "9967b443-8833-450f-93c8-2a7833194f75",
+            "layoutParsed": "3fb90dfc-e5d3-47cd-8e0a-21caa11bdbbf",
+            "paddingTop": "d3313c17-26c2-4f8b-86ac-dc2710d9dbe5",
+            "paddingTopParsed": "b2ffaa76-18bb-4fdb-a451-d882942ae2d7",
+            "paddingBottom": "d9b62363-b612-40a1-802f-c658b130cba4",
+            "paddingBottomParsed": "938b11ea-2a39-484f-bbd4-7793b19fe442",
+            "widgetZonesCount": "3390505d-2896-481b-9827-8ae2163e1cfa",
+            "backgroundColor": "63aad331-ab8e-4e7f-a025-f64c05fff893",
+            "backgroundColorParsed": "918fd2e2-f4d0-4eef-9f3b-3e87340f3f5b",
+            "headingSpacing": "12a4b6eb-0963-4d46-807b-d020eb695246",
+            "headingSpacingParsed": "b7f22d72-c95b-47b2-8047-d10ee44f6f1d",
+            "columnBreakpoint": "5e5607d7-dfb9-4e64-9910-c98fe20cb5c3",
+            "columnBreakpointParsed": "0675af72-927c-47d2-8622-b7b036056773",
+            "contentWidth": "4b1d80e6-14b9-46b2-965a-4f2acd85bfef",
+            "contentWidthParsed": "80aab95a-aa2b-478d-b728-d654130d1e79"
           }
         }
       ]
@@ -655,34 +736,34 @@
   <WebPageMetaTitle />
   <ContentItemReferences>
     <cms.contentitemreference>
-      <ContentItemReferenceGroupGUID>b736005a-620e-49bd-857d-01dd2175c2a5</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>26c343c0-e4a3-4f71-9962-c56f0620340c</ContentItemReferenceGUID>
+      <ContentItemReferenceGroupGUID>5cb85128-9340-4b83-a5ec-1083447fc42b</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>46ddfff4-24bd-4743-9dc3-770ffa738760</ContentItemReferenceGUID>
       <ContentItemReferenceSourceCommonDataID>
         <GUID>97e02035-3bdd-47c9-86c6-bb7a79454078</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>
       </ContentItemReferenceSourceCommonDataID>
       <ContentItemReferenceTargetItemID>
-        <CodeName>Poll2025-08-01-AugustRefresh-vsdjqlxs</CodeName>
-        <GUID>a409fc0a-72a3-47e0-bd6d-1c685c8f73bf</GUID>
+        <CodeName>Poll2026-11-13-WhichAIToolDoYouUseMostOfTheTime-dtm5qzqa</CodeName>
+        <GUID>a142a16a-960c-4dc5-aa62-b0be40e4f91a</GUID>
         <ObjectType>cms.contentitem</ObjectType>
       </ContentItemReferenceTargetItemID>
     </cms.contentitemreference>
     <cms.contentitemreference>
-      <ContentItemReferenceGroupGUID>af9ca209-6e32-4927-86d8-8f6e18d56564</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>8ac2e8d1-e0a9-4066-8ee6-97eaa7389c4d</ContentItemReferenceGUID>
+      <ContentItemReferenceGroupGUID>6831d4dd-b238-45da-88df-112b7c4b7701</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>7b7c6733-bb76-4fe3-bb73-6a4e9145a68c</ContentItemReferenceGUID>
       <ContentItemReferenceSourceCommonDataID>
         <GUID>97e02035-3bdd-47c9-86c6-bb7a79454078</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>
       </ContentItemReferenceSourceCommonDataID>
       <ContentItemReferenceTargetItemID>
-        <CodeName>CommunityPrograms-xoo2eblo</CodeName>
-        <GUID>8d2fb739-b1aa-4459-980a-5d5d40d5b6f8</GUID>
+        <CodeName>HomePageHero-image</CodeName>
+        <GUID>20ed90f9-72d1-4aa8-9002-99497d264dba</GUID>
         <ObjectType>cms.contentitem</ObjectType>
       </ContentItemReferenceTargetItemID>
     </cms.contentitemreference>
     <cms.contentitemreference>
-      <ContentItemReferenceGroupGUID>af9ca209-6e32-4927-86d8-8f6e18d56564</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>97023127-958f-4532-9709-ae9d7aae0509</ContentItemReferenceGUID>
+      <ContentItemReferenceGroupGUID>b34c5ed1-8e36-43bf-8edc-a75e3d1b7a2a</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>9e16ea01-c595-44dd-b48d-2f571ee2076a</ContentItemReferenceGUID>
       <ContentItemReferenceSourceCommonDataID>
         <GUID>97e02035-3bdd-47c9-86c6-bb7a79454078</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>
@@ -694,21 +775,47 @@
       </ContentItemReferenceTargetItemID>
     </cms.contentitemreference>
     <cms.contentitemreference>
-      <ContentItemReferenceGroupGUID>e65b2f3b-b2b1-41a8-9d9f-cfcc004799e5</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>b4ebc5be-9f1b-48f1-864d-e7f3d83ea514</ContentItemReferenceGUID>
+      <ContentItemReferenceGroupGUID>b34c5ed1-8e36-43bf-8edc-a75e3d1b7a2a</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>d6aa18e0-2a93-4be6-95b7-609f8aa1decc</ContentItemReferenceGUID>
       <ContentItemReferenceSourceCommonDataID>
         <GUID>97e02035-3bdd-47c9-86c6-bb7a79454078</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>
       </ContentItemReferenceSourceCommonDataID>
       <ContentItemReferenceTargetItemID>
-        <CodeName>LaunchingTheKenticoCommunityNewsletter-zt8lgi6b</CodeName>
-        <GUID>29c754ea-b560-4d3e-a15a-9d3c04d59a41</GUID>
+        <CodeName>CommunityPrograms-xoo2eblo</CodeName>
+        <GUID>8d2fb739-b1aa-4459-980a-5d5d40d5b6f8</GUID>
         <ObjectType>cms.contentitem</ObjectType>
       </ContentItemReferenceTargetItemID>
     </cms.contentitemreference>
     <cms.contentitemreference>
-      <ContentItemReferenceGroupGUID>96af924c-0110-4511-a2bf-ebdb6ca1f6f4</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>ffd36045-ba18-4ca5-a735-04b1e9434acd</ContentItemReferenceGUID>
+      <ContentItemReferenceGroupGUID>b34c5ed1-8e36-43bf-8edc-a75e3d1b7a2a</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>8618d83d-7540-4177-b06a-8513e6048a77</ContentItemReferenceGUID>
+      <ContentItemReferenceSourceCommonDataID>
+        <GUID>97e02035-3bdd-47c9-86c6-bb7a79454078</GUID>
+        <ObjectType>cms.contentitemcommondata</ObjectType>
+      </ContentItemReferenceSourceCommonDataID>
+      <ContentItemReferenceTargetItemID>
+        <CodeName>AIDevelopmentHub-homelink</CodeName>
+        <GUID>f596c4d9-0701-4f7f-8ad2-9fe30f528227</GUID>
+        <ObjectType>cms.contentitem</ObjectType>
+      </ContentItemReferenceTargetItemID>
+    </cms.contentitemreference>
+    <cms.contentitemreference>
+      <ContentItemReferenceGroupGUID>b34c5ed1-8e36-43bf-8edc-a75e3d1b7a2a</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>972d72c2-92f0-41cf-a98d-928d93e05e45</ContentItemReferenceGUID>
+      <ContentItemReferenceSourceCommonDataID>
+        <GUID>97e02035-3bdd-47c9-86c6-bb7a79454078</GUID>
+        <ObjectType>cms.contentitemcommondata</ObjectType>
+      </ContentItemReferenceSourceCommonDataID>
+      <ContentItemReferenceTargetItemID>
+        <CodeName>Blog-homelink</CodeName>
+        <GUID>020f0277-376a-41c5-b6e0-d8226ccca30c</GUID>
+        <ObjectType>cms.contentitem</ObjectType>
+      </ContentItemReferenceTargetItemID>
+    </cms.contentitemreference>
+    <cms.contentitemreference>
+      <ContentItemReferenceGroupGUID>b34c5ed1-8e36-43bf-8edc-a75e3d1b7a2a</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>db5224e0-caa8-41af-985f-a4e6e41eb109</ContentItemReferenceGUID>
       <ContentItemReferenceSourceCommonDataID>
         <GUID>97e02035-3bdd-47c9-86c6-bb7a79454078</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>
@@ -720,8 +827,21 @@
       </ContentItemReferenceTargetItemID>
     </cms.contentitemreference>
     <cms.contentitemreference>
-      <ContentItemReferenceGroupGUID>96af924c-0110-4511-a2bf-ebdb6ca1f6f4</ContentItemReferenceGroupGUID>
-      <ContentItemReferenceGUID>324ab2e6-39b5-473f-8eec-2430d5ae7791</ContentItemReferenceGUID>
+      <ContentItemReferenceGroupGUID>b34c5ed1-8e36-43bf-8edc-a75e3d1b7a2a</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>5291d63c-608a-4aa2-a87e-d630c42dc231</ContentItemReferenceGUID>
+      <ContentItemReferenceSourceCommonDataID>
+        <GUID>97e02035-3bdd-47c9-86c6-bb7a79454078</GUID>
+        <ObjectType>cms.contentitemcommondata</ObjectType>
+      </ContentItemReferenceSourceCommonDataID>
+      <ContentItemReferenceTargetItemID>
+        <CodeName>XbyKIntegrations-homelink</CodeName>
+        <GUID>2b7f9d3a-88fe-4521-9ae2-c136da7af559</GUID>
+        <ObjectType>cms.contentitem</ObjectType>
+      </ContentItemReferenceTargetItemID>
+    </cms.contentitemreference>
+    <cms.contentitemreference>
+      <ContentItemReferenceGroupGUID>b34c5ed1-8e36-43bf-8edc-a75e3d1b7a2a</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>ec8f8e41-5dba-4399-a5c8-eed48de43c61</ContentItemReferenceGUID>
       <ContentItemReferenceSourceCommonDataID>
         <GUID>97e02035-3bdd-47c9-86c6-bb7a79454078</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>
@@ -732,10 +852,23 @@
         <ObjectType>cms.contentitem</ObjectType>
       </ContentItemReferenceTargetItemID>
     </cms.contentitemreference>
+    <cms.contentitemreference>
+      <ContentItemReferenceGroupGUID>f0cf0362-e4bb-49b0-87c6-ead685ec18f0</ContentItemReferenceGroupGUID>
+      <ContentItemReferenceGUID>59c88a1d-29ee-447b-9238-f29dfcaa784e</ContentItemReferenceGUID>
+      <ContentItemReferenceSourceCommonDataID>
+        <GUID>97e02035-3bdd-47c9-86c6-bb7a79454078</GUID>
+        <ObjectType>cms.contentitemcommondata</ObjectType>
+      </ContentItemReferenceSourceCommonDataID>
+      <ContentItemReferenceTargetItemID>
+        <CodeName>Poll2026-11-13-WhichUpcomingXperienceFeatureAreYouMostExcitedAbout-nx7wp0rl</CodeName>
+        <GUID>f56256f9-84ef-4af9-9f84-a465c6750710</GUID>
+        <ObjectType>cms.contentitem</ObjectType>
+      </ContentItemReferenceTargetItemID>
+    </cms.contentitemreference>
   </ContentItemReferences>
   <ContentItemObjectReferences>
     <cms.contentitemobjectreference>
-      <ContentItemObjectReferenceGUID>055d4496-b5a7-4fa9-892b-97633879449b</ContentItemObjectReferenceGUID>
+      <ContentItemObjectReferenceGUID>bc37147d-3e60-4b8f-bfac-c55c35dca08c</ContentItemObjectReferenceGUID>
       <ContentItemObjectReferenceSourceCommonDataID>
         <GUID>97e02035-3bdd-47c9-86c6-bb7a79454078</GUID>
         <ObjectType>cms.contentitemcommondata</ObjectType>
@@ -743,18 +876,6 @@
       <ContentItemObjectReferenceTargetFormID>
         <CodeName>CommunityFeedbackForm</CodeName>
         <GUID>e0463455-115d-4282-be99-242253d9a39e</GUID>
-        <ObjectType>cms.form</ObjectType>
-      </ContentItemObjectReferenceTargetFormID>
-    </cms.contentitemobjectreference>
-    <cms.contentitemobjectreference>
-      <ContentItemObjectReferenceGUID>61243063-95e7-444d-8b40-3ccf82f25454</ContentItemObjectReferenceGUID>
-      <ContentItemObjectReferenceSourceCommonDataID>
-        <GUID>97e02035-3bdd-47c9-86c6-bb7a79454078</GUID>
-        <ObjectType>cms.contentitemcommondata</ObjectType>
-      </ContentItemObjectReferenceSourceCommonDataID>
-      <ContentItemObjectReferenceTargetFormID>
-        <CodeName>NewsletterSignup</CodeName>
-        <GUID>ac5aca2c-6198-4dbe-a76e-fedb26111626</GUID>
         <ObjectType>cms.form</ObjectType>
       </ContentItemObjectReferenceTargetFormID>
     </cms.contentitemobjectreference>

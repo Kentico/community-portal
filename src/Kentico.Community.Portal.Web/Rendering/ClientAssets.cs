@@ -10,16 +10,6 @@ public class ClientAssets(IWebHostEnvironment env, IViteManifest manifest, IOpti
     private readonly string basePath = $"/{options.Value.Base?.Trim('/')}";
 
     /// <summary>
-    /// Returns true if editormd is required on the current page
-    /// </summary>
-    /// <value></value>
-    public bool EditormdRequired { get; internal set; } = false;
-    /// <summary>
-    /// Call to ensure Editormd.js is configured for the current page
-    /// </summary>
-    public void RequireEditormd() => EditormdRequired = true;
-
-    /// <summary>
     /// Returns true if Prism.js is required on the current page
     /// </summary>
     /// <value></value>

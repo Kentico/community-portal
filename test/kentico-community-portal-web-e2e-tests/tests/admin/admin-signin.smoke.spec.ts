@@ -17,4 +17,14 @@ test.describe("admin sign-in smoke", () => {
       page.locator('a[aria-label="System"]'),
     ).toBeVisible();
   });
+
+  test("opens the Community Members application", async ({ page }) => {
+    const adminShell = new AdminShellPage(page);
+
+    await adminShell.goto();
+    await adminShell.expectSignedIn();
+
+    const membersPage = await adminShell.openCommunityMembers();
+    await membersPage.expectLoaded();
+  });
 });

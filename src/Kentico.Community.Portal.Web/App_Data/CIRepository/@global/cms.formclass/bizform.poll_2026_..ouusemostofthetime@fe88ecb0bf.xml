@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cms.formclass>
+  <ClassContactMapping>
+    <form />
+  </ClassContactMapping>
+  <ClassDisplayName>
+    <![CDATA[Poll - 2026-11-13 - Which AI tool do you use most of the time?]]>
+  </ClassDisplayName>
+  <ClassFormDefinition>
+    <form>
+      <field column="Poll_2026_11_13_WhichAIToolDoYouUseMostOfTheTimeID" columntype="integer" enabled="true" guid="d1fb153a-9ef9-4f16-8508-79b3008e40c0" isPK="true" />
+      <field column="FormInserted" columnprecision="7" columntype="datetime" enabled="true" guid="0db71cd0-4b72-4c40-be2e-db11ea5307c7" system="true">
+        <properties>
+          <fieldcaption>Form inserted</fieldcaption>
+        </properties>
+      </field>
+      <field column="FormUpdated" columnprecision="7" columntype="datetime" enabled="true" guid="6fc0e02d-1756-4f9f-b423-d8ce2a9862c4" system="true">
+        <properties>
+          <fieldcaption>Form updated</fieldcaption>
+        </properties>
+      </field>
+      <field allowempty="true" column="MemberID" columntype="integer" enabled="true" guid="0d766d38-839f-4980-8b31-1a399596daff" visible="true">
+        <properties>
+          <fieldcaption>Member ID</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberID</componentidentifier>
+        </settings>
+      </field>
+      <field allowempty="true" column="MemberEmail" columnsize="500" columntype="text" enabled="true" guid="a488b8d1-20e7-4d04-b717-bd7374b7f04b" visible="true">
+        <properties>
+          <fieldcaption>Member email</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>CommunityPortal.FormComponent.HiddenMemberEmail</componentidentifier>
+        </settings>
+      </field>
+      <field column="Question" columnsize="200" columntype="text" enabled="true" guid="986c99bf-d349-4dae-a5c0-b849b16d6356" visible="true">
+        <properties>
+          <fieldcaption>Which AI tool do you use most of the time?</fieldcaption>
+          <smart>False</smart>
+        </properties>
+        <settings>
+          <componentidentifier>Kentico.RadioButtons</componentidentifier>
+          <DataSource>
+<![CDATA[
+Copilot desktop
+Copilot Chat (VS Code / VS)
+Copilot CLI
+Claude desktop
+Claude Code
+Codex CLI
+ChatGPT / Codex desktop
+Cursor
+Gemini CLI
+Other
+]]>
+          </DataSource>
+          <DataSourceValueSeparator>;</DataSourceValueSeparator>
+        </settings>
+      </field>
+    </form>
+  </ClassFormDefinition>
+  <ClassGUID>390d908c-208c-44ac-8311-62847638eb12</ClassGUID>
+  <ClassHasUnmanagedDbSchema>False</ClassHasUnmanagedDbSchema>
+  <ClassName>
+    <![CDATA[BizForm.Poll_2026_11_13_WhichAIToolDoYouUseMostOfTheTime]]>
+  </ClassName>
+  <ClassTableName>
+    <![CDATA[Form_Poll_2026_11_13_WhichAIToolDoYouUseMostOfTheTime]]>
+  </ClassTableName>
+  <ClassType>Form</ClassType>
+  <ClassXmlSchema>
+<![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Form_Poll_2026_11_13_WhichAIToolDoYouUseMostOfTheTime">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Poll_2026_11_13_WhichAIToolDoYouUseMostOfTheTimeID" msdata:ReadOnly="true" msdata:AutoIncrement="true" type="xs:int" />
+              <xs:element name="FormInserted" type="xs:dateTime" />
+              <xs:element name="FormUpdated" type="xs:dateTime" />
+              <xs:element name="MemberID" type="xs:int" minOccurs="0" />
+              <xs:element name="MemberEmail" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Question">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//Form_Poll_2026_11_13_WhichAIToolDoYouUseMostOfTheTime" />
+      <xs:field xpath="Poll_2026_11_13_WhichAIToolDoYouUseMostOfTheTimeID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
+]]>
+  </ClassXmlSchema>
+</cms.formclass>

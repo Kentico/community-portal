@@ -1,0 +1,45 @@
+@using Kentico.Community.Portal.Web.Components.TagHelpers
+@model Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.BlogPostList.BlogPostMosaicCardViewModel
+
+@* One Featured Mosaic card. The variant class (hero / tall / row) only changes
+   geometry; the markup is the same for all three. *@
+
+@{
+  var post = Model.Post;
+
+  // Most posts have no featured image. The fallback artwork (a CSS gradient with
+  // brand circles) is picked from the post's own identifier so a given post
+  // always shows the same variant.
+  int fallbackVariant = post.FallbackSeed % 4;
+}
+
+<article class="blog-post-mosaic__card @Model.VariantClass position-relative">
+  <div class="blog-post-mosaic__media" data-fallback="@(post.Image.HasValue ? null : fallbackVariant)">
+    @if (post.Image.HasValue)
+    {
+      <img xpc-image="post.Image" sizes="@Model.ImageSizes" class="blog-post-mosaic__img m-0" />
+    }
+  </div>
+
+  <div class="blog-post-mosaic__body">
+    <h3 class="blog-post-mosaic__title fw-bold m-0">
+      <a href="@post.LinkPath" class="blog-post-mosaic__link stretched-link text-decoration-none"
+        @(post.Description.HasValue ? $"aria-describedby={post.DescriptionID}" : null)>
+        @post.Title
+      </a>
+    </h3>
+
+    @* Not the shared _Description partial: that one is muted gray, the mosaic's copy is black. *@
+    @if (post.Description.TryGetValue(out string? description))
+    {
+      <p id="@post.DescriptionID" class="blog-post-mosaic__desc"
+        style="@(post.DescriptionMaxLines > 0 ? $"--bpl-clamp:{post.DescriptionMaxLines}" : null)">
+        @description
+      </p>
+    }
+
+    <partial name="~/Components/PageBuilder/Widgets/BlogPostList/_Meta.cshtml" model="post" />
+
+    <partial name="~/Components/PageBuilder/Widgets/BlogPostList/_Tags.cshtml" model="post" />
+  </div>
+</article>

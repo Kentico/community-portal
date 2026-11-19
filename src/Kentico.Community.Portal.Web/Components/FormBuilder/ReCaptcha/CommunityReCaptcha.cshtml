@@ -1,6 +1,8 @@
 @using CMS.Helpers.Internal
 @using Kentico.Forms.Web.Mvc
 @using Kentico.Community.Portal.Web.Components.FormBuilder.ReCaptcha
+@using Kentico.PageBuilder.Web.Mvc
+@inject IPageBuilderDataContextRetriever PageBuilderContext
 
 @model CommunityReCaptchaFormComponent
 
@@ -10,6 +12,13 @@
     var renderFunctionName = "renderRecaptcha" + safeComponentId;
     var recaptchaDivId = "google-recaptcha-" + Html.IdFor(x => x.Value);
     bool isFormBuilder = VirtualContext.ItemIsSet(VirtualContext.PARAM_FORM_BUILDER_URL);
+    /*
+     * Page Builder (edit and read-only): reCAPTCHA loads when the form scrolls into view, which adds
+     * a google.com iframe after the Page Builder frame has loaded. The admin then tries to attach
+     * click listeners to it and throws a cross-origin SecurityError. Nobody submits forms here, so
+     * skip it. Preview isn't affected and keeps reCAPTCHA.
+     */
+    bool isPageBuilder = PageBuilderContext.Retrieve().GetMode() != PageBuilderMode.Off;
 }
 
 @if (isFormBuilder)
@@ -17,6 +26,11 @@
     <div>
         @Html.Kentico().InfoMessage("reCAPTCHA will be displayed correctly when the form is placed on a page within a website channel. The solution must have reCAPTCHA settings configured in the appsettings.")
     </div>
+}
+else if (isPageBuilder)
+{
+    @* Plain site markup: Html.Kentico().InfoMessage needs the admin's icons and resource strings, which pages don't load *@
+    <p class="form-text text-muted fst-italic">reCAPTCHA loads on the live site and in Preview.</p>
 }
 else
 {
@@ -39,6 +53,13 @@ else
                         window.kentico.updatableFormHelper.submitForm(event);
                     }
                 });
+
+                // Not loaded with the page (the form can be on any page). Load it once the
+                // form scrolls into view; submit loads it otherwise.
+                const captchaForm = document.getElementById('@tokenHiddenId')?.closest('form');
+                if (captchaForm) {
+                    recaptcha.loadRecaptchaWhenVisible(captchaForm);
+                }
             });
 
             @if (!isFormBuilder)

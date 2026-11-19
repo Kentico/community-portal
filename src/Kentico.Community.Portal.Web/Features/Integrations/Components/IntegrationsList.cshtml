@@ -2,74 +2,81 @@
 
 @model Kentico.Community.Portal.Web.Features.Integrations.IntegrationsListViewModel
 
-<div class="section pb-7" x-data="{ searchTerm: '', searchType: 'all' }">
+@*
+    Every entry is server-rendered (crawlers, ItemList JSON-LD, #anchors).
+    Search and type filter only hide non-matching entries - see integrationsHubComponent.js
+*@
+<div class="section pb-7" x-data="integrationsHub" @@hashchange.window="revealHash()">
     <div class="container">
-        <form method="get" id="integrationsSearchForm" role="search" aria-label="Search integrations">
+        <form method="get" id="integrationsSearchForm" role="search" aria-label="Search extensions and integrations"
+              @@submit.prevent>
             <div class="row justify-content-center">
                 <div class="col-sm-10 col-lg-7">
-                    <div>
-                        <input type="text" class="form-control search rounded-pill"
-                               placeholder="Search by name or description"
-                               aria-label="Search integrations by name or description" aria-describedby="submitSearch"
-                               x-model="searchTerm">
-                    </div>
-                    <div class="w-100 mt-3">
-                        <label for="integrationType">Filter by type</label>
-                        <select id="integrationType" class="form-select form-select-sm w-auto d-inline"
-                                x-model="searchType" aria-label="Filter integrations by type">
-                            <option value="all">(All types)</option>
-                            @foreach (var type in Model.IntegrationTypes)
-                            {
-                                <option value="@type.Name">@type.Title</option>
-                            }
-                        </select>
+                    <input type="search" name="q" class="form-control search rounded-pill"
+                           placeholder="Search by name, description, type, or author"
+                           aria-label="Search extensions and integrations" aria-controls="integrationsList"
+                           data-testid="integrations-search" x-model.debounce.150ms="query">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mt-3">
+                        <div>
+                            <label for="integrationType">Filter by type</label>
+                            <select id="integrationType" name="type"
+                                    class="form-select form-select-sm w-auto d-inline"
+                                    aria-controls="integrationsList" data-testid="integrations-type"
+                                    x-model="type">
+                                <option value="">(All types)</option>
+                                @foreach (var type in Model.IntegrationTypes)
+                                {
+                                    <option value="@type.Name">@type.Title</option>
+                                }
+                            </select>
+                        </div>
+                        <p class="text-muted small mb-0" role="status" data-testid="integrations-count"
+                           x-text="summary">@Model.Items.Count extensions</p>
                     </div>
                 </div>
-            </div>
-            <div class="d-flex justify-content-end align-items-center gap-3 mt-3">
-
             </div>
         </form>
     </div>
     <div class="container">
-        <div class="row gx-lg-6 gx-xxl-7 mt-sm-n2 mt-lg-n4">
+        <p class="text-center mt-5" x-show="visibleCount === 0" x-cloak>
+            No extensions match.
+            <button type="button" class="btn btn-link p-0 align-baseline" @@click="reset()">Clear filters</button>
+        </p>
+        <div id="integrationsList" class="row gx-lg-6 gx-xxl-7 mt-sm-n2 mt-lg-n4">
             @foreach (var item in Model.Items)
             {
-                <div class="col-sm-6 col-lg-4 mt-3 mt-sm-5 mt-lg-6" x-data='@item.MetadataJSON'
-                     x-show='(title.includes(searchTerm.toLowerCase()) || description.includes(searchTerm.toLowerCase())) && (searchType === "all" || searchType === type)'>
+                string titleID = $"{item.Anchor}-title";
+
+                <div id="@item.Anchor" data-testid="integration-entry" data-type="@item.Type.CodeName"
+                     class="col-sm-6 col-lg-4 mt-3 mt-sm-5 mt-lg-6" x-show="matches($el)">
                     <article class="border rounded-3 p-3 d-flex flex-column h-100 widget-card"
-                             aria-label="Integration: @item.Title">
+                             aria-labelledby="@titleID">
                         @if (item.Logo.TryGetValue(out var logo))
                         {
                             <div class="text-center mb-3">
-                                <img xpc-image="logo" class="img-fluid" style="max-width: 60px; max-height: 60px;"
-                                     alt="@item.Title logo" />
+                                <img xpc-image="logo" class="img-fluid integration-logo" sizes="60px" decoding="async" />
                             </div>
                         }
-                        <h3 class="h3 mt-2 pt-1">@item.Title</h3>
-                        <p>
-                            <small class="text-muted">
-                                @item.Type.Title
-                            </small>
-                        </p>
+                        <h3 id="@titleID" class="h3 mt-2 pt-1">
+                            <a href="#@item.Anchor" class="text-dark text-decoration-none">@item.Title</a>
+                        </h3>
+                        <p><small class="text-muted">@item.Type.Title</small></p>
 
                         @if (item.AuthorLink.TryGetValue(out var link))
                         {
                             <p class="mt-2">by
                                 <small>
                                     <a href="@link.URL" aria-label="View @link.Label's profile">@link.Label</a>
-
                                     @if (item.Business.TryGetValue(out var business))
                                     {
                                         <text>from</text>
-
                                         @if (business.URL.TryGetValue(out string? url))
                                         {
                                             <a href="@url" aria-label="Visit @business.Label website">@business.Label</a>
                                         }
                                         else
                                         {
-                                            <text>@business.Label</text>
+                                            @business.Label
                                         }
                                     }
                                 </small>
@@ -78,28 +85,18 @@
 
                         <p class="mt-2 flex-grow-1">@item.ShortDescription</p>
 
-                        <div class="d-flex justify-content-around mt-3">
+                        <div class="d-flex justify-content-around mt-3" data-search-skip>
                             @if (item.RepositoryURL.TryGetValue(out string? repositoryURL))
                             {
-                                <a class="text-primary text-decoration-none widget-card-link" href="@repositoryURL"
-                                       aria-label="View @item.Title source code repository" rel="noopener noreferrer"
-                                       target="_blank">
-                                    Repository
-                                    <svg class="ms-1" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                                        <use xlink:href="/img/icons.svg#chevron-right" asp-append-version />
-                                    </svg>
-                                </a>
+                                <a class="text-primary text-decoration-none widget-card-link link-chevron" href="@repositoryURL"
+                                   aria-label="View @item.Title source code repository" rel="noopener noreferrer"
+                                   target="_blank">Repository</a>
                             }
                             @if (item.LibraryURL.TryGetValue(out string? libraryURL))
                             {
-                                <a class="text-primary text-decoration-none widget-card-link" href="@libraryURL"
-                                       aria-label="View @item.Title library documentation" rel="noopener noreferrer"
-                                       target="_blank">
-                                    Library
-                                    <svg class="ms-1" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-                                        <use xlink:href="/img/icons.svg#chevron-right" asp-append-version />
-                                    </svg>
-                                </a>
+                                <a class="text-primary text-decoration-none widget-card-link link-chevron" href="@libraryURL"
+                                   aria-label="View @item.Title library documentation" rel="noopener noreferrer"
+                                   target="_blank">Library</a>
                             }
                         </div>
                     </article>

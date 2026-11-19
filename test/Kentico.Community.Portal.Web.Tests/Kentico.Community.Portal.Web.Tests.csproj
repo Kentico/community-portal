@@ -22,6 +22,14 @@
 		<ProjectReference Include="..\..\src\Kentico.Community.Portal.Web\Kentico.Community.Portal.Web.csproj" />
 	</ItemGroup>
 
+	<!-- Brand fonts and logo for social image composition tests, from the site's static assets -->
+	<ItemGroup>
+		<None Include="..\..\src\Kentico.Community.Portal.Web\wwwroot\img\logo.svg" LinkBase="wwwroot\img" CopyToOutputDirectory="PreserveNewest" />
+		<None Include="..\..\src\Kentico.Community.Portal.Web\wwwroot\fonts\GTWalsheimPro-Bold.ttf" LinkBase="wwwroot\fonts" CopyToOutputDirectory="PreserveNewest" />
+		<None Include="..\..\src\Kentico.Community.Portal.Web\wwwroot\fonts\GTWalsheimPro-Medium.ttf" LinkBase="wwwroot\fonts" CopyToOutputDirectory="PreserveNewest" />
+		<None Include="..\..\src\Kentico.Community.Portal.Web\wwwroot\fonts\GTWalsheimPro-Regular.ttf" LinkBase="wwwroot\fonts" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<Using Include="NUnit.Framework" />
 		<Using Include="NSubstitute" />

@@ -26,10 +26,11 @@ public static class Extensions
 
         builder.Services.AddServiceDiscovery();
 
+        builder.Services.AddTransient<TransientRetryHandler>();
         builder.Services.ConfigureHttpClientDefaults(http =>
         {
-            // Turn on resilience by default
-            http.AddStandardResilienceHandler();
+            // Retry transient failures (Polly-free; see TransientRetryHandler)
+            http.AddHttpMessageHandler<TransientRetryHandler>();
 
             // Turn on service discovery by default
             http.AddServiceDiscovery();

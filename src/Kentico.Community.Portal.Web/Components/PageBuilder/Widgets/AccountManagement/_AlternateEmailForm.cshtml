@@ -1,0 +1,87 @@
+@using Kentico.Community.Portal.Web.Components.PageBuilder.Widgets.AccountManagement
+@using Kentico.Community.Portal.Web.Components.TagHelpers
+
+@model AlternateEmailViewModel
+
+<div id="alternateEmailForm" test-id="alternateEmail"
+     data-status="@(Model.IsVerified ? "verified" : Model.HasAlternateEmail ? "unverified" : "none")">
+    <h4>My alternate email</h4>
+
+    <small class="form-text text-muted d-block py-1">
+        Add a second email, like your business or agency email, so we can match you with your company's data
+        (e.g. certification synchronization). We only use it after you verify it.
+    </small>
+
+    @if (Model.HasAlternateEmail)
+    {
+        <div class="d-flex flex-wrap align-items-center gap-2 mt-2">
+            <strong test-id="alternateEmailCurrent">@Model.CurrentAlternateEmail</strong>
+            @if (Model.IsVerified)
+            {
+                <span class="badge text-bg-success" test-id="alternateEmailStatus" data-verified="true">
+                    Verified <time xpc-datetime="Model.VerifiedDate!.Value" xpc-datetime-format="@DateTimeFormat.Date"></time>
+                </span>
+            }
+            else
+            {
+                <span class="badge text-bg-warning" test-id="alternateEmailStatus" data-verified="false">Not verified</span>
+            }
+        </div>
+
+        <div class="d-flex flex-wrap gap-2 mt-2">
+            @if (!Model.IsVerified)
+            {
+                <form method="post" hx-post hx-controller="AccountManagementWidget" hx-action="ResendAlternateEmailVerification"
+                      hx-target="#alternateEmailForm" hx-swap="outerHTML" hx-disabled-elt="find fieldset">
+                    <fieldset hx-indicator="this" xpc-readonly-disabled>
+                        <button type="submit" class="btn btn-sm btn-outline-primary" xpc-loading-button
+                                test-id="resendAlternateEmailVerification">
+                            Resend verification link
+                        </button>
+                    </fieldset>
+                </form>
+            }
+            <form method="post" hx-post hx-controller="AccountManagementWidget" hx-action="RemoveAlternateEmail"
+                  hx-target="#alternateEmailForm" hx-swap="outerHTML" hx-disabled-elt="find fieldset">
+                <fieldset hx-indicator="this" xpc-readonly-disabled>
+                    <button type="submit" class="btn btn-sm btn-outline-danger" xpc-loading-button
+                            test-id="removeAlternateEmail">
+                        Remove
+                    </button>
+                </fieldset>
+            </form>
+        </div>
+    }
+
+    <form method="post" hx-post hx-controller="AccountManagementWidget" hx-action="UpdateAlternateEmail"
+          hx-target="#alternateEmailForm" hx-swap="outerHTML" hx-disabled-elt="find fieldset" test-id="alternateEmailUpdateForm">
+        <fieldset hx-indicator="this" xpc-readonly-disabled>
+            <div asp-validation-summary="ModelOnly" class="text-danger validation-summary"></div>
+
+            <div class="form-group">
+                <div class="editing-form-label-cell">
+                    <label asp-for="AlternateEmail" class="control-label form-label mt-3">
+                        @(Model.HasAlternateEmail ? "Replace alternate email" : "Alternate email")
+                    </label>
+                </div>
+                <div class="editing-form-value-cell">
+                    <input asp-for="AlternateEmail" type="email" autocomplete="email" class="form-control" test-id="alternateEmailInput" />
+                    <span asp-validation-for="AlternateEmail" class="text-danger field-validation-error" test-id="alternateEmailError"></span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3" xpc-loading-button test-id="saveAlternateEmail">
+                Save and send verification link
+            </button>
+
+            <vc:read-only-mode-notification />
+        </fieldset>
+    </form>
+
+    @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+    {
+        <xpc-alert dismissable="true">
+            <span test-id="alternateEmailStatusMessage">@Model.StatusMessage</span>
+        </xpc-alert>
+    }
+</div>
